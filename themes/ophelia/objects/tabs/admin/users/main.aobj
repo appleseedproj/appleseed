@@ -1,0 +1,5 @@
+ <div id='tabs'>
+
+  <a href='_admin/users/accounts/'><img src='themes/%USERTHEME%/images/tabs/admin/users/accounts%ADMINUSERSACCOUNTSTAB%.gif' border='0' /></a><a href='_admin/users/questions/'><img src='themes/%USERTHEME%/images/tabs/admin/users/questions%ADMINUSERSQUESTIONSTAB%.gif' border='0' /></a><a href='_admin/users/settings/'><img src='themes/%USERTHEME%/images/tabs/admin/users/settings%ADMINUSERSOPTIONSTAB%.gif' border='0' /></a><a href='_admin/users/access/'><img src='themes/%USERTHEME%/images/tabs/admin/users/access%ADMINUSERSACCESSTAB%.gif' border='0' /></a>
+
+ </div> <!-- #tabs -->

@@ -1,0 +1,70 @@
+<div id='accounts'>
+ <div id='content'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.NEW', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <?php $ADMINDATA->Broadcast(); ?>
+ 
+   <form id='add' method='POST' action='%TARGET%'>
+ 
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+ 
+    <p id='username'> 
+     USERNAME: 
+     <?php $zTOOLTIPS->Display ('USERNAME'); ?>
+    </p>
+    <?php $zHTML->TextBox ("USERNAME", 255, $ADMINDATA->Username); ?>
+    <?php $ADMINDATA->Broadcast ("field", "Username"); ?>
+ 
+    <p id='password'> 
+     PASSWORD: 
+     <?php $zTOOLTIPS->Display ('PASSWORD'); ?>
+    </p>
+    <?php $zHTML->TextBox ("PASS", 64, "", TRUE); ?>
+    <?php $ADMINDATA->Broadcast ("field", "Pass"); ?>
+
+    <p id='standing'> 
+     STANDING: 
+     <?php $zTOOLTIPS->Display ('STANDING'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("ACCOUNTSTANDING", $ADMINDATA->Standing, "STANDING"); ?>
+ 
+    <p id='verified'> 
+     VERIFIED: 
+     <?php $zTOOLTIPS->Display ('VERIFIED'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("ACCOUNTVERIFICATION", $ADMINDATA->Verification, "VERIFICATION"); ?>
+
+    <p id='email'> 
+     EMAIL: 
+     <?php $zTOOLTIPS->Display ('EMAIL'); ?>
+    </p>
+    <?php $zHTML->TextBox ("EMAIL", 64, $ADMINDATA->userProfile->Email); ?>
+    <?php $ADMINDATA->userProfile->Broadcast ("field", "Email"); ?>
+      
+    <p id='amount'> 
+     INVITES AMOUNT: 
+     <?php $zTOOLTIPS->Display ('AMOUNT'); ?>
+    </p>
+    <?php $zHTML->TextBox ("AMOUNT", 64, $ADMINDATA->userInvites->Amount); ?>
+    <?php $ADMINDATA->userInvites->Broadcast ("field", "Amount"); ?>
+    
+    <div id='actions'>
+
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #add -->
+ 
+     <form id='cancel' method='POST' action='%TARGET%'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+ 
+   </div> <!-- #actions -->
+  
+ </div> <!-- #content -->
+</div> <!-- #accounts -->

@@ -1,0 +1,50 @@
+<div id='group'>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+ <div id='container'>
+    <p id='heading'>
+     <?php $zSTRINGS->Display ('LABEL.NEW'); ?>
+     <?php $zTOOLTIPS->Display ('HEADING'); ?>
+    </p> <!-- #heading -->
+
+    <?php $zGROUPS->groupContent->Broadcast(); ?>
+
+<div id='editor'>
+    <form id='add' name='add' method='POST' action='<?php echo $gTARGET; ?>'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+     <?php $zHTML->Post ($gREPLYDATA); ?>
+
+     <input type='hidden' id='gREFERENCEID' name='gREFERENCEID' value='<?php echo $gREFERENCEID; ?>'>
+
+       <p id='subject'>
+        <?php $zSTRINGS->Display ('LABEL.SUBJECT'); ?>
+        <?php $zTOOLTIPS->Display ('SUBJECT'); ?>
+       </p> <!-- #subject -->
+        <?php $zHTML->TextBox ("SUBJECT", 70, $gSUBJECT); ?>
+        <?php $zGROUPS->groupContent->Broadcast ("field", "Subject"); ?>
+
+       <p id='body'>
+        <?php $zSTRINGS->Display ('LABEL.BODY'); ?>
+        <?php $zTOOLTIPS->Display ('BODY'); ?>
+       </p> <!-- .body -->
+       <?php $zHTML->TextArea ("BODY", $gBODY); ?>
+       <?php $zGROUPS->groupContent->Broadcast ("field", "Body"); ?>
+
+       <?php echo $bUSERICONLISTING; ?>
+
+  <div id='actions'>
+     <?php $zHTML->Button ('group_submit', NULL, ENABLED, "SUBMIT", "ACTION"); ?>
+     </form> <!-- #add -->
+
+     <form name='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
+     <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+     <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL'); ?>
+     <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "ACTION"); ?>
+     </form> <!-- #cancel -->
+  </div> <!-- #actions -->
+  </div> <!-- #editor -->
+
+ </div> <!-- #container -->
+ </div> <!-- #group  -->

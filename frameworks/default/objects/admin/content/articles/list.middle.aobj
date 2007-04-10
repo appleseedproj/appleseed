@@ -1,0 +1,25 @@
+   <?php $zHTML->Alternate(); ?>
+     <span class='tid'>
+       <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
+     </span>
+
+     <span class='title'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Title, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #title -->
+
+     <span class='full'>
+       <?php $zHTML->Link ($target, $zAPPLE->Format ($ADMINDATA->Full, FORMAT_VIEW), $gEXTRAPOSTDATA); ?>
+     </span> <!-- #full -->
+
+     <span class='submitted_username'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Submitted_Username, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #submitted_username -->
+
+     <span class='language'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Language, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #language -->
+
+     <span class='checkbox'>
+       <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
+     </span> <!-- #checkbox -->
+   </li>

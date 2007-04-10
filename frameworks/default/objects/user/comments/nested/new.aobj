@@ -1,0 +1,52 @@
+<div id='comments'>
+
+ <a name='comments'></a>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+ <div id='container'>
+    <p id='heading'>
+     <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.COMMENTS'); ?>
+     <?php $zTOOLTIPS->Display ('HEADING'); ?>
+    </p> <!-- #heading -->
+
+    <?php $zCOMMENTS->Broadcast(); ?>
+
+<div id='editor'>
+    <form id='add' name='add' method='POST' action='<?php echo $gTARGET; ?>#comments'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+     <?php $zHTML->Post ($gREPLYDATA); ?>
+
+     <input type='hidden' id='gREFERENCEID' name='gREFERENCEID' value='<?php echo $gREFERENCEID; ?>'>
+
+       <p id='subject'>
+        <?php $zSTRINGS->Display ('LABEL.SUBJECT', 'USER.COMMENTS'); ?>
+        <?php $zTOOLTIPS->Display ('SUBJECT'); ?>
+       </p> <!-- #subject -->
+        <?php $zHTML->TextBox ("SUBJECT", 70, $gSUBJECT); ?>
+        <?php $zCOMMENTS->Broadcast ("field", "Subject"); ?>
+
+       <p id='body'>
+        <?php $zSTRINGS->Display ('LABEL.BODY', 'USER.COMMENTS'); ?>
+        <?php $zTOOLTIPS->Display ('BODY'); ?>
+       </p> <!-- .body -->
+       <?php $zHTML->TextArea ("BODY", $gBODY); ?>
+       <?php $zCOMMENTS->Broadcast ("field", "Body"); ?>
+
+       <?php echo $bUSERICONLISTING; ?>
+
+  <div id='actions'>
+     <?php $zHTML->Button ('comment_submit', NULL, ENABLED, "SUBMIT", "COMMENTACTION"); ?>
+     </form> <!-- #add -->
+
+     <form name='cancel' method='POST' action='<?php echo $gCOMMENTTARGET; ?>'>
+     <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+     <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.COMMENTS'); ?>
+     <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "COMMENTACTION"); ?>
+     </form> <!-- ## comment.cancel -->
+  </div> <!-- #actions -->
+  </div> <!-- #editor -->
+
+ </div> <!-- #container -->
+ </div> <!-- #comments -->

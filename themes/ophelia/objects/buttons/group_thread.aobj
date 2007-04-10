@@ -1,0 +1,4 @@
+<span class='group_thread'>
+ <asd id='link' extra='THREADDATA' target='%TARGET%' text='%THREADLABEL%' />
+ <asd id='tooltip' title='group_thread' />
+</span> <!-- .group_thread -->

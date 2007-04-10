@@ -1,0 +1,6 @@
+<span class='edit_labels'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/edit_labels.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='edit_labels' />
+</span> <!-- .edit_labels -->

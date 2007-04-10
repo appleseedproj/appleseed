@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<appleseed>
+ <version>%APPLESEEDVERSION%</version>
+ <checklogin>
+  <username>%CHECKUSERNAME%</username>
+  <fullname>%CHECKFULLNAME%</fullname>
+  <domain>%SELFDOMAIN%</domain>
+  <time>%CHECKTIME%</time>
+  <address>%VERIFYADDRESS%</address>
+  <host>%VERIFYHOST%</host>
+  <token>%VERIFYTOKEN%</token>
+ </checklogin>
+</appleseed>

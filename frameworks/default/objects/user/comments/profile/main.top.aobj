@@ -1,0 +1,10 @@
+<div id='comments'>
+
+ <a name='comments'></a>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+ <div id='container'>
+  <?php $zLOCALUSER->Broadcast (); ?>
+
+  <div id='profile'>

@@ -1,0 +1,28 @@
+<div id='sectionERROR'>
+
+ <div id='site'>
+  <div id='common'>
+
+   <div id='error'>
+    <div id='caption'>
+     <?php echo $gERRORTITLE; ?>
+    </div> <!-- #caption -->
+ 
+    <div id='container'>
+     <?php echo $gERRORMSG; ?>
+     <div id='return'>
+      <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
+     </div> <!-- #return -->
+     </div> <!-- #container -->
+ 
+    </div> <!-- #error -->
+   </div> <!-- #comomn -->
+  </div> <!-- #site -->
+
+  <!-- ## footer obj -->
+  <?php $zHTML->Footer (); ?>
+
+ </div> <!-- #sectionERROR -->
+
+ </body>
+</html>

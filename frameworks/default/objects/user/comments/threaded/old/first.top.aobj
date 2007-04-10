@@ -1,0 +1,42 @@
+ <ul class='threadedcomment' id='first'>
+  <li>
+   <div class='threadedcomment' id='header'>
+
+    <div class='threadedcomment' id='icon'>
+     <?php echo $bCOMMENTICON; ?>
+    </div> <!-- ## threadedcomment.icon -->
+
+    <div class='threadedcomment' id='masslist'>
+    </div> <!-- ## threadedcomment.subject -->
+
+    <div class='threadedcomment' id='subject'>
+     <?php echo $gCOMMENTSUBJECT; ?>
+    </div> <!-- ## threadedcomment.subject -->
+
+    <div class='threadedcomment' id='author'>
+     <?php echo $gCOMMENTAUTHOR; ?>
+    </div> <!-- ## threadedcomment.author -->
+
+    <div class='threadedcomment' id='timestamp'>
+     <?php echo $gCOMMENTSTAMP; ?>
+    </div> <!-- ## threadedcomment.timestamp -->
+
+    <div class='threadedcomment' id='delete'>
+     <?php $zHTML->Button ('delete', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+    </div> <!-- ## threadedcomment.subject -->
+
+   </div> <!-- ## threadedcomment.header -->
+
+   <div class='threadedcomment' id='body'>
+    <?php echo $gCOMMENTBODY; ?>
+   </div>
+
+   <div class='threadedcomment' id='footer'>
+    <div class='threadedcomment' id='reply'>
+     <?php $zHTML->Button ('comment_reply', NULL, ENABLED, "REPLY", "COMMENTACTION"); ?>
+    </div>
+    <div class='threadedcomment' id='thread'>
+     <a href=''>Thread</a>
+    </div>
+   </div>
+  </li>

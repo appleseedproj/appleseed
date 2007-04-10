@@ -1,0 +1,36 @@
+<div id='friends'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+
+  <form id='viewtype' name='viewtype' method='post' action='<?php echo $gTARGET; ?>'>
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <?php $zHTML->Menu ($gCIRCLEVIEWTYPE, $gCIRCLEDATA, "", "", TRUE); ?>
+  </form> <!-- #viewtype -->
+
+  <p id='heading'>
+   <?php $zSTRINGS->Display ("LABEL.FRIENDS", "USER.FRIENDS"); ?></h1>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p> <!-- #heading -->
+
+  <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <div id='buttons_top'>
+    <?php $zHTML->Button ('move_down'); ?>
+    <?php $zHTML->Button ('move_up'); ?>
+
+    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+
+    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', 'USER.FRIENDS'); ?>
+    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+
+   </div> <!-- #buttons_top -->
+
+  <?php $zFRIENDS->Broadcast(); ?>
+
+  <div id='editor'>
+   <ul>

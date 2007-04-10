@@ -1,0 +1,31 @@
+ <?php $zHTML->Alternate(); ?>
+
+  <span class='name'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Name); ?>
+  </span> <!-- .name -->
+
+  <span class='directory'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Directory . "/"); ?>
+  </span> <!-- .directory -->
+
+  <span class='check'>
+    <?php $zHTML->CheckBox ('MASSLIST', $gVIEWDATA->tID, TRUE, $gCHECKED); ?>
+  </span> <!-- .check -->
+
+  <span class='thumb'>
+    <?php $zHTML->ImageLink ($gVIEWTARGET, NULL, $gPHOTOLOCATION); ?>
+  </span> <!-- ## photosets.thumb -->
+
+  <span class='description'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Description); ?>
+  </span> <!-- .description -->
+
+  <span class='photocount'>
+    <?php $zSTRINGS->Display ('INFO.PHOTOCOUNT', 'USER.PHOTOSETS'); ?>
+  </span> <!-- .photocount -->
+
+  <span class='edit'>
+    <?php $zHTML->ImageLink ($gTARGET, $gEXTRADATA, "$gTHEMELOCATION/images/buttons/edit.gif"); ?>
+  </span> <!-- .edit -->
+
+ </li> <!-- .[alternate] -->

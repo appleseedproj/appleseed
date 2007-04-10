@@ -1,0 +1,8 @@
+<p id='recipient'>
+ <?php $zSTRINGS->Display ('LABEL.RECIPIENT', 'USER.MESSAGES'); ?>
+ <?php $zTOOLTIPS->Display ('RECIPIENT'); ?>
+</p>
+
+<?php $zHTML->Hidden ("gRECIPIENTNAME", $gRECIPIENTNAME); ?>
+<?php $zHTML->Hidden ("gRECIPIENTDOMAIN", $gRECIPIENTDOMAIN); ?>
+<?php $zHTML->UserLink ($gRECIPIENTNAME, $gRECIPIENTDOMAIN); ?>

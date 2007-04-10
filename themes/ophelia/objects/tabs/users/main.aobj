@@ -1,0 +1,5 @@
+ <div id='tabs'>
+
+  <a href='profile/%FOCUSUSERNAME%/info/'><img src='themes/%USERTHEME%/images/tabs/users/info%USERINFOTAB%.gif' border='0' /></a><a href='profile/%FOCUSUSERNAME%/journal/'><img src='themes/%USERTHEME%/images/tabs/users/journal%USERJOURNALTAB%.gif' border='0' /></a><a href='profile/%FOCUSUSERNAME%/photos/'><img src='themes/%USERTHEME%/images/tabs/users/photos%USERPHOTOSTAB%.gif' border='0' /></a><a href='profile/%FOCUSUSERNAME%/friends/'><img src='themes/%USERTHEME%/images/tabs/users/friends%USERFRIENDSTAB%.gif' border='0' /></a><a href='profile/%FOCUSUSERNAME%/groups/'><img src='themes/%USERTHEME%/images/tabs/users/groups%USERGROUPSTAB%.gif' border='0' /></a>
+
+ </div> <!-- #tabs -->

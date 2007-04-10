@@ -1,0 +1,13 @@
+ <p id='info'>
+  <?php $zSTRINGS->Display ('INFO.INVITES'); ?>
+  <?php $zTOOLTIPS->Display ('INFO'); ?>
+ </p><!-- #info -->
+
+ <p id='invites'>
+  <?php $zSTRINGS->Display ('LABEL.INVITES'); ?>
+  <?php $zTOOLTIPS->Display ('INVITES'); ?>
+ </p><!-- #content -->
+
+ <?php $zHTML->TextArea ("INVITES", $gINVITES); ?>
+ <?php $zGROUPS->Broadcast ("field", "Invites"); ?>
+

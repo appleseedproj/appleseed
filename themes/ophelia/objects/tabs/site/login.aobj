@@ -1,0 +1,5 @@
+ <div id='tabs'>
+
+  <a href='login/'><img src='themes/%USERTHEME%/images/tabs/site/local%LOCALLOGINTAB%.gif' border='0' /></a><a href='login/remote/'><img src='themes/%USERTHEME%/images/tabs/site/remote%REMOTELOGINTAB%.gif' border='0' /></a>
+
+ </div> <!-- #tabs -->

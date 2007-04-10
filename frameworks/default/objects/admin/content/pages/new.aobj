@@ -1,0 +1,85 @@
+<div id='pages'>
+ <div id='container'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.NEW', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <?php $ADMINDATA->Broadcast(); ?>
+ 
+   <form id='edit' method='POST' action='_admin/content/pages/'>
+ 
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <p id='title'> 
+     TITLE:
+     <?php $zTOOLTIPS->Display ('TITLE'); ?>
+    </p>
+    <?php $zHTML->TextBox ("TITLE", 64, $ADMINDATA->Title); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Title"); ?>
+ 
+    <p id='location'> 
+     LOCATION:
+     <?php $zTOOLTIPS->Display ('LOCATION'); ?>
+    </p>
+    <?php $zHTML->TextBox ("LOCATION", 64, $ADMINDATA->Location); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Location"); ?>
+ 
+    <p id='context'> 
+     CONTEXT:
+     <?php $zTOOLTIPS->Display ('CONTEXT'); ?>
+    </p>
+    <?php $zHTML->TextBox ("CONTEXT", 64, $ADMINDATA->Context); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Context"); ?>
+ 
+    <p id='output'>
+     OUTPUT: 
+     <?php $zTOOLTIPS->Display ('OUTPUT'); ?>
+    </p>
+    <?php $zHTML->TextArea ("OUTPUT", $ADMINDATA->Output); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Output"); ?>
+
+    <p id='style'>
+     STYLE: 
+     <?php $zTOOLTIPS->Display ('STYLE'); ?>
+    </p>
+    <?php $zHTML->TextArea ("STYLE", $ADMINDATA->Style); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Style"); ?>
+
+    <p id='formatting'>
+     FORMATTING: 
+     <?php $zTOOLTIPS->Display ('FORMATTING'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("FORMATTING", $ADMINDATA->Formatting); ?><br />
+
+    <p id='template'>
+     TEMPLATE: 
+     <?php $zTOOLTIPS->Display ('TEMPLATE'); ?>
+    </p>
+    <?php $zHTML->Menu ("TEMPLATE", $gTEMPLATELIST, NULL, $ADMINDATA->Template); ?><br />
+
+    <p id='language'>
+     LANGUAGE: 
+     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language); ?><br />
+
+    <div id='actions'>
+
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+
+     <span class='delete'>&nbsp;</span>
+ 
+     <form id='cancel' method='POST' action='_admin/content/pages/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+ 
+   </div> <!-- #actions -->
+  
+ </div> <!-- #container -->
+</div> <!-- #pages -->

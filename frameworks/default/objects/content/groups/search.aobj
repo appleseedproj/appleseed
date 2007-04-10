@@ -1,0 +1,11 @@
+<div id='groups'>
+
+<?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/groups/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+  <div id='container'>
+  <?php $zGROUPS->Broadcast (); ?>
+
+   (not yet)
+
+  </div> <!-- #container -->
+</div> <!-- #groups -->

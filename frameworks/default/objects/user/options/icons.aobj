@@ -1,0 +1,29 @@
+<li>
+ <span class='image'>
+  <img src='<?php echo $gICONLOCATION ?>' border='0' />
+ </span> <!-- .image -->
+
+ <p class='keyword'>
+  <?php $zSTRINGS->Display ("LABEL.KEYWORD", "USER.OPTIONS.ICONS"); ?>
+  <?php $zTOOLTIPS->Display ('KEYWORD'); ?>
+ </p> <!-- .keyword -->
+ <span class='keyword'>
+  <?php $zHTML->TextBox ("KEYWORD[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Keyword); ?>
+ </span> <!-- .keyword -->
+ <?php $zFOCUSUSER->userIcons->Broadcast ("field", "Keyword", $gBROADCASTUNIQUE); ?>
+
+ <p class='comments'>
+  <?php $zSTRINGS->Display ("LABEL.COMMENTS", "USER.OPTIONS.ICONS"); ?>          
+  <?php $zTOOLTIPS->Display ('COMMENTS'); ?>
+ </p> <!-- .comments -->
+ <span class='comments'>
+  <?php $zHTML->TextBox ("COMMENTS[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Comments); ?>
+ </span> <!-- .comments -->
+ <?php $zFOCUSUSER->userIcons->Broadcast ("field", "Comments", $gBROADCASTUNIQUE); ?>
+
+ <span class='delete'>
+  <?php $zSTRINGS->Lookup ('CONFIRM.DELETE.ICON', $zAPPLE->Context); ?>
+  <?php $zHTML->ButtonLink ('delete_icon', "/profile/$gFOCUSUSERNAME/options/", $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+ </span>
+
+</li>

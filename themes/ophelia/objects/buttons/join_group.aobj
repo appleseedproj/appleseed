@@ -1,0 +1,6 @@
+<span class='join_group'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/join_group.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='join_group' />
+</span> <!-- .join_group -->

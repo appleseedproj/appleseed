@@ -1,0 +1,37 @@
+<div id='group'>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+   <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/group/<?php echo $zGROUPS->Name; ?>/'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zHTML->Button ('back'); ?>
+   </form> <!-- ## returnback -->
+ 
+   <form enctype="multipart/form-data" id='viewtype' name='viewtype' method='post' action='<?php echo $gTARGET; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zHTML->Post ($gREADDATA); ?>
+    <?php $zOPTIONS->Menu ($gGROUPVIEWTYPE, $gGROUPVIEW, "", TRUE); ?>
+   </form> <!-- #viewtype -->
+
+  <p id='heading'>
+   <?php echo $zGROUPS->Fullname; ?>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p> <!-- #heading -->
+
+  <?php $zLOCALUSER->Broadcast (); ?>
+
+  <div id='editor'>
+
+  <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <div id='buttons_top'>
+    <?php $zHTML->Button ($gSELECTBUTTON, NULL, ENABLED, NULL, 'ACTION'); ?>
+
+    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL'); ?>
+    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "ACTION") ?>
+   </div> <!-- #buttons_top -->
+
+   <?php $zGROUPS->groupContent->Broadcast(); ?>
+   

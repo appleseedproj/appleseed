@@ -1,0 +1,6 @@
+<span class='spam'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/spam.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='spam' />
+</span> <!-- .spam -->

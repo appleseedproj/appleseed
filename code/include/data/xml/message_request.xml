@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<appleseed>
+ <version>%APPLESEEDVERSION%</version>
+ <message>
+  <subject>%MESSAGESUBJECT%</subject>
+  <body><![CDATA[%MESSAGEBODY%]]></body>
+  <stamp>%MESSAGESTAMP%</stamp>
+  <fullname>%MESSAGEFULLNAME%</fullname>
+ </message>
+</appleseed>

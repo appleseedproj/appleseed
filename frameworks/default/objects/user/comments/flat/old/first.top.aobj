@@ -1,0 +1,42 @@
+ <ul class='flatcomment' id='first'>
+  <li>
+   <div class='flatcomment' id='header'>
+
+    <div class='flatcomment' id='icon'>
+     <?php echo $bCOMMENTICON; ?>
+    </div> <!-- ## flatcomment.icon -->
+
+    <div class='flatcomment' id='masslist'>
+    </div> <!-- ## flatcomment.subject -->
+
+    <div class='flatcomment' id='subject'>
+     <?php echo $gCOMMENTSUBJECT; ?>
+    </div> <!-- ## flatcomment.subject -->
+
+    <div class='flatcomment' id='author'>
+     <?php echo $gCOMMENTAUTHOR; ?>
+    </div> <!-- ## flatcomment.author -->
+
+    <div class='flatcomment' id='timestamp'>
+     <?php echo $gCOMMENTSTAMP; ?>
+    </div> <!-- ## flatcomment.timestamp -->
+
+    <div class='flatcomment' id='delete'>
+     <?php $zHTML->Button ('delete', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+    </div> <!-- ## flatcomment.subject -->
+
+   </div> <!-- ## flatcomment.header -->
+
+   <div class='flatcomment' id='body'>
+    <?php echo $gCOMMENTBODY; ?>
+   </div>
+
+   <div class='flatcomment' id='footer'>
+    <div class='flatcomment' id='reply'>
+     <?php $zHTML->Button ('comment-reply', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+    </div>
+    <div class='flatcomment' id='thread'>
+     <a href=''>Thread</a>
+    </div>
+   </div>
+  </li>

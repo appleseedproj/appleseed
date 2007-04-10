@@ -1,0 +1,3 @@
+<p class='<?php echo $gQUESTIONSTYLE; ?>'>
+ <?php echo $gQUESTIONANSWER; ?>
+</p> <!-- .<?php echo $gQUESTIONSTYLE; ?> -->

@@ -1,0 +1,37 @@
+   <?php $zHTML->Alternate(); ?>
+     <span class='tid'>
+       <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
+     </span>
+
+     <span class='userAuth_uID'>
+       <?php $zHTML->Link ($target, $username, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #userAuth_uID -->
+
+     <span class='location'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Location, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #location -->
+
+     <span class='r'>
+       <?php $zHTML->Link ($target, $zOPTIONS->Label("BOOLEAN", $ADMINDATA->r), $gEXTRAPOSTDATA); ?>
+     </span> <!-- #r -->
+
+     <span class='w'>
+       <?php $zHTML->Link ($target, $zOPTIONS->Label("BOOLEAN", $ADMINDATA->w), $gEXTRAPOSTDATA); ?>
+     </span> <!-- #w -->
+
+     <span class='e'>
+       <?php $zHTML->Link ($target, $zOPTIONS->Label("BOOLEAN", $ADMINDATA->e), $gEXTRAPOSTDATA); ?>
+     </span> <!-- #e -->
+
+     <span class='a'>
+       <?php $zHTML->Link ($target, $zOPTIONS->Label("BOOLEAN", $ADMINDATA->a), $gEXTRAPOSTDATA); ?>
+     </span> <!-- #a -->
+
+     <span class='inheritance'>
+       <?php $zHTML->Link ($target, $zOPTIONS->Label("BOOLEAN", $ADMINDATA->Inheritance), $gEXTRAPOSTDATA); ?>
+     </span> <!-- #inherit -->
+
+     <span class='checkbox'>
+       <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
+     </span> <!-- #checkbox -->
+   </li>

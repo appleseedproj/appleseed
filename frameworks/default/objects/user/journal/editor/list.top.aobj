@@ -1,0 +1,21 @@
+<div id='journal'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <?php $zJOURNAL->Broadcast (); ?>
+
+  <div id='editor'>
+  <form name='journal' id='journal' method='post' action='<?php echo $gTARGET; ?>'>
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <?php $zHTML->Button ($gSELECTBUTTON); ?>
+
+   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', 'USER.JOURNAL'); ?>
+   <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <?php $zOPTIONS->Menu ($gJOURNALVIEWTYPE, $gJOURNALVIEW, "", TRUE); ?>
+   
+    <ul>

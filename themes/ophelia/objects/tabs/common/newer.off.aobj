@@ -1,0 +1,7 @@
+<div id='scroll'>
+ <span class='prev'>
+   
+  <img src='themes/%USERTHEME%/images/tabs/common/newer_off.gif' border='0' />
+
+  <asd id='tooltip' title='prev' />
+ </span> <!-- .prev -->

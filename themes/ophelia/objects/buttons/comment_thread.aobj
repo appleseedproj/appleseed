@@ -1,0 +1,4 @@
+<span class='comment_thread'>
+ <asd id='link' extra='THREADDATA' target='%TARGET%#comments' text='%THREADLABEL%' />
+ <asd id='tooltip' title='comment_thread' />
+</span> <!-- .comment_thread -->

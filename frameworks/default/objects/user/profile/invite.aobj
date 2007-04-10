@@ -1,0 +1,27 @@
+ <div id='invite'>
+  <div id='caption'>
+    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.INVITE'); ?>
+  </div> <!-- #caption -->
+
+  <div id='container'>
+
+   <?php $zFOCUSUSER->userInvites->Broadcast(); ?>
+
+    <p id='content'>
+     <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'USER.INVITE'); ?>
+     <?php $zTOOLTIPS->Display ('CONTENT', 'USER.INVITE'); ?>
+    </p> <!-- #content -->
+ 
+    <form id='invite' name='invite' method='POST' action='profile/<?php echo $gPROFILEREQUEST; ?>/'>
+ 
+     <?php $zHTML->TextBox ("RECIPIENT", 128, $gRECIPIENT); ?>
+     <?php $zFOCUSUSER->userInvites->Broadcast ("field", "Recipient"); ?>
+ 
+     <?php $zHTML->Button ("invite"); ?>
+ 
+    <br /><br />
+
+   </form> <!-- #invite -->
+
+  </div> <!-- #container -->
+ </div> <!-- #invite -->

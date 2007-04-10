@@ -1,0 +1,4 @@
+<span class='group_delete'>
+ <asd id='link' target='%TARGET%' text='%DELETELABEL%' confirm='%CONFIRM%' />
+ <asd id='tooltip' title='group_delete' />
+</span> <!-- .group_delete -->

@@ -1,0 +1,6 @@
+<span class='forward'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/forward.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='forward' />
+</span> <!-- .forward -->

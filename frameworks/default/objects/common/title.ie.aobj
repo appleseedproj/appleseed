@@ -1,0 +1,31 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <base href="<?php echo $gSITEURL ?>" />
+  <title><?php echo $gPAGETITLE ?></title>
+
+   <link rel="stylesheet" media="screen"
+    href="themes/<?php echo $gUSERTHEME ?>/style/common/common.css" type="text/css" />
+   <link rel="stylesheet" media="screen"
+    href="themes/<?php echo $gUSERTHEME ?>/style/common/ie.css" type="text/css" />
+   <link rel="stylesheet" media="screen"
+    href="themes/<?php echo $gUSERTHEME ?>/style/<?php echo $gSTYLELOCATION ?>/common.css" type="text/css" />
+   <link rel="stylesheet" media="screen"
+    href="themes/<?php echo $gUSERTHEME ?>/style/<?php echo $gSTYLELOCATION ?>/ie.css" type="text/css" />
+
+   <!-- User Defined Styles -->
+   <style type="text/css"><!--
+    <?php echo $gUSERDEFINEDSTYLE; ?>
+   --></style>
+
+   <script type="text/javascript" src="frameworks/<?php echo $gFRAMEWORK ?>/javascript/base.js"></script>
+
+ </head>
+
+ <b><br />NOTE: If this site looks messy, it's because Internet Explorer is not CSS2 compliant. Please upgrade to <a href='http://www.mozilla.org/firefox/'>Mozilla Firefox</a><br /></b><br />
+    <a style='background:none;' href="http://www.spreadfirefox.com/?q=affiliates&id=0&t=70"><img border="0" alt="Get Firefox!" title="Get Firefox!" src="http://sfx-images.mozilla.org/affiliates/Buttons/88x31/get.gif"/></a>
+
+ <body>
+ <a name='top'></a>

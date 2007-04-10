@@ -1,0 +1,33 @@
+ <?php $zHTML->Alternate(); ?>
+
+  <span class='username'>
+    <?php echo $gFRIENDFULLNAME; ?>
+  </span> <!-- #username -->
+
+  <span class='icon'>
+    <?php echo $bFRIENDICON; ?>
+  </span> <!-- #icon -->
+
+  <form id='approve' name='approve' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+   <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
+   <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
+   <?php $zHTML->Button ('approve'); ?>
+  </form>
+
+  <form id='deny' name='deny' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
+   <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
+   <?php $zSTRINGS->Lookup ('CONFIRM.DENY', 'USER.FRIENDS'); ?>
+   <?php $zHTML->Button ('deny', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+  </form>
+
+  <span class='online'>
+    <?php echo $bONLINENOW; ?>
+  </span> <!-- #online -->
+
+  <span class='domain'>
+    <?php echo $zFRIENDS->Domain; ?>
+  </span> <!-- #domain -->
+
+ </li> <!-- #[alternate] -->

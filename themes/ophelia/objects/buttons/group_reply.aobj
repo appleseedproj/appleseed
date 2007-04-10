@@ -1,0 +1,4 @@
+<span class='group_reply'>
+ <asd id='link' extra='REPLYDATA' target='%TARGET%' text='%REPLYLABEL%' />
+ <asd id='tooltip' title='group_reply' />
+</span> <!-- .group_reply -->

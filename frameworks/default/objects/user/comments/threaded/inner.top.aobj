@@ -1,0 +1,10 @@
+ <a name='comments<?php echo $gTARGETID; ?>'></a>
+ <ul>
+  <li>
+   <span class='innerlink'>
+
+      <?php echo $gCOMMENTTHREAD; ?>
+
+   </span> <!-- .innerlink -->
+
+  </li>

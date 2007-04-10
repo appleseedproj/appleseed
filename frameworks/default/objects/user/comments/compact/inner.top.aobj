@@ -1,0 +1,26 @@
+ <a name='comments<?php echo $gTARGETID; ?>'></a>
+ <ul>
+  <li>
+   <div class='header'>
+
+    <span class='subject'>
+      <?php echo $gCOMMENTSUBJECT; ?>
+    </span> <!-- .subject -->
+
+    <span class='byline'>
+     <?php echo $gCOMMENTBYLINE; ?>
+    </span> <!-- .byline -->
+
+   </div> <!-- .header -->
+
+   <span class='body'>
+    <?php echo $gCOMMENTBODY; ?>
+   </span> <!-- .body -->
+
+
+   <div class='footer'>
+    <?php $zHTML->Button ('comment_reply', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+    <?php $zHTML->Button ('comment_parent', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+    <?php echo $bTHREADBUTTON; ?>
+   </div> <!-- .footer -->
+  </li>

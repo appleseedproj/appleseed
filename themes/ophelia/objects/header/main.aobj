@@ -1,0 +1,18 @@
+ <div id='header'>
+  <div id='header_top'>
+
+   <p id='header_friends'>
+   </p> <!-- #header_friends -->
+
+   <p id='header_email'>
+   </p> <!-- #header_email -->
+
+   <p id='header_loggedin'>
+   </p> <!-- #header_loggedin -->
+
+  </div> <!-- #header_top -->
+ </div> <!-- #header -->
+
+ <div id='header_menu'>
+   <img src='themes/%USERTHEME%/images/header/header_left.gif' width='181' height='21' border='0' /><a href='/'><img src='themes/%USERTHEME%/images/header/header_home.gif' width='52' height='21' border='0' /></a><a href='about/'><img src='themes/%USERTHEME%/images/header/header_aboutus.gif' width='65' height='21' border='0' /></a><img src='themes/%USERTHEME%/images/header/header_photos_off.gif' width='67' height='21' border='0' /><a href='groups/'><img src='themes/%USERTHEME%/images/header/header_groups.gif' width='70' height='21' border='0' /></a><a href='journals/'><img src='themes/%USERTHEME%/images/header/header_journals.gif' width='74' height='21' border='0' /></a><img src='themes/%USERTHEME%/images/header/header_options_off.gif' width='75' height='21' border='0' /><a href='search/'><img src='themes/%USERTHEME%/images/header/header_search.gif' width='61' height='21' border='0' /></a><a href='help/'><img src='themes/%USERTHEME%/images/header/header_help.gif' width='59' height='21' border='0' /></a><a href='login/'><img src='themes/%USERTHEME%/images/header/header_login.gif' width='61' height='21' border='0' /></a>
+ </div> <!-- #header_menu -->

@@ -1,0 +1,16 @@
+  </ul> 
+  </div> <!-- #listing -->
+
+    <form id='search' name='search' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/journal/'>
+
+     <span class='criteria'>
+      <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
+     </span> <!-- .criteria -->
+
+     <?php $zHTML->Button ('search'); ?>
+
+    </form> <!-- ## search -->
+
+    <?php $zHTML->ShowAll (); ?>
+
+ </div> <!-- #container -->

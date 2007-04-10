@@ -1,0 +1,20 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+  <div id='sectionPHOTO' style='width:<?php echo $gPHOTOWIDTH; ?>px'>
+   <div id='user'>
+
+    <!-- ## photo obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photo/main.aobj", INCLUDE_SECURITY_NONE); ?>
+
+    <!-- ## description obj -->
+    <?php echo $bDESCRIPTIONBOX; ?>
+
+    <!-- ## comments obj -->
+    <?php echo $bCOMMENTS; ?>
+
+    </div> <!-- #user -->
+   </div> <!-- #sectionPHOTO -->
+
+ </body>
+</html>

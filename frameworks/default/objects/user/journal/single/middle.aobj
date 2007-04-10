@@ -1,0 +1,25 @@
+   <div id='header'>
+
+    <?php echo $bUSERICON; ?>
+
+    <span class='title'>
+     <?php echo $zJOURNAL->Title; ?>
+    </span> <!-- .title -->
+
+    <span class='posted'>
+     <?php echo $zJOURNAL->fPosted; ?>
+    </span> <!-- .posted -->
+
+   </div> <!-- #header -->
+ 
+   <?php $zJOURNAL->Broadcast(); ?>
+ 
+   <div id='content'>
+
+    <?php echo $zAPPLE->Format ($zJOURNAL->Content, FORMAT_BASIC); ?>
+
+    <div id='tags'>
+     <?php $zSTRINGS->Display ('LABEL.TAGLIST', 'USER.JOURNAL'); ?>
+    </div> <!-- #tags -->
+ 
+   </div> <!-- #content -->

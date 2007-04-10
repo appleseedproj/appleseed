@@ -1,0 +1,18 @@
+  
+ <div id='info'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+  <div id='container'>
+ 
+    <?php echo $bDESCRIPTION; ?>
+    <br /><br />
+ 
+    <hr class='thin' />
+ 
+    <br />
+ 
+    <?php $zSTRINGS->Display ("LABEL.STATS", "USER.INFO"); ?>
+ 
+  </div> <!-- #container -->

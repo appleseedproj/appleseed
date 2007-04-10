@@ -1,0 +1,11 @@
+ <div id='about'>
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.INFO'); ?>
+  </div> <!-- #caption -->
+
+  <div id='container'>
+
+    (no text yet)
+
+  </div> <!-- #container -->
+ </div> <!-- #photos -->

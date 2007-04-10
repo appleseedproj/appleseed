@@ -1,0 +1,19 @@
+<html>
+
+ <title>
+  <?php echo $gERRORTITLE; ?>
+ </title>
+
+ <body>
+  <center>
+   <font face='Arial' size='2'>
+    <!-- Title -->
+    <b><?php echo $gERRORTITLE; ?></b><br />
+ 
+    <!-- Message -->
+    <?php echo $gERRORMSG; ?><br />
+   </font>
+  </center>
+ </body>
+
+</html>

@@ -1,0 +1,8 @@
+<p id='recipient'>
+ <?php $zSTRINGS->Display ('LABEL.RECIPIENT'); ?>
+ <?php $zTOOLTIPS->Display ('RECIPIENT'); ?>
+</p>
+
+<?php $zHTML->TextBox ("RECIPIENTADDRESS", 64, $zMESSAGE->Title); ?>
+
+<?php $zMESSAGE->Broadcast('field', 'recipientaddress'); ?>

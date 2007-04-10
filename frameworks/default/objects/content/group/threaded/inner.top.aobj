@@ -1,0 +1,9 @@
+ <ul>
+  <li>
+   <span class='innerlink'>
+
+      <?php echo $gTHREAD; ?>
+
+   </span> <!-- .innerlink -->
+
+  </li>

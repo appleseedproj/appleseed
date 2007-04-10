@@ -1,0 +1,20 @@
+   <?php $zHTML->Alternate(NULL); ?>
+
+     <span class='username'>
+       <?php $zHTML->Link ($target, $gSENDERNAME); ?>
+     </span> <!-- .username -->
+
+     <span class='subject'>
+       <?php echo $bINBOXMARK; ?>
+       <?php echo $bLABELSMARK; ?>
+       <?php $zHTML->Link ($target, $zMESSAGE->Subject); ?>
+     </span> <!-- .subject -->
+
+     <span class='stamp'>
+       <?php $zHTML->Link ($target, $zMESSAGE->fStamp); ?>
+     </span> <!-- .stamp -->
+
+     <span class='checkbox'>
+       <?php $zHTML->CheckBox ('MASSLIST', $zMESSAGE->Identifier, TRUE, $gCHECKED); ?>
+     </span> <!-- .checkbox -->
+   </li> <!-- #[alternate] -->

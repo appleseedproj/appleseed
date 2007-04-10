@@ -1,0 +1,34 @@
+   </ul>
+  </div> <!-- #editor -->
+
+  <div id='buttons_bottom'>
+
+ </form> <!-- #masslist -->
+
+   <form id='back' name='back' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zHTML->Button ("back"); ?>
+   </form> <!-- #back -->
+
+   <form id='new' name='new' method='POST' action='<?php echo $gTARGET; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zHTML->Button ("new"); ?>
+   </form> <!-- #new -->
+
+  </div> <!-- #buttons_bottom -->
+
+  <div id='search'>
+   <form id='search' name='search' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/circles/'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
+    <?php $zHTML->Button ('search'); ?>
+   </form> <!-- #search -->
+ 
+   <?php $zHTML->ShowAll (); ?>
+  </div> <!-- #search -->
+    
+ </div> <!-- #container -->
+
+ <?php $zHTML->Scroll ($gTARGET, 'user.circles', SCROLL_PAGEOF); ?>
+
+</div> <!-- #circles -->

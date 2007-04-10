@@ -1,0 +1,17 @@
+ <?php $zHTML->Alternate(); ?>
+   <span class='subject'>
+    <?php echo $gSUBJECT; ?>
+   </span> <!-- .subject -->
+ 
+   <span class='latest'>
+    <?php echo $gLATEST; ?>
+   </span> <!-- .latest -->
+
+   <span class='started'>
+    <?php echo $gSTARTED; ?> 
+   </span> <!-- .started -->
+
+   <span class='count'>
+    <?php echo $gCOUNT; ?> 
+   </span> <!-- .count -->
+  </li>

@@ -1,0 +1,23 @@
+   <?php $zHTML->Alternate(); ?>
+
+     <span class='subject'>
+       <?php $zHTML->Link ($gTARGET, $zJOURNAL->Title, $gEXTRAPOSTDATA); ?>
+     </span> <!-- .subject -->
+
+     <span class='count'>
+       <?php $zHTML->Link ($gTARGET . '#comments', $gCOUNT, $gEXTRAPOSTDATA); ?>
+     </span> <!-- .count -->
+
+     <span class='security'>
+       <?php echo $gPROTECTED; ?>
+     </span> <!-- .posted -->
+
+     <span class='posted'>
+       <?php $zHTML->Link ($gTARGET, $zJOURNAL->fPosted, $gEXTRAPOSTDATA); ?>
+     </span> <!-- .posted -->
+
+     <span class='body'>
+       <?php $zHTML->Link ($gTARGET, $zAPPLE->Format ($zJOURNAL->Content, FORMAT_BASIC), $gEXTRAPOSTDATA); ?>
+     </span> <!-- .subject -->
+
+   </li>

@@ -1,0 +1,25 @@
+   <?php $zHTML->Alternate(); ?>
+     <span class='tid'>
+       <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
+     </span>
+
+     <span class='title'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Title, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #title -->
+
+     <span class='output'>
+       <?php $zHTML->Link ($target, $output, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #output -->
+
+     <span class='context'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Context, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #context -->
+
+     <span class='language'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Language, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #language -->
+
+     <span class='checkbox'>
+       <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
+     </span> <!-- #checkbox -->
+   </li>

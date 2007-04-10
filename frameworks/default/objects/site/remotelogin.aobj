@@ -1,0 +1,24 @@
+<div id='login'>
+
+ <? $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+
+  <?php $zLOCALUSER->Broadcast ('login'); ?>
+
+  <form id='userinfo' name='userinfo' action='login/remote/' method='post'>
+
+   <p id='location'>
+    <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
+    <?php $zTOOLTIPS->Display ('LOCATION'); ?>
+   </p> <!-- #username -->
+   <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
+   <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>
+
+   <?php $zHTML->Button ("remotelogin"); ?>
+
+  </form> <!-- #userinfo -->
+
+ </div> <!-- #container -->
+
+</div> <!-- #login -->

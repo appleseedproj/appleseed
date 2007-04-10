@@ -1,0 +1,11 @@
+   </ul>
+
+   <div id='buttons'>
+    <div id='new'>
+     <form method='POST' action='<?php echo $gTARGET; ?>'>
+      <?php $zHTML->Button ("new_label"); ?>
+     </form>
+    </div> <!-- #new -->
+   </div> <!-- #buttons -->
+  </div> <!-- #container -->
+ </div> <!-- #editlabels -->

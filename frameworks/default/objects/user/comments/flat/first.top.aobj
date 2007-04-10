@@ -1,0 +1,39 @@
+ <a name='comments<?php echo $gTARGETID; ?>'></a>
+ <ul class='first'>
+  <li>
+   <div class='header'>
+
+    <span class='icon'>
+     <?php echo $bCOMMENTICON; ?>
+    </span> <!-- .icon -->
+
+     <span class='subject'>
+      <?php echo $gCOMMENTSUBJECT; ?>
+     </span> <!-- .subject -->
+ 
+    <span class='online'>
+     <?php echo $bONLINENOW; ?>
+    </span> <!-- .online -->
+
+     <span class='author'>
+      <?php echo $gCOMMENTAUTHOR; ?>
+     </span> <!-- .author -->
+ 
+     <span class='stamp'>
+      <?php echo $gCOMMENTSTAMP; ?>
+     </span> <!-- .stamp -->
+ 
+     <span class='delete_comment'>
+       <?php echo $bDELETEBUTTON; ?>
+     </span>
+
+   </div> <!-- .header -->
+
+   <span class='body'>
+    <?php echo $gCOMMENTBODY; ?>
+   </span>
+
+   <div class='footer'>
+    <?php $zHTML->Button ('comment_reply', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+   </div> <!-- .footer -->
+  </li>

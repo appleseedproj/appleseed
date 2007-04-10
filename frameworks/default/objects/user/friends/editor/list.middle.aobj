@@ -1,0 +1,39 @@
+ <?php $zHTML->Alternate(); ?>
+
+  <span class='fullname'>
+    <?php $zHTML->Link ($gTARGET, $gFRIENDFULLNAME); ?>
+  </span> <!-- .fullname -->
+
+  <span class='alias'>
+    <?php $zHTML->Link ($gTARGET, $zFRIENDS->Alias); ?>
+  </span> <!-- .alias -->
+
+  <span class='circles'>
+    <?php echo $gCIRCLESLISTING; ?>
+  </span> <!-- .circles -->
+
+  <span class='check'>
+    <?php $zHTML->CheckBox ('MASSLIST', $zFRIENDS->tID, TRUE, $gCHECKED); ?>
+  </span> <!-- .check -->
+
+  <span class='icon'>
+   <?php $zHTML->ImageLink ($gTARGET, NULL, $gFRIENDSICON); ?>
+  </span> <!-- #icon -->
+
+  <span class='username'>
+    <?php $zHTML->Link ($gTARGET, $zFRIENDS->Username); ?>
+  </span> <!-- .username -->
+
+  <span class='online'>
+    <?php echo $bONLINENOW; ?>
+  </span> <!-- #online -->
+
+  <span class='domain'>
+    <?php $zHTML->Link ($gTARGET, $zFRIENDS->Domain); ?>
+  </span> <!-- .domain -->
+
+  <span class='edit'>
+    <?php $zHTML->ImageLink ($gEDITTARGET, $gEXTRAPOSTDATA, "$gTHEMELOCATION/images/buttons/edit.gif"); ?>
+  </span> <!-- .edit -->
+
+ </li> <!-- .[alternate] -->

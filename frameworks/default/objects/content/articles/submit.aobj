@@ -1,0 +1,65 @@
+<div id='articles'>
+
+ <!-- tabs objects -->
+<?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.SUBMIT', 'CONTENT.ARTICLES'); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p> <!-- .top -->
+
+ <div id='submit'>
+  <?php $zARTICLES->Broadcast(); ?>
+
+    <form id='submit' name='submit' method='POST' action='<?php echo $gTARGET; ?>'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+
+     <input type='hidden' id='gACTION' name='guID' value='<?php echo $guID; ?>'>
+
+     <p id='title'>
+      <?php $zSTRINGS->Display ('LABEL.TITLE', 'CONTENT.ARTICLES'); ?>
+      <?php $zTOOLTIPS->Display ('TITLE'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("TITLE", 64, $gTITLE); ?>
+     <?php $zARTICLES->Broadcast ("field", "Title"); ?>
+
+     <p id='summary'>
+      <?php $zSTRINGS->Display ('LABEL.SUMMARY', 'CONTENT.ARTICLES'); ?>
+      <?php $zTOOLTIPS->Display ('SUMMARY'); ?>
+     </p><!-- #summary -->
+
+     <?php $zHTML->TextArea ("SUMMARY", $gSUMMARY); ?>
+     <?php $zARTICLES->Broadcast ("field", "Summary"); ?>
+
+     <p id='full'>
+      <?php $zSTRINGS->Display ('LABEL.FULL', 'CONTENT.ARTICLES'); ?>
+      <?php $zTOOLTIPS->Display ('FULL'); ?>
+     </p><!-- #full -->
+
+     <?php $zHTML->TextArea ("FULL", $gFULL); ?>
+     <?php $zARTICLES->Broadcast ("field", "Full"); ?>
+
+  <div id='actions'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <?php $zHTML->Button ('submit'); ?>
+
+   </form> <!-- #submit -->
+
+   <span class='delete'>&nbsp;</span>
+
+   <form id='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
+    <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+    <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'CONTENT.ARTICLES'); ?>
+    <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   </form> <!-- # cancel -->
+  </div> <!-- #actions -->
+
+ </div> <!-- #submit -->
+ </div> <!-- #container -->
+</div> <!-- #articles -->

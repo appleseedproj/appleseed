@@ -1,0 +1,3 @@
+<div id='container'>
+ <?php $zSTRINGS->Display ('OBJECT.CONTENT', $zAPPLE->Context); ?>
+</div> <!-- #container -->

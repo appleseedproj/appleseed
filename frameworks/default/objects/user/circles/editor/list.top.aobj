@@ -1,0 +1,32 @@
+<div id='circles'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+
+  <p id='heading'>
+   <?php $zSTRINGS->Display ("LABEL.CIRCLES", $zAPPLE->Context); ?></h1>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p> <!-- #heading -->
+
+  <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <div id='buttons_top'>
+    <?php $zHTML->Button ('move_down'); ?>
+    <?php $zHTML->Button ('move_up'); ?>
+
+    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+
+      <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zAPPLE->Context); ?>
+    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+
+   </div> <!-- #buttons_top -->
+
+  <?php $zLOCALUSER->Broadcast(); ?>
+  <?php $zCIRCLES->Broadcast(); ?>
+
+  <div id='editor'>
+   <ul>

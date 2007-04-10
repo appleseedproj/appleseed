@@ -1,0 +1,5 @@
+<span class='add_enemy'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/add_enemy.gif' />
+ <asd id='tooltip' title='add_enemy' />
+</span> <!-- .add_enemy -->

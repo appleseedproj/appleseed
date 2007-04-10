@@ -1,0 +1,7 @@
+ <div id='tabs'>
+
+  <a href='/articles/'><img src='themes/%USERTHEME%/images/tabs/content/read_articles%CONTENTARTICLESVIEWTAB%.gif' border='0' /></a>
+  <a href='articles/submit/'><img src='themes/%USERTHEME%/images/tabs/content/submit_article%CONTENTARTICLESSUBMITTAB%.gif' border='0' /></a>
+  <a href='articles/queue/'><img src='themes/%USERTHEME%/images/tabs/content/article_queue%CONTENTARTICLESQUEUETAB%.gif' border='0' /></a>
+
+ </div> <!-- #tabs -->

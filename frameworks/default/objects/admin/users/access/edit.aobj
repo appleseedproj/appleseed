@@ -1,0 +1,84 @@
+<div id='access'>
+ <div id='container'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.EDIT', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <?php $ADMINDATA->Broadcast(); ?>
+ 
+   <form id='edit' method='POST' action='_admin/users/access/'>
+ 
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
+ 
+    <p id='userauth_uid'> 
+     USER:
+     <?php $zTOOLTIPS->Display ('USERAUTH_UID'); ?>
+    </p>
+    <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?>
+ 
+    <p id='fullquestion'>
+     LOCATION: 
+     <?php $zTOOLTIPS->Display ('LOCATION'); ?>
+    </p>
+    <?php $zHTML->TextBox ("LOCATION", 70, $ADMINDATA->Location); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Location"); ?>
+
+    <p id='r'>
+     READ: 
+     <?php $zTOOLTIPS->Display ('READ'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->r, "R"); ?>
+
+    <p id='w'>
+     WRITE: 
+     <?php $zTOOLTIPS->Display ('WRITE'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->w, "W"); ?>
+
+    <p id='e'>
+     EDITOR: 
+     <?php $zTOOLTIPS->Display ('EDITOR'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->e, "E"); ?>
+
+    <p id='a'>
+     ADMIN: 
+     <?php $zTOOLTIPS->Display ('ADMIN'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->a, "A"); ?>
+
+    <p id='inheritance'>
+     INHERITANCE: 
+     <?php $zTOOLTIPS->Display ('INHERITANCE'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?>
+
+    <div id='actions'>
+
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+ 
+     <form id='delete' method='POST' action='_admin/users/access/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <input type='hidden' id='gtID' name='gtID' 
+             value='<?php echo $ADMINDATA->tID ?>'>
+      <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+     </form> <!-- #delete -->
+ 
+     <form id='cancel' method='POST' action='_admin/users/access/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+ 
+   </div> <!-- #actions -->
+  
+ </div> <!-- #container -->
+</div> <!-- #access -->

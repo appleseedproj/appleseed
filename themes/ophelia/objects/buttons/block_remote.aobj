@@ -1,0 +1,5 @@
+<span class='block_remote'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/block.gif' />
+ <asd id='tooltip' title='block_remote' />
+</span> <!-- .block_remote -->

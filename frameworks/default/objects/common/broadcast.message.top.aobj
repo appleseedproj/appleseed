@@ -1,0 +1,2 @@
+<!-- Broadcast -->
+<p class='message' onClick='this.style.visibility="hidden"; this.style.height="0px";'>

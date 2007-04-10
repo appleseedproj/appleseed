@@ -1,0 +1,5 @@
+<span class='save_disabled'>
+ <input disabled='disabled' class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/save_disabled.gif' />
+ <asd id='tooltip' title='save_disabled' />
+</span> <!-- .save_disabled -->

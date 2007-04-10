@@ -1,0 +1,4 @@
+ <div id='tabs'>
+
+  <a href='_admin/control/config/'><img src='themes/%USERTHEME%/images/tabs/admin/control/config%ADMINCONTROLCONFIGTAB%.gif' border='0' /></a><a href='admin/control/security/'><img src='themes/%USERTHEME%/images/tabs/admin/control/security%ADMINCONTROLSECURITYTAB%.gif' border='0' /></a><a href='admin/control/defaults/'><img src='themes/%USERTHEME%/images/tabs/admin/control/defaults%ADMINCONTROLDEFAULTSTAB%.gif' border='0' /></a><a href='admin/control/storage/'><img src='themes/%USERTHEME%/images/tabs/admin/control/storage%ADMINCONTROLSTORAGETAB%.gif' border='0' /></a>
+</div> <!-- #tabs -->

@@ -1,0 +1,31 @@
+<div id='messages'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <?php $zMESSAGE->Broadcast ("messages"); ?>
+  <form name='masslist' id='masslist' method='post' action='<?php echo $gTARGET; ?>'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+  <div id='buttons'>
+   <span id='foldername'>
+    <?php echo $gMESSAGELOCATION; ?>
+   </span>
+
+   <span class='spam_all'>
+    &nbsp;
+   </span>
+
+   <?php $zHTML->Button ($gSELECTBUTTON); ?>
+
+   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL'); ?>
+   <?php $zHTML->Button ('delete_forever_all', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+
+   <span id='change'>
+    <?php $zOPTIONS->Menu ("MESSAGESVIEW", $gMESSAGESVIEW, "", TRUE); ?>
+   </span>
+  </div> <!-- #buttons -->
+
+   <ul>

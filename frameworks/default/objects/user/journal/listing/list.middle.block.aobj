@@ -1,0 +1,23 @@
+   <?php $zHTML->Alternate(); ?>
+
+     <span class='subject'>
+       <?php echo $zJOURNAL->Title; ?>
+     </span> <!-- .subject -->
+
+     <span class='count'>
+       <?php echo $gCOUNT; ?>
+     </span> <!-- .count -->
+
+     <span class='security'>
+       <?php echo $gPROTECTED; ?>
+     </span> <!-- .posted -->
+
+     <span class='posted'>
+       <?php echo $zJOURNAL->fPosted; ?>
+     </span> <!-- .posted -->
+
+     <span class='body'>
+       <?php echo $zJOURNAL->Content; ?>
+     </span> <!-- .subject -->
+
+   </li> 

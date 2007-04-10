@@ -1,0 +1,5 @@
+<span class='group_submit'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/submit.gif' />
+ <asd id='tooltip' title='group_submit' />
+</span> <!-- .group_submit -->

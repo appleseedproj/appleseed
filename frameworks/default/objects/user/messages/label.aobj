@@ -1,0 +1,4 @@
+<li class='<?php echo $gLABELSELECT[$gLABELNAME]; ?>'>
+ <span id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME; ?>/messages/<?php echo $gLABELNAME; ?>/'><?php echo $gLABELNAME; ?></a></span>
+ <span id='new'><?php echo $gCOUNTNEWMESSAGES; ?></span> <!-- #new -->
+</li> <!-- #<?php echo $gLABELSELECT[$gLABELNAME]; ?> -->

@@ -1,0 +1,81 @@
+<div id='articles'>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+ <div id='container'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.EDIT', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <?php $zARTICLES->Broadcast(); ?>
+ 
+   <form id='edit' method='POST' action='<?php echo $gTARGET; ?>'>
+ 
+   <p id='submitted'> 
+    <?php $zSTRINGS->Display ('LABEL.SUBMITTED', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('SUBMITTED'); ?>
+   </p>
+
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <?php $zHTML->Hidden ("tID", $zARTICLES->tID); ?>
+ 
+    <p id='verification'>
+     <?php $zSTRINGS->Display ('LABEL.VERIFICATION', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('VERIFICATION'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("VERIFICATION", $zARTICLES->Verification); ?><br />
+
+    <p id='title'> 
+     <?php $zSTRINGS->Display ('LABEL.TITLE', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('TITLE'); ?>
+    </p>
+    <?php $zHTML->TextBox ("TITLE", 64, $zARTICLES->Title); ?><br />
+    <?php $zARTICLES->Broadcast ("field", "Title"); ?>
+ 
+    <p id='summary'>
+     <?php $zSTRINGS->Display ('LABEL.SUMMARY', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('SUMMARY'); ?>
+    </p>
+    <?php $zHTML->TextArea ("SUMMARY", $zARTICLES->Summary); ?><br />
+    <?php $zARTICLES->Broadcast ("field", "Summary"); ?>
+
+    <p id='full'>
+     <?php $zSTRINGS->Display ('LABEL.FULL', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('FULL'); ?>
+    </p>
+    <?php $zHTML->TextArea ("FULL", $zARTICLES->Full); ?><br />
+    <?php $zARTICLES->Broadcast ("field", "Full"); ?>
+
+    <p id='stamp'>
+     <?php $zSTRINGS->Display ('LABEL.STAMP', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('STAMP'); ?>
+    </p><!-- #stamp -->
+    <?php $zHTML->DateMenu ("STAMP", $gSTAMPLIST['MONTH'], $gSTAMPLIST['DAY'], $gSTAMPLIST['YEAR']); ?>
+    @
+    <?php $zHTML->TimeMenu ("STAMP", $gSTAMPLIST['HOUR'], $gSTAMPLIST['MINUTE']); ?>
+
+    <p id='language'>
+     <?php $zSTRINGS->Display ('LABEL.LANGUAGE', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("LANGUAGE", $zARTICLES->Language); ?><br />
+
+    <div id='actions'>
+
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+ 
+     <form id='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+ 
+   </div> <!-- #actions -->
+  
+ </div> <!-- #container -->
+</div> <!-- #articles -->

@@ -1,0 +1,37 @@
+  </ul>
+
+  <div id='buttons'>
+   <span id='read'>
+    <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
+   </span>
+
+   <span id='archive'>
+    <?php $zHTML->Button ('archive_all'); ?>
+   </span>
+
+   <span id='inbox'>
+    <?php $zHTML->Button ('move_inbox_all'); ?>
+   </span>
+
+   <span id='label'>
+    <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
+    <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE, "LABEL_ALL"); ?>
+   </span>
+
+  </div> <!-- #buttons -->
+ </form> <!-- #masslist -->
+
+   <div id='search'>
+
+    <form id='searchmessages' name='searchmessages' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/messages/'>
+     <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
+     <?php $zOPTIONS->Menu ("SEARCHMESSAGESBY"); ?>
+     <?php $zHTML->Button ('search'); ?>
+    </form> <!-- ## searchmessages -->
+
+    <?php $zHTML->ShowAll (); ?>
+
+   </div> <!-- #search -->
+
+ </div> <!-- #container -->
+</div> <!-- #messages -->

@@ -1,0 +1,73 @@
+<div id='photosets'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <p id='heading'>
+   <?php $zSTRINGS->Display ('LABEL.EDIT', 'USER.PHOTOSETS'); ?>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p>
+
+  <div id='edit'>
+   <?php $gVIEWDATA->Broadcast(); ?>
+
+   <form id='add' name='add' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+
+    <p id='name'>
+     <?php $zSTRINGS->Display ('LABEL.NAME', 'USER.PHOTOSETS'); ?>
+     <?php $zTOOLTIPS->Display ('NAME'); ?>
+    </p> <!-- #name -->
+    <?php $zHTML->TextBox ("NAME", 70, $gVIEWDATA->Name); ?>
+    <?php $gVIEWDATA->Broadcast ("field", "Name"); ?>
+
+    <p id='description'>
+     <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', 'USER.PHOTOSETS'); ?>
+     <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
+    </p> <!-- #description -->
+    <?php $zHTML->TextArea ("DESCRIPTION", $gVIEWDATA->Description); ?>
+    <?php $gVIEWDATA->Broadcast ("field", "Description"); ?>
+
+    <p id='directory'>
+     <?php $zSTRINGS->Display ('LABEL.DIRECTORY', 'USER.PHOTOSETS'); ?>
+     <?php $zTOOLTIPS->Display ('DIRECTORY'); ?>
+    </p> <!-- #directory -->
+    <?php $zHTML->TextBox ("DIRECTORY", 70, $gVIEWDATA->Directory); ?>
+    <p id='directory_info'>
+     <?php $zSTRINGS->Display ('INFO.DIRECTORY', 'USER.PHOTOSETS'); ?>
+    </p> <!-- #directory_info -->
+    <?php $gVIEWDATA->Broadcast ("field", "Directory"); ?>
+
+    <p id='tags'>
+     <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.PHOTOSETS'); ?>
+     <?php $zTOOLTIPS->Display ('TAGS'); ?>
+    </p> <!-- #tags -->
+    <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->Tags); ?>
+    <p id='tags_info'>
+     <?php $zSTRINGS->Display ('INFO.TAGS', 'USER.PHOTOSETS'); ?>
+    </p> <!-- tags_info -->
+    <?php $gVIEWDATA->Broadcast ("field", "Tags"); ?>
+ 
+    <?php echo $bPRIVACYOPTIONS; ?>
+
+  </div> <!-- #edit -->
+
+    <div id='actions'>
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #add -->
+
+     <span class='delete'>&nbsp;</span>
+
+     <form id='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.PHOTOSETS'); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+    </div> <!-- #actions -->
+
+ </div> <!-- #container -->
+</div> <!-- #photosets -->

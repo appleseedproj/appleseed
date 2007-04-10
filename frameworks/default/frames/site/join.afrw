@@ -1,0 +1,41 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+ <div id='browserFULL'>
+
+  <div id='sectionFULL'>
+
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
+  
+   <div id='site'>
+
+   <div id='sectionA'>
+
+    <div id='logoA'></div>
+
+    <!-- ## loginbox obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/login.aobj", INCLUDE_SECURITY_NONE); ?>
+
+    <!-- ## join obj -->
+    <?php $zAPPLE->IncludeFile ($gJOINLOCATION, INCLUDE_SECURITY_NONE); ?>
+
+   </div> <!-- #sectionA -->
+
+   <div id='sectionBC'>
+
+    <!-- ## joininfo obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/joininfo.aobj", INCLUDE_SECURITY_NONE); ?>
+
+   </div> <!-- #sectionBC -->
+
+   </div> <!-- #site -->
+
+   <!-- ## footer obj -->
+   <?php $zHTML->Footer (); ?>
+
+  </div> <!-- #sectionFULL -->
+   </div> <!-- #browserFULL -->
+
+ </body>
+</html>

@@ -1,0 +1,15 @@
+ <?php $zHTML->Alternate(); ?>
+
+  <span class='fullname'>
+    <?php echo $gFRIENDNAME; ?>
+  </span> <!-- #fullname -->
+
+  <span class='icon'>
+    <?php echo $bFRIENDICON; ?>
+  </span> <!-- #icon -->
+
+  <span class='domain'>
+    <?php echo $zFRIENDS->Domain; ?>
+  </span> <!-- #domain -->
+
+ </li> <!-- #[alternate] -->

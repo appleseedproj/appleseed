@@ -1,0 +1,17 @@
+<div class='friends' id='list'>
+ <?php $zHTML->Alternate(); ?>
+
+  <div class='friends' id='username'>
+    <?php echo $zFRIENDS->Username; ?>
+  </div> <!-- ## friends.username -->
+
+  <div class='friends' id='icon'>
+    <a href='<?php echo $gTARGET; ?>'><img src='<?php echo $gFRIENDSICON; ?>' border='0' /></a>
+  </div> <!-- ## friends.icon -->
+
+  <div class='friends' id='domain'>
+    <?php echo $zFRIENDS->Domain; ?>
+  </div> <!-- ## friends.domain -->
+
+ </div> <!-- ## friends.[alternate] -->
+</div> <!-- ## friends.list -->

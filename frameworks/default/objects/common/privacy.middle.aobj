@@ -1,0 +1,25 @@
+<?php $zHTML->Alternate (); ?>
+ <span class='label'>
+  <?php echo $gLABEL; ?>
+ </span> <!-- .label -->
+ 
+ <span class='allow'>
+  <?php $zHTML->Radio ("PRIVACY[$gCIRCLESID]", $gSELECTED, PRIVACY_ALLOW, TRUE, $gPRIVACYALLOW); ?>
+ </span> <!-- .label -->
+ 
+ <span class='screen'>
+  <?php $zHTML->Radio ("PRIVACY[$gCIRCLESID]", $gSELECTED, PRIVACY_SCREEN, TRUE, $gPRIVACYSCREEN); ?>
+ </span> <!-- .screen -->
+ 
+ <span class='restrict'>
+  <?php $zHTML->Radio ("PRIVACY[$gCIRCLESID]", $gSELECTED, PRIVACY_RESTRICT, TRUE, $gPRIVACYRESTRICT); ?>
+ </span> <!-- .restrict -->
+ 
+ <span class='block'>
+  <?php $zHTML->Radio ("PRIVACY[$gCIRCLESID]", $gSELECTED, PRIVACY_BLOCK, TRUE, $gPRIVACYBLOCK); ?>
+ </span> <!-- .block -->
+
+ <span class='hide'>
+  <?php $zHTML->Radio ("PRIVACY[$gCIRCLESID]", $gSELECTED, PRIVACY_HIDE, TRUE, $gPRIVACYHIDE); ?>
+ </span> <!-- .hide -->
+</li>

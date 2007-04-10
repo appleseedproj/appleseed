@@ -1,0 +1,41 @@
+<!-- ## title obj -->
+<?php $zHTML->Title ($zCONTENTPAGE->Title, $zCONTENTPAGE->Style); ?>
+
+ <div id='browserFULL'>
+
+  <div id='sectionFULL'>
+
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
+  
+   <div id='content'>
+
+   <div id='sectionA'>
+
+    <div id='logoA'></div>
+
+   </div> <!-- #sectionA -->
+
+   <div id='sectionBC'>
+
+    <div id='<?php echo $zCONTENTPAGE->Location; ?>'>
+      <div id='caption'>
+       <?php echo $zCONTENTPAGE->Title; ?>
+      </div> <!-- #caption -->
+
+     <div id='container'>
+       <?php echo $zAPPLE->Format ($zCONTENTPAGE->Output, $zCONTENTPAGE->Formatting); ?>
+     </div> <!-- #container -->
+    </div> <!-- #<?php echo $zCONTENTPAGE->Location; ?> -->
+   </div> <!-- #sectionBC -->
+
+   </div> <!-- #content -->
+
+   <!-- ## footer obj -->
+   <?php $zHTML->Footer (); ?>
+
+  </div> <!-- #sectionFULL -->
+   </div> <!-- #browserFULL -->
+
+ </body>
+</html>

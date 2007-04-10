@@ -1,0 +1,16 @@
+<div id='friends'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='pending'>
+  <div id='container'>
+  <?php $zFRIENDS->Broadcast (); ?>
+
+    <form id='viewtype' name='viewtype' method='post' action='<?php echo $gTARGET; ?>'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+     <?php $zHTML->Menu ($gCIRCLEVIEWTYPE, $gCIRCLEDATA, "", "", TRUE); ?>
+    </form> <!-- #viewtype -->
+
+   <div id='listing'>
+   <ul>

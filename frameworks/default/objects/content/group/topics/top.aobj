@@ -1,0 +1,19 @@
+ <div id='header'>
+   <span class='subject'>
+    TOPIC
+   </span> <!-- .subject -->
+ 
+   <span class='latest'>
+    LATEST POST  
+   </span> <!-- .latest -->
+
+   <span class='started'>
+    STARTED BY
+   </span> <!-- .started -->
+
+   <span class='count'>
+    REPLIES
+   </span> <!-- .count -->
+ </div> <!-- #header -->
+
+ <ul>

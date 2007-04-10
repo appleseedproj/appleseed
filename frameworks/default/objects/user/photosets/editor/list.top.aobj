@@ -1,0 +1,29 @@
+<div id='photosets'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <div id='buttons_top'>
+    <?php $zHTML->Button ('move_down'); ?>
+    <?php $zHTML->Button ('move_up'); ?>
+
+    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+
+    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', 'USER.PHOTOSETS'); ?>
+    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+   </div> <!-- #buttons_top -->
+
+  <p id='heading'>
+   <?php $zSTRINGS->Display ("LABEL.PHOTOSETS", "USER.PHOTOSETS"); ?></h1>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p>
+
+  <?php $gVIEWDATA->Broadcast(); ?>
+
+  <div id='editor'>
+   <ul>

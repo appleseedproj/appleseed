@@ -1,0 +1,47 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+ <div id='browserFULL'>
+
+  <div id='sectionFULL'>
+
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
+  
+   <div id='user'>
+
+   <div id='sectionA'>
+
+    <div id='logoA'></div>
+
+    <!-- ## profile/photo obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/photo.aobj", INCLUDE_SECURITY_NONE); ?>
+
+    <!-- ## invite obj -->
+    <?php echo $bINVITEBOX; ?>
+
+    <!-- ## contact obj -->
+    <?php echo $bCONTACTBOX; ?>
+
+    <!-- ## profile obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/main.aobj", INCLUDE_SECURITY_NONE); ?>
+
+   </div> <!-- #sectionA -->
+
+   <div id='sectionBC'>
+
+    <!-- ## options obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/options/main.aobj", INCLUDE_SECURITY_NONE); ?>
+
+   </div> <!-- #sectionBC -->
+
+   </div> <!-- #user -->
+
+   <!-- ## footer obj -->
+   <?php $zHTML->Footer (); ?>
+
+  </div> <!-- #sectionFULL -->
+   </div> <!-- #browserFULL -->
+
+ </body>
+</html>

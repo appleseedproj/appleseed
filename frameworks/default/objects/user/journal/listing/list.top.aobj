@@ -1,0 +1,17 @@
+ <div id='journal'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+  <div id='container'>
+   <?php $zJOURNAL->Broadcast ("journal"); ?>
+ 
+   <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='<?php echo $gTARGET; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zOPTIONS->Menu ($gJOURNALVIEWTYPE, $gJOURNALVIEW, "", TRUE); ?>
+   </form> <!-- ## returnback -->
+ 
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <div id='listing'>
+    <ul>

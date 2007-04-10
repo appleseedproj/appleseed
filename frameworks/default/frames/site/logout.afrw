@@ -1,0 +1,13 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+ <div class='sectionFULL' id='refresh'>
+
+ <!-- ## refresh buf -->
+ <?php echo $bREFRESHLINE; ?>
+
+ <?php $zSTRINGS->Display ('BROWSER.REFRESH', $zAPPLE->Context); ?>
+
+ </div> <!-- ## sectionFULL.refresh -->
+</div> <!-- ## sectionFULL -->
+

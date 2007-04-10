@@ -1,0 +1,30 @@
+ <?php $zHTML->Alternate(); ?>
+  <span class='filename'>
+    <?php $zHTML->Popup ($gVIEWTARGET, $gVIEWDATA->photoInfo->Filename, $gPOPWIDTH, $gPOPHEIGHT); ?><br />
+  </span> <!-- .filename -->
+
+  <span class='hint'>
+    <?php $zSTRINGS->Display ('LABEL.HINT', 'USER.PHOTOS'); ?>
+  </span> <!-- .hint -->
+
+  <span class='check'>
+    <?php $zHTML->CheckBox ('MASSLIST', $gVIEWDATA->photoInfo->tID, TRUE, $gCHECKED); ?>
+  </span> <!-- .check -->
+
+  <span class='thumb'>
+    <?php $zHTML->Popup ($gVIEWTARGET, "", $gPOPWIDTH, $gPOPHEIGHT, "", $gPHOTOLOCATION); ?>
+  </span> <!-- .thumb -->
+
+  <span class='description'>
+    <?php $zHTML->Popup ($gVIEWTARGET, $gVIEWDATA->photoInfo->Description, $gPOPWIDTH, $gPOPHEIGHT); ?>
+  </span> <!-- .description -->
+
+  <span class='comments'>
+   &nbsp;<?php $zHTML->Popup ($gVIEWTARGET . "#comments", $gCOMMENTLABEL, $gPOPWIDTH, $gPOPHEIGHT); ?>
+  </span> <!-- #comments -->
+
+  <span class='edit'>
+    <?php $zHTML->ImageLink ($gTARGET, $gEXTRAPOSTDATA, "$gTHEMELOCATION/images/buttons/edit.gif"); ?>
+  </span> <!-- .edit -->
+
+</li> <!-- #[alternate] -->

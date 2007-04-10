@@ -1,0 +1,16 @@
+ <div id='invite'>
+  <div id='caption'>
+    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.INVITE'); ?>
+  </div> <!-- #caption -->
+
+  <div id='container'>
+
+   <?php $zFOCUSUSER->userInvites->Broadcast(); ?>
+
+    <p id='content'>
+     <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'USER.INVITE.CONFIRM'); ?>
+     <?php $zTOOLTIPS->Display ('CONTENT', 'USER.INVITE.CONFIRM'); ?>
+    </p> <!-- #content -->
+ 
+  </div> <!-- #container -->
+ </div> <!-- #invite -->

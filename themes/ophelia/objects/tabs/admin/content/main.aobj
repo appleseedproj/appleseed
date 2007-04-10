@@ -1,0 +1,5 @@
+ <div id='tabs'>
+
+  <a href='_admin/content/articles/'><img src='themes/%USERTHEME%/images/tabs/admin/content/articles%ADMINCONTENTARTICLESTAB%.gif' border='0' /></a><a href='_admin/content/pages/'><img src='themes/%USERTHEME%/images/tabs/admin/content/pages%ADMINCONTENTPAGESTAB%.gif' border='0' /></a><a href='_admin/content/modules/'><img src='themes/%USERTHEME%/images/tabs/admin/content/modules%ADMINCONTENTMODULESTAB%.gif' border='0' /></a><a href='_admin/content/themes/'><img src='themes/%USERTHEME%/images/tabs/admin/content/themes%ADMINCONTENTTHEMESTAB%.gif' border='0' /></a>
+
+ </div> <!-- #tabs -->

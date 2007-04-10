@@ -1,0 +1,16 @@
+<div id='photosets'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+
+  <p id='heading'>
+   <?php $zSTRINGS->Display ("LABEL.PHOTOSETS", "USER.PHOTOSETS"); ?></h1>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p> <!-- #heading -->
+
+  <?php $gVIEWDATA->Broadcast(); ?>
+
+  <div id='listing'>
+   <ul>

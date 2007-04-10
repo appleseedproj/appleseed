@@ -1,0 +1,12 @@
+ <span class='next'>
+   
+  <form method='POST' action='%TARGET%'>
+   <asd id='post' />
+
+   <input class='image' type='image' name='gACTION' id='gACTION'
+    src='themes/%USERTHEME%/images/tabs/common/next.gif' width='38' height='13' border='0'/>
+  </form>
+
+  <asd id='tooltip' title='next' />
+ </span> <!-- .next -->
+</div> <!-- #scroll -->

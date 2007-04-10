@@ -1,0 +1,37 @@
+ <ul>
+  <li>
+   <div class='header'>
+
+    <span class='icon'>
+     <?php echo $bICON; ?>
+    </span> <!-- #icon -->
+
+    <div class='information'>
+     <span class='subject'>
+       <?php echo $gSUBJECT; ?>
+     </span> <!-- .subject -->
+ 
+     <span class='online'>
+      <?php echo $bONLINENOW; ?>
+     </span> <!-- .online -->
+ 
+     <span class='author'>
+      <?php echo $gAUTHOR; ?>
+     </span> <!-- .author -->
+ 
+     <span class='stamp'>
+      <?php echo $gSTAMP; ?>
+     </span> <!-- .timestamp -->
+
+    </div> <!-- .information -->
+    </div> <!-- .header -->
+
+   <span class='body'>
+    <?php echo $gBODY; ?>
+   </span> <!-- .body -->
+
+   <div class='footer'>
+    <?php $zHTML->Button ('group_reply', NULL, ENABLED, NULL, "ACTION"); ?>
+    <?php echo $bDELETEBUTTON; ?>
+   </div> <!-- .footer -->
+  </li>

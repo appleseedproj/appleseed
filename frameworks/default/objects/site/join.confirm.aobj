@@ -1,0 +1,12 @@
+<div id='join'>
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.JOIN'); ?>
+ </div> <!-- #caption -->
+
+<div id='container'>
+ <?php $zFOCUSUSER->Broadcast ('join'); ?>
+
+ <?php $zSTRINGS->Display ("OBJECT.CONTENT", "SITE.JOIN"); ?>
+
+ </div> <!-- #container -->
+</div> <!-- #join -->

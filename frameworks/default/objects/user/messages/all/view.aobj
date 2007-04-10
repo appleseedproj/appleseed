@@ -1,0 +1,88 @@
+<div id='messages'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <div id='view'>
+   <?php $zMESSAGE->Broadcast ("message"); ?>
+   <?php $zMESSAGE->messageLabels->Broadcast ("message"); ?>
+ 
+   <div id='buttons'>
+ 
+    <span id='back'>
+     <?php $zSTRINGS->Display ("LABEL.BACK", "USER.MESSAGES"); ?>
+    </span> <!-- #back -->
+ 
+    <form id='spam' name='spam' method='POST' action='<?php echo $gTARGET; ?>'>
+     <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+     <?php $zHTML->Button ('spam'); ?>
+    </form> <!-- #spam -->
+ 
+    <form id='delete' name='delete' method='POST' action='<?php echo $gTARGET; ?>'>
+     <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+     <?php $zSTRINGS->Lookup ('CONFIRM.TRASH'); ?>
+     <?php $zHTML->Button ('trash', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+    </form> <!-- #delete -->
+ 
+   </div> <!-- #buttons -->
+ 
+   <div id='header'>
+    <div id='top'>
+     <span id='subject'><?php echo $zMESSAGE->Subject; ?></span>
+     <span id='labels'><?php echo $gLABELLIST; ?></span>
+    </div> <!-- #top -->
+  
+    <div id='bottom'>
+     <span id='sender'><?php $zHTML->UserLink ($zMESSAGE->Sender_Username); ?></span>
+     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
+    </div> <!-- #bottom -->
+   </div> <!-- #header -->
+ 
+   <div id='body'>
+ 
+      <?php echo $zAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?>
+ 
+   </div> <!-- #body -->
+ 
+   <div id='buttons'>
+ 
+    <span class='reply'>
+      <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
+       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+       <?php $zHTML->Button ('reply'); ?>
+      </form> <!-- #reply -->
+    </span> <!-- #reply -->
+ 
+    <span class='forward'>
+     <form id='forward' name='forward' method='POST' action='<?php echo $gTARGET; ?>'>
+      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+      <?php $zHTML->Button ('forward'); ?>
+     </form> <!-- #forward -->
+    </span> <!-- #forward -->
+ 
+    <span class='unread'>
+      <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
+       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+       <?php $zHTML->Button ('unread'); ?>
+      </form> <!-- #unread -->
+    </span> <!-- #unread -->
+ 
+    <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
+     <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+     <?php $zHTML->Button ('move_inbox'); ?>
+    </form> <!-- ## message.move.inbox -->
+ 
+    <span class='label'>
+      <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
+       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
+       <input type='hidden' name='gACTION' value='LABEL' />
+       <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE); ?>
+      </form> <!-- #label -->
+    </span> <!-- #label -->
+ 
+   </div> <!-- #buttons -->
+ 
+  </div> <!-- #view -->
+ </div> <!-- #container -->
+</div> <!-- #messages -->

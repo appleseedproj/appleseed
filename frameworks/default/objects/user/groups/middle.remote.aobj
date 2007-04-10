@@ -1,0 +1,17 @@
+<li class='remote'>
+ <span class='fullname'>
+  <?php echo $zGROUPS->Fullname; ?>
+ </span>
+ <span class='owner'>
+  <?php echo $bOWNERICON; ?>
+ </span>
+ <span class='stamp'>
+  <?php echo $zGROUPS->fStamp; ?>
+ </span>
+ <span class='link'>
+  <a href='<?php echo $gGROUPLINK; ?>'><?php echo $gGROUPLINK; ?></a>
+ </span>
+ <span class='members'>
+  <?php echo $bMEMBERS; ?>
+ </span>
+</li> <!-- .remote -->

@@ -1,0 +1,58 @@
+<div id='circles'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <p id='heading'>
+   <?php $zSTRINGS->Display ('LABEL.EDIT', $zAPPLE->Context); ?>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p>
+
+  <div id='edit'>
+   <?php $zCIRCLES->Broadcast(); ?>
+
+   <form id='edit' name='edit' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/circles/'>
+    <?php $zHTML->Hidden ("tID", $zCIRCLES->tID); ?>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+
+    <p id='name'>
+     <?php $zSTRINGS->Display ('LABEL.NAME', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('NAME'); ?>
+    </p> <!-- #tags -->
+    <?php $zHTML->TextBox ("NAME", 70, $zCIRCLES->Name); ?>
+    <?php $zCIRCLES->Broadcast ("field", "Name"); ?>
+ 
+    <p id='description'>
+     <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', $zAPPLE->Context); ?>
+     <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
+    </p> <!-- #description -->
+    <?php $zHTML->TextArea ("DESCRIPTION", $zCIRCLES->Description); ?>
+    <?php $zCIRCLES->Broadcast ("field", "Description"); ?>
+
+  </div> <!-- #edit -->
+
+    <div id='actions'>
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+
+     <form id='delete' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/circles/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <input type='hidden' id='gtID' name='gtID' 
+             value='<?php echo $zCIRCLES->tID ?>'>
+      <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+     </form> <!-- #delete -->
+     <form id='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/circles/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+    </div> <!-- #actions -->
+
+ </div> <!-- #container -->
+</div> <!-- #circles -->

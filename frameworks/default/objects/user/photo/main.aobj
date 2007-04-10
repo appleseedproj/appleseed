@@ -1,0 +1,12 @@
+ <div id='photo' style="width=<?php echo $gPHOTOWIDTH; ?>px">
+  <div id='caption'>
+    <?php echo $gFILENAME; ?>
+  </div> <!-- #caption -->
+ 
+  <div id='container'>
+   <?php $zLOCALUSER->Broadcast(); ?>
+   <a href='#' onClick='window.close(); return true;'><img src='<?php echo $gPHOTOLOCATION; ?>' width='<?php echo $gPHOTOWIDTH ?>' height='<?php echo $gPHOTOHEIGHT ?>' border='0' /></a>
+
+  </div> <!-- #container -->
+
+  <?php $zHTML->Scroll ($gSCROLLTARGET, 'user.photos'); ?>

@@ -1,0 +1,22 @@
+ <div id='labels'>
+
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.MESSAGES.LABELS'); ?>
+  </div> <!-- #caption -->
+
+ <div id='container'>
+
+  <div id='edit'>
+   <form name='message' id='labels' method='POST' action='<?php echo $gLABELSTARGET; ?>'>
+    <?php $zHTML->Button ('edit_labels'); ?>
+   </form>
+  </div> <!-- #edit -->
+
+   <?php $zMESSAGE->messageLabelList->Broadcast ("labels"); ?>
+
+  <ul>
+   <?php echo $bLABELLISTING; ?>
+  </ul>
+
+ </div> <!-- #container -->
+ </div> <!-- #labels -->

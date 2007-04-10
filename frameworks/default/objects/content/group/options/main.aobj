@@ -1,0 +1,100 @@
+<div id='group'>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+  <div id='container'>
+
+    <p id='heading'>
+     <?php echo $zGROUPS->Fullname; ?>
+     <?php $zTOOLTIPS->Display ('HEADING'); ?>
+    </p> <!-- #heading -->
+
+    <?php $zGROUPS->Broadcast(); ?>
+
+    <?php $zAPPLE->IncludeFile ($gSECTIONLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ 
+  <div id='options'>
+  <form id='options' name='options' method='POST' action='<?php echo $gTARGET; ?>'>
+   <div id='general' class='<?php echo $gOPTIONGENERAL; ?>' name='general'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+
+     <p id='name'>
+      <?php $zSTRINGS->Display ('LABEL.NAME'); ?>
+      <?php $zTOOLTIPS->Display ('NAME'); ?>
+     </p><!-- #title -->
+
+     <?php $zGROUPS->Broadcast ("field", "Name"); ?>
+
+     <p id='fullname'>
+      <?php $zSTRINGS->Display ('LABEL.FULLNAME'); ?>
+      <?php $zTOOLTIPS->Display ('FULLNAME'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("FULLNAME", 32, $zGROUPS->Fullname); ?>
+     <?php $zGROUPS->Broadcast ("field", "Fullname"); ?>
+
+     <p id='description'>
+      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION'); ?>
+      <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
+     </p><!-- #content -->
+
+     <?php $zHTML->TextArea ("DESCRIPTION", $zGROUPS->Description); ?>
+     <?php $zGROUPS->Broadcast ("field", "Description"); ?>
+
+     <p id='access'>
+      <?php $zSTRINGS->Display ('LABEL.ACCESS'); ?>
+      <?php $zTOOLTIPS->Display ('ACCESS'); ?>
+     </p><!-- #content -->
+
+     <?php $zOPTIONS->Menu ("GROUPACCESS", $zGROUPS->Access, "ACCESS"); ?>
+     <?php $zGROUPS->Broadcast ("field", "Access"); ?>
+
+     <p id='tags'>
+      <?php $zSTRINGS->Display ('LABEL.TAGS'); ?>
+      <?php $zTOOLTIPS->Display ('TAGS'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("TAGS", 128, $zGROUPS->Tags); ?>
+     <?php $zGROUPS->Broadcast ("field", "Tags"); ?>
+
+  </div> <!-- #general -->
+
+  <div id='membereditor' class='<?php echo $gOPTIONMEMBEREDITOR; ?>' name='membereditor'>
+    <?php echo $bMEMBEREDITOR; ?>
+  </div>
+
+  <div id='pendingeditor' class='<?php echo $gOPTIONPENDINGEDITOR; ?>' name='pendingeditor'>
+    <?php echo $bPENDINGEDITOR; ?>
+  </div>
+
+  <div id='invite' class='<?php echo $gOPTIONINVITE; ?>' name='invite'>
+    <?php echo $bINVITEEDITOR; ?>
+  </div>
+
+  <div id='actions'>
+    <input type='hidden' id='gSECTION' name='gSECTION' value='<?php echo $gSECTIONDEFAULT ?>' />
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <?php $zHTML->Button ('save'); ?>
+   <?php $zHTML->Button ('save_all'); ?>
+
+   </form> <!-- #options -->
+
+   <form id='delete' method='POST' action='<?php echo $gTARGET; ?>'>
+    <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zSTRINGS->Lookup ('CONFIRM.DELETE'); ?>
+    <?php $zHTML->Button ('delete_group', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   </form> <!-- #delete -->
+
+   <form id='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
+    <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL'); ?>
+    <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   </form> <!-- #cancel -->
+  </div> <!-- #actions -->
+   </div> <!-- #options -->
+  
+  </div> <!-- #container -->
+</div> <!-- #group -->

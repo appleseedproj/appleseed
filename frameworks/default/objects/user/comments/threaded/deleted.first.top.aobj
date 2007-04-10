@@ -1,0 +1,5 @@
+ <a name='comments<?php echo $gTARGETID; ?>'></a>
+ <ul class='first'>
+   <li class='deleted'>
+    <?php $zSTRINGS->Display ('LABEL.DELETED', 'USER.COMMENTS'); ?>
+   </li> 

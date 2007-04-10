@@ -1,0 +1,92 @@
+<div id='journal'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+  <div id='container'>
+
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.EDIT', 'USER.JOURNAL'); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p> <!-- .top -->
+
+ <div id='editor'>
+  <?php $zJOURNAL->Broadcast(); ?>
+
+    <form id='edit' name='edit' method='POST' action='<?php echo $gTARGET; ?>'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+
+     <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
+
+     <p id='title'>
+      <?php $zSTRINGS->Display ('LABEL.TITLE', 'USER.JOURNAL'); ?>
+      <?php $zTOOLTIPS->Display ('TITLE'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("TITLE", 64, $zJOURNAL->Title); ?>
+     <?php $zJOURNAL->Broadcast ("field", "Title"); ?>
+
+     <p id='content'>
+      <?php $zSTRINGS->Display ('LABEL.CONTENT', 'USER.JOURNAL'); ?>
+      <?php $zTOOLTIPS->Display ('CONTENT'); ?>
+     </p><!-- #content -->
+
+     <?php $zHTML->TextArea ("CONTENT", $zJOURNAL->Content); ?>
+     <?php $zJOURNAL->Broadcast ("field", "Content"); ?>
+
+     <p id='tags'>
+      <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.JOURNAL'); ?>
+      <?php $zTOOLTIPS->Display ('TAGS'); ?>
+     </p><!-- #tags -->
+
+     <?php $zHTML->TextBox ("TAGS", 64, $zJOURNAL->Tags); ?>
+     <?php $zJOURNAL->Broadcast ("field", "Tags"); ?>
+
+     <p id='icon'>
+      <?php $zSTRINGS->Display ('LABEL.ICON', 'USER.JOURNAL'); ?>
+      <?php $zTOOLTIPS->Display ('ICON'); ?>
+     </p><!-- #icon -->
+
+     <?php $zHTML->Menu ("USERICON", $gICONLIST, "", $zJOURNAL->userIcons_Filename); ?>
+
+     <p id='posted'>
+      <?php $zSTRINGS->Display ('LABEL.POSTED', 'USER.JOURNAL'); ?>
+      <?php $zTOOLTIPS->Display ('POSTED'); ?>
+     </p><!-- #posted -->
+
+     <?php $zHTML->DateMenu ("POSTED", $gPOSTEDLIST['MONTH'], $gPOSTEDLIST['DAY'], $gPOSTEDLIST['YEAR']); ?>
+     <span class='at'>@</span>
+     <?php $zHTML->TimeMenu ("POSTED", $gPOSTEDLIST['HOUR'], $gPOSTEDLIST['MINUTE']); ?>
+
+     <?php echo $bPRIVACYOPTIONS; ?>
+
+  <div id='actions'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <?php $zHTML->Button ('save'); ?>
+
+   </form> <!-- #edit -->
+
+   <form id='delete' method='POST' action='<?php echo $gTARGET; ?>'>
+    <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
+    <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', 'USER.JOURNAL'); ?>
+    <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+   </form> <!-- #delete -->
+ 
+   <form id='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
+    <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+    <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.JOURNAL'); ?>
+    <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   </form> <!-- ## journal.cancel -->
+
+  </div> <!-- #actions -->
+  
+  </div> <!-- #buttons -->
+
+ </div> <!-- #container -->
+ </div> <!-- #editor -->
+</div> <!-- #journal -->

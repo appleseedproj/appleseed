@@ -1,0 +1,30 @@
+ <ul class='first'>
+  <li>
+
+   <span class='author'>
+    <?php echo $gCOMMENTAUTHORFULLNAME; ?>
+   </span> <!-- .icon -->
+
+   <span class='stamp'>
+    <?php echo $gCOMMENTSTAMP; ?>
+   </span>
+
+   <span class='icon'>
+    <?php echo $bCOMMENTICON; ?>
+   </span> <!-- .icon -->
+
+   <form id='delete_comment' name='delete_comment' action='<?php echo $gTARGET; ?>#comments' method=POST>
+    <input type='hidden' name='gtID' value='<?php echo $zCOMMENTS->tID; ?>' />
+    <?php echo $bDELETEBUTTON; ?>
+   </form> <!-- #delete_comment -->
+
+   <span class='body'>
+    <?php echo $gCOMMENTBODY; ?>
+   </span>
+
+   <span class='online'>
+    <?php echo $bONLINENOW; ?>
+   </span> <!-- .online -->
+
+
+  </li>

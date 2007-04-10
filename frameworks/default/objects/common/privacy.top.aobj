@@ -1,0 +1,28 @@
+<div id='privacy'>
+ <div id='titles'>
+  <span class='label'>
+   <?php $zSTRINGS->Display ('LABEL.SETTINGS', 'USER.PRIVACY'); ?>
+  </span> <!-- .label -->
+ 
+  <span class='allow'>
+   <?php $zSTRINGS->Display ('LABEL.ALLOW', 'USER.PRIVACY'); ?>
+  </span> <!-- .allow -->
+  
+  <span class='screen'>
+   <?php $zSTRINGS->Display ('LABEL.SCREEN', 'USER.PRIVACY'); ?>
+  </span> <!-- .screen -->
+  
+  <span class='restrict'>
+   <?php $zSTRINGS->Display ('LABEL.RESTRICT', 'USER.PRIVACY'); ?>
+  </span> <!-- .restrict -->
+  
+  <span class='block'>
+   <?php $zSTRINGS->Display ('LABEL.BLOCK', 'USER.PRIVACY'); ?>
+  </span> <!-- .block -->
+  
+  <span class='hide'>
+   <?php $zSTRINGS->Display ('LABEL.HIDE', 'USER.PRIVACY'); ?>
+  </span> <!-- .hide -->
+ </div> <!-- #titles -->
+ 
+ <ul>

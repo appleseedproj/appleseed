@@ -1,0 +1,5 @@
+<span class='back'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/back.gif' />
+ <asd id='tooltip' title='back' />
+</span> <!-- .back -->

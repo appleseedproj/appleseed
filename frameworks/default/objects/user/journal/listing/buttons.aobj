@@ -1,0 +1,18 @@
+<div class='journal' id='buttons'>
+
+ <div class='journal' id='listing_new'>
+  <form id='newjournal' name='newjournal' method='POST' action='profile/<?php echo $zFOCUSUSER->Username ?>/journal/'>
+   <?php $zHTML->Button ('new'); ?>
+  </form> <!-- ## newjournal -->
+ </div> <!-- ## journal.new -->
+
+ <div class='journal' id='listing_edit'>
+  &nbsp;
+ </div> <!-- ## journal.edit -->
+ 
+ <div class='journal' id='listing_delete'>
+  <form id='deletejournal' name='deletejournal' method='POST' action='profile/<?php echo $zFOCUSUSER->Username ?>/journal/'>
+   <?php $zHTML->Button ('delete_all'); ?>
+  </form> <!-- ## deletephoto -->
+ </div> <!-- ## journal.delete -->
+</div> <!-- ## member.buttons -->

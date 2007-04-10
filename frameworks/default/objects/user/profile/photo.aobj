@@ -1,0 +1,11 @@
+ <div id='profilephoto'>
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE.PHOTO'); ?>
+  </div> <!-- #caption -->
+
+  <div id='container'>
+   <div id='image'>
+    <img alt='Profile Image' src='<?php echo $gPROFILEPICTURE; ?>'>
+   </div> <!-- .image -->
+  </div> <!-- #image -->
+ </div> <!-- #profilephoto -->

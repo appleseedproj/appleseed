@@ -1,0 +1,22 @@
+<div id='accounts'>
+ <div id='content'>
+
+  <form id='list' method='post' action='%TARGET%'>
+ 
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+ 
+    <?php $zHTML->Button ('move_down'); ?>
+ 
+    <?php $zHTML->Button ('move_up'); ?>
+ 
+    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+ 
+   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zAPPLE->Context); ?>
+   <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+ 
+   <?php $zHTML->Titles ("ADMINDATA", "titles", "%TARGET%"); ?>
+ 
+   <?php $ADMINDATA->Broadcast("admin"); ?>
+   <?php $ADMINDATA->userProfile->Broadcast("admin"); ?>
+ 
+   <ul>

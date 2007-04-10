@@ -1,0 +1,42 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+  <div class='sectionFULL'>
+
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
+
+   <div class='sectionA'>
+
+    <div class='sectionA' ID='logo'></div>
+
+    <!-- ## stats obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/common/stats.aobj", INCLUDE_SECURITY_NONE); ?>
+
+   </div> <!-- ## sectionA -->
+
+   <div class='sectionBC'>
+
+    <!-- ## switches obj -->
+    <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/switches/admin/main.aobj", INCLUDE_SECURITY_BASIC); ?>
+
+   </div> <!-- ## sectionBC -->
+
+   <div class='sectionBC'>
+
+    <!-- ## tabs obj -->
+    <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/admin/groups/main.aobj", INCLUDE_SECURITY_BASIC); ?>
+      
+    <!-- ## main -->
+    <?php $zAPPLE->IncludeFile ($mainlocation, INCLUDE_SECURITY_NONE); ?>
+
+   </div> <!-- ## sectionBC -->
+
+    <!-- ## footer obj -->
+    <?php $zHTML->Footer (); ?>
+
+  </div> <!-- ## sectionFULL -->
+
+ </body>
+</html>
+

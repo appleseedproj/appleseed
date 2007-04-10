@@ -1,0 +1,14 @@
+ <?php $zHTML->Alternate(); ?>
+  <span class='filename'>
+    <?php $zHTML->Popup ($gVIEWTARGET, $gVIEWDATA->photoInfo->Filename, $gPOPWIDTH, $gPOPHEIGHT); ?>
+  </span> <!-- .filename -->
+
+  <span class='thumb' >
+    <?php $zHTML->Popup ($gVIEWTARGET, "", $gPOPWIDTH, $gPOPHEIGHT, "", $gPHOTOLOCATION, $gTHUMBX, $gTHUMBY); ?>
+  </span> <!-- .thumb -->
+
+  <span class='comments'>
+    <?php $zHTML->Popup ($gVIEWTARGET . "#comments", $gCOMMENTLABEL, $gPOPWIDTH, $gPOPHEIGHT); ?>
+  </span> <!-- #comments -->
+
+ </li> <!-- #[alternate] -->

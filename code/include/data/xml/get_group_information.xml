@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<appleseed>
+ <version>%APPLESEEDVERSION%</version>
+ <fullname>%FULLNAME%</fullname>
+ <description><![CDATA[%DESCRIPTION%]]></description>
+ <stamp>%STAMP%</stamp>
+ <tags>%TAGS%</tags>
+ <members>%MEMBERS%</members>
+ <success>%SUCCESS%</success>
+</appleseed>

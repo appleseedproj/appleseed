@@ -1,0 +1,38 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+ <div id='browserFULL'>
+
+  <div id='sectionFULL'>
+
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
+  
+   <div id='content'>
+   <div id='main'>
+   <div id='sectionA'>
+
+    <div id='logoA'></div>
+
+   </div> <!-- #sectionA -->
+
+   <div id='sectionBC'>
+
+    <!-- ## articles obj -->
+    <?php echo $bARTICLES; ?>
+
+    <!-- ## comments obj -->
+    <?php echo $bCOMMENTS; ?>
+
+   </div> <!-- ## sectionBC -->
+
+    <!-- ## footer obj -->
+    <?php $zHTML->Footer (); ?>
+
+   </div> <!-- #sectionFULL -->
+   </div> <!-- #main -->
+   </div> <!-- #content -->
+  </div> <!-- #browserFULL -->
+
+ </body>
+</html>

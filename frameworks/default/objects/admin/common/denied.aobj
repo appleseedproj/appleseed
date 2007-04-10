@@ -1,0 +1,3 @@
+<div class='admin' id='content'>
+ <? $zSTRINGS->Display ('ERROR.DENIED', $zAPPLE->Context); ?>
+</div> <!-- ## admin.content -->

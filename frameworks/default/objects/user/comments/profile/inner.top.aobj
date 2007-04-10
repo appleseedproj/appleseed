@@ -1,0 +1,14 @@
+ <ul>
+  <li>
+
+   <span class='icon'>
+    <?php echo $bCOMMENTICON; ?>
+   </span> <!-- .icon -->
+
+   <span class='body'>
+    <?php echo $gCOMMENTBODY; ?>
+   </span>
+
+   <?php $zHTML->Button ('delete', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
+
+  </li>

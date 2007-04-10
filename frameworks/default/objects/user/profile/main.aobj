@@ -1,0 +1,11 @@
+  <div id='profile'>
+   <div id='caption'>
+    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE'); ?>
+  </div> <!-- #caption -->
+
+  <div id='container'>
+
+  <?php echo $bPROFILEQUESTIONS; ?>
+
+  </div> <!-- #container -->
+ </div> <!-- #profile -->

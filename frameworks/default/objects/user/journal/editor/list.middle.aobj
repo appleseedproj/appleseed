@@ -1,0 +1,19 @@
+   <?php $zHTML->Alternate(); ?>
+
+     <span class='subject'>
+       <?php $zHTML->Link ($gTARGET, $zJOURNAL->Title, $gEXTRAPOSTDATA); ?>
+     </span> <!-- .subject -->
+
+     <span class='comments'>
+       <?php $zHTML->Link ($gTARGET . '#comments', $gCOUNT, $gEXTRAPOSTDATA); ?>
+     </span> <!-- .subject -->
+
+     <span class='posted'>
+       <?php $zHTML->Link ($gTARGET, $zJOURNAL->fPosted, $gEXTRAPOSTDATA); ?>
+     </span> <!-- .posted -->
+
+     <span class='checkbox'>
+       <?php $zHTML->CheckBox ('MASSLIST', $zJOURNAL->tID, TRUE, $gCHECKED); ?>
+     </span> <!-- #checkbox -->
+
+   </li>

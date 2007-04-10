@@ -1,0 +1,60 @@
+<?php
+
+require_once 'HTMLPurifier/AttrDef.php';
+require_once 'HTMLPurifier/CSSDefinition.php';
+
+/**
+ * Validates the HTML attribute style, otherwise known as CSS.
+ * @note We don't implement the whole CSS specification, so it might be
+ *       difficult to reuse this component in the context of validating
+ *       actual stylesheet declarations.
+ */
+class HTMLPurifier_AttrDef_CSS extends HTMLPurifier_AttrDef
+{
+    
+    function validate($css, $config, &$context) {
+        
+        $css = $this->parseCDATA($css);
+        
+        $definition = $config->getCSSDefinition();
+        
+        // we're going to break the spec and explode by semicolons.
+        // This is because semicolon rarely appears in escaped form
+        
+        $declarations = explode(';', $css);
+        $propvalues = array();
+        
+        foreach ($declarations as $declaration) {
+            if (!$declaration) continue;
+            if (!strpos($declaration, ':')) continue;
+            list($property, $value) = explode(':', $declaration, 2);
+            $property = trim($property);
+            $value    = trim($value);
+            if (!isset($definition->info[$property])) continue;
+            // inefficient call, since the validator will do this again
+            if (strtolower(trim($value)) !== 'inherit') {
+                // inherit works for everything (but only on the base property)
+                $result = $definition->info[$property]->validate(
+                    $value, $config, $context );
+            } else {
+                $result = 'inherit';
+            }
+            if ($result === false) continue;
+            $propvalues[$property] = $result;
+        }
+        
+        // slightly inefficient, but it's the only way of getting rid of
+        // duplicates. Perhaps config to optimize it, but not now.
+        
+        $new_declarations = '';
+        foreach ($propvalues as $prop => $value) {
+            $new_declarations .= "$prop:$value;";
+        }
+        
+        return $new_declarations ? $new_declarations : false;
+        
+    }
+    
+}
+
+?>

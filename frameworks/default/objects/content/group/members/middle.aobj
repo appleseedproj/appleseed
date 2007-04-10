@@ -1,0 +1,19 @@
+ <?php $zHTML->Alternate(); ?>
+
+  <span class='fullname'>
+    <?php echo $gMEMBERNAME; ?>
+  </span> <!-- #fullname -->
+
+  <span class='icon'>
+    <?php echo $bMEMBERICON; ?>
+  </span> <!-- #icon -->
+
+  <span class='online'>
+    <?php echo $bONLINENOW; ?>
+  </span> <!-- #online -->
+
+  <span class='domain'>
+    <?php echo $zGROUPS->groupMembers->Domain; ?>
+  </span> <!-- #domain -->
+
+ </li> <!-- #[alternate] -->

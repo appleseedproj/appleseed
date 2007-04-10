@@ -1,0 +1,10 @@
+<?php $zHTML->Alternate(); ?>
+ <span class='user'>
+  <?php $zHTML->Userlink ($zGROUPS->groupMembers->Username, $zGROUPS->groupMembers->Domain); ?>
+ </span> <!-- .user -->
+ <span class='action'>
+  <?php $zHTML->Hidden ("GROUPPENDINGUSERNAME[]", $zGROUPS->groupMembers->Username); ?>
+  <?php $zHTML->Hidden ("GROUPPENDINGDOMAIN[]", $zGROUPS->groupMembers->Domain); ?>
+  <?php $zOPTIONS->Menu ("GROUPPENDINGACTION", $gGROUPACTION, "GROUPPENDINGACTION[]"); ?>
+ </span> <!-- .action -->
+</li>

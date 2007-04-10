@@ -1,0 +1,21 @@
+ </ul> 
+ </div> <!-- #listing -->
+ 
+  <div id='search'>
+   <form id='search' name='search' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
+    <?php $zHTML->Button ('search'); ?>
+   </form> <!-- #search -->
+ 
+   <?php $zHTML->ShowAll (); ?>
+  </div> <!-- #search -->
+
+ </div> <!-- #container -->
+
+  </div> <!-- #container -->
+ </div> <!-- #requests -->
+
+ <?php $zHTML->Scroll ($gTARGET, 'user.friends', SCROLL_PAGEOF); ?>
+
+</div> <!-- #friends -->

@@ -1,0 +1,21 @@
+<div id='logs'>
+ <div id='container'>
+
+  <form id='list' method='post' action='_admin/system/logs/'>
+ 
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+ 
+    <?php $zHTML->Button ('move_down'); ?>
+ 
+    <?php $zHTML->Button ('move_up'); ?>
+ 
+    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+ 
+   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zAPPLE->Context); ?>
+   <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+ 
+   <?php $zHTML->Titles ("ADMINDATA", "titles", "_admin/system/logs/"); ?>
+ 
+   <?php $ADMINDATA->Broadcast(); ?>
+ 
+   <ul>

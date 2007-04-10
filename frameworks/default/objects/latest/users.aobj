@@ -1,0 +1,17 @@
+<div id='latest'>
+ <div id='users'>
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.USERS'); ?>
+  </div> <!-- #caption -->
+
+<div id='container'>
+
+  (no text yet)
+
+ <div id='view'>
+  <?php $zSTRINGS->Display ('OBJECT.VIEW', 'SITE.MAIN.USERS'); ?>
+ </div> <!-- #view -->
+
+</div> <!-- #container -->
+ </div> <!-- #users -->
+</div> <!-- #latest -->

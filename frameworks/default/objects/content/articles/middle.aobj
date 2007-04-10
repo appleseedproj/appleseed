@@ -1,0 +1,39 @@
+ <div class='header'>
+   <span class='icon'>
+    <?php echo $bARTICLEICON; ?>
+   </span>
+
+   <span class='title'>
+    <?php echo $zARTICLES->Title; ?>
+   </span> <!-- #title -->
+
+   <span class='stamp'>
+    <?php echo $zARTICLES->fStamp; ?>
+   </span> <!-- #stamp -->
+
+   <span class='posted'>
+    Posted By <?php echo $zHTML->CreateUserLink ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain, FALSE); ?>
+   </span> <!-- #stamp -->
+
+ </div> <!-- .header -->
+
+ <div class='article'>
+
+   <p class='summary'>
+    <?php echo $zAPPLE->Format ($zARTICLES->Summary, $zARTICLES->Formatting); ?>
+    <?php $zTOOLTIPS->Display ('FULL'); ?>
+   </p> <!-- #output -->
+
+ </div> <!-- .article -->
+
+ <div class='footer'>
+
+   <span class='read'>
+    <a href='articles/<?php echo $zARTICLES->tID; ?>/'>Read More</a>
+   </span> <!-- .read -->
+
+   <span class='comments'>
+    <a href='articles/<?php echo $zARTICLES->tID; ?>/#comments'><?php echo $bCOMMENTCOUNT; ?></a>
+   </span> <!-- .comments -->
+
+ </div> <!-- .footer -->

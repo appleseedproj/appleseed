@@ -1,0 +1,68 @@
+<div id='logs'>
+ <div id='container'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.EDIT', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <?php $ADMINDATA->Broadcast(); ?>
+ 
+   <form id='edit' method='POST' action='_admin/system/logs/'>
+ 
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
+ 
+    <p id='concern'> 
+     CONCERN:
+     <?php $zTOOLTIPS->Display ('CONCERN'); ?>
+    </p>
+    <?php $zHTML->TextBox ("CONCERN", 64, $ADMINDATA->Concern); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Concern"); ?>
+ 
+    <p id='label'>
+     LABEL: 
+     <?php $zTOOLTIPS->Display ('LABEL'); ?>
+    </p>
+      <?php $zHTML->TextBox ("LABEL", 64, $ADMINDATA->Label); ?><br />
+      <?php $ADMINDATA->Broadcast ("field", "Label"); ?>
+
+    <p id='value'>
+     VALUE: 
+     <?php $zTOOLTIPS->Display ('VALUE'); ?>
+    </p>
+    <?php $zHTML->TextBox ("VALUE", 64, $ADMINDATA->Value); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Value"); ?>
+
+    <p id='chosen'>
+     CHOSEN: 
+     <?php $zTOOLTIPS->Display ('CHOSEN'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Chosen, "CHOSEN"); ?>
+
+    <div id='actions'>
+
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+ 
+     <form id='delete' method='POST' action='_admin/system/logs/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <input type='hidden' id='gtID' name='gtID' 
+             value='<?php echo $ADMINDATA->tID ?>'>
+      <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+     </form> <!-- #delete -->
+ 
+     <form id='cancel' method='POST' action='_admin/system/logs/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+ 
+   </div> <!-- #actions -->
+  
+ </div> <!-- #container -->
+</div> <!-- #logs -->

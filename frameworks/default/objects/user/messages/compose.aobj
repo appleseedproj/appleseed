@@ -1,0 +1,53 @@
+<div id='messages'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <div id='compose'>
+
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.COMPOSE', 'USER.MESSAGES'); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+ 
+   <?php $zMESSAGE->Broadcast(); ?>
+ 
+   <form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+ 
+    <?php echo $bRECIPIENT; ?>
+ 
+    <p id='subject'>
+     <?php $zSTRINGS->Display ('LABEL.SUBJECT', 'USER.MESSAGES'); ?>
+     <?php $zTOOLTIPS->Display ('SUBJECT'); ?>
+    </p>
+ 
+    <?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?>
+ 
+    <p id='body'>
+     <?php $zSTRINGS->Display ('LABEL.BODY', 'USER.MESSAGES'); ?>
+     <?php $zTOOLTIPS->Display ('BODY'); ?>
+    </p>
+ 
+    <?php $zHTML->TextArea ("BODY", $gBODY); ?>
+    <?php $zMESSAGE->Broadcast('field', 'body'); ?>
+ 
+   <div id='buttons'>
+    <?php $zHTML->Button ('save_draft'); ?>
+ 
+    <?php $zHTML->Button ('send'); ?>
+  </form> <!-- #compose -->
+ 
+     <form method='POST' action='<?php echo $gTARGET; ?>'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <input type='hidden' id='gIDENTIFIER' name='gIDENTIFIER' value='<?php echo $gIDENTIFIER; ?>'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.MESSAGES'); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+   </div> <!-- #buttons -->
+ 
+  </div> <!-- #compose -->
+ </div> <!-- #container -->
+</div> <!-- #messages -->

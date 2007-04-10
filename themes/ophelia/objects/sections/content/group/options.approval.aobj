@@ -1,0 +1,18 @@
+<div id='sections'>
+  <span id='general_top' class='%OPTIONGENERAL%' onClick="javascript:jTOGGLEFORM ('general');">
+    <asd id='string' title='label.general' />
+    <asd id='tooltip' title='general_top' />
+  </span> <!-- general_top -->
+
+  <span id='membereditor_top' class='%OPTIONMEMBEREDITOR%' onClick="javascript:jTOGGLEFORM ('membereditor');">
+    <asd id='string' title='label.membereditor' />
+    <asd id='tooltip' title='membereditor_top' />
+  </span> <!-- pending_top -->
+
+  <span id='pendingeditor_top' class='%OPTIONPENDINGEDITOR%' onClick="javascript:jTOGGLEFORM ('pendingeditor');">
+    <asd id='string' title='label.pendingeditor' />
+    <asd id='tooltip' title='pendingeditor_top' />
+  </span> <!-- pending_top -->
+
+</div> <!-- #sections -->
+

@@ -1,0 +1,9 @@
+<div id='articles'>
+
+ <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+ <div id='container'>
+
+   <?php $zARTICLES->Broadcast(); ?>
+ 
+   <ul>

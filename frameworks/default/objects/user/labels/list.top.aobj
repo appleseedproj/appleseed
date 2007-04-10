@@ -1,0 +1,14 @@
+ <div id='editlabels'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+  <div id='container'>
+   <?php $zMESSAGE->messageLabels->Broadcast (); ?>
+ 
+   <p id='top'>
+    <?php $zSTRINGS->Display ("LABEL.EDIT", "USER.MESSAGES.LABELS"); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <ul>

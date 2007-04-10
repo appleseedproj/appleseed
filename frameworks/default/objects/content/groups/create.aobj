@@ -1,0 +1,79 @@
+<div id='groups'>
+
+<?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/groups/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+  <div id='container'>
+
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.CREATE'); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p> <!-- .top -->
+
+ <div id='create'>
+  <?php $zGROUPS->Broadcast(); ?>
+
+    <form id='create' name='create' method='POST' action='<?php echo $gTARGET; ?>'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+
+     <p id='name'>
+      <?php $zSTRINGS->Display ('LABEL.NAME'); ?>
+      <?php $zTOOLTIPS->Display ('NAME'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("NAME", 32, $gNAME); ?>
+     <?php $zGROUPS->Broadcast ("field", "Name"); ?>
+
+     <p id='fullname'>
+      <?php $zSTRINGS->Display ('LABEL.FULLNAME'); ?>
+      <?php $zTOOLTIPS->Display ('FULLNAME'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("FULLNAME", 32, $gFULLNAME); ?>
+     <?php $zGROUPS->Broadcast ("field", "Fullname"); ?>
+
+     <p id='description'>
+      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION'); ?>
+      <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
+     </p><!-- #content -->
+
+     <?php $zHTML->TextArea ("DESCRIPTION", $gDESCRIPTION); ?>
+     <?php $zGROUPS->Broadcast ("field", "Description"); ?>
+
+     <p id='access'>
+      <?php $zSTRINGS->Display ('LABEL.ACCESS'); ?>
+      <?php $zTOOLTIPS->Display ('ACCESS'); ?>
+     </p><!-- #content -->
+
+     <?php $zOPTIONS->Menu ("GROUPACCESS", $gACCESS, "ACCESS"); ?>
+     <?php $zGROUPS->Broadcast ("field", "Access"); ?>
+
+     <p id='tags'>
+      <?php $zSTRINGS->Display ('LABEL.TAGS'); ?>
+      <?php $zTOOLTIPS->Display ('TAGS'); ?>
+     </p><!-- #title -->
+
+     <?php $zHTML->TextBox ("TAGS", 128, $gTAGS); ?>
+     <?php $zGROUPS->Broadcast ("field", "Tags"); ?>
+
+  <div id='actions'>
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <?php $zHTML->Button ('save'); ?>
+
+   </form> <!-- #create -->
+
+   <span class='delete'>&nbsp;</span>
+
+   <form id='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
+    <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+    <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+    <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL'); ?>
+    <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   </form> <!-- #cancel -->
+  </div> <!-- #actions -->
+
+ </div> <!-- #create -->
+
+  </div> <!-- #container -->
+</div> <!-- #groups -->

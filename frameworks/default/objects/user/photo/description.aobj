@@ -1,0 +1,17 @@
+ <div id='description'>
+  <div id='caption'>
+   <?php $zSTRINGS->Display ("LABEL.DESCRIPTION", "USER.PHOTO"); ?>
+  </div> <!-- #caption -->
+ 
+  <div id='container'>
+
+   <div id='content'>
+    <?php echo $zAPPLE->Format ($gDESCRIPTION, FORMAT_SECURE); ?>
+   </div> <!-- #content -->
+
+   <div id='tags'>
+    <?php echo $gTAGS; ?>
+   </div> <!-- #tags -->
+
+  </div> <!-- #container -->
+ </div> <!-- #description -->

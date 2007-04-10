@@ -1,0 +1,22 @@
+   <?php $zHTML->Alternate(); ?>
+
+    <form method='POST' action='<?php echo $gTARGET; ?>'>
+     <input type='hidden' name='gtID' value='<?php echo $gtID; ?>' />
+     <span class='label'>
+      <?php $zHTML->TextBox ("LABEL", 32, $zMESSAGE->messageLabels->Label); ?>
+     </span> 
+
+     <span class='count'>
+       <?php $zSTRINGS->Display ("LABEL.COUNT", "USER.MESSAGES.LABELS"); ?>
+     </span> <!-- .count -->
+
+      <?php $zHTML->Button ("save_label"); ?>
+     </form>
+
+     <form method='POST' action='<?php echo $gTARGET; ?>'>
+      <input type='hidden' name='gtID' value='<?php echo $gtID; ?>' />
+      <?php $zHTML->Button ('delete_label', $zAPPLE->ParseTags ($gCONFIRMDELETE)); ?>
+     </form>
+     <?php echo $gFIELDERROR; ?>
+   </li> <!-- .[alternate] -->
+ 

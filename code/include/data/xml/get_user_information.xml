@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<appleseed>
+ <version>%APPLESEEDVERSION%</version>
+ <userinfo>
+  <fullname>%RETURNFULLNAME%</fullname>
+  <online>%RETURNONLINE%</online>
+ </userinfo>
+</appleseed>

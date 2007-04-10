@@ -1,0 +1,33 @@
+<div id='groups'>
+
+<?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/groups/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ 
+  <div id='container'>
+
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.CREATED'); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p> <!-- .top -->
+
+ <div id='created'>
+   <p id='info'>
+    <?php $zSTRINGS->Display ('INFO.CREATED'); ?>
+   </p>
+
+   <p id='created_link'>
+    <a href='<?php echo $gGROUPLINK; ?>'><?php echo $gGROUPLINK; ?></a>
+   </p>
+
+   <p id='created_fullname'>
+    <?php echo $zGROUPS->Fullname; ?>
+   </p>
+
+   <p id='created_description'>
+    <?php echo $zAPPLE->Format ($zGROUPS->Description, FORMAT_BASIC); ?>
+   </p>
+
+  <?php $zGROUPS->Broadcast(); ?>
+ </div> <!-- #created -->
+
+  </div> <!-- #container -->
+</div> <!-- #groups -->
