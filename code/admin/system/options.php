@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: options.php                             CREATED: 04-14-2005 + 
-  // | LOCATION: /code/admin/system/                MODIFIED: 04-25-2005 +
+  // | LOCATION: /code/admin/system/                MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -38,6 +38,7 @@
 
   // Include BASE API classes.
   require_once ('code/include/classes/BASE/application.php'); 
+  require_once ('code/include/classes/BASE/debug.php'); 
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 
@@ -364,5 +365,8 @@
 
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/system/options.afrw", INCLUDE_SECURITY_NONE);
+
+  // End the application.
+  $zAPPLE->End ();
 
 ?>

@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: images.php                              CREATED: 12-31-2004 + 
-  // | LOCATION: /code/common/                      MODIFIED: 01-04-2006 +
+  // | LOCATION: /code/common/                      MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -61,6 +61,7 @@
 
   // Include BASE API classes.
   require_once ('code/include/classes/BASE/application.php'); 
+  require_once ('code/include/classes/BASE/debug.php'); 
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 

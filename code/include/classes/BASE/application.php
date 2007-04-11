@@ -70,6 +70,7 @@
       // Initialize classes
       global $zSTRINGS, $zOPTIONS, $zLOGS, $zHTML, $zXML;
       global $zFOCUSUSER, $zLOCALUSER, $zIMAGE;
+      global $zDEBUG;
   
       $zSTRINGS = new cSYSTEMSTRINGS;
       $zOPTIONS = new cSYSTEMOPTIONS;
@@ -80,6 +81,8 @@
       $zXML     = new cXML;
   
       $zLOCALUSER = new cUSERAUTHORIZATION;
+      
+      $zDEBUG = new cDEBUG;
   
       // Strip all slashes from POST data.
       foreach ($_POST as $key => $value) {
@@ -861,7 +864,11 @@
 
     // End Application.
     function End () {
+      global $zDEBUG;
 
+      // Echo the debug information.
+      $zDEBUG->DisplayDebugInformation();
+  
       exit;
 
     } // End

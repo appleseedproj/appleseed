@@ -94,7 +94,10 @@
       global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML;
       global $zAUTHUSER, $zREMOTEUSER, $zLOCALUSER, $zFOCUSUSER;
       global $zIMAGE;
+      global $zDEBUG;
   
+      $zDEBUG = new cDEBUG;
+
       $zSTRINGS = new cSYSTEMSTRINGS ();
       $zTOOLTIPS = new cSYSTEMTOOLTIPS ();
       $zOPTIONS = new cSYSTEMOPTIONS ();
@@ -106,10 +109,10 @@
   
       $zFOCUSUSER = new cUSER ();
       $zLOCALUSER = new cUSER ();
-        $zREMOTEUSER = new cAUTHSESSIONS ();
+      $zREMOTEUSER = new cAUTHSESSIONS ();
 
       $zAUTHUSER = new cAUTHUSER ();
-
+      
       // Strip all slashes from POST data.
       foreach ($_POST as $key => $value) {
        

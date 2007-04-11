@@ -3,8 +3,8 @@
   // | Appleseed Web Community Management Software                       |
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
-  // | FILE: main.php                                CREATED: 02-11-2005 + 
-  // | LOCATION: /code/user/                        MODIFIED: 01-04-2006 +
+  // | FILE: main.php                                CREATED: 02-11-2005 +
+  // | LOCATION: /code/user/                        MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -16,13 +16,13 @@
   // | This program is distributed in the hope that it will be useful,   |
   // | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
   // | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
-  // | GNU General Public License for more details.                      |	
+  // | GNU General Public License for more details.                      |
   // |                                                                   |
   // | You should have received a copy of the GNU General Public License |
   // | along with this program; if not, write to:                        |
   // |                                                                   |
   // |   The Free Software Foundation, Inc.                              |
-  // |   59 Temple Place - Suite 330,                                    | 
+  // |   59 Temple Place - Suite 330,                                    |
   // |   Boston, MA  02111-1307, USA.                                    |
   // |                                                                   |
   // |   http://www.gnu.org/copyleft/gpl.html                            |
@@ -38,23 +38,24 @@
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
   // Include BASE API classes.
-  require_once ('code/include/classes/BASE/application.php'); 
-  require_once ('code/include/classes/base.php'); 
-  require_once ('code/include/classes/system.php'); 
-  require_once ('code/include/classes/BASE/remote.php'); 
+  require_once ('code/include/classes/BASE/application.php');
+  require_once ('code/include/classes/BASE/debug.php');
+  require_once ('code/include/classes/base.php');
+  require_once ('code/include/classes/system.php');
+  require_once ('code/include/classes/BASE/remote.php');
 
   // Include Appleseed classes.
-  require_once ('code/include/classes/appleseed.php'); 
-  require_once ('code/include/classes/friends.php'); 
-  require_once ('code/include/classes/groups.php'); 
-  require_once ('code/include/classes/messages.php'); 
-  require_once ('code/include/classes/privacy.php'); 
-  require_once ('code/include/classes/users.php'); 
-  require_once ('code/include/classes/auth.php'); 
+  require_once ('code/include/classes/appleseed.php');
+  require_once ('code/include/classes/friends.php');
+  require_once ('code/include/classes/groups.php');
+  require_once ('code/include/classes/messages.php');
+  require_once ('code/include/classes/privacy.php');
+  require_once ('code/include/classes/users.php');
+  require_once ('code/include/classes/auth.php');
 
   // Create the Application class.
   $zAPPLE = new cAPPLESEED ();
-  
+
   // Set Global Variables (Put this at the top of wrapper scripts)
   $zAPPLE->SetGlobals ();
 
@@ -202,8 +203,8 @@
 
       $bCONTACTBOX = $zAPPLE->BufferContactBox ();
     } // if
-
   } // if
+
 
   // Check to see if the main profile photo exists.
   $username = $zFOCUSUSER->Username;
@@ -218,7 +219,7 @@
   } // if
 
   // Load the profile questions, unless headed to options or messages page.
-  if ( ($gPROFILEACTION != 'options') and 
+  if ( ($gPROFILEACTION != 'options') and
        ($gPROFILEACTION != 'messages') ) {
     $zAPPLE->Profile ();
   } // if
@@ -229,7 +230,7 @@
   // Reroute to proper location.
   switch ($gPROFILEACTION) {
 
-    case "journal": 
+    case "journal":
       $zAPPLE->IncludeFile ('code/user/journal.php', INCLUDE_SECURITY_NONE);
     break;
 
@@ -237,36 +238,36 @@
       $zAPPLE->IncludeFile ('code/user/photosets.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "circles": 
+    case "circles":
       $zAPPLE->Context = 'user.friends.circles';
       $zAPPLE->IncludeFile ('code/user/circles.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "friends": 
+    case "friends":
       $zAPPLE->IncludeFile ('code/user/friends.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "info": 
+    case "info":
       $zAPPLE->IncludeFile ('code/user/info.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "messages_two": 
+    case "messages_two":
       $zAPPLE->IncludeFile ('code/user/messages_two.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "groups": 
+    case "groups":
       $zAPPLE->IncludeFile ('code/user/groups.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "messages": 
+    case "messages":
       $zAPPLE->IncludeFile ('code/user/messages.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "options": 
+    case "options":
       $zAPPLE->IncludeFile ('code/user/options.php', INCLUDE_SECURITY_NONE);
     break;
 
-    case "": 
+    case "":
       // Grab user's default page from database.
       $zAPPLE->SetContext ("user.info");
       $zAPPLE->IncludeFile ('code/user/info.php', INCLUDE_SECURITY_NONE);
@@ -276,5 +277,8 @@
       $zAPPLE->IncludeFile ('code/site/error/404.php', INCLUDE_SECURITY_NONE);
     break;
   } // switch
+  
+  // End the application.
+  $zAPPLE->End ();
 
 ?>

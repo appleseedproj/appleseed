@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: 403.php                                 CREATED: 01-01-2005 + 
-  // | LOCATION: /code/site/error/                  MODIFIED: 02-11-2005 +
+  // | LOCATION: /code/site/error/                  MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -38,6 +38,7 @@
 
   // Include BASE API classes.
   require_once ('code/include/classes/BASE/application.php'); 
+  require_once ('code/include/classes/BASE/debug.php'); 
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 
@@ -73,5 +74,8 @@
 
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/error/403.afrw", INCLUDE_SECURITY_NONE);
+
+  // End the application.
+  $zAPPLE->End ();
 
 ?>

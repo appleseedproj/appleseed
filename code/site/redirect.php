@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: redirect.php                            CREATED: 04-11-2006 + 
-  // | LOCATION: /code/site/                        MODIFIED: 04-11-2006 +
+  // | LOCATION: /code/site/                        MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -38,6 +38,7 @@
 
   // Include BASE API classes.
   require_once ('code/include/classes/BASE/application.php'); 
+  require_once ('code/include/classes/BASE/debug.php'); 
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/content.php'); 
   require_once ('code/include/classes/system.php'); 

@@ -106,7 +106,7 @@
                          "$keyname = $toidvalue";
 
       // Rollback and quit if error occurs.
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -120,7 +120,7 @@
                    "$keyname = $pFROMIDVALUE";
 
       // Rollback and quit if error occurs.
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -134,7 +134,7 @@
                    "$keyname = 999999";
 
       // Rollback and quit if error occurs.
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -197,7 +197,7 @@
                    "$keyname = $toidvalue $wherestatement";
 
       // Rollback and quit if error occurs.
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -211,7 +211,7 @@
                    "$keyname = $pFROMIDVALUE $wherestatement";
 
       // Rollback and quit if error occurs.
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -225,7 +225,7 @@
                    "$keyname = 999999 $wherestatement";
 
       // Rollback and quit if error occurs.
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -279,21 +279,31 @@
 
     // Commit the database transaction.
     function Commit () {
-      mysql_query ('COMMIT');
+      
+      $this->Query ('COMMIT');
+      
+      return (TRUE);
     } // Commit
 
     // Begin the database transaction.
     function Begin () {
-      mysql_query ('BEGIN');
+      
+      $this->Query ('BEGIN');
+      
+      return (TRUE);
     } // Commit
 
     // Rollback the database transaction.
     function Rollback () {
-      mysql_query ('ROLLBACK');
+      
+      $this->Query ('ROLLBACK');
+      
+      return (TRUE);
     } // Commit
 
     // Count the number of rows in a table.
     function CountRows ($pWHERECLAUSE = '') {
+      
       if ($pWHERECLAUSE) {
         $this->Statement = 'SELECT COUNT(*) FROM ' .  $this->TableName . 
                      ' WHERE ' . $pWHERECLAUSE;
@@ -301,7 +311,7 @@
         $this->Statement = 'SELECT COUNT(*) FROM ' .  $this->TableName;
       } // if
 
-      $query = mysql_query($this->Statement);
+      $query = $this->Query($this->Statement);
       $result = mysql_fetch_row($query);
       $rows = $result[0];
 
@@ -341,7 +351,8 @@
     function Fields () {
 
       $fieldstatement = "SHOW CREATE TABLE $this->TableName";
-      $fieldresult = mysql_query($fieldstatement);
+      
+      $fieldresult = $this->Query($fieldstatement);
       $fieldcount = 0;
 
       // Retrieve the create table data.
@@ -408,7 +419,8 @@
 
       // Retrieve a list of field names from the table.
       $fieldstatement = "SHOW COLUMNS FROM $this->TableName";
-      $fieldresult = mysql_query($fieldstatement);
+      
+      $fieldresult = $this->Query($fieldstatement);
       $fieldcount = 0;
 
       // Use this to check for the first string value;
@@ -623,7 +635,7 @@
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -635,12 +647,13 @@
 
     // Add a record to the table.
     function Add () {
-
+      
       global $gDEBUG;
 
       // Retrieve a list of field names from the table.
       $fieldstatement = "SHOW COLUMNS FROM $this->TableName";
-      $fieldresult = mysql_query($fieldstatement);
+      
+      $fieldresult = $this->Query($fieldstatement);
 
       // Check if successful.
       if (!$fieldresult) {
@@ -733,7 +746,7 @@
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -762,21 +775,26 @@
 
     // Send a direct query to the database.
     function Query ($pSTATEMENT) {
-       global $gDEBUG;
+      global $zDEBUG;
+      global $gDEBUG;
       
       if ($gDEBUG['echostatement'] == TRUE) {
         echo "\n<!-- SQL: $pSTATEMENT -->\n";
       } // if
 
+      // Add SQL statement to DEBUG list.
+      $zDEBUG->RememberStatement ($pSTATEMENT, get_class ($this));
+
       // Submit the query
       if ($this->Result = mysql_query($pSTATEMENT)) {
+        return ($this->Result);
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
-        return (-1);
+        return ($this->Result);
       } // if
 
-      return (0);
+      return (TRUE);
     } // Query
 
     // Select based on one field/value pair.
@@ -802,12 +820,12 @@
       if ($pORDERBY) {
         $this->Statement .= " ORDER BY " . $pORDERBY;
       } // if
-
+      
       if ($gDEBUG['echostatement'] == TRUE) {
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -833,7 +851,7 @@
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -916,7 +934,7 @@
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -927,7 +945,7 @@
     } // SelectByMultiple
 
     function DeleteByMultiple ($pDEFINITIONS, $pLIKE = "", $pANDOR = "AND") {
-
+      
       global $gDEBUG;
 
       $this->Statement = "DELETE FROM $this->TableName WHERE ";
@@ -970,7 +988,7 @@
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -1034,7 +1052,7 @@
         echo "<!-- SQL: $this->Statement -->\n";
       } // if
 
-      if ($this->Result = mysql_query($this->Statement)) {
+      if ($this->Result = $this->Query($this->Statement)) {
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
@@ -1545,7 +1563,7 @@
 
       $this->Statement = "SELECT $pVALUE, $pLABEL FROM " .  $this->TableName;
 
-      if ($internalResult = mysql_query($this->Statement)) {
+      if ($internalResult = $this->Query($this->Statement)) {
       } else {
         return (0);
       } // if
@@ -1566,7 +1584,7 @@
       $this->Statement = "SELECT MAX($pCOUNTKEY) as MAXVALUE FROM $this->TableName WHERE $pWHEREKEY='" . $pWHEREDATA . "'";
  
       // Return the value or an error.
-      if ($result = mysql_query($this->Statement)) {
+      if ($result = $this->Query($this->Statement)) {
         $resultarray = mysql_fetch_array ($result);
         return ($resultarray['MAXVALUE']);
       } else {

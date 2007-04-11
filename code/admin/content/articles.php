@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: articles.php                            CREATED: 09-05-2006 + 
-  // | LOCATION: /code/admin/content/               MODIFIED: 09-05-2006 +
+  // | LOCATION: /code/admin/content/               MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -38,6 +38,7 @@
 
   // Include BASE API classes.
   require_once ('code/include/classes/BASE/application.php'); 
+  require_once ('code/include/classes/BASE/debug.php'); 
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/content.php'); 
   require_once ('code/include/classes/system.php'); 
@@ -397,5 +398,8 @@
 
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/content/articles.afrw", INCLUDE_SECURITY_NONE);
+
+  // End the application.
+  $zAPPLE->End ();
 
 ?>

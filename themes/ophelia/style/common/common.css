@@ -427,3 +427,65 @@ p.linkonline {
   margin:0 0 2px 0; padding:0;
   text-decoration:none;
 } 
+
+/* DEBUG INFORMATION */
+
+#debug #container {
+ float:left;
+ width:80%;
+ margin-left:10%;
+ margin-right:10%;
+ background:#fafafa;
+ border:1px solid #cccccc;
+ border-right:2px solid #999999;
+ border-bottom:2px solid #999999;
+ padding:10px;
+ -moz-border-radius:12px;
+ text-align:left;
+}
+
+#debug #caption {
+ float:left;
+ width:79%;
+ margin-right:10%;
+ margin-left:11%;
+ text-align:left;
+}
+
+#debug ul {
+ float:left;
+ width:100%;
+ border:1px solid #cccccc;
+ border-right:2px solid #999999;
+ border-bottom:2px solid #999999;
+ margin:0; padding:0;
+}
+
+#debug ul li {
+ float:left;
+ list-style-type:none;
+ width:100%;
+ display:block;
+}
+
+#debug #statement ul li span {
+ float:left;
+}
+
+#debug #statement ul li span.count {
+ width:9%;
+ padding:5px 0 5px 1%;
+}
+
+#debug #statement ul li span.statement {
+ width:64%;
+ padding:5px 0 5px 1%;
+}
+
+#debug #statement ul li span.class {
+ width:24%;
+ padding:5px 1% 5px 0;
+ float:right;
+ text-align:right;
+ font-style:italic;
+}
