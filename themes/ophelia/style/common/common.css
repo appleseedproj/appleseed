@@ -444,6 +444,12 @@ p.linkonline {
  text-align:left;
 }
 
+#debug #title {
+ float:left;
+ width:100%;
+ padding:10px 0;
+}
+
 #debug #caption {
  float:left;
  width:79%;
@@ -468,24 +474,37 @@ p.linkonline {
  display:block;
 }
 
-#debug #statement ul li span {
+#debug ul li span {
  float:left;
+ padding:5px 0 5px 1%;
 }
 
 #debug #statement ul li span.count {
  width:9%;
- padding:5px 0 5px 1%;
 }
 
 #debug #statement ul li span.statement {
- width:64%;
- padding:5px 0 5px 1%;
+ width:59%;
+}
+
+#debug #statement ul li span.benchmark {
+ width:9%;
 }
 
 #debug #statement ul li span.class {
- width:24%;
+ width:19%;
  padding:5px 1% 5px 0;
  float:right;
  text-align:right;
  font-style:italic;
+}
+
+#debug #benchmark {
+ float:left;
+ width:100%;
+ padding:10px 0;
+}
+
+#debug #benchmark span.label {
+ width:25%;
 }

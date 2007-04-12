@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: base.php                                CREATED: 02-25-2005 + 
-  // | LOCATION: /code/include/classes/BASE/        MODIFIED: 01-13-2006 +
+  // | LOCATION: /code/include/classes/BASE/        MODIFIED: 04-10-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2006 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -782,19 +782,20 @@
         echo "\n<!-- SQL: $pSTATEMENT -->\n";
       } // if
 
-      // Add SQL statement to DEBUG list.
-      $zDEBUG->RememberStatement ($pSTATEMENT, get_class ($this));
+      $zDEBUG->BenchmarkStart('STATEMENT');
 
       // Submit the query
       if ($this->Result = mysql_query($pSTATEMENT)) {
-        return ($this->Result);
+        $zDEBUG->BenchmarkStop('STATEMENT');
       } else {
         $this->Error = -1;
         $this->Message = mysql_error();
-        return ($this->Result);
       } // if
+      
+      // Add SQL statement to DEBUG list.
+      $zDEBUG->RememberStatement ($pSTATEMENT, get_class ($this), $zDEBUG->Benchmark('STATEMENT'));
 
-      return (TRUE);
+      return ($this->Result);
     } // Query
 
     // Select based on one field/value pair.

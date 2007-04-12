@@ -77,6 +77,12 @@
         $gINITIALIZED = TRUE;
       } // if
   
+      global $zDEBUG;
+  
+      $zDEBUG = new cDEBUG;
+      
+      $zDEBUG->BenchmarkStart ('SITE');
+      
       // Connect to the database.
       $this->DBConnect ();
   
@@ -94,9 +100,6 @@
       global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML;
       global $zAUTHUSER, $zREMOTEUSER, $zLOCALUSER, $zFOCUSUSER;
       global $zIMAGE;
-      global $zDEBUG;
-  
-      $zDEBUG = new cDEBUG;
 
       $zSTRINGS = new cSYSTEMSTRINGS ();
       $zTOOLTIPS = new cSYSTEMTOOLTIPS ();
@@ -289,7 +292,7 @@
       // Modify gACTION from BUTTONNAME
       $gACTION = strtoupper ($gACTION);
       $gACTION = str_replace (' ', '_', $gACTION);
-  
+      
     } // Initialize
 
     // Check whether system is configured properly.

@@ -38,24 +38,30 @@
   // Debug class.
   class cDEBUG {
     var $StatementCount;
-    var $StatementList = array ();
+    var $StatementList;
+    var $BenchmarkStart;
+    var $BenchmarkStop;
+    var $BenchmarkTotal;
 
     function cDEBUG () {
+      
+      $this->BenchmarkStart = array ();
+      $this->BenchmarkStop = array ();
+      $this->BenchmarkTotal = array ();
+      
+      $this->StatemenList = array ();
       $this->StatementCount = 0;
       
       return (TRUE);
     } // Constructor
 
-    function RememberStatement ($statement, $classname = NULL) {
+    function RememberStatement ($statement, $classname, $benchmark) {
       // Return out if user does not have proper access.
 
-      if ($classname) {
-        if (!$statement) return false;
-        $this->StatementList[$this->StatementCount]['statement'] = $statement;
-        $this->StatementList[$this->StatementCount]['class'] = "$classname";
-      } else {
-        $this->StatementList[$this->StatementCount] = $statement;
-      } // if
+      if (!$statement) return false;
+      $this->StatementList[$this->StatementCount]['statement'] = $statement;
+      $this->StatementList[$this->StatementCount]['benchmark'] = $benchmark;
+      $this->StatementList[$this->StatementCount]['class'] = "$classname";
 
       $this->StatementCount++;
 
@@ -68,7 +74,7 @@
       
       global $zAPPLE;
       
-      global $gCOUNT, $gSTATEMENT, $gCLASS;
+      global $gCOUNT, $gSTATEMENT, $gCLASS, $gBENCHMARK;
       $gCOUNT = NULL; $gSTATEMENT = NULL; $gCLASS = NULL;
       
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.top.aobj", INCLUDE_SECURITY_NONE);
@@ -77,6 +83,7 @@
         // Switch the class for every other row.
         $gSTATEMENT = $info['statement'];
         $gCLASS = $info['class'];
+        $gBENCHMARK = $info['benchmark'];
         $oddeven = ($oddeven == "even") ? "odd" : "even";
         $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
       } // foreach
@@ -96,18 +103,68 @@
       // Return out if user does not have proper access.
       if ($zLOCALUSER->userAccess->r == FALSE) return (FALSE);
 
-
       // Top of Debug element.
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/top.aobj", INCLUDE_SECURITY_NONE);
       
       // Display queued listing of SQL statements.
       $this->DisplayStatementList ();
       
+      // Display total page benchmark.
+      $this->DisplayTotalBenchmark ();
+      
       // Bottom of Debug element.
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/bottom.aobj", INCLUDE_SECURITY_NONE);
-      
       
       return (TRUE);
       
     } // DisplayDebugInformation
+    
+    function DisplayTotalBenchmark () {
+      global $zAPPLE;
+      global $gFRAMELOCATION;
+      global $gTOTALTIME, $gSQLTIME;
+      
+      
+      $this->BenchmarkStop ('SITE');
+      $gTOTALTIME = $this->Benchmark ('SITE');
+      $gSQLTIME = $this->BenchmarkTotal['STATEMENT'];
+      
+      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/benchmark.aobj", INCLUDE_SECURITY_NONE);
+      
+      return (TRUE);
+    } // DisplayTotalBenchmark
+    
+    function BenchmarkStart ($pIDENTIFIER) {
+      $this->BenchmarkStart[$pIDENTIFIER] = $this->GetMicroTime ();
+      
+      return (TRUE);
+    } // BenchmarkStart
+    
+    function BenchmarkStop ($pIDENTIFIER) {
+      $this->BenchmarkStop[$pIDENTIFIER] = $this->GetMicroTime ();
+      
+      return (TRUE);
+    } // BenchmarkStop
+    
+    function Benchmark ($pIDENTIFIER) {
+      
+      // Haven't started and stopped the timer properly.
+      if ((!$this->BenchmarkStart[$pIDENTIFIER]) or (!$this->BenchmarkStop[$pIDENTIFIER])) return (FALSE);
+      $benchmark = $this->BenchmarkStop[$pIDENTIFIER] - $this->BenchmarkStart[$pIDENTIFIER];
+      $benchmark = round ($benchmark, 6);
+      
+      $this->BenchmarkTotal[$pIDENTIFIER] += $benchmark;
+      
+      return $benchmark;
+      
+    } // Benchmark
+    
+    // Get the full value of MicroTime
+    function GetMicroTime () {
+      
+      list($m, $s) = explode(" ", microtime()); 
+      $return = (float)$s + (float)$m; 
+      
+      return $return;
+    } // GetMicroTime
   }

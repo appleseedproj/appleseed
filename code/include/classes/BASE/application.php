@@ -865,7 +865,7 @@
     // End Application.
     function End () {
       global $zDEBUG;
-
+      
       // Echo the debug information.
       $zDEBUG->DisplayDebugInformation();
   

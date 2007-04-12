@@ -1,0 +1,18 @@
+<div id='benchmark'>
+<div id='title'>SYSTEM BENCHMARKS</div>
+ <ul>
+  <li class='odd'>
+   <div id='sql'>
+    <span class='label'>SQL TIME:</span>
+    <span class='value'><?php echo $gSQLTIME; ?></span>
+   </div> <!-- #total -->
+  </li>
+  <li class='even'>
+   <div id='total'>
+    <span class='label'>TOTAL TIME:</span>
+    <span class='value'><?php echo $gTOTALTIME; ?></span>
+   </div> <!-- #total -->
+  </li>
+ </ul>
+</div> <!-- #title -->
+</div> <!-- #benchmark -->
