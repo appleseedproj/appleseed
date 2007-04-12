@@ -83,6 +83,9 @@
       
       $zDEBUG->BenchmarkStart ('SITE');
       
+      // Capture all errors and warnings.
+      set_error_handler (array ($zDEBUG, 'HandleError'));
+      
       // Connect to the database.
       $this->DBConnect ();
   

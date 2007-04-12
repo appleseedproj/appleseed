@@ -506,5 +506,39 @@ p.linkonline {
 }
 
 #debug #benchmark span.label {
- width:25%;
+ width:69%;
+}
+
+#debug #errors ul li .error,
+#debug #errors ul li .warning {
+ color:#cc3311;
+}
+#debug #errors ul li .error {
+ color:#ff0000;
+ font-size:12px;
+}
+
+#debug #errors span.count {
+ width:9%;
+}
+
+#debug #errors span.string {
+ width:69%;
+}
+
+#debug #errors span.type {
+ width:9%;
+}
+
+#debug #errors span.file {
+ display:block;
+ width:89%;
+ padding-left:11%;
+ color:#999999;
+}
+
+#debug #errors span.line {
+ text-align:right;
+ padding:5px 1% 5px 0;
+ width:9%;
 }

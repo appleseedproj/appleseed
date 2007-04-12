@@ -39,6 +39,8 @@
   class cDEBUG {
     var $StatementCount;
     var $StatementList;
+    var $ErrorList;
+    var $ErrorCount;
     var $BenchmarkStart;
     var $BenchmarkStop;
     var $BenchmarkTotal;
@@ -49,8 +51,11 @@
       $this->BenchmarkStop = array ();
       $this->BenchmarkTotal = array ();
       
-      $this->StatemenList = array ();
+      $this->StatementList = array ();
       $this->StatementCount = 0;
+      
+      $this->ErrorList = array ();
+      $this->ErrorCount = 0;
       
       return (TRUE);
     } // Constructor
@@ -92,6 +97,31 @@
       return (TRUE);
     } // DisplayStatementList
     
+    function DisplayErrorList () {
+      
+      global $gFRAMELOCATION;
+      
+      global $zAPPLE;
+      
+      global $gCOUNT, $gSTRING, $gTYPE, $gFILE, $gLINE;
+      $gCOUNT = NULL; $gSTRING = NULL; $gTYPE = NULL; $gFILE = NULL; $gLINE = NULL;
+      
+      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.top.aobj", INCLUDE_SECURITY_NONE);
+      $oddeven = "even";
+      foreach ($this->ErrorList as $gCOUNT => $info) {
+        // Switch the class for every other row.
+        $gSTRING = $info['string'];
+        $gTYPE = $info['type'];
+        $gFILE = $info['file'];
+        $gLINE = $info['line'];
+        $oddeven = ($oddeven == "even") ? "odd" : "even";
+        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
+      } // foreach
+      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.bottom.aobj", INCLUDE_SECURITY_NONE);
+      
+      return (TRUE);
+    } // DislayErrorList
+    
     function DisplayDebugInformation () {
       
       global $gFRAMELOCATION;
@@ -106,11 +136,14 @@
       // Top of Debug element.
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/top.aobj", INCLUDE_SECURITY_NONE);
       
-      // Display queued listing of SQL statements.
-      $this->DisplayStatementList ();
-      
       // Display total page benchmark.
       $this->DisplayTotalBenchmark ();
+      
+      // Display error listing
+      $this->DisplayErrorList ();
+      
+      // Display queued listing of SQL statements.
+      $this->DisplayStatementList ();
       
       // Bottom of Debug element.
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/bottom.aobj", INCLUDE_SECURITY_NONE);
@@ -167,4 +200,35 @@
       
       return $return;
     } // GetMicroTime
+    
+    function HandleError ($errno, $errstr, $errfile, $errline) {
+      
+      $this->ErrorList[$this->ErrorCount]['string'] = $errstr;
+      $this->ErrorList[$this->ErrorCount]['file'] = $errfile;
+      $this->ErrorList[$this->ErrorCount]['line'] = $errline;
+      
+      switch ($errno) {
+        case E_ERROR:
+          $this->ErrorList[$this->ErrorCount]['type'] = 'ERROR';
+        break;
+
+        case E_WARNING:
+          $this->ErrorList[$this->ErrorCount]['type'] = 'WARNING';
+        break;
+        
+        case E_NOTICE:
+          $this->ErrorList[$this->ErrorCount]['type'] = 'NOTICE';
+        break;
+        
+        default:
+          $this->ErrorList[$this->ErrorCount]['type'] = 'UNKNOWN';
+        break;
+      } // switch
+      
+      $this->ErrorCount ++;
+      
+      /* Don't execute PHP internal error handler */
+      return (TRUE);
+      
+    } // HandleError
   }

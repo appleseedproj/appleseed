@@ -83,6 +83,11 @@
       $zLOCALUSER = new cUSERAUTHORIZATION;
       
       $zDEBUG = new cDEBUG;
+      
+      $zDEBUG->BenchmarkStart ('SITE');
+      
+      // Capture all errors and warnings.
+      set_error_handler (array ($zDEBUG, 'HandleError'));
   
       // Strip all slashes from POST data.
       foreach ($_POST as $key => $value) {
@@ -153,7 +158,7 @@
       // Modify gACTION from BUTTONNAME
       $gACTION = strtoupper ($gACTION);
       $gACTION = str_replace (' ', '_', $gACTION);
-  
+      
     } // Initialize
 
     // Generate a random seed.
@@ -865,6 +870,7 @@
     // End Application.
     function End () {
       global $zDEBUG;
+      
       
       // Echo the debug information.
       $zDEBUG->DisplayDebugInformation();
