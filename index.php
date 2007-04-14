@@ -42,6 +42,7 @@
   $gPASSWORD = ($_POST['gPASSWORD']) ? $_POST['gPASSWORD'] : $gPASSWORD;
   $gPREFIX = ($_POST['gPREFIX']) ? $_POST['gPREFIX'] : $gPREFIX;
   $gHOST = ($_POST['gHOST']) ? $_POST['gHOST'] : $gHOST;
+  $gHOST = ($gHOST) ? $gHOST : 'localhost';
   $gDOMAIN = ($_POST['gDOMAIN']) ? $_POST['gDOMAIN'] : $gDOMAIN;
   $gDOMAIN = ($gDOMAIN) ? $gDOMAIN : 'http://' . $_SERVER['HTTP_HOST'];
   $gADMINUSER = ($_POST['gADMINUSER']) ? $_POST['gADMINUSER'] : 'Admin';
@@ -51,6 +52,7 @@
   // Add http:// to Domain if not already there.
   if (strtolower(substr ($gDOMAIN, 0, 7)) != 'http://') $gDOMAIN = 'http://' . $gDOMAIN;
   
+  $INSTALL->CheckForSubDirectory ();
   $INSTALL->CheckPHPVersion ();
   $INSTALL->CheckMysqlVersion ();
   $INSTALL->CheckRegisterGlobals ();
@@ -488,6 +490,9 @@ class cINSTALL {
         <p class='title'>System Check</p>
         <p class='information'>This system cannot be installed until the following conditions are met.</p>
         
+        <span class='label'>Installed in site root directory? (see documentation)</span>
+        <?php echo $ErrorMark['sub_dir']; ?>
+        
         <span class='label'>Is register_globals turned off?</span>
         <?php echo $ErrorMark['register_globals']; ?>
         
@@ -577,6 +582,9 @@ class cINSTALL {
         <p class='title'>System Check</p>
         <p class='information'>This system cannot be installed until the following conditions are met.</p>
         
+        <span class='label'>Installed in root directory? (see documentation)</span>
+        <?php echo $ErrorMark['sub_dir']; ?>
+        
         <span class='label'>Is register_globals turned off?</span>
         <?php echo $ErrorMark['register_globals']; ?>
         
@@ -615,7 +623,11 @@ class cINSTALL {
         <span class='label'>Creating Administrator Account</span>
         <span class='done'>DONE</span>
         
-        <p class='done'>Your Appleseed installation is now complete!  Be sure to change the permissions on <b>.htaccess</b> and <b>site.adat</b> so that they aren't writable anymore. </p>
+        <p class='done'>
+        Your Appleseed installation is now complete!  Be sure to 
+        change the permissions on <b>.htaccess</b> and <b>site.adat</b> 
+        so that they aren't writable anymore, and delete the install
+        script (index.php) from the appleseed root directory. </p>
         
         <p class='final'><a href='<?php echo $gDOMAIN; ?>/login/'>Click Here To Login To Your Appleseed Site</a></p>
         
@@ -630,6 +642,21 @@ class cINSTALL {
     </html> <?php
     
   } // ViewStepTwo
+  
+  function CheckForSubDirectory () {
+    global $Error, $ErrorMark;
+    
+    $subdir = $_SERVER['REQUEST_URI'];
+    if ($subdir != '/') {
+      $Error['sub_dir'] = TRUE;
+      $ErrorMark['sub_dir'] = "<span class='no'>N</span>";
+    } else {
+      $Error['sub_dir'] = FALSE;
+      $ErrorMark['sub_dir'] = "<span class='yes'>Y</span>";
+    } // if
+    
+    return (TRUE);
+  } // CheckForSubDirectory
   
 } // cINSTALL
 ?>

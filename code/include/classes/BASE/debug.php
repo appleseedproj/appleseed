@@ -212,6 +212,10 @@
           $this->ErrorList[$this->ErrorCount]['type'] = 'ERROR';
         break;
 
+        case E_USER_WARNING:
+          $this->ErrorList[$this->ErrorCount]['type'] = 'ASD WARNING';
+        break;
+
         case E_WARNING:
           $this->ErrorList[$this->ErrorCount]['type'] = 'WARNING';
         break;

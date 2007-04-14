@@ -60,6 +60,17 @@
     // Overwrite inhereted ::Initialize function.
     function Initialize ($pCONTEXT = "") {
       
+      global $zDEBUG;
+      
+      global $zDEBUG;
+  
+      $zDEBUG = new cDEBUG;
+      
+      $zDEBUG->BenchmarkStart ('SITE');
+      
+      // Capture all errors and warnings.
+      set_error_handler (array ($zDEBUG, 'HandleError'));
+      
       // Check if system is configured properly.
       $this->RuntimeVerification ();
       
@@ -77,15 +88,6 @@
         $gINITIALIZED = TRUE;
       } // if
   
-      global $zDEBUG;
-  
-      $zDEBUG = new cDEBUG;
-      
-      $zDEBUG->BenchmarkStart ('SITE');
-      
-      // Capture all errors and warnings.
-      set_error_handler (array ($zDEBUG, 'HandleError'));
-      
       // Connect to the database.
       $this->DBConnect ();
       
@@ -303,6 +305,12 @@
     // Check whether system is configured properly.
     function RuntimeVerification () {
 
+      if (file_exists ('index.php')) {
+        // Install script still exists.  Warn admin, potential security hazard.  
+        trigger_error("Install script (index.php) is still available in the web directory.  " .
+                      "This is a potential security hazard.  Please delete index.php.", E_USER_WARNING);
+      } // if
+      
       if (ini_get('register_globals')) {
         // Register globals is on.  Exit with error.
         echo "ERROR: register_globals is on. Please disable.<br />";

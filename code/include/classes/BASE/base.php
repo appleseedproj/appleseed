@@ -2787,16 +2787,16 @@
       $footnote = "footnote.pages.aobj";
 
       switch ($pSCROLLTYPE) {
-        case SCROLL_PAGEOF:
+        case 'SCROLL_PAGEOF':
           $footnote = "footnote.pageof.aobj";
         break;
-        case SCROLL_SPECIAL:
+        case 'SCROLL_SPECIAL':
           $footnote = "footnote.special.aobj";
         break;
-        case SCROLL_NOFIRST:
+        case 'SCROLL_NOFIRST':
           $scrollnofirst = TRUE;
         break;
-        case SCROLL_PAGES:
+        case 'SCROLL_PAGES':
         break;
         default:
         break;
