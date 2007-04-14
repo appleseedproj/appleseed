@@ -41,7 +41,9 @@
     var $tID, $Title, $Output, $Context, $Formatting, $Language;
 
     function cBASESYSTEMSTRINGS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'systemStrings';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemStrings';
       $this->tID = '';
       $this->Title = '';
       $this->Output = '';
@@ -251,7 +253,9 @@
     var $tID, $Concern, $Label, $Value, $Chosen;
  
     function cBASESYSTEMOPTIONS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'systemOptions';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemOptions';
       $this->tID = '';
       $this->Concern = '';
       $this->Label = '';
@@ -493,7 +497,9 @@
     var $tID, $userAuth_uID, $Entry, $Stamp, $Severity, $Chosen, $Location;
 
     function cBASESYSTEMLOGS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'systemLogs';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemLogs';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Entry = '';
@@ -581,7 +587,9 @@
     var $tID, $Title, $Output, $Context, $Formatting, $Language;
 
     function cBASESYSTEMTOOLTIPS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'systemTooltips';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemTooltips';
       $this->tID = '';
       $this->Title = '';
       $this->Output = '';

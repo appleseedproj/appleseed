@@ -46,7 +46,9 @@
     var $groupContent, $groupMembers;
 
     function cGROUPINFORMATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'groupInformation';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'groupInformation';
       $this->tID = '';
       $this->Context = '';
       $this->userAuth_uID = '';
@@ -1732,7 +1734,9 @@
     var $Subject, $Body, $Stamp;
 
     function cGROUPCONTENT ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'groupContent';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'groupContent';
       $this->tID = '';
       $this->groupInformation_tID = '';
       $this->Context = '';
@@ -1891,7 +1895,9 @@
     var $Username, $Domain, $Verification, $Stamp;
 
     function cGROUPMEMBERS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'groupMembers';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'groupMembers';
       $this->tID = '';
       $this->Context = '';
       $this->userAuth_uID = '';

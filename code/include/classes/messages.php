@@ -2578,7 +2578,9 @@
     var $Cascade;
 
     function cMESSAGEINFORMATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'messageInformation';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'messageInformation';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Sender_Username = '';
@@ -2707,7 +2709,9 @@
     var $tID, $messageLabels_tID, $messageContent_tID;
 
     function cMESSAGELABELLIST ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'messageLabelList';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'messageLabelList';
       $this->tID = '';
       $this->messageLabels_tID = '';
       $this->messageContent_tID = '';
@@ -2776,8 +2780,9 @@
     var $tID, $userAuth_uID, $Label;
 
     function cMESSAGELABELS ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
 
-      $this->TableName = 'messageLabels';
+      $this->TableName = $gTABLEPREFIX . 'messageLabels';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Label = '';
@@ -2845,7 +2850,9 @@
     var $Cascade;
 
     function cMESSAGENOTIFICATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'messageNotification';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'messageNotification';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Sender_Username = '';
@@ -2964,7 +2971,9 @@
     var $Cascade;
 
     function cMESSAGESTORE ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'messageStore';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'messageStore';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Sender_Username = '';

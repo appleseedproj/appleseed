@@ -53,7 +53,9 @@
     var $Statement;
 
     function cBASEDATACLASS ($pDEFAULTCONTEXT = "", $pDEFAULTTABLENAME = "") {
-      $this->TableName = $pDEFAULTTABLENAME;
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . $pDEFAULTTABLENAME;
       $this->LastIncrement = '';
       $this->Error = '';
       $this->Message = '';

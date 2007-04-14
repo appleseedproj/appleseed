@@ -47,7 +47,9 @@
     var $photoInfo;
 
     function cPHOTOSETS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'photoSets';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'photoSets';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Name = '';
@@ -147,7 +149,9 @@
     var $Comments;
 
     function cPHOTOINFORMATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'photoInformation';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'photoInformation';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->photoSets_tID = '';
@@ -300,7 +304,9 @@
     var $Filename, $Width, $Height;
 
     function cPHOTOPRIVACY ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'photoPrivacy';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'photoPrivacy';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->photoSets_tID = '';

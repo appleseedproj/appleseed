@@ -41,7 +41,9 @@
     var $tID, $Title, $Output, $Formatting, $Location, $Language;
 
     function cCONTENTPAGES ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'contentPages';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'contentPages';
       $this->tID = '';
       $this->Title = '';
       $this->Output = '';
@@ -150,7 +152,9 @@
     var $Verification;
 
     function cCONTENTARTICLES ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'contentArticles';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'contentArticles';
       $this->tID = '';
       $this->Title = '';
       $this->Output = '';

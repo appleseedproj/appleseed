@@ -44,7 +44,9 @@
     var $Cascade;
 
     function cUSERAUTHORIZATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userAuthorization';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userAuthorization';
       $this->uID = '';
       $this->Username = '';
       $this->Pass = '';
@@ -210,7 +212,9 @@
     var $userAuth_uID, $Identifier, $Stamp, $Address, $Host;
  
     function cUSERSESSIONS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userSessions';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userSessions';
       $this->userAuth_uID = '';
       $this->Identifier = '';
       $this->Stamp = '';
@@ -354,7 +358,9 @@
     var $tID, $userAuth_uID, $Location, $r, $w, $a, $e, $Inheritance;
  
     function cUSERACCESS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userAccess';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userAccess';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Location = '';
@@ -462,7 +468,9 @@
     var $tID, $userAuth_uID, $Identifier, $Value, $SettingsCache;
  
     function cUSERSETTINGS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userSettings';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userSettings';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Identifier = '';

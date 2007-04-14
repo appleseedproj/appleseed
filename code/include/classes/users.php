@@ -44,7 +44,9 @@
     var $Cascade;
 
     function cUSER ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userAuthorization';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userAuthorization';
       $this->uID = '';
       $this->Username = '';
       $this->Pass = '';
@@ -654,7 +656,9 @@
     var $Zipcode, $Birthday;
  
     function cUSERPROFILE ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userProfile';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userProfile';
       $this->userAuth_uID = '';
       $this->Email = '';
       $this->Fullname = '';
@@ -817,7 +821,9 @@
     var $tID, $FullQuestion, $ShortQuestion, $TypeOf, $Concern, $Visibility;
  
     function cUSERQUESTIONS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userQuestions';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userQuestions';
       $this->tID = '';
       $this->FullQuestion = '';
       $this->ShortQuestion = '';
@@ -913,7 +919,9 @@
     var $tID, $userAuth_uID, $userQuestions_tID, $Answer;
  
     function cUSERANSWERS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userAnswers';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userAnswers';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->userQuestions_tID = '';
@@ -996,7 +1004,9 @@
     var $userAuth_uID, $Views, $FirstLogin, $LastLogin;
 
     function cUSERINFORMATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userInformation';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userInformation';
       $this->userAuth_uID = '';
       $this->Views = '';
       $this->FirstLogin = '';
@@ -1139,7 +1149,9 @@
     var $userAuth_uID, $Value, $Active, $Amount;
 
     function cUSERINVITES ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userInvites';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userInvites';
       $this->userAuth_uID = '';
       $this->Value = '';
       $this->Active = '';
@@ -1309,7 +1321,9 @@
     var $tID, $userAuth_uID, $Filename, $Keyword, $Comments;
 
     function cUSERICONS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userIcons';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userIcons';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Filename = '';
@@ -1470,7 +1484,9 @@
     var $tID, $userAuth_uID, $Name, $Domain;
 
     function cUSERGROUPS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'userGroups';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userGroups';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->Name = '';

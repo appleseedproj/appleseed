@@ -131,7 +131,9 @@
     var $photoInfo;
 
     function cAUTHSESSIONS ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'authSessions';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'authSessions';
       $this->tID = '';
       $this->Username = '';
       $this->Domain = '';
@@ -283,7 +285,9 @@
     var $photoInfo;
 
     function cAUTHVERIFICATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'authVerification';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'authVerification';
       $this->tID = '';
       $this->Username = '';
       $this->Domain = '';

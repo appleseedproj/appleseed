@@ -88,7 +88,7 @@
       
       // Connect to the database.
       $this->DBConnect ();
-  
+      
       // Global Variables
       global $gUSERTHEME;
       global $gSETTINGS, $gLOGINSESSION, $gREMOTELOGINSESSION;
@@ -98,6 +98,8 @@
       global $gFOCUSFULLNAME;
       global $gPROFILEREQUEST, $gPROFILEACTION, $gPROFILESUBACTION;
       global $gACTION;
+      
+      global $gTABLEPREFIX;
   
       // Initialize classes
       global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML;

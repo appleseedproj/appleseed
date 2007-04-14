@@ -42,8 +42,9 @@
     var $Cascade;
 
     function cFRIENDINFORMATION ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
 
-      $this->TableName = 'friendInformation';
+      $this->TableName = $gTABLEPREFIX . 'friendInformation';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->sID = '';
@@ -1616,8 +1617,9 @@
     var $tID, $friendCircles_tID, $friendInformation_tID;
 
     function cFRIENDCIRCLESLIST ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
 
-      $this->TableName = 'friendCirclesList';
+      $this->TableName = $gTABLEPREFIX . 'friendCirclesList';
       $this->tID = '';
       $this->friendCircles_tID = '';
       $this->friendInformation_tID = '';
@@ -1687,8 +1689,9 @@
     var $tID, $userAuth_uID, $sID, $Name, $Description;
 
     function cFRIENDCIRCLES ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
 
-      $this->TableName = 'friendCircles';
+      $this->TableName = $gTABLEPREFIX . 'friendCircles';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->sID = '';

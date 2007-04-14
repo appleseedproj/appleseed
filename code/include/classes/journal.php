@@ -48,7 +48,9 @@
     var $journalPrivacy;
 
     function cJOURNALPOST ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'journalPost';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'journalPost';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->userIcons_Filename = '';
@@ -333,7 +335,9 @@
     var $Filename, $Width, $Height;
 
     function cJOURNALPRIVACY ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'journalPrivacy';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'journalPrivacy';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->journalPost_tID = '';

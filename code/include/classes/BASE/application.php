@@ -412,11 +412,12 @@
   
       } // foreach
 
-      global $gCONNECT;
+      global $gCONNECT, $gTABLEPREFIX;
       $gCONNECT['username'] = $setting_un;
       $gCONNECT['password'] = $setting_pw;
       $gCONNECT['database'] = $setting_db;
       $gCONNECT['host'] = $setting_host;
+      $gTABLEPREFIX = $setting_pre;
       
       global $gSITEURL;
       $gSITEURL = $setting_url;

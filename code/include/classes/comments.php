@@ -43,7 +43,9 @@
     var $Subject, $Body, $Stamp;
 
     function cCOMMENTINFORMATION ($pDEFAULTCONTEXT = '') {
-      $this->TableName = 'commentInformation';
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'commentInformation';
       $this->tID = '';
       $this->rID = '';
       $this->Context = '';
