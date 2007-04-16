@@ -70,7 +70,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("common.images");
+  $zAPPLE->Initialize("common.images", TRUE);
 
   $USER = new cUSER();
   $USER->Select ("Username", $gICONUSER);

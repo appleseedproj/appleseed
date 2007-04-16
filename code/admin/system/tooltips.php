@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.system.tooltips");
+  $zAPPLE->Initialize("admin.system.tooltips", TRUE);
 
   // Create local classes.
   $ADMINDATA = new cSYSTEMTOOLTIPS ($zAPPLE->Context);

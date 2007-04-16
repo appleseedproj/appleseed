@@ -55,6 +55,7 @@
   $INSTALL->CheckForSubDirectory ();
   $INSTALL->CheckPHPVersion ();
   $INSTALL->CheckMysqlVersion ();
+  $INSTALL->CheckMagicQuotes ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckPhotoDirectory ();
   $INSTALL->CheckSiteData ();
@@ -176,6 +177,21 @@ class cINSTALL {
     
     return ($version[0]);
   } // GetMysqlVersion
+  
+  function CheckMagicQuotes () {
+    global $Error, $ErrorMark;
+    
+    // Check if register_globals is turned off.
+    if ((ini_get ('magic_quotes_gpc')) or (ini_get('magic_quotes_runtime'))) {
+      $Error['magic_quotes'] = TRUE;
+      $ErrorMark['magic_quotes'] = "<span class='no'>N</span>";
+    } else {
+      $Error['magic_quotes'] = FALSE;
+      $ErrorMark['magic_quotes'] = "<span class='yes'>Y</span>";
+    } // if
+  
+    return (TRUE);
+  } // CheckMagicQuotes
   
   function CheckRegisterGlobals () {
     global $Error, $ErrorMark;
@@ -495,6 +511,9 @@ class cINSTALL {
         <span class='label'>Installed in site root directory? (see documentation)</span>
         <?php echo $ErrorMark['sub_dir']; ?>
         
+        <span class='label'>Is magic_quotes turned off?</span>
+        <?php echo $ErrorMark['magic_quotes']; ?>
+        
         <span class='label'>Is register_globals turned off?</span>
         <?php echo $ErrorMark['register_globals']; ?>
         
@@ -586,6 +605,9 @@ class cINSTALL {
         
         <span class='label'>Installed in root directory? (see documentation)</span>
         <?php echo $ErrorMark['sub_dir']; ?>
+        
+        <span class='label'>Is magic_quotes turned off?</span>
+        <?php echo $ErrorMark['magic_quotes']; ?>
         
         <span class='label'>Is register_globals turned off?</span>
         <?php echo $ErrorMark['register_globals']; ?>

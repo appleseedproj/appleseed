@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.error.404");
+  $zAPPLE->Initialize("site.error.404", TRUE);
 
   // Set the page title.
   $zSTRINGS->Lookup ('BROWSER.SUBTITLE', 'SITE.ERROR.404');

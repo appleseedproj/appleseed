@@ -59,7 +59,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.redirect");
+  $zAPPLE->Initialize("site.redirect", TRUE);
 
   // Set "Remember Me" as on by default.
   $gREMEMBER = 'on';

@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.users");
+  $zAPPLE->Initialize("admin.users", TRUE);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);

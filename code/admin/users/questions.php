@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.users.questions");
+  $zAPPLE->Initialize("admin.users.questions", TRUE);
 
   // Create local classes.
   $ADMINDATA = new cUSERQUESTIONS ($zAPPLE->Context);

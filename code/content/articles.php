@@ -60,7 +60,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("content.articles");
+  $zAPPLE->Initialize("content.articles", TRUE);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE, '/content/articles/');

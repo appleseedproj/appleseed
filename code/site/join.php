@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.join");
+  $zAPPLE->Initialize("site.join", TRUE);
 
   // Initialize tabs
   global $gLOCALLOGINTAB, $gREMOTELOGINTAB;

@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.login");
+  $zAPPLE->Initialize("site.login", TRUE);
 
   global $gLOGINBOX;
   $gLOGINBOX = "login";

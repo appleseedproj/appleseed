@@ -59,7 +59,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.content.pages");
+  $zAPPLE->Initialize("admin.content.pages", TRUE);
 
   // Create local classes.
   $ADMINDATA = new cCONTENTPAGES ($zAPPLE->Context);

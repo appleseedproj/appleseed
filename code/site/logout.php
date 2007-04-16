@@ -59,7 +59,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.logout");
+  $zAPPLE->Initialize("site.logout", TRUE);
 
   // Log the user out of the system.
   $zLOCALUSER->userSession->Destroy();

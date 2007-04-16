@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.system.strings");
+  $zAPPLE->Initialize("admin.system.strings", TRUE);
 
   // Create local classes.
   $ADMINDATA = new cSYSTEMSTRINGS ($zAPPLE->Context);

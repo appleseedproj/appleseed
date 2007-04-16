@@ -58,7 +58,7 @@
     } // Constructor
 
     // Overwrite inhereted ::Initialize function.
-    function Initialize ($pCONTEXT = "") {
+    function Initialize ($pCONTEXT = "", $pREGISTERGLOBALS = FALSE) {
       
       global $zDEBUG;
       
@@ -123,47 +123,52 @@
 
       $zAUTHUSER = new cAUTHUSER ();
       
-      // Strip all slashes from POST data.
-      foreach ($_POST as $key => $value) {
-       
-        // Put the global variable in local scope.
-        global $$key;
-        $$key = $_POST[$key];
-      
-        // Strip slashes off of post variable.
-        if (is_array ($$key) ) {
-          foreach ($$key as $k => $v) {
-            // Must create a reference to $$key, instead of using directly.
-            $array = &$$key;
-            $array[$k] = stripslashes ($v);
-          } // foreach
-        } else {
-           $$key = stripslashes ($value);
-        } // if
-      
-      } //foreach
-  
-      // Strip all slashes from GET data.
-      foreach ($_GET as $key => $value) {
-       
-        // Put the global variable in local scope.
-        global $$key;
-        if ($$key) continue;
-      
-        $$key = $_GET[$key];
+      // Fake register_globals and magic_slashes functionality.
+      // NOTE: Eventually phase out this section.
+      if ($pREGISTERGLOBALS) {
 
-        // Strip slashes off of post variable.
-        if (is_array ($$key) ) {
-          foreach ($$key as $k => $v) {
-            // Must create a reference to $$key, instead of using directly.
-            $array = &$$key;
-            $array[$k] = stripslashes ($v);
-          } // foreach
-        } else {
-           $$key = stripslashes ($value);
-        } // if
+        // Strip all slashes from POST data.
+        foreach ($_POST as $key => $value) {
+       
+          // Put the global variable in local scope.
+          global $$key;
+          $$key = $_POST[$key];
+        
+          // Strip slashes off of post variable.
+          if (is_array ($$key) ) {
+            foreach ($$key as $k => $v) {
+              // Must create a reference to $$key, instead of using directly.
+              $array = &$$key;
+              $array[$k] = stripslashes ($v);
+            } // foreach
+          } else {
+             $$key = stripslashes ($value);
+          } // if
+        
+        } //foreach
+    
+        // Strip all slashes from GET data.
+        foreach ($_GET as $key => $value) {
+         
+          // Put the global variable in local scope.
+          global $$key;
+          if ($$key) continue;
+        
+          $$key = $_GET[$key];
+  
+          // Strip slashes off of post variable.
+          if (is_array ($$key) ) {
+            foreach ($$key as $k => $v) {
+              // Must create a reference to $$key, instead of using directly.
+              $array = &$$key;
+              $array[$k] = stripslashes ($v);
+            } // foreach
+          } else {
+             $$key = stripslashes ($value);
+          } // if
       
-      } //foreach
+        } //foreach
+      } // if
   
       // Load site title and url into global variable.
       $zSTRINGS->Lookup ('BROWSER.TITLE', $zAPPLE->Context);
@@ -311,6 +316,12 @@
                       "This is a potential security hazard.  Please delete index.php.", E_USER_WARNING);
       } // if
       
+      if ((ini_get ('magic_quotes_gpc')) or (ini_get('magic_quotes_runtime'))) {
+        // Magic Quotes is on.  Exit with error.
+        echo "ERROR: magic_quotes is on. Please disable.<br />";
+        $this->Abort ();
+      } // if
+
       if (ini_get('register_globals')) {
         // Register globals is on.  Exit with error.
         echo "ERROR: register_globals is on. Please disable.<br />";

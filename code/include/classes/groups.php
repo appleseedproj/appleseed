@@ -155,7 +155,6 @@
     } // Constructor
 
     // Initialize the group posting subsystem.
-
     function Initialize () {
       global $gCONTENTGROUPSINFOTAB;
       global $gCONTENTGROUPSTAB;

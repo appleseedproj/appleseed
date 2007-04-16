@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.users.accounts");
+  $zAPPLE->Initialize("admin.users.accounts", TRUE);
 
   // Create local classes.
   $ADMINDATA = new cUSER ($zAPPLE->Context);

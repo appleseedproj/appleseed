@@ -60,7 +60,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("user");
+  $zAPPLE->Initialize("user", TRUE);
 
   // Set the context based on which profile action was requested.
   $zAPPLE->SetContext("user." . $gPROFILEACTION);

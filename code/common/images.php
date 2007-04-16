@@ -83,7 +83,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("common.images");
+  $zAPPLE->Initialize("common.images", TRUE);
 
   list ($null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = split ('/', $requested_pic);
 

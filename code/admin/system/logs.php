@@ -58,7 +58,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.system.logs");
+  $zAPPLE->Initialize("admin.system.logs", TRUE);
 
   // Create local classes.
   $ADMINDATA = new cSYSTEMLOGS ($zAPPLE->Context);

@@ -59,7 +59,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site");
+  $zAPPLE->Initialize("site", TRUE);
 
   switch ($gACTION) {
     case 'GET_USER_INFORMATION':

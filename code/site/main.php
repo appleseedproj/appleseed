@@ -60,7 +60,7 @@
   $zAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site");
+  $zAPPLE->Initialize("site", TRUE);
 
   // Create the Articles class.
   $zARTICLES = new cEXTENDEDCONTENTARTICLES  ("content.articles");
