@@ -1,11 +1,11 @@
 <div id='benchmark'>
-<div id='title'>SYSTEM BENCHMARKS</div>
+<div id='title'><a name='benchmarks' href='#debug'>SYSTEM BENCHMARKS &uarr;</a></div>
  <ul>
   <li class='odd'>
    <div id='sql'>
     <span class='label'>SQL TIME:</span>
     <span class='value'><?php echo $gSQLTIME; ?></span>
-   </div> <!-- #total -->
+   </div> <!-- #sql -->
   </li>
   <li class='even'>
    <div id='total'>

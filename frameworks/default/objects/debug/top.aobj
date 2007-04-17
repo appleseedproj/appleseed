@@ -1,3 +1,8 @@
 <div id='debug'>
- <div id='caption'>DEBUG INFORMATION</div>
+ <div id='caption'><a name='debug'>DEBUG INFORMATION</a></div>
  <div id='container'>
+  <div id='quick'>
+   <a href='#benchmarks'>SYSTEM BENCHMARKS &darr;</a>
+   <a href='#errors'>ERRORS & WARNINGS &darr;</a>
+   <a href='#statements'>SQL STATEMENTS &darr;</a>
+  </div> <!-- #quick -->

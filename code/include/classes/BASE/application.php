@@ -417,7 +417,7 @@
       $gCONNECT['password'] = $setting_pw;
       $gCONNECT['database'] = $setting_db;
       $gCONNECT['host'] = $setting_host;
-      $gTABLEPREFIX = $setting_pre;
+      if (isset ($setting_pre)) $gTABLEPREFIX = $setting_pre;
       
       global $gSITEURL;
       $gSITEURL = $setting_url;

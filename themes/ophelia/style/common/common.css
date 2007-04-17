@@ -429,6 +429,14 @@ p.linkonline {
 } 
 
 /* DEBUG INFORMATION */
+#debug,
+#debug #benchmark,
+#debug #statement,
+#debug #errors {
+ float:left;
+ clear:both;
+ width:100%;
+}
 
 #debug #container {
  float:left;
@@ -446,8 +454,11 @@ p.linkonline {
 
 #debug #title {
  float:left;
- width:100%;
- padding:10px 0;
+ clear:both;
+}
+#debug #title a {
+ float:left;
+ padding:10px;
 }
 
 #debug #caption {
@@ -455,6 +466,7 @@ p.linkonline {
  width:79%;
  margin-right:10%;
  margin-left:11%;
+ padding:10px 0 0 0;
  text-align:left;
 }
 
@@ -499,12 +511,6 @@ p.linkonline {
  font-style:italic;
 }
 
-#debug #benchmark {
- float:left;
- width:100%;
- padding:10px 0;
-}
-
 #debug #benchmark span.label {
  width:69%;
 }
@@ -541,4 +547,14 @@ p.linkonline {
  text-align:right;
  padding:5px 1% 5px 0;
  width:9%;
+}
+
+#debug #quick {
+ text-align:center;
+}
+#debug a {
+ background:none;
+}
+#debug #quick a {
+ padding:0 20px;
 }
