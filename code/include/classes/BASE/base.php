@@ -2457,7 +2457,7 @@
             } // foreach
           } else {
             // If this key was previously declared, then continue on.
-            if (($pDATALIST[$fullkeyname] != "") or ($pDATALIST[$fullkeyname] == "0")) continue;
+            if (isset($pDATALIST[$fullkeyname]) or ($pDATALIST[$fullkeyname] == "0")) continue;
 
             $finalstring .= "$fullkeyname=$listvalue&";
 

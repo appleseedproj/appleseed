@@ -475,7 +475,7 @@
       $this->userAuth_uID = '';
       $this->Identifier = '';
       $this->Value = '';
-      $this->SettingsCache = array ();
+      $this->SettingsCache = array ('DefaultTheme' => NULL);
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';

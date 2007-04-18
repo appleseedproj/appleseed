@@ -400,6 +400,13 @@
       // Load the database connection information.
       $settings = file ($settings_file); 
   
+      // Initialize Variables.
+      $setting_un = null;
+      $setting_pw = null;
+      $setting_db = null;
+      $setting_pre = null;
+      $setting_host = null;
+      
       // Loop through each line.
       foreach ($settings as $setting) {
   
@@ -417,7 +424,7 @@
       $gCONNECT['password'] = $setting_pw;
       $gCONNECT['database'] = $setting_db;
       $gCONNECT['host'] = $setting_host;
-      if (isset ($setting_pre)) $gTABLEPREFIX = $setting_pre;
+      $gTABLEPREFIX = $setting_pre;
       
       global $gSITEURL;
       $gSITEURL = $setting_url;

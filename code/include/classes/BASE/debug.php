@@ -49,7 +49,7 @@
       
       $this->BenchmarkStart = array ();
       $this->BenchmarkStop = array ();
-      $this->BenchmarkTotal = array ();
+      $this->BenchmarkTotal = array ('STATEMENT' => 0, 'SITE' => 0);
       
       $this->StatementList = array ();
       $this->StatementCount = 0;
