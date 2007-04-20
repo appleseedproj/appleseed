@@ -36,6 +36,7 @@
   require_once 'code/include/external/htmlpurifier/HTMLPurifier.auto.php';
   require_once 'code/include/external/phpmailer/class.phpmailer.php';
   require_once 'code/include/external/phpmailer/class.smtp.php';
+  require_once 'code/include/external/PEAR/Mail/Queue.php';
 
   class cAPPLESEED extends cAPPLICATION {
 
@@ -53,6 +54,7 @@
       $this->PurifierConfig->set('Core', 'XHTML', false); //replace with false if HTML 4.01
       $this->Purifier = new HTMLPurifier($this->PurifierConfig);
 
+      // Eventually remove and replace with PEAR/Mail::Queue.
       $this->Mailer = new PHPMailer();
 
     } // Constructor

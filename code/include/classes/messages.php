@@ -2113,7 +2113,7 @@
 
     } // ReportListAsSpam
 
-
+    // Send an Appleseed message.
     function Send ($pSENDERUSERNAME = NULL) {
       global $gRECIPIENTADDRESS;
       global $gRECIPIENTNAME, $gRECIPIENTDOMAIN, $gSITEDOMAIN;
