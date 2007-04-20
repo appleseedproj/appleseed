@@ -36,7 +36,6 @@
   require_once 'code/include/external/htmlpurifier/HTMLPurifier.auto.php';
   require_once 'code/include/external/phpmailer/class.phpmailer.php';
   require_once 'code/include/external/phpmailer/class.smtp.php';
-  require_once 'code/include/external/PEAR/Mail/Queue.php';
 
   class cAPPLESEED extends cAPPLICATION {
 
