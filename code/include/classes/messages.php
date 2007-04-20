@@ -520,7 +520,6 @@
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
-      return ($returnbuffer);
 
     } // BufferLabel
 
@@ -539,8 +538,8 @@
 
       global $gSENDERNAME, $gSENDERONLINE;
 
-      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_INBOX . ") ";
-      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM messageInformation WHERE Location = " . FOLDER_INBOX . " AND userAuth_uID = " . $zFOCUSUSER->uID . ") ";
+      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM " . $gTABLEPREFIX . "messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_INBOX . ") ";
+      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM " . $gTABLEPREFIX . "messageInformation WHERE Location = " . FOLDER_INBOX . " AND userAuth_uID = " . $zFOCUSUSER->uID . ") ";
       $query = $statement_left . " UNION " . $statement_right;
       $query .= " ORDER BY Stamp DESC";
 
@@ -650,7 +649,9 @@
 
       global $gSENDERNAME, $gSENDERONLINE;
 
-      $query = "SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM messageStore where userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_SENT;
+      global $gTABLEPREFIX;
+
+      $query = "SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM " . $gTABLEPREFIX . "messageStore where userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_SENT;
       $query .= " ORDER BY Stamp DESC";
 
       $this->Query ($query);
@@ -759,7 +760,9 @@
 
       global $gSENDERNAME, $gSENDERONLINE;
 
-      $query = "SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM messageStore where userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_DRAFTS;
+      global $gTABLEPREFIX;
+
+      $query = "SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM " . $gTABLEPREFIX . "messageStore where userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_DRAFTS;
       $query .= " ORDER BY Stamp DESC";
 
       $this->Query ($query);
@@ -867,7 +870,9 @@
 
       global $gSENDERNAME, $gSENDERONLINE;
 
-      $query = "SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp, Location FROM messageInformation WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_TRASH;
+      global $gTABLEPREFIX;
+
+      $query = "SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp, Location FROM " . $gTABLEPREFIX . "messageInformation WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_TRASH;
       $query .= " ORDER BY Stamp DESC";
 
       $this->Query ($query);
@@ -976,8 +981,8 @@
 
       global $gSENDERNAME, $gSENDERONLINE;
 
-      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp, Location FROM messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location != " . FOLDER_SPAM . " ) ";
-      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp, Location FROM messageInformation WHERE Location != " . FOLDER_TRASH . " AND userAuth_uID = " . $zFOCUSUSER->uID . " AND Location != " . FOLDER_SPAM . ") ";
+      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp, Location FROM " . $gTABLEPREFIX . "messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location != " . FOLDER_SPAM . " ) ";
+      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp, Location FROM " . $gTABLEPREFIX . "messageInformation WHERE Location != " . FOLDER_TRASH . " AND userAuth_uID = " . $zFOCUSUSER->uID . " AND Location != " . FOLDER_SPAM . ") ";
       $query = $statement_left . " UNION " . $statement_right;
       $query .= " ORDER BY Stamp DESC";
 
@@ -1092,8 +1097,8 @@
 
       global $gSENDERNAME, $gSENDERONLINE;
 
-      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_SPAM . ") ";
-      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM messageInformation WHERE Location = " . FOLDER_SPAM . " AND userAuth_uID = " . $zFOCUSUSER->uID . ") ";
+      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM " . $gTABLEPREFIX . "messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_SPAM . ") ";
+      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM " . $gTABLEPREFIX . "messageInformation WHERE Location = " . FOLDER_SPAM . " AND userAuth_uID = " . $zFOCUSUSER->uID . ") ";
       $query = $statement_left . " UNION " . $statement_right;
       $query .= " ORDER BY Stamp DESC";
 
@@ -1190,9 +1195,11 @@
     function SelectAllMessages () {
 
       global $zFOCUSUSER, $gSORT;
+      
+      global $gTABLEPREFIX;
 
-      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM messageNotification) ";
-      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM messageInformation) ";
+      $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM " . $gTABLEPREFIX . "messageNotification) ";
+      $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM " . $gTABLEPREFIX . "messageInformation) ";
       $query = $statement_left . " UNION " . $statement_right;
       $query .= " ORDER BY Stamp DESC";
 
