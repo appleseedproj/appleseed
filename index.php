@@ -156,10 +156,10 @@ class cINSTALL {
     $minor = $VersionArray[1];
     $micro = $VersionArray[2];
     
-    if ($main > 5) {
+    if ($main > 4) {
       $Error['mysql_version'] = FALSE;
       $ErrorMark['mysql_version'] = "<span class='yes'>Y</span>";
-    } elseif ($main == 5) {
+    } elseif ($main == 4) {
       // Add sub-checks for minor versions.
       $Error['mysql_version'] = FALSE;
       $ErrorMark['mysql_version'] = "<span class='yes'>Y</span>";
@@ -529,7 +529,7 @@ class cINSTALL {
         <span class='label'>PHP version 4.1.0 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
-        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
+        <span class='label'>Mysql version 4.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
         <?php echo $ErrorMark['mysql_version']; ?>
        </div>
        
@@ -624,7 +624,7 @@ class cINSTALL {
         <span class='label'>PHP version 4.1.0 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
-        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
+        <span class='label'>Mysql version 4.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
         <?php echo $ErrorMark['mysql_version']; ?>
        </div> <!-- #check -->
        

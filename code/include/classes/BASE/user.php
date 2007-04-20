@@ -307,11 +307,11 @@
       if ($pREMEMBER) {
        // Set for 30 days.
        setcookie ($pSESSIONNAME, $session_string, 
-                  time()+60*60*24*30, '/', '.' . $gSITEDOMAIN) 
+                  time()+60*60*24*30, '/') 
          or $session_string = "";
       } else {
        // Set for when browser closes.
-       setcookie ($pSESSIONNAME, $session_string, 0, '/', '.' . $gSITEDOMAIN)
+       setcookie ($pSESSIONNAME, $session_string, 0, '/')
          or $session_string = "";
       } // if
   
@@ -344,7 +344,7 @@
       $this->Delete ();
  
       // Set the cookie with that string.
-      setcookie ($pSESSIONNAME, $this->Identifier, time() - 3600, '/', '.' . $gSITEDOMAIN);
+      setcookie ($pSESSIONNAME, $this->Identifier, time() - 3600, '/');
   
       return (0);
  
