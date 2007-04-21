@@ -1,2 +1,2 @@
 <!-- Broadcast -->
-<p class='error' onClick='this.style.visibility="hidden"; this.style.height="0px";'>
+<p class='error'>
