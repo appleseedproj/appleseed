@@ -205,6 +205,10 @@
       $zFRIENDS->Deny ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
     break;
 
+    case 'CANCEL':
+      $zFRIENDS->Cancel ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
+    break;
+
     case 'SAVE':
       // Check if user has write access;
       if ( ($gFOCUSUSERID != $gAUTHUSERID) and 

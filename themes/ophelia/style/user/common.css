@@ -2099,10 +2099,12 @@ form#compose p.error:hover {
 
 /* CONTEXT: users.friends:requests */
 
+#user #friends #pending #listing,
 #user #friends #requests #listing {
  float:left;
 }
 
+#user #friends #pending #listing li,
 #user #friends #requests #listing li {
  float:left;
  width:236px;
