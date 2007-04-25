@@ -87,7 +87,6 @@
   } else {
     $returnicon = "photos/" . $USER->Username . "/icons/" . $USER->userIcons->Filename;
   } // if
-
   $zIMAGE->Show ($returnicon);
 
 ?>

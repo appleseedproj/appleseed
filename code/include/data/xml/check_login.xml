@@ -2,11 +2,11 @@
 <appleseed>
  <version>%APPLESEEDVERSION%</version>
  <checklogin>
-  <username>%CHECKUSERNAME%</username>
-  <fullname>%CHECKFULLNAME%</fullname>
-  <domain>%SELFDOMAIN%</domain>
-  <time>%CHECKTIME%</time>
-  <address>%VERIFYADDRESS%</address>
-  <host>%VERIFYHOST%</host>
+  <username>%USERNAME%</username>
+  <fullname>%FULLNAME%</fullname>
+  <domain>%DOMAIN%</domain>
+  <time>%TIME%</time>
+  <address>%ADDRESS%</address>
+  <host>%HOST%</host>
  </checklogin>
 </appleseed>

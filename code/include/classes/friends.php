@@ -1505,7 +1505,7 @@
 
       // Check if this is a long distance relationship.
       if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
-        return ($this->LongDistanceDeny ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN));
+        return ($this->LongDistanceDeny ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN));
       } // if
 
       // Get Information On The Requesting User.
@@ -1646,7 +1646,84 @@
     } // RemoveAll
 
     function LongDistanceDeny ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
-      echo "DENY"; exit;
+
+      global $zSTRINGS, $zXML;
+
+      global $gSITEDOMAIN, $gDOMAIN;
+
+      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
+
+      // Get Information On The Requesting User.
+      $REQUESTINGUSER =  new cUSER ();
+      $REQUESTINGUSER->Select ("Username", $pLOCALUSERNAME);
+      $REQUESTINGUSER->FetchArray ();
+
+      // Find the highest Sort ID.
+      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $zLOCALUSER->uID;
+      $query = mysql_query($statement);
+      $result = mysql_fetch_row($query);
+      $sortid = $result[0] + 1;
+
+      // Step 1: Check remote friend relationship status.
+      $status = $this->LongDistanceStatus ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
+      
+      switch ($status) {
+        case FRIEND_VERIFIED:
+        case FRIEND_REQUESTS:
+        case FRIEND_PENDING:
+          // Correct
+        default:
+          
+          $VERIFY = new cUSERTOKENS ();
+          $USER = new cUSER ();
+          $USER->Select ("Username", $pLOCALUSERNAME);
+          $USER->FetchArray();
+          $VERIFY->userAuth_uID = $USER->uID;
+          $VERIFY->LoadToken ($pREMOTEDOMAIN);
+          $token = $VERIFY->Token;
+          if (!$token) {
+            $VERIFY->CreateToken ($pREMOTEDOMAIN);
+            $token = $VERIFY->Token;
+          } // if
+      
+          unset ($VERIFY);
+          unset ($USER);
+
+          // Send request to delete remote friend.
+          $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
+          $datalist = array ("gACTION"   => "DELETE_FRIEND",
+                             "gTOKEN" => $token,
+                             "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gDOMAIN" => $pLOCALDOMAIN);
+          $zREMOTE->Post ($datalist);
+        
+          $zXML->Parse ($zREMOTE->Return);
+
+          $fullname = $zXML->GetValue ("fullname", 0);
+          $result = $zXML->GetValue ("result", 0);
+
+          unset ($zREMOTE);
+          
+          $deletecriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
+                                   "Username"     => $pREMOTEUSERNAME,
+                                   "Domain"       => $pREMOTEDOMAIN);
+          $this->SelectByMultiple ($deletecriteria);
+          while ($this->FetchArray()) {
+            $this->Delete();
+          } // while
+
+          global $gDENIEDNAME;
+          $gDENIEDNAME = $fullname;
+          $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
+          $this->Message = $zSTRINGS->Output;
+          unset ($gREQUESTEDUSER);
+
+          $gCIRCLEVIEWADMIN = CIRCLE_REQUESTS;
+          $gCIRCLEVIEW = CIRCLE_REQUESTS;
+
+        break;
+      } // switch
+
       return (TRUE);
     } // LongDistanceDeny
 

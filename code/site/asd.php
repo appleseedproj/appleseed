@@ -127,6 +127,48 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'CANCEL_FRIEND_REQUEST':
+      $gTOKEN = $_POST['gTOKEN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      // Check for an authentication token.
+      if (!$gTOKEN) {
+        $code = 1000;
+        $message = "ERROR.NOTOKEN";
+        $return = $zSERVER->XML->ErrorData ($code, $message);
+        echo $return; exit;
+      } // if
+
+      // Check Friend Status.
+      $zSERVER->CancelFriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data;
+    break;
+    case 'DELETE_FRIEND':
+      $gTOKEN = $_POST['gTOKEN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      // Check for an authentication token.
+      if (!$gTOKEN) {
+        $code = 1000;
+        $message = "ERROR.NOTOKEN";
+        $return = $zSERVER->XML->ErrorData ($code, $message);
+        echo $return; exit;
+      } // if
+
+      // Check Friend Status.
+      $zSERVER->DeleteFriend ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data;
+    break;
     case 'APPROVE_FRIEND_REQUEST':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -162,32 +204,18 @@
     
     break;
     case 'GET_ICON_LIST':
-     $USER = new cUSER ();
-                      
-     $USER->Select ("Username", $gUSERNAME);
-     $USER->FetchArray();
-
-     $USER->userIcons->Select ("userAuth_uID", $USER->uID);
-     
-     $return = "";
-
-     $data = implode ("", file ("code/include/data/xml/get_icon_list/top.xml"));
-     $return = $zAPPLE->ParseTags ($data);
-
-     global $gICONKEYWORD, $gICONFILENAME;
-     while ($USER->userIcons->FetchArray()) {
-       $gICONKEYWORD = $USER->userIcons->Keyword;
-       $gICONFILENAME = $USER->userIcons->Filename;
-       $data = implode ("", file ("code/include/data/xml/get_icon_list/middle.xml"));
-       $return .= $zAPPLE->ParseTags ($data);
-     } // while
-
-     $data = implode ("", file ("code/include/data/xml/get_icon_list/bottom.xml"));
-     $return .= $zAPPLE->ParseTags ($data);
-
-     echo $return;
-
-     unset ($USER);
+    
+      $gDOMAIN = $_POST['gDOMAIN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+    
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      // Retrieve the icon list.
+      $zSERVER->GetIconList ($gUSERNAME);
+      
+      echo $zSERVER->XML->Data; exit;
+      
     break;
     case 'MESSAGE_RETRIEVE':
       // NOTE: Replace this with proper class data.

@@ -51,11 +51,13 @@
     function BuildIconList () {
 
       global $zXML;
+      global $gSITEDOMAIN;
 
       global $gICONLIST;
 
       $zREMOTE = new cREMOTE ($this->Domain);
       $datalist = array ("gACTION"   => "GET_ICON_LIST",
+                         "gDOMAIN"   => $gSITEDOMAIN,
                          "gUSERNAME" => $this->Username);
       $zREMOTE->Post ($datalist);
 

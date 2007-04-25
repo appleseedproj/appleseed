@@ -1305,10 +1305,14 @@
       } else {
         global $gICONSOURCE, $gICONTARGET;
         if (($zAUTHUSER->Domain) and ($pDOMAIN != $zAUTHUSER->Domain)) {
-          // Redirect to home domain for remote authentication.
-          $target = $pDOMAIN;
-          $location = "/profile/" . $pUSERNAME . "/";
-          $gICONTARGET = "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location;
+          if ($pDOMAIN != $gSITEDOMAIN) {
+            // Redirect to home domain for remote authentication.
+            $target = $pDOMAIN;
+            $location = "/profile/" . $pUSERNAME . "/";
+            $gICONTARGET = "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location;
+          } else {
+            $gICONTARGET = "http://" . $pDOMAIN . "/profile/" . $pUSERNAME . "/";
+          } // if
         } else {
           $gICONTARGET = "http://" . $pDOMAIN . "/profile/" . $pUSERNAME . "/";
         } // if

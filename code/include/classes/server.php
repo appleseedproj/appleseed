@@ -171,13 +171,14 @@
         // Load and send back the fullname.
         global $gFULLNAME;
         
-        $sql_statement = "SELECT Fullname
+        $sql_statement = "SELECT Fullname,Alias
                           FROM   " . $this->TablePrefix . "userProfile
                           WHERE userAuth_uID = $uid
         ";
         $sql_result = mysql_query($sql_statement);
         $result = mysql_fetch_assoc ($sql_result);
         $gFULLNAME = $result['Fullname'];
+        if ($result['Alias']) $gFULLNAME = $result['Alias'];
         
         $this->XML->Load ("code/include/data/xml/check_token.xml");
         mysql_free_result ($sql_result);
@@ -210,8 +211,6 @@
         // If not, send back to see if Token is valid.
         $REMOTE = new cREMOTE ($pDOMAIN);
         $datalist = array ("gACTION"   => "CHECK_TOKEN",
-        
-        
                            "gTOKEN"    => $pTOKEN,
                            "gDOMAIN"   => $this->SiteDomain);
         $REMOTE->Post ($datalist, 1);
@@ -240,10 +239,10 @@
         } // if
       } else {
         // A result was found, use this result.
-        $results = mysql_fetch_assoc ($sql_result);
+        $result = mysql_fetch_assoc ($sql_result);
         mysql_free_result ($sql_result);
         
-        $this->ReturnUsername = $results['Username'];
+        $this->ReturnUsername = $result['Username'];
         $this->Token = $pTOKEN;
       } // if
       
@@ -294,15 +293,6 @@
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
       
-      // echo "LOCAL:<br >";
-      // echo $pUSERNAME, "<br />";
-      // echo $this->SiteDomain, "<br />";
-      
-      // echo "REMOTE:<br >";
-      // echo $this->ReturnUsername, "<br />";
-      // echo $pDOMAIN, "<br />";
-      // exit;
-      
       $friendInfo = $this->TablePrefix . "friendInformation";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -320,11 +310,11 @@
                                 );
       
       $sql_result = mysql_query ($sql_statement);
-      $results = mysql_fetch_assoc ($sql_result);
+      $result = mysql_fetch_assoc ($sql_result);
       global $gFULLNAME;
-      $gFULLNAME = $results['Fullname'];
-      if ($result['Alias']) $gFULLNAME = $results['Alias'];
-      $uID = $results['uID'];
+      $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      $uID = $result['uID'];
       mysql_free_result ($sql_result);
       
       // Delete any current records.
@@ -356,8 +346,8 @@
                                 );
       
       $sql_result = mysql_query ($sql_statement);
-      $results = mysql_fetch_assoc ($sql_result);
-      $sID = $results['sID'];
+      $result = mysql_fetch_assoc ($sql_result);
+      $sID = $result['sID'];
       if ($sID) 
         $sID++;
       else
@@ -390,7 +380,7 @@
       global $gFULLNAME;
       
       $sql_statement = "
-        SELECT Fullname
+        SELECT Fullname, Alias
         FROM   $userProfile,$userAuth
         WHERE  $userProfile.userAuth_uID = $userAuth.uID
         AND    $userAuth.Username = '%s'
@@ -402,12 +392,126 @@
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
       $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/add_friend_request.xml");
       
       return (TRUE);
     } // AddFriendRequest
+    
+    function DeleteFriend ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      
+      // Delete the friend record.
+      
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      $userProfile = $this->TablePrefix . "userProfile";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      
+      $sql_statement = "
+        DELETE $friendInfo
+        FROM   $friendInfo,$userAuth
+        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+        AND    $friendInfo.Username = '%s'
+        AND    $friendInfo.Domain = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($this->ReturnUsername),
+                                mysql_real_escape_string ($pDOMAIN)
+                                );
+                                
+      $sql_result = mysql_query($sql_statement);
+      global $gRESULT;
+      $gRESULT = 1;
+                                
+      // Load and send back the fullname.
+      global $gFULLNAME;
+      
+      $sql_statement = "
+        SELECT Fullname,Alias
+        FROM   $userProfile,$userAuth
+        WHERE  $userProfile.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME));
+                                
+      $sql_result = mysql_query($sql_statement);
+      $result = mysql_fetch_assoc ($sql_result);
+      $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      mysql_free_result ($sql_result);
+      
+      $this->XML->Load ("code/include/data/xml/delete_friend.xml");
+      
+      return (TRUE);
+    } // DeleteFriend
+    
+    function CancelFriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      
+      // Update the friend record.
+      
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      $userProfile = $this->TablePrefix . "userProfile";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      
+      $sql_statement = "
+        UPDATE $friendInfo,$userAuth
+        SET    $friendInfo.Verification = 1
+        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+        AND    $friendInfo.Username = '%s'
+        AND    $friendInfo.Domain = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($this->ReturnUsername),
+                                mysql_real_escape_string ($pDOMAIN)
+                                );
+                                
+      $sql_result = mysql_query($sql_statement);
+      global $gRESULT;
+      
+      $gRESULT = 1;
+                                
+      // Load and send back the fullname.
+      global $gFULLNAME;
+      
+      $sql_statement = "
+        SELECT Fullname,Alias
+        FROM   $userProfile,$userAuth
+        WHERE  $userProfile.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME));
+                                
+      $sql_result = mysql_query($sql_statement);
+      $result = mysql_fetch_assoc ($sql_result);
+      $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      mysql_free_result ($sql_result);
+      
+      $this->XML->Load ("code/include/data/xml/cancel_friend_request.xml");
+      
+      return (TRUE);
+    } // CancelFriendRequest
     
     function ApproveFriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
@@ -446,7 +550,7 @@
       global $gFULLNAME;
       
       $sql_statement = "
-        SELECT Fullname
+        SELECT Fullname,Alias
         FROM   $userProfile,$userAuth
         WHERE  $userProfile.userAuth_uID = $userAuth.uID
         AND    $userAuth.Username = '%s'
@@ -458,6 +562,7 @@
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
       $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/approve_friend_request.xml");
@@ -488,10 +593,10 @@
                                 
       $sql_result = mysql_query ($sql_statement);
       
-      $results = mysql_fetch_assoc ($sql_result);
+      $result = mysql_fetch_assoc ($sql_result);
       
       global $gFRIENDSTATUS;
-      $gFRIENDSTATUS = $results['Verification'];
+      $gFRIENDSTATUS = $result['Verification'];
       
       $this->XML->Load ("code/include/data/xml/check_friend_status.xml");
       
@@ -579,18 +684,18 @@
       $result_count = mysql_num_rows ($sql_result);
 
       if ($result_count) {
-        $results = mysql_fetch_assoc ($sql_result);
+        $result = mysql_fetch_assoc ($sql_result);
         
-        global $gCHECKUSERNAME, $gCHECKFULLNAME, $gCHECKTIME, $gSELFDOMAIN;
-        global $gVERIFYADDRESS, $gVERIFYHOST;
-        $gCHECKUSERNAME = $pUSERNAME;
-        $gCHECKFULLNAME = $results['Fullname'];
-        if ($results['Alias']) $gCHECKFULLNAME = $results['Alias'];
-        $gCHECKTIME = time ();
-        $gSELFDOMAIN = str_replace ("www.", NULL, $_SERVER['HTTP_HOST']);
-        $gVERIFYADDRESS = $results['Address'];
-        $gVERIFYHOST = $results['Host'];
-        $tID = $results['tID'];
+        global $gUSERNAME, $gFULLNAME, $gTIME, $gDOMAIN;
+        global $gADDRESS, $gHOST;
+        $gUSERNAME = $pUSERNAME;
+        $gFULLNAME = $result['Fullname'];
+        if ($result['Alias']) $gFULLNAME = $result['Alias'];
+        $gTIME = time ();
+        $gDOMAIN = str_replace ("www.", NULL, $_SERVER['HTTP_HOST']);
+        $gADDRESS = $result['Address'];
+        $gHOST = $result['Host'];
+        $tID = $result['tID'];
         
         // Set the Verification To Inactive
         $sql_statement = "
@@ -616,5 +721,50 @@
       
       return (TRUE);
     } // CheckLogin
+    
+    function GetIconList ($pUSERNAME) {
+      
+      $userIcons = $this->TablePrefix . "userIcons";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $finaldata = null;
+      
+      $this->XML->Load ("code/include/data/xml/get_icon_list/top.xml");
+      $finaldata = $this->XML->Data;
+      
+      // Check our local database, see if this token exists.
+      $sql_statement = "
+        SELECT $userIcons.Filename,$userIcons.Keyword
+        FROM   $userIcons,$userAuth
+        WHERE  $userIcons.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($pDOMAIN),
+                                mysql_real_escape_string ($pUSERNAME));
+                                
+      $sql_result = mysql_query ($sql_statement);
+
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      global $gFILENAME, $gKEYWORD;
+      
+      // Loop through the results.
+      while ($result = mysql_fetch_assoc($sql_result)) {
+        $gFILENAME = $result['Filename'];
+        $gKEYWORD = $result['Keyword'];
+        $this->XML->Load ("code/include/data/xml/get_icon_list/middle.xml");
+        $finaldata .= $this->XML->Data;
+      } // while
+      
+      $this->XML->Load ("code/include/data/xml/get_icon_list/bottom.xml");
+      $finaldata .= $this->XML->Data;
+      
+      $this->XML->Data = $finaldata;
+      
+      return (TRUE);
+    } // GetIconList
     
   } // cSERVER
