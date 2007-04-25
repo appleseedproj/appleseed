@@ -746,7 +746,6 @@
         $datalist = array ("gACTION"   => "GET_USER_INFORMATION",
                            "gUSERNAME" => $this->Username);
         $zREMOTE->Post ($datalist, 1);
-
         $zXML->Parse ($zREMOTE->Return);
 
         // If no appleseed version was retrieved, an invalid url was used.
@@ -1072,16 +1071,25 @@
           // Step 3a: No relationship exists remotely, so add remote friend request.
 
           // Retrieve token.
-          $AUTH = new cAUTHVERIFICATION ();
-          $AUTH->GetToken ($pLOCALUSERNAME, $pREMOTEDOMAIN);
+          $VERIFY = new cUSERTOKENS ();
+          $USER = new cUSER ();
+          $USER->Select ("Username", $pLOCALUSERNAME);
+          $USER->FetchArray();
+          $VERIFY->userAuth_uID = $USER->uID;
+          $VERIFY->LoadToken ($pREMOTEDOMAIN);
           $token = $AUTH->Token;
-          unset ($AUTH);
+          if (!$token) {
+            $VERIFY->CreateToken ($pREMOTEDOMAIN);
+            $token = $VERIFY->Token;
+          } // if
+          unset ($VERIFY);
+          unset ($USER);
 
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
           $datalist = array ("gACTION"   => "ADD_FRIEND_REQUEST",
                              "gTOKEN"    => $token,
-                             "gLOCALUSERNAME" => $pREMOTEUSERNAME,
-                             "gLOCALDOMAIN" => $pREMOTEDOMAIN);
+                             "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gDOMAIN"   => $pLOCALDOMAIN);
           $zREMOTE->Post ($datalist);
         
           $zXML->Parse ($zREMOTE->Return);
@@ -1137,18 +1145,28 @@
 
       global $gSITEDOMAIN;
 
-      $AUTH = new cAUTHVERIFICATION ();
-      $AUTH->GetToken ($pLOCALUSERNAME, $pREMOTEDOMAIN);
-      $token = $AUTH->Token;
-      unset ($AUTH);
+      $VERIFY = new cUSERTOKENS ();
+      $USER = new cUSER ();
+      $USER->Select ("Username", $pLOCALUSERNAME);
+      $USER->FetchArray();
+      $VERIFY->userAuth_uID = $USER->uID;
+      $VERIFY->LoadToken ($pREMOTEDOMAIN);
+      $token = $VERIFY->Token;
+      if (!$token) {
+        $VERIFY->CreateToken ($pREMOTEDOMAIN);
+        $token = $VERIFY->Token;
+      } // if
+      
+      unset ($VERIFY);
+      unset ($USER);
 
       $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
       $datalist = array ("gACTION"   => "CHECK_FRIEND_STATUS",
                          "gTOKEN"    => $token,
-                         "gLOCALUSERNAME" => $pREMOTEUSERNAME,
-                         "gLOCALDOMAIN" => $pREMOTEDOMAIN);
+                         "gUSERNAME" => $pREMOTEUSERNAME,
+                         "gDOMAIN" => $pLOCALDOMAIN);
       $zREMOTE->Post ($datalist);
-
+      
       $zXML->Parse ($zREMOTE->Return);
 
       $status = $zXML->GetValue ("status", 0);
@@ -1169,7 +1187,7 @@
       if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
         return ($this->LongDistanceApprove ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN));
       } // if
-
+      
       // Get Information On The Requesting User.
       $REQUESTINGUSER =  new cUSER ();
       $REQUESTINGUSER->Select ("Username", $pREQUESTINGUSERNAME);
@@ -1185,6 +1203,7 @@
                               "Username"       => $RECEIVINGUSER->Username,
                               "Domain"         => $gSITEDOMAIN,
                               "Verification"    => FRIEND_PENDING);
+                              
       $this->SelectByMultiple ($checkcriteria);
       if ($this->CountResult () == 0) { 
         // No corresponding friend request exists, so recreate relationship.
@@ -1225,7 +1244,6 @@
 
       unset ($REQUESTINGUSER);
       unset ($RECEIVINGUSER);
-      unset ($FRIENDCHECK);
 
       return (TRUE);
 
@@ -1341,13 +1359,27 @@
 
         case FRIEND_PENDING:
           // Step 2a: Remotely pending (correctly), so approve remote friend request.
+          
+          $VERIFY = new cUSERTOKENS ();
+          $USER = new cUSER ();
+          $USER->Select ("Username", $pLOCALUSERNAME);
+          $USER->FetchArray();
+          $VERIFY->userAuth_uID = $USER->uID;
+          $VERIFY->LoadToken ($pREMOTEDOMAIN);
+          $token = $VERIFY->Token;
+          if (!$token) {
+            $VERIFY->CreateToken ($pREMOTEDOMAIN);
+            $token = $VERIFY->Token;
+          } // if
+      
+          unset ($VERIFY);
+          unset ($USER);
+
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
           $datalist = array ("gACTION"   => "APPROVE_FRIEND_REQUEST",
-                             "gREMOTEUSERNAME" => $pLOCALUSERNAME,
-                             "gREMOTEFULLNAME" => $REQUESTINGUSER->userProfile->GetAlias (),
-                             "gREMOTEDOMAIN" => $pLOCALDOMAIN,
-                             "gLOCALUSERNAME" => $pREMOTEUSERNAME,
-                             "gLOCALDOMAIN" => $pREMOTEDOMAIN);
+                             "gTOKEN" => $token,
+                             "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gDOMAIN" => $pLOCALDOMAIN);
           $zREMOTE->Post ($datalist);
         
           $zXML->Parse ($zREMOTE->Return);
@@ -1395,16 +1427,25 @@
 
         default:
           // Step 3a: No relationship exists remotely, so add remote friend request.
-          $AUTH = new cAUTHVERIFICATION ();
-          $AUTH->GetToken ($pLOCALUSERNAME, $pREMOTEDOMAIN);
+          $VERIFY = new cUSERTOKENS ();
+          $USER = new cUSER ();
+          $USER->Select ("Username", $pLOCALUSERNAME);
+          $USER->FetchArray();
+          $VERIFY->userAuth_uID = $USER->uID;
+          $VERIFY->LoadToken ($pREMOTEDOMAIN);
           $token = $AUTH->Token;
-          unset ($AUTH);
+          if (!$token) {
+            $VERIFY->CreateToken ($pREMOTEDOMAIN);
+            $token = $VERIFY->Token;
+          } // if
+          unset ($VERIFY);
+          unset ($USER);
 
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
           $datalist = array ("gACTION"   => "ADD_FRIEND_REQUEST",
                              "gTOKEN"    => $token,
-                             "gLOCALUSERNAME" => $pREMOTEUSERNAME,
-                             "gLOCALDOMAIN" => $pREMOTEDOMAIN);
+                             "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gDOMAIN" => $pLOCALDOMAIN);
           $zREMOTE->Post ($datalist);
 
           $zXML->Parse ($zREMOTE->Return);

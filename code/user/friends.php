@@ -198,11 +198,11 @@
     break;
 
     case 'APPROVE':
-      $zFRIENDS->Approve ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zAUTHUSER->Username, $zAUTHUSER->Domain);
+      $zFRIENDS->Approve ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
     break;
 
     case 'DENY':
-      $zFRIENDS->Deny ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zAUTHUSER->Username, $zAUTHUSER->Domain);
+      $zFRIENDS->Deny ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
     break;
 
     case 'SAVE':

@@ -240,22 +240,8 @@
  
     } // Constructor
  
-    // Look up the authentication token.
-    function GetToken ($pUSERNAME, $pREMOTEDOMAIN) {
-      $tokencriteria = array ("Username" => $pUSERNAME,
-                              "Domain"   => $pREMOTEDOMAIN);
-      $this->SelectByMultiple ($tokencriteria, "Stamp");
-      $this->FetchArray ();
-
-      $token = $this->Token;
-
-      if ($token) return ($token);
-
-      return (FALSE);
-    } // GetToken
- 
     // Create the session.
-    function Create ($pREMEMBER, $pSESSIONNAME = "gLOGINSESSION", $pTOKEN = NULL) {
+    function Create ($pREMEMBER, $pSESSIONNAME = "gLOGINSESSION") {
 
       // Delete all records older than 24 hours.
       $deletestatement = "DELETE FROM " . $this->TableName . " WHERE Stamp <  DATE_ADD(now(),INTERVAL -1 DAY)";
@@ -266,7 +252,7 @@
                                  "Domain"    => $this->Domain);
       $this->SelectByMultiple ($existingcriteria);
       $this->FetchArray ();
-      parent::Create ($pREMEMBER, $pSESSIONNAME, $pTOKEN);
+      parent::Create ($pREMEMBER, $pSESSIONNAME);
     } // Create
 
   } // cAUTHSESSIONS
@@ -395,7 +381,7 @@
     } // Constructor
 
     // Look up the authentication token.
-    function GetToken ($pUSERNAME, $pREMOTEDOMAIN) {
+    function LoadToken ($pUSERNAME, $pREMOTEDOMAIN) {
       $tokencriteria = array ("Username" => $pUSERNAME,
                               "Domain"   => $pREMOTEDOMAIN);
       $this->SelectByMultiple ($tokencriteria, "Stamp");
@@ -406,7 +392,7 @@
       if ($token) return ($token);
 
       return (FALSE);
-    } // GetToken
+    } // LoadToken
  
   } // cAUTHVERIFICATION
 

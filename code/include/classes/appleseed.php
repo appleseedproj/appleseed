@@ -75,9 +75,6 @@
       // Check if system is configured properly.
       $this->RuntimeVerification ();
       
-      global $gAPPLESEEDVERSION;
-      $gAPPLESEEDVERSION = '0.6.0';
-
       // Set the context.
       $this->SetContext ($pCONTEXT);
 
@@ -326,6 +323,12 @@
       if (ini_get('register_globals')) {
         // Register globals is on.  Exit with error.
         echo "ERROR: register_globals is on. Please disable.<br />";
+        $this->Abort ();
+      } // if
+      
+      if (!is_writable('photos/')) {
+        // Photos directory isn't writable.
+        echo "ERROR: photos/ directory is not writable.";
         $this->Abort ();
       } // if
 
@@ -577,6 +580,8 @@
       define ("SQL_SKIP", '*!');
       define ("SQL_NOW", '@!');
       define ("SQL_NOT", '^!');
+      define ("SQL_GT", '%!');
+      define ("SQL_LT", '&!');
 
       define ("SUCCESS", 1);
   

@@ -42,6 +42,7 @@
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 
+  require_once ("code/include/classes/BASE/xml.php");
 
   // Include Appleseed classes.
   require_once ('code/include/classes/appleseed.php'); 
@@ -102,7 +103,6 @@
         $zVERIFY->Verified = TRUE;
         $zVERIFY->Address = $_SERVER['REMOTE_ADDR'];
         $zVERIFY->Host = $_SERVER['REMOTE_HOST'];
-        $zVERIFY->Token = $zAPPLE->RandomString (32);
         $zVERIFY->Stamp = SQL_NOW;
         $zVERIFY->Active = TRUE;
         if (!$zVERIFY->Host) $zVERIFY->Host = gethostbyaddr ($zVERIFY->Address);
@@ -138,10 +138,9 @@
       $zREMOTEUSER->Username = $zXML->GetValue ("username", 0);
       $zREMOTEUSER->Fullname = $zXML->GetValue ("fullname", 0);
       $zREMOTEUSER->Domain = $zXML->GetValue ("domain", 0);
-      $zREMOTEUSER->Token = $zXML->GetValue ("token", 0);
 
       if ($zREMOTEUSER->Username) {
-        $zREMOTEUSER->Create (FALSE, "gREMOTELOGINSESSION", $zREMOTEUSER->Token);
+        $zREMOTEUSER->Create (FALSE, "gREMOTELOGINSESSION");
       } // if
 
       $location = $gSITEURL;

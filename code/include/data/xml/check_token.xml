@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <appleseed>
  <version>%APPLESEEDVERSION%</version>
- <userinfo>
-  <fullname>%FULLNAME%</fullname>
-  <online>%ONLINE%</online>
- </userinfo>
+ <result>TRUE</result>
+ <username>%USERNAME%</username>
+ <fullname>%FULLNAME%</fullname>
 </appleseed>

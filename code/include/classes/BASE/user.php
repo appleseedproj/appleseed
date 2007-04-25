@@ -285,7 +285,7 @@
     } // Constructor
 
     // Create the session.
-    function Create ($pREMEMBER, $pSESSIONNAME = "gLOGINSESSION", $pTOKEN = NULL) {
+    function Create ($pREMEMBER, $pSESSIONNAME = "gLOGINSESSION") {
 
       // This bible was placed here by a Gideon.
       // R.I.P. William Melvin Hicks, 1961 - 1994. 
@@ -323,7 +323,6 @@
       $this->Stamp = SQL_NOW;
       $this->Address = $_SERVER['REMOTE_ADDR'];
       $this->Host = $_SERVER['REMOTE_HOST'];
-      if ($pTOKEN) $this->Token = $pTOKEN;
       if (!$this->Host) $this->Host = gethostbyaddr ($this->Address);
   
       $this->Add();
@@ -351,6 +350,118 @@
     } // Destroy
 
   } // cUSERSESSIONS
+  
+  class cUSERTOKENS extends cBASEDATACLASS {
+    var $tID,$userAuth_uID, $Domain, $Token, $Stamp;
+ 
+    function cUSERTOKENS ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'userTokens';
+      $this->tID = '';
+      $this->userAuth_uID = '';
+      $this->Domain = '';
+      $this->Token = '';
+      $this->Stamp = '';
+      $this->Error = 0;
+      $this->Message = '';
+      $this->Result = '';
+      $this->PrimaryKey = 'tID';
+      $this->ForeignKey = 'userAuth_uID';
+ 
+      // Assign context from paramater.
+      $this->PageContext = $pDEFAULTCONTEXT;
+ 
+      // Create extended field definitions
+      $this->FieldDefinitions = array (
+
+        'tID'            => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'userAuth_uID'   => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Domain'         => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Token'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => '',
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'STRING'),
+
+        'Stamp'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'DATETIME'),
+
+      );
+
+      // Grab the fields from the database.
+      $this->Fields();
+ 
+    } // Constructor
+    
+    function LoadToken ($pDOMAIN) {
+      // Load tokens created in the last 30 min from the database.
+      $sql_query = "SELECT * FROM $this->TableName " .
+                   "WHERE userAuth_uID = '$this->userAuth_uID' " .
+                   "AND Domain = '$pDOMAIN' " .
+                   "AND Stamp > DATE_SUB(now(), INTERVAL 30 MINUTE)";
+      $this->Query ($sql_query);
+      
+      $this->FetchArray ();
+      
+      return (TRUE);
+    } // LoadToken
+    
+    function CreateToken ($pDOMAIN) {
+      
+      global $zAPPLE;
+      
+      // Load and delete current token.
+      $this->LoadToken ($pDOMAIN);
+      
+      // Delete
+      $this->Delete();
+      
+      // Create new token information.
+      $this->Token = $zAPPLE->RandomString (32);
+      $this->Domain = $pDOMAIN;
+      $this->Stamp = SQL_NOW;
+      
+      // Add new token.
+      $this->Add ();
+      
+      return (TRUE);
+    } // CreateToken
+    
+  } // cUSERTOKENS
 
   // User access class.
   class cUSERACCESS extends cBASEDATACLASS {
@@ -603,8 +714,6 @@
       return (TRUE);
 
     } // Save
-
-    
 
   } // cUSERSETTINGS
 

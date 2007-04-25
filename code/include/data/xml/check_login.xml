@@ -8,6 +8,5 @@
   <time>%CHECKTIME%</time>
   <address>%VERIFYADDRESS%</address>
   <host>%VERIFYHOST%</host>
-  <token>%VERIFYTOKEN%</token>
  </checklogin>
 </appleseed>

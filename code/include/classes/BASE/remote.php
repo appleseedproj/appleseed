@@ -54,8 +54,6 @@
 
       // NOTE:  Possibly use external class to cover these functions?
 
-      global $zAPPLE;
-
       foreach ($pDATALIST as $key => $value) {
         $parameters .= $key . '=' . $value . '&';
       } // foreach

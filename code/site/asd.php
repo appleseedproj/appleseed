@@ -29,297 +29,137 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.3.0                                               |
+  // | VERSION:      0.7.0                                               |
   // | DESCRIPTION:  ASD Network traffic hub.                            |
   // +-------------------------------------------------------------------+
 
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
-  // Include BASE API classes.
-  require_once ('code/include/classes/BASE/application.php'); 
-  require_once ('code/include/classes/BASE/debug.php'); 
-  require_once ('code/include/classes/base.php'); 
-  require_once ('code/include/classes/system.php'); 
-  require_once ('code/include/classes/BASE/remote.php'); 
-
-  // Include Appleseed classes.
-  require_once ('code/include/classes/appleseed.php'); 
-  require_once ('code/include/classes/privacy.php'); 
-  require_once ('code/include/classes/friends.php'); 
-  require_once ('code/include/classes/groups.php'); 
-  require_once ('code/include/classes/messages.php'); 
-  require_once ('code/include/classes/users.php'); 
-  require_once ('code/include/classes/auth.php'); 
-
-  // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  // Include Lightweight Server Classes
+  require_once ('code/include/classes/server.php'); 
   
-  // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
-
-  // Initialize Appleseed.
-  $zAPPLE->Initialize("site", TRUE);
+  // Suppress warning reports.
+  error_reporting (E_ERROR);
+  
+  $gACTION = $_POST['gACTION'];
 
   switch ($gACTION) {
     case 'GET_USER_INFORMATION':
-      $USER = new cUSER();
-
-      $USER->Select ("Username", $gUSERNAME);
-      $USER->FetchArray();
-
-      // If no users found, push out an error message.
-      if ($USER->CountResult () == 0) {
-        $code = 1000;
-        $message = "User '$gUSERNAME' Not Found";
-        $return = $zXML->ErrorData ($code, $message);
-      } else { 
-        global $gRETURNFULLNAME, $gRETURNONLINE;
-        $gRETURNFULLNAME = $USER->userProfile->GetAlias ();
+    
+      $gUSERNAME = $_POST['gUSERNAME'];
       
-        if ($USER->userInformation->CheckOnline ())
-          $gRETURNONLINE = "ONLINE";
-        else
-          $gRETURNONLINE = "OFFLINE";
-
-        $data = implode ("", file ("code/include/data/xml/get_user_information.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      // Get User Info.
+      $zSERVER->GetUserInformation ($gUSERNAME);
+      
+      echo $zSERVER->XML->Data; exit;
+      
+    break;
+    case 'CHECK_TOKEN':
+      
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      // Check for an authentication token.
+      if (!$gTOKEN) {
+        $code = 1000;
+        $message = "ERROR.NOTOKEN";
+        $return = $zSERVER->XML->ErrorData ($code, $message);
+        
+        echo $return; exit;
       } // if
-      echo $return;
-      unset ($USER);
+      
+      // Check Friend Status.
+      $zSERVER->CheckLocalToken ($gTOKEN, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data; 
+      
+      exit;
+      
     break;
     case 'CHECK_FRIEND_STATUS':
-
+      $gTOKEN = $_POST['gTOKEN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
       // Check for an authentication token.
       if (!$gTOKEN) {
         $code = 1000;
         $message = "ERROR.NOTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
+        $return = $zSERVER->XML->ErrorData ($code, $message);
+        
         echo $return; exit;
       } // if
-
-      // Authenticate token.
-      $AUTH = new cAUTHSESSIONS ();
-      $AUTH->Select ("Token", $gTOKEN);
-
-      if ($AUTH->CountResult () == 0) {
-        $code = 1000;
-        $message = "ERROR.INVALIDTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      $AUTH->FetchArray ();
-
-      unset ($AUTH);
-
-      $USER = new cUSER();
-
-      $USER->Select ("Username", $gLOCALUSERNAME);
-      $USER->FetchArray();
-
-      // If no users found, push out an error message.
-      if ($USER->CountResult () == 0) {
-        $code = 1000;
-        $message = "ERROR.NOTFOUND";
-        $return = $zXML->ErrorData ($code, $message);
-      } else { 
-        $friendcriteria = array ("userAuth_uID" => $USER->uID,
-                                 "Username" => $remoteusername,
-                                 "Domain"   => $remooteusername);
-        $FRIEND = new cFRIENDINFORMATION();
-        $FRIEND->SelectByMultiple ($friendcriteria);
-        $FRIEND->FetchArray();
-
-        global $gFRIENDSTATUS;
-        $gFRIENDSTATUS = $FRIEND->Verification; 
-        if (!$gFRIENDSTATUS) $gFRIENDSTATUS = 0;
-
-        $data = implode ("", file ("code/include/data/xml/check_friend_status.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-
-      } // if
-      echo $return;
-      unset ($USER);
+      
+      // Check Friend Status.
+      $zSERVER->CheckFriendStatus ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data; exit;
+      
     break;
     case 'ADD_FRIEND_REQUEST':
-
+      $gTOKEN = $_POST['gTOKEN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
       // Check for an authentication token.
       if (!$gTOKEN) {
         $code = 1000;
         $message = "ERROR.NOTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
+        $return = $zSERVER->XML->ErrorData ($code, $message);
         echo $return; exit;
       } // if
 
-      // Authenticate token.
-      $AUTH = new cAUTHSESSIONS ();
-      $AUTH->Select ("Token", $gTOKEN);
-
-      if ($AUTH->CountResult () == 0) {
-        $code = 1000;
-        $message = "ERROR.INVALIDTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      $AUTH->FetchArray ();
-
-      $remoteusername = $AUTH->Username;
-      $remotedomain = $AUTH->Domain;
-      list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
-
-      unset ($AUTH);
-
-      $USER = new cUSER ();
-      $zFRIENDS = new cFRIENDINFORMATION ();
-
-      $USER->Select ("Username", $gLOCALUSERNAME);
-      $USER->FetchArray ();
-
-      global $gLOCALFULLNAME;
-      $gLOCALFULLNAME = $USER->userProfile->GetAlias ();
+      // Check Friend Status.
+      $zSERVER->AddFriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $USER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Update the friend's record.
-      $zFRIENDS->userAuth_uID = $USER->uID;
-      $zFRIENDS->sID = $sortid;
-      $zFRIENDS->Username = $remoteusername;
-      $zFRIENDS->Domain = $remotedomain;
-      $zFRIENDS->Verification = FRIEND_REQUESTS;
-      $zFRIENDS->Stamp = SQL_NOW;
-
-      $zFRIENDS->Add ();
-
-      if ($zFRIENDS->Error == 0) {
-        global $gFRIENDRESULT;
-        $gFRIENDRESULT = SUCCESS;
-        $data = implode ("", file ("code/include/data/xml/add_friend_request.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-        $zFRIENDS->NotifyRequest ($USER->userProfile->Email, $USER->userProfile->GetAlias (), $remotefullname, $gLOCALUSERNAME); 
-      } else {
-        $code = 2000;
-        $message = $zFRIENDS->Message;
-        $return = $zXML->ErrorData ($code, $message);
-      } // if
-      echo $return;
-      unset ($USER);
+      echo $zSERVER->XML->Data;
     break;
     case 'APPROVE_FRIEND_REQUEST':
-
+      $gTOKEN = $_POST['gTOKEN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
       // Check for an authentication token.
       if (!$gTOKEN) {
         $code = 1000;
         $message = "ERROR.NOTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
+        $return = $zSERVER->XML->ErrorData ($code, $message);
         echo $return; exit;
       } // if
 
-      // Authenticate token.
-      $AUTH = new cAUTHSESSIONS ();
-      $AUTH->Select ("Token", $gTOKEN);
-
-      if ($AUTH->CountResult () == 0) {
-        $code = 1000;
-        $message = "ERROR.INVALIDTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      $AUTH->FetchArray ();
-
-      $remoteusername = $AUTH->Username;
-      $remotedomain = $AUTH->Domain;
-      list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
-
-      unset ($AUTH);
-
-      $USER = new cUSER ();
-      $zFRIENDS = new cFRIENDINFORMATION ();
-
-      $USER->Select ("Username", $gLOCALUSERNAME);
-      $USER->FetchArray ();
-
-      global $gLOCALFULLNAME;
-      $gLOCALFULLNAME = $USER->userProfile->GetAlias ();
+      // Check Friend Status.
+      $zSERVER->ApproveFriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $USER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Update the friend's record.
-      $friendcriteria = array ("userAuth_uID" => $USER->uID,
-                               "Username" => $remoteusername,
-                               "Domain"   => $remotedomain);
-      $zFRIENDS->SelectByMultiple ($friendcriteria);
-      $zFRIENDS->FetchArray();
-      $resultcount = $zFRIENDS->CountResult();
-      $zFRIENDS->Verification = FRIEND_VERIFIED;
-
-      $zFRIENDS->Update ();
-
-      if (($zFRIENDS->Error == 0) and ($resultcount > 0)) {
-        global $gFRIENDRESULT;
-        $gFRIENDRESULT = SUCCESS;
-        $data = implode ("", file ("code/include/data/xml/approve_friend_request.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-        $zFRIENDS->NotifyApproval ($USER->userProfile->Email, $remotefullname, $USER->userProfile->GetAlias (), $gLOCALUSERNAME); 
-      } else {
-        $code = 2000;
-        $message = $zFRIENDS->Message;
-        $return = $zXML->ErrorData ($code, $message);
-      } // if
-      echo $return;
-      unset ($USER);
+      echo $zSERVER->XML->Data;
     break;
     case 'CHECK_LOGIN':
-      $zVERIFY = new cAUTHVERIFICATION();
-
-      $criteria = array ("Username" => $gUSERNAME,
-                         "Domain"   => $gDOMAIN,
-                         "Active"   => TRUE);
-      $zVERIFY->SelectByMultiple ($criteria);
-      $zVERIFY->FetchArray ();
-
-      if ($zVERIFY->CountResult() > 0) {
-
-        $USER = new cUSER ();
-                      
-        $USER->Select ("Username", $zVERIFY->Username);
-        $USER->FetchArray();
-
-        global $gCHECKUSERNAME, $gCHECKFULLNAME, $gCHECKTIME, $gSELFDOMAIN;
-        global $gVERIFYADDRESS, $gVERIFYHOST;
-        $gCHECKUSERNAME = $USER->Username;
-        $gCHECKFULLNAME = $USER->userProfile->GetAlias ();
-        $gCHECKTIME = time ();
-        $gSELFDOMAIN = str_replace ("www.", NULL, $_SERVER['HTTP_HOST']);
-        $gVERIFYADDRESS = $zVERIFY->Address;
-        $gVERIFYHOST = $zVERIFY->Host;
-        $gVERIFYTOKEN = $zVERIFY->Token;
-        $data = implode ("", file ("code/include/data/xml/check_login.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-        unset ($USER);
-      } else {
-        $code = 2000;
-        $message = $zFRIENDS->Message;
-        $return = $zXML->ErrorData ($code, $message);
-      } // if
-
-      $zVERIFY->Active = FALSE;
-      $zVERIFY->Update();
-      unset ($zVERIFY);
-
-      echo $return;
-
+    
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      $zSERVER->CheckLogin ($gUSERNAME, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data; exit;
+    
     break;
     case 'GET_ICON_LIST':
      $USER = new cUSER ();
@@ -440,6 +280,7 @@
       } // if
 
       // Authenticate token.
+      /* TEMPORARILY REMOVED
       $AUTH = new cAUTHSESSIONS ();
       $AUTH->Select ("Token", $gTOKEN);
 
@@ -451,7 +292,8 @@
       } // if
 
       $AUTH->FetchArray ();
-
+      */
+      
       $remoteusername = $AUTH->Username;
       $remotedomain = $AUTH->Domain;
       list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
@@ -512,6 +354,7 @@
       } // if
 
       // Authenticate token.
+      /* TEMPORARILY REMOVED
       $AUTH = new cAUTHSESSIONS ();
       $AUTH->Select ("Token", $gTOKEN);
 
@@ -524,6 +367,8 @@
 
       $AUTH->FetchArray ();
 
+      */
+      
       $remoteusername = $AUTH->Username;
       $remotedomain = $AUTH->Domain;
       list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);

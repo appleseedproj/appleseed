@@ -2,9 +2,7 @@
 <appleseed>
  <version>%APPLESEEDVERSION%</version>
  <friend>
-  <username>%LOCALUSERNAME%</username>
-  <fullname>%LOCALFULLNAME%</fullname>
-  <domain>%LOCALDOMAIN%</domain>
-  <result>%FRIENDRESULT%</result>
+  <fullname>%FULLNAME%</fullname>
+  <result>%RESULT%</result>
  </friend>
 </appleseed>

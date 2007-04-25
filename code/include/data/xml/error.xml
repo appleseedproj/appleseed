@@ -2,7 +2,6 @@
 <appleseed>
  <version>%APPLESEEDVERSION%</version>
  <error>
-  <code>%ERRORCODE%</code>
-  <message>%ERRORMESSAGE%</message>
+  <title>%ERRORTITLE%</title>
  </error>
 </appleseed>

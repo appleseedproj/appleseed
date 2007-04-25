@@ -406,6 +406,7 @@
       $setting_db = null;
       $setting_pre = null;
       $setting_host = null;
+      $setting_ver = null;
       
       // Loop through each line.
       foreach ($settings as $setting) {
@@ -425,6 +426,9 @@
       $gCONNECT['database'] = $setting_db;
       $gCONNECT['host'] = $setting_host;
       $gTABLEPREFIX = $setting_pre;
+      
+      global $gAPPLESEEDVERSION;
+      $gAPPLESEEDVERSION = $setting_ver;
       
       global $gSITEURL;
       $gSITEURL = $setting_url;

@@ -61,7 +61,7 @@
       $this->ForeignKey = '';
       $this->Cascade = array ('userSession', 'userAccess', 'userProfile', 
                               'userInformation', 'userInvites', 'userIcons',
-                              'userSettings', 'userGroups');
+                              'userSettings', 'userGroups', 'userTokens');
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
@@ -123,6 +123,7 @@
       $this->userInvites      = new cUSERINVITES ($pDEFAULTCONTEXT);
       $this->userIcons        = new cUSERICONS ($pDEFAULTCONTEXT);
       $this->userGroups       = new cUSERGROUPS ($pDEFAULTCONTEXT);
+      $this->userTokens       = new cUSERTOKENS ($pDEFAULTCONTEXT);
 
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;
@@ -133,10 +134,11 @@
     } // Constructor
 
     // Initialize a new user.
-    function Initialize () {
+    function Initialize ($pCREATERELATIONSHIP = TRUE) {
 
       global $zAPPLE;
       global $gVALUE;
+      global $gSITEDOMAIN;
 
       // Create the default user icon.
       $this->userIcons->userAuth_uID = $this->uID;
@@ -153,18 +155,20 @@
       $icondir = "photos/" . $this->Username . "/icons/";
       $zAPPLE->CreateDirectory ($icondir);
 
-      // Create the default friend relationship.
-      $INVITE = new cUSERINVITES ();
-      $INVITE->Select ("Value", $gVALUE);
-      $INVITE->FetchArray();
+      if ($pCREATERELATIONSHIP) {
+        // Create the default friend relationship.
+      	$INVITE = new cUSERINVITES ();
+      	$INVITE->Select ("Value", $gVALUE);
+      	$INVITE->FetchArray();
+	 
+      	$USER = new cUSER();
+      	$USER->Select ("uID", $INVITE->userAuth_uID);
+      	$USER->FetchArray();
 
-      $USER = new cUSER();
-      $USER->Select ("uID", $INVITE->userAuth_uID);
-      $USER->FetchArray();
-
-      $FRIEND = new cFRIENDINFORMATION();
-      $FRIEND->Request ($this->Username, $gSITEDOMAIN, $USER->Username, $gSITEDOMAIN, FALSE);
-      $FRIEND->Approve ($this->Username, $gSITEDOMAIN, $USER->Username, $gSITEDOMAIN, FALSE);
+      	$FRIEND = new cFRIENDINFORMATION();
+      	$FRIEND->Request ($this->Username, $gSITEDOMAIN, $USER->Username, $gSITEDOMAIN, FALSE);
+      	$FRIEND->Approve ($this->Username, $gSITEDOMAIN, $USER->Username, $gSITEDOMAIN, FALSE);
+      } // if
 
       unset ($INVITE);
       unset ($USER);
@@ -528,7 +532,7 @@
         $zSTRINGS->Lookup ('ERROR.UPLOAD', 'USER.OPTIONS.ICONS');
         $zPHOTO->Message = $zSTRINGS->Output;
       } // if
-
+      
       return (TRUE);
     } // SavePhoto
 

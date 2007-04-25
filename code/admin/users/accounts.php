@@ -42,6 +42,7 @@
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 
+  require_once ('code/include/classes/BASE/xml.php'); 
 
   // Include Appleseed classes.
   require_once ('code/include/classes/appleseed.php'); 
@@ -102,7 +103,7 @@
   // Display the select all button by default.
   $gSELECTBUTTON = 'select_all';
 
-  // Change the select button if anything is eelected.
+  // Change the select button if anything is selected.
   if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'select_none';
 
   // PART I: Determine appropriate action.
@@ -259,7 +260,7 @@
           $ADMINDATA->Add();
 
           // Initialize the new account.
-          $ADMINDATA->Initialize ();
+          $ADMINDATA->Initialize (FALSE);
 
           // Update the amount of invites available.
           $ADMINDATA->userInvites->ChangeInvites ();
