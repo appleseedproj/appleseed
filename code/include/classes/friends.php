@@ -1497,8 +1497,7 @@
       $this->Delete ();
 
       // Notify requested user.
-      if ($pNOTIFY)
-        $this->NotifyDelete ($TARGETUSER->userProfile->Email, $SOURCEUSER->userProfile->GetAlias (), $TARGETUSER->userProfile->GetAlias (), $TARGETUSER->Username);
+      // if ($pNOTIFY) $this->NotifyDelete ($TARGETUSER->userProfile->Email, $SOURCEUSER->userProfile->GetAlias (), $TARGETUSER->userProfile->GetAlias (), $TARGETUSER->Username);
 
       global $gFRIENDUSERNAME;
       $gFRIENDUSERNAME = $TARGETUSER->userProfile->GetAlias ();

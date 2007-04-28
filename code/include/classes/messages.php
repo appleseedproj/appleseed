@@ -2232,7 +2232,8 @@
       $zSTRINGS->Lookup ('MESSAGE.SENT');
       $this->Message = $zSTRINGS->Output;
 
-      $this->NotifyMessage ($RECIPIENT->userProfile->Email, $gRECIPIENTNAME, $recipientfullname, $senderfullname);
+      // Disabled. 04-27-2007.
+      // $this->NotifyMessage ($RECIPIENT->userProfile->Email, $gRECIPIENTNAME, $recipientfullname, $senderfullname);
 
       unset ($RECIPIENT);
       unset ($gRECIPIENTNAME);

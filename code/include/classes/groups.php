@@ -275,7 +275,8 @@
               $FRIEND->Domain = $this->groupContent->Owner_Domain;
               list ($fullname, $online, $email) = $FRIEND->GetUserInformation();
 
-              $this->NotifyReply ($email, $fullname, $this->groupContent->Owner_Username, $zAUTHUSER->Fullname);
+              // Disabled. 04-27-2007.
+              // $this->NotifyReply ($email, $fullname, $this->groupContent->Owner_Username, $zAUTHUSER->Fullname);
 
               unset ($FRIEND);
             } // if

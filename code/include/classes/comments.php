@@ -230,20 +230,23 @@
         switch (strtoupper($zAPPLE->Context)) {
           case 'USER.INFO':
             // Send email.
-            $this->NotifyProfile ($zFOCUSUSER->userProfile->Email, 
-                                  $zFOCUSUSER->userProfile->GetAlias (), 
-                                  $zFOCUSUSER->Username,
-                                  $zAUTHUSER->Fullname);
+            // Disabled: 04-27-2007
+            // $this->NotifyProfile ($zFOCUSUSER->userProfile->Email, 
+            //                       $zFOCUSUSER->userProfile->GetAlias (), 
+            //                       $zFOCUSUSER->Username,
+           //                        $zAUTHUSER->Fullname);
           break;
           case 'USER.JOURNAL':
             // Send email.
-            $this->NotifyJournal ($zFOCUSUSER->userProfile->Email, 
-                                  $zFOCUSUSER->userProfile->GetAlias (), 
-                                  $zFOCUSUSER->Username,
-                                  $zAUTHUSER->Fullname);
+            // Disabled: 04-27-2007
+            // $this->NotifyJournal ($zFOCUSUSER->userProfile->Email, 
+            //                       $zFOCUSUSER->userProfile->GetAlias (), 
+            //                       $zFOCUSUSER->Username,
+            //                       $zAUTHUSER->Fullname);
           break;
           case 'CONTENT.ARTICLES':
-            $this->NotifyArticle ($zAUTHUSER->Fullname);
+            // Disabled: 04-27-2007
+            // $this->NotifyArticle ($zAUTHUSER->Fullname);
           break;
         } // switch
 
@@ -265,7 +268,8 @@
               $FRIEND->Domain = $this->Owner_Domain;
               list ($fullname, $online, $email) = $FRIEND->GetUserInformation();
 
-              $this->NotifyReply ($email, $fullname, $this->Owner_Username, $zAUTHUSER->Fullname);
+              // Disabled: 04-27-2007
+              // $this->NotifyReply ($email, $fullname, $this->Owner_Username, $zAUTHUSER->Fullname);
 
               unset ($FRIEND);
             } // if

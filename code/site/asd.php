@@ -280,7 +280,8 @@
       $zMESSAGE->messageNotification->Add ();
 
       $zAPPLE->Context = "USER.MESSAGES";
-      $zMESSAGE->NotifyMessage ($USER->userProfile->Email, $USER->Username, $USER->userProfile->Fullname, $gSENDER_FULLNAME) ;
+      // Disabled. 04-27-2007.
+      // $zMESSAGE->NotifyMessage ($USER->userProfile->Email, $USER->Username, $USER->userProfile->Fullname, $gSENDER_FULLNAME) ;
 
       if ($zMESSAGE->Error == 0) {
         global $gRECIPIENTFULLNAME, $gSUCCESS;
