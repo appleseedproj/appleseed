@@ -2099,18 +2099,23 @@ form#compose p.error:hover {
 
 /* CONTEXT: users.friends:requests */
 
-#user #friends #pending #listing,
 #user #friends #requests #listing {
  float:left;
 }
 
-#user #friends #pending #listing li,
 #user #friends #requests #listing li {
  float:left;
  width:236px;
 }
 
-#user #friends #listing li span.deny,
+#user #friends #pending #listing li {
+ float:left;
+ height:170px;
+}
+#user #friends #listing li span.cancel {
+ float:left;
+ margin:5px 0;
+}
 
 #user #friends #listing li span.deny,
 #user #friends #listing li span.approve {

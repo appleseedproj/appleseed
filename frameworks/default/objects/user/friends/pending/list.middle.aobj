@@ -1,0 +1,27 @@
+ <?php $zHTML->Alternate(); ?>
+
+  <span class='username'>
+    <?php echo $gFRIENDFULLNAME; ?>
+  </span> <!-- #username -->
+
+  <span class='icon'>
+    <?php echo $bFRIENDICON; ?>
+  </span> <!-- #icon -->
+
+  <span class='online'>
+    <?php echo $bONLINENOW; ?>
+  </span> <!-- #online -->
+
+  <span class='domain'>
+    <?php echo $zFRIENDS->Domain; ?>
+  </span> <!-- #domain -->
+
+  <form id='cancel' name='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+   <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
+   <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
+   <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.FRIENDS'); ?>
+   <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+  </form>
+
+ </li> <!-- #[alternate] -->

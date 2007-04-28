@@ -573,16 +573,21 @@
 
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.top.aobj", INCLUDE_SECURITY_NONE);
 
-      $query = "SELECT friendInformation.*, friendCircles.*, " .
-               "friendCircles.tID AS FriendID, friendCircles.Name AS " .
-               "FriendName, friendCircles.Description AS FriendDesc, " .
-               "friendCirclesList.* FROM friendInformation, " .
-               "friendCirclesList, friendCircles WHERE " .
-               "friendCirclesList.friendCircles_tID = friendCircles.tID AND " .
-               "      friendCirclesList.friendInformation_tID = " .
-               "      friendInformation.tID AND " .
-               "      friendInformation.userAuth_uID = " . $zFOCUSUSER->uID . 
-               " ORDER BY friendCircles.sID, friendInformation.sID";
+      global $gTABLEPREFIX;
+      $friendCircles = $gTABLEPREFIX . "friendCircles";
+      $friendCirclesList = $gTABLEPREFIX . "friendCirclesList";
+      $friendInfo = $gTABLEPREFIX . "friendInfo";
+      
+      $query = "SELECT $friendInfo.*, $friendCircles.*, " .
+               "$friendCircles.tID AS FriendID, $friendCircles.Name AS " .
+               "FriendName, $friendCircles.Description AS FriendDesc, " .
+               "$friendCirclesList.* FROM $friendInfo, " .
+               "$friendCirclesList, $friendCircles WHERE " .
+               "$friendCirclesList.friendCircles_tID = $friendCircles.tID AND " .
+               "      $friendCirclesList.friendInformation_tID = " .
+               "      $friendInfo.tID AND " .
+               "      $friendInfo.userAuth_uID = " . $zFOCUSUSER->uID . 
+               " ORDER BY $friendCircles.sID, $friendInfo.sID";
   
       $this->Query ($query);
 
@@ -743,7 +748,7 @@
 
         // Check Online (remote)
         $zREMOTE = new cREMOTE ($this->Domain);
-        $datalist = array ("gACTION"   => "GET_USER_INFORMATION",
+        $datalist = array ("gACTION"   => "USER_INFORMATION",
                            "gUSERNAME" => $this->Username);
         $zREMOTE->Post ($datalist, 1);
         $zXML->Parse ($zREMOTE->Return);
@@ -802,294 +807,232 @@
     } // GetUserInformation
 
     // Process a friend request.
-    function Request ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pNOTIFY = TRUE) {
+    function Request ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zSTRINGS;
+      global $zAPPLE, $zSTRINGS, $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
-
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pREQUESTINGUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
-
-      // Get Information On The Receiving User.
-      $RECEIVINGUSER =  new cUSER ();
-      $RECEIVINGUSER->Select ("Username", $pRECEIVINGUSERNAME);
-      $RECEIVINGUSER->FetchArray ();
-
-      // Step 1: Check if the receiving user has already sent a friend request to this user.
-
-      $friendcheckcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                    "Username"     => $RECEIVINGUSER->Username,
-                                    "Domain"       => $gSITEDOMAIN);
-      $FRIENDCHECK = new cFRIENDINFORMATION ();
-      $FRIENDCHECK->SelectByMultiple ($friendcheckcriteria);
-      $FRIENDCHECK->FetchArray();
-
-      // User is already a pending friend.
-      if ( ($FRIENDCHECK->CountResult() > 0) and ($FRIENDCHECK->Verification == FRIEND_PENDING) ) {
-        global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
-        global $gREQUESTNAME;
-        $gREQUESTNAME = $RECEIVINGUSER->userProfile->GetAlias ();
-        $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
-        $this->Error = -1;
-        $this->Message = $zSTRINGS->Output;
-        unset ($gREQUESTNAME);
-        $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
-        $gCIRCLEVIEW = CIRCLE_PENDING;
-        return (FALSE);
-      } // if
-
-      // User is already a verified friend.
-      if ( ($FRIENDCHECK->CountResult() > 0) and ($FRIENDCHECK->Verification == FRIEND_VERIFIED) ) {
-        global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
-        global $gREQUESTNAME;
-        $gREQUESTNAME = $RECEIVINGUSER->userProfile->GetAlias ();
-        $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
-        $this->Error = -1;
-        $this->Message = $zSTRINGS->Output;
-        unset ($gREQUESTNAME);
-        return (FALSE);
-      } // if
-
-      // Check if this is a long distance relationship.
-      if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
-        return ($this->LongDistanceRequest ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN));
-      } // if
-
-      // Step 2: Approve if the receiving user has already sent a friend request to this user.
-      if ( ($FRIENDCHECK->CountResult() > 0) and ($FRIENDCHECK->Verification == FRIEND_REQUESTS) ) {
-        $this->Approve ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN); 
-        return (TRUE);
-      } // if
-
-      // Step 3: Create the requesting relationship. 
-
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $RECEIVINGUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Add REQUESTING to RECEIVING.
-      $this->userAuth_uID = $RECEIVINGUSER->uID;
-      $this->sID = $sortid;
-      $this->Username = $REQUESTINGUSER->Username;
-      $this->Domain = $gSITEDOMAIN;
-      $this->Verification = FRIEND_REQUESTS;
-      $this->Stamp = SQL_NOW;
-
-      $this->Add ();
-
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $REQUESTINGUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Add RECEIVING to REQUESTING.
-      $this->userAuth_uID = $REQUESTINGUSER->uID;
-      $this->sID = $sortid;
-      $this->Username = $RECEIVINGUSER->Username;
-      $this->Domain = $gSITEDOMAIN;
-      $this->Verification = FRIEND_PENDING;
-      $this->Stamp = SQL_NOW;
-
-      $this->Add ();
-
-      // Notify requested user.
-      if ($pNOTIFY)
-        $this->NotifyRequest ($RECEIVINGUSER->userProfile->Email, $RECEIVINGUSER->userProfile->GetAlias (), $REQUESTINGUSER->userProfile->GetAlias (), $RECEIVINGUSER->Username);
-
-      $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
-      $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
-      $gCIRCLEVIEW = CIRCLE_PENDING;
-      $this->Error = 0;
-      $this->Message = $zSTRINGS->Output;
-
-      // Step 4: Create the recieving relationship.
-
-      unset ($REQUESTINGUSER);
-      unset ($RECEIVINGUSER);
-      unset ($FRIENDCHECK);
-
-      return (TRUE);
       
+      $source_verification = $this->CheckVerification ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
+      
+      $USER = new cUSER();
+      $USER->Select ("Username", $pUSERNAME);
+      $USER->FetchArray ();
+      $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
+      $fullname = $USER->userProfile->Fullname;
+      $uid = $USER->uID;
+      unset ($USER);
+      
+      switch ($target_verification) {
+        case FRIEND_VERIFIED:
+          // Check if relationship has already been created.
+          if ($source_verification == FRIEND_VERIFIED) {
+            global $gREQUESTNAME;
+            $gREQUESTNAME = $fullname;
+            $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
+            $this->Error = -1;
+            $this->Message = $zSTRINGS->Output;
+            
+            return (TRUE);
+          } // if
+          
+          // Already verified on one side.  Verify on the other.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            return (FALSE);
+          } // if
+          
+          global $gREQUESTNAME;
+          $gREQUESTNAME = $fullname;
+          $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
+          $this->Error = -1;
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
+        break;
+        
+        case FRIEND_REQUESTS:
+          // Check if relationship has already been created.
+          if ($source_verification == FRIEND_PENDING) {
+            global $gREQUESTNAME;
+            $gREQUESTNAME = $fullname;
+            $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
+            $this->Error = -1;
+            $this->Message = $zSTRINGS->Output;
+            
+            $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+            $gCIRCLEVIEW = CIRCLE_PENDING;
+            
+            return (TRUE);
+          } // if
+          
+          // Already verified on one side.  Verify on the other.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_PENDING);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            return (FALSE);
+          } // if
+          
+          global $gREQUESTNAME;
+          $gREQUESTNAME = $fullname;
+          $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
+          $this->Error = -1;
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+          $gCIRCLEVIEW = CIRCLE_PENDING;
+        break;
+        
+        case FRIEND_PENDING:
+          // Begin Transaction.
+          $this->Begin ();
+          
+          // Requested on one side.  Verify on both sides.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+          
+          $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_VERIFIED);
+          
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+         
+          // Commit Transaction
+          $this->Commit ();
+          
+          global $gNEWFRIEND;
+          $gNEWFRIEND = $fullname;
+          $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
+        break;
+        
+        default:
+          // Begin Transaction.
+          $this->Begin ();
+          
+          // Add pending record to source.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_PENDING);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+          
+          // Add request record to target.
+          $USER = new cUSER();
+          $USER->Select ("Username", $pUSERNAME);
+          $USER->FetchArray ();
+          $fullname = $USER->userProfile->Fullname;
+          $uid = $USER->uID;
+          unset ($USER);
+          
+          $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_REQUESTS);
+          
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+         
+          // Commit Transaction
+          $this->Commit ();
+          
+          global $gREQUESTEDUSER;
+          $gREQUESTEDUSER = $fullname;
+          $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+          $gCIRCLEVIEW = CIRCLE_PENDING;
+        break;
+      } // switch
+      
+      return (TRUE);
     } // Request
 
-    function LongDistanceRequest ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
+    function LongDistanceApprove ($pREMOTEUSERNAME, $pREMOTEDOMAIN) {
 
-      global $zSTRINGS, $zXML;
+      global $zAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
-
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pLOCALUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
-
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $zLOCALUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
+      
+      $token = $this->Token ($zLOCALUSER->uID, $pREMOTEDOMAIN);
 
       // Step 1: Check remote friend relationship status.
-      $status = $this->LongDistanceStatus ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
+      $status = $this->LongDistanceStatus ($token, $zLOCALUSER->Username, $gSITEDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
       switch ($status) {
         case FRIEND_VERIFIED:
-          // Step 1a: Remotely verified, create verified local record.
-          $FRIEND = new cFRIENDINFORMATION ();
-          $friendcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                   "Username"     => $pREMOTEUSERNAME,
-                                   "Domain"       => $pREMOTEDOMAIN);
-          $FRIEND->SelectByMultiple ($friendcriteria);
-          if ($FRIEND->CountResult() == 0) {
-            // No local record exists, so create one and set to verified.
-            $FRIEND->userAuth_uID = $REQUESTINGUSER->uID;
-            $FRIEND->sID = $sortid;
-            $FRIEND->Username = $pREMOTEUSERNAME;
-            $FRIEND->Domain = $pREMOTEDOMAIN;
-            $FRIEND->Verification = FRIEND_VERIFIED;
-            $FRIEND->Stamp = SQL_NOW;
-            $FRIEND->Add ();
-
+          // Remotely verified, create verified local record.
+          
+          // Create Local Record.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_VERIFIED);
+            
+          if ($success) {
+            // Set success message.
             global $gNEWFRIEND;
-            list ($gNEWFRIEND) = $FRIEND->GetUserInformation ();
+            list ($gNEWFRIEND) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
 
             $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
             $this->Message = $zSTRINGS->Output;
-
-          } else {
-            $FRIEND->FetchArray();
-            if ($FRIEND->Verification == FRIEND_VERIFIED) {
-              // Friend is already on list.
-              global $gREQUESTNAME;
-              list ($gREQUESTNAME) = $FRIEND->GetUserInformation ();
-  
-              $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
-              $this->Message = $zSTRINGS->Output;
-              $this->Error = -1;
-            } else {
-              // Update local record.
-              $FRIEND->Verification = FRIEND_VERIFIED;
-              $FRIEND->Update ();
-
-              global $gNEWFRIEND;
-              list ($gNEWFRIEND) = $FRIEND->GetUserInformation ();
-  
-              $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-              $this->Message = $zSTRINGS->Output;
-            } // if
           } // if
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
         break;
 
         case FRIEND_REQUESTS:
-          $FRIEND = new cFRIENDINFORMATION ();
-
-          $pendingcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                    "Username"     => $pREMOTEUSERNAME,
-                                    "Domain"       => $pREMOTEDOMAIN);
-          $FRIEND->SelectByMultiple ($pendingcriteria);
-
-          if ($FRIEND->CountResult() == 0) {
-            // No local record exists, so create one and set to verified.
-            $FRIEND->userAuth_uID = $REQUESTINGUSER->uID;
-            $FRIEND->sID = $sortid;
-            $FRIEND->Username = $pREMOTEUSERNAME;
-            $FRIEND->Domain = $pREMOTEDOMAIN;
-            $FRIEND->Verification = FRIEND_PENDING;
-            $FRIEND->Stamp = SQL_NOW;
-            $FRIEND->Add ();
-          } else {
-            // Update local record.
-            $FRIEND->FetchArray();
-            $FRIEND->Verification = FRIEND_PENDING;
-            $FRIEND->Update ();
-          } // if
+          // Request already exists, create a pending record.
+          $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_PENDING);
 
           // Error message since we're awaiting approval on their part.
-          $FRIEND->Username = $pREMOTEUSERNAME;
-          $FRIEND->Domain = $pREMOTEDOMAIN;
           global $gREQUESTNAME;
-          list ($gREQUESTNAME) = $FRIEND->GetUserInformation();
+          list ($gREQUESTNAME) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
           $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
           $this->Error = -1;
           $this->Message = $zSTRINGS->Output;
-          unset ($FRIEND);
 
           $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
           $gCIRCLEVIEW = CIRCLE_PENDING;
         break;
 
         case FRIEND_PENDING:
-          // Step 2a: Remotely pending, so approve remote friend request.
-          $result = $this->LongDistanceApprove ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
-          if ($result == SUCCESS) {
-            // Step 2b: If success, approve local friend request.
-            $FRIEND = new cFRIENDINFORMATION ();
-            $friendcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                     "Username"     => $pREMOTEUSERNAME,
-                                     "Domain"       => $pREMOTEDOMAIN);
-            $FRIEND->SelectByMultiple ($friendcriteria);
-            if ($FRIEND->CountResult() == 0) {
-              // No local record exists, so create one and set to verified.
-              $FRIEND->userAuth_uID = $REQUESTINGUSER->uID;
-              $FRIEND->sID = $sortid;
-              $FRIEND->Username = $pREMOTEUSERNAME;
-              $FRIEND->Domain = $pREMOTEDOMAIN;
-              $FRIEND->Verification = FRIEND_VERIFIED;
-              $FRIEND->Stamp = SQL_NOW;
-              $FRIEND->Add ();
-            } else {
-              // Update local record.
-              $FRIEND->FetchArray();
-              $FRIEND->Verification = FRIEND_VERIFIED;
-              $FRIEND->Update ();
-            } // if
-
-            global $gREQUESTEDUSER;
-            list ($gREQUESTEDUSER) = $FRIEND->GetUserInformation ();
-            $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
-            unset ($gREQUESTEDUSER);
-
-          } else {
-            // Error message due to unsuccessful approval attempt.
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
-            $this->Error = -1;
-          } // if
-        break;
-
-        default:
-          // Step 3a: No relationship exists remotely, so add remote friend request.
-
-          // Retrieve token.
-          $VERIFY = new cUSERTOKENS ();
-          $USER = new cUSER ();
-          $USER->Select ("Username", $pLOCALUSERNAME);
-          $USER->FetchArray();
-          $VERIFY->userAuth_uID = $USER->uID;
-          $VERIFY->LoadToken ($pREMOTEDOMAIN);
-          $token = $AUTH->Token;
-          if (!$token) {
-            $VERIFY->CreateToken ($pREMOTEDOMAIN);
-            $token = $VERIFY->Token;
-          } // if
-          unset ($VERIFY);
-          unset ($USER);
-
+          // Correctly pending, so approve remote friend request.
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "ADD_FRIEND_REQUEST",
+          $datalist = array ("gACTION"   => "FRIEND_APPROVE",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
-                             "gDOMAIN"   => $pLOCALDOMAIN);
+                             "gDOMAIN"   => $gSITEDOMAIN);
           $zREMOTE->Post ($datalist);
         
           $zXML->Parse ($zREMOTE->Return);
@@ -1098,32 +1041,18 @@
           $result = $zXML->GetValue ("result", 0);
 
           unset ($zREMOTE);
+          
           if ($result == SUCCESS) {
-            // Delete any existing relationships to maintain integrity.
-            $deletecriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                     "Username"     => $pREMOTEUSERNAME,
-                                     "Domain"       => $pREMOTEDOMAIN);
-            $this->SelectByMultiple ($deletecriteria);
-            while ($this->FetchArray()) {
-              $this->Delete();
-            } // while
 
-            // Step 3b: If success, add local pending request.
-            $this->userAuth_uID = $REQUESTINGUSER->uID;
-            $this->sID = $sortid;
-            $this->Username = $pREMOTEUSERNAME;
-            $this->Domain = $pREMOTEDOMAIN;
-            $this->Verification = FRIEND_PENDING;
-            $this->Stamp = SQL_NOW;
+            // If success, add local pending request.
+            $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_VERIFIED);
 
-            $this->Add ();
-
-            global $gREQUESTEDUSER;
-            $gREQUESTEDUSER = $fullname;
-            $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
+            // Set message.
+            global $gNEWFRIEND;
+            $gNEWFRIEND = $fullname;
+            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
             $this->Message = $zSTRINGS->Output;
-            unset ($gREQUESTEDUSER);
-
+            unset ($gNEWFRIEND);
           } else {
             // Error message due to unsuccessful request attempt.
             $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
@@ -1131,255 +1060,17 @@
             $this->Error = -1;
           } // if
 
-          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
-          $gCIRCLEVIEW = CIRCLE_PENDING;
-
-        break;
-      } // switch
-
-      return (TRUE);
-    } // LongDistanceRequest
-
-    function LongDistanceStatus ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
-      global $zREMOTE, $zAPPLE, $zXML;
-
-      global $gSITEDOMAIN;
-
-      $VERIFY = new cUSERTOKENS ();
-      $USER = new cUSER ();
-      $USER->Select ("Username", $pLOCALUSERNAME);
-      $USER->FetchArray();
-      $VERIFY->userAuth_uID = $USER->uID;
-      $VERIFY->LoadToken ($pREMOTEDOMAIN);
-      $token = $VERIFY->Token;
-      if (!$token) {
-        $VERIFY->CreateToken ($pREMOTEDOMAIN);
-        $token = $VERIFY->Token;
-      } // if
-      
-      unset ($VERIFY);
-      unset ($USER);
-
-      $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-      $datalist = array ("gACTION"   => "CHECK_FRIEND_STATUS",
-                         "gTOKEN"    => $token,
-                         "gUSERNAME" => $pREMOTEUSERNAME,
-                         "gDOMAIN" => $pLOCALDOMAIN);
-      $zREMOTE->Post ($datalist);
-      
-      $zXML->Parse ($zREMOTE->Return);
-
-      $status = $zXML->GetValue ("status", 0);
-
-      unset ($zREMOTE);
-
-      return ($status);
-
-    } // LongDistanceStatus
-
-    function Approve ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pNOTIFY = TRUE) {
-
-      global $zSTRINGS;
-
-      global $gSITEDOMAIN;
-
-      // Check if this is a long distance relationship.
-      if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
-        return ($this->LongDistanceApprove ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN));
-      } // if
-      
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pREQUESTINGUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
-
-      // Get Information On The Receiving User.
-      $RECEIVINGUSER =  new cUSER ();
-      $RECEIVINGUSER->Select ("Username", $pRECEIVINGUSERNAME);
-      $RECEIVINGUSER->FetchArray ();
-
-      // Step 1: Check if a request exists.
-      $checkcriteria = array ("userAuth_uID"   => $REQUESTINGUSER->uID,
-                              "Username"       => $RECEIVINGUSER->Username,
-                              "Domain"         => $gSITEDOMAIN,
-                              "Verification"    => FRIEND_PENDING);
-                              
-      $this->SelectByMultiple ($checkcriteria);
-      if ($this->CountResult () == 0) { 
-        // No corresponding friend request exists, so recreate relationship.
-        $this->Deny ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, FALSE); 
-        $this->Request ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN); 
-        return (TRUE);
-      } // if
-
-      // Step 2: Approve request.
-
-      // Update the requested record.
-      $approvecriteria = array ("userAuth_uID"   => $REQUESTINGUSER->uID,
-                                "Username"       => $RECEIVINGUSER->Username,
-                                "Domain"         => $gSITEDOMAIN);
-      $this->SelectByMultiple ($approvecriteria);
-      $this->FetchArray ();
-      $this->Verification = FRIEND_VERIFIED;
-      $this->Update ();
-
-      // Update the receiving record.
-      $approvecriteria = array ("userAuth_uID"   => $RECEIVINGUSER->uID,
-                                "Username"       => $REQUESTINGUSER->Username,
-                                "Domain"         => $gSITEDOMAIN);
-      $this->SelectByMultiple ($approvecriteria);
-      $this->FetchArray ();
-      $this->Verification = FRIEND_VERIFIED;
-      $this->Update ();
-
-      // Notify requested user.
-      if ($pNOTIFY)
-        $this->NotifyApproval ($REQUESTINGUSER->userProfile->Email, $RECEIVINGUSER->userProfile->GetAlias (), $REQUESTINGUSER->userProfile->GetAlias (), $REQUESTINGUSER->Username);
-
-      global $gNEWFRIEND;
-      $gNEWFRIEND = $REQUESTINGUSER->userProfile->GetAlias ();
-
-      $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
-
-      unset ($REQUESTINGUSER);
-      unset ($RECEIVINGUSER);
-
-      return (TRUE);
-
-    } // Approve
-    
-    function LongDistanceApprove ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
-
-      global $zSTRINGS, $zXML;
-
-      global $gSITEDOMAIN, $gDOMAIN;
-
-      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
-
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pLOCALUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
-
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $zLOCALUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Step 1: Check remote friend relationship status.
-      $status = $this->LongDistanceStatus ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
-      switch ($status) {
-        case FRIEND_VERIFIED:
-          // Step 1a: Remotely verified, create verified local record.
-          $FRIEND = new cFRIENDINFORMATION ();
-          $friendcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                   "Username"     => $pREMOTEUSERNAME,
-                                   "Domain"       => $pREMOTEDOMAIN);
-          $FRIEND->SelectByMultiple ($friendcriteria);
-          if ($FRIEND->CountResult() == 0) {
-            // No local record exists, so create one and set to verified.
-            $FRIEND->userAuth_uID = $REQUESTINGUSER->uID;
-            $FRIEND->sID = $sortid;
-            $FRIEND->Username = $pREMOTEUSERNAME;
-            $FRIEND->Domain = $pREMOTEDOMAIN;
-            $FRIEND->Verification = FRIEND_VERIFIED;
-            $FRIEND->Stamp = SQL_NOW;
-            $FRIEND->Add ();
-
-            global $gNEWFRIEND;
-            list ($gNEWFRIEND) = $FRIEND->GetUserInformation ();
-
-            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
-
-          } else {
-            $FRIEND->FetchArray();
-            if ($FRIEND->Verification == FRIEND_VERIFIED) {
-              // Friend is already on list.
-              global $gREQUESTNAME;
-              list ($gREQUESTNAME) = $FRIEND->GetUserInformation ();
-  
-              $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
-              $this->Message = $zSTRINGS->Output;
-              $this->Error = -1;
-            } else {
-              // Update local record.
-              $FRIEND->Verification = FRIEND_VERIFIED;
-              $FRIEND->Update ();
-
-              global $gNEWFRIEND;
-              list ($gNEWFRIEND) = $FRIEND->GetUserInformation ();
-  
-              $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-              $this->Message = $zSTRINGS->Output;
-            } // if
-          } // if
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
         break;
 
-        case FRIEND_REQUESTS:
-          $FRIEND = new cFRIENDINFORMATION ();
-
-          $pendingcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                    "Username"     => $pREMOTEUSERNAME,
-                                    "Domain"       => $pREMOTEDOMAIN);
-          $FRIEND->SelectByMultiple ($pendingcriteria);
-
-          if ($FRIEND->CountResult() == 0) {
-            // No local record exists, so create one and set to verified.
-            $FRIEND->userAuth_uID = $REQUESTINGUSER->uID;
-            $FRIEND->sID = $sortid;
-            $FRIEND->Username = $pREMOTEUSERNAME;
-            $FRIEND->Domain = $pREMOTEDOMAIN;
-            $FRIEND->Verification = FRIEND_PENDING;
-            $FRIEND->Stamp = SQL_NOW;
-            $FRIEND->Add ();
-          } else {
-            // Update local record.
-            $FRIEND->FetchArray();
-            $FRIEND->Verification = FRIEND_PENDING;
-            $FRIEND->Update ();
-          } // if
-
-          // Error message since we're awaiting approval on their part.
-          $FRIEND->Username = $pREMOTEUSERNAME;
-          $FRIEND->Domain = $pREMOTEDOMAIN;
-          global $gREQUESTNAME;
-          list ($gREQUESTNAME) = $FRIEND->GetUserInformation();
-          $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
-          $this->Error = -1;
-          $this->Message = $zSTRINGS->Output;
-          unset ($FRIEND);
-
-          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
-          $gCIRCLEVIEW = CIRCLE_PENDING;
-
-        break;
-
-        case FRIEND_PENDING:
-          // Step 2a: Remotely pending (correctly), so approve remote friend request.
-          
-          $VERIFY = new cUSERTOKENS ();
-          $USER = new cUSER ();
-          $USER->Select ("Username", $pLOCALUSERNAME);
-          $USER->FetchArray();
-          $VERIFY->userAuth_uID = $USER->uID;
-          $VERIFY->LoadToken ($pREMOTEDOMAIN);
-          $token = $VERIFY->Token;
-          if (!$token) {
-            $VERIFY->CreateToken ($pREMOTEDOMAIN);
-            $token = $VERIFY->Token;
-          } // if
-      
-          unset ($VERIFY);
-          unset ($USER);
-
+        default:
+          // No relationship exists remotely, so add remote friend request.
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "APPROVE_FRIEND_REQUEST",
-                             "gTOKEN" => $token,
+          $datalist = array ("gACTION"   => "FRIEND_REQUEST",
+                             "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
-                             "gDOMAIN" => $pLOCALDOMAIN);
+                             "gDOMAIN"   => $gSITEDOMAIN);
           $zREMOTE->Post ($datalist);
         
           $zXML->Parse ($zREMOTE->Return);
@@ -1388,98 +1079,18 @@
           $result = $zXML->GetValue ("result", 0);
 
           unset ($zREMOTE);
+          
           if ($result == SUCCESS) {
-            // Step 2b: If success, approve local friend request.
-            $FRIEND = new cFRIENDINFORMATION ();
-            $friendcriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                     "Username"     => $pREMOTEUSERNAME,
-                                     "Domain"       => $pREMOTEDOMAIN);
-            $FRIEND->SelectByMultiple ($friendcriteria);
-            if ($FRIEND->CountResult() == 0) {
-              // No local record exists, so create one and set to verified.
-              $FRIEND->userAuth_uID = $REQUESTINGUSER->uID;
-              $FRIEND->sID = $sortid;
-              $FRIEND->Username = $pREMOTEUSERNAME;
-              $FRIEND->Domain = $pREMOTEDOMAIN;
-              $FRIEND->Verification = FRIEND_VERIFIED;
-              $FRIEND->Stamp = SQL_NOW;
-              $FRIEND->Add ();
-            } else {
-              // Update local record.
-              $FRIEND->FetchArray();
-              $FRIEND->Verification = FRIEND_VERIFIED;
-              $FRIEND->Update ();
-            } // if
 
-            global $gNEWFRIEND;
-            $gNEWFRIEND = $fullname;
-            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
-            unset ($gREQUESTEDUSER);
+            // If success, add local pending request.
+            $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_PENDING);
 
-          } else {
-            // Error message due to unsuccessful approval attempt.
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
-            $this->Error = -1;
-          } // if
-        break;
-
-        default:
-          // Step 3a: No relationship exists remotely, so add remote friend request.
-          $VERIFY = new cUSERTOKENS ();
-          $USER = new cUSER ();
-          $USER->Select ("Username", $pLOCALUSERNAME);
-          $USER->FetchArray();
-          $VERIFY->userAuth_uID = $USER->uID;
-          $VERIFY->LoadToken ($pREMOTEDOMAIN);
-          $token = $AUTH->Token;
-          if (!$token) {
-            $VERIFY->CreateToken ($pREMOTEDOMAIN);
-            $token = $VERIFY->Token;
-          } // if
-          unset ($VERIFY);
-          unset ($USER);
-
-          $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "ADD_FRIEND_REQUEST",
-                             "gTOKEN"    => $token,
-                             "gUSERNAME" => $pREMOTEUSERNAME,
-                             "gDOMAIN" => $pLOCALDOMAIN);
-          $zREMOTE->Post ($datalist);
-
-          $zXML->Parse ($zREMOTE->Return);
-
-          $fullname = $zXML->GetValue ("fullname", 0);
-          $result = $zXML->GetValue ("result", 0);
-
-          unset ($zREMOTE);
-          if ($result == SUCCESS) {
-            // Delete any existing relationships to maintain integrity.
-            $deletecriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                     "Username"     => $pREMOTEUSERNAME,
-                                     "Domain"       => $pREMOTEDOMAIN);
-            $this->SelectByMultiple ($deletecriteria);
-            while ($this->FetchArray()) {
-              $this->Delete();
-            } // while
-
-            // Step 3b: If success, add local pending request.
-            $this->userAuth_uID = $REQUESTINGUSER->uID;
-            $this->sID = $sortid;
-            $this->Username = $pREMOTEUSERNAME;
-            $this->Domain = $pREMOTEDOMAIN;
-            $this->Verification = FRIEND_PENDING;
-            $this->Stamp = SQL_NOW;
-
-            $this->Add ();
-
+            // Set message.
             global $gREQUESTEDUSER;
             $gREQUESTEDUSER = $fullname;
             $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
             $this->Message = $zSTRINGS->Output;
             unset ($gREQUESTEDUSER);
-
           } else {
             // Error message due to unsuccessful request attempt.
             $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
@@ -1496,154 +1107,389 @@
       return (TRUE);
     } // LongDistanceApprove
 
-    function Deny ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pNOTIFY = TRUE) {
+    function LongDistanceRequest ($pREMOTEUSERNAME, $pREMOTEDOMAIN) {
 
-      global $zSTRINGS;
+      global $zAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
 
+      global $gSITEDOMAIN, $gDOMAIN;
+
+      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
+      
+      $token = $this->Token ($zLOCALUSER->uID, $pREMOTEDOMAIN);
+
+      // Step 1: Check remote friend relationship status.
+      $status = $this->LongDistanceStatus ($token, $zLOCALUSER->Username, $gSITEDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
+      switch ($status) {
+        case FRIEND_VERIFIED:
+          // Remotely verified, create verified local record.
+          
+          // Create Local Record.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_VERIFIED);
+            
+          if ($success) {
+            // Set success message.
+            global $gREQUESTNAME;
+            list ($gREQUESTNAME) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
+
+            $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+          } // if
+        break;
+
+        case FRIEND_REQUESTS:
+          // Request already exists, create a pending record.
+          $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_PENDING);
+
+          // Error message since we're awaiting approval on their part.
+          $FRIEND = new cFRIENDINFORMATION();
+          $FRIEND->Username = $pREMOTEUSERNAME;
+          $FRIEND->Domain = $pREMOTEDOMAIN;
+          global $gREQUESTNAME;
+          list ($gREQUESTNAME) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
+          $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
+          $this->Error = -1;
+          $this->Message = $zSTRINGS->Output;
+          unset ($FRIEND);
+
+          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+          $gCIRCLEVIEW = CIRCLE_PENDING;
+        break;
+
+        case FRIEND_PENDING:
+          // Already pending, so approve remote friend request.
+          $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
+          $datalist = array ("gACTION"   => "FRIEND_APPROVE",
+                             "gTOKEN"    => $token,
+                             "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gDOMAIN"   => $gSITEDOMAIN);
+          $zREMOTE->Post ($datalist);
+        
+          $zXML->Parse ($zREMOTE->Return);
+
+          $fullname = $zXML->GetValue ("fullname", 0);
+          $result = $zXML->GetValue ("result", 0);
+
+          unset ($zREMOTE);
+          
+          if ($result == SUCCESS) {
+
+            // If success, add local verified request.
+            $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_VERIFIED);
+
+            // Set message.
+            global $gNEWFRIEND;
+            $gNEWFRIEND = $fullname;
+            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            unset ($gNEWFRIEND);
+          } else {
+            // Error message due to unsuccessful request attempt.
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+          } // if
+
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
+        break;
+
+        default:
+          // No relationship exists remotely, so add remote friend request.
+          $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
+          $datalist = array ("gACTION"   => "FRIEND_REQUEST",
+                             "gTOKEN"    => $token,
+                             "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gDOMAIN"   => $gSITEDOMAIN);
+          $zREMOTE->Post ($datalist);
+        
+          $zXML->Parse ($zREMOTE->Return);
+
+          $fullname = $zXML->GetValue ("fullname", 0);
+          $result = $zXML->GetValue ("result", 0);
+
+          unset ($zREMOTE);
+          
+          if ($result == SUCCESS) {
+
+            // If success, add local pending request.
+            $this->CreateLocal ($zLOCALUSER->uID, $pREMOTEUSERNAME, $pREMOTEDOMAIN, FRIEND_PENDING);
+
+            // Set message.
+            global $gREQUESTEDUSER;
+            $gREQUESTEDUSER = $fullname;
+            $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            unset ($gREQUESTEDUSER);
+          } else {
+            // Error message due to unsuccessful request attempt.
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+          } // if
+
+          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+          $gCIRCLEVIEW = CIRCLE_PENDING;
+
+        break;
+      } // switch
+
+      return (TRUE);
+    } // LongDistanceRequest
+
+    function LongDistanceStatus ($pTOKEN, $pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
+      global $zREMOTE, $zAPPLE, $zXML;
 
       global $gSITEDOMAIN;
 
-      // Check if this is a long distance relationship.
-      if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
-        return ($this->LongDistanceDeny ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN));
-      } // if
+      $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
+      $datalist = array ("gACTION"   => "FRIEND_STATUS",
+                         "gTOKEN"    => $pTOKEN,
+                         "gUSERNAME" => $pREMOTEUSERNAME,
+                         "gDOMAIN"   => $pLOCALDOMAIN);
+      $zREMOTE->Post ($datalist);
+      
+      $zXML->Parse ($zREMOTE->Return);
 
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pREQUESTINGUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
+      $status = $zXML->GetValue ("status", 0);
 
-      // Get Information On The Receiving User.
-      $RECEIVINGUSER =  new cUSER ();
-      $RECEIVINGUSER->Select ("Username", $pRECEIVINGUSERNAME);
-      $RECEIVINGUSER->FetchArray ();
+      unset ($zREMOTE);
 
-      // Step 1: Deny request.
+      return ($status);
 
-      // Delete the requested record.
-      $denycriteria = array ("userAuth_uID"   => $REQUESTINGUSER->uID,
-                             "Username"       => $RECEIVINGUSER->Username,
-                             "Domain"         => $gSITEDOMAIN);
-      $this->SelectByMultiple ($denycriteria);
-      $this->FetchArray ();
-      $this->Delete ();
+    } // LongDistanceStatus
 
-      // Update the receiving record.
-      $denycriteria = array ("userAuth_uID"   => $RECEIVINGUSER->uID,
-                             "Username"       => $REQUESTINGUSER->Username,
-                             "Domain"         => $gSITEDOMAIN);
-      $this->SelectByMultiple ($denycriteria);
-      $this->FetchArray ();
-      $this->Verification = FRIEND_VERIFIED;
-      $this->Delete ();
+    function Approve ($pUSERNAME, $pNOTIFY = TRUE) {
+
+      global $zAPPLE, $zSTRINGS, $zLOCALUSER;
+
+      global $gSITEDOMAIN;
+
+      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
+      
+      $source_verification = $this->CheckVerification ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
+      
+      $USER = new cUSER();
+      $USER->Select ("Username", $pUSERNAME);
+      $USER->FetchArray ();
+      $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
+      $fullname = $USER->userProfile->Fullname;
+      $uid = $USER->uID;
+      unset ($USER);
+      
+      switch ($target_verification) {
+        case FRIEND_VERIFIED:
+          // Already verified on one side.  Verify on the other.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            return (FALSE);
+          } // if
+          
+          global $gNEWFRIEND;
+          $gNEWFRIEND = $fullname;
+          $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
+        break;
+        
+        case FRIEND_PENDING:
+          // Correct.
+          
+          // Begin Transaction.
+          $this->Begin ();
+          
+          // Requested on one side.  Verify on both sides.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+          
+          $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_VERIFIED);
+          
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+         
+          // Commit Transaction
+          $this->Commit ();
+          
+          global $gNEWFRIEND;
+          $gNEWFRIEND = $fullname;
+          $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
+          $gCIRCLEVIEW = CIRCLE_NEWEST;
+        break;
+        
+        case FRIEND_REQUESTS:
+        default:
+          // Begin Transaction.
+          $this->Begin ();
+          
+          // Add pending record to source.
+          $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_PENDING);
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+          
+          // Add request record to target.
+          $USER = new cUSER();
+          $USER->Select ("Username", $pUSERNAME);
+          $USER->FetchArray ();
+          $fullname = $USER->userProfile->Fullname;
+          $uid = $USER->uID;
+          unset ($USER);
+          
+          $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_REQUESTS);
+          
+          if (!$success) {
+            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+            $this->Message = $zSTRINGS->Output;
+            $this->Error = -1;
+            // Rollback Transaction
+            $this->Rollback ();
+            return (FALSE);
+          } // if
+         
+          // Commit Transaction
+          $this->Commit ();
+          
+          global $gREQUESTEDUSER;
+          $gREQUESTEDUSER = $fullname;
+          $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
+          $this->Message = $zSTRINGS->Output;
+          
+          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+          $gCIRCLEVIEW = CIRCLE_PENDING;
+        break;
+      } // switch
+      
+      return (TRUE);
+    } // Approve
+    
+    function Deny ($pUSERNAME, $pNOTIFY = TRUE) {
+
+      global $zSTRINGS, $zLOCALUSER;
+
+      global $gSITEDOMAIN;
+      
+      // Delete the source record.
+      
+      $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
+      
+      // Get Information On The Target User.
+      $USER =  new cUSER ();
+      $USER->Select ("Username", $pUSERNAME);
+      $USER->FetchArray ();
+      $uid = $USER->uID;
+      $fullname = $USER->userProfile->GetAlias ();
+      
+      $this->DeleteLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN);
 
       // Notify requested user.
-      if ($pNOTIFY)
-        $this->NotifyDenial ($REQUESTINGUSER->userProfile->Email, $RECEIVINGUSER->userProfile->GetAlias (), $REQUESTINGUSER->userProfile->GetAlias (), $REQUESTINGUSER->Username);
+      // if ($pNOTIFY) $this->NotifyDenial ($zLOCALUSER->userProfile->Email, $TARGETUSER->userProfile->GetAlias (), $SOURCEUSER->userProfile->GetAlias (), $SOURCEUSER->Username);
 
       global $gDENIEDNAME;
-      $gDENIEDNAME = $REQUESTINGUSER->userProfile->GetAlias ();
+      $gDENIEDNAME = $fullname;
 
       $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
       $this->Message = $zSTRINGS->Output;
-
-      unset ($REQUESTINGUSER);
-      unset ($RECEIVINGUSER);
-      unset ($FRIENDCHECK);
+      
+      unset ($USER);
 
       return (TRUE);
 
     } // Deny
 
-    function Cancel ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pNOTIFY = TRUE) {
+    function Cancel ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zSTRINGS;
-
+      global $zSTRINGS, $zLOCALUSER;
 
       global $gSITEDOMAIN;
+      
+      // Delete the source record.
+      
+      $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
+      
+      // Get Information On The Target User.
+      $USER =  new cUSER ();
+      $USER->Select ("Username", $pUSERNAME);
+      $USER->FetchArray ();
+      $uid = $USER->uID;
+      $fullname = $USER->userProfile->GetAlias ();
+      
+      $this->DeleteLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN);
 
-      // Check if this is a long distance relationship.
-      if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
-        return ($this->LongDistanceCancel ($pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN));
-      } // if
-
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pREQUESTINGUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
-
-      // Get Information On The Receiving User.
-      $RECEIVINGUSER =  new cUSER ();
-      $RECEIVINGUSER->Select ("Username", $pRECEIVINGUSERNAME);
-      $RECEIVINGUSER->FetchArray ();
-
-      // Step 1: Cancel request.
-
-      // Delete the requested record.
-      $denycriteria = array ("userAuth_uID"   => $REQUESTINGUSER->uID,
-                             "Username"       => $RECEIVINGUSER->Username,
-                             "Domain"         => $gSITEDOMAIN);
-      $this->SelectByMultiple ($denycriteria);
-      $this->FetchArray ();
-      $this->Delete ();
-
-      // Update the receiving record.
-      $denycriteria = array ("userAuth_uID"   => $RECEIVINGUSER->uID,
-                             "Username"       => $REQUESTINGUSER->Username,
-                             "Domain"         => $gSITEDOMAIN);
-      $this->SelectByMultiple ($denycriteria);
-      $this->FetchArray ();
-      $this->Verification = FRIEND_VERIFIED;
-      $this->Delete ();
+      // Notify requested user.
+      // if ($pNOTIFY) $this->NotifyDenial ($zLOCALUSER->userProfile->Email, $TARGETUSER->userProfile->GetAlias (), $SOURCEUSER->userProfile->GetAlias (), $SOURCEUSER->Username);
 
       global $gDENIEDNAME;
-      $gDENIEDNAME = $REQUESTINGUSER->userProfile->GetAlias ();
+      $gDENIEDNAME = $fullname;
 
-      $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
+      $zSTRINGS->Lookup ('MESSAGE.CANCELLED', 'USER.FRIENDS');
       $this->Message = $zSTRINGS->Output;
-
-      unset ($REQUESTINGUSER);
-      unset ($RECEIVINGUSER);
-      unset ($FRIENDCHECK);
+      
+      unset ($USER);
 
       return (TRUE);
 
     } // Cancel
 
-    function Remove ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN, $pNOTIFY = TRUE) {
+    function Remove ($pSOURCEUSERNAME, $pSOURCEDOMAIN, $pTARGETUSERNAME, $pTARGETDOMAIN, $pNOTIFY = TRUE) {
 
       global $zSTRINGS;
 
       global $gSITEDOMAIN;
 
       // Check if this is a long distance relationship.
-      if ($pREQUESTINGDOMAIN != $pRECEIVINGDOMAIN) {
-        return ($this->LongDistanceRemove ($pREQUESTINGUSERNAME, $pREQUESTINGDOMAIN, $pRECEIVINGUSERNAME, $pRECEIVINGDOMAIN));
+      if ($pSOURCEDOMAIN != $pTARGETDOMAIN) {
+        return ($this->LongDistanceRemove ($pSOURCEUSERNAME, $pSOURCEDOMAIN, $pTARGETUSERNAME, $pTARGETDOMAIN));
       } // if
 
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pREQUESTINGUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
+      // Get Information On The Source User.
+      $SOURCEUSER =  new cUSER ();
+      $SOURCEUSER->Select ("Username", $pSOURCEUSERNAME);
+      $SOURCEUSER->FetchArray ();
 
-      // Get Information On The Receiving User.
-      $RECEIVINGUSER =  new cUSER ();
-      $RECEIVINGUSER->Select ("Username", $pRECEIVINGUSERNAME);
-      $RECEIVINGUSER->FetchArray ();
+      // Get Information On The Target User.
+      $TARGETUSER =  new cUSER ();
+      $TARGETUSER->Select ("Username", $pTARGETUSERNAME);
+      $TARGETUSER->FetchArray ();
 
       // Step 1: Remove friend.
 
       // Delete the requested record.
-      $denycriteria = array ("userAuth_uID"   => $REQUESTINGUSER->uID,
-                             "Username"       => $RECEIVINGUSER->Username,
+      $denycriteria = array ("userAuth_uID"   => $SOURCEUSER->uID,
+                             "Username"       => $TARGETUSER->Username,
                              "Domain"         => $gSITEDOMAIN);
       $this->SelectByMultiple ($denycriteria);
       $this->FetchArray ();
       $this->Delete ();
 
-      // Update the receiving record.
-      $denycriteria = array ("userAuth_uID"   => $RECEIVINGUSER->uID,
-                             "Username"       => $REQUESTINGUSER->Username,
+      // Update the target record.
+      $denycriteria = array ("userAuth_uID"   => $TARGETUSER->uID,
+                             "Username"       => $SOURCEUSER->Username,
                              "Domain"         => $gSITEDOMAIN);
       $this->SelectByMultiple ($denycriteria);
       $this->FetchArray ();
@@ -1652,16 +1498,16 @@
 
       // Notify requested user.
       if ($pNOTIFY)
-        $this->NotifyDelete ($RECEIVINGUSER->userProfile->Email, $REQUESTINGUSER->userProfile->GetAlias (), $RECEIVINGUSER->userProfile->GetAlias (), $RECEIVINGUSER->Username);
+        $this->NotifyDelete ($TARGETUSER->userProfile->Email, $SOURCEUSER->userProfile->GetAlias (), $TARGETUSER->userProfile->GetAlias (), $TARGETUSER->Username);
 
       global $gFRIENDUSERNAME;
-      $gFRIENDUSERNAME = $RECEIVINGUSER->userProfile->GetAlias ();
+      $gFRIENDUSERNAME = $TARGETUSER->userProfile->GetAlias ();
 
       $zSTRINGS->Lookup ('MESSAGE.DELETE', 'USER.FRIENDS');
       $this->Message = $zSTRINGS->Output;
 
-      unset ($REQUESTINGUSER);
-      unset ($RECEIVINGUSER);
+      unset ($SOURCEUSER);
+      unset ($TARGETUSER);
       unset ($FRIENDCHECK);
 
       return (TRUE);
@@ -1700,172 +1546,181 @@
 
     } // RemoveAll
 
-    function LongDistanceDeny ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
+    function LongDistanceCancel ($pUSERNAME, $pDOMAIN) {
+      
+      global $zLOCALUSER, $zSTRINGS, $zXML;
 
-      global $zSTRINGS, $zXML;
-
-      global $gSITEDOMAIN, $gDOMAIN;
+      global $gSITEDOMAIN;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pLOCALUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
+      $token = $this->Token ($zLOCALUSER->uID, $pDOMAIN);
 
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $zLOCALUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Step 1: Check remote friend relationship status.
-      $status = $this->LongDistanceStatus ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
-      
-      switch ($status) {
-        case FRIEND_VERIFIED:
-        case FRIEND_REQUESTS:
-        case FRIEND_PENDING:
-          // Correct
-        default:
-          
-          $VERIFY = new cUSERTOKENS ();
-          $USER = new cUSER ();
-          $USER->Select ("Username", $pLOCALUSERNAME);
-          $USER->FetchArray();
-          $VERIFY->userAuth_uID = $USER->uID;
-          $VERIFY->LoadToken ($pREMOTEDOMAIN);
-          $token = $VERIFY->Token;
-          if (!$token) {
-            $VERIFY->CreateToken ($pREMOTEDOMAIN);
-            $token = $VERIFY->Token;
-          } // if
-      
-          unset ($VERIFY);
-          unset ($USER);
-
-          // Send request to delete remote friend.
-          $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "DELETE_FRIEND",
-                             "gTOKEN" => $token,
-                             "gUSERNAME" => $pREMOTEUSERNAME,
-                             "gDOMAIN" => $pLOCALDOMAIN);
-          $zREMOTE->Post ($datalist);
+      // Send request to delete remote friend.
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"   => "FRIEND_DELETE",
+                         "gTOKEN" => $token,
+                         "gUSERNAME" => $pUSERNAME,
+                         "gDOMAIN" => $gSITEDOMAIN);
+      $zREMOTE->Post ($datalist);
         
-          $zXML->Parse ($zREMOTE->Return);
+      $zXML->Parse ($zREMOTE->Return);
 
-          $fullname = $zXML->GetValue ("fullname", 0);
-          $result = $zXML->GetValue ("result", 0);
+      $fullname = $zXML->GetValue ("fullname", 0);
+      $success = $zXML->GetValue ("result", 0);
 
-          unset ($zREMOTE);
-          
-          $deletecriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                   "Username"     => $pREMOTEUSERNAME,
-                                   "Domain"       => $pREMOTEDOMAIN);
-          $this->SelectByMultiple ($deletecriteria);
-          while ($this->FetchArray()) {
-            $this->Delete();
-          } // while
-
-          global $gDENIEDNAME;
-          $gDENIEDNAME = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
-          unset ($gREQUESTEDUSER);
-
-          $gCIRCLEVIEWADMIN = CIRCLE_REQUESTS;
-          $gCIRCLEVIEW = CIRCLE_REQUESTS;
-
-        break;
-      } // switch
-
-      return (TRUE);
-    } // LongDistanceDeny
-
-    function LongDistanceCancel ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
-
-      global $zSTRINGS, $zXML;
-
-      global $gSITEDOMAIN, $gDOMAIN;
-
-      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
-
-      // Get Information On The Requesting User.
-      $REQUESTINGUSER =  new cUSER ();
-      $REQUESTINGUSER->Select ("Username", $pLOCALUSERNAME);
-      $REQUESTINGUSER->FetchArray ();
-
-      // Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $zLOCALUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Step 1: Check remote friend relationship status.
-      $status = $this->LongDistanceStatus ($pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
+      unset ($zREMOTE);
       
-      switch ($status) {
-        case FRIEND_VERIFIED:
-        case FRIEND_REQUESTS:
-          // Correct
-        case FRIEND_PENDING:
-        default:
-          
-          $VERIFY = new cUSERTOKENS ();
-          $USER = new cUSER ();
-          $USER->Select ("Username", $pLOCALUSERNAME);
-          $USER->FetchArray();
-          $VERIFY->userAuth_uID = $USER->uID;
-          $VERIFY->LoadToken ($pREMOTEDOMAIN);
-          $token = $VERIFY->Token;
-          if (!$token) {
-            $VERIFY->CreateToken ($pREMOTEDOMAIN);
-            $token = $VERIFY->Token;
-          } // if
+      if (!$success) {
+        $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+        $this->Message = $zSTRINGS->Output;
+        $this->Error = -1;
+        return (FALSE);
+      } // if
       
-          unset ($VERIFY);
-          unset ($USER);
-
-          // Send request to delete remote friend.
-          $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "DELETE_FRIEND",
-                             "gTOKEN" => $token,
-                             "gUSERNAME" => $pREMOTEUSERNAME,
-                             "gDOMAIN" => $pLOCALDOMAIN);
-          $zREMOTE->Post ($datalist);
-        
-          $zXML->Parse ($zREMOTE->Return);
-
-          $fullname = $zXML->GetValue ("fullname", 0);
-          $result = $zXML->GetValue ("result", 0);
-
-          unset ($zREMOTE);
+      // Delete local record.
+      $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $pDOMAIN);
           
-          $deletecriteria = array ("userAuth_uID" => $REQUESTINGUSER->uID,
-                                   "Username"     => $pREMOTEUSERNAME,
-                                   "Domain"       => $pREMOTEDOMAIN);
-          $this->SelectByMultiple ($deletecriteria);
-          while ($this->FetchArray()) {
-            $this->Delete();
-          } // while
+      global $gDENIEDNAME;
+      $gDENIEDNAME = $fullname;
+      $zSTRINGS->Lookup ('MESSAGE.CANCELLED', 'USER.FRIENDS');
+      $this->Message = $zSTRINGS->Output;
 
-          global $gDENIEDNAME;
-          $gDENIEDNAME = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.CANCELLED', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
-          unset ($gREQUESTEDUSER);
-
-          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
-          $gCIRCLEVIEW = CIRCLE_PENDING;
-
-        break;
-      } // switch
-
+      $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+      $gCIRCLEVIEW = CIRCLE_PENDING;
+      
       return (TRUE);
     } // LongDistanceCancel
 
-  } // cFRIENDINFORMATION
+    function LongDistanceDeny ($pUSERNAME, $pDOMAIN) {
+      
+      global $zLOCALUSER, $zSTRINGS, $zXML;
 
+      global $gSITEDOMAIN;
+
+      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
+
+      $token = $this->Token ($zLOCALUSER->uID, $pDOMAIN);
+
+      // Send request to delete remote friend.
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"   => "FRIEND_DELETE",
+                         "gTOKEN" => $token,
+                         "gUSERNAME" => $pUSERNAME,
+                         "gDOMAIN" => $gSITEDOMAIN);
+      $zREMOTE->Post ($datalist);
+        
+      $zXML->Parse ($zREMOTE->Return);
+
+      $fullname = $zXML->GetValue ("fullname", 0);
+      $success = $zXML->GetValue ("result", 0);
+
+      unset ($zREMOTE);
+      
+      if (!$success) {
+        $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+        $this->Message = $zSTRINGS->Output;
+        $this->Error = -1;
+        return (FALSE);
+      } // if
+      
+      // Delete local record.
+      $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $pDOMAIN);
+          
+      global $gDENIEDNAME;
+      $gDENIEDNAME = $fullname;
+      $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
+      $this->Message = $zSTRINGS->Output;
+
+      $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
+      $gCIRCLEVIEW = CIRCLE_PENDING;
+      
+      return (TRUE);
+    } // LongDistanceDeny
+
+    // Create a local friend record.
+    function CreateLocal ($pUID, $pUSERNAME, $pDOMAIN, $pVERIFICATION) {
+    
+      // Step 1: Remove existing records.
+      $deletecriteria = array ("userAuth_uID" => $pUID,
+                               "Username"     => $pUSERNAME,
+                               "Domain"       => $pDOMAIN);
+      $this->SelectByMultiple ($deletecriteria);
+      while ($this->FetchArray()) {
+        $this->Delete();
+      } // while
+      
+      // Step 2: Select max Sort ID.
+      $statement = "SELECT MAX(sID) FROM $this->TableName WHERE userAuth_uID = " . $pUID;
+      $query = mysql_query($statement);
+      $result = mysql_fetch_row($query);
+      $sortid = $result[0] + 1;
+      
+      // Step 3. Create new record.
+      $this->userAuth_uID = $pUID;
+      $this->sID = $sortid;
+      $this->Username = $pUSERNAME;
+      $this->Domain = $pDOMAIN;
+      $this->Verification = $pVERIFICATION;
+      $this->Stamp = SQL_NOW;
+      $this->Add ();
+      
+      if ($this->Error == -1) return (FALSE);
+      
+      return (TRUE);
+    } // CreateLocal
+    
+    // Delete a local friend record.
+    function DeleteLocal ($pUID, $pUSERNAME, $pDOMAIN) {
+    
+      // Step 1: Remove existing records.
+      $deletecriteria = array ("userAuth_uID" => $pUID,
+                               "Username"     => $pUSERNAME,
+                               "Domain"       => $pDOMAIN);
+      $this->SelectByMultiple ($deletecriteria);
+      while ($this->FetchArray()) {
+        $this->Delete();
+      } // while
+      
+      return (TRUE);
+    } // DeleteLocal
+    
+    function CheckVerification ($pUID, $pUSERNAME, $pDOMAIN) {
+      
+      $FRIEND = new cFRIENDINFORMATION ();
+      
+      $criteria = array ("userAuth_uID" => $pUID,
+                         "Username"     => $pUSERNAME,
+                         "Domain"       => $pDOMAIN);
+      $FRIEND->SelectByMultiple ($criteria);
+      $FRIEND->FetchArray ();
+      
+      $verification = $FRIEND->Verification;
+      
+      unset ($FRIEND);
+      
+      return ($verification);
+    } // if
+    
+    function Token ($pUID, $pDOMAIN) {
+      $VERIFY = new cUSERTOKENS ();
+      
+      $VERIFY->userAuth_uID = $pUID;
+      $VERIFY->LoadToken ($pDOMAIN);
+      
+      $token = $VERIFY->Token;
+      
+      if (!$token) {
+        $VERIFY->CreateToken ($pDOMAIN);
+        $token = $VERIFY->Token;
+      } // if
+      unset ($VERIFY);
+      
+      return ($token);
+    } // Token
+
+  } // cFRIENDINFORMATION
+  
   // Friends circles list class.
   class cFRIENDCIRCLESLIST extends cDATACLASS {
 

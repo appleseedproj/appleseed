@@ -433,6 +433,7 @@
                    "WHERE userAuth_uID = '$this->userAuth_uID' " .
                    "AND Domain = '$pDOMAIN' " .
                    "AND Stamp > DATE_SUB(now(), INTERVAL 30 MINUTE)";
+      $this->Statement = $sql_query;
       $this->Query ($sql_query);
       
       $this->FetchArray ();
@@ -445,10 +446,11 @@
       global $zAPPLE;
       
       // Load and delete current token.
-      $this->LoadToken ($pDOMAIN);
-      
-      // Delete
-      $this->Delete();
+      $sql_query = "DELETE FROM $this->TableName " .
+                   "WHERE userAuth_uID = '$this->userAuth_uID' " .
+                   "AND Domain = '$pDOMAIN' ";
+      $this->Statement = $sql_query;
+      $this->Query ($sql_query);
       
       // Create new token information.
       $this->Token = $zAPPLE->RandomString (32);

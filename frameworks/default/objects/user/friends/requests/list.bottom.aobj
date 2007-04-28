@@ -11,8 +11,6 @@
    <?php $zHTML->ShowAll (); ?>
   </div> <!-- #search -->
 
- </div> <!-- #container -->
-
   </div> <!-- #container -->
  </div> <!-- #requests -->
 

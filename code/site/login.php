@@ -127,7 +127,7 @@
       $self = $_SERVER['HTTP_HOST'];
       $self = str_replace ("www.", NULL, $self);
 
-      $datalist = array ("gACTION"   => "CHECK_LOGIN",
+      $datalist = array ("gACTION"   => "LOGIN_CHECK",
                          "gUSERNAME" => $gREFERENCEUSERNAME,
                          "gDOMAIN"   => $self);
       $zREMOTE->Post ($datalist);

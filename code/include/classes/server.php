@@ -129,7 +129,7 @@
       return (TRUE);
     } // Connect
     
-    function CheckLocalToken ($pTOKEN, $pDOMAIN) {
+    function TokenCheckLocal ($pTOKEN, $pDOMAIN) {
       
       // Check our local database, see if this token exists.
       $sql_statement = "
@@ -180,14 +180,14 @@
         $gFULLNAME = $result['Fullname'];
         if ($result['Alias']) $gFULLNAME = $result['Alias'];
         
-        $this->XML->Load ("code/include/data/xml/check_token.xml");
+        $this->XML->Load ("code/include/data/xml/token_check.xml");
         mysql_free_result ($sql_result);
       } // if
       
       return (TRUE);
-    } // CheckLocalToken
+    } // TokenCheckLocal
     
-    function CheckRemoteToken ($pTOKEN, $pDOMAIN) {
+    function TokenCheckRemote ($pTOKEN, $pDOMAIN) {
       
       // First, check our remote cache database, see if this token exists.
       $sql_statement = "
@@ -210,7 +210,7 @@
       if ($result_count == 0) {
         // If not, send back to see if Token is valid.
         $REMOTE = new cREMOTE ($pDOMAIN);
-        $datalist = array ("gACTION"   => "CHECK_TOKEN",
+        $datalist = array ("gACTION"   => "TOKEN_CHECK",
                            "gTOKEN"    => $pTOKEN,
                            "gDOMAIN"   => $this->SiteDomain);
         $REMOTE->Post ($datalist, 1);
@@ -229,7 +229,7 @@
         if ($result) {
           // If so, store for later use.
           
-          $this->StoreToken($pTOKEN, $username, $pDOMAIN);
+          $this->TokenStore($pTOKEN, $username, $pDOMAIN);
           
           $this->ReturnUsername = $username;
           $this->ReturnFullname = $fullname;
@@ -247,9 +247,9 @@
       } // if
       
       return (TRUE);
-    } // CheckRemoteToken
+    } // TokenCheckRemote
     
-    function StoreToken ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function TokenStore ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Delete all existing tokens.
       $sql_statement = "
@@ -284,11 +284,11 @@
       $sql_result = mysql_query ($sql_statement);
       
       return (TRUE);
-    } // StoreToken
+    } // TokenStore
     
-    function AddFriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -395,14 +395,14 @@
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       mysql_free_result ($sql_result);
       
-      $this->XML->Load ("code/include/data/xml/add_friend_request.xml");
+      $this->XML->Load ("code/include/data/xml/friend_request.xml");
       
       return (TRUE);
-    } // AddFriendRequest
+    } // FriendRequest
     
-    function DeleteFriend ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendDelete ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -451,14 +451,14 @@
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       mysql_free_result ($sql_result);
       
-      $this->XML->Load ("code/include/data/xml/delete_friend.xml");
+      $this->XML->Load ("code/include/data/xml/friend_delete.xml");
       
       return (TRUE);
-    } // DeleteFriend
+    } // FriendDelete
     
-    function CancelFriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -508,14 +508,14 @@
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       mysql_free_result ($sql_result);
       
-      $this->XML->Load ("code/include/data/xml/cancel_friend_request.xml");
+      $this->XML->Load ("code/include/data/xml/friend_cancel.xml");
       
       return (TRUE);
-    } // CancelFriendRequest
+    } // FriendCancel
     
-    function ApproveFriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendApprove ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -565,14 +565,14 @@
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       mysql_free_result ($sql_result);
       
-      $this->XML->Load ("code/include/data/xml/approve_friend_request.xml");
+      $this->XML->Load ("code/include/data/xml/friend_approve.xml");
       
       return (TRUE);
-    } // ApproveFriendRequest
+    } // FriendApprove
     
-    function CheckFriendStatus ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendStatus ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      $this->CheckRemoteToken ($pTOKEN, $pDOMAIN); 
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -596,14 +596,14 @@
       $result = mysql_fetch_assoc ($sql_result);
       
       global $gFRIENDSTATUS;
-      $gFRIENDSTATUS = $result['Verification'];
+      if (!$gFRIENDSTATUS = $result['Verification']) $gFRIENDSTATUS = 0;
       
-      $this->XML->Load ("code/include/data/xml/check_friend_status.xml");
+      $this->XML->Load ("code/include/data/xml/friend_status.xml");
       
       return (TRUE);
-    } // CheckFriendStatus
+    } // FriendStatus
     
-    function GetUserInformation ($pUSERNAME) {
+    function UserInformation ($pUSERNAME) {
       
       // Load and send back the fullname.
       global $gFULLNAME;
@@ -652,12 +652,12 @@
       $gONLINE = NULL;
       if ($difference < 180) $gONLINE = "ONLINE";
             
-      $this->XML->Load ("code/include/data/xml/get_user_information.xml");
+      $this->XML->Load ("code/include/data/xml/user_information.xml");
       
       return (TRUE);
-    } // GetUserInformation
+    } // UserInformation
     
-    function CheckLogin ($pUSERNAME, $pDOMAIN) {
+    function LoginCheck ($pUSERNAME, $pDOMAIN) {
       
       $authVerification = $this->TablePrefix . "authVerification";
       $userProfile = $this->TablePrefix . "userProfile";
@@ -717,18 +717,18 @@
         return (FALSE);
       } // if
       
-      $this->XML->Load ("code/include/data/xml/check_login.xml");
+      $this->XML->Load ("code/include/data/xml/login_check.xml");
       
       return (TRUE);
-    } // CheckLogin
+    } // LoginCheck
     
-    function GetIconList ($pUSERNAME) {
+    function IconList ($pUSERNAME) {
       
       $userIcons = $this->TablePrefix . "userIcons";
       $userAuth = $this->TablePrefix . "userAuthorization";
       $finaldata = null;
       
-      $this->XML->Load ("code/include/data/xml/get_icon_list/top.xml");
+      $this->XML->Load ("code/include/data/xml/icon_list/top.xml");
       $finaldata = $this->XML->Data;
       
       // Check our local database, see if this token exists.
@@ -755,16 +755,16 @@
       while ($result = mysql_fetch_assoc($sql_result)) {
         $gFILENAME = $result['Filename'];
         $gKEYWORD = $result['Keyword'];
-        $this->XML->Load ("code/include/data/xml/get_icon_list/middle.xml");
+        $this->XML->Load ("code/include/data/xml/icon_list/middle.xml");
         $finaldata .= $this->XML->Data;
       } // while
       
-      $this->XML->Load ("code/include/data/xml/get_icon_list/bottom.xml");
+      $this->XML->Load ("code/include/data/xml/icon_list/bottom.xml");
       $finaldata .= $this->XML->Data;
       
       $this->XML->Data = $finaldata;
       
       return (TRUE);
-    } // GetIconList
+    } // IconList
     
   } // cSERVER

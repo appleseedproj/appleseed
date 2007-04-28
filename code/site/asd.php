@@ -43,9 +43,9 @@
   error_reporting (E_ERROR);
   
   $gACTION = $_POST['gACTION'];
-
+  
   switch ($gACTION) {
-    case 'GET_USER_INFORMATION':
+    case 'USER_INFORMATION':
     
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -53,12 +53,12 @@
       $zSERVER = new cSERVER ($gDOMAIN);
       
       // Get User Info.
-      $zSERVER->GetUserInformation ($gUSERNAME);
+      $zSERVER->UserInformation ($gUSERNAME);
       
       echo $zSERVER->XML->Data; exit;
       
     break;
-    case 'CHECK_TOKEN':
+    case 'TOKEN_CHECK':
       
       $gTOKEN = $_POST['gTOKEN'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -76,14 +76,14 @@
       } // if
       
       // Check Friend Status.
-      $zSERVER->CheckLocalToken ($gTOKEN, $gDOMAIN);
+      $zSERVER->TokenCheckLocal ($gTOKEN, $gDOMAIN);
       
       echo $zSERVER->XML->Data; 
       
       exit;
       
     break;
-    case 'CHECK_FRIEND_STATUS':
+    case 'FRIEND_STATUS':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -101,12 +101,12 @@
       } // if
       
       // Check Friend Status.
-      $zSERVER->CheckFriendStatus ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      $zSERVER->FriendStatus ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data; exit;
       
     break;
-    case 'ADD_FRIEND_REQUEST':
+    case 'FRIEND_REQUEST':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -123,11 +123,11 @@
       } // if
 
       // Check Friend Status.
-      $zSERVER->AddFriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      $zSERVER->FriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
-    case 'CANCEL_FRIEND_REQUEST':
+    case 'FRIEND_CANCEL':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -144,11 +144,11 @@
       } // if
 
       // Check Friend Status.
-      $zSERVER->CancelFriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      $zSERVER->FriendCancel ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
-    case 'DELETE_FRIEND':
+    case 'FRIEND_DELETE':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -165,11 +165,11 @@
       } // if
 
       // Check Friend Status.
-      $zSERVER->DeleteFriend ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      $zSERVER->FriendDelete ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
-    case 'APPROVE_FRIEND_REQUEST':
+    case 'FRIEND_APPROVE':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -186,11 +186,11 @@
       } // if
 
       // Check Friend Status.
-      $zSERVER->ApproveFriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      $zSERVER->FriendApprove ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
-    case 'CHECK_LOGIN':
+    case 'LOGIN_CHECK':
     
       $gUSERNAME = $_POST['gUSERNAME'];
       $gDOMAIN = $_POST['gDOMAIN'];
@@ -198,12 +198,12 @@
       // Create the Server class.
       $zSERVER = new cSERVER ($gDOMAIN);
       
-      $zSERVER->CheckLogin ($gUSERNAME, $gDOMAIN);
+      $zSERVER->LoginCheck ($gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data; exit;
     
     break;
-    case 'GET_ICON_LIST':
+    case 'ICON_LIST':
     
       $gDOMAIN = $_POST['gDOMAIN'];
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -212,7 +212,7 @@
       $zSERVER = new cSERVER ($gDOMAIN);
       
       // Retrieve the icon list.
-      $zSERVER->GetIconList ($gUSERNAME);
+      $zSERVER->IconList ($gUSERNAME);
       
       echo $zSERVER->XML->Data; exit;
       
@@ -298,7 +298,7 @@
 
       unset ($zMESSAGE);
     break;
-    case 'JOIN_GROUP':
+    case 'GROUP_JOIN':
       // Check for an authentication token.
       if (!$gTOKEN) {
         $code = 1000;
@@ -334,7 +334,7 @@
      if ($zGROUPS->CountResult() == 0) {
        $gSUCCESS = FALSE;
        $gMESSAGE = "ERROR.NOTFOUND";
-       $data = implode ("", file ("code/include/data/xml/join_group.xml"));
+       $data = implode ("", file ("code/include/data/xml/group_join.xml"));
        $return = $zAPPLE->ParseTags ($data);
        echo $return;
        exit;
@@ -368,11 +368,11 @@
 
      unset ($zGROUPS);
 
-     $data = implode ("", file ("code/include/data/xml/join_group.xml"));
+     $data = implode ("", file ("code/include/data/xml/group_join.xml"));
      $return = $zAPPLE->ParseTags ($data);
      echo $return;
     break;
-    case 'LEAVE_GROUP':
+    case 'GROUP_LEAVE':
       // Check for an authentication token.
       if (!$gTOKEN) {
         $code = 1000;
@@ -410,7 +410,7 @@
      if ($zGROUPS->CountResult() == 0) {
        $gSUCCESS = FALSE;
        $gMESSAGE = "ERROR.NOTFOUND";
-       $data = implode ("", file ("code/include/data/xml/leave_group.xml"));
+       $data = implode ("", file ("code/include/data/xml/group_leave.xml"));
        $return = $zAPPLE->ParseTags ($data);
        echo $return;
        exit;
@@ -429,11 +429,11 @@
 
      unset ($zGROUPS);
 
-     $data = implode ("", file ("code/include/data/xml/leave_group.xml"));
+     $data = implode ("", file ("code/include/data/xml/group_leave.xml"));
      $return = $zAPPLE->ParseTags ($data);
      echo $return;
     break;
-    case 'GET_GROUP_INFORMATION':
+    case 'GROUP_INFORMATION':
      $GROUP = new cGROUPINFORMATION ();
      $GROUP->Select ("Name", $gGROUPNAME);
 
@@ -450,7 +450,7 @@
        $gTAGS = $GROUP->Tags . " ";
      } // if
 
-     $data = implode ("", file ("code/include/data/xml/get_group_information.xml"));
+     $data = implode ("", file ("code/include/data/xml/group_information.xml"));
      $return = $zAPPLE->ParseTags ($data);
 
      echo $return;

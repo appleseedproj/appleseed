@@ -181,66 +181,67 @@
                                    $_COOKIE["gREMOTELOGINSESSION"] : "";
 
       // Pull zLOCALUSER info from database.
-      if ($gLOGINSESSION) {
+      // Check if user is bouncing.
+      if (!$this->Bounce ()) {
+        if ($gLOGINSESSION) {
   
-        $zLOCALUSER->userSession->Select ("Identifier", $gLOGINSESSION);
-        $zLOCALUSER->userSession->FetchArray ();
-        $zLOCALUSER->uID = $zLOCALUSER->userSession->userAuth_uID;
+          $zLOCALUSER->userSession->Select ("Identifier", $gLOGINSESSION);
+          $zLOCALUSER->userSession->FetchArray ();
+          $zLOCALUSER->uID = $zLOCALUSER->userSession->userAuth_uID;
   
-        $zLOCALUSER->Select ("uID", $zLOCALUSER->uID);
-        if ($zLOCALUSER->CountResult() == 0) {
-          // User is anonymous.
-          $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
-          $zAUTHUSER->Username = $zSTRINGS->Output;
-          $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
-          $zAUTHUSER->Fullname = $zSTRINGS->Output;
-          $zAUTHUSER->Domain = $gSITEDOMAIN;
-          $zAUTHUSER->Remote = FALSE;
-          $zAUTHUSER->Anonymous = TRUE;
-          $zLOCALUSER->userSession->Destroy ('gLOGINSESSION');
+          $zLOCALUSER->Select ("uID", $zLOCALUSER->uID);
+          if ($zLOCALUSER->CountResult() == 0) {
+            // User is anonymous.
+            $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
+            $zAUTHUSER->Username = $zSTRINGS->Output;
+            $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
+            $zAUTHUSER->Fullname = $zSTRINGS->Output;
+            $zAUTHUSER->Domain = $gSITEDOMAIN;
+            $zAUTHUSER->Remote = FALSE;
+            $zAUTHUSER->Anonymous = TRUE;
+            $zLOCALUSER->userSession->Destroy ('gLOGINSESSION');
+          } else {
+            $zLOCALUSER->FetchArray ();
+    
+            $zLOCALUSER->Access ();
+            // Global variables
+            $gAUTHUSERID = $zLOCALUSER->uID;
+            $gAUTHUSERNAME = $zLOCALUSER->Username;
+            $gAUTHDOMAIN = $gSITEDOMAIN;
+  
+            $zAUTHUSER->Username = $zLOCALUSER->Username;
+            $zAUTHUSER->Fullname = $zLOCALUSER->userProfile->GetAlias ();
+            $zAUTHUSER->Domain = $gSITEDOMAIN;
+            $zAUTHUSER->Remote = FALSE;
+  
+            // Update Online Stamp
+            $zLOCALUSER->userInformation->UpdateOnlineStamp ();
+          } // if
+  
+        } elseif ($gREMOTELOGINSESSION) {
+          
+          $zREMOTEUSER->Select ("Identifier", $gREMOTELOGINSESSION);
+          $zREMOTEUSER->FetchArray ();
+  
+          if ($zREMOTEUSER->CountResult() == 0) {
+            // User is anonymous.
+            $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
+            $zAUTHUSER->Username = $zSTRINGS->Output;
+            $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
+            $zAUTHUSER->Fullname = $zSTRINGS->Output;
+            $zAUTHUSER->Domain = $gSITEDOMAIN;
+            $zAUTHUSER->Remote = FALSE;
+            $zAUTHUSER->Anonymous = TRUE;
+            $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
+          } else {
+            $zAUTHUSER->Username = $zREMOTEUSER->Username;
+            $zAUTHUSER->Fullname = $zREMOTEUSER->Fullname;
+            $zAUTHUSER->Domain = $zREMOTEUSER->Domain;
+            $zAUTHUSER->Remote = TRUE;
+            $gAUTHUSERNAME = $zAUTHUSER->Username;
+            $gAUTHDOMAIN = $zAUTHUSER->Domain;
+          } // if
         } else {
-          $zLOCALUSER->FetchArray ();
-  
-          $zLOCALUSER->Access ();
-          // Global variables
-          $gAUTHUSERID = $zLOCALUSER->uID;
-          $gAUTHUSERNAME = $zLOCALUSER->Username;
-          $gAUTHDOMAIN = $gSITEDOMAIN;
-
-          $zAUTHUSER->Username = $zLOCALUSER->Username;
-          $zAUTHUSER->Fullname = $zLOCALUSER->userProfile->GetAlias ();
-          $zAUTHUSER->Domain = $gSITEDOMAIN;
-          $zAUTHUSER->Remote = FALSE;
-
-          // Update Online Stamp
-          $zLOCALUSER->userInformation->UpdateOnlineStamp ();
-        } // if
-
-      } elseif ($gREMOTELOGINSESSION) {
-        $zREMOTEUSER->Select ("Identifier", $gREMOTELOGINSESSION);
-        $zREMOTEUSER->FetchArray ();
-
-        if ($zREMOTEUSER->CountResult() == 0) {
-          // User is anonymous.
-          $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
-          $zAUTHUSER->Username = $zSTRINGS->Output;
-          $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
-          $zAUTHUSER->Fullname = $zSTRINGS->Output;
-          $zAUTHUSER->Domain = $gSITEDOMAIN;
-          $zAUTHUSER->Remote = FALSE;
-          $zAUTHUSER->Anonymous = TRUE;
-          $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
-        } else {
-          $zAUTHUSER->Username = $zREMOTEUSER->Username;
-          $zAUTHUSER->Fullname = $zREMOTEUSER->Fullname;
-          $zAUTHUSER->Domain = $zREMOTEUSER->Domain;
-          $zAUTHUSER->Remote = TRUE;
-          $gAUTHUSERNAME = $zAUTHUSER->Username;
-          $gAUTHDOMAIN = $zAUTHUSER->Domain;
-        } // if
-      } else {
-        // Check if user is bouncing.
-        if (!$this->Bounce ()) {
           // User is anonymous.
           $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
           $zAUTHUSER->Username = $zSTRINGS->Output;
@@ -251,7 +252,7 @@
           $zAUTHUSER->Anonymous = TRUE;
         } // if
       } // if
-
+  
       // Clear "bounce" paramater from URL.
       $this->ClearBounce ();
 
@@ -335,7 +336,7 @@
       return (TRUE);
     } // RuntimeVerification
 
-    // Remote "bounce" paramater from URL if it exists.
+    // Remove "bounce" paramater from URL if it exists.
     function ClearBounce () {
       $host = $_SERVER['HTTP_HOST'];
       $self = $_SERVER['REQUEST_URI'];
@@ -356,20 +357,26 @@
 
     // Check if user is 'bouncing' persistent remote login.
     function Bounce ($pCONTEXT = "") {
-      global $zREMOTEUSER, $zXML;
+      
+      global $zLOCALUSER, $zREMOTEUSER, $zXML;
+      global $gLOGINSESSION, $gREMOTELOGINSESSION;
 
       $host = $_SERVER['HTTP_HOST'];
       $self = $_SERVER['REQUEST_URI'];
       list ($NULL, $get) = split ('\?', $self);
       list ($value, $bounce) = split ('\=', $get);
       $get = '?' . $get;
-
+      
       if ($$value) {
+        // Remove any logged in users.
+        if ($gLOGINSESSION) $zLOCALUSER->userSession->Destroy ('gLOGINSESSION');
+        if ($gREMOTELOGINSESSION) $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
+        
         list ($username, $domain) = split ('\@', $$value);
         // Create the Remote class.
         $zREMOTE = new cREMOTE ($domain);
 
-        $datalist = array ("gACTION"   => "CHECK_LOGIN",
+        $datalist = array ("gACTION"   => "LOGIN_CHECK",
                            "gUSERNAME" => $username,
                            "gDOMAIN"   => $host);
         $zREMOTE->Post ($datalist);
@@ -392,6 +399,8 @@
         Header ("Location: " . $redirect);
         exit;
 
+      } else {
+        return (FALSE);
       } // if
 
       return (FALSE);

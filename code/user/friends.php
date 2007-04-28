@@ -103,110 +103,32 @@
       $gMASSLIST = array (); $gSELECTBUTTON = 'select_all';
     break;
 
-    case 'ADD_REMOTE_FRIEND':
-      // Step 1:  Check if user is already a friend.
-      $checkcriteria = array ("userAuth_uID" => $zLOCALUSER->uID,
-                              "Username"       => $gUSERNAME,
-                              "Domain"         => $gDOMAIN);
-      $zFRIENDS->SelectByMultiple ($checkcriteria);
-      $zFRIENDS->FetchArray ();
-
-      // Exit out if user already is a friend.
-      if ($zFRIENDS->CountResult() > 0) {
-        global $gREQUESTNAME;
-        $gREQUESTNAME = $zFRIENDS->Username;
-        $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
-        $zFRIENDS->Message = $zSTRINGS->Output;
-        unset ($gREQUESTNAME);
-        break;
-      } // if
-
-      // Step 2: Find the highest Sort ID.
-      $statement = "SELECT MAX(sID) FROM friendInformation WHERE userAuth_uID = " . $zLOCALUSER->uID;
-      $query = mysql_query($statement);
-      $result = mysql_fetch_row($query);
-      $sortid = $result[0] + 1;
-
-      // Step 3: Create relationship if user already has a pending request.
-      $checkcriteria = array ("userAuth_uID" => $zLOCALUSER->uID,
-                              "Username"     => $gUSERNAME,
-                              "Domain"       => $gDOMAIN,
-                              "Verification"  => FRIEND_REQUESTS);
-
-      $zFRIENDS->SelectByMultiple ($checkcriteria);
-      $zFRIENDS->FetchArray ();
-
-      // Update the friend's record.
-      $verification = FRIEND_PENDING;
-      if ($zFRIENDS->CountResult() > 0) {
-        $zFRIENDS->Verification = FRIEND_VERIFIED;
-        $zFRIENDS->Update ();
-        $verification = FRIEND_VERIFIED;
-      } else {
-        $zREMOTE = new cREMOTE ($gDOMAIN);
-
-        // Add to requested (Friend -> Remote); 
-        $datalist = array ("gACTION"   => "ADD_REMOTE_FRIEND",
-                           "gUSERNAME" => $gUSERNAME,
-                           "gREMOTEUSERNAME" => $zFOCUSUSER->Username,
-                           "gREMOTEDOMAIN"   => $gSITEDOMAIN);
-        $zREMOTE->Post ($datalist);
-
-        $returndata = split ("\n", $zREMOTE->Return);
-
-        $result = $returndata[0];
-        $email = $returndata[1];
-        $fullname = $returndata[2];
-
-        // Notify requested user.
-        $zFRIENDS->NotifyRequest ($email, $fullname, $zFOCUSUSER->userProfile->GetAlias (), $gUSERNAME, $gDOMAIN);
-
-      } // if
-
-      // Add pending (FOCUSUSER -> Friend)
-      $zFRIENDS->userAuth_uID = $zLOCALUSER->uID;
-      $zFRIENDS->sID = $sortid;
-      $zFRIENDS->UserID = NULL;
-      $zFRIENDS->Username = $gUSERNAME;
-      $zFRIENDS->Domain = $gDOMAIN;
-      $zFRIENDS->Verification = $verification;
-
-       $zFRIENDS->Add ();
-
-      global $gREQUESTEDUSER;
-      $gREQUESTEDUSER = $zFRIENDS->Username;
-
-      // If no error, determine the success message and where to send the user.
-      if ($zFRIENDS->Error == 0) {
-        if ($verification == FRIEND_PENDING) {
-          $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
-          $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
-          $gCIRCLEVIEW = CIRCLE_PENDING;
-        } else {
-          global $gREQUESTEDUSER;
-          $gREQUESTEDUSER = $zFRIENDS->Username;
-          $zSTRINGS->Lookup ('MESSAGE.ADDED', 'USER.FRIENDS');
-          $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
-          $gCIRCLEVIEW = CIRCLE_NEWEST;
-        } // if
-        $zFRIENDS->Message = $zSTRINGS->Output;
-      } // if
-    break;
-
     case 'ADD_FRIEND':
-      $zFRIENDS->Request ($zAUTHUSER->Username, $zAUTHUSER->Domain, $gFRIENDUSERNAME, $gFRIENDDOMAIN);
+      if ($gSITEDOMAIN == $gFRIENDDOMAIN)
+        $zFRIENDS->Request ($gFRIENDUSERNAME);
+      else
+        $zFRIENDS->LongDistanceRequest ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
     case 'APPROVE':
-      $zFRIENDS->Approve ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
+      if ($gSITEDOMAIN == $gFRIENDDOMAIN)
+        $zFRIENDS->Approve ($gFRIENDUSERNAME);
+      else
+        $zFRIENDS->LongDistanceApprove ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
     case 'DENY':
-      $zFRIENDS->Deny ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
+      if ($gSITEDOMAIN == $gFRIENDDOMAIN)
+        $zFRIENDS->Deny ($gFRIENDUSERNAME);
+      else 
+        $zFRIENDS->LongDistanceDeny ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
     case 'CANCEL':
-      $zFRIENDS->Cancel ($gFRIENDUSERNAME, $gFRIENDDOMAIN, $zFOCUSUSER->Username, $gSITEDOMAIN);
+      if ($gSITEDOMAIN == $gFRIENDDOMAIN)
+        $zFRIENDS->Cancel ($gFRIENDUSERNAME);
+      else 
+        $zFRIENDS->LongDistanceCancel ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
     case 'SAVE':
@@ -250,6 +172,7 @@
 
   switch ($gPROFILESUBACTION) {
     case 'requests':
+      if (($gCIRCLEVIEW) or ($gCIRCLEVIEWADMIN)) break;
       if ($zLOCALUSER->uID == $zFOCUSUSER->uID) {
         // View requests.
         $gCIRCLEVIEW = CIRCLE_REQUESTS;
@@ -434,6 +357,8 @@
         break;
       } // if
       if ( ($zFRIENDS->Error == 0) or 
+           ($gACTION == 'APPROVE') or 
+           ($gACTION == 'CANCEL') or 
            ($gACTION == 'ADD_FRIEND') or 
            ($gACTION == 'CIRCLE_ALL') or 
            ($gACTION == 'MOVE_UP') or 

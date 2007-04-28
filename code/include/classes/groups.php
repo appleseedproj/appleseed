@@ -1192,7 +1192,7 @@
 
      if ($gSITEDOMAIN != $pGROUPDOMAIN) {
        $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
-       $datalist = array ("gACTION"        => "GET_GROUP_INFORMATION",
+       $datalist = array ("gACTION"        => "GROUP_INFORMATION",
                           "gGROUPNAME"     => $pGROUPNAME);
        $zREMOTE->Post ($datalist);
 
@@ -1277,7 +1277,7 @@
 
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
-        $datalist = array ("gACTION"        => "JOIN_GROUP",
+        $datalist = array ("gACTION"        => "GROUP_JOIN",
                            "gTOKEN"         => $token,
                            "gGROUPNAME"     => $pGROUPNAME);
         $zREMOTE->Post ($datalist);
@@ -1367,7 +1367,7 @@
 
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
-        $datalist = array ("gACTION"        => "LEAVE_GROUP",
+        $datalist = array ("gACTION"        => "GROUP_LEAVE",
                            "gTOKEN"         => $token,
                            "gGROUPNAME"     => $pGROUPNAME);
         $zREMOTE->Post ($datalist);
