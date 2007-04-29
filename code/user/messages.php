@@ -291,6 +291,7 @@
             $bREADSTATUS = "Status: Read";
           } else {
             $bREADSTATUS = "Status: Unread";
+            
           } // if
           $messageview = 'sent';
         break;

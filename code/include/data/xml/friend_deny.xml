@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <appleseed>
  <version>%APPLESEEDVERSION%</version>
- <recipient>
-  <success>%SUCCESS%</success>
+ <friend>
   <fullname>%FULLNAME%</fullname>
- </recipient>
+  <result>%RESULT%</result>
+ </friend>
 </appleseed>

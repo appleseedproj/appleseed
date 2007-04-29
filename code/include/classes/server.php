@@ -400,6 +400,118 @@
       return (TRUE);
     } // FriendRequest
     
+    function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      
+      // Delete the friend record.
+      
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      $userProfile = $this->TablePrefix . "userProfile";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      
+      $sql_statement = "
+        DELETE $friendInfo
+        FROM   $friendInfo,$userAuth
+        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+        AND    $friendInfo.Username = '%s'
+        AND    $friendInfo.Domain = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($this->ReturnUsername),
+                                mysql_real_escape_string ($pDOMAIN)
+                                );
+                                
+      $sql_result = mysql_query($sql_statement);
+      global $gRESULT;
+      $gRESULT = 1;
+                                
+      // Load and send back the fullname.
+      global $gFULLNAME;
+      
+      $sql_statement = "
+        SELECT Fullname,Alias
+        FROM   $userProfile,$userAuth
+        WHERE  $userProfile.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME));
+                                
+      $sql_result = mysql_query($sql_statement);
+      $result = mysql_fetch_assoc ($sql_result);
+      $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      mysql_free_result ($sql_result);
+      
+      $this->XML->Load ("code/include/data/xml/friend_deny.xml");
+      
+      return (TRUE);
+    } // FriendDeny
+    
+    function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      
+      // Delete the friend record.
+      
+      $friendInfo = $this->TablePrefix . "friendInformation";
+      $userProfile = $this->TablePrefix . "userProfile";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      
+      $sql_statement = "
+        DELETE $friendInfo
+        FROM   $friendInfo,$userAuth
+        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+        AND    $friendInfo.Username = '%s'
+        AND    $friendInfo.Domain = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($this->ReturnUsername),
+                                mysql_real_escape_string ($pDOMAIN)
+                                );
+                                
+      $sql_result = mysql_query($sql_statement);
+      global $gRESULT;
+      $gRESULT = 1;
+                                
+      // Load and send back the fullname.
+      global $gFULLNAME;
+      
+      $sql_statement = "
+        SELECT Fullname,Alias
+        FROM   $userProfile,$userAuth
+        WHERE  $userProfile.userAuth_uID = $userAuth.uID
+        AND    $userAuth.Username = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME));
+                                
+      $sql_result = mysql_query($sql_statement);
+      $result = mysql_fetch_assoc ($sql_result);
+      $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      mysql_free_result ($sql_result);
+      
+      $this->XML->Load ("code/include/data/xml/friend_cancel.xml");
+      
+      return (TRUE);
+    } // FriendCancel
+    
     function FriendDelete ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
@@ -455,63 +567,6 @@
       
       return (TRUE);
     } // FriendDelete
-    
-    function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
-      
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
-      
-      $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
-      
-      // Update the friend record.
-      
-      $friendInfo = $this->TablePrefix . "friendInformation";
-      $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
-      
-      $sql_statement = "
-        UPDATE $friendInfo,$userAuth
-        SET    $friendInfo.Verification = 1
-        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
-        AND    $friendInfo.Username = '%s'
-        AND    $friendInfo.Domain = '%s'
-      ";
-      
-      $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
-                                mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
-                                );
-                                
-      $sql_result = mysql_query($sql_statement);
-      global $gRESULT;
-      
-      $gRESULT = 1;
-                                
-      // Load and send back the fullname.
-      global $gFULLNAME;
-      
-      $sql_statement = "
-        SELECT Fullname,Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
-      ";
-      
-      $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
-                                
-      $sql_result = mysql_query($sql_statement);
-      $result = mysql_fetch_assoc ($sql_result);
-      $gFULLNAME = $result['Fullname'];
-      if ($result['Alias']) $gFULLNAME = $result['Alias'];
-      mysql_free_result ($sql_result);
-      
-      $this->XML->Load ("code/include/data/xml/friend_cancel.xml");
-      
-      return (TRUE);
-    } // FriendCancel
     
     function FriendApprove ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
@@ -766,5 +821,151 @@
       
       return (TRUE);
     } // IconList
+    
+    function MessageRetrieve ($pUSERNAME, $pIDENTIFIER) {
+      
+      $messageStore = $this->TablePrefix . "messageStore";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $userProfile = $this->TablePrefix . "userProfile";
+      
+      // Select the message.
+      $sql_statement = "
+        SELECT $messageStore.Subject AS Subject,  
+               $messageStore.Body AS Body,
+               $messageStore.Stamp AS Stamp,
+               $userProfile.Fullname AS Fullname,
+               $userProfile.Alias AS Alias
+        FROM   $messageStore,$userProfile
+        WHERE  $messageStore.Sender_Username = '%s'
+        AND    $userProfile.userAuth_uID = $messageStore.userAuth_uID
+        AND    $messageStore.Identifier = '%s'
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($pIDENTIFIER));
+                                
+      $sql_result = mysql_query ($sql_statement);
+      
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      if ($result_count == 0) {
+        // No results found.  Unauthenticated. Send back an error.
+        $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return (FALSE);
+      } // if
+      
+      $result = mysql_fetch_assoc ($sql_result);
+      global $gSUBJECT, $gBODY, $gSTAMP, $gFULLNAME;
+      $gSUBJECT = $result['Subject'];
+      $gBODY = $result['Body'];
+      $gSTAMP = $result['Stamp'];
+      $gFULLNAME = $result['Fullname'];
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      
+      $this->XML->Load ("code/include/data/xml/message_retrieve.xml");
+      
+      return (TRUE);
+      /* 
+      // NOTE: Replace this with proper class data.
+      $zMESSAGE = new cMESSAGE ();
+      $messagecriteria = array ("Sender_Username" => $gSENDER_USERNAME,
+                                "Identifier"      => $gIDENTIFIER);
+      $zMESSAGE->messageStore->SelectByMultiple ($messagecriteria);
+      $zMESSAGE->messageStore->FetchArray ();
+      if ($zMESSAGE->messageStore->CountResult () == 0) {
+        $code = 3000;
+        $message = $zFRIENDS->Message;
+        $return = $zXML->ErrorData ($code, $message);
+      } else {
+        global $gMESSAGEBODY, $gMESSAGESUBJECT, $gMESSAGESTAMP;
+        $gMESSAGEBODY = $zMESSAGE->messageStore->Body;
+        $gMESSAGESUBJECT = $zMESSAGE->messageStore->Subject;
+        $gMESSAGESTAMP = $zMESSAGE->messageStore->Stamp;
+        $USER = new cUSER ();
+        $USER->Select ("Username", $zMESSAGE->messageStore->Sender_Username);
+        $USER->FetchArray ();
+        $gMESSAGEFULLNAME = $USER->userProfile->Fullname;
+        $data = implode ("", file ("code/include/data/xml/message_retrieve.xml"));
+        $return = $zAPPLE->ParseTags ($data);
+
+        // Mark message as read.
+        $query = "UPDATE " . $zMESSAGE->messageStore->TableName . " SET Standing = " . MESSAGE_READ . " WHERE tID = " . $zMESSAGE->messageStore->tID . " AND Standing = " . MESSAGE_UNREAD;
+        $zMESSAGE->messageStore->Query ($query);
+
+      } // if
+      */
+    } // MessageRetrieve
+    
+    function MessageNotify ($pRECIPIENT, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {
+      
+      global $gSUCCESS, $gFULLNAME;
+      
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      $userProfile = $this->TablePrefix . "userProfile";
+      
+      // First check if the user exists.
+      $sql_statement = "
+        SELECT $userAuth.uID as uID,
+               $userProfile.Fullname as Fullname,
+               $userProfile.Alias as Alias
+        FROM   $userAuth,$userProfile
+        WHERE  $userAuth.Username = '%s'
+        AND    $userProfile.userAuth_uID = $userAuth.uID
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pRECIPIENT));
+                                
+      $sql_result = mysql_query ($sql_statement);
+      
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      if ($result_count == 0) {
+        // No results found.  No such user.
+        $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return (FALSE);
+      } // if
+      
+      $result = mysql_fetch_assoc ($sql_result);
+      $uid = $result['uID'];
+      $fullname = $result['Fullname'];
+      mysql_free_result ($sql_result);
+      
+      $messageNotify = $this->TablePrefix . "messageNotification";
+      
+      // Insert notification into database.
+      $sql_statement = "
+        INSERT INTO $messageNotify 
+        (userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Stamp, Standing, Location)
+        VALUES
+        ('%s', '%s', '%s', '%s', '%s', NOW(), 1, 1)
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($uid),
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($pDOMAIN),
+                                mysql_real_escape_string ($pIDENTIFIER),
+                                mysql_real_escape_string ($pSUBJECT));
+      
+      if (!$sql_result = mysql_query ($sql_statement)) {
+        // No results found.  No such user.
+        $this->XML->ErrorData ("ERROR.FAILED");
+        return (FALSE);
+      } // if
+      
+      mysql_free_result ($sql_result);
+      
+      $gFULLNAME = $fullname;
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      $gSUCCESS = TRUE;
+      
+      $this->XML->Load ("code/include/data/xml/message_notify.xml");
+      
+      return (TRUE);
+    } // MessageNotify
     
   } // cSERVER

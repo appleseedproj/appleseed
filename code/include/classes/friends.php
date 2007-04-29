@@ -1557,10 +1557,10 @@
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
-      $datalist = array ("gACTION"   => "FRIEND_DELETE",
-                         "gTOKEN" => $token,
+      $datalist = array ("gACTION"   => "FRIEND_CANCEL",
+                         "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
-                         "gDOMAIN" => $gSITEDOMAIN);
+                         "gDOMAIN"   => $gSITEDOMAIN);
       $zREMOTE->Post ($datalist);
         
       $zXML->Parse ($zREMOTE->Return);
@@ -1603,10 +1603,10 @@
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
-      $datalist = array ("gACTION"   => "FRIEND_DELETE",
-                         "gTOKEN" => $token,
+      $datalist = array ("gACTION"   => "FRIEND_DENY",
+                         "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
-                         "gDOMAIN" => $gSITEDOMAIN);
+                         "gDOMAIN"   => $gSITEDOMAIN);
       $zREMOTE->Post ($datalist);
         
       $zXML->Parse ($zREMOTE->Return);

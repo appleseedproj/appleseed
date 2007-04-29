@@ -148,6 +148,27 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'FRIEND_DENY':
+      $gTOKEN = $_POST['gTOKEN'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      // Create the Server class.
+      $zSERVER = new cSERVER ($gDOMAIN);
+      
+      // Check for an authentication token.
+      if (!$gTOKEN) {
+        $code = 1000;
+        $message = "ERROR.NOTOKEN";
+        $return = $zSERVER->XML->ErrorData ($code, $message);
+        echo $return; exit;
+      } // if
+
+      // Check Friend Status.
+      $zSERVER->FriendDeny ($gTOKEN, $gUSERNAME, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data;
+    break;
     case 'FRIEND_DELETE':
       $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -218,86 +239,34 @@
       
     break;
     case 'MESSAGE_RETRIEVE':
-      // NOTE: Replace this with proper class data.
-      $zMESSAGE = new cMESSAGE ();
-      $messagecriteria = array ("Sender_Username" => $gSENDER_USERNAME,
-                                "Identifier"      => $gIDENTIFIER);
-      $zMESSAGE->messageStore->SelectByMultiple ($messagecriteria);
-      $zMESSAGE->messageStore->FetchArray ();
-      if ($zMESSAGE->messageStore->CountResult () == 0) {
-        $code = 3000;
-        $message = $zFRIENDS->Message;
-        $return = $zXML->ErrorData ($code, $message);
-      } else {
-        global $gMESSAGEBODY, $gMESSAGESUBJECT, $gMESSAGESTAMP;
-        $gMESSAGEBODY = $zMESSAGE->messageStore->Body;
-        $gMESSAGESUBJECT = $zMESSAGE->messageStore->Subject;
-        $gMESSAGESTAMP = $zMESSAGE->messageStore->Stamp;
-        $USER = new cUSER ();
-        $USER->Select ("Username", $zMESSAGE->messageStore->Sender_Username);
-        $USER->FetchArray ();
-        $gMESSAGEFULLNAME = $USER->userProfile->Fullname;
-        $data = implode ("", file ("code/include/data/xml/message_request.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-
-        // Mark message as read.
-        $query = "UPDATE " . $zMESSAGE->messageStore->TableName . " SET Standing = " . MESSAGE_READ . " WHERE tID = " . $zMESSAGE->messageStore->tID . " AND Standing = " . MESSAGE_UNREAD;
-        $zMESSAGE->messageStore->Query ($query);
-
-      } // if
-
-      echo $return;
-
-      unset ($zMESSAGE);
+    
+      $gIDENTIFIER = $_POST['gIDENTIFIER'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+    
+      // Create the Server class.
+      $zSERVER = new cSERVER (NULL);
+      
+      // Retrieve a message. 
+      $zSERVER->MessageRetrieve ($gUSERNAME, $gIDENTIFIER);
+      
+      echo $zSERVER->XML->Data; exit;
+      
     break;
     case 'MESSAGE_NOTIFY':
+      $gRECIPIENT       = $_POST['gRECIPIENT'];
+      $gUSERNAME        = $_POST['gUSERNAME'];
+      $gDOMAIN          = $_POST['gDOMAIN'];
+      $gIDENTIFIER      = $_POST['gIDENTIFIER'];
+      $gSUBJECT         = $_POST['gSUBJECT'];
 
-      $zMESSAGE = new cMESSAGE ();
-
-      $USER = new cUSER ();
-      $USER->Select ("Username", $gRECIPIENTNAME);
-      $USER->FetchArray();
-
-      if ($USER->CountResult() == 0) {
-        $code = 1000;
-        $message = "User '$gUSERNAME' Not Found";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return;
-        break;
-      } // if
-
-      // NOTE:  Check if referring domain matches gSENDER_DOMAIN.
-
-      $zMESSAGE->messageNotification->userAuth_uID = $USER->uID;
-      $zMESSAGE->messageNotification->Sender_Username = $gSENDER_USERNAME;
-      $zMESSAGE->messageNotification->Sender_Domain = $gSENDER_DOMAIN;
-      $zMESSAGE->messageNotification->Identifier = $gIDENTIFIER;
-      $zMESSAGE->messageNotification->Subject = $gSUBJECT;
-      $zMESSAGE->messageNotification->Stamp = SQL_NOW;
-      $zMESSAGE->messageNotification->Standing = MESSAGE_UNREAD;
-      $zMESSAGE->messageNotification->Location = FOLDER_INBOX;
-
-      $zMESSAGE->messageNotification->Add ();
-
-      $zAPPLE->Context = "USER.MESSAGES";
-      // Disabled. 04-27-2007.
-      // $zMESSAGE->NotifyMessage ($USER->userProfile->Email, $USER->Username, $USER->userProfile->Fullname, $gSENDER_FULLNAME) ;
-
-      if ($zMESSAGE->Error == 0) {
-        global $gRECIPIENTFULLNAME, $gSUCCESS;
-        $gSUCCESS = TRUE;
-        $gRECIPIENTFULLNAME = $USER->userProfile->Fullname;
-        $data = implode ("", file ("code/include/data/xml/message_notify.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-      } else {
-        $code = 1000;
-        $message = "Could not update";
-        $return = $zXML->ErrorData ($code, $message);
-      } // if
-
-      echo $return;
-
-      unset ($zMESSAGE);
+      // Create the Server class.
+      $zSERVER = new cSERVER (NULL);
+      
+      // Store a message notification. 
+      $zSERVER->MessageNotify ($gRECIPIENT, $gUSERNAME, $gDOMAIN, $gIDENTIFIER, $gSUBJECT);
+      
+      echo $zSERVER->XML->Data; exit;
+      
     break;
     case 'GROUP_JOIN':
       // Check for an authentication token.
