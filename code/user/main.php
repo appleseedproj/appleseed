@@ -62,6 +62,9 @@
 
   // Initialize Appleseed.
   $zAPPLE->Initialize("user", TRUE);
+  
+  // Add javascript to top of page.
+  $zHTML->AddScript ("user/main.js");
 
   // Set the context based on which profile action was requested.
   $zAPPLE->SetContext("user." . $gPROFILEACTION);

@@ -607,7 +607,7 @@
       $switchcount = 0;
 
       global $gCHECKED;
-      global $gFRIENDSICON, $gFRIENDFULLNAME, $gFRIENDNAME;
+      global $gFRIENDSICON, $gFRIENDNAME;
 
       global $bONLINENOW;
   
@@ -648,7 +648,7 @@
     
           $bONLINENOW = OUTPUT_NBSP;
 
-          list ($gFRIENDFULLNAME, $online) = $this->GetUserInformation();
+          list ($gFRIENDNAME, $online) = $this->GetUserInformation();
 
           // If user activity in the last 3 minutes, consider them online.
           if ($online) {
@@ -656,11 +656,6 @@
           } // if
 
           $gFRIENDSICON = "http://" . $this->Domain . "/icon/" . $this->Username;
-          if ($this->Alias) {
-            $gFRIENDNAME = ucwords ($this->Alias);
-          } else {
-            $gFRIENDNAME = ucwords ($gFRIENDFULLNAME);
-          } // if
     
           unset ($USER);
     
@@ -740,7 +735,6 @@
         // Pull from cache if available.
         if (isset ($this->InformationCache[$this->Username][$this->Domain])) {
           $fullname = $this->InformationCache[$this->Username][$this->Domain]['FULLNAME'];
-          $email = $this->InformationCache[$this->Username][$this->Domain]['EMAIL'];
           $online = $this->InformationCache[$this->Username][$this->Domain]['ONLINE'];
           $return = array ($fullname, $online, $email);
           return ($return);
@@ -748,7 +742,7 @@
 
         // Check Online (remote)
         $zREMOTE = new cREMOTE ($this->Domain);
-        $datalist = array ("gACTION"   => "USER_INFORMATION",
+        $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
                            "gUSERNAME" => $this->Username);
         $zREMOTE->Post ($datalist, 1);
         $zXML->Parse ($zREMOTE->Return);
@@ -795,7 +789,7 @@
           $online = TRUE;
         } // if
 
-        $fullname = ucwords ($USER->userProfile->GetAlias ());
+        $fullname = $USER->userProfile->GetAlias ();
         $email = $USER->userProfile->Email;
 
       } // if
@@ -821,7 +815,7 @@
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
       $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
-      $fullname = $USER->userProfile->Fullname;
+      $fullname = $USER->userProfile->GetAlias();
       $uid = $USER->uID;
       unset ($USER);
       
@@ -948,7 +942,7 @@
           $USER = new cUSER();
           $USER->Select ("Username", $pUSERNAME);
           $USER->FetchArray ();
-          $fullname = $USER->userProfile->Fullname;
+          $fullname = $USER->userProfile->GetAlias();
           $uid = $USER->uID;
           unset ($USER);
           
@@ -1029,7 +1023,7 @@
         case FRIEND_PENDING:
           // Correctly pending, so approve remote friend request.
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "FRIEND_APPROVE",
+          $datalist = array ("gACTION"   => "ASD_FRIEND_APPROVE",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
                              "gDOMAIN"   => $gSITEDOMAIN);
@@ -1159,7 +1153,7 @@
         case FRIEND_PENDING:
           // Already pending, so approve remote friend request.
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "FRIEND_APPROVE",
+          $datalist = array ("gACTION"   => "ASD_FRIEND_APPROVE",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
                              "gDOMAIN"   => $gSITEDOMAIN);
@@ -1197,7 +1191,7 @@
         default:
           // No relationship exists remotely, so add remote friend request.
           $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-          $datalist = array ("gACTION"   => "FRIEND_REQUEST",
+          $datalist = array ("gACTION"   => "ASD_FRIEND_REQUEST",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
                              "gDOMAIN"   => $gSITEDOMAIN);
@@ -1243,7 +1237,7 @@
       global $gSITEDOMAIN;
 
       $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
-      $datalist = array ("gACTION"   => "FRIEND_STATUS",
+      $datalist = array ("gACTION"   => "ASD_FRIEND_STATUS",
                          "gTOKEN"    => $pTOKEN,
                          "gUSERNAME" => $pREMOTEUSERNAME,
                          "gDOMAIN"   => $pLOCALDOMAIN);
@@ -1273,7 +1267,7 @@
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
       $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
-      $fullname = $USER->userProfile->Fullname;
+      $fullname = $USER->userProfile->GetAlias();
       $uid = $USER->uID;
       unset ($USER);
       
@@ -1357,7 +1351,7 @@
           $USER = new cUSER();
           $USER->Select ("Username", $pUSERNAME);
           $USER->FetchArray ();
-          $fullname = $USER->userProfile->Fullname;
+          $fullname = $USER->userProfile->GetAlias();
           $uid = $USER->uID;
           unset ($USER);
           
@@ -1557,7 +1551,7 @@
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
-      $datalist = array ("gACTION"   => "FRIEND_CANCEL",
+      $datalist = array ("gACTION"   => "ASD_FRIEND_CANCEL",
                          "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
                          "gDOMAIN"   => $gSITEDOMAIN);
@@ -1603,7 +1597,7 @@
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
-      $datalist = array ("gACTION"   => "FRIEND_DENY",
+      $datalist = array ("gACTION"   => "ASD_FRIEND_DENY",
                          "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
                          "gDOMAIN"   => $gSITEDOMAIN);

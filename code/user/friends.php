@@ -35,7 +35,10 @@
   // +-------------------------------------------------------------------+
 
   // Classes.
-  global $zFRIENDS;
+  global $zFRIENDS, $zHTML;
+  
+  // Add javascript to top of page.
+  $zHTML->AddScript ("user/friends.js");
 
   // Buffers.
   global $bMAINSECTION, $bONLINENOW;
@@ -330,9 +333,9 @@
     
       $gFRIENDSICON = "http://" . $zFRIENDS->Domain . "/icon/" . $zFRIENDS->Username . "/";
       if ($zFRIENDS->Domain != $gSITEDOMAIN) {
-        list ($gFRIENDFULLNAME, $online) = $zFRIENDS->GetUserInformation();
+        $gFRIENDFULLNAME = $zFRIENDS->Username;
       } else {
-        $gFRIENDFULLNAME = ucwords ($USER->userProfile->GetAlias ());
+        $gFRIENDFULLNAME = $USER->userProfile->GetAlias ();
       } // if
 
       $gFRIENDSICON = "http://" . $zFRIENDS->Domain . "/icon/" . $zFRIENDS->Username . "/";
@@ -400,8 +403,12 @@
           $bONLINENOW = OUTPUT_NBSP;
 
           // Retrieve user info.
-          list ($gFRIENDFULLNAME, $online) = $zFRIENDS->GetUserInformation();
 
+          if ($zFRIENDS->Domain != $gSITEDOMAIN) {
+            $gFRIENDFULLNAME = $zFRIENDS->Username;
+          } else {
+            list ($gFRIENDFULLNAME, $online) = $zFRIENDS->GetUserInformation();
+          } // if
           // Load the online icon.
           if ($online) $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
 
@@ -409,9 +416,9 @@
           $gFRIENDSICON = "http://" . $zFRIENDS->Domain . "/icon/" . $zFRIENDS->Username . "/";
 
           if ($zFRIENDS->Alias) {
-            $gFRIENDNAME = ucwords ($zFRIENDS->Alias);
+            $gFRIENDNAME = $zFRIENDS->Alias;
           } else {
-            $gFRIENDNAME = ucwords ($gFRIENDFULLNAME);
+            $gFRIENDNAME = $gFRIENDFULLNAME;
           } // if
     
           unset ($USER);
@@ -453,7 +460,10 @@
 
           } // if
 
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.aobj", INCLUDE_SECURITY_NONE);
+          if ($zFRIENDS->Domain != $gSITEDOMAIN) 
+            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.remote.aobj", INCLUDE_SECURITY_NONE);
+          else 
+            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.aobj", INCLUDE_SECURITY_NONE);
     
           unset ($gEXTRAPOSTDATA);
     

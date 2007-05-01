@@ -35,6 +35,7 @@
 
   require_once ("code/include/classes/BASE/remote.php");
   require_once ("code/include/classes/BASE/xml.php");
+  require_once ('code/include/external/JSON/JSON.php');
   
   // Light-weight server class for node communication.
   class cSERVER {
@@ -51,7 +52,7 @@
     var $Token_Uid;
     var $ReturnUsername;
 
-    function cSERVER ($pHOST) {
+    function cSERVER ($pHOST = NULL) {
       
       // Create XML object.
       $this->XML = new cXML ();
@@ -74,6 +75,9 @@
       
       // Load Site Information.
       $this->LoadSiteInfo ();
+      
+      // Create JSON Object
+      $this->JSON = new cJSON ();
       
       // Connect To The Database.
       $this->Connect ();
@@ -210,7 +214,7 @@
       if ($result_count == 0) {
         // If not, send back to see if Token is valid.
         $REMOTE = new cREMOTE ($pDOMAIN);
-        $datalist = array ("gACTION"   => "TOKEN_CHECK",
+        $datalist = array ("gACTION"   => "ASD_TOKEN_CHECK",
                            "gTOKEN"    => $pTOKEN,
                            "gDOMAIN"   => $this->SiteDomain);
         $REMOTE->Post ($datalist, 1);
@@ -969,3 +973,70 @@
     } // MessageNotify
     
   } // cSERVER
+  
+  class cAJAX extends cSERVER {
+    
+    function cAJAX () {
+      
+      // Create XML object.
+      $this->XML = new cXML ();
+      
+      // Initialize Variables.
+      $this->SiteURL = null;
+      $this->SiteDomain = null;
+      $this->Database = null;
+      $this->DatabaseHost = null;
+      $this->DatabaseUsername = null;
+      $this->DatabasePassword = null;
+      $this->DatabaseLink = null;
+      $this->TablePrefix = null;
+      $this->Token = null;
+      $this->Token_uID = null;
+      $this->ReturnUsername = null;
+      
+      // Load Site Information.
+      $this->LoadSiteInfo ();
+      
+      // Create JSON Object
+      $this->JSON = new cJSON ();
+      
+      // Connect To The Database.
+      $this->Connect ();
+      
+      return (TRUE);
+      
+    } // Constructor
+    
+    function GetUserInformation ($pUSERNAME, $pDOMAIN) {
+      
+      $REMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
+                         "gUSERNAME"   => $pUSERNAME,
+                         "gDOMAIN"   => $this->SiteDomain);
+      $REMOTE->Post ($datalist, 1);
+
+      $this->XML->Parse ($REMOTE->Return);
+
+      // If no appleseed version was retrieved, an invalid url was used.
+      $version = ucwords ($this->XML->GetValue ("version", 0));
+      if (!$version) return (FALSE);
+      
+      $result = $this->XML->GetValue ("result", 0);
+      $fullname = $this->XML->GetValue ("fullname", 0);
+      $online = $this->XML->GetValue ("online", 0);
+      
+      $val['result'] = $result;
+      $val['fullname'] = $fullname;
+      $val['online'] = $online;
+      
+      $return = $this->JSON->encode ($val);
+      
+      return ($return);
+    } // GetUserInformation
+    
+  } // cAJAX
+  
+  // Local Appleseed extension of JSON class.
+  class cJSON extends Services_JSON {
+    
+  } // cJSON

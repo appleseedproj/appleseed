@@ -2021,8 +2021,9 @@ form#compose p.error:hover {
 }
 
 #user #friends #listing li {
+ float:left;
  width:118px;
- height:150px;
+ height:160px;
  list-style-type:none;
  text-align:center;
  margin:3px 2px 3px 1px; 
@@ -2030,12 +2031,30 @@ form#compose p.error:hover {
 }
 
 #user #friends #listing li.even {
+ float:left;
  background-color:#ecf0f5;
  margin:3px 2px 3px 2px; 
 }
 
 #user #friends #listing li.odd {
  background-color:#ecf0f5;
+}
+
+#user #friends #listing li.loading {
+ position:relative;
+ float:left;
+ background:url('/themes/ophelia/images/animations/loading.gif') no-repeat 45px 65px;
+ background-color:#ecf0f5;
+ z-index:50;
+}
+
+#user #friends #listing li.loading .online, 
+#user #friends #listing li.loading .domain, 
+#user #friends #listing li.loading .fullname, 
+#user #friends #listing li.loading .icon {
+ position:relative;
+ z-index:25;
+ opacity:.2;
 }
 
 #user #friends #listing li.even:hover,
@@ -2052,6 +2071,7 @@ form#compose p.error:hover {
 }
 
 #user #friends #listing li span.fullname {
+ padding:5px 0;
 }
 
 #user #friends #listing li span.icon {
@@ -2110,7 +2130,7 @@ form#compose p.error:hover {
 
 #user #friends #pending #listing li {
  float:left;
- height:170px;
+ height:180px;
 }
 #user #friends #listing li span.cancel {
  float:left;

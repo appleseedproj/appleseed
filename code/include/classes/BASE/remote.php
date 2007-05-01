@@ -52,6 +52,9 @@
     // Send a post request to a host, and store the return information.
     function Post ($pDATALIST, $pTIMEOUT = 2) {
 
+      $parameters = null;
+      $data = null;
+      
       // NOTE:  Possibly use external class to cover these functions?
 
       foreach ($pDATALIST as $key => $value) {

@@ -43,6 +43,7 @@
     var $PurifierConfig;
     var $Purifier;
     var $Mailer;
+    var $JSON;
 
     function cAPPLESEED () {
       
@@ -55,7 +56,7 @@
 
       // Eventually remove and replace with PEAR/Mail::Queue.
       $this->Mailer = new PHPMailer();
-
+      
     } // Constructor
 
     // Overwrite inhereted ::Initialize function.
@@ -376,7 +377,7 @@
         // Create the Remote class.
         $zREMOTE = new cREMOTE ($domain);
 
-        $datalist = array ("gACTION"   => "LOGIN_CHECK",
+        $datalist = array ("gACTION"   => "ASD_LOGIN_CHECK",
                            "gUSERNAME" => $username,
                            "gDOMAIN"   => $host);
         $zREMOTE->Post ($datalist);

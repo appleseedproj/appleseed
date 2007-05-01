@@ -1716,7 +1716,7 @@
 
       // Retrieve message data.
       $zREMOTE = new cREMOTE ($this->messageNotification->Sender_Domain);
-      $datalist = array ("gACTION"          => "MESSAGE_RETRIEVE",
+      $datalist = array ("gACTION"          => "ASD_MESSAGE_RETRIEVE",
                          "gUSERNAME"        => $zFOCUSUSER->Username,
                          "gIDENTIFIER"      => $this->messageNotification->Identifier);
       $zREMOTE->Post ($datalist);
@@ -2264,7 +2264,7 @@
       } // if
       // Send the notification. 
       $zREMOTE = new cREMOTE ($gRECIPIENTDOMAIN);
-      $datalist = array ("gACTION"          => "MESSAGE_NOTIFY",
+      $datalist = array ("gACTION"          => "ASD_MESSAGE_NOTIFY",
                          "gRECIPIENT"       => $gRECIPIENTNAME,
                          "gUSERNAME"        => $senderusername,
                          "gDOMAIN"          => $gSITEDOMAIN,

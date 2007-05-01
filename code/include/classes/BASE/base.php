@@ -1810,11 +1810,13 @@
   class cHTML {
 
     var $Output;
+    var $ScriptList;
 
     // Constructor.
     function cHTML () {
 
       $Output = "";
+      $ScriptList = array ();
 
     } // Constructor
 
@@ -2077,7 +2079,7 @@
       return (0);
     } // TextArea
 
-    function SwitchAlternate ($pSTYLEPREFIX = "", $pSTYLESUFFIX = "") {
+    function SwitchAlternate ($pSTYLEPREFIX = NULL, $pSTYLESUFFIX = NULL, $pADDITIONALCLASS = NULL) {
       global $gALTERNATE;
       global $gSTYLEID;
 
@@ -2089,18 +2091,21 @@
         $gSTYLEID = $pSTYLEPREFIX . 'odd' . $pSTYLESUFFIX;
         $gALTERNATE = 0;
       } // if
+      
+      if ($pADDITIONALCLASS) $gSTYLEID .= " " . $pADDITIONALCLASS;
 
+      return (TRUE);
     } // SwitchAlternate
 
     // Alternate listing
-    function Alternate ($pSTYLEPREFIX = "", $pSTYLESUFFIX = "") {
+    function Alternate ($pSTYLEPREFIX = NULL, $pSTYLESUFFIX = NULL, $pADDITIONALCLASS = NULL) {
       global $gFRAMELOCATION;
       global $gALTERNATE;
       global $gSTYLEID, $gSTYLEEXTRA;
 
       global $zAPPLE;
 
-      $this->SwitchAlternate ($pSTYLEPREFIX, $pSTYLESUFFIX);
+      $this->SwitchAlternate ($pSTYLEPREFIX, $pSTYLESUFFIX, $pADDITIONALCLASS);
       // Load alternate.top object
       $output = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/alternate.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
@@ -2934,6 +2939,15 @@
       } // if
   
     } // Footer
+    
+    // Add a script to be loaded at runtime.
+    function AddScript ($pSCRIPTNAME) {
+      global $gFRAMELOCATION;
+      $url = $gFRAMELOCATION . "javascript/" . $pSCRIPTNAME;
+      $this->ScriptList[] = $url;
+      
+      return (TRUE);
+    } // AddScript
 
     // Output the title object.
     function Title ($pPAGETITLE = NULL, $pUSERDEFINEDSTYLE = NULL) {
@@ -2944,6 +2958,19 @@
 
       global $gSTYLELOCATION;
       global $gUSERDEFINEDSTYLE;
+      
+      global $bSCRIPTLIST;
+      
+      $bSCRIPTLIST = null;
+      if (count($this->ScriptList) > 0) {
+        foreach ($this->ScriptList as $scriptname) {
+          global $gSCRIPTNAME;
+          $gSCRIPTNAME = $scriptname;
+          $bSCRIPTLIST .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/script.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        } // foreach
+      } else {
+       $bSCRIPTLIST = ' ';
+      } // if
 
       // Determine directory for CSS file.
       $stylecontextarray = split ('\.', $zAPPLE->Context);

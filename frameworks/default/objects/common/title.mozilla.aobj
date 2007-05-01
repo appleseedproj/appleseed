@@ -20,8 +20,14 @@
     <?php echo $gUSERDEFINEDSTYLE; ?>
    --></style>
 
-   <script type="text/javascript" src="frameworks/<?php echo $gFRAMEWORK ?>/javascript/mootools.v1.00.js"></script>
-   <script type="text/javascript" src="<?php echo $gFRAMELOCATION ?>/javascript/base.js"></script>
+   <script type="text/javascript" src="<?php echo $gFRAMELOCATION ?>javascript/external/mootools.v1.00.js"></script>
+   <script type="text/javascript" src="<?php echo $gFRAMELOCATION ?>javascript/site/common.js"></script>
+   <?php echo $bSCRIPTLIST; ?>
+   
+   <!-- Global variables required by Javascript -->
+   <script type="text/javascript">
+     var asdTheme = "<?php echo $gUSERTHEME; ?>";
+   </script>
 
  </head>
 

@@ -56,7 +56,7 @@
       global $gICONLIST;
 
       $zREMOTE = new cREMOTE ($this->Domain);
-      $datalist = array ("gACTION"   => "ICON_LIST",
+      $datalist = array ("gACTION"   => "ASD_ICON_LIST",
                          "gDOMAIN"   => $gSITEDOMAIN,
                          "gUSERNAME" => $this->Username);
       $zREMOTE->Post ($datalist);
