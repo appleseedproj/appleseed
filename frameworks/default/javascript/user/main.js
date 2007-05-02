@@ -49,6 +49,6 @@
 	} // userInitialize
 	
 	function badImage () {
-	  this.src = 'themes/' + asdTheme + '/images/icons/unknown_image.gif';
+	  this.src = 'themes/' + asdTheme + '/images/common/unknown.gif';
 	  this.alt = 'Image Not Found!';
 	} // BadImage
