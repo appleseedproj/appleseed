@@ -1,3 +1,37 @@
+  // +-------------------------------------------------------------------+
+  // | Appleseed Web Community Management Software                       |
+  // | http://appleseed.sourceforge.net                                  |
+  // +-------------------------------------------------------------------+
+  // | FILE: friends.js                              CREATED: 05-01-2007 + 
+  // | LOCATION: /frame...script/user/              MODIFIED: 05-01-2007 +
+  // +-------------------------------------------------------------------+
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
+  // +-------------------------------------------------------------------+
+  // | This program is free software; you can redistribute it and/or     |
+  // | modify it under the terms of the GNU General Public License       |
+  // | as published by the Free Software Foundation; either version 2    |
+  // | of the License, or (at your option) any later version.            |
+  // |                                                                   |
+  // | This program is distributed in the hope that it will be useful,   |
+  // | but WITHOUT ANY WARRANTY; without even the implied warranty of    |
+  // | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the     |
+  // | GNU General Public License for more details.                      |	
+  // |                                                                   |
+  // | You should have received a copy of the GNU General Public License |
+  // | along with this program; if not, write to:                        |
+  // |                                                                   |
+  // |   The Free Software Foundation, Inc.                              |
+  // |   59 Temple Place - Suite 330,                                    | 
+  // |   Boston, MA  02111-1307, USA.                                    |
+  // |                                                                   |
+  // |   http://www.gnu.org/copyleft/gpl.html                            |
+  // +-------------------------------------------------------------------+
+  // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
+  // +-------------------------------------------------------------------+
+  // | VERSION:      0.7.0                                               |
+  // | DESCRIPTION:  Client-side script for friends component.           |
+  // +-------------------------------------------------------------------+
+
 	// Initialize once the window is loaded.
 	window.addEvent('domready', function(){new userFriendsInitialize();});
 	
@@ -44,29 +78,39 @@
 	    var currentElement   = $$('.unloaded')[0];
 	    var currentElementFullname = $$('.unloaded .fullname')[0];
 	    var currentElementOnline = $$('.unloaded .online')[0];
+	    var currentElementImage = $$('.unloaded .icon .icon_img')[0];
 	    ChangeLoadingState (currentElement, 'loading');
 	    
 	    var ajaxObject = new Ajax('/ajax/', {
 	      postBody: jsonString, 
 	      onComplete:  function(req) {
-	        var userInfo = Json.evaluate (req);
-	        if (userInfo.fullname) {
-	          this.currentFullname.innerHTML = userInfo.fullname;
-	          if (userInfo.online == 'ONLINE') {
-	            var online = new Element ('img');
-	            online.setProperty ('src', '/themes/' + asdTheme + '/images/icons/onlinenow.gif'); 
-	            this.currentOnline.adopt (online);
-	          } // if
+	      
+	        if (req) {
+	          var userInfo = Json.evaluate (req);
 	          
-    	      ChangeLoadingState (this.current, 'loaded');
+	          if (userInfo.fullname) {
+	            this.currentFullname.innerHTML = userInfo.fullname;
+	            if (userInfo.online == 'ONLINE') {
+	              var online = new Element ('img');
+	              online.setProperty ('src', '/themes/' + asdTheme + '/images/icons/onlinenow.gif'); 
+	              this.currentOnline.adopt (online);
+	            } // if
+	          
+    	        ChangeLoadingState (this.current, 'loaded');
+    	      } else {
+    	        ChangeLoadingState (this.current, 'failed');
+    	      } // if
     	    } else {
-    	      ChangeLoadingState (this.current, 'failed');
+  	        ChangeLoadingState (this.current, 'failed');
     	    } // if
 	      }
 	    });
 	    
+	    ajaxObject.username = username;
+	    ajaxObject.domain = domain;
 	    ajaxObject.currentFullname = currentElementFullname;
 	    ajaxObject.currentOnline = currentElementOnline;
+	    ajaxObject.currentImage = currentElementImage;
 	    ajaxObject.current = currentElement;
 	    
 	    ajaxObject.request();

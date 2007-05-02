@@ -2028,6 +2028,7 @@ form#compose p.error:hover {
  text-align:center;
  margin:3px 2px 3px 1px; 
  -moz-border-radius:8px;
+ overflow:hidden;
 }
 
 #user #friends #listing li.even {
@@ -2057,9 +2058,20 @@ form#compose p.error:hover {
  opacity:.2;
 }
 
+#user #friends #listing li.failed {
+ float:left;
+ background:url('/themes/ophelia/images/icons/unknown.gif') no-repeat 9px 20px;  
+ background-color:#cfd3d8;
+}
+
+#user #friends #listing li.failed .icon {
+ opacity:0;
+}
+
 #user #friends #listing li.even:hover,
 #user #friends #listing li.odd:hover {
  background-color:#cfd3d8;
+ overflow:visible;
 }
 
 #user #friends #listing li span {
