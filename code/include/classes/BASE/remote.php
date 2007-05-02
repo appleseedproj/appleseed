@@ -66,7 +66,7 @@
       $path = "/asd/"; // path to cgi, asp, php program
       $user_agent = ""; // identify as your own user agent (like "MSIE") if you want
 
-      // Open a socket and set timeout to 1 second.
+      // Open a socket and set timeout to 2 seconds.
       $fp = fsockopen($this->Host, 80, $errno, $errstr, $pTIMEOUT);
 
       // Return FALSE if no resource was created.

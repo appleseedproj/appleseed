@@ -61,6 +61,13 @@
       // Get user information in JSON format.
       $result = $zAJAX->GetUserInformation ($username, $domain);
       
+      if (!$result) {
+        // Return null values.
+        $val['result'] = null;
+        $val['fullname'] = null;
+        $result = $zAJAX->JSON->encode ($val);
+      } // if
+      
       echo $result;
       
       exit;
