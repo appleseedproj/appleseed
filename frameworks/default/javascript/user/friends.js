@@ -40,6 +40,8 @@
 	  
 	  LoadRemoteFriends (); 
 	  
+	  AttachLinksToElements (); 
+	  
 	  return (true);
 	} // userFriendsInitialize
 	
@@ -123,3 +125,34 @@
 	  
 	  return (true);
 	} // LoadRemoteFriends
+	
+	function AttachLinksToElements () {
+	
+	  // Attach links to all SPAN elements.
+	  spanElements = document.getElementsByTagName("span");
+	   
+	  for (i = 0; i < spanElements.length; i++) {
+	    var target = spanElements[i].getAttribute ('href');
+	    var post = spanElements[i].getAttribute ('post');
+	    var confirm = spanElements[i].getAttribute ('confirm');
+	    if (!confirm) confirm = '';
+	    if (target) {
+	      spanElements[i].setAttribute('onClick', 'jPOSTLINK ("' + target + '", "' + post + '", "' + confirm + '");'); 
+	    }
+	  } // for
+	  
+	  // Attach links to all DIV elements.
+	  divElements = document.getElementsByTagName("div");
+	   
+	  for (i = 0; i < divElements.length; i++) {
+	    var target = divElements[i].getAttribute ('href');
+	    var post = divElements[i].getAttribute ('post');
+	    var confirm = divElements[i].getAttribute ('confirm');
+	    if (!confirm) confirm = '';
+	    if (target) {
+	      divElements[i].setAttribute('onClick', 'jPOSTLINK ("' + target + '", "' + post + '", "' + confirm + '");'); 
+	    }
+	  } // for
+	  
+	  return (true);
+	} // AttachLinksToElements

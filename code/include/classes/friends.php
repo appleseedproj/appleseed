@@ -276,7 +276,8 @@
     } // NotifyDenial
 
     // Notify the user that a friend request has been made.
-    function NotifyRequest ($pEMAIL, $pREQUESTEDUSER, $pREQUESTUSER, $pREQUESTEDUSERNAME, $pREQUESTEDDOMAIN = NULL) {
+    function NotifyRequest ($pREQUESTEDUSER, $pREQUESTUSER, $pREQUESTEDUSERNAME, $pREQUESTEDDOMAIN = NULL) {
+      
       global $zSTRINGS, $zAPPLE;
 
       global $gREQUESTUSER, $gREQUESTEDUSER;
@@ -290,35 +291,19 @@
         $gFRIENDSURL = $gSITEURL . "/profile/" . $pREQUESTEDUSERNAME . "/friends/requests/";
       } // if
 
-      $to = $pEMAIL;
-
+      global $gSUBJECT, $gBODY;
       $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.REQUEST');
-      $subject = $zSTRINGS->Output;
+      $gSUBJECT = $zSTRINGS->Output;
 
       $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.REQUEST');
-      $body = $zSTRINGS->Output;
+      $gBODY = $zSTRINGS->Output;
+      
+      $MESSAGE = new cMESSAGE ();
+      $MESSAGE->Send ();
+      unset ($MESSAGE); 
 
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.FRIENDS.REQUEST');
-      $from = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.FRIENDS.REQUEST');
-      $fromname = $zSTRINGS->Output;
-
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
-
-      $zAPPLE->Mailer->Send();
-
-      $zAPPLE->Mailer->ClearAddresses();
-
-      unset ($to);
-      unset ($subject);
-      unset ($body);
-
+      unset ($gSUBJECT);
+      unset ($gBODY);
       return (TRUE);
 
     } // NotifyRequest
@@ -817,8 +802,13 @@
       $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
       $fullname = $USER->userProfile->GetAlias();
       $uid = $USER->uID;
-      unset ($USER);
       
+      global $gRECIPIENTADDRESS;
+      global $gRECIPIENTNAME, $gRECIPIENTDOMAIN, $gSITEDOMAIN;
+      
+      $gRECIPIENTADDRESS = $USER->Username . '@' . $gSITEDOMAIN;
+      $gRECIPIENTDOMAIN = $gSITEDOMAIN;
+
       switch ($target_verification) {
         case FRIEND_VERIFIED:
           // Check if relationship has already been created.
@@ -938,14 +928,6 @@
             return (FALSE);
           } // if
           
-          // Add request record to target.
-          $USER = new cUSER();
-          $USER->Select ("Username", $pUSERNAME);
-          $USER->FetchArray ();
-          $fullname = $USER->userProfile->GetAlias();
-          $uid = $USER->uID;
-          unset ($USER);
-          
           $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_REQUESTS);
           
           if (!$success) {
@@ -965,10 +947,14 @@
           $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
           $this->Message = $zSTRINGS->Output;
           
+          if ($pNOTIFY) $this->NotifyRequest ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
+      
           $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
           $gCIRCLEVIEW = CIRCLE_PENDING;
         break;
       } // switch
+      
+      unset ($USER);
       
       return (TRUE);
     } // Request
@@ -1083,6 +1069,7 @@
             global $gREQUESTEDUSER;
             $gREQUESTEDUSER = $fullname;
             $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
+            
             $this->Message = $zSTRINGS->Output;
             unset ($gREQUESTEDUSER);
           } else {
@@ -1353,7 +1340,6 @@
           $USER->FetchArray ();
           $fullname = $USER->userProfile->GetAlias();
           $uid = $USER->uID;
-          unset ($USER);
           
           $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_REQUESTS);
           
@@ -1373,6 +1359,10 @@
           $gREQUESTEDUSER = $fullname;
           $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
           $this->Message = $zSTRINGS->Output;
+          
+          if ($pNOTIFY) $this->NotifyRequest ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
+      
+          unset ($USER);
           
           $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
           $gCIRCLEVIEW = CIRCLE_PENDING;

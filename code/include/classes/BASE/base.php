@@ -2096,6 +2096,20 @@
 
       return (TRUE);
     } // SwitchAlternate
+    
+    function GetAlternate () {
+      global $gALTERNATE;
+      
+      if ($gALTERNATE == 0) {
+        $return = 'even';
+      } else {
+        $return = 'odd';
+      } // if
+      
+      $this->SwitchAlternate ();
+      
+      return ($return);
+    } // GetAlternate
 
     // Alternate listing
     function Alternate ($pSTYLEPREFIX = NULL, $pSTYLESUFFIX = NULL, $pADDITIONALCLASS = NULL) {

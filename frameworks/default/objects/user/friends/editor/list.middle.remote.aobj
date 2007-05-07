@@ -1,4 +1,4 @@
- <li class='<?php echo $zHTML->GetAlternate(); ?>' >
+ <li class='<?php echo $zHTML->GetAlternate(); ?> unloaded' href="<?php echo $gEDITTARGET; ?>" >
 
   <span class='username'>
     <?php $zHTML->UserLink ($zFRIENDS->Username, $zFRIENDS->Domain, TRUE); ?>

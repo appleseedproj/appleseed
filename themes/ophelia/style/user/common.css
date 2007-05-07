@@ -1204,11 +1204,12 @@ form#compose p.error:hover {
 
 #user #folders #compose {
  float:left;
- clear:right;
+ clear:both;
  margin-bottom:5px;
- width:237px;
+ width:147px;
  margin-right:5px;
 }
+
 #user #folders #compose span.compose {
  float:right;
 } 
@@ -1221,12 +1222,14 @@ form#compose p.error:hover {
  padding-left:10px;
  margin-bottom:5px;
  color:#000000;
+ clear:both;
 }
 
+#user #folders #list #normal:hover,
 #user #folders #list #selected {
  clear:both;
  font:12px Arial;
- width:230px;
+ width:145px;
  padding-top:2px;
  padding-bottom:2px;
  padding-left:10px;
@@ -1242,6 +1245,11 @@ form#compose p.error:hover {
  border-color:#ccd0d5;
 }
 
+#user #folders #list #normal:hover {
+ border:none;
+ background-color:#dff3f8;
+}
+
 #user #folders #list #selected a {
  color:#0232ff;
  background-color:#bfd3e8;
@@ -1249,7 +1257,7 @@ form#compose p.error:hover {
 
 #user #folders #list #normal a {
  color:#000000;
- background:#fafafa;
+ background:none;
 } 
 
 #user #folders #list #title {
@@ -1268,7 +1276,7 @@ form#compose p.error:hover {
 #user #folders #container,
 #user #labels #container {
  font:11px Arial;
- width:235px;
+ width:150px;
  background:#fafafa;
  border:1px solid #cccccc;
  border-right:2px solid #999999;
@@ -1297,9 +1305,10 @@ form#compose p.error:hover {
  color:#000000;
 }
 
+#user #labels li.normal:hover,
 #user #labels li.selected {
  font:10px Arial;
- width:230px;
+ width:145px;
  padding:0 0 0 10px;
  color:#0232ff;
  -moz-border-radius:8px;
@@ -1310,9 +1319,14 @@ form#compose p.error:hover {
  border-right:0px;
 }
 
+#user #labels li.normal:hover{
+ border:none;
+ background-color:#dff3f8;
+}
+
 #user #labels li.normal a {
  color:#000000;
- background:#fafafa;
+ background:none;
 } 
 
 #user #labels li.selected a {
@@ -1330,7 +1344,7 @@ form#compose p.error:hover {
 } 
 
 #user #labels p.message {
- width:247px;
+ width:162px;
  position:relative;
  left:-6px;
  color:#ffffff;
@@ -1354,6 +1368,29 @@ form#compose p.error:hover {
 
 #user #editlabels {
  float:left;
+}
+
+#user #editlabels #container {
+ position:relative;
+ width:570px;
+ left:-75px;
+ clear:both;
+ float:left;
+ font:11px Arial;
+ background:#fafafa;
+ border:1px solid #cccccc;
+ border-right:2px solid #999999;
+ border-bottom:2px solid #999999;
+ margin:0 0 10px 0;
+ text-align:justify;
+ padding:6px;
+ -moz-border-radius:12px;
+}
+
+#user #editlabels #container p.error,
+#user #editlabels #container p.message {
+ left:-6px;
+ width:583px;
 }
 
 #user #editlabels ul {
@@ -1391,7 +1428,7 @@ form#compose p.error:hover {
 }
 
 #user #editlabels li span.label {
- width:232px;
+ width:312px;
  margin-right:10px;
 }
 
@@ -1416,7 +1453,7 @@ form#compose p.error:hover {
 }
 
 #user #editlabels #buttons {
- width:487px;
+ width:570px;
  margin:10px 0 0 0;
 }
 
@@ -1626,13 +1663,37 @@ form#compose p.error:hover {
 
 /* CONTEXT: users.messages */
 
-#user #messages #container {
+#user #messages #tabs {
+ position:relative;
  float:left;
+ left:-75px;
+}
+
+#user #messages #container {
+ position:relative;
+ width:570px;
+ left:-75px;
+ clear:both;
+ float:left;
+ font:11px Arial;
+ background:#fafafa;
+ border:1px solid #cccccc;
+ border-right:2px solid #999999;
+ border-bottom:2px solid #999999;
+ margin:0 0 10px 0;
+ text-align:justify;
+ padding:6px;
+ -moz-border-radius:12px;
+}
+
+#user #messages #container p.message {
+ left:-6px;
+ width:583px;
 }
 
 #user #messages #container ul {
  float:left;
- width:487px;
+ width:570px;
  padding:0;
  margin:0;
  border-top:1px solid #000000;
@@ -1642,16 +1703,14 @@ form#compose p.error:hover {
 
 #user #messages #container li {
  list-style-type:none;
- width:487px;
- -moz-border-radius:12px;
- -moz-border-radius-bottomleft:0px;
- -moz-border-radius-bottomright:0px;
+ width:570px;
+ padding:3px 0;
 }
 
 #user #messages #buttons {
  float:left;
  margin:10px 0;
- width:487px;
+ width:570px;
 }
 
 #user #messages #buttons span {
@@ -1691,7 +1750,7 @@ form#compose p.error:hover {
 }
 
 #user #messages #buttons span#archive {
- width:125px;
+ width:205px;
 }
 
 #user #messages #buttons span#inbox {
@@ -1747,7 +1806,7 @@ form#compose p.error:hover {
 }
 
 #user #messages #container li span.username {
- width:88px;
+ width:98px;
  overflow:hidden;
  height:14px;
  margin:0 13px 0 3px;
@@ -1775,7 +1834,7 @@ form#compose p.error:hover {
 } 
 
 #user #messages #container li span.subject {
- width:295px;
+ width:370px;
  overflow:hidden;
  display:inline;
  top:0px;
@@ -1830,7 +1889,7 @@ form#compose p.error:hover {
 
 #user #messages #container #view #header #top {
  float:left;
- width:487px;
+ width:570px;
  background-color:#cfd3d8;
  -moz-border-radius:4px;
  -moz-border-radius-bottomright:0px;
@@ -1847,7 +1906,7 @@ form#compose p.error:hover {
 }
 
 #user #messages #container #view #header #top span#subject {
- width:299px;
+ width:399px;
  font-weight:bold;
  font-size:12px;
 }
@@ -1878,7 +1937,7 @@ form#compose p.error:hover {
 
 #user #messages #container #view #body {
  float:left;
- width:455px;
+ width:537px;
  min-height:60px;
  font-size:11px;
  color:#000000;
@@ -1897,7 +1956,7 @@ form#compose p.error:hover {
 }
 
 #user #messages #container #view #buttons {
- width:487px;
+ width:567px;
  color:#000000;
  padding-left:00px;
  padding-right:0px;
@@ -1917,26 +1976,26 @@ form#compose p.error:hover {
 
 #user #messages #container #view span.not_spam,
 #user #messages #container #view span.spam {
- width:104px;
+ width:184px;
 }
 
 #user #messages #container #view span.reply {
- width:60px;
+ width:80px;
 }
 
 #user #messages #container #view span.forward {
- width:80px;
+ width:120px;
 }
 
 #user #messages #container #view span.unread {
- width:80px;
+ width:220px;
  text-align:center;
 }
 
 #user #messages #container #view span.move_inbox,
 #user #messages #container #view span.archive {
- width:107px;
- text-align:center;
+ width:147px;
+ text-align:right;
 }
 
 #user #messages #container #view span.label {
@@ -2023,7 +2082,7 @@ form#compose p.error:hover {
 #user #friends #listing li {
  float:left;
  width:118px;
- height:160px;
+ height:auto;
  list-style-type:none;
  text-align:center;
  margin:3px 2px 3px 1px; 
@@ -2072,6 +2131,7 @@ form#compose p.error:hover {
 #user #friends #listing li.odd:hover {
  background-color:#cfd3d8;
  overflow:visible;
+ 
 }
 
 #user #friends #listing li span {
@@ -2083,7 +2143,9 @@ form#compose p.error:hover {
 }
 
 #user #friends #listing li span.fullname {
- padding:5px 0;
+ width:114px;
+ height:20px;
+ padding:5px 2px;
 }
 
 #user #friends #listing li span.icon {
@@ -2102,6 +2164,7 @@ form#compose p.error:hover {
 #user #friends #listing li span.domain {
  clear:both;
  width:118px;
+ padding:0 0 5px 0;
  color:#9a8d9f;
 }
 
@@ -2189,14 +2252,13 @@ form#compose p.error:hover {
 }
 
 #user #friends form#masslist #buttons_bottom span#circle{
- width:200px;
  float:right;
- text-align:right;
+ width:95px;
 }
 
 #user #friends #buttons_bottom form#editcircles span.edit_circles {
- float:right;
- width:287px;
+ float:left;
+ width:392px;
 }
 
 #user #friends #editor ul {
@@ -2211,43 +2273,42 @@ form#compose p.error:hover {
 
 #user #friends #editor li {
  width:487px;
- height:15px;
  margin:0;
- overflow:hidden;
  list-style-type:none;
- -moz-border-radius:12px;
- -moz-border-radius-bottomleft:0px;
- -moz-border-radius-bottomright:0px;
-}
-
-#user #friends #editor li a {
- background:none;
 }
 
 #user #friends #editor li:hover {
- height:auto;
- -moz-border-radius:12px;
+ background-color:#cfd3d8;
+ cursor:pointer;
 }
+
+#user #friends #editor li span.alias a,
+#user #friends #editor li span.domain a,
+#user #friends #editor li span.fullname a {
+ background:none;
+}
+
 
 #user #friends #editor li span {
  float:left;
- margin:0 0 0 5px;
- padding:0px;
- overflow:hidden;
+ padding:4px 1px 0px 1px;
+ cursor:pointer;
+}
+
+#user #friends #editor li span.username {
+ padding:0 1px;
 }
 
 #user #friends #editor li span.fullname {
- width:100px;
- height:15px;
- margin:2px 0 0 2px;
+ width:180px;
  text-align:left;
 }
 
 #user #friends #editor li span.alias {
- width:88px;
- height:15px;
- margin:2px 0 0 2px;
+ clear:both;
+ width:188px;
  text-align:left;
+ font-style:italic;
 }
 
 #user #friends #editor li span.alias a {
@@ -2257,52 +2318,29 @@ form#compose p.error:hover {
 }
 
 #user #friends #editor li span.circles {
- width:266px;
- height:15px;
+ width:206px;
  color:#0232ff;
  font-style:italic;
- overflow:hidden;
- margin:2px 0 0 2px;
  text-align:left;
 }
 
 #user #friends #editor li span.check {
  width:23px;
- margin:2px 4px 0 0;
- height:15px;
+ padding:1px;
  text-align:right;
 }
 
-#user #friends #editor li span.icon {
- vertical-align:top;
- width:50px;
- height:auto;
-}
-
-#user #friends #editor li span.icon img {
- width:100%;
- height:auto;
-}
-
 #user #friends #editor li span.username {
- width:134px;
- margin:48px 0 0 4px;
+ width:80px;
  text-align:left;
 }
 
 #user #friends #editor li span.domain {
  width:194px;
- margin:48px 0 0 0;
  text-align:left;
 }
 #user #friends #editor li span.domain a {
  color:#9a8d9f;
-}
-
-#user #friends #editor li span.edit {
- width:96px;
- margin:48px 4px 2px 0;
- text-align:right;
 }
 
 /* CONTEXT: users.friends:edit */

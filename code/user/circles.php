@@ -70,6 +70,9 @@
 
   // Create the data class.
   $zCIRCLES = new cFRIENDCIRCLES ($zAPPLE->Context);
+  
+  // Set the scroll step.
+  $gSCROLLSTEP[$zAPPLE->Context] = 20;
 
   // Display the select all button by default.
   $gSELECTBUTTON = 'select_all';

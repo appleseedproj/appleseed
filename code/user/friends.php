@@ -64,7 +64,7 @@
 
   // Deprecate the auto submit action.
   if ($gAUTOSUBMITACTION) $gACTION = $gAUTOSUBMITACTION;
-
+  
   $gCIRCLEVIEWTYPE = "CIRCLEVIEW";
 
   // Set the circle view to ADMIN if user has access.
@@ -315,7 +315,6 @@
       // Create the friend listing.
       if (!$SKIP) $zFRIENDS->SelectByMultiple ($friendcriteria, "tID DESC");
     break;
-    
   } // switch
 
   switch ($gACTION) {
@@ -339,7 +338,6 @@
       } // if
 
       $gFRIENDSICON = "http://" . $zFRIENDS->Domain . "/icon/" . $zFRIENDS->Username . "/";
-
 
       global $gCIRCLESLISTING;
       $gCIRCLESLISTING = $zFRIENDS->GetCircles();
@@ -368,6 +366,8 @@
            ($gACTION == 'MOVE_DOWN') or 
            ($gACTION == 'DELETE_ALL') ) {
   
+        $gPOSTDATA[$gCIRCLEVIEWTYPE] = $gCIRCLEVIEW;
+  
         $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.top.aobj", INCLUDE_SECURITY_NONE);
   
         // Calculate scroll values.
@@ -391,10 +391,9 @@
         global $gCHECKED;
         global $gFRIENDSICON, $gFRIENDFULLNAME, $gFRIENDNAME;
     
-        $gPOSTDATA[$gCIRCLEVIEWTYPE] = $gCIRCLEVIEW;
-  
         // Loop through the list.
         for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+          
          if ($zFRIENDS->FetchArray()) {
     
           // Check if entry is hidden or blocked for this user.
@@ -432,12 +431,9 @@
           global $bFRIENDICON;
           $bFRIENDICON = $zAPPLE->BufferUserIcon ($zFRIENDS->Username, $zFRIENDS->Domain, NULL);
     
-          global $gEDITTARGET;
-          $gEDITTARGET = "/profile/" . $zFOCUSUSER->Username . "/friends/";
-    
-          global $gEXTRAPOSTDATA;
-          $gEXTRAPOSTDATA['ACTION'] = "EDIT";
-          $gEXTRAPOSTDATA['tID'] = $zFRIENDS->tID;
+          global $gEDITTARGET, $gEDITPOST;
+          $gEDITTARGET = "http://" . $gSITEDOMAIN . "/profile/" . $zFOCUSUSER->Username . "/friends/";
+          $gEDITPOST   = 'gACTION=EDIT&gtID=' . $zFRIENDS->tID;
     
           $gCHECKED = FALSE;
           // Select 
@@ -464,8 +460,6 @@
             $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.remote.aobj", INCLUDE_SECURITY_NONE);
           else 
             $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.aobj", INCLUDE_SECURITY_NONE);
-    
-          unset ($gEXTRAPOSTDATA);
     
          } else {
           break;
