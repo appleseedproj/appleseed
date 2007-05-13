@@ -1,4 +1,4 @@
- <?php $zHTML->Alternate(); ?>
+ <li class='<?php echo $zHTML->GetAlternate(); ?>' >
 
   <span class='fullname'>
     <?php echo $gFRIENDNAME; ?>
@@ -7,6 +7,10 @@
   <span class='icon'>
     <?php echo $bFRIENDICON; ?>
   </span> <!-- #icon -->
+
+  <span class='online'>
+    <?php echo $bONLINENOW; ?>
+  </span> <!-- #online -->
 
   <span class='domain'>
     <?php echo $zFRIENDS->Domain; ?>

@@ -421,11 +421,11 @@ a:hover span.linkinfo {
   text-decoration:none;
 }
 
-p.linkicon,
-p.linkfullname,
-p.linkonline {
+.linkinfo span.icon,
+.linkinfo span.fullname,
+.linkinfo span.domain,
+.linkinfo span.online {
   margin:0 0 2px 0; padding:0;
-  text-decoration:none;
 } 
 
 /* DEBUG INFORMATION */

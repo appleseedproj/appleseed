@@ -1,8 +1,6 @@
- <li class='<?php echo $zHTML->GetAlternate(); ?>' >
+ <li class='<?php echo $zHTML->GetAlternate(); ?> unloaded' href="<?php echo $gEDITTARGET; ?>" >
 
-  <span class='username'>
-    <?php echo $gFRIENDFULLNAME; ?>
-  </span> <!-- #username -->
+  <span class='fullname'><?php echo $gFRIENDFULLNAME; ?></span> <!-- #username -->
 
   <span class='icon'>
     <?php echo $bFRIENDICON; ?>
@@ -12,9 +10,7 @@
     <?php echo $bONLINENOW; ?>
   </span> <!-- #online -->
 
-  <span class='domain'>
-    <?php echo $zFRIENDS->Domain; ?>
-  </span> <!-- #domain -->
+  <span class='domain'><?php echo $zFRIENDS->Domain; ?></span> <!-- #domain -->
 
   <form id='cancel' name='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
    <?php $zHTML->Post ($gPOSTDATA); ?>

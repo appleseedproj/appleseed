@@ -1,21 +1,16 @@
    </ul>
 
-  <form id='search' method='POST' action='<?php echo $gTARGET; ?>'>
+  <?php $zSEARCH->Ask (); ?>
+  
+  <form id='new' method='POST' action='_admin/content/articles/'>
+  <input type='hidden' id='gtID' name='gtID' value='' />
+  <input type='hidden' id='gACTION' name='gACTION' value='NEW' />
+  
+  <?php $zHTML->Post ($gPOSTDATA); ?>
+  
+  <?php $zHTML->Button ('new'); ?>
+ </form> <!-- ## new -->
 
-   <span class='criteria'>
-    <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
-   </span> <!-- .criteria -->
-
-   <span class='searchby'>
-    <?php $zOPTIONS->Menu ("SEARCHQUEUEBY"); ?>
-   </span> <!-- .searchby -->
-
-   <input type='hidden' id='gACTION' name='gACTION' value='SEARCH' />
-   <?php $zHTML->Button ('search'); ?>
-
-  </form> <!-- ## search -->
-
-  <?php $zHTML->ShowAll (); ?>
 
  </div> <!-- #container -->
 

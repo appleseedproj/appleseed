@@ -3,8 +3,8 @@
   // | Appleseed Web Community Management Software                       |
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
-  // | FILE: asd.php                                 CREATED: 05-01-2007 + 
-  // | LOCATION: /code/site/                        MODIFIED: 05-01-2007 +
+  // | FILE: ajax.php                                CREATED: 05-01-2007 + 
+  // | LOCATION: /code/site/                        MODIFIED: 05-10-2007 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+

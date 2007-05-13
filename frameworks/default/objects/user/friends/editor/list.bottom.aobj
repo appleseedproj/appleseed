@@ -18,15 +18,7 @@
 
   </div> <!-- #buttons_bottom -->
 
-  <div id='search'>
-   <form id='search' name='search' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
-    <?php $zHTML->Post ($gPOSTDATA); ?>
-    <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
-    <?php $zHTML->Button ('search'); ?>
-   </form> <!-- #search -->
- 
-   <?php $zHTML->ShowAll (); ?>
-  </div> <!-- #search -->
+  <?php $zSEARCH->Ask (); ?>
     
  </div> <!-- #container -->
 

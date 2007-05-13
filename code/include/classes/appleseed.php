@@ -103,7 +103,7 @@
       global $gTABLEPREFIX;
   
       // Initialize classes
-      global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML;
+      global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML, $zSEARCH;
       global $zAUTHUSER, $zREMOTEUSER, $zLOCALUSER, $zFOCUSUSER;
       global $zIMAGE;
 
@@ -115,6 +115,7 @@
       $zIMAGE   = new cIMAGE ();
       $zHTML    = new cHTML ();
       $zXML     = new cXML ();
+      $zSEARCH  = new cSEARCH ();
   
       $zFOCUSUSER = new cUSER ();
       $zLOCALUSER = new cUSER ();

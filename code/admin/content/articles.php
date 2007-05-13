@@ -52,6 +52,7 @@
   require_once ('code/include/classes/messages.php'); 
   require_once ('code/include/classes/users.php'); 
   require_once ('code/include/classes/auth.php'); 
+  require_once ('code/include/classes/search.php'); 
 
   // Create the Application class.
   $zAPPLE = new cAPPLESEED ();
@@ -90,8 +91,7 @@
   $gSCROLLSTEP[$zAPPLE->Context] = 10;
 
   // Set the post data to move back and forth.
-  $gPOSTDATA = Array ("SEARCHSTRINGSBY" => $gSEARCHSTRINGSBY,
-                      "CRITERIA"        => $gCRITERIA,
+  $gPOSTDATA = Array ("CRITERIA"        => $gCRITERIA,
                       "SCROLLSTART"     => $gSCROLLSTART,
                       "SORT"            => $gSORT);
 
@@ -294,13 +294,7 @@
     case 'DELETE':
     default:
       if ($gCRITERIA) {
-        if ($gSEARCHSTRINGSBY == SQL_SKIP) {
-          // Search all fields
-          $ADMINDATA->SelectByAll($gCRITERIA, $gSORT, 1);
-        } else {
-          // Search a single field
-          $ADMINDATA->Select($gSEARCHSTRINGSBY, $gCRITERIA, $gSORT, 1);
-        } // if
+        $ADMINDATA->SelectByAll($gCRITERIA, $gSORT, 1);
 
         // If only one result, jump right to edit form.
         if ( ($ADMINDATA->CountResult() == 1) AND ($gACTION == 'SEARCH') ) {

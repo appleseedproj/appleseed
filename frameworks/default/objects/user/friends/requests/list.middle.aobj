@@ -8,18 +8,18 @@
     <?php echo $bFRIENDICON; ?>
   </span> <!-- #icon -->
 
-  <form id='approve' name='approve' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+  <form id='friend_approve' name='friend_approve' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
    <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
    <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
-   <?php $zHTML->Button ('approve'); ?>
+   <?php $zHTML->Button ('friend_approve'); ?>
   </form>
 
-  <form id='deny' name='deny' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+  <form id='friend_deny' name='friend_deny' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
    <?php $zHTML->Post ($gPOSTDATA); ?>
    <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
    <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
    <?php $zSTRINGS->Lookup ('CONFIRM.DENY', 'USER.FRIENDS'); ?>
-   <?php $zHTML->Button ('deny', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   <?php $zHTML->Button ('friend_deny', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
   </form>
 
   <span class='online'>

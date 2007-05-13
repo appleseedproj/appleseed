@@ -42,7 +42,7 @@
 
   // Buffers.
   global $bMAINSECTION, $bONLINENOW;
-
+  
   // Variables.
   global $gCIRCLEVIEWTYPE, $gCIRCLEVIEW, $gCIRCLEVIEWADMIN;
   global $gCIRCLEDATA, $gCIRCLEVALUE;
@@ -65,8 +65,6 @@
   // Deprecate the auto submit action.
   if ($gAUTOSUBMITACTION) $gACTION = $gAUTOSUBMITACTION;
   
-  $gCIRCLEVIEWTYPE = "CIRCLEVIEW";
-
   // Set the circle view to ADMIN if user has access.
   if ( ( ($zAUTHUSER->Username == $zFOCUSUSER->Username) and 
          ($zAUTHUSER->Domain == $gSITEDOMAIN) ) or
@@ -98,7 +96,10 @@
     break;
 
     case 'DELETE':
-      $zFRIENDS->Remove ($zAUTHUSER->Username, $zAUTHUSER->Domain, $gFRIENDUSERNAME, $gFRIENDDOMAIN);
+      if ($gSITEDOMAIN == $gFRIENDDOMAIN)
+        $zFRIENDS->Remove ($gFRIENDUSERNAME);
+      else
+        $zFRIENDS->LongDistanceRemove ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
     case 'DELETE_ALL':
@@ -106,28 +107,28 @@
       $gMASSLIST = array (); $gSELECTBUTTON = 'select_all';
     break;
 
-    case 'ADD_FRIEND':
+    case 'FRIEND_REQUEST':
       if ($gSITEDOMAIN == $gFRIENDDOMAIN)
         $zFRIENDS->Request ($gFRIENDUSERNAME);
       else
         $zFRIENDS->LongDistanceRequest ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
-    case 'APPROVE':
+    case 'FRIEND_APPROVE':
       if ($gSITEDOMAIN == $gFRIENDDOMAIN)
         $zFRIENDS->Approve ($gFRIENDUSERNAME);
       else
         $zFRIENDS->LongDistanceApprove ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
-    case 'DENY':
+    case 'FRIEND_DENY':
       if ($gSITEDOMAIN == $gFRIENDDOMAIN)
         $zFRIENDS->Deny ($gFRIENDUSERNAME);
       else 
         $zFRIENDS->LongDistanceDeny ($gFRIENDUSERNAME, $gFRIENDDOMAIN);
     break;
 
-    case 'CANCEL':
+    case 'FRIEND_CANCEL':
       if ($gSITEDOMAIN == $gFRIENDDOMAIN)
         $zFRIENDS->Cancel ($gFRIENDUSERNAME);
       else 
@@ -207,54 +208,22 @@
       $friendview = "all";
     break;
     case CIRCLE_DEFAULT:
+      $friendview = "all";
+    break;
     default:
       $friendview = "all";
       if ($gCIRCLEVIEW) $friendview = 'circle';
     break;
   } // switch
 
-  // Create the Circle View menu.
-  if ($gCIRCLEVIEWTYPE == "CIRCLEVIEWADMIN") {
-
-    $gCIRCLEDATA = array (CIRCLE_DEFAULT   => "Default View",
-                          CIRCLE_NEWEST    => "Newest",
-                          CIRCLE_VIEWALL   => "View All",
-                          CIRCLE_REQUESTS  => "Requests",
-                          CIRCLE_PENDING   => "Pending",
-                          CIRCLE_EDITOR    => "Editor View");
-  } else {
-    $gCIRCLEDATA = array (CIRCLE_DEFAULT   => "Default View",
-                          CIRCLE_NEWEST    => "Newest",
-                          CIRCLE_VIEWALL   => "View All");
-  } // if
-
+  $gCIRCLEDATA = $zFRIENDS->CreateFriendsMenu ($gCIRCLEVIEWTYPE);
+  
   global $gCIRCLELIST;
 
-  $gCIRCLELIST = array ("X"    => MENU_DISABLED . "Add To Circle:");
   if (!$gCIRCLEVALUE) $gCIRCLEVALUE = 'X';
 
   global $gTARGET, $gCIRCLETARGET;
   $gCIRCLETARGET = "/profile/" . $zFOCUSUSER->Username . "/friends";
-
-  // Select the friend circles list.
-  $zFRIENDS->friendCircles->Select ("userAuth_uID", $zFOCUSUSER->uID, "sID ASC");
-
-  // Add the list of circles to the menu.
-  if ($zFRIENDS->friendCircles->CountResult() > 0) {
-
-    $gCIRCLEDATA[NULL] = MENU_DISABLED . "----------";
-    $gCIRCLEDATA[CIRCLE_VIEWCIRCLES] = "View Circles";
-
-    // Loop through the friends circles.
-    while ($zFRIENDS->friendCircles->FetchArray ()) {
-      $gCIRCLEDATA[$zFRIENDS->friendCircles->tID] = "&nbsp;" . $zFRIENDS->friendCircles->Name;
-      $gCIRCLELIST[$zFRIENDS->friendCircles->tID] = "&nbsp;" . $zFRIENDS->friendCircles->Name;
-      // array_push ($gCIRCLEDATA, $zFRIENDS->friendCircles->tID, $zFRIENDS->friendCircles->Name);
-    } // while
-
-  } else {
-    $gCIRCLELIST = NULL;
-  } // if
 
   // Select the proper results.
   switch ($gCIRCLEVIEW) {
@@ -317,6 +286,9 @@
     break;
   } // switch
 
+  $gPOSTDATA[$gCIRCLEVIEWTYPE] = $gCIRCLEVIEW;
+  $gPOSTDATA['SCROLLSTART'] = $gSCROLLSTART;
+        
   switch ($gACTION) {
     case 'CIRCLE':
     case 'EDIT':
@@ -348,6 +320,9 @@
       } // if
 
       $gCIRCLELIST = $zFRIENDS->CreateFullCirclesMenu ();
+      
+      $gPOSTDATA['CIRCLEVIEWADMIN'] = CIRCLE_EDITOR;
+      $gPOSTDATA['CIRCLEVIEW'] = CIRCLE_EDITOR;
 
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/edit.aobj", INCLUDE_SECURITY_NONE);
     break;
@@ -358,15 +333,14 @@
         break;
       } // if
       if ( ($zFRIENDS->Error == 0) or 
-           ($gACTION == 'APPROVE') or 
-           ($gACTION == 'CANCEL') or 
-           ($gACTION == 'ADD_FRIEND') or 
+           ($gACTION == 'FRIEND_APPROVE') or 
+           ($gACTION == 'FRIEND_CANCEL') or 
+           ($gACTION == 'FRIEND_REQUEST') or 
+           ($gACTION == 'FRIEND_DENY') or 
            ($gACTION == 'CIRCLE_ALL') or 
            ($gACTION == 'MOVE_UP') or 
            ($gACTION == 'MOVE_DOWN') or 
            ($gACTION == 'DELETE_ALL') ) {
-  
-        $gPOSTDATA[$gCIRCLEVIEWTYPE] = $gCIRCLEVIEW;
   
         $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.top.aobj", INCLUDE_SECURITY_NONE);
   

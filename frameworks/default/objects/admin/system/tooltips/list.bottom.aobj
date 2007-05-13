@@ -1,29 +1,7 @@
    </ul>
   </form>
 
-  <form id='search' method='POST' action='_admin/system/tooltips/'>
-
-   <span class='criteria'>
-    <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
-   </span> <!-- .criteria -->
-
-   <span class='searchby'>
-    <?php $zOPTIONS->Menu ("SEARCHTOOLTIPSBY"); ?>
-   </span> <!-- .searchby -->
-
-   <input type='hidden' id='gACTION' name='gACTION' value='SEARCH' />
-   <?php $zHTML->Button ('search'); ?>
-
-  </form> <!-- ## search -->
-
-  <?php $zHTML->ShowAll (); ?>
-
-  <form id='new' method='POST' action='_admin/system/tooltips/'>
-   <input type='hidden' id='gtID' name='gtID' value='' />
-   <input type='hidden' id='gACTION' name='gACTION' value='NEW' />
-   <?php $zHTML->Post ($gPOSTDATA); ?>
-   <?php $zHTML->Button ('new'); ?>
-  </form> <!-- ## new -->
+  <?php $zSEARCH->Ask (); ?>
 
  </div> <!-- #container -->
 

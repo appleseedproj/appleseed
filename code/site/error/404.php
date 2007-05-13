@@ -51,6 +51,7 @@
   require_once ('code/include/classes/messages.php'); 
   require_once ('code/include/classes/users.php'); 
   require_once ('code/include/classes/auth.php'); 
+  require_once ('code/include/classes/search.php'); 
 
   // Create the Application class.
   $zAPPLE = new cAPPLESEED ();

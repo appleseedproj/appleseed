@@ -1,5 +1,15 @@
 /* CONTEXT: common */
 
+li:hover {
+ color:#0232ff;
+ background-color:#cfd3d8;
+ cursor:pointer;
+}
+
+li:hover span {
+ cursor:pointer;
+}
+
 .even {
  float:left;
  background-color:#dce0e5;
@@ -272,9 +282,7 @@ form#compose p.error:hover {
 
 #user #journal #editor li:hover,
 #user #journal #editor li:hover a {
- color:#311aff;
  float:left;
- background-color:#cfd3d8;
  height:auto;
  min-height:1.6em;
  max-height:3em;
@@ -436,9 +444,6 @@ form#compose p.error:hover {
  list-style-type:none;
 }
 
-#user #photosets #listing li:hover {
-}
-
 #user #photosets #actions,
 #user #photosets #listing form#edit,
 #user #photosets #listing form#add {
@@ -548,9 +553,6 @@ form#compose p.error:hover {
  margin:0;
  overflow:hidden;
  list-style-type:none;
- -moz-border-radius:12px;
- -moz-border-radius-bottomleft:0px;
- -moz-border-radius-bottomright:0px;
 }
 
 #user #photosets #editor li:hover {
@@ -753,9 +755,6 @@ form#compose p.error:hover {
  list-style-type:none;
 }
 
-#user #photos #listing #one li:hover {
-}
-
 #user #photos #listing #one li span.thumb {
  width:100px;
  height:100px;
@@ -812,9 +811,6 @@ form#compose p.error:hover {
  list-style-type:none;
 }
 
-#user #photos #listing #two li:hover {
-}
-
 #user #photos #listing #two li span.thumb {
  width:100px;
  height:100px;
@@ -863,9 +859,6 @@ form#compose p.error:hover {
  overflow:hidden;
  text-align:center;
  list-style-type:none;
-}
-
-#user #photos #listing #four li:hover {
 }
 
 #user #photos #listing #four li span.thumb {
@@ -1021,9 +1014,6 @@ form#compose p.error:hover {
  margin:0;
  overflow:hidden;
  list-style-type:none;
- -moz-border-radius:12px;
- -moz-border-radius-bottomleft:0px;
- -moz-border-radius-bottomright:0px;
 }
 
 #user #photos #editor li:hover {
@@ -1247,7 +1237,7 @@ form#compose p.error:hover {
 
 #user #folders #list #normal:hover {
  border:none;
- background-color:#dff3f8;
+ background-color:#bfd3e8;
 }
 
 #user #folders #list #selected a {
@@ -1314,14 +1304,13 @@ form#compose p.error:hover {
  -moz-border-radius:8px;
  -moz-border-radius-topright:0px;
  -moz-border-radius-bottomright:0px;
- background-color:#bfd3e8;
  border:1px solid #ccd0d5;
  border-right:0px;
+ background-color:#bfd3e8;
 }
 
 #user #labels li.normal:hover{
  border:none;
- background-color:#dff3f8;
 }
 
 #user #labels li.normal a {
@@ -1331,7 +1320,6 @@ form#compose p.error:hover {
 
 #user #labels li.selected a {
  color:#0232ff;
- background-color:#bfd3e8;
 } 
 
 #user #labels #title {
@@ -1416,11 +1404,6 @@ form#compose p.error:hover {
  border:none;
 }
 
-#user #editlabels li:hover {
- color:#0232ff;
- background-color:#bfd3e8;
-}
-
 #user #editlabels li span {
  float:left;
  overflow:hidden;
@@ -1490,9 +1473,6 @@ form#compose p.error:hover {
  height:15px;
  margin:0;
  overflow:hidden;
- -moz-border-radius:12px;
- -moz-border-radius-bottomleft:0px;
- -moz-border-radius-bottomright:0px;
 }
 
 #user #circles #editor li a {
@@ -1511,11 +1491,6 @@ form#compose p.error:hover {
  font-style:italic;
  background:none;
  border:none;
-}
-
-#user #circles #editor li:hover {
- color:#0232ff;
- background-color:#bfd3e8;
 }
 
 #user #circles #editor li span {
@@ -2131,7 +2106,6 @@ form#compose p.error:hover {
 #user #friends #listing li.odd:hover {
  background-color:#cfd3d8;
  overflow:visible;
- 
 }
 
 #user #friends #listing li span {
@@ -2192,6 +2166,32 @@ form#compose p.error:hover {
  text-align:justify;
 }
 
+#user #friends li .linkinfo span.fullname {
+ width:114px;
+ height:20px;
+ padding:5px 2px;
+}
+
+#user #friends li .linkinfo span.icon {
+ height:100px;
+ clear:both;
+}
+
+#user #friends li .linkinfo span.online {
+ clear:both;
+ width:118px;
+ height:20px;
+ margin-top:2px;
+ text-align:center;
+}
+
+#user #friends li .linkinfo span.domain {
+ clear:both;
+ width:118px;
+ padding:0 0 5px 0;
+ color:#9a8d9f;
+}
+
 /* CONTEXT: users.friends:requests */
 
 #user #friends #requests #listing {
@@ -2212,8 +2212,8 @@ form#compose p.error:hover {
  margin:5px 0;
 }
 
-#user #friends #listing li span.deny,
-#user #friends #listing li span.approve {
+#user #friends #listing li span.friend_deny,
+#user #friends #listing li span.friend_approve {
  width:59px;
  margin:43px 0;
  height:13px;
@@ -2277,11 +2277,7 @@ form#compose p.error:hover {
  list-style-type:none;
 }
 
-#user #friends #editor li:hover {
- background-color:#cfd3d8;
- cursor:pointer;
-}
-
+ 
 #user #friends #editor li span.alias a,
 #user #friends #editor li span.domain a,
 #user #friends #editor li span.fullname a {
@@ -2415,7 +2411,7 @@ form#compose p.error:hover {
  text-align:right;
 }
 
-#user #friends #actions span.cancel{
+#user #friends #actions span.friend_cancel{
  width:80px;
  text-align:right;
 }
@@ -2586,18 +2582,14 @@ form#compose p.error:hover {
  -moz-border-radius:12px;
 }
 
-#user #contact #container span.add_remote_friend,
-#user #contact #container span.add_friend,
-#user #contact #container span.send_remote_message,
+#user #contact #container span.friend_request,
 #user #contact #container span.send_message {
  float:left;
  width:105px;
  margin:5px 0 5px 10px;
 }
 
-#user #contact #container span.add_remote_enemy,
-#user #contact #container span.add_enemy,
-#user #contact #container span.block_remote,
+#user #contact #container span.enemy_request,
 #user #contact #container span.block {
  float:right;
  text-align:right;
@@ -2661,7 +2653,6 @@ form#compose p.error:hover {
 
 #user #privacy li {
  height:1.6em;
- overflow:hidden;
  list-style-type:none;
 } 
 
@@ -2676,20 +2667,7 @@ form#compose p.error:hover {
 }
 
 #user #privacy li a {
- background:none;
  text-decoration:none;
-} 
-
-#user #privacy li:hover,
-#user #privacy li:hover a {
- color:#311aff;
- float:left;
- background-color:#cfd3d8;
- height:auto;
- min-height:1.6em;
- max-height:3em;
- overflow:hidden;
- list-style-type:none;
 } 
 
 #user #privacy span {
@@ -2858,9 +2836,7 @@ form#compose p.error:hover {
 
 #user #journal #listing li:hover {
  height:114px;
- color:#0232ff;
  float:left;
- background-color:#bfd3e8;
 }
 
 #user #journal #listing li span.subject {

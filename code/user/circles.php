@@ -339,6 +339,8 @@
           $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/circles/";
     
           $gPOSTDATA['ACTION'] = "EDIT";
+          $gPOSTDATA['CIRCLEVIEW'] = CIRCLE_EDITOR;
+          $gPOSTDATA['CIRCLEVIEWADMIN'] = CIRCLE_EDITOR;
           $gPOSTDATA['tID'] = $zCIRCLES->tID;
 
           $gCHECKED = FALSE;

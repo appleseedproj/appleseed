@@ -76,6 +76,7 @@
   require_once ('code/include/classes/photo.php'); 
   require_once ('code/include/classes/comments.php'); 
   require_once ('code/include/classes/auth.php'); 
+  require_once ('code/include/classes/search.php'); 
 
   // Create the Application class.
   $zAPPLE = new cAPPLESEED ();

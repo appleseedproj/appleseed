@@ -65,6 +65,9 @@
 	function LoadRemoteFriends () {
 	  var remotefriendslist = $$('.unloaded');
 	  
+	  // No remote friends were found.
+	  if (remotefriendslist.length == 0) return (false);
+	  
 	  var count = 0;
 	  for (var i in remotefriendslist) {
 	    

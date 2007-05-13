@@ -420,8 +420,88 @@
        } // if
 
        return ($circlearray);
-
     } // GetCircles
+    
+    // Create the friends menu based on the circle view type.
+    function CreateFriendsMenu ($pCIRCLEVIEWTYPE) {
+      
+      $return = '';
+      
+      if ($pCIRCLEVIEWTYPE == "CIRCLEVIEWADMIN") {
+        $return = $this->CreateFriendsAdminMenu ();
+      } else {
+        $return = $this->CreateFriendsMainMenu ();
+      } // if
+      
+      return ($return);
+    } // CreateFriendsMenu
+    
+    // Create the menu for non-focused users.
+    function CreateFriendsMainMenu () {
+      $begin = array (CIRCLE_DEFAULT   => "Default View",
+                      CIRCLE_NEWEST    => "Newest",
+                      CIRCLE_VIEWALL   => "View All");
+                       
+      $end = $this->AddCirclesToFriendsMenu ();
+                       
+      $return = $begin;
+      if ($end)  {
+        foreach ($end as $key => $val) {
+          $return[$key] = $val;
+        }
+      } // if
+     
+      
+      return ($return);
+    } // CreateFriendsMainMenu
+    
+    // Create the menu for focus users and admins.
+    function CreateFriendsAdminMenu () {
+      global $zFOCUSUSER;
+      
+      // Create the base menu.
+      $begin = array (CIRCLE_DEFAULT   => "Default View",
+                       CIRCLE_NEWEST    => "Newest",
+                       CIRCLE_VIEWALL   => "View All",
+                       CIRCLE_REQUESTS  => "Requests",
+                       CIRCLE_PENDING   => "Pending",
+                       CIRCLE_EDITOR    => "Editor View");
+                       
+      $end = $this->AddCirclesToFriendsMenu ();
+                       
+      $return = $begin;
+      if ($end)  {
+        foreach ($end as $key => $val) {
+          $return[$key] = $val;
+        }
+      } // if
+     
+      return ($return);
+    } // CreateFriendsAdminMenu
+    
+    function AddCirclesToFriendsMenu () {
+      global $zFOCUSUSER;
+      
+      $return = array ();
+      // Select circles from database.
+      $this->friendCircles->Select ("userAuth_uID", $zFOCUSUSER->uID, "sID ASC");
+      
+      if ($this->friendCircles->CountResult() > 0) {
+
+        $return[NULL] = MENU_DISABLED . "----------";
+        $return[CIRCLE_VIEWCIRCLES] = "View Circles";
+
+        // Loop through the friends circles.
+        while ($this->friendCircles->FetchArray ()) {
+          $return[$this->friendCircles->tID] = "&nbsp;" . $this->friendCircles->Name;
+        } // while
+        
+      } else {
+        return (NULL);
+      } // if
+                              
+      return ($return);
+    } // AddCirclesToFriendsMenu
 
     function CreateFullCirclesMenu () {
 
@@ -1620,6 +1700,52 @@
       
       return (TRUE);
     } // LongDistanceDeny
+
+    function LongDistanceRemove ($pUSERNAME, $pDOMAIN) {
+      
+      global $zLOCALUSER, $zSTRINGS, $zXML;
+
+      global $gSITEDOMAIN;
+
+      global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
+
+      $token = $this->Token ($zLOCALUSER->uID, $pDOMAIN);
+
+      // Send request to delete remote friend.
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"   => "ASD_FRIEND_DELETE",
+                         "gTOKEN"    => $token,
+                         "gUSERNAME" => $pUSERNAME,
+                         "gDOMAIN"   => $gSITEDOMAIN);
+      $zREMOTE->Post ($datalist);
+        
+      $zXML->Parse ($zREMOTE->Return);
+
+      $fullname = $zXML->GetValue ("fullname", 0);
+      $success = $zXML->GetValue ("result", 0);
+
+      unset ($zREMOTE);
+      
+      if (!$success) {
+        $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
+        $this->Message = $zSTRINGS->Output;
+        $this->Error = -1;
+        return (FALSE);
+      } // if
+      
+      // Delete local record.
+      $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $pDOMAIN);
+          
+      global $gFRIENDNAME;
+      $gFRIENDNAME = $fullname;
+      $zSTRINGS->Lookup ('MESSAGE.DELETED', 'USER.FRIENDS');
+      $this->Message = $zSTRINGS->Output;
+
+      $gCIRCLEVIEWADMIN = CIRCLE_EDITOR;
+      $gCIRCLEVIEW = CIRCLE_EDITOR;
+      
+      return (TRUE);
+    } // LongDistanceRemove
 
     // Create a local friend record.
     function CreateLocal ($pUID, $pUSERNAME, $pDOMAIN, $pVERIFICATION) {

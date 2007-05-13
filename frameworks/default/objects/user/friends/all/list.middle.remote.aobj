@@ -1,4 +1,4 @@
- <?php $zHTML->Alternate(NULL, NULL, "unloaded"); ?>
+ <li class='<?php echo $zHTML->GetAlternate(); ?> unloaded' >
 
   <span class='fullname'><?php echo $gFRIENDNAME; ?></span> <!-- #fullname -->
 

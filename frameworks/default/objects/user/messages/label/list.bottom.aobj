@@ -21,17 +21,7 @@
   </div> <!-- #buttons -->
  </form> <!-- #masslist -->
 
-   <div id='search'>
-
-    <form id='searchmessages' name='searchmessages' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/messages/'>
-     <?php $zHTML->TextBox ("CRITERIA", 70, $gCRITERIA); ?>
-     <?php $zOPTIONS->Menu ("SEARCHMESSAGESBY"); ?>
-     <?php $zHTML->Button ('search'); ?>
-    </form> <!-- ## searchmessages -->
-
-    <?php $zHTML->ShowAll (); ?>
-
-   </div> <!-- #search -->
+  <?php $zSEARCH->Ask (); ?>
 
  </div> <!-- #container -->
 </div> <!-- #messages -->

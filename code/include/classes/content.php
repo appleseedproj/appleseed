@@ -198,13 +198,7 @@
         case 'SAVE':
         default:
           if ($gCRITERIA) {
-            if ($gSEARCHSTRINGSBY == SQL_SKIP) {
-              // Search all fields
-              $this->SelectByAll($gCRITERIA, $gSORT, 1);
-            } else {
-              // Search a single field
-              $this->Select($gSEARCHSTRINGSBY, $gCRITERIA, $gSORT, 1);
-            } // if
+            $this->SelectByAll($gCRITERIA, $gSORT, 1);
     
             // If only one result, jump right to edit form.
             if ( ($this->CountResult() == 1) AND ($gACTION == 'SEARCH') ) {

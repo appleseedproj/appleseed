@@ -1930,7 +1930,7 @@
     } // Hidden
 
     // Output a TextBox element.
-    function TextBox ($pINPUTNAME, $pINPUTMAX = 64, $pINPUTVALUE = "", $pPASSWORD = FALSE) {
+    function TextBox ($pINPUTNAME, $pINPUTMAX = 64, $pINPUTVALUE = "", $pPASSWORD = FALSE, $pDISABLED = FALSE) {
 
       // Add a 'g' at the beginning to signify a global variable.
       if ($pINPUTNAME[0] != 'g') $pINPUTNAME = 'g' . $pINPUTNAME;
@@ -1970,6 +1970,9 @@
       } else {
         $type = 'text';
       } // if
+      
+      $disabled = "";
+      if ($pDISABLED) $disabled = "disabled=disabled";
 
       if ($pINPUTNAME[0] == 'g') {
         $classname = strtolower (substr ($pINPUTNAME, 1, strlen ($pINPUTNAME)-1));
@@ -1977,7 +1980,7 @@
         $classname = strtolower ($pINPUTNAME);
       } // if
 
-      $this->Output = "<input type='$type' name='$pINPUTNAME' " .
+      $this->Output = "<input $disabled type='$type' name='$pINPUTNAME' " .
                        "class='$classname' " . 
                        "maxlength='$pINPUTMAX' value=\"$pINPUTVALUE\" />\n";
 
@@ -2321,6 +2324,7 @@
       global $gLINKUSERTARGET;
       global $gLINKUSERNAME;
       global $gLINKICON;
+      global $gLINKDOMAIN;
       global $gSITEDOMAIN;
 
       global $zSTRINGS, $zAUTHUSER;
@@ -2331,6 +2335,7 @@
 
       $gLINKUSERNAME = $pUSERNAME;
       if (!$pDOMAIN) $pDOMAIN = $gSITEDOMAIN;
+      $gLINKDOMAIN = $pDOMAIN;
 
       if ($pUSERNAME == ANONYMOUS) {
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
@@ -2345,8 +2350,8 @@
           $gLINKICON = 'http://' . $pDOMAIN . '/icon/' . $pUSERNAME . '/';
           $online = NULL;
           $gONLINENOW = NULL;
-          list ($gLINKFULLNAME, $online) = $zAPPLE->GetUserInformation ($pUSERNAME, $pDOMAIN);
-          if ($online) $gONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          $gLINKFULLNAME = $pUSERNAME;
+          $gONLINENOW = '';
         } // if
         if ($pDOMAIN != $gSITEDOMAIN) {
           if (($zAUTHUSER->Domain) and ($pDOMAIN != $zAUTHUSER->Domain)) {
