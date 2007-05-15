@@ -102,7 +102,7 @@
 
 #admin #container li {
  clear:both;
- height:1.5em;
+ height:2.4em;
  overflow:hidden;
  list-style-type:none;
 } 
@@ -145,11 +145,8 @@
  color:#311aff;
  float:left;
  background-color:#cfd3d8;
- height:auto;
- min-height:1.5em;
- max-height:3em;
- overflow:hidden;
  list-style-type:none;
+ overflow:hidden;
 } 
 
 /* edit, new */

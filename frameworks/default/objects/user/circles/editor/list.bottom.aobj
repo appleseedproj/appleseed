@@ -18,6 +18,15 @@
   </div> <!-- #buttons_bottom -->
 
   <?php $zSEARCH->Ask (); ?>
+
+  <form id='new' method='POST' action=''>
+   <input type='hidden' id='gtID' name='gtID' value='' />
+   <input type='hidden' id='gACTION' name='gACTION' value='NEW' />
+
+   <?php $zHTML->Post ($gPOSTDATA); ?>
+
+   <?php $zHTML->Button ('new'); ?>
+  </form> <!-- ## new -->
     
  </div> <!-- #container -->
 

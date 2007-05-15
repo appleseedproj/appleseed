@@ -286,6 +286,9 @@
         $gFOCUSFULLNAME = $zFOCUSUSER->userProfile->GetAlias ();
       } // if
   
+      global $gADMINEMAIL;
+      $gADMINEMAIL = 'admin@' . $gSITEDOMAIN;
+
       // Select any new messages.
       global $gMESSAGECOUNT, $gNEWMESSAGES;
   
@@ -653,10 +656,6 @@
       define ("GROUP_ACTION_APPROVE", 1);
       define ("GROUP_ACTION_REMOVE", 2);
 
-      //NOTE: Restore this.
-      //$gADMINEMAIL = 'admin@appleseed.localhost';
-      $gADMINEMAIL = 'michael.chisari@gmail.com';
-  
       $gAUTHUSERID = 0; $gAUTHUSERNAME = ''; $gAUTHUSERADMIN = 0;
   
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';

@@ -1,0 +1,84 @@
+<div id='friends'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <p id='heading'>
+   <?php $zSTRINGS->Display ('LABEL.EDIT', 'USER.FRIENDS'); ?>
+   <?php $zTOOLTIPS->Display ('HEADING'); ?>
+  </p>
+
+  <div id='edit'>
+   <?php $zFRIENDS->Broadcast(); ?>
+   <?php $zFRIENDS->friendCircles->Broadcast(); ?>
+
+   <form id='circle' name='circle' method='POST' action='<?php echo $gCIRCLETARGET; ?>'>
+    <input type='hidden' name='gtID' value='<?php echo $gtID; ?>' />
+    <input type='hidden' name='gACTION' value='CIRCLE' />
+    <span class='circle'>
+     <?php $zHTML->Menu ("CIRCLEVALUE", $gCIRCLELIST, "", "", TRUE); ?>
+    </span> <!-- #circle -->
+   </form> <!-- #circle -->
+ 
+   <form id='edit' class='unloaded' name='edit' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+    <?php $zHTML->Hidden ("tID", $zFRIENDS->tID); ?>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+
+    <p class='username'><?php echo $gFRIENDFULLNAME; ?></p> <!-- #username -->
+    
+    <p class='fullname'><?php echo $gFRIENDFULLNAME; ?></p> <!-- #fullname -->
+
+    <p id='icon'>
+     <?php $zHTML->ImageLink ($gTARGET, NULL, $gFRIENDSICON); ?>
+     <?php $zTOOLTIPS->Display ('ICON'); ?>
+    </p> <!-- #icon -->
+    
+    <p class='domain'><?php echo $zFRIENDS->Domain; ?></p> <!-- #domain -->
+
+    <p id='circles'>
+     <?php $zSTRINGS->Display ('LABEL.CIRCLES', 'USER.FRIENDS'); ?>
+     <?php $zTOOLTIPS->Display ('CIRCLES'); ?>
+    </p> <!-- #circles -->
+    <span class='circles'>
+     <?php echo $gCIRCLESLISTING; ?>
+    </span> <!-- .circles -->
+ 
+    <p id='alias'>
+     <?php $zSTRINGS->Display ('LABEL.ALIAS', 'USER.FRIENDS'); ?>
+     <?php $zTOOLTIPS->Display ('ALIAS'); ?>
+    </p> <!-- #tags -->
+    <?php $zHTML->TextBox ("ALIAS", 70, $zFRIENDS->Alias); ?>
+    <p id='info_alias'>
+     <?php $zSTRINGS->Display ('INFO.ALIAS', 'USER.FRIENDS'); ?>
+    </p> <!-- info_alias -->
+    <?php $zFRIENDS->Broadcast ("field", "Alias"); ?>
+ 
+    <?php echo $bPRIVACYOPTIONS; ?>
+
+  </div> <!-- #edit -->
+
+    <div id='actions'>
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+
+     <form id='delete' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username ?>'>
+      <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain ?>'>
+      <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', 'USER.FRIENDS'); ?>
+      <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+     </form> <!-- #delete -->
+     <form id='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.FRIENDS'); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+    </div> <!-- #actions -->
+
+ </div> <!-- #container -->
+</div> <!-- #friends -->

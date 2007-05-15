@@ -1914,13 +1914,19 @@ form#compose p.error:hover {
  float:left;
  width:537px;
  min-height:60px;
- font-size:11px;
+ font-size:12px;
+ line-height:15px;
  color:#000000;
  background-color:#edf1f6;
  border:1px solid #dce0e5;
  padding:10px 15px;
  margin:10px 0;
  -moz-border-radius:8px;
+}
+
+#user #messages #container #view #body a {
+ text-decoration:underline;
+ background:none;
 }
 
 #user #messages #container #view #body a.localuser,

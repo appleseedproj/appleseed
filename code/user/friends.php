@@ -152,7 +152,6 @@
       // UPDATE
       $zFRIENDS->userAuth_uID = $zFOCUSUSER->uID;
       $zFRIENDS->sID = SQL_SKIP;
-      $zFRIENDS->UserID = SQL_SKIP;
       $zFRIENDS->Username = SQL_SKIP;
       $zFRIENDS->Domain = SQL_SKIP;
       $zFRIENDS->Verification = SQL_SKIP;
@@ -292,12 +291,8 @@
   switch ($gACTION) {
     case 'CIRCLE':
     case 'EDIT':
-      $zFRIENDS->Select ("userAuth_uID", $guID);
+      $zFRIENDS->Select ("tID", $gtID);
       $zFRIENDS->FetchArray ();
-      $USER = new cUSER ($zAPPLE->Context);
-    
-      $USER->Select ("uID", $zFRIENDS->UserID);
-      $USER->FetchArray (); 
     
       global $gFRIENDSICON, $gFRIENDFULLNAME;
       $gTARGET = "http://" . $zFRIENDS->Domain . "/profile/" . $zFRIENDS->Username . "/";
@@ -306,7 +301,12 @@
       if ($zFRIENDS->Domain != $gSITEDOMAIN) {
         $gFRIENDFULLNAME = $zFRIENDS->Username;
       } else {
+        $USER = new cUSER ($zAPPLE->Context);
+        $USER->Select ("Username", $zFRIENDS->Username);
+        $USER->FetchArray (); 
+    
         $gFRIENDFULLNAME = $USER->userProfile->GetAlias ();
+        unset ($USER);
       } // if
 
       $gFRIENDSICON = "http://" . $zFRIENDS->Domain . "/icon/" . $zFRIENDS->Username . "/";
@@ -393,8 +393,6 @@
           } else {
             $gFRIENDNAME = $gFRIENDFULLNAME;
           } // if
-    
-          unset ($USER);
     
           // Adjust for a hidden entry.
           if ( $zAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;

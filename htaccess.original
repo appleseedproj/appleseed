@@ -1,0 +1,131 @@
+#-------LOCAL RULES----------------
+
+#------APPLESEED RULES--------------
+
+# Turn Rewrite Engine On
+RewriteEngine On
+
+# Redirect image links
+
+# Redirect main page.
+RewriteRule ^$ code/site/main.php [L]
+
+# Redirect the asd network location.
+RewriteRule .*^asd\/$ code/site/asd.php [L]
+
+# Redirect the ajax server location.
+RewriteRule .*^ajax\/$ code/site/ajax.php [L]
+
+# Redirect if user directory is accessed
+RewriteRule .*^profile\/$ \/ [R,L]
+RewriteRule .*^profile\/(.*)\/$ code/user/main.php?gPROFILEREQUEST=$1 [L]
+RewriteRule .*^profile\/(.*)$ code/user/main.php?gPROFILEREQUEST=$1 [L]
+
+# Redirect the join page
+RewriteRule .*^join$ code/site/join.php [L]
+RewriteRule .*^join\/(.*)\/$ code/site/join.php?gVALUE=$1 [L]
+RewriteRule .*^join\/(.*)$ code/site/join.php?gVALUE=$1 [L]
+
+# Redirect the login page
+RewriteRule .*login\/$ code/site/login.php [L]
+RewriteRule .*login$ code/site/login.php [L]
+RewriteRule .*^login\/bounce\/(.*)$ code/site/bounce.php [L]
+RewriteRule .*^login\/bounce$ code/site/bounce.php [L]
+RewriteRule .*^login\/(.*)\/$ code/site/login.php?gLOGINREQUEST=$1 [L]
+RewriteRule .*^login\/(.*)$ code/site/login.php?gLOGINREQUEST=$1 [L]
+
+# Redirect the logout page
+RewriteRule .*logout\/$ code/site/logout.php [L]
+RewriteRule .*logout$ code/site/logout.php [L]
+
+# Redirect the admin pages
+RewriteRule .*^_admin\/$ code/admin/main.php [L]
+RewriteRule .*^_admin$ code/admin/main.php [L]
+RewriteRule .*^_admin\/users\/$ code/admin/users/main.php [L]
+RewriteRule .*^_admin\/users$ code/admin/users/main.php [L]
+RewriteRule .*^_admin\/content\/$ code/admin/content/main.php [L]
+RewriteRule .*^_admin\/content$ code/admin/content/main.php [L]
+RewriteRule .*^_admin\/control\/$ code/admin/control/main.php [L]
+RewriteRule .*^_admin\/control$ code/admin/control/main.php [L]
+RewriteRule .*^_admin\/groups\/$ code/admin/groups/main.php [L]
+RewriteRule .*^_admin\/groups$ code/admin/groups/main.php [L]
+RewriteRule .*^_admin\/system\/$ code/admin/system/main.php [L]
+RewriteRule .*^_admin\/system$ code/admin/system/main.php [L]
+
+# Redirect the admin subpages
+RewriteRule .*^_admin\/users\/access\/$ code/admin/users/access.php [L]
+RewriteRule .*^_admin\/users\/access$ code/admin/users/access.php [L]
+RewriteRule .*^_admin\/users\/accounts\/$ code/admin/users/accounts.php [L]
+RewriteRule .*^_admin\/users\/accounts$ code/admin/users/accounts.php [L]
+RewriteRule .*^_admin\/users\/questions\/$ code/admin/users/questions.php [L]
+RewriteRule .*^_admin\/users\/questions$ code/admin/users/questions.php [L]
+
+# Admin/System redirects
+RewriteRule .*^_admin\/system\/config\/$ code/admin/system/config.php [L]
+RewriteRule .*^_admin\/system\/config$ code/admin/system/config.php [L]
+RewriteRule .*^_admin\/system\/logs\/$ code/admin/system/logs.php [L]
+RewriteRule .*^_admin\/system\/logs$ code/admin/system/logs.php [L]
+RewriteRule .*^_admin\/system\/strings\/$ code/admin/system/strings.php [L]
+RewriteRule .*^_admin\/system\/strings$ code/admin/system/strings.php [L]
+RewriteRule .*^_admin\/system\/tooltips\/$ code/admin/system/tooltips.php [L]
+RewriteRule .*^_admin\/system\/tooltips$ code/admin/system/tooltips.php [L]
+RewriteRule .*^_admin\/system\/security\/$ code/admin/system/security.php [L]
+RewriteRule .*^_admin\/system\/security$ code/admin/system/security.php [L]
+RewriteRule .*^_admin\/system\/options\/$ code/admin/system/options.php [L]
+RewriteRule .*^_admin\/system\/options$ code/admin/system/options.php [L]
+RewriteRule .*^_admin\/system\/logs\/$ code/admin/system/logs.php [L]
+RewriteRule .*^_admin\/system\/logs$ code/admin/system/logs.php [L]
+
+# Admin/Content redirects
+RewriteRule .*^_admin\/content\/articles\/$ code/admin/content/articles.php [L]
+RewriteRule .*^_admin\/content\/articles$ code/admin/content/articles.php [L]
+RewriteRule .*^_admin\/content\/pages\/$ code/admin/content/pages.php [L]
+RewriteRule .*^_admin\/content\/pages$ code/admin/content/pages.php [L]
+
+# Security redirects.
+
+# Redirect appleseed data request attempts to 403 Forbidden message.
+RewriteRule .*adat$ code/error/403.php [L]
+
+# Redirect image links
+
+# Go directly to these files, do not process through image.php
+RewriteRule .*^photos/.*/profile.jpg$ - [R=302,L]
+RewriteRule .*^photos/.*/icons/.*\.gif$ - [L]
+RewriteRule .*^photos/.*/icons/.*\.jpg$ - [L]
+RewriteRule .*^photos/.*/icons/.*\.png$ - [L]
+RewriteRule .*^themes.*\.gif$ - [L]
+RewriteRule .*^themes.*\.jpg$ - [L]
+RewriteRule .*^themes.*\.png$ - [L]
+
+# Redirect the newswire.
+RewriteRule .*^news\/(.*)$ code/content/articles.php?gARTICLEREQUEST=$1 [L]
+RewriteRule .*^news\/(.*)\/$ code/content/articles.php?gARTICLEREQUEST=$1 [L]
+RewriteRule .*^articles\/(.*)\/$ code/content/articles.php?gARTICLEREQUEST=$1 [L]
+RewriteRule .*^articles\/(.*)$ code/content/articles.php?gARTICLEREQUEST=$1 [L]
+
+# Redirect the discussion groups
+RewriteRule .*^group\/(.*)\/$ code/content/group.php?gGROUPREQUEST=$1 [L]
+RewriteRule .*^group\/(.*)$ code/content/group.php?gGROUPREQUEST=$1 [L]
+
+RewriteRule .*^groups\/(.*)\/$ code/content/groups.php?gGROUPSECTION=$1 [L]
+RewriteRule .*^groups\/(.*)$ code/content/groups.php?gGROUPSECTION=$1 [L]
+
+# Redirect to icon.php for default icon.
+RewriteRule .*^icon\/(.*)\/$ code/common/icon.php?gICONUSER=$1 [L]
+RewriteRule .*^icon\/(.*)$ code/common/icon.php?gICONUSER=$1 [L]
+
+# Redirect to image.php
+RewriteRule .*\.jpg$ code/common/images.php [L]
+RewriteRule .*\.gif$ code/common/images.php [L]
+RewriteRule .*\.png$ code/common/images.php [L]
+
+# Disallow direct access to index.php after install.
+RewriteRule .*index.php$ code/site/main.php [L]
+
+# Redirect Error Documents.
+Options +FollowSymlinks -Indexes
+ErrorDocument 404 /code/site/redirect.php
+ErrorDocument 403 /code/site/error/403.php
+
+#------APPLESEED USER DEFINED REDIRECTS --------------
