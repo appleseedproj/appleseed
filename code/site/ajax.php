@@ -55,7 +55,6 @@
   switch ($gACTION) {
     case 'AJAX_GET_USER_INFORMATION':
   
-      sleep (8);
       $username = $JSON->username;
       $domain = $JSON->domain;
       
