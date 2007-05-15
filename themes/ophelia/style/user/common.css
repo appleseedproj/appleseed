@@ -1661,6 +1661,7 @@ form#compose p.error:hover {
  -moz-border-radius:12px;
 }
 
+#user #messages #container p.error,
 #user #messages #container p.message {
  left:-6px;
  width:583px;
@@ -1699,7 +1700,7 @@ form#compose p.error:hover {
 }
 
 #user #messages #buttons span.spam_all {
- width:114px;
+ width:146px;
 }
 
 #user #messages #buttons span.select_none,
@@ -1709,7 +1710,7 @@ form#compose p.error:hover {
 
 #user #messages #buttons span.delete_forever_all,
 #user #messages #buttons span.trash_all {
- width:110px;
+ width:160px;
  text-align:right;
 }
 
@@ -1969,18 +1970,18 @@ form#compose p.error:hover {
 }
 
 #user #messages #container #view span.unread {
- width:220px;
+ width:120px;
  text-align:center;
 }
 
 #user #messages #container #view span.move_inbox,
 #user #messages #container #view span.archive {
- width:147px;
+ width:107px;
  text-align:right;
 }
 
 #user #messages #container #view span.label {
- width:158px;
+ width:140px;
  text-align:right;
 }
 

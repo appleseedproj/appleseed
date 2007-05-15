@@ -1239,6 +1239,7 @@
         $this->messageInformation->Select ("Identifier", $pIDENTIFIER);
         $this->messageInformation->FetchArray();
         $this->tID = $this->messageInformation->tID;
+        $this->userAuth_uID = $this->messageInformation->userAuth_uID;
         $this->Subject = $this->messageInformation->Subject;
         $this->Body = $this->messageInformation->Body;
         $this->Stamp = $this->messageInformation->Received_Stamp;
@@ -1260,6 +1261,7 @@
         $this->messageStore->Select ("Identifier", $pIDENTIFIER);
         $this->messageStore->FetchArray();
         $this->tID = $this->messageStore->tID;
+        $this->userAuth_uID = $this->messageStore->userAuth_uID;
         $this->Subject = $this->messageStore->Subject;
         $this->Body = $this->messageStore->Body;
         $this->Stamp = $this->messageStore->Stamp;
@@ -1735,6 +1737,7 @@
         break;
         default:
           $this->tID = $this->messageNotification->tID;
+          $this->userAuth_uID = $this->messageNotification->userAuth_uID;
           $this->Subject = $zAPPLE->Purifier->Purify ($zXML->GetValue ("subject", 0));
           $this->Body = html_entity_decode ($zAPPLE->Purifier->Purify ( $zXML->GetValue ("body", 0)));
           $this->Stamp = ucwords ($zXML->GetValue ("stamp", 0));
@@ -2232,8 +2235,7 @@
       $zSTRINGS->Lookup ('MESSAGE.SENT');
       $this->Message = $zSTRINGS->Output;
 
-      // Disabled. 04-27-2007.
-      // $this->NotifyMessage ($RECIPIENT->userProfile->Email, $gRECIPIENTNAME, $recipientfullname, $senderfullname);
+      $this->NotifyMessage ($RECIPIENT->userProfile->Email, $gRECIPIENTNAME, $recipientfullname, $senderfullname);
 
       unset ($RECIPIENT);
       unset ($gRECIPIENTNAME);
@@ -2266,6 +2268,7 @@
       $zREMOTE = new cREMOTE ($gRECIPIENTDOMAIN);
       $datalist = array ("gACTION"          => "ASD_MESSAGE_NOTIFY",
                          "gRECIPIENT"       => $gRECIPIENTNAME,
+                         "gFULLNAME"        => $senderfullname,
                          "gUSERNAME"        => $senderusername,
                          "gDOMAIN"          => $gSITEDOMAIN,
                          "gIDENTIFIER"      => $identifier,

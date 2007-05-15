@@ -30,7 +30,7 @@
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
   // | Part of the Appleseed BASE API                                    |
-  // | VERSION:      0.6.0                                               |
+  // | VERSION:      0.7.0                                               |
   // | DESCRIPTION:  Remote class definitions. Functions for connecting  |
   // |               to external hosts through HTTP.                     |
   // +-------------------------------------------------------------------+

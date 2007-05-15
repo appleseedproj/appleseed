@@ -254,6 +254,7 @@
     break;
     case 'ASD_MESSAGE_NOTIFY':
       $gRECIPIENT       = $_POST['gRECIPIENT'];
+      $gFULLNAME        = $_POST['gFULLNAME'];
       $gUSERNAME        = $_POST['gUSERNAME'];
       $gDOMAIN          = $_POST['gDOMAIN'];
       $gIDENTIFIER      = $_POST['gIDENTIFIER'];
@@ -263,7 +264,7 @@
       $zSERVER = new cSERVER (NULL);
       
       // Store a message notification. 
-      $zSERVER->MessageNotify ($gRECIPIENT, $gUSERNAME, $gDOMAIN, $gIDENTIFIER, $gSUBJECT);
+      $zSERVER->MessageNotify ($gRECIPIENT, $gFULLNAME, $gUSERNAME, $gDOMAIN, $gIDENTIFIER, $gSUBJECT);
       
       echo $zSERVER->XML->Data; exit;
       

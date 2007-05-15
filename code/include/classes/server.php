@@ -902,7 +902,7 @@
       */
     } // MessageRetrieve
     
-    function MessageNotify ($pRECIPIENT, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {
+    function MessageNotify ($pRECIPIENT, $pFULLNAME, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {
       
       global $gSUCCESS, $gFULLNAME;
       
@@ -912,6 +912,7 @@
       // First check if the user exists.
       $sql_statement = "
         SELECT $userAuth.uID as uID,
+               $userProfile.Email as Email,
                $userProfile.Fullname as Fullname,
                $userProfile.Alias as Alias
         FROM   $userAuth,$userProfile
@@ -936,6 +937,7 @@
       $result = mysql_fetch_assoc ($sql_result);
       $uid = $result['uID'];
       $fullname = $result['Fullname'];
+      $email = $result['Email'];
       mysql_free_result ($sql_result);
       
       $messageNotify = $this->TablePrefix . "messageNotification";
@@ -956,16 +958,87 @@
                                 mysql_real_escape_string ($pSUBJECT));
       
       if (!$sql_result = mysql_query ($sql_statement)) {
-        // No results found.  No such user.
+        // Unable to insert notification.
         $this->XML->ErrorData ("ERROR.FAILED");
         return (FALSE);
       } // if
       
       mysql_free_result ($sql_result);
       
+      // Send email notification.
+      
+      // Load the notification subject.
+      $systemStrings = $this->TablePrefix . "systemStrings";
+      
+      $sql_statement = "
+        SELECT $systemStrings.Output as Output
+        FROM   $systemStrings
+        WHERE  $systemStrings.Title = 'MAIL.FROM'
+        AND    $systemStrings.Context = 'USER.MESSAGES'
+      ";
+      
+      $sql_result = mysql_query ($sql_statement);
+      
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      $result = mysql_fetch_assoc ($sql_result);
+      $subject = $result['Output'];
+      
+      mysql_free_result ($sql_result);
+      
+      // Load the notification message body.
+      $sql_statement = "
+        SELECT $systemStrings.Output as Output
+        FROM   $systemStrings
+        WHERE  $systemStrings.Title = 'MAIL.BODY'
+        AND    $systemStrings.Context = 'USER.MESSAGES'
+      ";
+      
+      $sql_result = mysql_query ($sql_statement);
+      
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      $result = mysql_fetch_assoc ($sql_result);
+      $message = $result['Output'];
+      
+      mysql_free_result ($sql_result);
+      
+      // Load the notification sender.
+      $sql_statement = "
+        SELECT $systemStrings.Output as Output
+        FROM   $systemStrings
+        WHERE  $systemStrings.Title = 'MAIL.FROM'
+        AND    $systemStrings.Context = 'USER.MESSAGES'
+      ";
+      
+      $sql_result = mysql_query ($sql_statement);
+      
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      $result = mysql_fetch_assoc ($sql_result);
+      $from = $result['Output'];
+      
+      mysql_free_result ($sql_result);
+      
       $gFULLNAME = $fullname;
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       $gSUCCESS = TRUE;
+      
+      $messagesurl = "http://" . $this->SiteDomain . "/profile/" . $pRECIPIENT . "/messages/";
+      $from = str_replace ('%SITEDOMAIN%', $this->SiteDomain, $from);
+      $subject = str_replace ('%SITEDOMAIN%', $this->SiteDomain, $subject);
+      $message = str_replace ('%SENDERNAME%', $pFULLNAME, $message);
+      $message = str_replace ('%RECIPIENTFULLNAME%', $gFULLNAME, $message);
+      $message = str_replace ('%MESSAGESURL%', $messagesurl, $message);
+      
+      $headers = 'From: ' . $from . "\r\n" .
+        'Reply-To: ' . $from . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+        
+      mail ($email, $subject, $message, $headers);
       
       $this->XML->Load ("code/include/data/xml/message_notify.xml");
       

@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.6.0                                               |
+  // | VERSION:      0.7.0                                               |
   // | DESCRIPTION:  This file uses mod_rewrite to push out an image     |
   // | file if requested.  Uses MySQL for user authentication.           |
   // +-------------------------------------------------------------------+

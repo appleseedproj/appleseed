@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.6.0                                               |
+  // | VERSION:      0.7.0                                               |
   // | DESCRIPTION:  Displays circles section of user profile page.      |
   // | WRAPPED BY:   /code/user/main.php                                 |
   // +-------------------------------------------------------------------+

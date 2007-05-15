@@ -253,13 +253,14 @@ class cINSTALL {
     return (TRUE);
   } // CheckHtaccessFinal
   
-  function WriteSiteData ($pDATABASE, $pUSERNAME, $pPASSWORD, $pPREFIX, $pHOST, $pDOMAIN) {
+  function WriteSiteData ($pDATABASE, $pUSERNAME, $pPASSWORD, $pPREFIX, $pVERSION, $pHOST, $pDOMAIN) {
     $site_data = "data/site.adat";
     
     $filedata = "db:$pDATABASE\n" .
                 "un:$pUSERNAME\n" .
                 "pw:$pPASSWORD\n" .  
                 "pre:$pPREFIX\n" .  
+                "ver:$pVERSION\n" .
                 "host:$pHOST\n" .
                 "url:$pDOMAIN";
                 
@@ -467,7 +468,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS;
     
-    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.0', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
