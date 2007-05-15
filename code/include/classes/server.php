@@ -938,6 +938,9 @@
       $uid = $result['uID'];
       $fullname = $result['Fullname'];
       $email = $result['Email'];
+      $gFULLNAME = $fullname;
+      if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      
       mysql_free_result ($sql_result);
       
       $messageNotify = $this->TablePrefix . "messageNotification";
@@ -1023,8 +1026,6 @@
       
       mysql_free_result ($sql_result);
       
-      $gFULLNAME = $fullname;
-      if ($result['Alias']) $gFULLNAME = $result['Alias'];
       $gSUCCESS = TRUE;
       
       $messagesurl = "http://" . $this->SiteDomain . "/profile/" . $pRECIPIENT . "/messages/";
