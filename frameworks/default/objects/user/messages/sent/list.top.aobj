@@ -14,18 +14,12 @@
     <?php echo $gMESSAGELOCATION; ?>
    </span>
 
-   <span class='spam_all'>
-    &nbsp;
-   </span>
-
    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+   
+   <span class='archive_all'>&nbsp;</span>
+   <span class='labelvalue'>&nbsp;</span>
 
-   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL'); ?>
-   <?php $zHTML->Button ('delete_forever_all', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
 
-   <span id='change'>
-    <?php $zOPTIONS->Menu ("MESSAGESVIEW", $gMESSAGESVIEW, "", TRUE); ?>
-   </span>
   </div> <!-- #buttons -->
 
    <ul>

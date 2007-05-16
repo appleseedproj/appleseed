@@ -78,6 +78,9 @@
 
   // Create the data class.
   $zMESSAGE = new cMESSAGE ();
+  
+  // Initialize messages class.
+  $zMESSAGE->Initialize ();
 
   // Set the target.
   if ($gPROFILESUBACTION) $subaction = $gPROFILESUBACTION . '/';

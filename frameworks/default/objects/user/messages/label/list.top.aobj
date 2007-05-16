@@ -14,17 +14,13 @@
     <?php echo $gMESSAGELOCATION; ?>
    </span>
 
-   <?php $zHTML->Button ("spam_all"); ?>
-
    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+   
+   <?php $zHTML->Button ('archive_all'); ?>
 
-   <?php $zSTRINGS->Lookup ('CONFIRM.TRASHALL'); ?>
-   <?php $zHTML->Button ('trash_all', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
+   <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE, "LABEL_ALL"); ?>
 
-
-   <span id='change'>
-    <?php $zOPTIONS->Menu ("MESSAGESVIEW", $gMESSAGESVIEW, "", TRUE); ?>
-   </span>
   </div> <!-- #buttons -->
 
   <ul>

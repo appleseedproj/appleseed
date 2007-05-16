@@ -20,6 +20,15 @@ li:hover span {
  background-color:#ecf0f5;
 } 
 
+div#search {
+ float:left;
+ clear:both;
+ margin:10px 0;
+ padding-top:10px;
+ border-top:1px solid #ccd0d5;
+ width:100%;
+}
+
 #user textarea {
  width:339px;
  height:200px;
@@ -289,18 +298,6 @@ form#compose p.error:hover {
  overflow:hidden;
  list-style-type:none;
 } 
-
-#user #journal #editor span.criteria {
- width:200px;
-}
-
-#user #journal #editor span.search {
- width:60px;
-}
-
-#user #journal #editor span.show_all {
- width:70px;
-}
 
 #user #journal #editor span.new {
  float:right;
@@ -1568,12 +1565,6 @@ form#compose p.error:hover {
  text-align:right;
 }
 
-#user #circles #search {
- float:left;
- margin:5px 0 0 0;
- padding:0;
-}
-
 /* CONTEXT: user.friends.circles:edit */
 
 #user #circles #edit {
@@ -1700,18 +1691,20 @@ form#compose p.error:hover {
 }
 
 #user #messages #buttons span.spam_all {
- width:146px;
+ width:200px;
+}
+#user #messages #buttons span.move_inbox_all {
+ width:113px;
 }
 
 #user #messages #buttons span.select_none,
 #user #messages #buttons span.select_all {
- width:70px;
+ width:200px;
 }
 
 #user #messages #buttons span.delete_forever_all,
 #user #messages #buttons span.trash_all {
- width:160px;
- text-align:right;
+ width:177px;
 }
 
 #user #messages #buttons span#change {
@@ -1720,20 +1713,20 @@ form#compose p.error:hover {
  text-align:right;
 }
 
-#user #messages #buttons span#read {
- width:109px;
- text-align:left;
+#user #messages #buttons span.readaction {
+ width:80px;
+ text-align:right;
 }
 
-#user #messages #buttons span#archive {
- width:205px;
+#user #messages #buttons span.archive_all {
+ width:113px;
 }
 
 #user #messages #buttons span#inbox {
  width:110px;
 }
 
-#user #messages #buttons span#label {
+#user #messages #buttons span.labelvalue {
  width:143px;
 }
 #user #messages #buttons span.labelvalue select {
@@ -1847,10 +1840,6 @@ form#compose p.error:hover {
  top:0px;
  margin-right:0px;
  padding:0px;
-}
-
-#user #messages #container #search {
- float:left;
 }
 
 /* CONTEXT: users.messages:view */
@@ -1993,13 +1982,18 @@ form#compose p.error:hover {
 
 #user #messages #container #compose form#compose {
  float:left;
- width:339px;
+ width:420px;
  padding:0 74px;
  margin:10px 0;
 }
 
+#user #messages #container #compose form#compose input.recipientaddress {
+ width:220px;
+}
+
+#user #messages #container #compose form#compose .body,
 #user #messages #container #compose form#compose input.subject {
- width:339px;
+ width:420px;
 }
 
 #user #messages #container #compose p {
@@ -2025,6 +2019,12 @@ form#compose p.error:hover {
  text-align:right;
 }
 
+#user #messages #container form#compose p.error {
+ padding:0;
+ margin:2px 0 5px 5px;
+ width:auto;
+}
+
 /* CONTEXT: users.friends */
 
 #user #friends {
@@ -2043,12 +2043,6 @@ form#compose p.error:hover {
  margin:5px 0 0 0; 
  text-align:center;
  border-bottom:1px solid #000000;
-}
-
-#user #friends #search {
- float:left;
- margin:10px 0 0 0;
- padding:0;
 }
 
 /* CONTEXT: users.friends:listing */

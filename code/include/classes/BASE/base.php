@@ -796,6 +796,8 @@
       
       // Add SQL statement to DEBUG list.
       $zDEBUG->RememberStatement ($pSTATEMENT, get_class ($this), $zDEBUG->Benchmark('STATEMENT'));
+      
+      $this->Statement = $pSTATEMENT;
 
       return ($this->Result);
     } // Query

@@ -1,23 +1,15 @@
   </ul>
 
   <div id='buttons'>
-   <span id='read'>
-    <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
-   </span>
+   <?php $zHTML->Button ('move_inbox_all'); ?>
+   
+   <span class='spam_all'>&nbsp;</span>
 
-   <span id='archive'>
-    <?php $zHTML->Button ('archive_all'); ?>
-   </span>
-
-   <span id='inbox'>
-    <?php $zHTML->Button ('move_inbox_all'); ?>
-   </span>
-
-   <span id='label'>
-    <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
-    <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE, "LABEL_ALL"); ?>
-   </span>
-
+   <?php $zSTRINGS->Lookup ('CONFIRM.TRASHALL'); ?>
+   <?php $zHTML->Button ('trash_all', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+   
+   <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
+   
   </div> <!-- #buttons -->
  </form> <!-- #masslist -->
 

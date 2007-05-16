@@ -52,6 +52,20 @@
 
     } // Constructor
     
+    function Initialize () {
+      global $gREADDATA, $gREADACTION;
+      global $gLABELDATA;
+      
+      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
+                          "READ_ALL" => "&nbsp;Read+",
+                          "UNREAD_ALL" => "&nbsp;Unread+");
+      $gREADACTION = 'Z';
+      
+      $gLABELDATA = $this->CreateFullLabelMenu ();
+      
+      return (TRUE);
+    } // Initialize
+    
     function CountNewMessages () {
       global $zLOCALUSER, $zAPPLE, $zHTML, $zSTRINGS;
 
@@ -247,7 +261,7 @@
                "AS     CountResult " .
                "FROM   $InformationTable " .
                "WHERE  $InformationTable.Standing = " . MESSAGE_UNREAD . " " .
-               "AND    $InformationTable.Location = " . FOLDER_INBOX . " " . 
+               "AND    $InformationTable.Location = " . FOLDER_SPAM . " " . 
                "AND    userAuth_uID = " . $zFOCUSUSER->uID;
 
       $this->Query ($query);
@@ -509,14 +523,6 @@
        } // if
       } // for
 
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
-
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
@@ -611,7 +617,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -619,14 +625,6 @@
         break;
        } // if
       } // for
-
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
 
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
@@ -731,14 +729,6 @@
        } // if
       } // for
 
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
-
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
@@ -842,14 +832,6 @@
        } // if
       } // for
 
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
-
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
@@ -944,7 +926,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -952,14 +934,6 @@
         break;
        } // if
       } // for
-
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
 
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
@@ -993,7 +967,7 @@
 
       // Calculate scroll values.
       $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
-
+      
       // Adjust for a recently deleted entry.
       $zAPPLE->AdjustScroll ('users.messages', $this);
 
@@ -1060,7 +1034,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -1068,14 +1042,6 @@
         break;
        } // if
       } // for
-
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
 
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
@@ -1170,7 +1136,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -1178,14 +1144,6 @@
         break;
        } // if
       } // for
-
-      $gLABELDATA = $this->CreateFullLabelMenu ();
-
-      global $gREADDATA, $gREADACTION;
-      $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
-                          "READ_ALL" => "&nbsp;Read+",
-                          "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
 
       $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
@@ -1297,6 +1255,21 @@
         $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
     } // LoadDraft
+    
+    // Remove a draft from the drafts folder.
+    function RemoveDraft ($pIDENTIFIER) {
+      
+      $this->messageStore->Select ("Identifier", $pIDENTIFIER);
+      $this->messageStore->FetchArray ();
+      
+      // Check to make sure it is stored in the drafts folder.
+      if ($this->messageStore->Location == FOLDER_DRAFTS) {
+        // Delete record.
+        $this->messageStore->Delete ();
+      } // if
+      
+      return (TRUE);
+    } // RemoveDraft
 
     // Mark The Current Message As Read.
     function MarkAsRead () {
@@ -1419,13 +1392,12 @@
         $this->Error = -1;
         return (FALSE);
       } // if
-
       foreach ($pDATALIST as $key => $id) {
 
         $classlocation = $this->LocateMessage ($id);
 
         // Select the message in question.
-        $this->$classlocation->Select ("tID", $id);
+        $this->$classlocation->Select ("Identifier", $id);
         $this->$classlocation->FetchArray ();
 
         // Check if user owns this message.
@@ -2052,7 +2024,7 @@
     } // MoveListToArchive
 
     function MoveListToInbox ($pDATALIST) {
-
+      
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
@@ -2079,7 +2051,7 @@
 
         $this->MoveToInbox ();
       } // if
-
+      
       $zSTRINGS->Lookup ('MESSAGE.INBOXALL');
       $this->Message = $zSTRINGS->Output;
 
@@ -2164,7 +2136,10 @@
       } else {
         $this->SendLocal ($pSENDERUSERNAME);
       } // if
-
+      
+      global $gIDENTIFIER;
+      $this->RemoveDraft ($gIDENTIFIER);
+      
       return (TRUE);
     } // Send
 

@@ -1,19 +1,13 @@
   </ul>
 
   <div id='buttons'>
-   <span id='read'>
-    &nbsp;
-   </span>
+   <span class='move_inbox_all'>&nbsp;</span>
+   <span class='spam_all'>&nbsp;</span>
 
-   <span id='archive'>
-    &nbsp;
-   </span>
+   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL'); ?>
+   <?php $zHTML->Button ('delete_forever_all', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
 
-   <span id='inbox'>
-    &nbsp;
-   </span>
-
-   <span id='label'>
+   <span class='readaction'>
     &nbsp;
    </span>
 
