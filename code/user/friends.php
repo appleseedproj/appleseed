@@ -440,6 +440,8 @@
     
         $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/friends/";
   
+        $gCIRCLELIST = $zFRIENDS->CreateAllCirclesMenu ();
+      
         $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.bottom.aobj", INCLUDE_SECURITY_NONE);
   
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') or 

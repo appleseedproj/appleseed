@@ -1981,9 +1981,20 @@ form#compose p.error:hover {
  margin:10px 0;
 }
 
+#user #messages #container #compose form#compose p#recipient {
+ width:auto;
+ float:left;
+ background-color:#ff00ff;
+}
 #user #messages #container #compose form#compose .recipientaddress {
- width:420px;
+ clear:none;
+ float:left;
+ width:320px;
  height:40px;
+}
+#user #messages #container #compose form#compose .mailcircle {
+ clear:none;
+ float:right;
 }
 
 #user #messages #container #compose form#compose .body,

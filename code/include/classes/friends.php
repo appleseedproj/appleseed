@@ -586,6 +586,39 @@
 
     } // CreateFullCirclesMenu
 
+    function CreateAllCirclesMenu () {
+
+      global $zFOCUSUSER, $zSTRINGS;
+      global $gCIRCLEVALUE;
+
+      $returnarray = array ();
+      $this->friendCircles->Select ("userAuth_uID", $zFOCUSUSER->uID);
+
+      // Create the list of available circles.
+      if ($this->friendCircles->CountResult () == 0) {
+
+      } else {
+
+        $foundnewcircles = TRUE;
+
+        $zSTRINGS->Lookup ("LABEL.APPLY", $this->PageContext);
+
+        // Start the menu list at '1'.
+        $returnarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+
+        $gCIRCLEVALUE = 'X';
+
+        // Loop through the list of circles.
+        while ($this->friendCircles->FetchArray ()) {
+          $returnarray[$this->friendCircles->tID] = "&nbsp; " . $this->friendCircles->Name;
+        } // while
+
+      } // if
+
+      return ($returnarray);
+
+    } // CreateAllCirclesMenu
+
     function LoadFriendsCircle ($pCIRCLEID) {
       global $gCIRCLEVIEW, $zFOCUSUSER;
       global $gSORT;
