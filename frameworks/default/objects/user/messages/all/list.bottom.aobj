@@ -13,7 +13,5 @@
   </div> <!-- #buttons -->
  </form> <!-- #masslist -->
 
-  <?php $zSEARCH->Ask (); ?>
-    
  </div> <!-- #container -->
 </div> <!-- #messages -->

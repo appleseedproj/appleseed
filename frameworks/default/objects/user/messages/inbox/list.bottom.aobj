@@ -14,8 +14,6 @@
   </div> <!-- #buttons -->
  </form> <!-- #masslist -->
 
-  <?php $zSEARCH->Ask (); ?>
-
  </div> <!-- #container -->
  <? $zHTML->Scroll ($gTARGET, 'messages', 'users.messages'); ?>
 </div> <!-- #messages -->

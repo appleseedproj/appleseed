@@ -233,9 +233,8 @@
 
     case 'SEND':
       // NOTE: Use Sanity () function and standard error responses here.
-      if ( (!$gRECIPIENTADDRESS) and 
-           ( (!$gRECIPIENTNAME) or (!$gRECIPIENTDOMAIN) ) ) {
-        // No body text was provided.  Show error.
+      if (!$gRECIPIENTADDRESS) {
+        // No recipient was provided.  Show error.
         $gACTION = 'SEND_MESSAGE';
         $zSTRINGS->Lookup ("ERROR.UNABLE");
         $zMESSAGE->Message = $zSTRINGS->Output;
@@ -251,7 +250,7 @@
         $zMESSAGE->Errorlist['body'] = $zSTRINGS->Output;
         $zMESSAGE->Error = -1;
       } else {
-        if (!$zMESSAGE->Send ()) {
+        if (!$zMESSAGE->Send ($gRECIPIENTADDRESS, $gSUBJECT, $gBODY)) {
           $gACTION = 'SEND_MESSAGE';
         } // if;
       } // if
@@ -296,6 +295,9 @@
             $bREADSTATUS = "Status: Unread";
             
           } // if
+          
+          global $bRECIPIENTLIST;
+          $bRECIPIENTLIST = $zMESSAGE->BufferRecipientList ();
           $messageview = 'sent';
         break;
         case FOLDER_DRAFTS:
@@ -381,15 +383,21 @@
       // Select the message we're replying to.
       $zMESSAGE->SelectMessage ($gIDENTIFIER);
 
-      global $gRECIPIENTNAME, $gRECIPIENTDOMAIN;
-      $gRECIPIENTNAME = $zMESSAGE->Sender_Username;
-      $gRECIPIENTDOMAIN = $zMESSAGE->Sender_Domain;
-
-      list ($senderfullname, $null) = $zAPPLE->GetUserInformation ($zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain);
+      $zMESSAGE->messageRecipients->Select ("messageStore_tID", $zMESSAGE->tID);
+      $addresses = array ();
+      while ($zMESSAGE->messageRecipients->FetchArray ()) {
+        $addresses[] = $zMESSAGE->messageRecipients->Username . '@' . $zMESSAGE->messageRecipients->Domain;
+      }
+      
+      list ($username, $domain) = split ('@', $addresses[0]);
+      
+      unset ($addresses);
+      
+      list ($senderfullname, $null) = $zAPPLE->GetUserInformation ($username, $domain);
 
       global $gBODY;
       $zMESSAGE->FormatVerboseDate ("Stamp");
-      $gBODY = $zAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain, $zMESSAGE->fStamp);
+      $gBODY = $zAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $username, $domain, $zMESSAGE->fStamp);
 
       global $gSUBJECT;
       $gSUBJECT = $zMESSAGE->Subject;
@@ -419,7 +427,8 @@
     break;
     case 'SEND':
     case 'SAVE_DRAFT':
-      if ($gACTION != 'SEND') $zMESSAGE->SaveDraft ();
+      if ($gACTION != 'SEND') 
+        $zMESSAGE->SaveDraft ();
     case 'ARCHIVE':
     case 'ARCHIVE_ALL':
     case 'CANCEL_DRAFT':

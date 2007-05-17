@@ -829,6 +829,7 @@
     function MessageRetrieve ($pUSERNAME, $pIDENTIFIER) {
       
       $messageStore = $this->TablePrefix . "messageStore";
+      $messageRecipients = $this->TablePrefix . "messageRecipients";
       $userAuth = $this->TablePrefix . "userAuthorization";
       $userProfile = $this->TablePrefix . "userProfile";
       
@@ -839,12 +840,12 @@
                $messageStore.Stamp AS Stamp,
                $userProfile.Fullname AS Fullname,
                $userProfile.Alias AS Alias
-        FROM   $messageStore,$userProfile
-        WHERE  $messageStore.Sender_Username = '%s'
+        FROM   $messageStore,$userProfile,$messageRecipients
+        WHERE  $messageRecipients.Username = '%s'
         AND    $userProfile.userAuth_uID = $messageStore.userAuth_uID
-        AND    $messageStore.Identifier = '%s'
+        AND    $messageRecipients.Identifier = '%s'
+        AND    $messageRecipients.messageStore_tID = $messageStore.tID;
       ";
-      
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($pUSERNAME),
                                 mysql_real_escape_string ($pIDENTIFIER));

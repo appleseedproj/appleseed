@@ -16,7 +16,7 @@
   <form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <input type='hidden' id='gIDENTIFIER' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier ?>'>
+   <input type='hidden' id='gtID' name='gtID' value='<?php echo $zMESSAGE->tID ?>'>
 
    <?php echo $bRECIPIENT; ?>
 

@@ -33,7 +33,7 @@
     </div> <!-- #top -->
   
     <div id='bottom'>
-     <span id='sender'><?php $zHTML->UserLink ($zMESSAGE->Sender_Username); ?></span>
+     <span id='recipients'><?php echo $bRECIPIENTLIST; ?></span>
      <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
     </div> <!-- #bottom -->
    </div> <!-- #header -->

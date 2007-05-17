@@ -23,9 +23,9 @@ li:hover span {
 div#search {
  float:left;
  clear:both;
- margin:10px 0;
- padding-top:10px;
- border-top:1px solid #ccd0d5;
+ margin:5px 0 15px 0;
+ padding-bottom:10px;
+ border-bottom:1px solid #ccd0d5;
  width:100%;
 }
 
@@ -1892,6 +1892,7 @@ form#compose p.error:hover {
  float:left;
 }
 
+#user #messages #container #view #header #bottom span#recipients,
 #user #messages #container #view #header #bottom span#sender {
  float:left;
 }
@@ -2024,6 +2025,20 @@ form#compose p.error:hover {
  margin:2px 0 5px 5px;
  width:auto;
 }
+
+#user #messages #scroll {
+ position:relative;
+ width:570px;
+ left:-75px;
+ clear:both;
+ float:left;
+ padding:5px 5px 0 5px;
+}
+
+#user #scroll a {
+ background:none;
+} 
+
 
 /* CONTEXT: users.friends */
 
