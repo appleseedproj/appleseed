@@ -3,6 +3,6 @@
  <?php $zTOOLTIPS->Display ('RECIPIENT'); ?>
 </p>
 
-<?php $zHTML->TextBox ("RECIPIENTADDRESS", 256, $gRECIPIENTADDRESS); ?>
+<?php $zHTML->TextArea ("RECIPIENTADDRESS", $gRECIPIENTADDRESS); ?>
 
 <?php $zMESSAGE->Broadcast('field', 'recipientaddress'); ?>

@@ -63,6 +63,9 @@
   // Classes.
   global $zMESSAGE;
 
+  // Add javascript to top of page.
+  $zHTML->AddScript ("user/messages.js");
+
   // Buffers.
   global $bMAINSECTION;
   global $bLABELLISTING;

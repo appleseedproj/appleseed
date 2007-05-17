@@ -12,9 +12,9 @@
    </form>
   </div> <!-- #edit -->
 
+  <ul>
    <?php $zMESSAGE->messageLabelList->Broadcast ("labels"); ?>
 
-  <ul>
    <?php echo $bLABELLISTING; ?>
   </ul>
 

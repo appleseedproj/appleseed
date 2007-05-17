@@ -56,6 +56,7 @@
     function Initialize () {
       global $gREADDATA, $gREADACTION;
       global $gLABELDATA;
+      global $gCIRCLEDATA;
       
       $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
                           "READ_ALL" => "&nbsp;Read+",
@@ -63,6 +64,7 @@
       $gREADACTION = 'Z';
       
       $gLABELDATA = $this->CreateFullLabelMenu ();
+      $gCIRCLEDATA = $this->CreateCircleMenu ();
       
       return (TRUE);
     } // Initialize
@@ -339,7 +341,7 @@
         break; 
     
         default:
-          $gFOLDERSELECT[$gSUBPROFILEACTION] = "selected";  
+          $gFOLDERSELECT[$gPROFILESUBACTION] = "selected";  
         break;
       } // switch
 
@@ -408,6 +410,8 @@
       global $gMESSAGESTAMP, $gMESSAGESTANDING;
 
       global $gACTION, $gCHECKED;
+      
+      global $gFOLDERID;
 
       global $gSENDERNAME, $gSENDERONLINE;
 
@@ -506,7 +510,7 @@
 
         global $bINBOXMARK;
         $bINBOXMARK = NULL;
-
+        
         if ( ($this->Location == FOLDER_INBOX) and 
              ($gFOLDERID != FOLDER_INBOX) ) {
           $bINBOXMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.inbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
@@ -568,6 +572,8 @@
       global $gACTION, $gCHECKED;
 
       global $gSENDERNAME, $gSENDERONLINE;
+      
+      global $gTABLEPREFIX;
 
       $statement_left  = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Stamp FROM " . $gTABLEPREFIX . "messageNotification WHERE userAuth_uID = " . $zFOCUSUSER->uID . " AND Location = " . FOLDER_INBOX . ") ";
       $statement_right = "(SELECT tID, userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Standing, Received_Stamp AS Stamp FROM " . $gTABLEPREFIX . "messageInformation WHERE Location = " . FOLDER_INBOX . " AND userAuth_uID = " . $zFOCUSUSER->uID . ") ";
@@ -688,7 +694,7 @@
                "WHERE    $messageStore.userAuth_uID = " . $zFOCUSUSER->uID .  " " . 
                "AND      $messageRecipients.messageStore_tID = $messageStore.tID " . 
                "AND      $messageStore.Location = " . FOLDER_SENT . " " .
-               "GROUP BY $messageStore.Subject ";
+               "GROUP BY $messageStore.Subject " .
                "ORDER BY $messageStore.Stamp DESC";
 
       $this->Query ($query);
@@ -806,7 +812,7 @@
                "WHERE    $messageStore.userAuth_uID = " . $zFOCUSUSER->uID .  " " . 
                "AND      $messageRecipients.messageStore_tID = $messageStore.tID " . 
                "AND      $messageStore.Location = " . FOLDER_DRAFTS . " " .
-               "GROUP BY $messageStore.Subject ";
+               "GROUP BY $messageStore.Subject " .
                "ORDER BY $messageStore.Stamp DESC";
 
       $this->Query ($query);
@@ -1007,6 +1013,10 @@
       global $gMESSAGESTAMP, $gMESSAGESTANDING;
 
       global $gACTION, $gCHECKED;
+      
+      global $gTABLEPREFIX;
+      
+      global $gFOLDERID;
 
       global $gSENDERNAME, $gSENDERONLINE;
 
@@ -1521,7 +1531,7 @@
     } // CreateLabelLinks
 
     function Label ($pLABELVALUE) {
-      global $zSTRINGS;
+      global $zSTRINGS, $gIDENTIFIER;
 
       $checkcriteria = array ("Identifier" => $this->Identifier,
                               "messageLabels_tID" => $pLABELVALUE);
@@ -1660,6 +1670,29 @@
       return ($returnarray);
 
     } // CreateFullLabelMenu
+    
+    function CreateCircleMenu () {
+      
+      global $zFOCUSUSER, $zSTRINGS;
+      
+      $CIRCLES = new cFRIENDCIRCLES ();
+      
+      $CIRCLES->Select ("userAuth_uID", $zFOCUSUSER->uID);
+      
+      if ($CIRCLES->CountResult() == 0) return (NULL);
+      
+      $return = array ();
+      $zSTRINGS->Lookup ("LABEL.MAILCIRCLE", "USER.MESSAGES");
+
+      // Start the menu list at '1'.
+      $return = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+
+      while ($CIRCLES->FetchArray ()) {
+        $return[$CIRCLES->Name] = $CIRCLES->Name;
+      } // while
+      
+      return ($return);
+    } // CreateCircleMenu
 
     // Buffer the label menu for a specific message.
     function CreateSpecificLabelMenu () {
@@ -2596,7 +2629,7 @@
 
       return ($output);
 
-    } // bufferLabelList
+    } // BufferLabelList
 
     // Count new messages for each label.
     function CountNewInLabels ($pLABELID) {

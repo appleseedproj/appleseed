@@ -15,6 +15,10 @@
  
    <form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
+    
+     <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
+     <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", ""); ?>
+
  
     <?php echo $bRECIPIENT; ?>
  

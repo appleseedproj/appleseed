@@ -25,7 +25,7 @@ div#search {
  clear:both;
  margin:5px 0 15px 0;
  padding-bottom:10px;
- border-bottom:1px solid #ccd0d5;
+ border-bottom:1px solid #dce0e5;
  width:100%;
 }
 
@@ -210,6 +210,14 @@ form#compose p.error:hover {
  background:#0106aa;
  cursor:crosshair;
 } 
+
+#user ul p.message,
+#user ul p.message:hover {
+ background:none;
+ font-weight:bold;
+ color:#0106aa;
+ border:none;
+}
 
 /* CONTEXT: users.journal.editor */
 
@@ -1332,21 +1340,6 @@ form#compose p.error:hover {
  width:162px;
  position:relative;
  left:-6px;
- color:#ffffff;
- cursor:crosshair;
- border:1px solid #311aff;
- border-left:none;
- border-right:none;
- padding:1px 0;
- text-align:center;
- font-style:italic;
- background:#311Aff;
-} 
-
-#user #labels p.message:hover {
- color:#aaaaaa;
- background:#0106aa;
- cursor:crosshair;
 } 
 
 /* CONTEXT: users.editlabels */
@@ -1988,8 +1981,9 @@ form#compose p.error:hover {
  margin:10px 0;
 }
 
-#user #messages #container #compose form#compose input.recipientaddress {
- width:220px;
+#user #messages #container #compose form#compose .recipientaddress {
+ width:420px;
+ height:40px;
 }
 
 #user #messages #container #compose form#compose .body,
