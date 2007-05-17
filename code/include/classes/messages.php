@@ -2214,13 +2214,33 @@
       // Verify each address in list.
       $addresslist = split (",", $pADDRESSLIST);
       
+      // Load circle requests from list.
+      foreach ($addresslist as $id => $address) {
+        $circles = null;
+        if (strstr ($address, ':')) {
+          list ($type, $circlename) = split (':', $address);
+          if (!$circles = $this->LoadFromCircle($circlename)) return (FALSE);
+          unset ($addresslist[$id]);
+          foreach ($circles as $cid => $address) {
+            $addresslist[] = $address;
+          } // foreach
+        } // if
+      } // foreach 
+      
+      // Append found circles onto addresslist.
+      
       // Split recipients into remote and local lists.
       $remotelist = array (); $locallist = array ();
       foreach ($addresslist as $id => $address) {
         $address = str_replace (' ', '', $address);
         
-        if (!$this->VerifyAddress ($address)) return (FALSE);
+        // If it's empty, pop off list and skip.
+        if (!$address) {
+          unset ($addresslist[$id]);
+          continue;
+        } // if
         
+        if (!$this->VerifyAddress ($address)) return (FALSE);
         list ($username, $domain) = split ('@', $address);
         
         if ($domain != $gSITEDOMAIN) {
@@ -2229,6 +2249,14 @@
           $locallist[] = $address;
         } // if
       } // foreach
+      
+      // Combine into one big list in case an error occurs.
+      if (count($remotelist) > 0) $combine[] = join (', ', $remotelist);
+      if (count($locallist) > 0) $combine[] = join (', ', $locallist);
+      
+      // To: field will be filled with addresses instead of circle:CircleName's
+      global $gRECIPIENTADDRESS;
+      $gRECIPIENTADDRESS = join (', ', $combine);
       
       // Store the "sent" message.
       $table_id = $this->StoreMessage ($zFOCUSUSER->uID, $pSUBJECT, $pBODY, SQL_NOW, FOLDER_SENT);
@@ -2262,6 +2290,44 @@
 
       return (TRUE);
     } // Send
+    
+    // Load a list of addresses from a friend's circle.
+    function LoadFromCircle ($pCIRCLE) {
+      global $zFOCUSUSER, $zSTRINGS;
+      
+      $FRIENDS = new cFRIENDINFORMATION ();
+      
+      // Load the circle information.
+      $criteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
+                         "Name"         => $pCIRCLE);
+      $FRIENDS->friendCircles->Select ("Name", $pCIRCLE);
+      $FRIENDS->friendCircles->FetchArray ();
+      
+      // Check if circle with this name was found.
+      if ($FRIENDS->friendCircles->CountResult() == 0) {
+        $this->Error = -1;
+        global $gBADCIRCLE;
+        $gBADCIRCLE = $pCIRCLE;
+        $zSTRINGS->Lookup ("ERROR.UNABLE");
+        $this->Message = $zSTRINGS->Output;
+        $zSTRINGS->Lookup ("ERROR.NOCIRCLE");
+        $this->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $this->Error = -1;
+      } // if
+      
+      $return = array ();
+      
+      // Load the friend circles list.
+      $FRIENDS->friendCirclesList->Select ("friendCircles_tID", $FRIENDS->friendCircles->tID);
+      while ($FRIENDS->friendCirclesList->FetchArray()) {
+        $FRIENDS->Select ("tID", $FRIENDS->friendCirclesList->friendInformation_tID);
+        $FRIENDS->FetchArray ();
+        $address = $FRIENDS->Username . '@' . $FRIENDS->Domain;
+        $return[] = $address;
+      } // while
+      
+      return ($return); 
+    } // LoadFromCircle
     
     // Place the message in the message store.
     function StoreMessage ($pUSERID, $pSUBJECT, $pBODY, $pSTAMP, $pLOCATION) {

@@ -219,6 +219,14 @@ form#compose p.error:hover {
  border:none;
 }
 
+#user ul p.error,
+#user ul p.error:hover {
+ background:none;
+ font-weight:bold;
+ color:#cc151a;
+ border:none;
+}
+
 /* CONTEXT: users.journal.editor */
 
 #user #journal #editor {
@@ -1984,9 +1992,8 @@ form#compose p.error:hover {
 #user #messages #container #compose form#compose .recipientaddress {
  clear:both;
  float:left;
- width:320px;
+ width:420px;
  height:40px;
- margin-bottom:10px;
 }
 #user #messages #container #compose form#compose .mailcircle {
  clear:none;
@@ -1999,6 +2006,7 @@ form#compose p.error:hover {
 }
 
 #user #messages #container #compose p {
+ float:left;
  clear:both;
  margin:10px 0 0 0;
 } 
