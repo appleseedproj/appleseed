@@ -1997,7 +1997,7 @@ form#compose p.error:hover {
 } 
 
 #user #messages #container #compose #buttons {
- width:339px;
+ width:420px;
 }
 
 #user #messages #container #compose span.save_draft {
@@ -2010,7 +2010,7 @@ form#compose p.error:hover {
 
 #user #messages #container #compose span.cancel {
  float:left;
- width:64px;
+ width:144px;
  text-align:right;
 }
 

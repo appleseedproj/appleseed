@@ -18,6 +18,9 @@
 
    <input type='hidden' id='gtID' name='gtID' value='<?php echo $zMESSAGE->tID ?>'>
 
+     <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
+     <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", "X"); ?>
+ 
    <?php echo $bRECIPIENT; ?>
 
    <p id='subject'>

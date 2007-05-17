@@ -1681,7 +1681,6 @@
       
       if ($CIRCLES->CountResult() == 0) return (NULL);
       
-      $return = array ();
       $zSTRINGS->Lookup ("LABEL.MAILCIRCLE", "USER.MESSAGES");
 
       // Start the menu list at '1'.

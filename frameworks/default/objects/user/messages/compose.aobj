@@ -17,8 +17,7 @@
     <?php $zHTML->Post ($gPOSTDATA); ?>
     
      <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
-     <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", ""); ?>
-
+     <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", "X"); ?>
  
     <?php echo $bRECIPIENT; ?>
  
