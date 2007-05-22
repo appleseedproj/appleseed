@@ -381,10 +381,10 @@
       // Select the message we're replying to.
       $zMESSAGE->SelectMessage ($gIDENTIFIER);
 
-      $zMESSAGE->messageRecipients->Select ("messageStore_tID", $zMESSAGE->tID);
+      $zMESSAGE->messageRecipient->Select ("messageStore_tID", $zMESSAGE->tID);
       $addresses = array ();
-      while ($zMESSAGE->messageRecipients->FetchArray ()) {
-        $addresses[] = $zMESSAGE->messageRecipients->Username . '@' . $zMESSAGE->messageRecipients->Domain;
+      while ($zMESSAGE->messageRecipient->FetchArray ()) {
+        $addresses[] = $zMESSAGE->messageRecipient->Username . '@' . $zMESSAGE->messageRecipient->Domain;
       }
       
       list ($username, $domain) = split ('@', $addresses[0]);

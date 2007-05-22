@@ -47,7 +47,7 @@
       $this->messageInformation = new cMESSAGEINFORMATION ($pDEFAULTCONTEXT);
       $this->messageNotification = new cMESSAGENOTIFICATION ($pDEFAULTCONTEXT);
       $this->messageStore = new cMESSAGESTORE ($pDEFAULTCONTEXT);
-      $this->messageRecipients = new cMESSAGERECIPIENTS ($pDEFAULTCONTEXT);
+      $this->messageRecipient = new cMESSAGERECIPIENTS ($pDEFAULTCONTEXT);
       $this->messageLabelList = new cMESSAGELABELLIST ($pDEFAULTCONTEXT);
       $this->messageLabels = new cMESSAGELABELS ($pDEFAULTCONTEXT);
 
@@ -208,7 +208,7 @@
       global $zFOCUSUSER;
 
       $StoreTable = $this->messageStore->TableName;
-      $RecipientsTable = $this->messageRecipients->TableName;
+      $RecipientsTable = $this->messageRecipient->TableName;
 
       // Count stored messages.
       $query = "SELECT COUNT($StoreTable.tID) " .
@@ -681,18 +681,18 @@
       global $gTABLEPREFIX;
       
       $messageStore = $this->messageStore->TableName;
-      $messageRecipients = $this->messageRecipients->TableName;
+      $messageRecipient = $this->messageRecipient->TableName;
 
       $query = "SELECT   $messageStore.tID AS tID, " .
                "         $messageStore.userAuth_uID AS userAuth_uID, " .
-               "         $messageRecipients.Identifier AS Identifier, " .
-               "         $messageRecipients.Username AS Username, " .
-               "         $messageRecipients.Domain AS Domain, " .
+               "         $messageRecipient.Identifier AS Identifier, " .
+               "         $messageRecipient.Username AS Username, " .
+               "         $messageRecipient.Domain AS Domain, " .
                "         $messageStore.Subject AS Subject, " .
                "         $messageStore.Stamp AS Stamp " .
-               "FROM     $messageStore, $messageRecipients " .
+               "FROM     $messageStore, $messageRecipient " .
                "WHERE    $messageStore.userAuth_uID = " . $zFOCUSUSER->uID .  " " . 
-               "AND      $messageRecipients.messageStore_tID = $messageStore.tID " . 
+               "AND      $messageRecipient.messageStore_tID = $messageStore.tID " . 
                "AND      $messageStore.Location = " . FOLDER_SENT . " " .
                "GROUP BY $messageStore.Subject " .
                "ORDER BY $messageStore.Stamp DESC";
@@ -798,19 +798,19 @@
       global $gTABLEPREFIX;
 
       $messageStore = $this->messageStore->TableName;
-      $messageRecipients = $this->messageRecipients->TableName;
+      $messageRecipient = $this->messageRecipient->TableName;
 
       $query = "SELECT   $messageStore.tID AS tID, " .
                "         $messageStore.userAuth_uID AS userAuth_uID, " .
-               "         $messageRecipients.Identifier AS Identifier, " .
-               "         $messageRecipients.Username AS Username, " .
-               "         $messageRecipients.Domain AS Domain, " .
-               "         $messageRecipients.Standing AS Standing, " .
+               "         $messageRecipient.Identifier AS Identifier, " .
+               "         $messageRecipient.Username AS Username, " .
+               "         $messageRecipient.Domain AS Domain, " .
+               "         $messageRecipient.Standing AS Standing, " .
                "         $messageStore.Subject AS Subject, " .
                "         $messageStore.Stamp AS Stamp " .
-               "FROM     $messageStore, $messageRecipients " .
+               "FROM     $messageStore, $messageRecipient " .
                "WHERE    $messageStore.userAuth_uID = " . $zFOCUSUSER->uID .  " " . 
-               "AND      $messageRecipients.messageStore_tID = $messageStore.tID " . 
+               "AND      $messageRecipient.messageStore_tID = $messageStore.tID " . 
                "AND      $messageStore.Location = " . FOLDER_DRAFTS . " " .
                "GROUP BY $messageStore.Subject " .
                "ORDER BY $messageStore.Stamp DESC";
@@ -1247,11 +1247,11 @@
       
       // Check messageStore
       $messageStore = $this->messageStore->TableName;
-      $messageRecipients = $this->messageRecipients->TableName;
+      $messageRecipient = $this->messageRecipient->TableName;
       $query = "SELECT $messageStore.tID AS tID " .
-               "FROM   $messageStore, $messageRecipients " .
-               "WHERE  $messageRecipients.Identifier = '$pIDENTIFIER' " .
-               "AND    $messageRecipients.messageStore_tID = $messageStore.tID " .
+               "FROM   $messageStore, $messageRecipient " .
+               "WHERE  $messageRecipient.Identifier = '$pIDENTIFIER' " .
+               "AND    $messageRecipient.messageStore_tID = $messageStore.tID " .
                "AND    $messageStore.userAuth_uID = " . $zFOCUSUSER->uID;
       $this->Query ($query);
       if ($this->CountResult () > 0) return ('messageStore');
@@ -1282,15 +1282,15 @@
         $this->Sender_Domain = $this->messageInformation->Sender_Domain;
         
         // Check for corresponding local message recipient record and mark as read.
-        $this->messageRecipients->Select ('Identifier', $pIDENTIFIER);
-        $this->messageRecipients->FetchArray();
-        $this->messageRecipients->Standing = MESSAGE_READ;
-        $this->messageRecipients->Update ();
+        $this->messageRecipient->Select ('Identifier', $pIDENTIFIER);
+        $this->messageRecipient->FetchArray();
+        $this->messageRecipient->Standing = MESSAGE_READ;
+        $this->messageRecipient->Update ();
       } elseif ($classlocation == 'messageStore') {
         // Message is in sent folder.
-        $this->messageRecipients->Select ("Identifier", $pIDENTIFIER);
-        $this->messageRecipients->FetchArray();
-        $this->messageStore->Select ("tID", $this->messageRecipients->messageStore_tID);
+        $this->messageRecipient->Select ("Identifier", $pIDENTIFIER);
+        $this->messageRecipient->FetchArray();
+        $this->messageStore->Select ("tID", $this->messageRecipient->messageStore_tID);
         $this->messageStore->FetchArray();
         $this->tID = $this->messageStore->tID;
         $this->userAuth_uID = $this->messageStore->userAuth_uID;
@@ -1315,10 +1315,10 @@
         global $gFRAMELOCATION;
         global $gRECIPIENTADDRESS;
 
-        $this->messageRecipients->Select ("messageStore_tID", $this->tID);
+        $this->messageRecipient->Select ("messageStore_tID", $this->tID);
         $addresses = array ();
-        while ($this->messageRecipients->FetchArray ()) {
-          $addresses[] = $this->messageRecipients->Username . '@' . $this->messageRecipients->Domain;
+        while ($this->messageRecipient->FetchArray ()) {
+          $addresses[] = $this->messageRecipient->Username . '@' . $this->messageRecipient->Domain;
         }
         $gRECIPIENTADDRESS = join (', ', $addresses);
         $gtID = $this->tID;
@@ -1335,7 +1335,7 @@
       $this->messageStore->Select ("tID", $pDRAFTID);
       $this->messageStore->FetchArray ();
       
-      $this->messageRecipients->Delete("messageStore_tID = $pDRAFTID");
+      $this->messageRecipient->Delete("messageStore_tID = $pDRAFTID");
       
       // Check to make sure it is stored in the drafts folder.
       if ($this->messageStore->Location == FOLDER_DRAFTS) {
@@ -1348,6 +1348,7 @@
 
     // Mark The Current Message As Read.
     function MarkAsRead () {
+      global $zSTRINGS;
 
       // Do not change the status of a Draft message.
       if ($this->Location == FOLDER_DRAFTS) return (TRUE);
@@ -1374,11 +1375,10 @@
     
     // Mark The Current Message As Unread.
     function MarkAsUnread () {
+      global $zSTRINGS;
 
       // Do not change the status of a Draft message.
       if ($this->Location == FOLDER_DRAFTS) return (FALSE);
-
-      global $zSTRINGS;
 
       // Check if user owns this message.
       if ($this->CheckReadAccess () == FALSE) {
@@ -2237,6 +2237,7 @@
       
       global $gSITEDOMAIN, $gtID;
       
+      // Append found circles onto addresslist.
       if (!$addresslist = $this->CreateAddressList ($pADDRESSES)) {
         $zSTRINGS->Lookup ("ERROR.UNABLE");
         $this->Message = $zSTRINGS->Output;
@@ -2246,34 +2247,26 @@
         return (FALSE);
       } 
       
-      // Append found circles onto addresslist.
-      
+      // If no subject, use standard "no subject" text.
+      if ($pSUBJECT == NULL) {
+        $zSTRINGS->Lookup ('LABEL.NOSUBJECT');
+        $pSUBJECT = $zSTRINGS->Output;
+      } // if
+
       // Split recipients into remote and local lists.
-      $remotelist = array (); $locallist = array ();
       foreach ($addresslist as $id => $address) {
         if (!$this->VerifyAddress ($address)) return (FALSE);
-        list ($username, $domain) = split ('@', $address);
-        
-        if ($domain != $gSITEDOMAIN) {
-          $remotelist[] = $address;
-        } else {
-          $locallist[] = $address;
-        } // if
       } // foreach
-      
-      // Combine into one big list in case an error occurs.
-      if (count($remotelist) > 0) $combine[] = join (', ', $remotelist);
-      if (count($locallist) > 0) $combine[] = join (', ', $locallist);
       
       // To: field will be filled with addresses instead of circle:CircleName's
       global $gRECIPIENTADDRESS;
-      $gRECIPIENTADDRESS = join (', ', $combine);
+      $gRECIPIENTADDRESS = join (', ', $addresslist);
       
       // Store the "sent" message.
       $table_id = $this->StoreMessage ($zFOCUSUSER->uID, $pSUBJECT, $pBODY, SQL_NOW, FOLDER_SENT);
       
-      // Loop through the list of local recipients.
-      foreach ($locallist as $id => $address) {
+      // Loop through the list of recipients.
+      foreach ($addresslist as $id => $address) {
         // Split the address.
         list ($username, $domain) = split ('@', $address);  
         
@@ -2281,17 +2274,11 @@
         $identifier = $zAPPLE->RandomString (128);
         
         // Receive Message.
-        $this->RecieveMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
-      } // foreach
-      
-      // Loop through the list of remote recipients.
-      foreach ($remotelist as $id => $address) {
-        // Split the address.
-        list ($username, $domain) = split ('@', $address);  
-        $identifier = $zAPPLE->RandomString (128);
-        
-        // Send a remote message notification. 
-        $this->RemoteMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
+        if ($domain != $gSITEDOMAIN) {
+          $this->RemoteMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
+        } else {
+          $this->RecieveMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
+        } // if
       } // foreach
       
       $this->RemoveDraft ($gtID);
@@ -2426,14 +2413,14 @@
       $this->messageInformation->Add ();
       
       // Add the recipient.
-      $this->messageRecipients->messageStore_tID = $pMESSAGEID;
-      $this->messageRecipients->userAuth_uID = $pSENDERID;
-      $this->messageRecipients->Identifier = $pIDENTIFIER;
-      $this->messageRecipients->Username = $reciever_username;
-      $this->messageRecipients->Domain = $reciever_domain;
-      $this->messageRecipients->Standing = $pSTANDING;
+      $this->messageRecipient->messageStore_tID = $pMESSAGEID;
+      $this->messageRecipient->userAuth_uID = $pSENDERID;
+      $this->messageRecipient->Identifier = $pIDENTIFIER;
+      $this->messageRecipient->Username = $reciever_username;
+      $this->messageRecipient->Domain = $reciever_domain;
+      $this->messageRecipient->Standing = $pSTANDING;
       
-      $this->messageRecipients->Add ();
+      $this->messageRecipient->Add ();
       
       // Send an email notification to the reciever.
       $this->NotifyMessage ($reciever_email, $reciever_username, $reciever_fullname, $fullname);
@@ -2482,14 +2469,14 @@
       } // if
 
       // Add the recipient.
-      $this->messageRecipients->messageStore_tID = $pMESSAGEID;
-      $this->messageRecipients->userAuth_uID = $pSENDERID;
-      $this->messageRecipients->Identifier = $pIDENTIFIER;
-      $this->messageRecipients->Username = $username;
-      $this->messageRecipients->Domain = $domain;
-      $this->messageRecipients->Standing = $pSTANDING;
+      $this->messageRecipient->messageStore_tID = $pMESSAGEID;
+      $this->messageRecipient->userAuth_uID = $pSENDERID;
+      $this->messageRecipient->Identifier = $pIDENTIFIER;
+      $this->messageRecipient->Username = $username;
+      $this->messageRecipient->Domain = $domain;
+      $this->messageRecipient->Standing = $pSTANDING;
       
-      $this->messageRecipients->Add ();
+      $this->messageRecipient->Add ();
       
       return (TRUE);
     } // RemoteMessage
@@ -2597,13 +2584,13 @@
         $identifier = $zAPPLE->RandomString (128);
 
         list ($username, $domain) = split ('@', $address);
-        $this->messageRecipients->messageStore_tID = $table_id;
-        $this->messageRecipients->userAuth_uID = $zFOCUSUSER->uID;
-        $this->messageRecipients->Identifier = $identifier;
-        $this->messageRecipients->Username = $username;
-        $this->messageRecipients->Domain = $domain;
-        $this->messageRecipients->Standing = MESSAGE_UNREAD;
-        $this->messageRecipients->Add ();
+        $this->messageRecipient->messageStore_tID = $table_id;
+        $this->messageRecipient->userAuth_uID = $zFOCUSUSER->uID;
+        $this->messageRecipient->Identifier = $identifier;
+        $this->messageRecipient->Username = $username;
+        $this->messageRecipient->Domain = $domain;
+        $this->messageRecipient->Standing = MESSAGE_UNREAD;
+        $this->messageRecipient->Add ();
       } // foreach
       
       $zSTRINGS->Lookup ('MESSAGE.SAVED');
@@ -2620,13 +2607,13 @@
       
       global $bRECIPIENT;
         
-      $this->messageRecipients->Select ("messageStore_tID", $this->tID);
+      $this->messageRecipient->Select ("messageStore_tID", $this->tID);
       
       $buffer = null;
       
-      while ($this->messageRecipients->FetchArray()) {
-        $bRECIPIENT = $zHTML->CreateUserLink ($this->messageRecipients->Username, $this->messageRecipients->Domain);
-        if ($this->messageRecipients->Standing == MESSAGE_READ) {
+      while ($this->messageRecipient->FetchArray()) {
+        $bRECIPIENT = $zHTML->CreateUserLink ($this->messageRecipient->Username, $this->messageRecipient->Domain);
+        if ($this->messageRecipient->Standing == MESSAGE_READ) {
           $zSTRINGS->Lookup ('LABEL.READ');
           $zAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
         } else {
@@ -3293,7 +3280,7 @@
     function cMESSAGERECIPIENTS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
-      $this->TableName = $gTABLEPREFIX . 'messageRecipients';
+      $this->TableName = $gTABLEPREFIX . 'messageRecipient';
       $this->tID = '';
       $this->userAuth_uID = '';
       $this->messageStore_tID = '';

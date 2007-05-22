@@ -344,17 +344,17 @@ CREATE TABLE `%PREFIX%messageNotification` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `messageRecipients`
+-- Table structure for table `messageRecipient`
 --
 
-DROP TABLE IF EXISTS `%PREFIX%messageRecipients`;
-CREATE TABLE `%PREFIX%messageRecipients` (
+DROP TABLE IF EXISTS `%PREFIX%messageRecipient`;
+CREATE TABLE `%PREFIX%messageRecipient` (
   `tID` int(10) unsigned NOT NULL auto_increment,
   `messageStore_tID` int(10) unsigned NOT NULL default '0',
   `userAuth_uID` int(10) unsigned zerofill NOT NULL default '0000000000',
   PRIMARY KEY  (`tID`),
-  KEY `two_messageRecipients_FKIndex1` (`userAuth_uID`),
-  KEY `two_messageRecipients_FKIndex2` (`messageStore_tID`)
+  KEY `two_messageRecipient_FKIndex1` (`userAuth_uID`),
+  KEY `two_messageRecipient_FKIndex2` (`messageStore_tID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

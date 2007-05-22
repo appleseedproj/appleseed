@@ -829,7 +829,7 @@
     function MessageRetrieve ($pUSERNAME, $pIDENTIFIER) {
       
       $messageStore = $this->TablePrefix . "messageStore";
-      $messageRecipients = $this->TablePrefix . "messageRecipients";
+      $messageRecipient = $this->TablePrefix . "messageRecipient";
       $userAuth = $this->TablePrefix . "userAuthorization";
       $userProfile = $this->TablePrefix . "userProfile";
       
@@ -841,11 +841,11 @@
                $messageStore.Stamp AS Stamp,
                $userProfile.Fullname AS Fullname,
                $userProfile.Alias AS Alias
-        FROM   $messageStore,$userProfile,$messageRecipients
-        WHERE  $messageRecipients.Username = '%s'
+        FROM   $messageStore,$userProfile,$messageRecipient
+        WHERE  $messageRecipient.Username = '%s'
         AND    $userProfile.userAuth_uID = $messageStore.userAuth_uID
-        AND    $messageRecipients.Identifier = '%s'
-        AND    $messageRecipients.messageStore_tID = $messageStore.tID;
+        AND    $messageRecipient.Identifier = '%s'
+        AND    $messageRecipient.messageStore_tID = $messageStore.tID;
       ";
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($pUSERNAME),
@@ -873,11 +873,11 @@
       
       // Mark message as read.
       $sql_statement = "
-        UPDATE $messageRecipients 
-        SET    $messageRecipients.Standing = 2 
-        WHERE  $messageRecipients.Identifier = '%s' 
-        AND    $messageRecipients.Standing = 1 
-        AND    $messageRecipients.messageStore_tID = '%s'
+        UPDATE $messageRecipient 
+        SET    $messageRecipient.Standing = 2 
+        WHERE  $messageRecipient.Identifier = '%s' 
+        AND    $messageRecipient.Standing = 1 
+        AND    $messageRecipient.messageStore_tID = '%s'
       ";
                        
       $sql_statement = sprintf ($sql_statement,
