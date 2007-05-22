@@ -73,7 +73,7 @@
   $gPAGESUBTITLE = ' - Join';
 
   // Refresh if already logged in.
-  if ($gAUTHUSERID) {
+  if ($zAUTHUSER->uID) {
 
     // Create the meta refresh line.
     $bREFRESHLINE = $zHTML->Refresh ($gSITEURL);

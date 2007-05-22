@@ -59,7 +59,7 @@
   $zAPPLE->Context = "user.photosets";
            
   // Check if user is admin or is viewing their own page.
-  if ($gFOCUSUSERID != $gAUTHUSERID) {
+  if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     $listlocation = "listing/";
     if ($zLOCALUSER->userAccess->a == TRUE) $listlocation = "editor/";
   } else {
@@ -67,7 +67,7 @@
   } // if
 
   // Create a warning message if user has no write access.
-  if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+  if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
        ($zLOCALUSER->userAccess->a == TRUE) and 
        ($zLOCALUSER->userAccess->w == FALSE) ) {
     $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
@@ -221,7 +221,7 @@
 
     case 'SAVE':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
@@ -339,7 +339,7 @@
 
     case 'DELETE':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);

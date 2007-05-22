@@ -38,7 +38,7 @@
   require_once ('code/include/classes/messages.php'); 
 
   // Check if user has necessary access to this page.
-  if ($gFOCUSUSERID != $gAUTHUSERID) {
+  if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
       $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);

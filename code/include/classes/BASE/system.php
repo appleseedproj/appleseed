@@ -727,9 +727,7 @@
 
      $this->FetchArray();
 
-     global $gTOOLTIP;
-     $gTOOLTIP = $this->Output;
-
+     $zAPPLE->SetTag ('TOOLTIP', $this->Output);
 
      // Load the tooltip from the themes directory.
      $output = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tooltips/default.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);

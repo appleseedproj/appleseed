@@ -44,6 +44,7 @@
     var $Purifier;
     var $Mailer;
     var $JSON;
+    var $Tags;
 
     function cAPPLESEED () {
       
@@ -57,6 +58,10 @@
       // Eventually remove and replace with PEAR/Mail::Queue.
       $this->Mailer = new PHPMailer();
       
+      // Initialize ASD tags array.
+      $this->Tags = array ();
+      
+      return (TRUE);
     } // Constructor
 
     // Overwrite inhereted ::Initialize function.
@@ -89,12 +94,11 @@
   
       // Connect to the database.
       $this->DBConnect ();
-      
+
       // Global Variables
       global $gUSERTHEME;
       global $gSETTINGS, $gLOGINSESSION, $gREMOTELOGINSESSION;
       global $gSITETITLE, $gSITEURL, $gSITEDOMAIN;
-      global $gAUTHUSERID, $gAUTHUSERNAME, $gAUTHDOMAIN;
       global $gFOCUSUSERID, $gFOCUSUSERNAME;
       global $gFOCUSFULLNAME;
       global $gPROFILEREQUEST, $gPROFILEACTION, $gPROFILESUBACTION;
@@ -171,7 +175,7 @@
       } // if
   
       // Load site title and url into global variable.
-      $zSTRINGS->Lookup ('BROWSER.TITLE', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('BROWSER.TITLE', $this->Context);
       $gSITETITLE = $zSTRINGS->Output;
   
       // Check for gLOGINSESSION cookie.
@@ -207,10 +211,11 @@
     
             $zLOCALUSER->Access ();
             // Global variables
-            $gAUTHUSERID = $zLOCALUSER->uID;
-            $gAUTHUSERNAME = $zLOCALUSER->Username;
-            $gAUTHDOMAIN = $gSITEDOMAIN;
+            $this->SetTag('AUTHUSERNAME', $zLOCALUSER->Username);
+            $this->SetTag('AUTHUSERID', $zLOCALUSER->uID);
+            $this->SetTag('AUTHDOMAIN', $gSITEDOMAIN);
   
+            $zAUTHUSER->uID = $zLOCALUSER->uID;
             $zAUTHUSER->Username = $zLOCALUSER->Username;
             $zAUTHUSER->Fullname = $zLOCALUSER->userProfile->GetAlias ();
             $zAUTHUSER->Domain = $gSITEDOMAIN;
@@ -240,8 +245,8 @@
             $zAUTHUSER->Fullname = $zREMOTEUSER->Fullname;
             $zAUTHUSER->Domain = $zREMOTEUSER->Domain;
             $zAUTHUSER->Remote = TRUE;
-            $gAUTHUSERNAME = $zAUTHUSER->Username;
-            $gAUTHDOMAIN = $zAUTHUSER->Domain;
+            $this->SetTag('AUTHUSERNAME', $zAUTHUSER->Username);
+            $this->SetTag('AUTHDOMAIN', $zAUTHUSER->Domain);
           } // if
         } else {
           // User is anonymous.
@@ -261,10 +266,14 @@
       // Load user settings into memory cache.
       $zLOCALUSER->userSettings->Load ();
 
+      // Set Site Domain tag.
+      $this->SetTag ('SITEDOMAIN', $gSITEDOMAIN);
+      
       // Set default theme.
       if ($zLOCALUSER->userSettings->Get ("DefaultTheme")) {
         global $gTHEMELOCATION;
         $gUSERTHEME = $zLOCALUSER->userSettings->Get ("DefaultTheme");
+        $this->SetTag ('USERTHEME', $gUSERTHEME);
         $gTHEMELOCATION = "themes/$gUSERTHEME/";
       } // if
 
@@ -288,20 +297,15 @@
   
       global $gADMINEMAIL;
       $gADMINEMAIL = 'admin@' . $gSITEDOMAIN;
+      $this->SetTag ('ADMINEMAIL', $gADMINEMAIL);
 
-      // Select any new messages.
-      global $gMESSAGECOUNT, $gNEWMESSAGES;
-  
       $MESSAGES = new cMESSAGE ();
-      $gNEWMESSAGES = $MESSAGES->CountNewMessages ();
+      $this->SetTag ('NEWMESSAGES', $MESSAGES->CountNewMessages ());
   
       unset ($MESSAGES);
   
-      // Select any new friend requests.
-      global $gFRIENDCOUNT, $gNEWFRIENDS;
-
       $FRIENDS = new cFRIENDINFORMATION ();
-      $gNEWFRIENDS = $FRIENDS->CountNewFriends ();
+      $this->SetTag ('NEWFRIENDS', $FRIENDS->CountNewFriends ()); 
   
       unset ($FRIENDS);
 
@@ -338,6 +342,12 @@
         $this->Abort ();
       } // if
 
+      if (!is_writable('attachments/')) {
+        // Photos directory isn't writable.
+        echo "ERROR: attachments/ directory is not writable.";
+        $this->Abort ();
+      } // if
+
       return (TRUE);
     } // RuntimeVerification
 
@@ -345,6 +355,10 @@
     function ClearBounce () {
       $host = $_SERVER['HTTP_HOST'];
       $self = $_SERVER['REQUEST_URI'];
+      
+      // Return FALSE if we're not bouncing.
+      if (!strstr ($self, '?')) return (FALSE);
+      
       list ($NULL, $get) = split ('\?', $self);
       list ($value, $bounce) = split ('\=', $get);
       $get = '?' . $get;
@@ -368,6 +382,10 @@
 
       $host = $_SERVER['HTTP_HOST'];
       $self = $_SERVER['REQUEST_URI'];
+      
+      // Return FALSE if we're not bouncing.
+      if (!strstr ($self, '?')) return (FALSE);
+      
       list ($NULL, $get) = split ('\?', $self);
       list ($value, $bounce) = split ('\=', $get);
       $get = '?' . $get;
@@ -429,7 +447,6 @@
       } // if
   
       global $gFOCUSUSERID, $gFOCUSUSERNAME, $gPROFILEACTION, $gPROFILESUBACTION;
-      global $gAUTHUSERID, $gAUTHUSERNAME, $gAUTHUSERADMIN;
       global $gERRORMSG, $gERRORTITLE;
   
       global $gUSERJOURNALTAB, $gUSERPHOTOSTAB;
@@ -608,6 +625,7 @@
   
       define ("MESSAGE_UNREAD", 1);
       define ("MESSAGE_READ", 2);
+      
       define ("MENU_DISABLED",  "$!");
 
       define ("MESSAGE_TYPE_LOCAL", 1);
@@ -656,8 +674,6 @@
       define ("GROUP_ACTION_APPROVE", 1);
       define ("GROUP_ACTION_REMOVE", 2);
 
-      $gAUTHUSERID = 0; $gAUTHUSERNAME = ''; $gAUTHUSERADMIN = 0;
-  
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
   
       $gCONTENTARTICLESVIEWTAB = '_off';
@@ -697,6 +713,7 @@
       $gSETTINGS['InviteAmount'] = 2;
   
       $gUSERTHEME = $gSETTINGS['UserTheme'];
+      $this->SetTag ('USERTHEME', $gUSERTHEME);
       $gFRAMEWORK = $gSETTINGS['Framework'];
   
       global $gFRAMELOCATION, $gTHEMELOCATION;
@@ -855,8 +872,7 @@
       $gQUESTIONANSWER = $zSTRINGS->Output;
       $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
  
-      global $gFOCUSAGE;
-      $gFOCUSAGE = $this->CalculateAge ($zFOCUSUSER->userProfile->Birthday); 
+      $this->SetTag ('FOCUSAGE', $this->CalculateAge ($zFOCUSUSER->userProfile->Birthday)); 
       $gQUESTIONSTYLE = 'age'; 
       $zSTRINGS->Lookup ("LABEL.AGE", "USER.PROFILE");
       $gQUESTIONANSWER = $zSTRINGS->Output;
@@ -970,11 +986,17 @@
       global $gCOMMENTCOUNT;
   
       foreach ($tagvalues[1] as $tagval) {
-        $pval = "g" . strtoupper ($tagval);
-        global $$pval;
         $pattern = "/%$tagval%/";
-        if (!isset ($$pval)) $$pval = "<!-- (unknown tag: $pval) -->";
-        $pPARSEDATA = preg_replace ($pattern, $$pval, $pPARSEDATA);
+        if (!isset ($this->Tags[$tagval])) {
+          // Trigger a warning.
+          trigger_error("Still using old global system for ASD tag '$tagval'.  Move to new Tags() system.", E_USER_WARNING);
+          $pval = "g" . strtoupper ($tagval);
+          global $$pval;
+          if (!isset ($$pval)) $$pval = "<!-- (unknown tag: $$pval) -->";
+          $pPARSEDATA = preg_replace ($pattern, $$pval, $pPARSEDATA);
+        } else {
+          $pPARSEDATA = preg_replace ($pattern, $this->Tags[$tagval], $pPARSEDATA);
+        } // if
         $pPARSEDATA = $this->ParseTags ($pPARSEDATA);
       } // foreach
   
@@ -1014,6 +1036,8 @@
           $tagarray[$tagname] = $value;
         } // foreach
   
+        if (!isset ($tagarray['id'])) $tagarray['id'] = null;
+        
         switch ($tagarray['id']) {
   
          case "thumb":
@@ -1112,6 +1136,8 @@
             $fval = '(unknown global)';
           } else {
             // Modify the case of the string.
+            if (!isset ($tagarray['case'])) $tagarray['case'] = null;
+        
             switch (strtoupper ($tagarray['case']) ) {
               case "UPPER":
                 $fval = strtoupper ($$pval);
@@ -1137,11 +1163,11 @@
           // Parse out the system string.
           $OBJSTRING = new cSYSTEMSTRINGS;
 
-          $title = strtoupper ($tagarray['title']);
-          $context = strtoupper ($tagarray['context']);
+          if (isset ($tagarray['title'])) $title = strtoupper ($tagarray['title']);
+          if (isset ($tagarray['context'])) $context = strtoupper ($tagarray['context']);
           
           // Unless specified, set to the specific context.
-          if (!$context) $context = $this->Context;
+          if (!isset ($context)) $context = $this->Context;
 
           $OBJSTRING->Lookup ($title, $context);
           $output = $OBJSTRING->Output;
@@ -1149,6 +1175,8 @@
           $output = $this->ParseTags ($output);
   
           // Modify the case of the string.
+          if (!isset ($tagarray['case'])) $tagarray['case'] = null;
+        
           switch (strtoupper ($tagarray['case']) ) {
             case "UPPER":
               $output = strtoupper ($output);
@@ -1220,6 +1248,8 @@
              $popup = TRUE;
              if (strtoupper($tagarray['popup']) == 'OFF') $popup = FALSE;
 
+             if (!isset ($tagarray['domain'])) $tagarray['domain'] = $gSITEDOMAIN;
+        
              if ($tagarray['domain'] != $gSITEDOMAIN) {
                global $zHTML;
                //NOTE: Remote check if user exists.
@@ -1248,7 +1278,7 @@
            } // if
   
            // Group link tag.
-           if ($tagarray['group']) {
+           if (isset ($tagarray['group'])) {
 
              if (strstr ($tagarray['group'], '@')) {
                list ($tagarray['group'], $tagarray['domain']) = split ('@', $tagarray['group']);

@@ -204,6 +204,8 @@
     break;
 
     case 'LABEL_ALL':
+      // NOTE:  Find a way to resolve conflict between global and POST variable.
+      $gLABELVALUE = $_POST['gLABELVALUE'];
       $zMESSAGE->AddLabelToList ($gMASSLIST);
     break;
 
@@ -216,6 +218,7 @@
     case 'LABEL':
       $zMESSAGE->SelectMessage ($gIDENTIFIER);
       $zMESSAGE->LoadDraft ();
+      $gLABELVALUE = $_POST['gLABELVALUE'];
       $zMESSAGE->Label ($gLABELVALUE);
     break;
 
@@ -241,7 +244,7 @@
         $gACTION = 'SEND_MESSAGE';
         $zSTRINGS->Lookup ("ERROR.UNABLE");
         $zMESSAGE->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.TO");
+        $zSTRINGS->Lookup ("ERROR.NORECIPIENT");
         $zMESSAGE->Errorlist['recipientaddress'] = $zSTRINGS->Output;
         $zMESSAGE->Error = -1;
       } elseif (!$gBODY) {
@@ -249,7 +252,7 @@
         $gACTION = 'SEND_MESSAGE';
         $zSTRINGS->Lookup ("ERROR.UNABLE");
         $zMESSAGE->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.BODY");
+        $zSTRINGS->Lookup ("ERROR.NOBODY");
         $zMESSAGE->Errorlist['body'] = $zSTRINGS->Output;
         $zMESSAGE->Error = -1;
       } else {
@@ -291,14 +294,6 @@
           $messageview = 'inbox';
         break;
         case FOLDER_SENT:
-          global $bREADSTATUS;
-          if ($zMESSAGE->Standing == MESSAGE_READ) {
-            $bREADSTATUS = "Status: Read";
-          } else {
-            $bREADSTATUS = "Status: Unread";
-            
-          } // if
-          
           global $bRECIPIENTLIST;
           $bRECIPIENTLIST = $zMESSAGE->BufferRecipientList ();
           $messageview = 'sent';
@@ -431,7 +426,7 @@
     case 'SEND':
     case 'SAVE_DRAFT':
       if ($gACTION != 'SEND') 
-        $zMESSAGE->SaveDraft ();
+        $zMESSAGE->SaveDraft ($gRECIPIENTADDRESS, $gSUBJECT, $gBODY);
     case 'ARCHIVE':
     case 'ARCHIVE_ALL':
     case 'CANCEL_DRAFT':

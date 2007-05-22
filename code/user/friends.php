@@ -137,7 +137,7 @@
 
     case 'SAVE':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);

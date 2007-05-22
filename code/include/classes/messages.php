@@ -1281,13 +1281,11 @@
         $this->Sender_Username = $this->messageInformation->Sender_Username;
         $this->Sender_Domain = $this->messageInformation->Sender_Domain;
         
-        // Check for corresponding local sent message and mark as read.
-        $MESSAGE = new cMESSAGESTORE ();
-        $MESSAGE->Select ("Identifier", $pIDENTIFIER);
-        $MESSAGE->FetchArray ();
-        $MESSAGE->Standing = MESSAGE_READ;
-        $MESSAGE->Update ();
-        unset ($MESSAGE);
+        // Check for corresponding local message recipient record and mark as read.
+        $this->messageRecipients->Select ('Identifier', $pIDENTIFIER);
+        $this->messageRecipients->FetchArray();
+        $this->messageRecipients->Standing = MESSAGE_READ;
+        $this->messageRecipients->Update ();
       } elseif ($classlocation == 'messageStore') {
         // Message is in sent folder.
         $this->messageRecipients->Select ("Identifier", $pIDENTIFIER);
@@ -1531,7 +1529,9 @@
     } // CreateLabelLinks
 
     function Label ($pLABELVALUE) {
-      global $zSTRINGS, $gIDENTIFIER;
+      global $zSTRINGS, $zAPPLE;
+      
+      global $gIDENTIFIER;
 
       $checkcriteria = array ("Identifier" => $this->Identifier,
                               "messageLabels_tID" => $pLABELVALUE);
@@ -1546,16 +1546,11 @@
         $this->messageLabels->Select ("tID", $pLABELVALUE);
         $this->messageLabels->FetchArray ();
 
-        global $gAPPLYLABELNAME; 
-
-        $gAPPLYLABELNAME = $this->messageLabels->Label;
+        $zAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
          
         $zSTRINGS->Lookup ('MESSAGE.APPLY');
-
-        $this->messageLabels->Message = $zSTRINGS->Output;
+        $this->Message = $zSTRINGS->Output;
  
-        unset ($gAPPLYLABELNAME);
-  
       } else {
         $this->messageLabelList->Select ("Identifier", $gIDENTIFIER);
         $this->FetchArray ();
@@ -1569,19 +1564,18 @@
         $gREMOVELABELNAME = $this->messageLabels->Label;
        
         $zSTRINGS->Lookup ('MESSAGE.REMOVE');
-
-        $this->messageLabels->Message = $zSTRINGS->Output;
+        $this->Message = $zSTRINGS->Output;
 
         unset ($gREMOVELABELNAME);
-  
       } // if
 
       return (TRUE);
     } // Label
 
     function AddLabelToList ($pDATALIST) {
+      global $zSTRINGS, $zAPPLE;
+      
       global $gLABELVALUE, $gSELECTBUTTON;
-      global $zSTRINGS;
 
       $labelaction = substr ($gLABELVALUE, 0, 1);
       if ( ($labelaction == 'r') or
@@ -1618,16 +1612,18 @@
       $this->messageLabels->Select ("tID", $gLABELVALUE);
       $this->messageLabels->FetchArray ();
 
-      global $gAPPLYLABELNAME; 
-
-      $gAPPLYLABELNAME = $this->messageLabels->Label;
+      $zAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
            
-      $zSTRINGS->Lookup ('MESSAGE.APPLY');
+      if ($labelaction == 'a') {
+        $zSTRINGS->Lookup ('MESSAGE.APPLYALL');
+      } else {
+        $zSTRINGS->Lookup ('MESSAGE.REMOVEALL');
+      } // if
 
-      $this->messageLabels->Message = $zSTRINGS->Output;
+      $this->Message = $zSTRINGS->Output;
 
       unset ($gLABELVALUE);
-      unset ($gAPPLYLABELNAME);
+      
     } // AddLabelToList
 
     function CreateFullLabelMenu () {
@@ -1698,6 +1694,36 @@
 
       global $zFOCUSUSER, $zSTRINGS;
       global $gLABELVALUE;
+
+      $this->messageLabels->Select ("userAuth_uID", $zFOCUSUSER->uID, "Label ASC");
+  
+      $applyarray = array ();
+      $removearray = array ();
+
+      // Create the list of available labels.
+      if ($this->messageLabels->CountResult () == 0) {
+
+      } else {
+
+        $foundnewlabels = TRUE;
+
+        $zSTRINGS->Lookup ("LABEL.APPLY", "USER.MESSAGES.LABELS");
+
+        // Start the menu list at '1'.
+        $applyarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+
+        $zSTRINGS->Lookup ("LABEL.REMOVE", "USER.MESSAGES.LABELS");
+        $removearray = array ("Z" => MENU_DISABLED . $zSTRINGS->Output);
+
+        $gLABELVALUE = 'X';
+
+        // Loop through the list of labels.
+        while ($this->messageLabels->FetchArray ()) {
+          $applyarray['a' . $this->messageLabels->tID] = "&nbsp; " . $this->messageLabels->Label;
+          $removearray['r' . $this->messageLabels->tID] = "&nbsp; " . $this->messageLabels->Label;
+        } // while
+        $returnarray = array_merge ($applyarray, $removearray);
+      } // if
 
       $excludelist = array ();
 
@@ -2206,40 +2232,25 @@
     } // ReportListAsSpam
 
     // Send an Appleseed message.
-    function Send ($pADDRESSLIST, $pSUBJECT, $pBODY, $pSENDERUSERNAME = NULL) {
+    function Send ($pADDRESSES, $pSUBJECT, $pBODY, $pSENDERUSERNAME = NULL) {
       global $zAPPLE, $zFOCUSUSER, $zSTRINGS; 
       
       global $gSITEDOMAIN, $gtID;
       
-      // Verify each address in list.
-      $addresslist = split (",", $pADDRESSLIST);
-      
-      // Load circle requests from list.
-      foreach ($addresslist as $id => $address) {
-        $circles = null;
-        if (strstr ($address, ':')) {
-          list ($type, $circlename) = split (':', $address);
-          if (!$circles = $this->LoadFromCircle($circlename)) return (FALSE);
-          unset ($addresslist[$id]);
-          foreach ($circles as $cid => $address) {
-            $addresslist[] = $address;
-          } // foreach
-        } // if
-      } // foreach 
+      if (!$addresslist = $this->CreateAddressList ($pADDRESSES)) {
+        $zSTRINGS->Lookup ("ERROR.UNABLE");
+        $this->Message = $zSTRINGS->Output;
+        $zSTRINGS->Lookup ("ERROR.NORECIPIENT");
+        $this->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $this->Error = -1;
+        return (FALSE);
+      } 
       
       // Append found circles onto addresslist.
       
       // Split recipients into remote and local lists.
       $remotelist = array (); $locallist = array ();
       foreach ($addresslist as $id => $address) {
-        $address = str_replace (' ', '', $address);
-        
-        // If it's empty, pop off list and skip.
-        if (!$address) {
-          unset ($addresslist[$id]);
-          continue;
-        } // if
-        
         if (!$this->VerifyAddress ($address)) return (FALSE);
         list ($username, $domain) = split ('@', $address);
         
@@ -2290,6 +2301,41 @@
 
       return (TRUE);
     } // Send
+    
+    function CreateAddressList ($pADDRESSES) {
+      
+      // Find each address in list.
+      $addresslist = split (",", $pADDRESSES);
+      
+      // Load circle requests from list.
+      foreach ($addresslist as $id => $address) {
+        $circles = null;
+        if (strstr ($address, ':')) {
+          list ($type, $circlename) = split (':', $address);
+          unset ($addresslist[$id]);
+          if (!$circles = $this->LoadFromCircle($circlename)) continue;
+          foreach ($circles as $cid => $address) {
+            $addresslist[] = $address;
+          } // foreach
+        } // if
+      } // foreach 
+      
+      // Second pass to remove empty addresses.
+      foreach ($addresslist as $id => $address) {
+        $address = str_replace (' ', '', $address);
+        $addresslist[$id] = $address;
+        
+        // If it's empty, pop off list and skip.
+        if (!$address) {
+          unset ($addresslist[$id]);
+          continue;
+        } // if
+      } // foreach
+      
+      if (count($addresslist) == 0) return (FALSE);
+      
+      return ($addresslist);
+    } // CreateAddressList
     
     // Load a list of addresses from a friend's circle.
     function LoadFromCircle ($pCIRCLE) {
@@ -2453,6 +2499,8 @@
       
       // Step 1: Check if address is valid.
       if (!$zAPPLE->CheckEmail ($pADDRESS)) {
+        global $gWRONGADDRESS;
+        $gWRONGADDRESS = $pADDRESS;
         $zSTRINGS->Lookup ("ERROR.UNABLE");
         $this->Message = $zSTRINGS->Output;
         $zSTRINGS->Lookup ("ERROR.INVALID");
@@ -2524,26 +2572,24 @@
 
     } // NotifyMessage
 
-    function SaveDraft () {
+    function SaveDraft ($pADDRESSES, $pSUBJECT, $pBODY) {
       global $zAPPLE, $zFOCUSUSER, $zSTRINGS;
 
       global $gIDENTIFIER;
-      global $gRECIPIENTADDRESS;
-      global $gSUBJECT, $gBODY;
       global $gSITEDOMAIN;
       global $gtID;
       
       $this->RemoveDraft ($gtID);
 
-      if ($gSUBJECT == NULL) {
+      if ($pSUBJECT == NULL) {
         $zSTRINGS->Lookup ('LABEL.NOSUBJECT');
-        $gSUBJECT = $zSTRINGS->Output;
+        $pSUBJECT = $zSTRINGS->Output;
       } // if
 
       // Store the message.
-      $table_id = $this->StoreMessage ($zFOCUSUSER->uID, $gSUBJECT, $gBODY, SQL_NOW, FOLDER_DRAFTS);
+      $table_id = $this->StoreMessage ($zFOCUSUSER->uID, $pSUBJECT, $pBODY, SQL_NOW, FOLDER_DRAFTS);
       
-      $addresslist = split (',', $gRECIPIENTADDRESS);
+      $addresslist = $this->CreateAddressList ($pADDRESSES);
       
       // Store the recipients.
       foreach ($addresslist as $id => $address) {
@@ -2568,16 +2614,28 @@
     } // SaveDraft
 
     function BufferRecipientList () {
-      global $zHTML;
+      global $zHTML, $zAPPLE, $zSTRINGS;
       
+      global $gFRAMELOCATION;
+      
+      global $bRECIPIENT;
+        
       $this->messageRecipients->Select ("messageStore_tID", $this->tID);
       
       $buffer = null;
       
       while ($this->messageRecipients->FetchArray()) {
-        $bufferarray[] = $zHTML->CreateUserLink ($this->messageRecipients->Username, $this->messageRecipients->Domain);
+        $bRECIPIENT = $zHTML->CreateUserLink ($this->messageRecipients->Username, $this->messageRecipients->Domain);
+        if ($this->messageRecipients->Standing == MESSAGE_READ) {
+          $zSTRINGS->Lookup ('LABEL.READ');
+          $zAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
+        } else {
+          $zSTRINGS->Lookup ('LABEL.UNREAD');
+          $zAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
+        } // if
+        $bufferarray[] =  $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/recipient.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
-      $buffer = join (', ', $bufferarray);
+      $buffer = join (' ', $bufferarray);
       
       return ($buffer);
     } // BufferRecipientList

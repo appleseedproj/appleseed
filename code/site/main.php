@@ -79,7 +79,7 @@
   // Buffer the login box
   ob_start (); 
 
-  if ($gAUTHUSERNAME == '') {
+  if ($zAUTHUSER->Username == '') {
     // Include the login box tab object
     global $gLOCALLOGINTAB, $gREMOTELOGINTAB;
     $gLOCALLOGINTAB = ""; $gREMOTELOGINTAB = "_off";
@@ -96,7 +96,7 @@
   // Buffer the invite box
   ob_start (); 
  
-  if ( ($gAUTHUSERNAME != '') AND ($gSETTINGS['UseInvites'] == ON) AND 
+  if ( ($zAUTHUSER->Username != '') AND ($gSETTINGS['UseInvites'] == ON) AND 
        ($gINVITEAMOUNT > 0) ) {
     // Include the login box object
     $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/invitebox.aobj", INCLUDE_SECURITY_NONE);

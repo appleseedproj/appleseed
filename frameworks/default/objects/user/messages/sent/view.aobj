@@ -29,12 +29,11 @@
    <div id='header'>
     <div id='top'>
      <span id='subject'><?php echo $zMESSAGE->Subject; ?></a></span>
-     <span id='status'><?php echo $bREADSTATUS; ?></a></span>
+     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
     </div> <!-- #top -->
   
     <div id='bottom'>
      <span id='recipients'><?php echo $bRECIPIENTLIST; ?></span>
-     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
     </div> <!-- #bottom -->
    </div> <!-- #header -->
  

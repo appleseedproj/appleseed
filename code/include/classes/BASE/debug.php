@@ -107,20 +107,34 @@
       $gCOUNT = NULL; $gSTRING = NULL; $gTYPE = NULL; $gFILE = NULL; $gLINE = NULL;
       
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.top.aobj", INCLUDE_SECURITY_NONE);
-      $oddeven = "even";
-      foreach ($this->ErrorList as $gCOUNT => $info) {
-        // Switch the class for every other row.
-        $gSTRING = $info['string'];
-        $gTYPE = $info['type'];
-        $gFILE = $info['file'];
-        $gLINE = $info['line'];
-        $oddeven = ($oddeven == "even") ? "odd" : "even";
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
-      } // foreach
+      if (count($this->ErrorList) > 0) {
+        $oddeven = "even";
+        foreach ($this->ErrorList as $gCOUNT => $info) {
+          // Switch the class for every other row.
+          $gSTRING = $info['string'];
+          $gTYPE = $info['type'];
+          $gFILE = $info['file'];
+          $gLINE = $info['line'];
+          $oddeven = ($oddeven == "even") ? "odd" : "even";
+          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
+        } // foreach
+      } else {
+        $this->Broadcast ('No Errors Or Warnings Found.');
+      } // if
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.bottom.aobj", INCLUDE_SECURITY_NONE);
       
       return (TRUE);
     } // DislayErrorList
+
+    // Copy the cBASEDATACLASS::Broadcast function.
+    function Broadcast ($pMESSAGE, $pERROR = 0) {
+      $TEMP = new cBASEDATACLASS ();
+      $TEMP->Error = $pERROR;
+      $TEMP->Message = $pMESSAGE;
+      $TEMP->Broadcast();
+      unset ($TEMP);
+      return (TRUE);
+    } // Broadcast
     
     function DisplayDebugInformation () {
       
@@ -235,4 +249,4 @@
       return (TRUE);
       
     } // HandleError
-  }
+  } // cDEBUG

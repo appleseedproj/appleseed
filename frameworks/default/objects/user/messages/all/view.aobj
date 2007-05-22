@@ -30,12 +30,12 @@
    <div id='header'>
     <div id='top'>
      <span id='subject'><?php echo $zMESSAGE->Subject; ?></span>
-     <span id='labels'><?php echo $gLABELLIST; ?></span>
+     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
     </div> <!-- #top -->
   
     <div id='bottom'>
      <span id='sender'><?php $zHTML->UserLink ($zMESSAGE->Sender_Username); ?></span>
-     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
+     <span id='labels'><?php echo $gLABELLIST; ?></span>
     </div> <!-- #bottom -->
    </div> <!-- #header -->
  

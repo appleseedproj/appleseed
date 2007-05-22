@@ -835,7 +835,8 @@
       
       // Select the message.
       $sql_statement = "
-        SELECT $messageStore.Subject AS Subject,  
+        SELECT $messageStore.tID AS tID,
+               $messageStore.Subject AS Subject,  
                $messageStore.Body AS Body,
                $messageStore.Stamp AS Stamp,
                $userProfile.Fullname AS Fullname,
@@ -863,44 +864,31 @@
       
       $result = mysql_fetch_assoc ($sql_result);
       global $gSUBJECT, $gBODY, $gSTAMP, $gFULLNAME;
+      $tID = $result['tID'];
       $gSUBJECT = $result['Subject'];
       $gBODY = $result['Body'];
       $gSTAMP = $result['Stamp'];
       $gFULLNAME = $result['Fullname'];
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       
+      // Mark message as read.
+      $sql_statement = "
+        UPDATE $messageRecipients 
+        SET    $messageRecipients.Standing = 2 
+        WHERE  $messageRecipients.Identifier = '%s' 
+        AND    $messageRecipients.Standing = 1 
+        AND    $messageRecipients.messageStore_tID = '%s'
+      ";
+                       
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pIDENTIFIER),
+                                $tID);
+                                
+      $sql_result = mysql_query ($sql_statement);
+      
       $this->XML->Load ("code/include/data/xml/message_retrieve.xml");
       
       return (TRUE);
-      /* 
-      // NOTE: Replace this with proper class data.
-      $zMESSAGE = new cMESSAGE ();
-      $messagecriteria = array ("Sender_Username" => $gSENDER_USERNAME,
-                                "Identifier"      => $gIDENTIFIER);
-      $zMESSAGE->messageStore->SelectByMultiple ($messagecriteria);
-      $zMESSAGE->messageStore->FetchArray ();
-      if ($zMESSAGE->messageStore->CountResult () == 0) {
-        $code = 3000;
-        $message = $zFRIENDS->Message;
-        $return = $zXML->ErrorData ($code, $message);
-      } else {
-        global $gMESSAGEBODY, $gMESSAGESUBJECT, $gMESSAGESTAMP;
-        $gMESSAGEBODY = $zMESSAGE->messageStore->Body;
-        $gMESSAGESUBJECT = $zMESSAGE->messageStore->Subject;
-        $gMESSAGESTAMP = $zMESSAGE->messageStore->Stamp;
-        $USER = new cUSER ();
-        $USER->Select ("Username", $zMESSAGE->messageStore->Sender_Username);
-        $USER->FetchArray ();
-        $gMESSAGEFULLNAME = $USER->userProfile->Fullname;
-        $data = implode ("", file ("code/include/data/xml/message_retrieve.xml"));
-        $return = $zAPPLE->ParseTags ($data);
-
-        // Mark message as read.
-        $query = "UPDATE " . $zMESSAGE->messageStore->TableName . " SET Standing = " . MESSAGE_READ . " WHERE tID = " . $zMESSAGE->messageStore->tID . " AND Standing = " . MESSAGE_UNREAD;
-        $zMESSAGE->messageStore->Query ($query);
-
-      } // if
-      */
     } // MessageRetrieve
     
     function MessageNotify ($pRECIPIENT, $pFULLNAME, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {

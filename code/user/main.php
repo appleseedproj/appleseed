@@ -84,7 +84,7 @@
   global $gUSERTABS;
 
   // Check if focus user is logged in, or if administrator is viewing.
-  if ($gAUTHUSERID == $gFOCUSUSERID) {
+  if ($zAUTHUSER->uID == $gFOCUSUSERID) {
     // Authorized user is viewing.
     $gUSERTABS = "/objects/tabs/users/focus.aobj";
     $gUSERTABSLOCATION = $gTHEMELOCATION . $gUSERTABS;
@@ -202,7 +202,7 @@
     } // if
 
     // Check if a user is logged in.
-    if ($gAUTHUSERNAME) {
+    if ($zAUTHUSER->Username) {
       // Buffer the contact box.
       global $bCONTACTBOX;
 

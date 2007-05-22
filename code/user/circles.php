@@ -38,7 +38,7 @@
   require_once ('code/include/classes/friends.php'); 
 
   // Check if user has necessary access to this page.
-  if ($gFOCUSUSERID != $gAUTHUSERID) {
+  if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
       $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);
@@ -47,7 +47,7 @@
   } // if
 
   // Create a warning message if user has no write access.
-  if ( ($gAUTHUSERID != $gFOCUSUSERID) and
+  if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
        ($zLOCALUSER->userAccess->a == TRUE) and
        ($zLOCALUSER->userAccess->w == FALSE) ) {
     $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
@@ -111,7 +111,7 @@
 
     case 'MOVE_UP':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
@@ -143,7 +143,7 @@
 
     case 'MOVE_DOWN':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
@@ -182,7 +182,7 @@
 
     case 'DELETE_ALL':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
@@ -224,7 +224,7 @@
 
     case 'SAVE':
       // Check if user has write access;
-      if ( ($gFOCUSUSERID != $gAUTHUSERID) and 
+      if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);

@@ -137,175 +137,135 @@
       // Grab the fields from the database.
       $this->Fields();
  
+      return (TRUE);
     } // Constructor
 
     // Notify the user that a friend request has been made.
-    function NotifyApproval ($pEMAIL, $pREQUESTEDUSER, $pREQUESTUSER, $pREQUESTEDUSERNAME, $pREQUESTEDDOMAIN = NULL) {
+    function NotifyApprove ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
       global $zSTRINGS, $zAPPLE;
 
-      global $gREQUESTUSER, $gREQUESTEDUSER;
-      $gREQUESTUSER = $pREQUESTUSER;
-      $gREQUESTEDUSER = $pREQUESTEDUSER;
+      global $gSITEDOMAIN;
+      
+      global $gSOURCEUSER, $gTARGETUSER;
+      $gSOURCEUSER = $pSOURCEUSER;
+      $gTARGETUSER = $pTARGETUSER;
 
       global $gFRIENDSURL, $gSITEURL;
-      if ($pREQUESTEDDOMAIN) {
-        $gFRIENDSURL = "http://" . $pREQUESTEDDOMAIN . "/profile/" . $pREQUESTEDUSERNAME . "/friends/";
+      if ($pTARGETDOMAIN) {
+        $gFRIENDSURL = "http://" . $pTARGETDOMAIN . "/profile/" . $pTARGETUSERNAME . "/friends/";
+        $address = $pTARGETUSERNAME . '@' . $pTARGETDOMAIN;
       } else {
-        $gFRIENDSURL = $gSITEURL . "/profile/" . $pREQUESTEDUSERNAME . "/friends/";
+        $gFRIENDSURL = $gSITEURL . "/profile/" . $pTARGETUSERNAME . "/friends/";
+        $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
-
-      $to = $pEMAIL;
 
       $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.APPROVE');
       $subject = $zSTRINGS->Output;
 
       $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.APPROVE');
       $body = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.FRIENDS.APPROVE');
-      $from = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.FRIENDS.APPROVE');
-      $fromname = $zSTRINGS->Output;
-
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
-
-      $zAPPLE->Mailer->Send();
-
-      $zAPPLE->Mailer->ClearAddresses();
-
-      unset ($to);
-      unset ($subject);
-      unset ($body);
+      
+      $MESSAGE = new cMESSAGE ();
+      $MESSAGE->Send ($address, $subject, $body);
+      unset ($MESSAGE); 
 
       return (TRUE);
-
-    } // NotifyApproval
+    } // NotifyApprove
 
     // Notify the user that a friend has been deleted.
-    function NotifyDelete ($pEMAIL, $pREQUESTEDUSER, $pREQUESTUSER, $pREQUESTEDUSERNAME) {
+    function NotifyRemove ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
       global $zSTRINGS, $zAPPLE;
 
-      global $gREQUESTUSER, $gREQUESTEDUSER;
-      $gREQUESTUSER = $pREQUESTUSER;
-      $gREQUESTEDUSER = $pREQUESTEDUSER;
+      global $gSITEDOMAIN;
+      
+      global $gSOURCEUSER, $gTARGETUSER;
+      $gSOURCEUSER = $pSOURCEUSER;
+      $gTARGETUSER = $pTARGETUSER;
 
       global $gFRIENDSURL, $gSITEURL;
-      $gFRIENDSURL = $gSITEURL . "/profile/" . $pREQUESTEDUSERNAME . "/friends/";
+      if ($pTARGETDOMAIN) {
+        $gFRIENDSURL = "http://" . $pTARGETDOMAIN . "/profile/" . $pTARGETUSERNAME . "/friends/";
+        $address = $pTARGETUSERNAME . '@' . $pTARGETDOMAIN;
+      } else {
+        $gFRIENDSURL = $gSITEURL . "/profile/" . $pTARGETUSERNAME . "/friends/";
+        $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
+      } // if
 
-      $to = $pEMAIL;
-
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.DELETE');
+      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.REMOVE');
       $subject = $zSTRINGS->Output;
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.DELETE');
+      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.REMOVE');
       $body = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.FRIENDS.DELETE');
-      $from = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.FRIENDS.DELETE');
-      $fromname = $zSTRINGS->Output;
-
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
-
-      $zAPPLE->Mailer->Send();
-
-      $zAPPLE->Mailer->ClearAddresses();
-
-      unset ($to);
-      unset ($subject);
-      unset ($body);
+      
+      $MESSAGE = new cMESSAGE ();
+      $MESSAGE->Send ($address, $subject, $body);
+      unset ($MESSAGE); 
 
       return (TRUE);
-
-    } // NotifyDelete
+    } // NotifyRemove
 
     // Notify the user that a friend request has been denied.
-    function NotifyDenial ($pEMAIL, $pREQUESTEDUSER, $pREQUESTUSER, $pREQUESTEDUSERNAME) {
+    function NotifyDeny ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
       global $zSTRINGS, $zAPPLE;
 
-      global $gREQUESTUSER, $gREQUESTEDUSER;
-      $gREQUESTUSER = $pREQUESTUSER;
-      $gREQUESTEDUSER = $pREQUESTEDUSER;
+      global $gSITEDOMAIN;
+      
+      global $gSOURCEUSER, $gTARGETUSER;
+      $gSOURCEUSER = $pSOURCEUSER;
+      $gTARGETUSER = $pTARGETUSER;
 
       global $gFRIENDSURL, $gSITEURL;
-      $gFRIENDSURL = $gSITEURL . "/profile/" . $pREQUESTEDUSERNAME . "/friends/";
-
-      $to = $pEMAIL;
+      if ($pTARGETDOMAIN) {
+        $gFRIENDSURL = "http://" . $pTARGETDOMAIN . "/profile/" . $pTARGETUSERNAME . "/friends/";
+        $address = $pTARGETUSERNAME . '@' . $pTARGETDOMAIN;
+      } else {
+        $gFRIENDSURL = $gSITEURL . "/profile/" . $pTARGETUSERNAME . "/friends/";
+        $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
+      } // if
 
       $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.DENY');
       $subject = $zSTRINGS->Output;
 
       $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.DENY');
       $body = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.FRIENDS.DENY');
-      $from = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.FRIENDS.DENY');
-      $fromname = $zSTRINGS->Output;
-
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
-
-      $zAPPLE->Mailer->Send();
-
-      $zAPPLE->Mailer->ClearAddresses();
-
-      unset ($to);
-      unset ($subject);
-      unset ($body);
-
-      return (TRUE);
-
-    } // NotifyDenial
-
-    // Notify the user that a friend request has been made.
-    function NotifyRequest ($pREQUESTEDUSER, $pREQUESTUSER, $pREQUESTEDUSERNAME, $pREQUESTEDDOMAIN = NULL) {
-      
-      global $zSTRINGS, $zAPPLE;
-
-      global $gREQUESTUSER, $gREQUESTEDUSER;
-      $gREQUESTUSER = $pREQUESTUSER;
-      $gREQUESTEDUSER = $pREQUESTEDUSER;
-
-      global $gFRIENDSURL, $gSITEURL;
-      if ($pREQUESTEDDOMAIN) {
-        $gFRIENDSURL = "http://" . $pREQUESTEDDOMAIN . "/profile/" . $pREQUESTEDUSERNAME . "/friends/requests/";
-      } else {
-        $gFRIENDSURL = $gSITEURL . "/profile/" . $pREQUESTEDUSERNAME . "/friends/requests/";
-      } // if
-
-      global $gSUBJECT, $gBODY;
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.REQUEST');
-      $gSUBJECT = $zSTRINGS->Output;
-
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.REQUEST');
-      $gBODY = $zSTRINGS->Output;
       
       $MESSAGE = new cMESSAGE ();
-      $MESSAGE->Send ();
+      $MESSAGE->Send ($address, $subject, $body);
       unset ($MESSAGE); 
 
-      unset ($gSUBJECT);
-      unset ($gBODY);
       return (TRUE);
+    } // NotifyDeny
 
+    // Notify the user that a friend request has been made.
+    function NotifyRequest ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
+      global $zSTRINGS, $zAPPLE;
+
+      global $gSITEDOMAIN;
+      
+      global $gSOURCEUSER, $gTARGETUSER;
+      $gSOURCEUSER = $pSOURCEUSER;
+      $gTARGETUSER = $pTARGETUSER;
+
+      global $gFRIENDSURL, $gSITEURL;
+      if ($pTARGETDOMAIN) {
+        $gFRIENDSURL = "http://" . $pTARGETDOMAIN . "/profile/" . $pTARGETUSERNAME . "/friends/requests/";
+        $address = $pTARGETUSERNAME . '@' . $pTARGETDOMAIN;
+      } else {
+        $gFRIENDSURL = $gSITEURL . "/profile/" . $pTARGETUSERNAME . "/friends/requests/";
+        $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
+      } // if
+
+      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.REQUEST');
+      $subject = $zSTRINGS->Output;
+
+      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.REQUEST');
+      $body = $zSTRINGS->Output;
+      
+      $MESSAGE = new cMESSAGE ();
+      $MESSAGE->Send ($address, $subject, $body);
+      unset ($MESSAGE); 
+
+      return (TRUE);
     } // NotifyRequest
 
     function Circle () {
@@ -796,7 +756,7 @@
 
     function CountNewFriends () {
 
-      global $gAUTHUSERNAME;
+      global $zAUTHUSER;
       global $zLOCALUSER, $zSTRINGS, $zHTML, $zAPPLE;
 
       $zLOCALUSER->userInformation->Select ("userAuth_uID", $zLOCALUSER->uID);
@@ -814,7 +774,7 @@
         global $gFRIENDCOUNT;
         $gFRIENDCOUNT = $count;
         $zSTRINGS->Lookup ("LABEL.NEWFRIENDS", $zAPPLE->Context);
-        $return = $zHTML->CreateLink ("profile/$gAUTHUSERNAME/friends/requests/", $zAPPLE->ParseTags ($zSTRINGS->Output));
+        $return = $zHTML->CreateLink ("profile/$zAUTHUSER->Username/friends/requests/", $zAPPLE->ParseTags ($zSTRINGS->Output));
       } else {
         $return = OUTPUT_NBSP;
       } // if
@@ -1354,7 +1314,6 @@
     } // LongDistanceStatus
 
     function Approve ($pUSERNAME, $pNOTIFY = TRUE) {
-
       global $zAPPLE, $zSTRINGS, $zLOCALUSER;
 
       global $gSITEDOMAIN;
@@ -1369,7 +1328,6 @@
       $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
       $fullname = $USER->userProfile->GetAlias();
       $uid = $USER->uID;
-      unset ($USER);
       
       switch ($target_verification) {
         case FRIEND_VERIFIED:
@@ -1387,6 +1345,8 @@
           $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
           $this->Message = $zSTRINGS->Output;
           
+          if ($pNOTIFY) $this->NotifyApprove ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
+      
           $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
           $gCIRCLEVIEW = CIRCLE_NEWEST;
         break;
@@ -1427,6 +1387,8 @@
           $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
           $this->Message = $zSTRINGS->Output;
           
+          if ($pNOTIFY) $this->NotifyApprove ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
+      
           $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
           $gCIRCLEVIEW = CIRCLE_NEWEST;
         break;
@@ -1448,9 +1410,6 @@
           } // if
           
           // Add request record to target.
-          $USER = new cUSER();
-          $USER->Select ("Username", $pUSERNAME);
-          $USER->FetchArray ();
           $fullname = $USER->userProfile->GetAlias();
           $uid = $USER->uID;
           
@@ -1505,7 +1464,8 @@
       $this->DeleteLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN);
 
       // Notify requested user.
-      // if ($pNOTIFY) $this->NotifyDenial ($zLOCALUSER->userProfile->Email, $TARGETUSER->userProfile->GetAlias (), $SOURCEUSER->userProfile->GetAlias (), $SOURCEUSER->Username);
+      if ($pNOTIFY) $this->NotifyDeny ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
+      
 
       global $gDENIEDNAME;
       $gDENIEDNAME = $fullname;
@@ -1538,9 +1498,6 @@
       
       $this->DeleteLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN);
 
-      // Notify requested user.
-      // if ($pNOTIFY) $this->NotifyDenial ($zLOCALUSER->userProfile->Email, $TARGETUSER->userProfile->GetAlias (), $SOURCEUSER->userProfile->GetAlias (), $SOURCEUSER->Username);
-
       global $gDENIEDNAME;
       $gDENIEDNAME = $fullname;
 
@@ -1550,43 +1507,32 @@
       unset ($USER);
 
       return (TRUE);
-
     } // Cancel
 
-    function Remove ($pSOURCEUSERNAME, $pSOURCEDOMAIN, $pTARGETUSERNAME, $pTARGETDOMAIN, $pNOTIFY = TRUE) {
+    function Remove ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zSTRINGS;
+      global $zSTRINGS, $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
-      // Check if this is a long distance relationship.
-      if ($pSOURCEDOMAIN != $pTARGETDOMAIN) {
-        return ($this->LongDistanceRemove ($pSOURCEUSERNAME, $pSOURCEDOMAIN, $pTARGETUSERNAME, $pTARGETDOMAIN));
-      } // if
-
       // Get Information On The Source User.
-      $SOURCEUSER =  new cUSER ();
-      $SOURCEUSER->Select ("Username", $pSOURCEUSERNAME);
-      $SOURCEUSER->FetchArray ();
-
-      // Get Information On The Target User.
-      $TARGETUSER =  new cUSER ();
-      $TARGETUSER->Select ("Username", $pTARGETUSERNAME);
-      $TARGETUSER->FetchArray ();
+      $USER =  new cUSER ();
+      $USER->Select ("Username", $pUSERNAME);
+      $USER->FetchArray ();
 
       // Step 1: Remove friend.
 
       // Delete the requested record.
-      $denycriteria = array ("userAuth_uID"   => $SOURCEUSER->uID,
-                             "Username"       => $TARGETUSER->Username,
+      $denycriteria = array ("userAuth_uID"   => $USER->uID,
+                             "Username"       => $zLOCALUSER->Username,
                              "Domain"         => $gSITEDOMAIN);
       $this->SelectByMultiple ($denycriteria);
       $this->FetchArray ();
       $this->Delete ();
 
       // Update the target record.
-      $denycriteria = array ("userAuth_uID"   => $TARGETUSER->uID,
-                             "Username"       => $SOURCEUSER->Username,
+      $denycriteria = array ("userAuth_uID"   => $zLOCALUSER->uID,
+                             "Username"       => $USER->Username,
                              "Domain"         => $gSITEDOMAIN);
       $this->SelectByMultiple ($denycriteria);
       $this->FetchArray ();
@@ -1594,20 +1540,17 @@
       $this->Delete ();
 
       // Notify requested user.
-      // if ($pNOTIFY) $this->NotifyDelete ($TARGETUSER->userProfile->Email, $SOURCEUSER->userProfile->GetAlias (), $TARGETUSER->userProfile->GetAlias (), $TARGETUSER->Username);
+      if ($pNOTIFY) $this->NotifyRemove ($USER->userProfile->GetAlias (), 
+                                         $zLOCALUSER->userProfile->GetAlias (), 
+                                         $USER->Username);
 
       global $gFRIENDUSERNAME;
-      $gFRIENDUSERNAME = $TARGETUSER->userProfile->GetAlias ();
+      $gFRIENDUSERNAME = $USER->userProfile->GetAlias ();
 
       $zSTRINGS->Lookup ('MESSAGE.DELETE', 'USER.FRIENDS');
       $this->Message = $zSTRINGS->Output;
 
-      unset ($SOURCEUSER);
-      unset ($TARGETUSER);
-      unset ($FRIENDCHECK);
-
       return (TRUE);
-
     } // Remove
 
     function RemoveAll ($pMASSLIST) {
@@ -1630,7 +1573,7 @@
         $this->Select ("tID", $tidvalue);
         $this->FetchArray ();
 
-        $this->Remove ($zAUTHUSER->Username, $zAUTHUSER->Domain, $this->Username, $this->Domain);
+        $this->Remove ($this->Username);
       
         if (!$this->Error) {
           $zSTRINGS->Lookup ('MESSAGE.DELETEALL', $zAPPLE->Context);

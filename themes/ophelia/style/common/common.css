@@ -438,6 +438,24 @@ a:hover span.linkinfo {
  width:100%;
 }
 
+#debug ul p.message,
+#debug ul p.message:hover {
+ text-align:center;
+ background:none;
+ font-weight:bold;
+ color:#0106aa;
+ border:none;
+}
+
+#debug ul p.error,
+#debug ul p.error:hover {
+ text-align:center;
+ background:none;
+ font-weight:bold;
+ color:#cc151a;
+ border:none;
+}
+
 #debug #container {
  float:left;
  width:80%;

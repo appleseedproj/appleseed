@@ -35,7 +35,7 @@
   // +-------------------------------------------------------------------+
  
   // Check if user is admin.
-  if ($gFOCUSUSERID != $gAUTHUSERID) {
+  if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
       $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);
@@ -44,7 +44,7 @@
   } // if
 
   // Create a warning message if user has no write access.
-  if ( ($gAUTHUSERID != $gFOCUSUSERID) and
+  if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
        ($zLOCALUSER->userAccess->a == TRUE) and
        ($zLOCALUSER->userAccess->w == FALSE) ) {
     $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
@@ -99,7 +99,7 @@
     case 'SAVE':
 
       // Check if admin user has proper access.
-      if ( ($gAUTHUSERID != $gFOCUSUSERID) and
+      if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
         $zLOCALUSER->Message = $zSTRINGS->Output;
@@ -142,7 +142,7 @@
     case 'DELETE_ICON': 
 
       // Check if admin user has proper access.
-      if ( ($gAUTHUSERID != $gFOCUSUSERID) and
+      if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
         $zLOCALUSER->Message = $zSTRINGS->Output;
@@ -156,7 +156,7 @@
     case 'SAVE_ALL':
 
       // Check if admin user has proper access.
-      if ( ($gAUTHUSERID != $gFOCUSUSERID) and
+      if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
         $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
         $zLOCALUSER->Message = $zSTRINGS->Output;

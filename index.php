@@ -58,6 +58,7 @@
   $INSTALL->CheckMagicQuotes ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckPhotoDirectory ();
+  $INSTALL->CheckAttachmentDirectory ();
   $INSTALL->CheckSiteData ();
   $INSTALL->CheckHtaccessFinal ();
   
@@ -207,6 +208,21 @@ class cINSTALL {
   
     return (TRUE);
   } // CheckRegisterGlobals
+  
+  function CheckAttachmentDirectory () {
+    global $Error, $ErrorMark;
+    
+    // Check if photo directory is writable.
+    if (!is_writable (getcwd() . '/attachments/')) {
+      $Error['attachment_directory'] = TRUE;
+      $ErrorMark['attachment_directory'] = "<span class='no'>N</span>";
+    } else {
+      $Error['attachment_directory'] = FALSE;
+      $ErrorMark['attachment_directory'] = "<span class='yes'>Y</span>";
+    } // if
+    
+    return (TRUE);
+  } // CheckAttachmentDirectory
   
   function CheckPhotoDirectory () {
     global $Error, $ErrorMark;
@@ -521,6 +537,9 @@ class cINSTALL {
         <span class='label'>Is the photos/ directory writable?</span>
         <?php echo $ErrorMark['photo_directory']; ?>
         
+        <span class='label'>Is the attachments/ directory writable?</span>
+        <?php echo $ErrorMark['attachment_directory']; ?>
+        
         <span class='label'>Is data/site.adat writable?</span>
         <?php echo $ErrorMark['site_data']; ?>
         
@@ -615,6 +634,9 @@ class cINSTALL {
         
         <span class='label'>Is the photos/ directory writable?</span>
         <?php echo $ErrorMark['photo_directory']; ?>
+        
+        <span class='label'>Is the attachments/ directory writable?</span>
+        <?php echo $ErrorMark['attachment_directory']; ?>
         
         <span class='label'>Is data/site.adat writable?</span>
         <?php echo $ErrorMark['site_data']; ?>

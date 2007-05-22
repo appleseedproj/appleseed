@@ -1877,15 +1877,15 @@ form#compose p.error:hover {
  font-size:12px;
 }
 
-#user #messages #container #view #header #top span#status,
-#user #messages #container #view #header #top span#labels {
+#user #messages #container #view #header #bottom span#labels {
  float:right;
  padding-right:10px;
 }
 
-#user #messages #container #view #header #top span#labels a {
+#user #messages #container #view #header #bottom span#labels a {
  color:#0232ff;
  background-color:#cfd3d8;
+ padding:0 2px 0 2px;
  font-style:italic;
 }
 
@@ -1898,8 +1898,15 @@ form#compose p.error:hover {
  float:left;
 }
 
-#user #messages #container #view #header #bottom span#stamp {
+#user #messages #container #view #header #bottom .recipient {
+ padding-right:15px;
+ float:left;
+ clear:none;
+} 
+
+#user #messages #container #view #header #top span#stamp {
  float:right;
+ padding:7px 10px 0 0;
 }
 
 #user #messages #container #view #body {

@@ -62,7 +62,7 @@
   
       // Global Variables
       global $gSETTINGS, $gLOGINSESSION, $gSITETITLE, $gSITEURL;
-      global $gAUTHUSERID, $gAUTHUSERNAME, $gFOCUSUSERID, $gFOCUSUSERNAME;
+      global $gFOCUSUSERID, $gFOCUSUSERNAME;
       global $gPROFILEREQUEST, $gPROFILEACTION, $gPROFILESUBACTION;
       global $gDEBUG;
       global $gACTION;
@@ -146,8 +146,8 @@
         // $zLOCALUSER->Access ();
 
         // Global variables
-        $gAUTHUSERID = $zLOCALUSER->uID;
-        $gAUTHUSERNAME = $zLOCALUSER->Username;
+        $this->SetTag ('AUTHUSERID', $zLOCALUSER->uID);
+        $this->SetTag ('AUTHUSERNAME', $zLOCALUSER->Username);
   
       } // if
   
@@ -215,7 +215,6 @@
         $gGLOBALIZED = TRUE;
       } // if
   
-      global $gAUTHUSERID, $gAUTHUSERNAME, $gAUTHUSERADMIN;
       global $gERRORMSG, $gERRORTITLE;
   
       global $gSITEDOMAIN;
@@ -345,7 +344,6 @@
       // Appleseed BASE specific.  Do not modify.
 
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
-      $gAUTHUSERID = 0; $gAUTHUSERNAME = ''; $gAUTHUSERADMIN = 0;
   
       $gALTERNATE = 0;
   
@@ -947,6 +945,27 @@
 
     } // GeneratePassword
   
+    // Assign an ASD Tag value.
+    function SetTag ($pTAGNAME, $pTAGVALUE) {
+
+      $this->Tags[$pTAGNAME] = $pTAGVALUE;
+
+      return (TRUE);
+    } // SetTag
+
+    // Remove an ASD Tag value.
+    function RemoveTag ($pTAGNAME) {
+
+      unset ($this->Tags[$pTAGNAME]);
+
+      return (TRUE);
+    } // RemoveTag
+
+    // Return an ASD Tag value.
+    function GetTag ($pTAGNAME) {
+      return ($this->Tags[$pTAGNAME]);
+    } // GetTag
+
   } // cAPPLICATION
 
 ?>

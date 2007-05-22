@@ -71,7 +71,7 @@
   global $zLOCALUSER;
 
   // Create a warning message if user has no write access.
-  if ( ($gAUTHUSERID != $gFOCUSUSERID) and
+  if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
        ($zLOCALUSER->userAccess->a == TRUE) and
        ($zLOCALUSER->userAccess->w == FALSE) ) {
     $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.JOURNAL');
@@ -98,7 +98,7 @@
   $gJOURNALVIEWTYPE = "JOURNALVIEW";
 
   // Set the journal view to ADMIN if user has access.
-  if ( ($gAUTHUSERID == $gFOCUSUSERID) or
+  if ( ($zAUTHUSER->uID == $gFOCUSUSERID) or
        ($zLOCALUSER->userAccess->a == TRUE) ) {
 
     // Load the ADMIN view menu.

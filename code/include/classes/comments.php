@@ -645,7 +645,7 @@
 
       global $gCOMMENTVIEW;
 
-      global $zLOCALUSER, $gAUTHUSERNAME, $gFOCUSUSERNAME, $gAUTHDOMAIN;
+      global $zAUTHUSER, $zLOCALUSER, $gFOCUSUSERNAME;
 
       switch ($gCOMMENTVIEW) {
         case COMMENT_VIEW_PROFILE:
@@ -657,8 +657,8 @@
           $gCOMMENTVIEWFLAG = "nested";
 
           // Check if user is admin or is viewing their own page.
-          if ( ($gFOCUSUSERNAME == $gAUTHUSERNAME) and
-               ($gSITEDOMAIN == $gAUTHDOMAIN) ) {
+          if ( ($gFOCUSUSERNAME == $zAUTHUSER->Username) and
+               ($gSITEDOMAIN == $zAUTHUSER->Domain) ) {
             $gCOMMENTVIEWFLAG = "editor";
           } else {
             if ($zLOCALUSER->userAccess->a == TRUE) {
@@ -828,11 +828,11 @@
     // Initialize the commenting subsystem.
     function Initialize () {
 
-      global $zLOCALUSER, $zAPPLE;
+      global $zAUTHUSER, $zLOCALUSER, $zAPPLE;
 
       global $gCOMMENTVIEW, $gCOMMENTVIEWTYPE, $gCOMMENTVIEWADMIN; 
       global $gPOSTDATA;
-      global $gFOCUSUSERNAME, $gAUTHUSERNAME, $gAUTHDOMAIN;
+      global $gFOCUSUSERNAME;
       global $gSITEDOMAIN;
       global $gCOMMENTSELECTBUTTON;
       global $gSCROLLSTEP, $gSCROLLSTART, $gSCROLLMAX;
@@ -858,8 +858,8 @@
       $gPOSTDATA['COMMENTVIEW'] = $gCOMMENTVIEW;
 
       // Check if user is admin or is viewing their own page.
-      if ( ($gFOCUSUSERNAME == $gAUTHUSERNAME) and
-           ($gSITEDOMAIN == $gAUTHDOMAIN) ) {
+      if ( ($gFOCUSUSERNAME == $zAUTHUSER->Username) and
+           ($gSITEDOMAIN == $zAUTHUSER->Domain) ) {
         $gCOMMENTVIEWTYPE = "COMMENTVIEWADMIN";
       } else {
         if ($zLOCALUSER->userAccess->e == TRUE) {

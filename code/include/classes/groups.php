@@ -161,11 +161,11 @@
       global $gCONTENTGROUPSMEMBERSTAB;
       global $gCONTENTGROUPSOPTIONSTAB;
 
-      global $zLOCALUSER, $zAPPLE;
+      global $zAUTHUSER, $zLOCALUSER, $zAPPLE;
 
       global $gGROUPVIEW, $gGROUPVIEWTYPE, $gGROUPVIEWADMIN; 
       global $gPOSTDATA;
-      global $gFOCUSUSERNAME, $gAUTHUSERNAME, $gAUTHDOMAIN;
+      global $gFOCUSUSERNAME;
       global $gSITEDOMAIN;
       global $gSELECTBUTTON;
       global $gSCROLLSTEP, $gSCROLLSTART, $gSCROLLMAX;
@@ -195,8 +195,8 @@
       $gPOSTDATA['GROUPVIEW'] = $gGROUPVIEW;
 
       // Check if user is admin or is viewing their own page.
-      if ( ($gFOCUSUSERNAME == $gAUTHUSERNAME) and
-           ($gSITEDOMAIN == $gAUTHDOMAIN) ) {
+      if ( ($gFOCUSUSERNAME == $zAUTHUSER->Username) and
+           ($gSITEDOMAIN == $zAUTHUSER->Domain) ) {
         $gGROUPVIEWTYPE = "GROUPVIEWADMIN";
       } else {
         if ($zLOCALUSER->userAccess->e == TRUE) {
@@ -699,7 +699,9 @@
 
       global $gGROUPVIEW;
 
-      global $zLOCALUSER, $gAUTHUSERNAME, $gFOCUSUSERNAME, $gAUTHDOMAIN;
+      global $zAUTHUSER, $zLOCALUSER;
+ 
+      global $gFOCUSUSERNAME;
 
       switch ($gGROUPVIEW) {
         case GROUP_VIEW_EDITOR:
@@ -708,8 +710,8 @@
           $gGROUPVIEWFLAG = "nested";
 
           // Check if user is admin or is viewing their own page.
-          if ( ($gFOCUSUSERNAME == $gAUTHUSERNAME) and
-               ($gSITEDOMAIN == $gAUTHDOMAIN) ) {
+          if ( ($gFOCUSUSERNAME == $zAUTHUSER->Username) and
+               ($gSITEDOMAIN == $zAUTHUSER->Domain) ) {
             $gGROUPVIEWFLAG = "editor";
           } else {
             if ($zLOCALUSER->userAccess->a == TRUE) {

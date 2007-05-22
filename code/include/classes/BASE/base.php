@@ -437,7 +437,7 @@
           // Assume user defined types are correct, unless unassigned.
 
           // Check if the NULL value was not assigned.
-          if ($this->FieldDefinitions[$fieldname]['null'] == '') {
+          if (!isset($this->FieldDefinitions[$fieldname]['null'])) {
             if ($fieldarray['Null'] == 'YES') 
               $this->FieldDefinitions[$fieldname]['null'] = YES;
             else 
@@ -445,7 +445,7 @@
           } // if
 
           // Check if the DATATYPE value was not assigned.
-          if ($this->FieldDefinitions[$fieldname]['datatype'] == '') {
+          if (!isset($this->FieldDefinitions[$fieldname]['datatype'])) {
             // Determine the type and size of the field.
             $ftype = $fieldarray['Type'];
             $finaltype = preg_replace ("/\(\w+\)/", "", $ftype);
@@ -1831,7 +1831,7 @@
       unset ($gBROWSERVER);
       unset ($gBROWSEROS);
     
-      if (!$HTTP_USER_AGENT) $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
+      if (!isset($HTTP_USER_AGENT)) $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
    
       if (ereg( 'MSIE ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version)) {
         $gBROWSERVER=$log_version[1];
@@ -2323,8 +2323,6 @@
     function CreateUserLink ($pUSERNAME, $pDOMAIN = NULL, $pLINKICON = TRUE) {
 
       global $gUSERTHEME, $gTHEMELOCATION;
-      global $gLINKUSERTARGET;
-      global $gLINKUSERNAME;
       global $gLINKICON;
       global $gLINKDOMAIN;
       global $gSITEDOMAIN;
@@ -2335,9 +2333,10 @@
 
       $output = "";
 
-      $gLINKUSERNAME = $pUSERNAME;
+      $zAPPLE->SetTag ('LINKUSERNAME',$pUSERNAME);
+
       if (!$pDOMAIN) $pDOMAIN = $gSITEDOMAIN;
-      $gLINKDOMAIN = $pDOMAIN;
+      $zAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
 
       if ($pUSERNAME == ANONYMOUS) {
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
@@ -2360,16 +2359,16 @@
             // Redirect to home domain for remote authentication.
             $target = $pDOMAIN;
             $location = "/profile/" . $pUSERNAME . "/";
-            $gLINKUSERTARGET = "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location;
+            $zAPPLE->SetTag ('LINKUSERTARGET', "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location);
           } else {
-            $gLINKUSERTARGET = 'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/';
+            $zAPPLE->SetTag ('LINKUSERTARGET', 'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/');
           } // if
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/remoteuser.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remoteuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output = str_replace("\n", "", $output);
           $output = str_replace("\r", "", $output);
         } else {
-          $gLINKUSERTARGET = '/profile/' . $pUSERNAME . '/';
+          $zAPPLE->SetTag ('LINKUSERTARGET', '/profile/' . $pUSERNAME . '/');
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/localuser.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/localuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output = str_replace("\n", "", $output);
@@ -2377,8 +2376,6 @@
         } // if
       } // if
   
-      unset ($gLINKUSERNAME);
-      unset ($gLINKUSERTARGET);
       return ($output);
       
     } // CreateUserLink
@@ -2912,7 +2909,7 @@
 
     // Output the header object.
     function Header () {
-      global $gAUTHUSERNAME, $gAUTHUSERID, $gTHEMELOCATION;
+      global $gTHEMELOCATION;
       global $zSTRINGS, $zAPPLE;
       global $zAUTHUSER, $zLOCALUSER;
 
@@ -2941,12 +2938,12 @@
 
     // Output the footer object.
     function Footer () {
-      global $gAUTHUSERNAME, $gTHEMELOCATION;
+      global $gTHEMELOCATION;
       global $zSTRINGS, $zLOCALUSER, $zAPPLE;
   
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/admin/");
   
-      if ($gAUTHUSERNAME != '') { 
+      if ( !$zAUTHUSER->Anonymous) {
         if ($zLOCALUSER->userAccess->r == TRUE) {
           // Push the admin footer.
           $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/admin.aobj");

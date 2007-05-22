@@ -287,7 +287,7 @@
   $gPAGESUBTITLE = ' - Login';
 
   // Refresh if successful in or if already logged in.
-  if ( ($gACTION == "LOGIN") OR ($gAUTHUSERNAME) ) {
+  if ( ($gACTION == "LOGIN") OR (!$zAUTHUSER->Anonymous) ) {
 
     // Refresh to the user's profile page.
     $refreshurl = "/profile/" . $zLOCALUSER->Username . "/";
