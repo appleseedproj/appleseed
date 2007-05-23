@@ -98,10 +98,6 @@ form#compose p.error:hover {
  padding:5px 5px 0 5px;
 }
 
-#user #scroll a {
- background:none;
-} 
-
 #user #scroll a.selected {
  font-size:11px;
  font-weight:bold;
@@ -2050,11 +2046,6 @@ form#compose p.error:hover {
  float:left;
  padding:5px 5px 0 5px;
 }
-
-#user #scroll a {
- background:none;
-} 
-
 
 /* CONTEXT: users.friends */
 

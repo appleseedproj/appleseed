@@ -1,5 +1,6 @@
 /* Appleseed General Style Definitions */
 
+
  /* -- NEW DEFINITIONS -- */
 
  #sectionA {
@@ -169,17 +170,16 @@
   margin:0px; padding:0px;
  }
 
- a {
-  text-decoration:none;
-  color:#3c4b33;
-  background-color:#cde1df;
- }
+a {
+ text-decoration:none;
+ background:none;
+ color:#311Aff;
+}
 
- a:hover {
-  text-decoration:underline;
-  background-color:#cde1df;
-  color:#000000;
- }
+a:hover {
+ background:#311Aff;
+ color:#ffffff;
+}
 
  h1.photo#name {
   color:#000000;
@@ -317,7 +317,10 @@
    background:#eaeaea;
   } 
 
-  a.localuser {
+  a.localuser,
+  a.localuser:hover {
+   background-color:#cde1df;
+   color:#000000;
   }
 
   a.remoteuser {
@@ -577,3 +580,25 @@ a:hover span.linkinfo {
 #debug #quick a {
  padding:0 20px;
 }
+
+/* ADSENSE */
+
+#adsense #caption {
+ float:left;
+ padding-left:15px;
+ padding-top:10px;
+ color:#000000;
+}
+
+#adsense #container {
+ float:left;
+ width:96%;
+ margin:0;
+ background:#ffffff;
+ border:1px solid #dddddd;
+ padding:10px 2%;
+ margin:0 0 0 5px;
+ -moz-border-radius:12px;
+ text-align:left;
+} 
+

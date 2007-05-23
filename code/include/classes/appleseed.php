@@ -625,6 +625,7 @@
   
       define ("MESSAGE_UNREAD", 1);
       define ("MESSAGE_READ", 2);
+      define ("MESSAGE_QUEUED", 3);
       
       define ("MENU_DISABLED",  "$!");
 
