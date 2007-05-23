@@ -1,4 +1,7 @@
  <div id='adsense'>
+  <div id='caption'>
+   Proceeds from ads support Appleseed software development. You can also <a href="http://sourceforge.net/donate/index.php?group_id=137488">click here to donate to The Appleseed Project.</a>
+  </div>
   <div id='container'>
    <script type="text/javascript"><!--
     google_ad_client = "ca-pub-4315338231272490";
