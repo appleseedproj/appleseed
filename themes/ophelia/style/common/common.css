@@ -319,16 +319,22 @@ a:hover {
 
   a.localuser,
   a.localuser:hover {
-   background-color:#cde1df;
-   color:#000000;
+   background-color:#311aff;
+   color:#ffffff;
+   font-weight:bold;
+   padding:0 2px;
   }
 
   a.remoteuser {
-   background:#d0cde1;
+   background:#676673;
+   color:#ffffff;
+   padding:0 2px;
+   font-weight:bold;
+   margin:0;
   } 
 
   a.remotegroup {
-   background:#d0cde1;
+   background:#676673;
   } 
 
  /* FOOTER  DEFINITION */
