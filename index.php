@@ -129,8 +129,8 @@ class cINSTALL {
   function CheckPHPVersion () {
     global $Error, $ErrorMark;
     
-    // Check for PHP version 4.1.0 or higher.
-    $required = '4.1.0';
+    // Check for PHP version 5.0.0 or higher.
+    $required = '5.0.0';
     if(!function_exists(version_compare)) {
       $Error['php_version'] = TRUE;
       $ErrorMark['php_version'] = "<span class='no'>N</span>";
@@ -158,10 +158,6 @@ class cINSTALL {
     $micro = $VersionArray[2];
     
     if ($main > 4) {
-      $Error['mysql_version'] = FALSE;
-      $ErrorMark['mysql_version'] = "<span class='yes'>Y</span>";
-    } elseif ($main == 4) {
-      // Add sub-checks for minor versions.
       $Error['mysql_version'] = FALSE;
       $ErrorMark['mysql_version'] = "<span class='yes'>Y</span>";
     } else {
@@ -546,10 +542,10 @@ class cINSTALL {
         <span class='label'>Is .htaccess writable?</span>
         <?php echo $ErrorMark['htaccess_final']; ?>
         
-        <span class='label'>PHP version 4.1.0 or higher? (Running <?php echo phpversion(); ?>)</span>
+        <span class='label'>PHP version 5.0 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
-        <span class='label'>Mysql version 4.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
+        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
         <?php echo $ErrorMark['mysql_version']; ?>
        </div>
        
@@ -644,10 +640,10 @@ class cINSTALL {
         <span class='label'>Is .htaccess writable?</span>
         <?php echo $ErrorMark['htaccess_final']; ?>
         
-        <span class='label'>PHP version 4.1.0 or higher? (Running <?php echo phpversion(); ?>)</span>
+        <span class='label'>PHP version 5.0 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
-        <span class='label'>Mysql version 4.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
+        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
         <?php echo $ErrorMark['mysql_version']; ?>
        </div> <!-- #check -->
        
