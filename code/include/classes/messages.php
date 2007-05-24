@@ -2253,7 +2253,7 @@
         $pSUBJECT = $zSTRINGS->Output;
       } // if
 
-      // Split recipients into remote and local lists.
+      // Verify addresses in list.
       foreach ($addresslist as $id => $address) {
         if (!$this->VerifyAddress ($address)) return (FALSE);
       } // foreach
@@ -2273,11 +2273,11 @@
         // Create a unique identifier.
         $identifier = $zAPPLE->RandomString (128);
         
-        // Receive Message.
+        // Send a message notification.
         if ($domain != $gSITEDOMAIN) {
           $this->RemoteMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
         } else {
-          $this->RecieveMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
+          $this->LocalMessage ($table_id, $zFOCUSUSER->uID, $address, $identifier, $pSUBJECT, $pBODY);
         } // if
       } // foreach
       
@@ -2377,7 +2377,7 @@
     } // StoreMessage
     
     // Recieve a local message.
-    function RecieveMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {
+    function LocalMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {
       global $gSITEDOMAIN;
       
       // Get the information about the sender.
@@ -2427,7 +2427,7 @@
 
       return (TRUE);
       
-    } // RecieveMessage
+    } // LocalMessage
     
     // Send a remote message notification.
     function RemoteMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {

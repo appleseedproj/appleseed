@@ -10,6 +10,10 @@ li:hover span {
  cursor:pointer;
 }
 
+li:hover a:hover {
+ color:#0232ff;
+}
+
 .even {
  float:left;
  background-color:#dce0e5;
@@ -273,11 +277,6 @@ form#compose p.error:hover {
  overflow:hidden;
  margin-right:5px;
 }
-
-#user #journal #editor li a {
- background:none;
- text-decoration:none;
-} 
 
 #user #journal #editor span {
  float:left; 
@@ -1471,7 +1470,6 @@ form#compose p.error:hover {
 
 #user #circles #editor li a {
  background:none;
- text-decoration:none;
 } 
 
 
@@ -2689,10 +2687,6 @@ form#compose p.error:hover {
  cursor:help;
 }
 
-#user #privacy li a {
- text-decoration:none;
-} 
-
 #user #privacy span {
  float:left;
 }
@@ -2840,7 +2834,6 @@ form#compose p.error:hover {
 
 #user #journal #listing li a {
  background:none;
- text-decoration:none;
 } 
 
 #user #journal #listing span {
