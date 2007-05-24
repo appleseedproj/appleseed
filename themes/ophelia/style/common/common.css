@@ -321,7 +321,6 @@ a:hover {
   a.localuser:hover {
    background-color:#311aff;
    color:#ffffff;
-   font-weight:bold;
    padding:0 2px;
   }
 
@@ -329,7 +328,6 @@ a:hover {
    background:#676673;
    color:#ffffff;
    padding:0 2px;
-   font-weight:bold;
    margin:0;
   } 
 
