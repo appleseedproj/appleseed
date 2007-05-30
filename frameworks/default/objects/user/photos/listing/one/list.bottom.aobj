@@ -1,8 +1,0 @@
-   </ul>
-   </div> <!-- #one -->
-  </div> <!-- #listing -->
- </div> <!-- #container -->
-
- <?php $zHTML->Scroll ($gTARGET, 'user.photos'); ?>
-
-</div> <!-- #photos -->
