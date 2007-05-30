@@ -30,7 +30,7 @@
 
    <div id='sectionBC'>
 
-    <!-- ## photos -->
+    <!-- ## photo -->
     <?php echo $bMAINSECTION; ?>
 
     <!-- ## comments obj -->

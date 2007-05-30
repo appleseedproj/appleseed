@@ -1,12 +1,32 @@
- <div id='photo' style="width=<?php echo $gPHOTOWIDTH; ?>px">
-  <div id='caption'>
-    <?php echo $gFILENAME; ?>
-  </div> <!-- #caption -->
- 
-  <div id='container'>
+<div id='photo'>
+
+ <!-- tabs objects -->
+ <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+ <div id='container'>
+  <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/<?php echo $gDIRECTORY; ?>/'>
+   <?php $zHTML->Post ($gBACKPOSTDATA); ?>
+   <?php $zHTML->Button ('back'); ?>
+  </form> <!-- #returnback -->
+
    <?php $zLOCALUSER->Broadcast(); ?>
-   <a href='#' onClick='window.close(); return true;'><img src='<?php echo $gPHOTOLOCATION; ?>' width='<?php echo $gPHOTOWIDTH ?>' height='<?php echo $gPHOTOHEIGHT ?>' border='0' /></a>
+   
+   <p id='heading'>
+    <?php echo $gFILENAME; ?>
+    <?php $zTOOLTIPS->Display ('HEADING'); ?>
+   </p> <!-- #heading -->
+
+   <p id='description'>
+    <?php echo $gDESCRIPTION; ?>
+    <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
+   </p> <!-- #description -->
+   
+   <p id='original'>
+    <?php $zHTML->Button ('original'); ?>
+   </p>
+
+   <img src='<?php echo $gPHOTOLOCATION; ?>' border='0' />
 
   </div> <!-- #container -->
 
-  <?php $zHTML->Scroll ($gSCROLLTARGET, 'user.photos'); ?>
+  <?php $zHTML->Scroll ($gSCROLLTARGET, 'user.photo'); ?>
