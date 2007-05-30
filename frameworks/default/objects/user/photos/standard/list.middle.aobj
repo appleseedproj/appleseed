@@ -1,0 +1,22 @@
+ <?php $zHTML->Alternate(); ?>
+  <span class='filename'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->photoInfo->Filename); ?>
+  </span> <!-- .filename -->
+
+  <span class='thumb' >
+    <?php $zHTML->ImageLink ($gVIEWTARGET, NULL, $gPHOTOLOCATION, $gTHUMBX, $gTHUMBY); ?>
+  </span> <!-- .thumb -->
+
+  <span class='description'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->photoInfo->Description); ?>
+  </span>  <!-- .description -->
+
+  <span class='tags'>
+    <?php echo $gTAGSLABEL; ?>
+  </span> <!-- #tags -->
+
+  <span class='comments'>
+    <?php $zHTML->Link ($gVIEWTARGET . '#comments', $gCOMMENTLABEL); ?>
+  </span> <!-- #comments -->
+
+ </li> <!-- #[alternate] -->
