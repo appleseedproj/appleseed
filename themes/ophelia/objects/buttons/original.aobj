@@ -1,0 +1,4 @@
+<span class='original'>
+ <img border='0' src='themes/%USERTHEME%/images/buttons/original.png' /><a target="_original" href='%ORIGINALLINK%'><asd id='string' title='link.original' /></a>
+ <asd id='tooltip' title='cancel' />
+</span> <!-- .original -->

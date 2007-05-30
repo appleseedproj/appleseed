@@ -103,8 +103,11 @@ form#compose p.error:hover {
 }
 
 #user #scroll a.selected {
- font-size:11px;
+ font-size:12px;
+ padding:0 2px;
  font-weight:bold;
+ background:#311Aff;
+ color:#ffffff;
 } 
 
 #user #scroll span.prev {
@@ -557,14 +560,11 @@ form#compose p.error:hover {
 #user #photosets #editor li {
  float:left;
  width:487px;
- height:17px;
  margin:0;
- overflow:hidden;
  list-style-type:none;
 }
 
 #user #photosets #editor li:hover {
- -moz-border-radius:12px;
  height:auto;
 }
 
@@ -745,9 +745,9 @@ form#compose p.error:hover {
  overflow:hidden;
 }
 
-/* CONTEXT: users.photos:listing - one */
+/* CONTEXT: users.photos:listing - full */
 
-#user #photos #listing #one ul {
+#user #photos #listing #full ul {
  float:left; 
  text-align:center;
  width:487px;
@@ -755,55 +755,78 @@ form#compose p.error:hover {
  margin:10px 0;
 }
 
-#user #photos #listing #one li {
+#user #photos #listing #full li {
  width:487px;
- height:110px;
  margin:0 0 2px 0;
  overflow:hidden;
  list-style-type:none;
 }
 
-#user #photos #listing #one li span.thumb {
- width:100px;
- height:100px;
+#user #photos #listing #full li span.thumb {
+ width:200px;
+ height:200px;
  margin:5px 5px 5px 10px;
  text-align:left;
  vertical-align:middle;
 }
 
-#user #photos #listing #one li span.filename {
+#user #photos #listing #full li span.filename {
  float:left;
- width:367px;
+ width:267px;
  margin:5px 0 0 0;
  text-align:left;
  border-bottom:1px solid #000000;
 }
 
-#user #photos #listing #one li span.description {
- width:365px;
+#user #photos #listing #full li span.description {
+ width:265px;
  height:68px;
  overflow:hidden;
  margin:6px 0 0 0;
  text-align:justify;
 }
 
-#user #photos #listing #one li span.tags {
+#user #photos #listing #full li span.tags {
  float:left;
- width:200px;
- margin:0px;
+ width:265px;
+ margin:10px 0 0 0;
  text-align:left;
 }
 
-#user #photos #listing #one li span.comments {
- width:165px;
+#user #photos #listing #full li span.comments {
+ width:265px;
  height:14px;
  text-align:right;
- margin:0px;
+ margin:10px 0 0 0;
 }
 
-/* CONTEXT: users.photos:listing - two */
+#user #photos #listing #full li span.noexif,
+#user #photos #listing #full li span.exif {
+ width:265px;
+ margin:10px 0 0 0;
+ text-align:justify;
+}
+#user #photos #listing #full li span.noexif {
+ color:#aaaaaa;
+ font-style:italic;
+}
 
-#user #photos #listing #two ul {
+#user #photos #listing #full li span.exif ul,
+#user #photos #listing #full li span.exif li {
+ width:265px;
+ float:left;
+ margin:0;
+ left:0;
+ padding:0;
+}
+#user #photos #listing #full li span.exif li span.exiflabel {
+ width:50px;
+ text-align:left;
+}
+
+/* CONTEXT: users.photos:listing - standard */
+
+#user #photos #listing #standard ul {
  float:left; 
  text-align:center;
  width:487px;
@@ -811,39 +834,42 @@ form#compose p.error:hover {
  margin:10px 0;
 }
 
-#user #photos #listing #two li {
- width:241px;
- height:110px;
- margin:0 2px 2px 0;
+#user #photos #listing #standard li {
+ width:160px;
+ margin:0 1px 2px 1px;
  overflow:hidden;
  list-style-type:none;
 }
 
-#user #photos #listing #two li span.thumb {
- width:100px;
- height:100px;
- margin:5px 3px 5px 8px;
+#user #photos #listing #standard li span.thumb {
+ width:150px;
+ height:150px;
+ margin:5px 4px 5px 4px;
  text-align:left;
  vertical-align:middle;
 }
 
-#user #photos #listing #two li span.filename {
+#user #photos #listing #standard li span.filename {
  float:left;
- width:117px;
- margin:0 2px 0 0;
- text-align:left;
- border-bottom:1px solid #000000;
+ width:100%;
+ text-align:center;
+ margin:4px 0 0 0 ;
 }
 
-#user #photos #listing #two li span.description {
- width:125px;
+#user #photos #listing #standard li span.description {
+ width:150px;
  height:68px;
  overflow:hidden;
- margin:6px 0;
+ margin:6px 4px 0 4px;
  text-align:justify;
 }
 
-#user #photos #listing #two li span.tags {
+#user #photos #listing #standard li span.description a {
+ color:#444444;
+ font-style:italic;
+}
+
+#user #photos #listing #standard li span.tags {
  float:left;
  width:119px;
  margin:0px;
@@ -852,7 +878,7 @@ form#compose p.error:hover {
 
 /* CONTEXT: users.photos:listing - four */
 
-#user #photos #listing #four ul {
+#user #photos #listing #compact ul {
  float:left; 
  text-align:center;
  width:487px;
@@ -860,7 +886,7 @@ form#compose p.error:hover {
  margin:10px 0;
 }
 
-#user #photos #listing #four li {
+#user #photos #listing #compact li {
  width:119px;
  height:142px;
  margin:0 2px 2px 0;
@@ -869,7 +895,7 @@ form#compose p.error:hover {
  list-style-type:none;
 }
 
-#user #photos #listing #four li span.thumb {
+#user #photos #listing #compact li span.thumb {
  width:100px;
  height:100px;
  margin:5px 3px 5px 8px;
@@ -877,7 +903,7 @@ form#compose p.error:hover {
  vertical-align:middle;
 }
 
-#user #photos #listing #four li span.filename {
+#user #photos #listing #compact li span.filename {
  float:left;
  width:119px;
  margin:0;
@@ -885,7 +911,7 @@ form#compose p.error:hover {
  overflow:hidden;
 }
 
-#user #photos #listing #four li span.comments {
+#user #photos #listing #compact li span.comments {
  width:113px;
  height:14px;
  overflow:hidden;
@@ -974,6 +1000,7 @@ form#compose p.error:hover {
  float:right;
 }
 
+#user #photo form#returnback,
 #user #photos form#returnback {
  float:left;
  text-align:left;
@@ -1018,9 +1045,7 @@ form#compose p.error:hover {
 #user #photos #editor li {
  float:left;
  width:487px;
- height:17px;
  margin:0;
- overflow:hidden;
  list-style-type:none;
 }
 
@@ -1158,11 +1183,6 @@ form#compose p.error:hover {
 /* CONTEXT: users.photo */
 
 #user #photo {
- float:left;
- min-width:510px;
- margin:0 auto;
- margin-right:auto;
- margin-left:auto;
 }
 
 #user #photo #caption {
@@ -1172,19 +1192,36 @@ form#compose p.error:hover {
 
 #user #photo #container {
  width:auto;
- min-width:510px;
  text-align:center;
 }
 
-/* CONTEXT: users.photo.description */
-
-#user #photo #description {
+#user #photo p#heading {
+ width:500px;
  float:left;
+ margin:5px 0 0 0; 
+ text-align:center;
+ border-bottom:1px solid #000000;
 }
 
-#user #photo #description #container {
- width:510px;
- margin:0 auto;
+#user #photo .original {
+ float:right;
+ position:relative;
+ clear:both;
+ margin:5px 0; padding:0;
+} 
+
+#user #photo .original a {
+ padding:2px 0;
+ top:0px;
+}
+
+#user #photo p#description {
+ width:500px;
+ float:left;
+ margin:10px 0; 
+ text-align:justify;
+ color:#444444;
+ font-style:italic;
 }
 
 /* CONTEXT: users.photo.comments */
@@ -3658,6 +3695,9 @@ form#compose p.error:hover {
 #user #groups li span.link {
  clear:both;
  width:375px;
+}
+#user #groups li span.link a:hover {
+ color:#ffffff;
 }
 /* edit, new */
 

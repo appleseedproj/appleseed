@@ -578,9 +578,7 @@ a:hover span.linkinfo {
 #debug #quick {
  text-align:center;
 }
-#debug a {
- background:none;
-}
+
 #debug #quick a {
  padding:0 20px;
 }

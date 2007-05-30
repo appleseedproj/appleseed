@@ -165,11 +165,6 @@
   width:264px;
 }
 
-#articles #container .footer span a {
-  background:none;
-  text-decoration:underline;
-}
-
 #articles #container .footer span.comments {
   border-left:1px solid #8c9095;
   padding-left:10px;
@@ -1697,10 +1692,6 @@
  font-weight:bold;
 }
 
-#content #group .footer span a {
- background:none;
-}
-
 #content #group #threaded ul,
 #content #group #nested ul,
 #content #group #editor ul {
@@ -1957,9 +1948,6 @@
 #content #group #topics span.subject {
  margin-left:3px;
  width:247px;
-}
-#content #group #topics span.subject a {
- background:none;
 }
 
 #content #group #topics span.latest {
