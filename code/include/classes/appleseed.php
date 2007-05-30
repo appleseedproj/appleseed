@@ -687,7 +687,7 @@
       define ("PHOTO_FINAL_WIDTH", 500);
       define ("PHOTO_FINAL_HEIGHT", 1500);
       
-      define ("PHOTO_MAX_SIZE", 3000000);
+      define ("PHOTO_MAX_SIZE", 500000);
 
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
   
@@ -752,8 +752,8 @@
   
       $gPHOTOTHUMBX = 100; $gPHOTOTHUMBY = 100;
   
-      $gMAXPHOTOX = 4096; 
-      $gMAXPHOTOY = 4096;
+      $gMAXPHOTOX = 2048; 
+      $gMAXPHOTOY = 2048;
   
       $gMAXPHOTOSETS = 8;
   

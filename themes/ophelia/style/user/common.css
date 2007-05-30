@@ -1224,6 +1224,13 @@ form#compose p.error:hover {
  font-style:italic;
 }
 
+#user #photo #container p#image {
+ float:left;
+ width:100%;
+ text-align;center;
+ clear:both;
+}
+
 /* CONTEXT: users.photo.comments */
 
 #user #photo #comments {

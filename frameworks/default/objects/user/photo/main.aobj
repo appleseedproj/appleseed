@@ -25,7 +25,9 @@
     <?php $zHTML->Button ('original'); ?>
    </p>
 
-   <img src='<?php echo $gPHOTOLOCATION; ?>' border='0' />
+   <p id='image'>
+    <img src='<?php echo $gPHOTOLOCATION; ?>' border='0' />
+   </p>
 
   </div> <!-- #container -->
 

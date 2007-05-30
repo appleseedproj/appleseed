@@ -3,6 +3,6 @@
   </div> <!-- #listing -->
  </div> <!-- #container -->
 
- <?php $zHTML->Scroll ($gTARGET, 'user.photos'); ?>
+ <?php $zHTML->Scroll ($gTARGET, 'user.photos', SCROLL_NOFIRST); ?>
 
 </div> <!-- #photos -->

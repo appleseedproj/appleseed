@@ -791,7 +791,6 @@
         unset ($gVARIABLES);
 
         $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.bottom.aobj", INCLUDE_SECURITY_NONE);
-        //$zHTML->Scroll ($gTARGET, 'member', $zAPPLE->Context, SCROLL_NOFIRST);
 
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
 
