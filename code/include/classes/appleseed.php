@@ -496,7 +496,6 @@
       global $gUSERICONX, $gUSERICONY, $gUSERICONSIZE;
       global $gMAXICONS, $gMAXPHOTOSETS;
       global $gMAXPHOTOX, $gMAXPHOTOY;
-      global $gMAXPHOTOSIZE;
   
       global $gPHOTOTHUMBX, $gPHOTOTHUMBY;
   
@@ -557,9 +556,9 @@
       define ("FORMAT_VIEW", "6");    // Viewable
   
       define ("VIEW_DEFAULT", 1);
-      define ("VIEW_ONE", 2);
-      define ("VIEW_TWO", 3);
-      define ("VIEW_FOUR", 4);
+      define ("VIEW_COMPACT", 2);
+      define ("VIEW_STANDARD", 3);
+      define ("VIEW_FULL", 4);
       define ("VIEW_EDITOR", 5);
   
       define ("COMMENT_VIEW_EDITOR", 1);
@@ -674,6 +673,21 @@
 
       define ("GROUP_ACTION_APPROVE", 1);
       define ("GROUP_ACTION_REMOVE", 2);
+      
+      define ("PHOTO_THUMB_SMALL_WIDTH", 100);
+      define ("PHOTO_THUMB_SMALL_HEIGHT", 100);
+
+      define ("PHOTO_THUMB_MEDIUM_WIDTH", 150);
+      define ("PHOTO_THUMB_MEDIUM_HEIGHT", 150);
+
+      define ("PHOTO_THUMB_LARGE_WIDTH", 200);
+      define ("PHOTO_THUMB_LARGE_HEIGHT", 200);
+
+      $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
+      define ("PHOTO_FINAL_WIDTH", 500);
+      define ("PHOTO_FINAL_HEIGHT", 1500);
+      
+      define ("PHOTO_MAX_SIZE", 3000000);
 
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
   
@@ -738,9 +752,8 @@
   
       $gPHOTOTHUMBX = 100; $gPHOTOTHUMBY = 100;
   
-      $gMAXPHOTOX = 2048; 
-      $gMAXPHOTOY = 2048;
-      $gMAXPHOTOSIZE = 500000;
+      $gMAXPHOTOX = 4096; 
+      $gMAXPHOTOY = 4096;
   
       $gMAXPHOTOSETS = 8;
   

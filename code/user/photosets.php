@@ -484,7 +484,7 @@
           global $gTHUMBX, $gTHUMBY;
           $gTHUMBX = $gVIEWDATA->photoInfo->ThumbWidth; $gTHUMBY = $gVIEWDATA->photoInfo->ThumbHeight;
 
-          $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/_th." . $gVIEWDATA->photoInfo->Filename;
+          $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/_sm." . $gVIEWDATA->photoInfo->Filename;
 
           if (!file_exists ($gPHOTOLOCATION) ) {
             $gTHUMBX = $gPHOTOTHUMBX; $gTHUMBY = $gPHOTOTHUMBY;

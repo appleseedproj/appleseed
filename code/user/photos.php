@@ -81,7 +81,7 @@
   global $gPHOTOLISTING, $gPHOTOLISTINGEDITOR;
 
   // If the photos view isn't set, default to 'four'.
-  if (!$gPHOTOLISTING) $gPHOTOLISTING = VIEW_FOUR;
+  if (!$gPHOTOLISTING) $gPHOTOLISTING = VIEW_COMPACT;
 
   // Depracate the photolisting view.
   if ($gPHOTOLISTINGEDITOR != "") $gPHOTOLISTING = $gPHOTOLISTINGEDITOR;
@@ -100,33 +100,31 @@
     $gPHOTOLISTTYPE = "PHOTOLISTINGEDITOR";
   } // if
 
-  $listlocation = "listing/";
-
   // Set how much to step when scrolling.
   switch ($gPHOTOLISTING) {
     case VIEW_EDITOR:
       // Set the editor view.
-      $listlocation = "editor/";
+      $viewlocation = "editor/";
       $gSCROLLSTEP[$zAPPLE->Context] = 20;
     break;
 
     case VIEW_DEFAULT:
-      $viewlocation = "four/";
+      $viewlocation = "compact/";
       $gSCROLLSTEP[$zAPPLE->Context] = 20;
     break;
 
-    case VIEW_ONE:
-      $viewlocation = "one/";
+    case VIEW_COMPACT:
+      $viewlocation = "compact/";
       $gSCROLLSTEP[$zAPPLE->Context] = 10;
     break;
 
-    case VIEW_TWO:
-      $viewlocation = "two/";
+    case VIEW_STANDARD:
+      $viewlocation = "standard/";
       $gSCROLLSTEP[$zAPPLE->Context] = 20;
     break;
 
-    case VIEW_FOUR:
-      $viewlocation = "four/";
+    case VIEW_FULL:
+      $viewlocation = "full/";
       $gSCROLLSTEP[$zAPPLE->Context] = 40;
     break;
   } // switch
@@ -143,9 +141,9 @@
   // Set how much to step when scrolling.
   if ( ($gPHOTOLISTING == VIEW_EDITOR) or 
        ($gPHOTOLISTING == VIEW_DEFAULT) ) $gSCROLLSTEP[$zAPPLE->Context] = 20;
-  if ($gPHOTOLISTING == VIEW_ONE) $gSCROLLSTEP[$zAPPLE->Context] = 10;
-  if ($gPHOTOLISTING == VIEW_TWO) $gSCROLLSTEP[$zAPPLE->Context] = 20;
-  if ($gPHOTOLISTING == VIEW_FOUR) $gSCROLLSTEP[$zAPPLE->Context] = 40;
+  if ($gPHOTOLISTING == VIEW_COMPACT) $gSCROLLSTEP[$zAPPLE->Context] = 40;
+  if ($gPHOTOLISTING == VIEW_STANDARD) $gSCROLLSTEP[$zAPPLE->Context] = 20;
+  if ($gPHOTOLISTING == VIEW_FULL) $gSCROLLSTEP[$zAPPLE->Context] = 10;
 
   // Set the post data to move back and forth.
   $gPOSTDATA = Array ("SCROLLSTART"       => $gSCROLLSTART[$zAPPLE->Context],
@@ -241,9 +239,14 @@
         $gVIEWDATA->photoInfo->Select ("tID", $gVIEWDATA->photoInfo->tID);
         $gVIEWDATA->photoInfo->FetchArray ();
 
-        // Remove the image file.
-        $photofile = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/" . $gVIEWDATA->photoInfo->Filename;
-        $thumbfile = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/_th." . $gVIEWDATA->photoInfo->Filename;
+        // Remove the image files.
+        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+
+        $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
+        $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
+        $smfile = $photosetdir . "/_sm." . $gVIEWDATA->photoInfo->Filename;
+        $mdfile = $photosetdir . "/_md." . $gVIEWDATA->photoInfo->Filename;
+        $lgfile = $photosetdir . "/_lg." . $gVIEWDATA->photoInfo->Filename;
 
         // Begin transaction.
         $gVIEWDATA->photoInfo->Begin ();
@@ -252,7 +255,11 @@
         $gVIEWDATA->photoInfo->Delete();
 
         // Set error message if unable to delete photo set directory.
-        if ( (!unlink ($photofile) ) or (!unlink ($thumbfile) ) ) {
+        if ( (!unlink ($ogfile) ) or 
+             (!unlink ($fnfile) ) or 
+             (!unlink ($smfile) ) or 
+             (!unlink ($mdfile) ) or 
+             (!unlink ($lgfile) ) ) {
           global $gPHOTOFILENAME; $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
           $zSTRINGS->Lookup ('ERROR.FILE', $zAPPLE->Context);
           $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
@@ -311,10 +318,10 @@
       // Validate the uploaded file.
       $zIMAGE->Validate ($uploadfile, $uploaderror, $gMAXPHOTOX, $gMAXPHOTOY);
 
-      $location = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
+      $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
 
       // If photo set directory doesn't exist, create it.
-      if (!is_dir ($location)) $zAPPLE->CreateDirectory ($location);
+      if (!is_dir ($photosetdir))  $zAPPLE->CreateDirectory ($photosetdir);
 
       // Strip all spaces out of the filename.
       $filename = str_replace(" ", "", $_FILES['gNEWPHOTO']['name']);
@@ -322,8 +329,11 @@
       // Check for special filenames and rename.
       if ($filename == 'profile.jpg') $filename = '_profile.jpg';
 
-      $photofile = $location . $filename;
-      $thumbfile = $location . "_th." . $filename;
+      $ogfile = $photosetdir . "/_og." . $filename;
+      $fnfile = $photosetdir . "/" . $filename;
+      $smfile = $photosetdir . "/_sm." . $filename;
+      $mdfile = $photosetdir . "/_md." . $filename;
+      $lgfile = $photosetdir . "/_lg." . $filename;
 
       // Retrieve the image attributes.
       $zIMAGE->Attributes ($_FILES['gNEWPHOTO']['tmp_name']);
@@ -348,15 +358,37 @@
         $PHOTOCHECK->SelectByMultiple ($photocriteria, "sID");
 
         if ($PHOTOCHECK->CountResult () == 0) {
-          // Save the image data.
+          // Create the final photo and save it.
           $zIMAGE->Convert ($_FILES['gNEWPHOTO']['tmp_name']);
-          $zIMAGE->Save ($photofile, $zIMAGE->Type);
-          // Create a thumbnail and save it.
-          $zIMAGE->Resize ($gPHOTOTHUMBX, $gPHOTOTHUMBY);
-
-          $gVIEWDATA->photoInfo->ThumbWidth = $zIMAGE->Width;
-          $gVIEWDATA->photoInfo->ThumbHeight = $zIMAGE->Height;
-
+          if ( ($zIMAGE->Width > PHOTO_FINAL_WIDTH) or ($zIMAGE->Height > PHOTO_FINAL_HEIGHT) ) 
+            $zIMAGE->Resize (PHOTO_FINAL_WIDTH, PHOTO_FINAL_HEIGHT, TRUE, TRUE);
+          $zIMAGE->Save ($fnfile, $zIMAGE->Type);
+          $zIMAGE->Destroy();
+          
+          // Create a small thumbnail and save it.
+          $zIMAGE->Convert ($_FILES['gNEWPHOTO']['tmp_name']);
+          $zIMAGE->Attributes ($_FILES['gNEWPHOTO']['tmp_name']);
+          $zIMAGE->ResizeAndCrop (PHOTO_THUMB_SMALL_WIDTH, PHOTO_THUMB_SMALL_HEIGHT);
+          $zIMAGE->Save ($smfile, $zIMAGE->Type);
+          $zIMAGE->Destroy();
+          
+          // Create a medium thumbnail and save it.
+          $zIMAGE->Convert ($_FILES['gNEWPHOTO']['tmp_name']);
+          $zIMAGE->Attributes ($_FILES['gNEWPHOTO']['tmp_name']);
+          $zIMAGE->ResizeAndCrop (PHOTO_THUMB_MEDIUM_WIDTH, PHOTO_THUMB_MEDIUM_HEIGHT);
+          $zIMAGE->Save ($mdfile, $zIMAGE->Type);
+          $zIMAGE->Destroy();
+          
+          // Create a large thumbnail and save it.
+          $zIMAGE->Convert ($_FILES['gNEWPHOTO']['tmp_name']);
+          $zIMAGE->Attributes ($_FILES['gNEWPHOTO']['tmp_name']);
+          $zIMAGE->ResizeAndCrop (PHOTO_THUMB_LARGE_WIDTH, PHOTO_THUMB_LARGE_HEIGHT);
+          $zIMAGE->Save ($lgfile, $zIMAGE->Type);
+          $zIMAGE->Destroy();
+          
+          // Save the original image data.
+          move_uploaded_file ($_FILES['gNEWPHOTO']['tmp_name'], $ogfile);
+          
           // Create a unique tag for this photo.
           // NOTE: Create a function to test for unique.
           $gVIEWDATA->photoInfo->Hint = $zAPPLE->RandomString (6);
@@ -373,7 +405,6 @@
             $matchagainst->Select ("Hint", $gVIEWDATA->photoInfo->Hint);  
           } // while
           
-          $zIMAGE->Save ($thumbfile, $zIMAGE->Type);
           if ($zIMAGE->Error != -1) {
             global $gPHOTOFILENAME;
             $gPHOTOFILENAME = $filename;
@@ -440,11 +471,19 @@
         $oldsetid = $OLDDATA->photoSets_tID;
         $newsetid = $NEWDATA->tID;
 
-        $photofile = "photos/" . $zFOCUSUSER->Username . "/sets/" . $NEWDATA->Directory . "/" . $gVIEWDATA->photoInfo->Filename;
-        $oldfile = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/" . $OLDDATA->Filename;
+        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+      
+        $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
+        $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
+        $smfile = $photosetdir . "/_sm." . $gVIEWDATA->photoInfo->Filename;
+        $mdfile = $photosetdir . "/_md." . $gVIEWDATA->photoInfo->Filename;
+        $lgfile = $photosetdir . "/_lg." . $gVIEWDATA->photoInfo->Filename;
 
-        $photothumb = "photos/" . $zFOCUSUSER->Username . "/sets/" . $NEWDATA->Directory . "/_th." . $gVIEWDATA->photoInfo->Filename;
-        $oldthumb = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/_th." . $OLDDATA->Filename;
+        $old_ogfile = $photosetdir . "/_og." . $OLDDATA->Filename;
+        $old_fnfile = $photosetdir . "/" . $OLDDATA->Filename;
+        $old_smfile = $photosetdir . "/_sm." . $OLDDATA->Filename;
+        $old_mdfile = $photosetdir . "/_md." . $OLDDATA->Filename;
+        $old_lgfile = $photosetdir . "/_lg." . $OLDDATA->Filename;
 
         // Begin Transaction.
         $gVIEWDATA->photoInfo->Begin ();
@@ -454,8 +493,6 @@
         $gVIEWDATA->photoInfo->sID = SQL_SKIP;
         $gVIEWDATA->photoInfo->Width = SQL_SKIP;
         $gVIEWDATA->photoInfo->Height = SQL_SKIP;
-        $gVIEWDATA->photoInfo->ThumbWidth = SQL_SKIP;
-        $gVIEWDATA->photoInfo->ThumbHeight = SQL_SKIP;
         $gVIEWDATA->photoInfo->Hint = SQL_SKIP;
 
         $gVIEWDATA->photoInfo->ForeignKey = "photoSets_tID";
@@ -470,9 +507,12 @@
           $gVIEWDATA->photoInfo->Update();
 
           // Rename the files.
-          if ($oldfile != $photofile) {
-            if ( ( !rename ($oldfile, $photofile) ) or 
-                 ( !rename ($oldthumb, $photothumb) ) ) {
+          if ($old_fnfile != $fnfile) {
+            if ( ( !rename ($old_ogfile, $ogfile) ) or 
+                 ( !rename ($old_fnfile, $fnfile) ) or
+                 ( !rename ($old_smfile, $smfile) ) or
+                 ( !rename ($old_mdfile, $mdfile) ) or
+                 ( !rename ($old_lgfile, $lgfile) ) ) {
               // Look up the error message.
               global $gPHOTOFILENAME;  $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
               $zSTRINGS->Lookup ('ERROR.FILE', $zAPPLE->Context);
@@ -536,11 +576,18 @@
 
       $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
-      $photofile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
-      $thumbfile = $photosetdir . "/_th." . $gVIEWDATA->photoInfo->Filename;
+      $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
+      $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
+      $smfile = $photosetdir . "/_sm." . $gVIEWDATA->photoInfo->Filename;
+      $mdfile = $photosetdir . "/_md." . $gVIEWDATA->photoInfo->Filename;
+      $lgfile = $photosetdir . "/_lg." . $gVIEWDATA->photoInfo->Filename;
 
       // NOTE: CHECK FOR ERRORS BETTER.  SEE DELETEALL ABOVE.
-      unlink ($photofile); unlink ($thumbfile);
+      unlink ($ogfile);
+      unlink ($fnfile);
+      unlink ($smfile);
+      unlink ($mdfile);
+      unlink ($lgfile);
 
       if (!$gVIEWDATA->photoInfo->Error) {
         // Look up the name of the deleted photoset.
@@ -635,7 +682,7 @@
         global $gTARGET;
 
         $gTARGET = $_SERVER[REQUEST_URI];
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $listlocation . $viewlocation . "list.top.aobj", INCLUDE_SECURITY_NONE);
+        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.top.aobj", INCLUDE_SECURITY_NONE);
 
         unset ($gSWITCHPOSTDATA);
 
@@ -665,11 +712,15 @@
 
         global $gTARGET, $gVIEWTARGET;
         global $gVARIABLES, $gCHECKED;
+        
+        if ($viewlocation == 'compact/') $prefix = "_sm.";
+        if ($viewlocation == 'standard/') $prefix = "_md.";
+        if ($viewlocation == 'full/') $prefix = "_lg.";
 
         // Loop through the list.
         for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
          if ($gVIEWDATA->photoInfo->FetchArray()) {
-
+          
           $gCHECKED = FALSE;
 
           // Target for viewing a photoset.
@@ -683,12 +734,8 @@
           if ($gACTION == 'SELECT_ALL') $gCHECKED = TRUE;
           global $gPHOTOLOCATION;
           // Look up first photo filename in list.
-          $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/_th." . $gVIEWDATA->photoInfo->Filename;
+          $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . '/' . $prefix . $gVIEWDATA->photoInfo->Filename;
           if (!file_exists ($gPHOTOLOCATION) ) $gPHOTOLOCATION = "/$gTHEMELOCATION/images/error/noimage.png";
-
-          global $gTHUMBX, $gTHUMBY;
-          $gTHUMBX = $gVIEWDATA->photoInfo->ThumbWidth;
-          $gTHUMBY = $gVIEWDATA->photoInfo->ThumbHeight;
 
           global $gPOPWIDTH, $gPOPHEIGHT;
           $gPOPWIDTH = $gVIEWDATA->photoInfo->Width + 80;
@@ -715,12 +762,11 @@
           } else {
             $gCOMMENTLABEL = "";
           } // if
-
-          // Switch up the alternate tag to accomodate for multiple rows.
-          if ( ($viewlocation == 'two/') or ($viewlocation == 'four/') ) {
+ 
+          // NOTE: Break this off into a Modulate function to be called by the framework.
+          if ( $viewlocation == 'compact/' ) {
             // Determine what we're dividing by.
-            if ($viewlocation == 'two/')  $mod = 2;
-            if ($viewlocation == 'four/') $mod = 4;
+            if ($viewlocation == 'compact/')  $mod = 4;
 
             // If no remainder, switch up the alternate tag.
             if ($listcount % $mod == 0) {
@@ -734,7 +780,7 @@
 
           $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
           $gEXTRAPOSTDATA['tID']    = $gVIEWDATA->photoInfo->tID;
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $listlocation . $viewlocation  . "list.middle.aobj", INCLUDE_SECURITY_NONE);
+          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation  . "list.middle.aobj", INCLUDE_SECURITY_NONE);
           unset ($gEXTRAPOSTDATA['ACTION']); 
 
          } else {
@@ -744,7 +790,7 @@
         
         unset ($gVARIABLES);
 
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $listlocation . $viewlocation . "list.bottom.aobj", INCLUDE_SECURITY_NONE);
+        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.bottom.aobj", INCLUDE_SECURITY_NONE);
         //$zHTML->Scroll ($gTARGET, 'member', $zAPPLE->Context, SCROLL_NOFIRST);
 
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {

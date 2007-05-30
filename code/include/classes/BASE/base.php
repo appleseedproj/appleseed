@@ -3433,6 +3433,66 @@
       return ($result);
 
     } // Resize
+    
+    // ResizeAndCrop an image.
+    function ResizeAndCrop ($pNEWWIDTH, $pNEWHEIGHT) {
+
+      if ($this->Height == $this->Width) {
+        // Proportion is the same
+        $newwidth = $pNEWWIDTH; $newheight = $pNEWHEIGHT;
+        $startx = 0; $starty = 0;
+        $endx = $pNEWWIDTH; $endy = $pNEWHEIGHT;
+      } elseif ($this->Height > $this->Width) {
+        // Proportion is vertical
+        $newwidth = $pNEWWIDTH;
+        $newheight = ($pNEWWIDTH / $this->Width) * $this->Height;
+        $newheight = floor ($newheight);
+        $startx = 0; $starty = floor((($newheight - $pNEWHEIGHT) / 2));
+        $endy = $pNEWWIDTH; $endy = $newheight - ceil((($newheight - $pNEWHEIGHT) / 2));
+      } else {
+        // Proportion is horizontal
+        $newwidth = ($pNEWHEIGHT / $this->Height) * $this->Width;
+        $newwidth = floor ($newwidth);
+        $newheight = $pNEWHEIGHT;
+        $startx = floor((($newwidth - $pNEWWIDTH) / 2));  $starty = 0;
+        $endx = $newwidth - ceil((($newwidth - $pNEWWIDTH) / 2));  $endy = $pNEWHEIGHT;
+      } // if
+      
+      /*
+      echo $this->Width, "<br />";
+      echo $this->Height, "<br /><br />";
+      echo $pNEWWIDTH, "<br />";
+      echo $pNEWHEIGHT, "<br /><br />";
+      echo $newwidth, "<br />";
+      echo $newheight, "<br /><br />";
+      echo $startx, "<br />";
+      echo $starty, "<br />";
+      echo $endx, "<br />";
+      echo $endy, "<br />";
+      exit;
+      */
+        
+      $src_img = imagecreatetruecolor ($this->Width, $this->Height);
+      imagecopy($src_img, $this->Resource, 0, 0, 0, 0, $this->Width, $this->Height);
+
+      $this->Destroy ();
+
+      $intermediary = imagecreatetruecolor ($newwidth, $newheight);
+      $this->Resource = imagecreatetruecolor ($pNEWWIDTH, $pNEWHEIGHT);
+
+      // Resize image.
+      $result = imagecopyresampled($intermediary, $src_img, 0, 0, 0, 0, $newwidth, $newheight, $this->Width, $this->Height);
+      
+      // Crop image.
+      $result = imagecopy($this->Resource, $intermediary, 0, 0, $startx, $starty, $pNEWWIDTH, $pNEWHEIGHT);
+
+      imagedestroy ($intermediary);
+      
+      $this->Width = $pNEWWIDTH;
+      $this->Height = $pNEWHEIGHT;
+
+      return ($result);
+    } // ResizeAndCrop
 
     // Display an image to the browser. 
     function Show ($pFILENAME) {

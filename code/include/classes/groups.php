@@ -1273,12 +1273,12 @@
 
       $success = FALSE;
 
-      $VERIFY = new cUSERVERIFICATION ();
-      $VERIFY->userAuth_uID = $zLOCALUSER->uID;
-      $token = $VERIFY->LoadToken ($pGROUPDOMAIN);
-      unset ($VERIFY);
-
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {
+        $VERIFY = new cUSERVERIFICATION ();
+        $VERIFY->userAuth_uID = $zLOCALUSER->uID;
+        $token = $VERIFY->LoadToken ($pGROUPDOMAIN);
+        unset ($VERIFY);
+
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
         $datalist = array ("gACTION"        => "ASD_GROUP_JOIN",
                            "gTOKEN"         => $token,

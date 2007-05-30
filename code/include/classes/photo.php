@@ -134,6 +134,53 @@
  
     } // Constructor
  
+    function GetExifData () {
+      
+      global $zFOCUSUSER, $zAPPLE;
+      global $zSTRINGS;
+      
+      global $gFRAMELOCATION;
+      
+      $exiflocation = "photos/" . $zFOCUSUSER->Username . "/sets/" . $this->Directory . "/_og." . $this->photoInfo->Filename;
+          
+      if (!function_exists('exif_read_data')) return (FALSE);
+      
+      $exif = exif_read_data($exiflocation, 'ANY_TAG');
+      
+      if (!$exif) {
+        $zSTRINGS->Lookup ('MESSAGE.NOEXIF', $zAPPLE->Context);
+        global $gNOEXIF;
+        $gNOEXIF = $zSTRINGS->Output;
+        $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/none.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        return ($return);
+      } // if
+   
+      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      $final['MAKE'] = $exif['Make'];
+      $final['MODEL'] = $exif['Model'];
+      $final['DIMENSIONS'] = $exif['ExifImageWidth'] . "x" . $exif['ExifImageLength'];
+      $final['OWNER'] = $exif['OwnerName'];
+      $final['COMMENT'] = $exif['COMPUTED']['UserComment'];
+      $final['COPYRIGHT'] = $exif['COMPUTED']['Copyright'];
+      $final['PHOTOGRAPHER'] = $exif['COMPUTED']['Copyright.Photographer'];
+      $timestamp = strtotime($exif['DateTimeOriginal']);
+      $final['STAMP'] = date("F j, Y, g:i a", $timestamp);
+      
+      foreach ($final as $key => $value) {
+        global $gEXIFLABEL, $gEXIFDATA;
+        $zSTRINGS->Lookup ('LABEL.EXIF' . $key, $zAPPLE->Context);
+        $gEXIFLABEL = $zSTRINGS->Output;
+        $gEXIFDATA = $value;
+        if (!$value) continue;
+        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      } // foreach
+      
+      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      return ($return);
+    } // GetExifData
+ 
   } // cPHOTOSETS
 
   // Photo information class.
@@ -291,7 +338,7 @@
       $this->Fields();
  
     } // Constructor
- 
+    
   } // cPHOTOINFORMATION
 
   // Photo privacy class.

@@ -60,32 +60,37 @@
 
       // User attempting to view section.
       global $$pKEYUSER;
+      
+      global $gTABLEPREFIX;
 
       $ptable = $this->TableName;
+      $userAuth = $gTABLEPREFIX . "userAuthorization";
+      $friendCircles = $gTABLEPREFIX . "friendCircles";
+      $friendCirclesList = $gTABLEPREFIX . "friendCirclesList";
+      $friendInfo = $gTABLEPREFIX . "friendInformation";
 
       if ($$pKEYUSER->Anonymous) {
         // Anonymous user
         $query = "SELECT   MIN(" . $ptable . ".Access) AS FinalAccess " .
-                 "FROM     " . $ptable . ", userAuthorization,  " .
-                 "         friendCircles, friendCirclesList, friendInformation " .
-                 "         WHERE    " . $ptable . ".userAuth_uID = userAuthorization.uID " .
-                 "         AND      userAuthorization.uID= " . $$pLOCKUSER->uID .
+                 "FROM     " . $ptable . ", $userAuth  " .
+                 "         WHERE    " . $ptable . ".userAuth_uID = $userAuth.uID " .
+                 "         AND      $userAuth.uID= " . $$pLOCKUSER->uID .
                  "         AND      " . $ptable . ".friendCircles_sID = " . USER_EVERYONE .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL;
 
       } else {
         // Logged in User
         $query = "SELECT   MIN(" . $ptable . ".Access) AS FinalAccess " .
-                 "FROM     " . $ptable . ", userAuthorization,  " .
-                 "         friendCircles, friendCirclesList, friendInformation " .
-                 "         WHERE    " . $ptable . ".userAuth_uID = userAuthorization.uID " .
-                 "         AND      friendCircles.userAuth_uID = userAuthorization.uID " .
-                 "         AND      userAuthorization.uID= " . $$pLOCKUSER->uID .
-                 "         AND      " . $ptable . ".friendCircles_sID = friendCircles.sID  " .
+                 "FROM     " . $ptable . ", $userAuth,  " .
+                 "         $friendCircles, $friendCirclesList, $friendInfo " .
+                 "         WHERE    " . $ptable . ".userAuth_uID = $userAuth.uID " .
+                 "         AND      $friendCircles.userAuth_uID = $userAuth.uID " .
+                 "         AND      $userAuth.uID= " . $$pLOCKUSER->uID .
+                 "         AND      " . $ptable . ".friendCircles_sID = $friendCircles.sID  " .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL .
-                 "         AND      friendCircles.tID = friendCirclesList.friendCircles_tID " .
-                 "         AND      friendInformation.Username = '" . $$pKEYUSER->Username . "'" .
-                 "         AND      friendInformation.tID = friendCirclesList.friendInformation_tID";
+                 "         AND      $friendCircles.tID = $friendCirclesList.friendCircles_tID " .
+                 "         AND      $friendInfo.Username = '" . $$pKEYUSER->Username . "'" .
+                 "         AND      $friendInfo.tID = $friendCirclesList.friendInformation_tID";
 
       } // if
 
@@ -98,16 +103,16 @@
       // If no result was returned, user is not a friend.
       if ($result == NULL) {
         $query = "SELECT   MIN(" . $ptable . ".Access) AS FinalAccess " .
-                 "FROM     " . $ptable . ", userAuthorization,  " .
-                 "         friendCircles, friendCirclesList, friendInformation " .
-                 "         WHERE    " . $ptable . ".userAuth_uID = userAuthorization.uID " .
-                 "         AND      friendCircles.userAuth_uID = userAuthorization.uID " .
-                 "         AND      userAuthorization.uID= " . $$pLOCKUSER->uID .
+                 "FROM     " . $ptable . ", $userAuth,  " .
+                 "         $friendCircles, $friendCirclesList, $friendInfo " .
+                 "         WHERE    " . $ptable . ".userAuth_uID = $userAuth.uID " .
+                 "         AND      $friendCircles.userAuth_uID = $userAuth.uID " .
+                 "         AND      $userAuth.uID= " . $$pLOCKUSER->uID .
                  "         AND      (" . $ptable . ".friendCircles_sID = " . USER_LOGGEDIN .
                  "         OR       " . $ptable . ".friendCircles_sID = " . USER_EVERYONE . ") " .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL .
-                 "         AND      friendCircles.tID = friendCirclesList.friendCircles_tID " .
-                 "         AND      friendInformation.tID = friendCirclesList.friendInformation_tID";
+                 "         AND      $friendCircles.tID = $friendCirclesList.friendCircles_tID " .
+                 "         AND      $friendInfo.tID = $friendCirclesList.friendInformation_tID";
         // Select privacy settings.
         $this->Query ($query);
         $this->FetchArray ();

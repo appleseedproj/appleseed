@@ -4,9 +4,9 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: photo.php                               CREATED: 01-01-2005 + 
-  // | LOCATION: /code/user/                        MODIFIED: 04-11-2007 +
+  // | LOCATION: /code/user/                        MODIFIED: 05-30-2007 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2006 Appleseed Project                         |
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -40,11 +40,17 @@
 
   global $gFILENAME;
 
+  global $gDIRECTORY;
   list ($gDIRECTORY, $gFILENAME) = split ('/', $gPROFILESUBACTION);
+  
+  $zAPPLE->SetContext("user.photo");
 
   global $gPHOTOLOCATION;
   $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/" . $gFILENAME;
-
+  
+  // Set link to original photo.
+  $zAPPLE->SetTag ('ORIGINALLINK', "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/_og." . $gFILENAME);
+  
   global $gVIEWDATA;
   $gVIEWDATA = new cPHOTOSETS ($zAPPLE->Context);
   
@@ -63,6 +69,9 @@
     $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);
     $zAPPLE->End();
   } // if
+
+  // Set which tab to highlight.
+  $gUSERPHOTOSTAB = '';
 
   // Load data about this file.
   $photocriteria = array ("photoSets_tID" => $gVIEWDATA->tID,
@@ -127,14 +136,9 @@
                       "PHOTOLISTING"      => $gPHOTOLISTING,
                       "COMMENTVIEW"       => $gCOMMENTVIEW);
 
-  global $bDESCRIPTIONBOX;
+  global $bMAINSECTION;
 
-  // If no description/tags, don't display the box.
-  if ( ($gDESCRIPTION == "") and ($gTAGS == "") ) {
-    $bDESCRIPTIONBOX = "";
-  } else {
-    $bDESCRIPTIONBOX = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photo/description.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-  } // if
+  $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photo/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
   // Handle comments.
   $zCOMMENTS->Handle ();
