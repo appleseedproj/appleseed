@@ -37,6 +37,7 @@
  
   // Base data class that others extend from.
   class cBASEDATACLASS {
+    var $Cache;
     var $Error;
     var $Errorlist;
     var $Message;
@@ -76,6 +77,7 @@
       // Create extended field definitions.
       $this->FieldDefinitions = array ('' => '');
 
+      return (TRUE);
     } // Constructor
 
     // Move data ID up or down in database.
@@ -352,100 +354,167 @@
     // Pull fieldnames from database and put into FieldNames array.
     function Fields () {
 
-      $fieldstatement = "SHOW CREATE TABLE $this->TableName";
-      
-      $fieldresult = $this->Query($fieldstatement);
-      $fieldcount = 0;
+      global $zCACHE, $zDEBUG;
 
-      // Retrieve the create table data.
-      $fieldarray = mysql_fetch_assoc ($fieldresult);
-
-      // Retrieve the create information.
-      $create = $fieldarray['Create Table'];
-
-      // NOTE: Regular expressions would probably work better here.
-
-      // Retrieve the list of foreign keys.
-      $keystring = split ("CONSTRAINT ", $create);
-
-      // Get rid of the create information we don't need.
-      unset ($keystring[0]);
-
-      // Reverse the array to preference the first definitions.
-      $keystring = array_reverse ($keystring);
-
-      foreach ($keystring as $keycount => $constraint) {
-        $foreignlist = split ("FOREIGN KEY", $keystring[$keycount]);
-        $references = split ("REFERENCES ", $foreignlist[1]);
-
-        $keynames = $references[0];
-
-        $keynames = str_replace ('(`', '', $keynames);
-        $keynames = str_replace ('`)', '', $keynames);
-        $keynames = str_replace ('`', '', $keynames);
-        $keynames = str_replace (' ', '', $keynames);
-
-        $keylist = split (',', $keynames);
-
-        // Retrieve their references.
-        $tablenames = split ('` \(`', $references[1]);
-        $tablestring = $tablenames[0];
-        $tablestring = str_replace ('`', '', $tablestring);
-        $tablestring = str_replace ('`)', '', $tablestring);
-
-        // List of Tables
-        $tablelist = split (', ', $tablestring);
-
-        // Retrieve their reference fields.
-        $fieldnames = split (' ON DELETE', $tablenames[1]);
-        $fieldstring = $fieldnames[0];
-        $fieldstring = str_replace ('`', '', $fieldstring);
-        $fieldstring = str_replace (')', '', $fieldstring);
-
-        // List of Tables
-        $fieldlist = split (', ', $fieldstring);
+      if (isset ($zCACHE->ColumnCache[$this->TableName])) {
+        // Cache is already set, pull from cache.
+        $this->FieldDefinitions = $zCACHE->ColumnCache[$this->TableName];
+        $this->FieldNames = $zCACHE->FieldCache[$this->TableName];
+      } else {
+        $fieldstatement = "SHOW CREATE TABLE $this->TableName";
         
-        // Loop through the key list.
-        foreach ($keylist as $kcount => $kkey) {
-
-          $this->FieldDefinitions[$kkey]['foreign'] = TRUE;
-          $this->FieldDefinitions[$kkey]['foreigntable'] = $tablelist[0];
-          $this->FieldDefinitions[$kkey]['foreignfield'] = $fieldlist[$kcount];
+        $fieldresult = $this->Query($fieldstatement);
+        $fieldcount = 0;
+  
+        // Check if successful.
+        if (!$fieldresult) {
+          $this->Error = -1;
+          $this->Message = mysql_error();
+          return (-1);
+        }
+        // Retrieve the create table data.
+        $fieldarray = mysql_fetch_assoc ($fieldresult);
+  
+        // Retrieve the create information.
+        $create = $fieldarray['Create Table'];
+  
+        // NOTE: Regular expressions would probably work better here.
+  
+        // Retrieve the list of foreign keys.
+        $keystring = split ("CONSTRAINT ", $create);
+  
+        // Get rid of the create information we don't need.
+        unset ($keystring[0]);
+  
+        // Reverse the array to preference the first definitions.
+        $keystring = array_reverse ($keystring);
+  
+        foreach ($keystring as $keycount => $constraint) {
+          $foreignlist = split ("FOREIGN KEY", $keystring[$keycount]);
+          $references = split ("REFERENCES ", $foreignlist[1]);
+  
+          $keynames = $references[0];
+  
+          $keynames = str_replace ('(`', '', $keynames);
+          $keynames = str_replace ('`)', '', $keynames);
+          $keynames = str_replace ('`', '', $keynames);
+          $keynames = str_replace (' ', '', $keynames);
+  
+          $keylist = split (',', $keynames);
+  
+          // Retrieve their references.
+          $tablenames = split ('` \(`', $references[1]);
+          $tablestring = $tablenames[0];
+          $tablestring = str_replace ('`', '', $tablestring);
+          $tablestring = str_replace ('`)', '', $tablestring);
+  
+          // List of Tables
+          $tablelist = split (', ', $tablestring);
+  
+          // Retrieve their reference fields.
+          $fieldnames = split (' ON DELETE', $tablenames[1]);
+          $fieldstring = $fieldnames[0];
+          $fieldstring = str_replace ('`', '', $fieldstring);
+          $fieldstring = str_replace (')', '', $fieldstring);
+  
+          // List of Tables
+          $fieldlist = split (', ', $fieldstring);
           
+          // Loop through the key list.
+          foreach ($keylist as $kcount => $kkey) {
+  
+            $this->FieldDefinitions[$kkey]['foreign'] = TRUE;
+            $this->FieldDefinitions[$kkey]['foreigntable'] = $tablelist[0];
+            $this->FieldDefinitions[$kkey]['foreignfield'] = $fieldlist[$kcount];
+            
+          } // foreach
+
         } // foreach
 
-      } // foreach
-
-      // Unset the NULL item that keeps popping in there.
-      unset ($this->FieldDefinitions['']);
-
-      // Retrieve a list of field names from the table.
-      $fieldstatement = "SHOW COLUMNS FROM $this->TableName";
+        // Unset the NULL item that keeps popping in there.
+        unset ($this->FieldDefinitions['']);
+  
+        // Retrieve a list of field names from the table.
+        $fieldstatement = "SHOW COLUMNS FROM $this->TableName";
       
-      $fieldresult = $this->Query($fieldstatement);
-      $fieldcount = 0;
+        $fieldresult = $this->Query($fieldstatement);
+        $fieldcount = 0;
 
-      // Use this to check for the first string value;
-      $foundstring = FALSE;
+        // Check if successful.
+        if (!$fieldresult) {
+          $this->Error = -1;
+          $this->Message = mysql_error();
+          return (-1);
+        }
 
-      // Loop through the retrieved list.
-      while ($fieldarray = mysql_fetch_assoc ($fieldresult)) {
+        // Use this to check for the first string value;
+        $foundstring = FALSE;
 
-        $fieldname = $fieldarray['Field'];
-        // Check if this field has already been defined.
-        if (isset($this->FieldDefinitions[$fieldname])) {
-          // Assume user defined types are correct, unless unassigned.
+        // Loop through the retrieved list.
+        while ($fieldarray = mysql_fetch_assoc ($fieldresult)) {
 
-          // Check if the NULL value was not assigned.
-          if (!isset($this->FieldDefinitions[$fieldname]['null'])) {
+          $fieldname = $fieldarray['Field'];
+          // Check if this field has already been defined.
+          if (isset($this->FieldDefinitions[$fieldname])) {
+            // Assume user defined types are correct, unless unassigned.
+  
+            // Check if the NULL value was not assigned.
+            if (!isset($this->FieldDefinitions[$fieldname]['null'])) {
+              if ($fieldarray['Null'] == 'YES') 
+                $this->FieldDefinitions[$fieldname]['null'] = YES;
+              else 
+                $this->FieldDefinitions[$fieldname]['null'] = NO;
+            } // if
+  
+            // Check if the DATATYPE value was not assigned.
+            if (!isset($this->FieldDefinitions[$fieldname]['datatype'])) {
+              // Determine the type and size of the field.
+              $ftype = $fieldarray['Type'];
+              $finaltype = preg_replace ("/\(\w+\)/", "", $ftype);
+              $finaltype = preg_replace ("/ unsigned/", "", $finaltype);
+    
+              switch ($finaltype) {
+    
+                case 'text':
+                  $this->FieldDefinitions[$fieldname]['datatype'] = "STRING";
+                break;
+    
+                case 'char':
+                case 'varchar':
+                  $this->FieldDefinitions[$fieldname]['datatype'] = "STRING";
+                break;
+    
+                case 'float':
+                  $this->FieldDefinitions[$fieldname]['datatype'] = "FLOAT";
+                break;
+    
+                case 'datetime':
+                  $this->FieldDefinitions[$fieldname]['datatype'] = "DATETIME";
+                break;
+    
+                default:
+                  $this->FieldDefinitions[$fieldname]['datatype'] = "INTEGER";
+                break;
+    
+              } // switch
+            } // if
+  
+            // Check if field is a primary key.
+            if ($fieldarray['Key'] == 'PRI') {
+              $this->FieldDefinitions[$fieldname]['primary'] = TRUE;
+            } else {
+              $this->FieldDefinitions[$fieldname]['primary'] = FALSE;
+            } // if
+  
+          } else {
+            // Assign values according to database.
+  
+            // Check if NULL values are allowed.
             if ($fieldarray['Null'] == 'YES') 
               $this->FieldDefinitions[$fieldname]['null'] = YES;
             else 
               $this->FieldDefinitions[$fieldname]['null'] = NO;
-          } // if
 
-          // Check if the DATATYPE value was not assigned.
-          if (!isset($this->FieldDefinitions[$fieldname]['datatype'])) {
             // Determine the type and size of the field.
             $ftype = $fieldarray['Type'];
             $finaltype = preg_replace ("/\(\w+\)/", "", $ftype);
@@ -455,15 +524,27 @@
   
               case 'text':
                 $this->FieldDefinitions[$fieldname]['datatype'] = "STRING";
+                $this->FieldDefinitions[$fieldname]['max'] = 65536;
+                $this->FieldDefinitions[$fieldname]['min'] = 0;
               break;
   
               case 'char':
               case 'varchar':
+                if (!$foundstring) {
+                  $this->PrimaryIdentifier = $fieldname;
+                  $foundstring = TRUE;
+                } // if
                 $this->FieldDefinitions[$fieldname]['datatype'] = "STRING";
+                preg_match ("/([0-9]+)/", $ftype, $matches);
+                $this->FieldDefinitions[$fieldname]['max'] = $matches[0];
+                $this->FieldDefinitions[$fieldname]['min'] = 0;
               break;
   
               case 'float':
                 $this->FieldDefinitions[$fieldname]['datatype'] = "FLOAT";
+                preg_match ("/([0-9]+)/", $ftype, $matches);
+                $this->FieldDefinitions[$fieldname]['max'] = $matches[0];
+                $this->FieldDefinitions[$fieldname]['min'] = 0;
               break;
   
               case 'datetime':
@@ -472,98 +553,36 @@
   
               default:
                 $this->FieldDefinitions[$fieldname]['datatype'] = "INTEGER";
+                preg_match ("/([0-9]+)/", $ftype, $matches);
+                // NOTE:
+                $maximum = pow ($matches[0], 10);
+                // $maximum = $maximum ^ 10;
+                $this->FieldDefinitions[$fieldname]['max'] = $maximum;
+                $this->FieldDefinitions[$fieldname]['min'] = 0;
               break;
   
             } // switch
-          } // if
+  
+            // Check if field is a primary key.
+            if ($fieldarray['Key'] == 'PRI') {
+              $this->FieldDefinitions[$fieldname]['primary'] = TRUE;
+            } else {
+              $this->FieldDefinitions[$fieldname]['primary'] = FALSE;
+            } // if
+  
+          } // if 
+  
 
-          // Check if field is a primary key.
-          if ($fieldarray['Key'] == 'PRI') {
-            $this->FieldDefinitions[$fieldname]['primary'] = TRUE;
-          } else {
-            $this->FieldDefinitions[$fieldname]['primary'] = FALSE;
-          } // if
+          $this->FieldNames[$fieldcount] = $fieldname;
+          $fieldcount++;
+          $zCACHE->ColumnCache[$this->TableName][$fieldname] = $this->FieldDefinitions[$fieldname];
+        } // while
+        $this->FieldCount = $fieldcount;
+        $zCACHE->FieldCache[$this->TableName] = $this->FieldNames;
+        $zCACHE->FieldCount[$this->TableName] = $this->FieldCount;
 
-        } else {
-          // Assign values according to database.
-
-          // Check if NULL values are allowed.
-          if ($fieldarray['Null'] == 'YES') 
-            $this->FieldDefinitions[$fieldname]['null'] = YES;
-          else 
-            $this->FieldDefinitions[$fieldname]['null'] = NO;
-
-          // Determine the type and size of the field.
-          $ftype = $fieldarray['Type'];
-          $finaltype = preg_replace ("/\(\w+\)/", "", $ftype);
-          $finaltype = preg_replace ("/ unsigned/", "", $finaltype);
-
-          switch ($finaltype) {
-
-            case 'text':
-              $this->FieldDefinitions[$fieldname]['datatype'] = "STRING";
-              $this->FieldDefinitions[$fieldname]['max'] = 65536;
-              $this->FieldDefinitions[$fieldname]['min'] = 0;
-            break;
-
-            case 'char':
-            case 'varchar':
-              if (!$foundstring) {
-                $this->PrimaryIdentifier = $fieldname;
-                $foundstring = TRUE;
-              } // if
-              $this->FieldDefinitions[$fieldname]['datatype'] = "STRING";
-              preg_match ("/([0-9]+)/", $ftype, $matches);
-              $this->FieldDefinitions[$fieldname]['max'] = $matches[0];
-              $this->FieldDefinitions[$fieldname]['min'] = 0;
-            break;
-
-            case 'float':
-              $this->FieldDefinitions[$fieldname]['datatype'] = "FLOAT";
-              preg_match ("/([0-9]+)/", $ftype, $matches);
-              $this->FieldDefinitions[$fieldname]['max'] = $matches[0];
-              $this->FieldDefinitions[$fieldname]['min'] = 0;
-            break;
-
-            case 'datetime':
-              $this->FieldDefinitions[$fieldname]['datatype'] = "DATETIME";
-            break;
-
-            default:
-              $this->FieldDefinitions[$fieldname]['datatype'] = "INTEGER";
-              preg_match ("/([0-9]+)/", $ftype, $matches);
-              // NOTE:
-              $maximum = pow ($matches[0], 10);
-              // $maximum = $maximum ^ 10;
-              $this->FieldDefinitions[$fieldname]['max'] = $maximum;
-              $this->FieldDefinitions[$fieldname]['min'] = 0;
-            break;
-
-          } // switch
-
-          // Check if field is a primary key.
-          if ($fieldarray['Key'] == 'PRI') {
-            $this->FieldDefinitions[$fieldname]['primary'] = TRUE;
-          } else {
-            $this->FieldDefinitions[$fieldname]['primary'] = FALSE;
-          } // if
-
-        } // if 
-
-
-        $this->FieldNames[$fieldcount] = $fieldname;
-        $fieldcount++;
-      } // while
- 
-      $this->FieldCount = $fieldcount;
-
-      // Check if successful.
-      if (!$fieldresult) {
-        $this->Error = -1;
-        $this->Message = mysql_error();
-        return (-1);
-      }
-
+      } // if
+   
       return (0);
 
     } // Fields
@@ -1517,7 +1536,7 @@
     } // Sanitize
 
     // Broadcast any error messages to the browser.
-    function CreateBroadcast ($pCLASS, $pFIELDERROR = "", $pUNIQUEID = "") {
+    function CreateBroadcast ($pCLASS = "", $pFIELDERROR = "", $pUNIQUEID = "") {
 
       global $gFRAMELOCATION;
       global $zAPPLE;
@@ -1560,7 +1579,7 @@
 
     } // CreateBroadcast
    
-    function Broadcast ($pCLASS, $pFIELDERROR = "", $pUNIQUEID = "") {
+    function Broadcast ($pCLASS = "", $pFIELDERROR = "", $pUNIQUEID = "") {
 
       echo $this->CreateBroadcast ($pCLASS, $pFIELDERROR, $pUNIQUEID);
       
@@ -1807,6 +1826,22 @@
     } // Bruce
 
   } // cBASEDATACLASS
+
+  // Cache storage class for table information.
+  class cBASEDATACACHE {
+    var $ColumnCache;
+    var $FieldCache;
+    var $FieldCount;
+
+    function cBASEDATACACHE () {
+      $this->ColumnCache = array ();
+      $this->FieldCache = array ();
+      $this->FieldCount = array ();
+
+      return (TRUE);
+    } // Constructor
+
+  } // cBASEDATACACHE
 
   // HTML Class.
   class cHTML {
@@ -2478,6 +2513,8 @@
 
       // Loop through the data
 
+      $finalstring = NULL;
+
       // Append data from pDATALIST
       if (isset ($pDATALIST)) {
         foreach ($pDATALIST as $listkey => $listvalue) {
@@ -2488,22 +2525,26 @@
             foreach ($listvalue as $sublistkey => $sublistvalue) {
 
               // If this key was previously declared, then continue on.
-              if (($pDATALIST[$fullkeyname] != "") or ($pDATALIST[$fullkeyname] == "0")) continue;
+              if (isset($pDATALIST[$fullkeyname])) continue;
 
+              // Add slashes to prevent ' from breaking jPOSTLINK
+              // NOTE: Still doesn't pass single quotes back to browser right.
+              $sublistvalue = addslashes ($sublistvalue);
+  
               $finalstring .= "$fullkeyname" . "[" . $sublistkey . "]=$sublistvalue&";
 
             } // foreach
           } else {
             // If this key was previously declared, then continue on.
-            if (isset($pDATALIST[$fullkeyname]) or ($pDATALIST[$fullkeyname] == "0")) continue;
+            if (isset($pDATALIST[$fullkeyname])) continue;
 
             $finalstring .= "$fullkeyname=$listvalue&";
 
+            // Add slashes to prevent ' from breaking jPOSTLINK
+            // NOTE: Still doesn't pass single quotes back to browser right.
+            $listvalue = addslashes ($listvalue);
+  
           } // if
-
-          // Add slashes to prevent ' from breaking jPOSTLINK
-          // NOTE: Still doesn't pass single quotes back to browser right.
-          $listvalue = addslashes ($listvalue);
 
         } // foreach
 
@@ -2513,7 +2554,7 @@
       if (isset ($gPOSTDATA)) {
         foreach ($gPOSTDATA as $postkey => $postvalue) {
 
-          if ($pDATALIST[$postkey]) continue;
+          if (isset($pDATALIST[$postkey])) continue;
           // Add the hidden 'g' to signify a global variable.
           $fullkeyname = "g" . $postkey;
 
@@ -2528,7 +2569,7 @@
             } // foreach
           } else {
             // If this key was previously declared, then continue on.
-            if (($pDATALIST[$fullkeyname] != "") or ($pDATALIST[$fullkeyname] == "0")) continue;
+            if (isset($pDATALIST[$fullkeyname])) continue;
 
             $finalstring .= "$fullkeyname=$postvalue&";
 
@@ -2754,6 +2795,9 @@
       global $gMAXPAGES, $gSCROLLMAX, $gSCROLLSTEP;
       global $gCURRENTPAGE, $gSCROLLSTART;
 
+      // If no starting point is set, start at '0'
+      if (!isset($gSCROLLSTART[$pCONTEXT])) $gSCROLLSTART[$pCONTEXT] = 0;
+
       // Determine the Maximum and Current page amounts.
       $gMAXPAGES = ceil ($gSCROLLMAX[$pCONTEXT] / $gSCROLLSTEP[$pCONTEXT]);
       $gCURRENTPAGE = ceil ($gSCROLLSTART[$pCONTEXT] / $gSCROLLSTEP[$pCONTEXT]) + 1;
@@ -2939,7 +2983,7 @@
     // Output the footer object.
     function Footer () {
       global $gTHEMELOCATION;
-      global $zSTRINGS, $zLOCALUSER, $zAPPLE;
+      global $zSTRINGS, $zLOCALUSER, $zAUTHUSER, $zAPPLE;
   
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/admin/");
   

@@ -39,6 +39,7 @@
 
   // Set which tab to highlight.
   $gUSERGROUPSTAB = '';
+  $this->SetTag ('USERGROUPSTAB', $gUSERGROUPSTAB);
 
   global $zGROUPS;
   $zGROUPS = new cGROUPINFORMATION ("USER.GROUPS");

@@ -97,6 +97,9 @@
     $zFOCUSUSER->userInvites->CountInvites ();
     $gINVITECOUNT = $zFOCUSUSER->userInvites->Amount;
 
+    global $bCONTACTBOX;
+    $bCONTACTBOX = NULL;
+
     // Process invite action.
     if ($gACTION == "INVITE") {
 
@@ -204,7 +207,6 @@
     // Check if a user is logged in.
     if ($zAUTHUSER->Username) {
       // Buffer the contact box.
-      global $bCONTACTBOX;
 
       $bCONTACTBOX = $zAPPLE->BufferContactBox ();
     } // if

@@ -153,6 +153,7 @@
 
   // Set which tab to highlight.
   $gUSERPHOTOSTAB = '';
+  $this->SetTag ('USERPHOTOSTAB', $gUSERPHOTOSTAB);
 
   // Display the select all button by default.
   $gSELECTBUTTON = 'select_all';

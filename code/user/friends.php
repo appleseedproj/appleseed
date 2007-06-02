@@ -58,6 +58,7 @@
 
   // Set which tab to highlight.
   $gUSERFRIENDSTAB = '';
+  $this->SetTag ('USERFRIENDSTAB', $gUSERFRIENDSTAB);
 
   // Buffer the main listing.
   ob_start ();  

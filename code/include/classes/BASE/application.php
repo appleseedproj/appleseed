@@ -44,6 +44,10 @@
       // Override which database to use.
       $this->Database = $pDATABASE;
 
+      // Create global caching class.
+      global $zCACHE;
+      $zCACHE = new cBASEDATACACHE();
+      
     } // Constructor
 
     // Initialize application.
@@ -954,12 +958,12 @@
     } // SetTag
 
     // Remove an ASD Tag value.
-    function RemoveTag ($pTAGNAME) {
+    function UnsetTag ($pTAGNAME) {
 
       unset ($this->Tags[$pTAGNAME]);
 
       return (TRUE);
-    } // RemoveTag
+    } // UnsetTag
 
     // Return an ASD Tag value.
     function GetTag ($pTAGNAME) {

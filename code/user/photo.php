@@ -72,6 +72,7 @@
 
   // Set which tab to highlight.
   $gUSERPHOTOSTAB = '';
+  $this->SetTag ('USERPHOTOSTAB', $gUSERPHOTOSTAB);
 
   // Load data about this file.
   $photocriteria = array ("photoSets_tID" => $gVIEWDATA->tID,

@@ -109,6 +109,7 @@
 
   // Set which tab to highlight.
   $gUSERJOURNALTAB = '';
+  $this->SetTag ('USERJOURNALTAB', $gUSERJOURNALTAB);
 
   global $gTARGET;
   $gTARGET = "profile/" . $zFOCUSUSER->Username . "/journal/";

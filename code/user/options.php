@@ -54,6 +54,7 @@
 
   // Set which tab to highlight.
   $gUSEROPTIONSTAB = '';
+  $this->SetTag ('USEROPTIONSTAB', $gUSEROPTIONSTAB);
 
   global $gOPTION;
 

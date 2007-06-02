@@ -304,6 +304,7 @@
       global $zSTRINGS, $zHTML;
 
       $gCOMMENTTARGET = $_SERVER[REQUEST_URI];
+      $zAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
 
       $replyfile = "new";
 
@@ -359,6 +360,8 @@
 
       $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$replyfile.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
+      $zAPPLE->UnsetTag ('COMMENTTARGET');
+
       return ($result);
 
     } // AddForm
@@ -376,11 +379,15 @@
 
       global $zAPPLE;
 
-      $gPOSTDATA["SCROLLSTART[" . $this->CommentContext . "]"] = $gSCROLLSTART[$this->CommentContext];
+      if (isset ($gSCROLLSTART[$this->CommentContext]))
+        $gPOSTDATA["SCROLLSTART[" . $this->CommentContext . "]"] = $gSCROLLSTART[$this->CommentContext];
 
-      $gCOMMENTTARGET = $_SERVER[REQUEST_URI];
+      $gCOMMENTTARGET = $_SERVER['REQUEST_URI'];
+      $zAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
 
       $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+
+      $zAPPLE->UnsetTag ('COMMENTTARGET');
 
       return ($result);
 
@@ -803,6 +810,9 @@
 
       } // switch
     
+      $zAPPLE->SetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
+      $zAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
+
       // PART II: Parse the HTML.
       switch ($gCOMMENTACTION) {
         case 'EDIT':
@@ -811,11 +821,13 @@
     
         case 'ADD':
           $gCOMMENTADDTAB = "";
+          $zAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
           $bCOMMENTS .= $this->AddForm ($gREFERENCEID);
         break;
     
         default:
           $gCOMMENTREADTAB = "";
+          $zAPPLE->SetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
           $bCOMMENTS .= $this->Top ();
           $start = 0;
           if ($gSTARTINGID) $start = $gSTARTINGID;
@@ -823,6 +835,12 @@
           $bCOMMENTS .= $this->Bottom ();
         break;
       } // switch
+
+      $zAPPLE->UnsetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
+      $zAPPLE->UnsetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
+
+      return (true);
+
     } // Handle
 
     // Initialize the commenting subsystem.

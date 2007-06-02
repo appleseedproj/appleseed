@@ -60,6 +60,10 @@
       
       // Initialize ASD tags array.
       $this->Tags = array ();
+
+      // Create global caching class.
+      global $zCACHE;
+      $zCACHE = new cBASEDATACACHE();
       
       return (TRUE);
     } // Constructor
@@ -280,8 +284,13 @@
       // Pull the focus user information
       if ($gPROFILEREQUEST) {
         // Split the request into username and action
-        list ($gFOCUSUSERNAME, $gPROFILEACTION, $gPROFILESUBACTION) = split ('/', $gPROFILEREQUEST, 3);
-        $gPROFILESUBACTION = rtrim ($gPROFILESUBACTION, '/');
+        $profile_array = split ('/', $gPROFILEREQUEST, 3);
+        if (isset($profile_array[0])) $gFOCUSUSERNAME = $profile_array[0];
+        if (isset($profile_array[1])) $gPROFILEACTION = $profile_array[1];
+        if (isset($profile_array[2])) {
+          $gPROFILESUBACTION = $profile_array[2];
+          $gPROFILESUBACTION = rtrim ($gPROFILESUBACTION, '/');
+        } // if
   
         // Sanity check the username and action.
   
@@ -293,6 +302,7 @@
         $zFOCUSUSER->userSettings->Load ();
         $gFOCUSUSERID = $zFOCUSUSER->uID;
         $gFOCUSFULLNAME = $zFOCUSUSER->userProfile->GetAlias ();
+        $this->SetTag ('FOCUSFULLNAME', $gFOCUSFULLNAME);
       } // if
   
       global $gADMINEMAIL;
@@ -313,7 +323,20 @@
       $gACTION = strtoupper ($gACTION);
       $gACTION = str_replace (' ', '_', $gACTION);
       
+      // Set the timezone.
+      $this->SetTimeZone();
+
+      $this->SetTag ('FOCUSUSERNAME', $gFOCUSUSERNAME);
+
+      return (TRUE); 
+      
     } // Initialize
+    
+    // Set the time zone according to user settings or geolocated IP.
+    function SetTimeZone () {
+      // Get the time
+      date_default_timezone_set("America/New_York");
+    } // SetTimeZone
 
     // Check whether system is configured properly.
     function RuntimeVerification () {
@@ -696,9 +719,17 @@
       $gCONTENTARTICLESQUEUETAB = '_off';
 
       $gUSERJOURNALTAB = '_off'; $gUSERPHOTOSTAB = '_off';
-      $gUSERENEMIESTAB = '_off'; $gUSERFRIENDSTAB = '_off';
-      $gUSERINFOTAB = '_off'; $gUSERMESSAGESTAB = '_off';
-      $gUSERGROUPSTAB = '_off'; $gUSEROPTIONSTAB = '_off';
+      $gUSERFRIENDSTAB = '_off'; $gUSERINFOTAB = '_off'; 
+      $gUSERMESSAGESTAB = '_off'; $gUSERGROUPSTAB = '_off'; 
+      $gUSEROPTIONSTAB = '_off';
+
+      $this->SetTag ('USERJOURNALTAB', $gUSERJOURNALTAB);
+      $this->SetTag ('USERPHOTOSTAB', $gUSERPHOTOSTAB);
+      $this->SetTag ('USERFRIENDSTAB', $gUSERFRIENDSTAB);
+      $this->SetTag ('USERINFOTAB', $gUSERINFOTAB);
+      $this->SetTag ('USERMESSAGESTAB', $gUSERMESSAGESTAB);
+      $this->SetTag ('USERGROUPSTAB', $gUSERGROUPSTAB);
+      $this->SetTag ('USEROPTIONSTAB', $gUSEROPTIONSTAB);
   
       $gADMINUSERSACCOUNTSTAB = '_off'; $gADMINUSERSBILLINGTAB = '_off';
       $gADMINUSERSACCESSTAB = '_off'; $gADMINUSERSOPTIONSTAB = '_off';
@@ -872,7 +903,6 @@
 
       // Start with the hardcoded questions
       global $gFOCUSFULLNAME;
-      $gFOCUSFULLNAME = $zFOCUSUSER->userProfile->GetAlias ();
 
       $gQUESTIONSTYLE = 'fullname';
       $zSTRINGS->Lookup ("LABEL.FULLNAME", "USER.PROFILE");
@@ -881,6 +911,7 @@
 
       global $gFOCUSGENDER;
       $gFOCUSGENDER = $zOPTIONS->Label ("GENDER", $zFOCUSUSER->userProfile->Gender);
+      $this->SetTag ('FOCUSGENDER', $gFOCUSGENDER);
       $gQUESTIONSTYLE = 'gender';
       $zSTRINGS->Lookup ("LABEL.GENDER", "USER.PROFILE");
       $gQUESTIONANSWER = $zSTRINGS->Output;
@@ -960,6 +991,8 @@
       global $bPROFILEQUESTIONS;
       $bPROFILEQUESTIONS = ob_get_clean (); 
  
+      $this->UnsetTag ('FOCUSGENDER');
+
       return (0);
 
     } // Profile
@@ -1212,6 +1245,9 @@
          case 'tooltip':
           global $zTOOLTIPS;
 
+          if (!isset ($tagarray['title'])) $tagarray['title'] = NULL;
+          if (!isset ($tagarray['context'])) $tagarray['context'] = NULL;
+
           $title = strtoupper ($tagarray['title']);
           $context = strtoupper ($tagarray['context']);
 
@@ -1222,13 +1258,13 @@
          case 'link':
           // Parse out the post link.
           global $zHTML;
-          $target = $tagarray['target'];
-          $text = $tagarray['text'];
-          $image = $tagarray['image'];
-          $width = $tagarray['width'];
-          $height = $tagarray['height'];
-          $style = $tagarray['style'];
-          $confirm = $tagarray['confirm'];
+          if (isset ($tagarray['target'])) $target = $tagarray['target']; else $target = NULL;
+          if (isset ($tagarray['text'])) $text = $tagarray['text']; else $text = NULL;
+          if (isset ($tagarray['image'])) $image = $tagarray['image']; else $image = NULL;
+          if (isset ($tagarray['width'])) $width = $tagarray['width']; else $width = NULL;
+          if (isset ($tagarray['height'])) $height = $tagarray['height']; else $height = NULL;
+          if (isset ($tagarray['style'])) $style = $tagarray['style']; else $style = NULL;
+          if (isset ($tagarray['confirm'])) $confirm = $tagarray['confirm']; else $confirm = NULL;
           $extra = 'g' . $tagarray['extra'];
           global $$extra;
           $output = $zHTML->CreateLink ($target, $text, $$extra, $style, $image, $width, $height, $confirm);

@@ -72,6 +72,7 @@
 
   // Set which tab to display.
   $gUSERMESSAGESTAB = '';
+  $this->SetTag ('USERMESSAGESTAB', $gUSERMESSAGESTAB);
 
   // NOTE: Temporary
   $zAPPLE->Context = 'user.messages';
