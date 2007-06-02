@@ -36,12 +36,31 @@
 
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
+  
+  // Only include base and server.
+  require_once ('code/include/classes/base.php'); 
+  require_once ('code/include/classes/server.php'); 
+  
+  define ("PRIVACY_ALLOW",     "0");
+  define ("PRIVACY_SCREEN",    "1");
+  define ("PRIVACY_RESTRICT",  "2");
+  define ("PRIVACY_BLOCK",     "3");
+  define ("PRIVACY_HIDE",      "4");
+ 
+  define ("USER_EVERYONE",     "1000");
+  define ("USER_LOGGEDIN",     "2000");
+ 
+  $zIMAGE = new cIMAGE();
+  $zSERVER = new cSERVER();
+  
+  // Load Site Information.
+  $zSERVER->LoadSiteInfo ();
+  
+  // Suppress warning reports.
+  error_reporting (E_ERROR);
 
-  // Determine side door location of image.
-  $requested_pic = $_SERVER[REQUEST_URI];
-  // NOTE:  No long storing files outside of public_html directory
-  // $pic_location = "../sidedoor" . $requested_pic;
-  $pic_location = $requested_pic;
+  $pic_location = $_SERVER[REQUEST_URI];
+  $requested_pic = $pic_location;
 
   // Remove beginning '/' off location.
   if ($pic_location[0] == '/') $pic_location[0] = '';
@@ -54,104 +73,267 @@
     include ("404.php");
     exit(0); 
   } // if (file_exists)
-
-  // Step 1: Check if user is hotlinking.
-
-  // Step 2: Check if user has proper access.
-
-  // Include BASE API classes.
-  require_once ('code/include/classes/BASE/application.php'); 
-  require_once ('code/include/classes/BASE/debug.php'); 
-  require_once ('code/include/classes/base.php'); 
-  require_once ('code/include/classes/system.php'); 
-  require_once ('code/include/classes/BASE/remote.php'); 
-  require_once ('code/include/classes/BASE/xml.php'); 
-
-  // Include Appleseed classes.
-  require_once ('code/include/classes/friends.php'); 
-  require_once ('code/include/classes/appleseed.php'); 
-  require_once ('code/include/classes/privacy.php'); 
-  require_once ('code/include/classes/messages.php'); 
-  require_once ('code/include/classes/users.php'); 
-  require_once ('code/include/classes/photo.php'); 
-  require_once ('code/include/classes/comments.php'); 
-  require_once ('code/include/classes/auth.php'); 
-  require_once ('code/include/classes/search.php'); 
-
-  // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
   
-  // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
-
-  // Initialize Appleseed.
-  $zAPPLE->Initialize("common.images", TRUE);
-
+  // Split the URL information into a list.
   list ($null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = split ('/', $requested_pic);
-
-  // This is an uploaded user photo album, so double check security.
-  if ($ROOTDIR == 'photos') {
-    // Get the owner's user ID.
-    $zFOCUSUSER->Select ("Username", $gOWNER);
-    $zFOCUSUSER->FetchArray ();
-
-    // Get the photoset ID.
-    $zPHOTOSET = new cPHOTOSETS;
-    $setcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
-                          "Directory"    => $gDIRECTORY);
-    $zPHOTOSET->SelectByMultiple ($setcriteria);
-    $zPHOTOSET->FetchArray ();
-    $photosetid = $zPHOTOSET->tID;
-
-    // Get the photo sort ID.
-    $filename = str_replace ("_th.", "", $gFILENAME);
-    $photocriteria = array ("photoSets_tID" => $zPHOTOSET->tID,
-                            "Filename"      => $filename);
-    $zPHOTOSET->photoInfo->SelectByMultiple ($photocriteria);
-    $zPHOTOSET->photoInfo->FetchArray ();
-    $photosortid = $zPHOTOSET->photoInfo->sID;
-
-    // Check if album is hidden or blocked for this user.
-    $gPRIVACYSETTING = $zPHOTOSET->photoPrivacy->Determine ("zFOCUSUSER", "zAUTHUSER", "photoSets_tID", $photosetid);
-
-    $allowedfilename = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'];
-    $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/$gTHEMELOCATION/images/error/block.png";
-
-    unset ($zPHOTOSET);
+  
+  
+  // If we're not looking within the photos directory, then exit.
+  if ($ROOTDIR != 'photos') exit;
+  
+  // Get the session string from cookie.
+  $Identifier = $_COOKIE['gLOGINSESSION'];
+  $RemoteIdentifier = $_COOKIE['gREMOTELOGINSESSION'];
+  
+  $allowedfilename = $_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI'];
+  
+  //$zIMAGE->Show ($allowedfilename);
     
-    switch ($gPRIVACYSETTING) {
-      case PRIVACY_BLOCK:
-        if ( ($zLOCALUSER->userAccess->r == FALSE) and ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
-          // Check if the first thumbnail was requested, otherwise show error image.
-          if (strstr ($_SERVER[REQUEST_URI], "_th.") and
-             ($photosortid == 1) ) {
-            $zIMAGE->Show ($allowedfilename);
-          } else {
-            $zIMAGE->Show ($blockedfilename);
-          } // if
-        } else {
-          // Display the image.
-          $zIMAGE->Show ($allowedfilename);
-        } // if
-        exit(0);
-      break;
-
-      case PRIVACY_HIDE:
-        if ( ($zLOCALUSER->userAccess->r == FALSE) and ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
-          // Display the block image.
-          $zIMAGE->Show ($blockedfilename);
-        } else {
-          // Display the image.
-          $zIMAGE->Show ($allowedfilename);
-        } // if
-        exit(0);
-      break;
-
-      default:
+  $userAuth = $zSERVER->TablePrefix . "userAuthorization";
+  $userSessions = $zSERVER->TablePrefix . "userSessions";
+  $authSessions = $zSERVER->TablePrefix . "authSessions";
+  $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
+  $friendCircles = $zSERVER->TablePrefix . "friendCircles";
+  $friendCirclesList = $zSERVER->TablePrefix . "friendCirclesList";
+  $friendInfo = $zSERVER->TablePrefix . "friendInformation";
+      
+  // Check if user has access to this photo.
+  
+  if ((!$Identifier) and (!$RemoteIdentifier)) {
+    // Viewing user is anonymous.
+    $access = DetermineAnonymousAccess ($gOWNER, $gDIRECTORY);
+  } else {
+    // Viewing user is logged in.  Determine if they are remote or local.
+    if ($Identifier) 
+      $user = GetLocalUserInformation ($Identifier);
+    elseif ($RemoteIdentifier)
+      $user = GetRemoteUserInformation ($RemoteIdentifier);
+      
+    if ((!$user['Username']) and (!$user['Domain'])) {
+      // Insufficient user information.  Treat as anonymous.
+      $access = DetermineAnonymousAccess ($gOWNER, $gDIRECTORY);
+    } else {
+      $username = $user['Username'];
+      $domain = $user['Domain'];
+      
+      // If the owner is viewing their own image, just display the image.
+      if ( ($gOWNER == $username) and ($zSERVER->SiteDomain == $domain)) {
         $zIMAGE->Show ($allowedfilename);
-        exit(0);
-      break;
-    } // switch
+        exit;
+      } // if
+      
+      // Determine the access level.
+      $access = DetermineAccess ($gOWNER, $gDIRECTORY, $username, $domain);
+    } // if
+    
   } // if
-
-?>
+  
+  // Take action according to access.
+  switch ($access) {
+    case PRIVACY_ALLOW:
+    case PRIVACY_SCREEN:
+    case PRIVACY_RESTRICT:
+      // Show the image.
+      $zIMAGE->Show ($allowedfilename);
+    break;
+    
+    case PRIVACY_BLOCK:
+    case PRIVACY_HIDE:
+    default:
+      // NOTE: Add back when user themes are implemented.
+      // $theme = LoadThemeInformation ($Identifier);
+      $theme = 'ophelia';
+      $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/themes/$theme/images/error/block.png";
+      
+      // Show the blocked image.
+      $zIMAGE->Show ($blockedfilename);
+    break;
+  } // switch
+    
+  // End the program.
+  exit;
+  
+  //-- FUNCTIONS --------------------------------------
+  
+  // Determine access level for an anonymous user.
+  function DetermineAnonymousAccess ($pOWNER, $pDIRECTORY) {
+    global $zSERVER;
+    
+    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
+    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $authSessions = $zSERVER->TablePrefix . "authSessions";
+    $photoSets = $zSERVER->TablePrefix . "photoSets";
+    $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
+    $friendCircles = $zSERVER->TablePrefix . "friendCircles";
+    $friendCirclesList = $zSERVER->TablePrefix . "friendCirclesList";
+    $friendInfo = $zSERVER->TablePrefix . "friendInformation";
+      
+    $sql_statement = "
+      SELECT   MIN($photoPrivacy.Access) AS FinalAccess
+      FROM     $photoSets, $photoPrivacy, $userAuth
+      WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
+      AND      $userAuth.Username = '%s'
+      AND      $photoSets.userAuth_uID = $userAuth.uID
+      AND      $photoPrivacy.friendCircles_sID = %s
+      AND      $photoPrivacy.photoSets_tID = $photoSets.tID
+      AND      $photoSets.Directory = '%s'
+    ";
+    $sql_statement = sprintf ($sql_statement,
+                              mysql_real_escape_string ($pOWNER),
+                              mysql_real_escape_string (USER_EVERYONE),
+                              mysql_real_escape_string ($pDIRECTORY));
+                             
+    $sql_result = mysql_query ($sql_statement);
+    $sql_data = mysql_fetch_assoc ($sql_result);
+    $access = $sql_data['FinalAccess'];
+    
+    return ($access);
+  } // DetermineAnonymousAccess
+  
+  // Determine access for a logged in user.
+  function DetermineAccess ($pOWNER, $pDIRECTORY, $pUSERNAME, $pDOMAIN) {
+    global $zSERVER;
+    
+    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
+    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $authSessions = $zSERVER->TablePrefix . "authSessions";
+    $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
+    $photoSets = $zSERVER->TablePrefix . "photoSets";
+    $photoInfo = $zSERVER->TablePrefix . "photoInformation";
+    $friendCircles = $zSERVER->TablePrefix . "friendCircles";
+    $friendCirclesList = $zSERVER->TablePrefix . "friendCirclesList";
+    $friendInfo = $zSERVER->TablePrefix . "friendInformation";
+    
+    // Strip off any size indicators from file request.
+    $pFILENAME = str_replace ('_og.', NULL, $pFILENAME);
+    $pFILENAME = str_replace ('_sm.', NULL, $pFILENAME);
+    $pFILENAME = str_replace ('_md.', NULL, $pFILENAME);
+    $pFILENAME = str_replace ('_lg.', NULL, $pFILENAME);
+    $pLOCKID = 100;
+    $pSETID = 100;
+    
+    $sql_statement = "
+      SELECT   MIN($photoPrivacy.Access) AS FinalAccess
+      FROM     $photoSets, $photoInfo, $photoPrivacy, $userAuth,  $friendCircles, $friendCirclesList, $friendInfo 
+      WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
+      AND      $friendCircles.userAuth_uID = $userAuth.uID
+      AND      $userAuth.Username = '%s'
+      AND      $userAuth.uID = $photoSets.userAuth_uID
+      AND      $photoPrivacy.friendCircles_sID = $friendCircles.sID 
+      AND      $photoPrivacy.photoSets_tID = $photoSets.tID
+      AND      $photoSets.Directory = '%s'
+      AND      $friendCircles.tID = $friendCirclesList.friendCircles_tID
+      AND      $friendInfo.Username = '%s'
+      AND      $friendInfo.Domain = '%s'
+      AND      $friendInfo.tID = $friendCirclesList.friendInformation_tID
+    ";
+    
+    $sql_statement = sprintf ($sql_statement,
+                              mysql_real_escape_string ($pOWNER),
+                              mysql_real_escape_string ($pDIRECTORY),
+                              mysql_real_escape_string ($pUSERNAME),
+                              mysql_real_escape_string ($pDOMAIN));
+    
+    $sql_result = mysql_query ($sql_statement);
+    $sql_data = mysql_fetch_assoc ($sql_result);
+    
+    $access = $sql_data['FinalAccess'];
+    
+    // If we have a value, return.
+    if ($access) {
+      return ($access);
+    } // if
+    
+    // If no value was found, user is not a friend.
+    
+    $sql_statement = "
+      SELECT   MIN($photoPrivacy.Access) AS FinalAccess
+      FROM     $photoSets, $photoPrivacy, $userAuth
+      WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
+      AND      $userAuth.Username = '%s'
+      AND      $photoSets.userAuth_uID = $userAuth.uID
+      AND     ($photoPrivacy.friendCircles_sID = %s
+      OR       $photoPrivacy.friendCircles_sID = %s)
+      AND      $photoPrivacy.photoSets_tID = $photoSets.tID
+      AND      $photoSets.Directory = '%s'
+    ";
+    
+    $sql_statement = sprintf ($sql_statement,
+                              mysql_real_escape_string ($pOWNER),
+                              mysql_real_escape_string (USER_EVERYONE),
+                              mysql_real_escape_string (USER_LOGGEDIN),
+                              mysql_real_escape_string ($pDIRECTORY));
+                             
+    $sql_result = mysql_query ($sql_statement);
+    $sql_data = mysql_fetch_assoc ($sql_result);
+    
+    $access = $sql_data['FinalAccess'];
+    
+    return ($access);
+  } // DetermineAccess
+  
+  // Load local user information from the database.
+  function GetLocalUserInformation ($pIDENTIFIER) {
+    global $zSERVER;
+    
+    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
+    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $authSessions = $zSERVER->TablePrefix . "authSessions";
+    $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
+    $friendCircles = $zSERVER->TablePrefix . "friendCircles";
+    $friendCirclesList = $zSERVER->TablePrefix . "friendCirclesList";
+    $friendInfo = $zSERVER->TablePrefix . "friendInformation";
+      
+    // Possibly use a join statement to optimize?
+    
+    // Check for local.
+    $sql_statement = "
+      SELECT $userAuth.Username
+      FROM   $userSessions,$userAuth
+      WHERE  $userSessions.Identifier = '%s'
+      AND    $userAuth.uID = $userSessions.userAuth_uID
+    ";
+    
+    $sql_statement = sprintf ($sql_statement,
+                              mysql_real_escape_string ($pIDENTIFIER));
+                              
+    $sql_result = mysql_query ($sql_statement);
+    $sql_data = mysql_fetch_assoc ($sql_result);
+    $Username = $sql_data['Username'];
+    $uid = $sql_data['uID'];
+    
+    $return['Username'] = $Username;
+    $return['Domain'] = $zSERVER->SiteDomain;
+    
+    return ($return);
+  } // GetLocalUserInformation
+  
+  // Load remote user information from the database.
+  function GetRemoteUserInformation ($pIDENTIFIER) {
+    global $zSERVER;
+    
+    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
+    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $authSessions = $zSERVER->TablePrefix . "authSessions";
+    $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
+    $friendCircles = $zSERVER->TablePrefix . "friendCircles";
+    $friendCirclesList = $zSERVER->TablePrefix . "friendCirclesList";
+    $friendInfo = $zSERVER->TablePrefix . "friendInformation";
+      
+    // Check for remote.
+    $sql_statement = "
+      SELECT $authSessions.Username, $authSessions.Domain
+      FROM   $authSessions
+      WHERE  Identifier = '%s'
+    ";
+    
+    $sql_statement = sprintf ($sql_statement,
+                              mysql_real_escape_string ($pIDENTIFIER));
+                              
+    $sql_result = mysql_query ($sql_statement);
+    $sql_data = mysql_fetch_assoc ($sql_result);
+    $return['Username'] = $sql_data['Username'];
+    $return['Domain'] = $sql_data['Domain'];
+    
+    return ($return);
+  } // GetRemoteUserInformation
