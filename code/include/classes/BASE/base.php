@@ -822,7 +822,12 @@
     } // Query
 
     // Select based on one field/value pair.
-    function Select ($pFIELD = "", $pVALUE = "", $pORDERBY = "", $pLIKE = "") {
+    function Select ($pFIELD = "", $pVALUE = "", $pORDERBY = "", $pLIKE = NULL) {
+      
+      if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
+        $this->CascadeSelect ($pFIELD, $pVALUE, $pORDERBY, $pLIKE);
+        return (TRUE);
+      } // if
 
       global $gDEBUG;
 
@@ -859,15 +864,67 @@
       return (0);
 
     } // Select 
-
+    
+    // Create a JOIN statement to select cascading tables.
+    function CascadeSelect ($pFIELD = "", $pVALUE = "", $pORDERBY = "", $pLIKE = "") {
+  
+      $thistable = $this->TableName;
+      
+      foreach ($this->FieldNames as $fieldname) {
+        $fieldarray[] = $this->TableName . '.' . $fieldname . ' AS ' . $this->TableName . '__' . $fieldname;
+      } // foreach
+      
+      foreach ($this->Cascade as $cascadeclass) {
+        foreach ($this->$cascadeclass->FieldNames as $fieldname) {
+          $fieldarray[] = $this->$cascadeclass->TableName . '.' . $fieldname . ' AS ' . $this->$cascadeclass->TableName . '__' . $fieldname;
+        } // foreach
+        
+        $joinarray[] = "LEFT JOIN " .  $this->$cascadeclass->TableName . 
+                       " ON " . $this->$cascadeclass->TableName . ".userAuth_uID=$thistable.uID ";
+      } // foreach
+      
+      $fields = join (", \n", $fieldarray);
+      $leftjoin = join ("\n", $joinarray);
+      
+      if ($pLIKE) {
+        $where = "WHERE $thistable.$pFIELD like '%$pVALUE%'";
+      } else {
+        $where = "WHERE $thistable.$pFIELD = '$pVALUE'";
+      } // if
+      
+      $this->Statement = "
+        SELECT $fields
+        FROM $thistable
+        $leftjoin
+        $where
+      ";
+      
+      if ($pORDERBY) {
+        $this->Statement .= " ORDER BY " . $pORDERBY;
+      } // if
+      
+      if ($this->Result = $this->Query($this->Statement)) {
+      } else {
+        $this->Error = -1;
+        $this->Message = mysql_error();
+        return (-1);
+      } // if
+      
+      return (TRUE);
+    } // CascadeSelect
+    
     // Select using a custom Where clause.
-    function SelectWhere ($pWHERECLAUSE, $pSORT = "") {
+    function SelectWhere ($pWHERECLAUSE, $pORDERBY = "") {
 
+      if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
+        $this->CascadeSelectWhere ($pWHERECLAUSE, $pORDERBY);
+        return (TRUE);
+      } // if
       global $gDEBUG;
 
       $this->Statement = "SELECT * FROM $this->TableName WHERE " . $pWHERECLAUSE;
 
-      if ($pSORT) {
+      if ($pORDERBY) {
        $this->Statement .= " ORDER BY " . $pSORT;
       } // if
 
@@ -885,6 +942,47 @@
       return (0);
 
     } // SelectWhere
+    
+    function CascadeSelectWhere ($pWHERECLAUSE, $pORDERBY = "") {
+  
+      $thistable = $this->TableName;
+      
+      foreach ($this->FieldNames as $fieldname) {
+        $fieldarray[] = $this->TableName . '.' . $fieldname . ' AS ' . $this->TableName . '__' . $fieldname;
+      } // foreach
+      
+      foreach ($this->Cascade as $cascadeclass) {
+        foreach ($this->$cascadeclass->FieldNames as $fieldname) {
+          $fieldarray[] = $this->$cascadeclass->TableName . '.' . $fieldname . ' AS ' . $this->$cascadeclass->TableName . '__' . $fieldname;
+        } // foreach
+        
+        $joinarray[] = "LEFT JOIN " .  $this->$cascadeclass->TableName . 
+                       " ON " . $this->$cascadeclass->TableName . ".userAuth_uID=$thistable.uID ";
+      } // foreach
+      
+      $fields = join (", \n", $fieldarray);
+      $leftjoin = join ("\n", $joinarray);
+      
+      $this->Statement = "
+        SELECT $fields
+        FROM $thistable
+        $leftjoin
+        WHERE $pWHERECLAUSE
+      ";
+      
+      if ($pORDERBY) {
+        $this->Statement .= " ORDER BY " . $pORDERBY;
+      } // if
+      
+      if ($this->Result = $this->Query($this->Statement)) {
+      } else {
+        $this->Error = -1;
+        $this->Message = mysql_error();
+        return (-1);
+      } // if
+      
+      return (TRUE);
+    } // CascadeSelectWhere
 
     // Search table using all fields as criteria.
     function SelectByAll ($pCRITERIA = "", $pORDERBY = "", $pLIKE = "") {
@@ -1040,20 +1138,16 @@
     // Fetch the results of a query.
     function FetchArray () {
 
+      if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
+        $this->CascadeFetchArray ();
+        return (TRUE);
+      } // if
+
       if ($resultarray = mysql_fetch_array($this->Result, MYSQL_ASSOC)) {
         foreach ($resultarray as $tbl => $data) {
           $this->$tbl = $data;
           stripslashes ($this->$tbl);
         } // foreach
-
-        // Cascade through internal classes and pull data.
-        if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
-          foreach ($this->Cascade as $internal) {
-            $this->$internal->userAuth_uID = $this->uID;
-            $this->$internal->Select ("userAuth_uID", $this->uID);
-            $this->$internal->FetchArray ();
-          } // foreach
-        } // if
 
         return (1);
       } else {
@@ -1061,6 +1155,40 @@
       } // if
 
     } // FetchArray
+    
+    // Fetch a cascaded mysql result
+    function CascadeFetchArray () {
+      
+      if (!$resultarray = mysql_fetch_array($this->Result, MYSQL_ASSOC)) {
+        return (FALSE);
+      } // if
+      
+      foreach ($resultarray as $tbl => $data) {
+        stripslashes ($data);
+        list ($tablename, $fieldname) = split ('__', $tbl);
+        $dataarray[$tablename][$fieldname] = $data;
+      } // foreach
+      
+      foreach ($this->Cascade as $classname) {
+        foreach ($dataarray as $key => $val) {
+          if ($this->$classname->TableName == $key) {
+            foreach ($val as $field => $value) {
+              $this->$classname->$field = $value;
+            } // foreach
+          } // if
+          if ($this->TableName == $key) {
+            foreach ($val as $field => $value) {
+              $this->$field = $value;
+            } // foreach
+          } // if
+        } // foreach
+        // Synchronize the foreign key even if no values were found.
+        $this->$classname->userAuth_uID = $this->uID;
+      } // foreach
+      
+      return (TRUE);
+
+    } // CascadeFetchArray
 
     // Count the number of results from a query.
     function CountResult () {

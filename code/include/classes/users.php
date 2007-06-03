@@ -60,7 +60,7 @@
       $this->PrimaryKey = 'uID';
       $this->ForeignKey = '';
       $this->Cascade = array ('userSession', 'userAccess', 'userProfile', 
-                              'userInformation', 'userInvites', 'userIcons',
+                              'userInformation', 'userIcons',
                               'userSettings', 'userGroups', 'userTokens');
  
       // Create extended field definitions

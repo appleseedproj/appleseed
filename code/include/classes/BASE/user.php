@@ -119,6 +119,8 @@
 
       // Grab the fields from the database.
       $this->Fields();
+      
+      unset ($this->Cascade);
  
     } // Constructor
 
