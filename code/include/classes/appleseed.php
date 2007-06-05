@@ -66,8 +66,8 @@
       $zCACHE = new cBASEDATACACHE();
       
       // Load cache data if we can find it.
-      if (file_exists ('data/fields.acache')) include_once ('data/fields.acache');
-      if (file_exists ('data/columns.acache')) include_once ('data/columns.acache');
+      if (file_exists ('data/cache/fields.acache')) include_once ('data/fields.acache');
+      if (file_exists ('data/cache/columns.acache')) include_once ('data/columns.acache');
       
       return (TRUE);
     } // Constructor
