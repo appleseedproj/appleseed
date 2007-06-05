@@ -205,9 +205,8 @@
     } // if
 
     // Check if a user is logged in.
-    if ($zAUTHUSER->Username) {
+    if (!$zAUTHUSER->Anonymous) {
       // Buffer the contact box.
-
       $bCONTACTBOX = $zAPPLE->BufferContactBox ();
     } // if
   } // if
