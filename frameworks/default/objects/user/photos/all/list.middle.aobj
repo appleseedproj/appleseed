@@ -1,0 +1,5 @@
+ <?php $zHTML->Alternate(); ?>
+  <span class='thumb' >
+    <?php $zHTML->ImageLink ($gVIEWTARGET, NULL, $gPHOTOLOCATION, $gTHUMBX, $gTHUMBY); ?>
+  </span> <!-- .thumb -->
+ </li> <!-- #[alternate] -->
