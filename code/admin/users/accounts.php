@@ -421,7 +421,7 @@
           $gCRITERIA = ''; $gPOSTDATA['CRITERIA'] = '';
         } // if
       } else {
-        $ADMINDATA->Select("", "", $gSORT);
+        $ADMINDATA->Select(NULL, NULL, $gSORT);
       } // if
     break;
     

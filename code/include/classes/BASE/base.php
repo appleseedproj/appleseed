@@ -825,8 +825,8 @@
     function Select ($pFIELD = "", $pVALUE = "", $pORDERBY = "", $pLIKE = NULL) {
       
       if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
-        $this->CascadeSelect ($pFIELD, $pVALUE, $pORDERBY, $pLIKE);
-        return (TRUE);
+        $return = $this->CascadeSelect ($pFIELD, $pVALUE, $pORDERBY, $pLIKE);
+        return ($return);
       } // if
 
       global $gDEBUG;
@@ -886,10 +886,14 @@
       $fields = join (", \n", $fieldarray);
       $leftjoin = join ("\n", $joinarray);
       
-      if ($pLIKE) {
-        $where = "WHERE $thistable.$pFIELD like '%$pVALUE%'";
+      if ($pFIELD) {
+        if ($pLIKE) {
+          $where = "WHERE $thistable.$pFIELD like '%$pVALUE%'";
+        } else {
+          $where = "WHERE $thistable.$pFIELD = '$pVALUE'";
+        } // if
       } else {
-        $where = "WHERE $thistable.$pFIELD = '$pVALUE'";
+        $where = "GROUP BY $thistable.uID";
       } // if
       
       $this->Statement = "
@@ -917,9 +921,10 @@
     function SelectWhere ($pWHERECLAUSE, $pORDERBY = "") {
 
       if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
-        $this->CascadeSelectWhere ($pWHERECLAUSE, $pORDERBY);
-        return (TRUE);
+        $return = $this->CascadeSelectWhere ($pWHERECLAUSE, $pORDERBY);
+        return ($return);
       } // if
+      
       global $gDEBUG;
 
       $this->Statement = "SELECT * FROM $this->TableName WHERE " . $pWHERECLAUSE;
@@ -987,6 +992,11 @@
     // Search table using all fields as criteria.
     function SelectByAll ($pCRITERIA = "", $pORDERBY = "", $pLIKE = "") {
 
+      if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
+        $return = $this->CascadeSelectByAll ($pWHERECLAUSE, $pORDERBY);
+        return ($return);
+      } // if
+      
       $finaldef = array ();
 
       // Loop through the field names and create the where clause.
@@ -1139,8 +1149,8 @@
     function FetchArray () {
 
       if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
-        $this->CascadeFetchArray ();
-        return (TRUE);
+        $return = $this->CascadeFetchArray ();
+        return ($return);
       } // if
 
       if ($resultarray = mysql_fetch_array($this->Result, MYSQL_ASSOC)) {

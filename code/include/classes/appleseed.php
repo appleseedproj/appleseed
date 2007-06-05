@@ -65,14 +65,15 @@
       global $zCACHE;
       $zCACHE = new cBASEDATACACHE();
       
+      // Load cache data if we can find it.
+      if (file_exists ('data/fields.acache')) include_once ('data/fields.acache');
+      if (file_exists ('data/columns.acache')) include_once ('data/columns.acache');
+      
       return (TRUE);
     } // Constructor
 
     // Overwrite inhereted ::Initialize function.
     function Initialize ($pCONTEXT = "", $pREGISTERGLOBALS = FALSE) {
-      
-      global $zDEBUG;
-      
       global $zDEBUG;
   
       $zDEBUG = new cDEBUG;
@@ -327,7 +328,7 @@
       $this->SetTimeZone();
 
       $this->SetTag ('FOCUSUSERNAME', $gFOCUSUSERNAME);
-
+      
       return (TRUE); 
       
     } // Initialize
@@ -579,10 +580,11 @@
       define ("FORMAT_VIEW", "6");    // Viewable
   
       define ("VIEW_DEFAULT", 1);
-      define ("VIEW_COMPACT", 2);
-      define ("VIEW_STANDARD", 3);
-      define ("VIEW_FULL", 4);
-      define ("VIEW_EDITOR", 5);
+      define ("VIEW_ALL", 2);
+      define ("VIEW_COMPACT", 3);
+      define ("VIEW_STANDARD", 4);
+      define ("VIEW_FULL", 5);
+      define ("VIEW_EDITOR", 6);
   
       define ("COMMENT_VIEW_EDITOR", 1);
       define ("COMMENT_VIEW_DEFAULT", 1);

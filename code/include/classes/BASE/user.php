@@ -331,7 +331,6 @@
 
       // Return session string.
       return ($session_string);
- 
     } // Create 
  
     function Destroy ($pSESSIONNAME = "gLOGINSESSION") {

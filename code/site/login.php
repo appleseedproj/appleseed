@@ -76,7 +76,7 @@
     $reference = $parameters[1];
     list ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN) = split ('@', $reference);
   } // if
-
+  
   switch ($gLOGINREQUEST) {
     case 'check':
       $self = $_SERVER['HTTP_HOST'];

@@ -79,7 +79,7 @@
   // Buffer the login box
   ob_start (); 
 
-  if ($zAUTHUSER->Username == '') {
+  if ($zAUTHUSER->Anonymous) {
     // Include the login box tab object
     global $gLOCALLOGINTAB, $gREMOTELOGINTAB;
     $gLOCALLOGINTAB = ""; $gREMOTELOGINTAB = "_off";

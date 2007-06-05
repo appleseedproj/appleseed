@@ -876,7 +876,44 @@ form#compose p.error:hover {
  text-align:left;
 }
 
-/* CONTEXT: users.photos:listing - four */
+/* CONTEXT: users.photos:listing - all */
+
+#user #photos #listing #all ul {
+ float:left; 
+ text-align:center;
+ position:relative;
+ left:-8px;
+ width:505px;
+ padding:0;
+ margin:10px 0;
+}
+
+#user #photos #listing #all li {
+ width:100px;
+ margin:1px 1px 0 0;
+ padding:0;
+ text-align:center;
+ list-style-type:none;
+}
+
+#user #photos #listing #all li span.thumb {
+ margin:0;
+ padding:0;
+ width:100px;
+ height:100px;
+}
+
+#user #photos #listing #all li:hover{
+}
+#user #photos #listing #all li span.thumb:hover{
+ background-color:#0000aa;
+}
+#user #photos #listing #all li span.thumb img:hover{
+ opacity:0.6;
+}
+
+
+/* CONTEXT: users.photos:listing - compact */
 
 #user #photos #listing #compact ul {
  float:left; 
@@ -1045,13 +1082,7 @@ form#compose p.error:hover {
 #user #photos #editor li {
  float:left;
  width:487px;
- margin:0;
  list-style-type:none;
-}
-
-#user #photos #editor li:hover {
- -moz-border-radius:12px;
- height:auto;
 }
 
 #user #photos #editor li span{

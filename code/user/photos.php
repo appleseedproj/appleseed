@@ -113,6 +113,16 @@
       $gSCROLLSTEP[$zAPPLE->Context] = 20;
     break;
 
+    case VIEW_ALL:
+      $viewlocation = "all/";
+      $gSCROLLSTEP[$zAPPLE->Context] = 10000;
+    break;
+
+    case VIEW_STANDARD:
+      $viewlocation = "standard/";
+      $gSCROLLSTEP[$zAPPLE->Context] = 20;
+    break;
+
     case VIEW_COMPACT:
       $viewlocation = "compact/";
       $gSCROLLSTEP[$zAPPLE->Context] = 10;
@@ -142,26 +152,26 @@
   if ( ($gPHOTOLISTING == VIEW_EDITOR) or 
        ($gPHOTOLISTING == VIEW_DEFAULT) ) $gSCROLLSTEP[$zAPPLE->Context] = 20;
   if ($gPHOTOLISTING == VIEW_COMPACT) $gSCROLLSTEP[$zAPPLE->Context] = 40;
+  if ($gPHOTOLISTING == VIEW_ALL) $gSCROLLSTEP[$zAPPLE->Context] = 10000;
   if ($gPHOTOLISTING == VIEW_STANDARD) $gSCROLLSTEP[$zAPPLE->Context] = 20;
   if ($gPHOTOLISTING == VIEW_FULL) $gSCROLLSTEP[$zAPPLE->Context] = 10;
 
   // Set the post data to move back and forth.
-  $gPOSTDATA = Array ("SCROLLSTART"       => $gSCROLLSTART[$zAPPLE->Context],
+  $gPOSTDATA = Array ("SCROLLSTART"       => array ($zAPPLE->Context => $gSCROLLSTART[$zAPPLE->Context]),
                       "SORT"              => $gSORT,
                       "PHOTOLISTING"      => $gPHOTOLISTING,
                       "COMMENTVIEW"       => $gCOMMENTVIEW);
-
   // Set which tab to highlight.
   $gUSERPHOTOSTAB = '';
   $this->SetTag ('USERPHOTOSTAB', $gUSERPHOTOSTAB);
-
+  
   // Display the select all button by default.
   $gSELECTBUTTON = 'select_all';
 
   global $gCOMMENTSELECTBUTTON;
   // Display the select all button by default.
   $gCOMMENTSELECTBUTTON = 'select_all';
-
+  
   // PART I: Determine appropriate action.
   switch ($gACTION) {
     case 'SELECT_ALL':
@@ -678,7 +688,7 @@
         $gSWITCHPOSTDATA['SCROLLSTART'][$zAPPLE->Context] = 0;
 
         // Save the current scroll context.
-        $gBACKPOSTDATA['SCROLLSTART']['USER.PHOTOSETS'] = $gSCROLLSTART['USER.PHOTOSETS'];
+        $gBACKPOSTDATA['SCROLLSTART'][$zAPPLE->Context] = $gSCROLLSTART[$zAPPLE->Context];
 
         global $gTARGET;
 
@@ -714,6 +724,7 @@
         global $gTARGET, $gVIEWTARGET;
         global $gVARIABLES, $gCHECKED;
         
+        if ($viewlocation == 'all/') $prefix = "_sm.";
         if ($viewlocation == 'compact/') $prefix = "_sm.";
         if ($viewlocation == 'standard/') $prefix = "_md.";
         if ($viewlocation == 'full/') $prefix = "_lg.";
@@ -816,7 +827,7 @@
   $gREFERENCEID = $gVIEWDATA->tID;
 
   // Handle comments.
-  $zCOMMENTS->Handle ();
+  if ($gPHOTOLISTING != VIEW_EDITOR) $zCOMMENTS->Handle ();
 
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photos.afrw", INCLUDE_SECURITY_NONE);

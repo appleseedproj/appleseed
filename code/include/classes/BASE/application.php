@@ -487,11 +487,11 @@
         if ($gSCROLLSTART[$pCONTEXT] < $gSCROLLMAX[$pCONTEXT]) {
           $pDATACLASS->Seek ($gSCROLLSTART[$pCONTEXT]);
         } else {
-          $gSCROLLSTART[$pCONTEXT] = $gSCROLLSTART[$pCONTEXT] - $gSCROLLSTEP;
+          $gSCROLLSTART[$pCONTEXT] = $gSCROLLSTART[$pCONTEXT] - $gSCROLLSTEP[$pCONTEXT];
           if ($gSCROLLSTART[$pCONTEXT] < 0) $gSCROLLSTART[$pCONTEXT] = 0;
-          $gCURRENTPAGE = ceil ($gSCROLLSTART[$pCONTEXT] / $gSCROLLSTEP) + 1;
+          $gCURRENTPAGE = ceil ($gSCROLLSTART[$pCONTEXT] / $gSCROLLSTEP[$pCONTEXT]) + 1;
           $pDATACLASS->Seek ($gSCROLLSTART[$pCONTEXT]);
-          $gPOSTDATA['SCROLLSTART'] = $gSCROLLSTART;
+          $gPOSTDATA['SCROLLSTART'] = array ($pCONTEXT => $gSCROLLSTART[$pCONTEXT]);
         } // if
       } // if
 

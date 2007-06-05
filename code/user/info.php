@@ -39,6 +39,7 @@
 
   // Set which tab to highlight.
   $gUSERINFOTAB = '';
+  $zAPPLE->SetTag ('USERINFOTAB', '');
 
   global $bDESCRIPTION;
   if ($zFOCUSUSER->userProfile->Description) 
