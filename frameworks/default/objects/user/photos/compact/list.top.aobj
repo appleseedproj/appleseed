@@ -30,5 +30,5 @@
   <?php $zIMAGE->Broadcast(); ?>
 
   <div id='listing'>
-   <div id='compact'>
+   <div id='all'>
    <ul>
