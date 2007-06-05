@@ -11,12 +11,6 @@
       <?php $zHTML->Button ("friend_request"); ?>
      </form> <!-- #friend -->
 
-     <form id='enemy' name='enemy' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/friends/'>
-      <input type='hidden' name='gRECIPIENTNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
-      <input type='hidden' name='gRECIPIENTDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
-      <?php $zHTML->Button ("enemy_request"); ?>
-     </form> <!-- #enemy -->
-
      <form id='message' name='message' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/messages/'>
       <input type='hidden' name='gRECIPIENTNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
       <input type='hidden' name='gRECIPIENTDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />

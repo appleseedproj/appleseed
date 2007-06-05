@@ -2679,14 +2679,13 @@ form#compose p.error:hover {
 }
 
 #user #contact #container span.friend_request,
-#user #contact #container span.send_message {
+#user #contact #container span.block {
  float:left;
  width:105px;
  margin:5px 0 5px 10px;
 }
 
-#user #contact #container span.enemy_request,
-#user #contact #container span.block {
+#user #contact #container span.send_message {
  float:right;
  text-align:right;
  width:104px;
