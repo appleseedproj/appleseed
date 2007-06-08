@@ -1,0 +1,10 @@
+   </ul>
+   
+   <div id='action'>
+     <p>Add tag</p>
+    <?php $zHTML->TextBox ("TAGS"); ?>
+    <?php $zHTML->Button ("Tag"); ?>
+   </div> 
+ </div> <!-- #container -->
+
+</div> <!-- #tags -->

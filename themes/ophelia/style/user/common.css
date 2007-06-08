@@ -1221,11 +1221,6 @@ form#compose p.error:hover {
  text-align:left;
 }
 
-#user #photo #container {
- width:auto;
- text-align:center;
-}
-
 #user #photo p#heading {
  width:500px;
  float:left;
@@ -1260,17 +1255,6 @@ form#compose p.error:hover {
  width:100%;
  text-align;center;
  clear:both;
-}
-
-/* CONTEXT: users.photo.comments */
-
-#user #photo #comments {
- float:left;
-}
-
-#user #photo #comments #container {
- width:510px;
- text-align:left;
 }
 
 /* CONTEXT: users.folders */
@@ -3742,3 +3726,87 @@ form#compose p.error:hover {
  margin:10px 0 0 0;
 } 
 
+/* tags */
+
+#user #tags ul {
+ float:left;
+ clear:both;
+ margin-top:20px;
+ padding:5px;
+ width:477px;
+}
+
+#user #tags li {
+ float:left;
+ background:none;
+ list-style-type:none;
+}
+
+#user #tags li a {
+ float:left;
+}
+
+#user #tags li a:hover{
+ color:#ffffff;
+ background-color:#0232ff;
+}
+
+#user #tags .tagsize0 {
+ padding:5px 7px;
+ font-size:10px; 
+}
+
+#user #tags .tagsize1 {
+ padding:5px 7px;
+ font-size:12px;
+}
+
+#user #tags .tagsize2 {
+ padding:4px 8px;
+ font-size:14px; 
+}
+
+#user #tags .tagsize3 {
+ padding:4px 8px;
+ font-size:16px; 
+}
+
+#user #tags .tagsize4 {
+ padding:3px 9px;
+ font-size:18px; 
+}
+
+#user #tags .tagsize5 {
+ padding:3px 9px;
+ font-size:20px; 
+}
+
+#user #tags .tagsize6 {
+ padding:2px 10px;
+ font-size:22px; 
+}
+
+#user #tags .tagsize7 {
+ padding:2px 10px;
+ font-size:24px; 
+}
+
+#user #tags .tagsize8 {
+ padding:1px 11px;
+ font-size:26px; 
+}
+
+#user #tags .tagsize9 {
+ padding:1px 11px;
+ font-size:28px; 
+}
+
+#user #tags .tagsize10 {
+ padding:0px 12px;
+ font-size:30px; 
+}
+
+#user #tags div#action {
+ float:right;
+ clear:both;
+}

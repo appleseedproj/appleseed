@@ -29,12 +29,18 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:     0.7.0                                                |
-  // | DESCRIPTION: User access administration page.                     |
+  // | VERSION:     0.7.3                                                |
+  // | DESCRIPTION: Photo sets view and management.                      |
   // +-------------------------------------------------------------------+
 
   // If we're viewing a specific photoset or photo, return to those scripts.
   if ($gPROFILESUBACTION) {
+    // Check if we're viewing based on a tag.
+    if ($zTAGS->DetectTags()) {
+      $zAPPLE->IncludeFile ("code/user/tags/photos.php", INCLUDE_SECURITY_NONE);
+      $zAPPLE->End();
+    } // if
+    
     // Check if we're requesting a specific photo or a full photoset.
     if (strstr ($gPROFILESUBACTION, '/') ) {
       $zAPPLE->IncludeFile ("code/user/photo.php", INCLUDE_SECURITY_NONE);
@@ -43,7 +49,7 @@
     } // if
     $zAPPLE->End();
   } // if
-
+  
   // Include necessary files
   require_once ('code/include/classes/photo.php'); 
   require_once ('code/include/classes/comments.php'); 

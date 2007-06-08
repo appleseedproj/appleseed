@@ -1,0 +1,8 @@
+<div id='tags'>
+
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PHOTO.TAGS'); ?>
+  </div> <!-- #caption -->
+
+ <div id='container'>
+   <ul>

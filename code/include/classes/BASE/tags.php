@@ -97,6 +97,7 @@
       $this->Title = '';
       $this->tID = '';
       $this->tagInformation_tID = '';
+      $this->userAuth_uID = '';
       $this->rID = ''; 
       $this->Context = ''; 
       $this->Username = ''; 
@@ -122,6 +123,15 @@
                                    'datatype'   => 'INTEGER'),
 
  'tagInformation_tID'    => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+ 'userAuth_uID'          => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -186,20 +196,76 @@
  
    } // Constructor
    
-   function CreateDisplay () {
+   function CreateDisplay ($pLINK, $pREFERENCEID, $pOWNERID = NULL) {
       global $zAPPLE;
       
       global $gFRAMELOCATION;
+      
+      $context = $zAPPLE->Context;
      
+      $criteria = array ("rID"     => $pREFERENCEID,
+                         "Context" => $context);
+                         
+      if ($pOWNERID) $criteria['userAuth_uID'] = $pOWNERID;
+      
+      $tagList = $this->TableName;
+      $tagInfo = $this->tagInformation->TableName;
+      
+      // Anonymous user
+      $query = "SELECT   $tagInfo.Name, count($tagInfo.Name) as Amount
+                FROM     $tagList, $tagInfo
+                WHERE    $tagList.rID = $pREFERENCEID
+                AND      $tagList.userAuth_uID = $pOWNERID
+                AND      $tagList.tagInformation_tID = $tagInfo.tID
+                GROUP BY $tagInfo.tID
+                ORDER BY $tagInfo.Name ASC
+      ";
+      
+      $this->Query ($query);
+      
+      $count = 0; $max = 0;
+      $results = array ();
+      
+      while ($this->FetchArray ()) {
+        $results[$count]['Name'] = $this->Name;
+        $results[$count]['Amount'] = $this->Amount;
+        if ($this->Amount > $max) $max = $this->Amount;
+        $count++;
+      } // while
       $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      foreach ($results as $count => $data) {
+        global $gTAGNAME, $gTAGCLASS, $gTAGLINK;
+        $size = floor (($data['Amount'] / $max) * 10);
+        $gTAGNAME = strtolower ($data['Name']);
+        $gTAGCLASS = 'tagsize' . $size;
+        $gTAGLINK = $pLINK . $gTAGNAME . '/';
+        $gTAGNAME = str_replace ('_', ' ', $gTAGNAME);
+        
+        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      } // while
+      
       $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       return ($return);
    } // Display
    
-   function Display () {
-     echo $this->CreateDisplay ();
+   function Display ($pLINK, $pREFERENCEID, $pOWNERID = NULL) {
+     echo $this->CreateDisplay ($pLINK, $pREFERENCEID, $pOWNERID);
    } // Display
+   
+   // Detect whether the URL has a tag/ appended to it.
+   function DetectTags () {
+    
+      $url_split = split ('tag\/', $_SERVER['REQUEST_URI']);
+      $tag = $url_split[1];
+      $tag = str_replace ('/', '', $tag);
+      $tag = strtolower ($tag);
+      
+      if ($tag) return ($tag);
+     
+      return (FALSE);
+   } // DetectTags
 
   } // cTAGLIST
 

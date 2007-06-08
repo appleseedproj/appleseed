@@ -139,6 +139,12 @@
 
   global $bMAINSECTION;
 
+  global $gTAGREFERENCE;
+  $gTAGREFERENCE = $gVIEWDATA->tID;
+  
+  global $gTAGLINK;
+  $gTAGLINK = 'http://' . $gSITEDOMAIN . '/profile/' . $zFOCUSUSER->Username . '/photos/tag/';
+  
   $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photo/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
   // Handle comments.

@@ -30,5 +30,7 @@
    </p>
 
   </div> <!-- #container -->
-
+  
   <?php $zHTML->Scroll ($gSCROLLTARGET, 'user.photo'); ?>
+
+  <?php $zTAGS->Display($gTAGLINK, $gTAGREFERENCE, $zFOCUSUSER->uID); ?>
