@@ -43,6 +43,7 @@
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 
+  require_once ('code/include/classes/BASE/tags.php'); 
   require_once ("code/include/classes/BASE/xml.php");
 
   // Include Appleseed classes.

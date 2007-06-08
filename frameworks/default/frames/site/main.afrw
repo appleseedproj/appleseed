@@ -21,10 +21,10 @@
     <?php echo $bINVITEBOX; ?>
 
     <!-- ## latestusers obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/latest/users.aobj", INCLUDE_SECURITY_NONE); ?>
-
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/users.aobj", INCLUDE_SECURITY_NONE); ?>
+    
     <!-- ## latestphotos obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/latest/photos.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php echo $bLATESTPHOTOS; ?>
 
     <!-- ## siteinfo obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/info.aobj", INCLUDE_SECURITY_NONE); ?>

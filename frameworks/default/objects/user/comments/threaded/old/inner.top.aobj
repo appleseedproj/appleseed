@@ -1,9 +1,0 @@
- <ul class='threadedcomment'>
-  <li>
-   <div class='threadedcomment' id='innerlink'>
-
-      <?php echo $gCOMMENTTHREAD; ?>
-
-   </div> <!-- ## threadedcomment.innerlink -->
-
-  </li>

@@ -498,6 +498,57 @@
  float:right;
 }
 
+/* CONTEXT: site.latest.photos */
+
+#site #main #latest #photos ul {
+ padding:0;
+ margin:0;
+ text-align:center;
+}
+#site #main #latest #photos li {
+ list-style-type:none;
+ margin:3px;
+}
+
+#site #main #latest #photos li:hover {
+ background-color:#0000ff;
+}
+
+#site #main #latest #photos li:hover span.thumb{
+ opacity:0.7;
+}
+
+#site #main #latest #photos #view {
+ clear:both;
+}
+
+#site #main #latest #photos li span.thumb img {
+ width:50px;
+ height:50px;
+}
+#site #main #latest #photos li span.thumb {
+ float:left;
+ width:50px;
+}
+
+#site #main #latest #photos li span.updated {
+ display:none;
+}
+
+#site #main #latest #photos li span.owner {
+ display:none;
+}
+
+#site #main #latest #photos li span.set {
+ display:none;
+}
+
+#site #main #latest #photos li span.description {
+ display:none;
+}
+
+
+
 /* CONTEXT: site:scroll */
 
 #site #scroll {
@@ -527,4 +578,3 @@
  text-align:right;
  width:85px; 
 } 
-

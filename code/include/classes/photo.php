@@ -180,6 +180,39 @@
       
       return ($return);
     } // GetExifData
+    
+    function BufferLatestPhotos () {
+      global $zAPPLE;
+      
+      global $gSITEDOMAIN, $gFRAMELOCATION;
+      global $gIMG, $gIMGSRC, $gDIRECTORY, $gDIRECTORYSRC, $gOWNER, $gOWNERSRC, $gSTAMP, $gDESCRIPTION;
+      
+      $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      $USER = new cUSER();
+      
+      $this->photoInfo->Select (NULL, NULL, 'Stamp LIMIT 50');
+      while ($this->photoInfo->FetchArray ()) {
+        $this->Select ('tID', $this->photoInfo->photoSets_tID);
+        $this->FetchArray();
+        $USER->Select ("uID", $this->userAuth_uID);
+        $USER->FetchArray();
+        $gIMG = '/profile/' . $USER->Username . '/photos/' . $this->Directory . '/' . $this->photoInfo->Filename;
+        $gIMGSRC = '/photos/' . $USER->Username . '/sets/' . $this->Directory . '/' . '_sm.' . $this->photoInfo->Filename;
+        $gOWNER = $USER->userProfile->GetAlias();
+        $gOWNERSRC = '/profile/' . $USER->Username;
+        $gDIRECTORY = $this->Name;
+        $gDIRECTORYSRC = '/photos/' . $USER->Username . '/sets/' . $this->Directory . '/';
+        $gSTAMP = $this->photoInfo->FormatDate ('Stamp');
+        $gSTAMP = $this->photoInfo->fStamp;
+        $gDESCRIPTION = $this->photoInfo->Description;
+        $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      } // while
+      
+      $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      return ($buffer);
+    } // BufferLatestPhotos
  
   } // cPHOTOSETS
 

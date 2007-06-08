@@ -42,6 +42,7 @@
   require_once ('code/include/classes/base.php'); 
   require_once ('code/include/classes/system.php'); 
   require_once ('code/include/classes/BASE/remote.php'); 
+  require_once ('code/include/classes/BASE/tags.php'); 
   require_once ("code/include/classes/BASE/xml.php");
 
   // Include Appleseed classes.
@@ -51,6 +52,7 @@
   require_once ('code/include/classes/privacy.php'); 
   require_once ('code/include/classes/friends.php'); 
   require_once ('code/include/classes/messages.php'); 
+  require_once ('code/include/classes/photo.php'); 
   require_once ('code/include/classes/users.php'); 
   require_once ('code/include/classes/auth.php'); 
   require_once ('code/include/classes/search.php'); 
@@ -89,6 +91,10 @@
 
   // Retrieve output buffer.
   $bLOGINBOX = ob_get_clean ();
+  
+  global $bLATESTPHOTOS;
+  $zPHOTOS = new cPHOTOSETS();
+  $bLATESTPHOTOS = $zPHOTOS->BufferLatestPhotos();
 
   $zLOCALUSER->userInvites->CountInvites();
   $gINVITEAMOUNT = $zLOCALUSER->userInvites->Amount;
