@@ -826,9 +826,6 @@
   global $gREFERENCEID;
   $gREFERENCEID = $gVIEWDATA->tID;
 
-  // Handle comments.
-  if ($gPHOTOLISTING != VIEW_EDITOR) $zCOMMENTS->Handle ();
-
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photos.afrw", INCLUDE_SECURITY_NONE);
 

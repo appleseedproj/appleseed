@@ -79,6 +79,9 @@
                           "Filename"      => $gFILENAME);
   $gVIEWDATA->photoInfo->SelectByMultiple ($photocriteria);
   $gVIEWDATA->photoInfo->FetchArray ();
+  
+  global $gTAGREFERENCE;
+  $gTAGREFERENCE = $gVIEWDATA->photoInfo->tID;
 
   global $gREFERENCEID;
   $gREFERENCEID = $gVIEWDATA->photoInfo->tID;
@@ -95,7 +98,7 @@
            
   // Initialize the commenting subsystem.
   $zCOMMENTS->Initialize ();
-
+  
   // Create a warning message if user has no write access.
   global $gPHOTOWIDTH, $gPHOTOHEIGHT;
   global $gCOMMENTBOXWIDTH;
@@ -112,6 +115,11 @@
   $gTARGETPREFIX = "/profile/" . $zFOCUSUSER->Username . "/photos/" . $gVIEWDATA->Directory . "/";
   $gDESCRIPTION = $gVIEWDATA->photoInfo->Description;
   $gTAGS = $gVIEWDATA->photoInfo->Tags;
+
+  // Handle the tagging actions.
+  $zTAGS->Context = $zAPPLE->Context . '.TAGS';
+  $zTAGS->Handle($gVIEWDATA->photoInfo->tID, 'user.photo', 
+                 "/profile/$zFOCUSUSER->Username/photos/$gVIEWDATA->Directory/" . $gVIEWDATA->photoInfo->Filename . '#tags');
 
   $gVIEWDATA->photoInfo->Select ("photoSets_tID", $gVIEWDATA->tID, "sID");
   $gSCROLLMAX[$zAPPLE->Context] = $gVIEWDATA->photoInfo->CountResult();
@@ -139,9 +147,6 @@
 
   global $bMAINSECTION;
 
-  global $gTAGREFERENCE;
-  $gTAGREFERENCE = $gVIEWDATA->tID;
-  
   global $gTAGLINK;
   $gTAGLINK = 'http://' . $gSITEDOMAIN . '/profile/' . $zFOCUSUSER->Username . '/photos/tag/';
   

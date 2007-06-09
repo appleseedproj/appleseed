@@ -632,6 +632,9 @@
   
       define ("USER_EVERYONE",     "1000");
       define ("USER_LOGGEDIN",     "2000");
+      
+      define ("USER_TAG_LIMIT", 3);
+      define ("USER_TAG_MAXLENGTH", 16);
   
       define ("SQL_SKIP", '*!');
       define ("SQL_NOW", '@!');
@@ -714,7 +717,7 @@
       define ("PHOTO_FINAL_HEIGHT", 1500);
       
       define ("PHOTO_MAX_SIZE", 500000);
-
+      
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
   
       $gCONTENTARTICLESVIEWTAB = '_off';

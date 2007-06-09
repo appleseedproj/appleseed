@@ -33,37 +33,16 @@
   // | DESCRIPTION: Displays a listing of photos with a specific tag.    |
   // +-------------------------------------------------------------------+
 
-  echo "HI"; exit;
   // Include necessary files
   require_once ('code/include/classes/photo.php'); 
   require_once ('code/include/classes/comments.php'); 
-
-  $tagrequest = $zTAGS->DetectTags();
   
+  $tagcriteria = $zTAGS->DetectTags();
+
+  if ($tagcriteria) {
     global $gVIEWDATA;
     $gVIEWDATA = new cPHOTOSETS ();
     $zIMAGE = new cIMAGE();
-    // "Album request" is easier to understand.
-    global $gALBUMREQUEST;
-    $gALBUMREQUEST = $gPROFILESUBACTION;
-
-    // Create class for the data we'll be modifying/viewing.
-    global $gVIEWDATA;
-    $gVIEWDATA = new cPHOTOSETS ($zAPPLE->Context);
-    $photosetcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
-                               "Directory"    => $gALBUMREQUEST);
-    $gVIEWDATA->SelectByMultiple ($photosetcriteria);
-    $gVIEWDATA->FetchArray ();
-
-    // Check if photoset is hidden or blocked for this user.
-    $gPRIVACYSETTING = $gVIEWDATA->photoPrivacy->Determine ("zFOCUSUSER", "zAUTHUSER", "photoSets_tID", $gVIEWDATA->tID);
-
-    // Exit out if user is unauthorized.
-    if ( ( ($gPRIVACYSETTING == PRIVACY_BLOCK) or ($gPRIVACYSETTING == PRIVACY_HIDE) ) and
-         ($zLOCALUSER->userAccess->r == FALSE) and ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
-      $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);
-      $zAPPLE->End();
-    } // if
   } // if
 
   global $gIMAGEHINT;
@@ -717,7 +696,7 @@
 
         // Check if any results were found.
         if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-          $zSTRINGS->Lookup ('ERROR.NONE', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('MESSAGE.NONE', $zAPPLE->Context);
           $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
           $gVIEWDATA->photoInfo->Broadcast();
         } // if

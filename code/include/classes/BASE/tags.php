@@ -250,6 +250,107 @@
       return ($return);
    } // Display
    
+   function Handle ($pREFERENCEID, $pCONTEXT, $pLINK) {
+     global $gTAGENTRIES, $gTAGFORMLINK;
+     
+     global $zLOCALUSER, $zFOCUSUSER, $zAUTHUSER;
+     global $zSTRINGS;
+     
+     $gTAGFORMLINK = $pLINK;
+     
+     if ($zAUTHUSER->Anonymous) return (FALSE);
+     if (!$gTAGENTRIES) return (FALSE);
+     
+     // Check what the tag limit for this user is.
+     if ( ($zLOCALUSER->uID == $zFOCUSUSER->uID) or
+          ( ($zLOCALUSER->userAccess->a == TRUE) and 
+            ($zLOCALUSER->userAccess->w == TRUE) ) ) {
+       // User has FOCUS or ADMIN permissions.  1000 tag limit.
+       $limit = 1000;
+       $total = 0;
+     } else {
+      $tagList = $this->TableName;
+       // Select how many 
+      $query = "SELECT   COUNT($tagList.tID) AS taggedAmount
+                FROM     $tagList
+                WHERE    $tagList.rID = $pREFERENCEID
+                AND      $tagList.userAuth_uID = $zFOCUSUSER->uID
+                AND      $tagList.Username = '$zAUTHUSER->Username'
+                AND      $tagList.Domain = '$zAUTHUSER->Domain'
+      ";
+      $this->Query ($query);
+      $this->FetchArray();
+      $limit = USER_TAG_LIMIT;
+      $total = $this->taggedAmount;
+     } // if
+     
+     // Allowed deliminators
+     $taglist = str_replace (';', ',', $gTAGENTRIES);
+     $taglist = str_replace ('-', ',', $taglist);
+     $taglist = str_replace (':', ',', $taglist);
+     $taglist = str_replace ('+', ',', $taglist);
+     
+     // Split into an array.
+     $taglist = split (',', $taglist);
+     
+     // Check if the user has gone over their limit.
+     $current = count ($taglist);
+     $current += $total; 
+     if ($current > $limit) {
+       $this->Error = -1;
+       $zSTRINGS->Lookup ('ERROR.TOOMANY', $this->Context);
+       $this->Message = $zSTRINGS->Output;
+       return (FALSE);
+     } // if
+     
+     // Loop through the tags.
+     foreach ($taglist as $count => $value) {
+       // Strip white spaces off ends.
+       $taglist[$count] = ltrim (rtrim ($value));
+       
+       // Replace all spaces with underscores.
+       $taglist[$count] = str_replace (' ', '_', $taglist[$count]);
+       
+       // Check if the tag is too long
+       if (strlen ($taglist[$count]) > USER_TAG_MAXLENGTH) {
+         $this->Error = -1;
+         $zSTRINGS->Lookup ('ERROR.TOOLONG', $this->Context);
+         $this->Message = $zSTRINGS->Output;
+         return (FALSE);
+       } // if
+     } // if 
+       
+     foreach ($taglist as $count => $value) {
+       // Select for existing tags with this name.
+       $this->tagInformation->Select ('Name', $taglist[$count]);
+       
+       if ($this->tagInformation->CountResult() == 0) {
+         // Tag doesn't exist, create it.
+         $this->tagInformation->Name = $taglist[$count];
+         $this->tagInformation->Add();
+         $tagInformation_tID = $this->tagInformation->AutoIncremented();
+       } else {
+         // Tag exists, use it.
+         $this->tagInformation->FetchArray();
+         $tagInformation_tID = $this->tagInformation->tID;
+       } // if
+       
+       // Add the list record.
+       $this->tagInformation_tID = $tagInformation_tID;
+       $this->rID = $pREFERENCEID;
+       $this->userAuth_uID = $zFOCUSUSER->uID;
+       $this->Context = $pCONTEXT;
+       $this->Username = $zAUTHUSER->Username;
+       $this->Domain = $zAUTHUSER->Domain;
+       $this->Stamp = SQL_NOW;
+       $this->Add();
+     } // if
+     
+     unset ($gTAGENTRIES);
+     
+     return (TRUE);
+   } // Handle
+   
    function Display ($pLINK, $pREFERENCEID, $pOWNERID = NULL) {
      echo $this->CreateDisplay ($pLINK, $pREFERENCEID, $pOWNERID);
    } // Display

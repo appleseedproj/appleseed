@@ -1222,7 +1222,7 @@ form#compose p.error:hover {
 }
 
 #user #photo p#heading {
- width:500px;
+ width:487px;
  float:left;
  margin:5px 0 0 0; 
  text-align:center;
@@ -1251,10 +1251,13 @@ form#compose p.error:hover {
 }
 
 #user #photo #container p#image {
+ position:relative;
  float:left;
- width:100%;
- text-align;center;
  clear:both;
+ width:100%;
+ padding:0; margin:0;
+ left:-7px; top:0;
+ text-align:center;
 }
 
 /* CONTEXT: users.folders */
@@ -3731,7 +3734,7 @@ form#compose p.error:hover {
 #user #tags ul {
  float:left;
  clear:both;
- margin-top:20px;
+ margin-top:10px;
  padding:5px;
  width:477px;
 }
@@ -3806,7 +3809,13 @@ form#compose p.error:hover {
  font-size:30px; 
 }
 
+#user #tags label {
+}
+
 #user #tags div#action {
  float:right;
  clear:both;
+}
+#user #tags div#action input.tags{
+ width:200px;
 }

@@ -1,4 +1,5 @@
 <div id='tags'>
+  <a name='tags'></a>
 
   <div id='caption'>
    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PHOTO.TAGS'); ?>
