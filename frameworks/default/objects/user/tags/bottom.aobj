@@ -5,7 +5,7 @@
      <?php $zHTML->PostData(); ?>
      <label for='gTAGENTRIES' />Add Tag:</label>
      <?php $zHTML->TextBox ("TAGENTRIES"); ?>
-     <?php $zHTML->Button ("Tag"); ?>
+     <?php $zHTML->Button ("tag"); ?>
      <?php $zTAGS->Broadcast(); ?>
     </form>
    </div> 
