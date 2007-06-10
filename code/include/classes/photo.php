@@ -40,7 +40,7 @@
     var $tID, $userAuth_uID; 
     
     // Variables
-    var $Name, $Directory, $Description, $Tags;
+    var $Name, $Directory, $Description;
     var $Cascade;
 
     // Classes
@@ -55,7 +55,6 @@
       $this->Name = '';
       $this->Directory = '';
       $this->Description = '';
-      $this->Tags = '';
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
@@ -110,16 +109,6 @@
                                    'null'       => YES,
                                    'sanitize'   => YES,
                                    'datatype'   => 'STRING'),
-
-        'Tags'           => array ('max'        => '128',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => YES,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'STRING'),
-
       );
 
       // Internal class references.
@@ -182,16 +171,43 @@
     } // GetExifData
     
     function BufferLatestPhotos () {
-      global $zAPPLE;
+      global $zAPPLE, $zAUTHUSER;
       
-      global $gSITEDOMAIN, $gFRAMELOCATION;
+      global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
       global $gIMG, $gIMGSRC, $gDIRECTORY, $gDIRECTORYSRC, $gOWNER, $gOWNERSRC, $gSTAMP, $gDESCRIPTION;
       
       $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $USER = new cUSER();
+      $userAuth = $gTABLEPREFIX . "userAuthorization";
+      $userSessions = $gTABLEPREFIX . "userSessions";
+      $authSessions = $gTABLEPREFIX . "authSessions";
+      $photoSets = $gTABLEPREFIX . "photoSets";
+      $photoInfo = $gTABLEPREFIX . "photoInformation";
+      $photoPrivacy = $gTABLEPREFIX . "photoPrivacy";
+      $friendCircles = $gTABLEPREFIX . "friendCircles";
+      $friendCirclesList = $gTABLEPREFIX . "friendCirclesList";
+      $friendInfo = $gTABLEPREFIX . "friendInformation";
       
-      $this->photoInfo->Select (NULL, NULL, 'Stamp LIMIT 50');
+      if ($zAUTHUSER->Anonymous) {
+        $sql_statement = "
+          SELECT   MIN($photoPrivacy.Access) AS FinalAccess,
+                   $photoInfo.Filename
+          FROM     $photoSets, $photoPrivacy, $userAuth, $photoInfo
+          WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
+          AND      $photoSets.userAuth_uID = $userAuth.uID
+          AND      $photoPrivacy.friendCircles_sID = %s
+          AND      $photoPrivacy.photoSets_tID = $photoSets.tID
+          GROUP BY $photoInfo.Filename
+        ";
+        $sql_statement = sprintf ($sql_statement,
+                                  mysql_real_escape_string (USER_EVERYONE));
+      } else {
+        
+      } // if
+                             
+      $this->photoInfo->Select (NULL, NULL, 'Stamp LIMIT 48');
+      
       while ($this->photoInfo->FetchArray ()) {
         $this->Select ('tID', $this->photoInfo->photoSets_tID);
         $this->FetchArray();
@@ -223,7 +239,7 @@
     var $tID, $userAuth_uID, $photoSets_tID;
 
     // Variables
-    var $Filename, $Width, $Height, $ThumbWidth, $ThumbHeight, $Description, $Tags;
+    var $Filename, $Width, $Height, $ThumbWidth, $ThumbHeight, $Description;
 
     // Classes
     var $Comments;
@@ -241,7 +257,6 @@
       $this->ThumbWidth = '';
       $this->ThumbHeight = '';
       $this->Description = '';
-      $this->Tags = '';
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
@@ -352,15 +367,6 @@
                                    'null'       => YES,
                                    'sanitize'   => YES,
                                    'datatype'   => 'DATETIME'),
-
-        'Tags'           => array ('max'        => '128',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => 'unique',
-                                   'null'       => YES,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'STRING'),
 
       );
 

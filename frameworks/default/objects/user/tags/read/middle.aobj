@@ -1,0 +1,7 @@
+ <?php $zHTML->Alternate(); ?>
+   <span class='tag' >
+    <span class='<?php echo $gTAGCLASS; ?>'> 
+     <a href='<?php echo $gTAGLINK; ?>'><?php echo $gTAGNAME; ?></a>
+    </span>
+   </span>
+ </li> <!-- #[alternate] -->

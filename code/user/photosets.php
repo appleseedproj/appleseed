@@ -4,9 +4,9 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: photosets.php                           CREATED: 07-25-2005 + 
-  // | LOCATION: /code/user/                        MODIFIED: 04-11-2007 +
+  // | LOCATION: /code/user/                        MODIFIED: 07-08-2007 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2006 Appleseed Project                         |
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -433,6 +433,7 @@
     default:
       if ( ($gVIEWDATA->Error == 0) or 
            ($gACTION == 'MOVE_DOWN') or
+           ($gACTION == '') or
            ($gACTION == 'MOVE_UP') or
            ($gACTION == 'DELETE_ALL') ) {
 
@@ -520,10 +521,6 @@
             default:
             break;
           } // switch
-
-          // NOTE: Pull from database.
-          $gTAGSLABEL = "";
-          if ($gVIEWDATA->Tags != "") $gTAGSLABEL = 'Tags: ';
 
           $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
           $gEXTRAPOSTDATA['tID']    = $gVIEWDATA->photoInfo->tID;

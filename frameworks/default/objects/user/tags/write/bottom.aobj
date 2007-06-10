@@ -1,0 +1,13 @@
+   </ul>
+   
+   <div id='action'>
+    <form id='tag' method='POST' action='<?php echo $gTAGFORMLINK; ?>'>
+     <?php $zHTML->PostData(); ?>
+     <?php $zHTML->TextBox ("TAGENTRIES"); ?>
+     <?php $zHTML->Button ("tag"); ?>
+    </form>
+   </div>  <!-- #action -->
+   
+ </div> <!-- #container -->
+
+</div> <!-- #tags -->

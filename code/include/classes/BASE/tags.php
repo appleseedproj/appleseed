@@ -198,30 +198,52 @@
    
    function CreateDisplay ($pLINK, $pREFERENCEID, $pOWNERID = NULL) {
       global $zAPPLE;
+      global $zAUTHUSER, $zLOCALUSER, $zFOCUSUSER;
       
       global $gFRAMELOCATION;
       
       $context = $zAPPLE->Context;
-     
-      $criteria = array ("rID"     => $pREFERENCEID,
-                         "Context" => $context);
+      
+      $view = 'read';
+      if (!$zAUTHUSER->Anonymous) $view = 'write';
+      
+      // Check  if user is owner or admin.
+      if ( ($zLOCALUSER->uID == $zFOCUSUSER->uID) or
+          ( ($zLOCALUSER->userAccess->a == TRUE) and 
+            ($zLOCALUSER->userAccess->w == TRUE) ) ) {
+        // User has editing access.
+        $view = 'edit';
+      } // if
+      
+      $restricted = NULL;
+      // Check if user has used up all three tags.
+      if ($view == 'write') {
+        $criteria = array ("rID"     => $pREFERENCEID,
+                           "Context" => $context,
+                           "Username"=> $zAUTHUSER->Username,
+                           "Domain"  => $zAUTHUSER->Domain);
+        $this->SelectByMultiple ($criteria);
+        $taggedcount = $this->CountResult();
+        
+        if ($taggedcount == USER_TAG_LIMIT) {
+          $restricted = '.restricted';
+        } // if
                          
-      if ($pOWNERID) $criteria['userAuth_uID'] = $pOWNERID;
+      } // if
       
       $tagList = $this->TableName;
       $tagInfo = $this->tagInformation->TableName;
       
-      // Anonymous user
-      $query = "SELECT   $tagInfo.Name, count($tagInfo.Name) as Amount
-                FROM     $tagList, $tagInfo
-                WHERE    $tagList.rID = $pREFERENCEID
-                AND      $tagList.userAuth_uID = $pOWNERID
-                AND      $tagList.tagInformation_tID = $tagInfo.tID
-                GROUP BY $tagInfo.tID
-                ORDER BY $tagInfo.Name ASC
+      // Select from the tag listing.
+      $sql_query = "SELECT   $tagInfo.Name, count($tagInfo.Name) AS Amount
+                    FROM     $tagList, $tagInfo
+                    WHERE    $tagList.rID = $pREFERENCEID
+                    AND      $tagList.userAuth_uID = $pOWNERID
+                    AND      $tagList.tagInformation_tID = $tagInfo.tID
+                    GROUP BY $tagInfo.tID
+                    ORDER BY $tagInfo.Name ASC
       ";
-      
-      $this->Query ($query);
+      $this->Query ($sql_query);
       
       $count = 0; $max = 0;
       $results = array ();
@@ -229,29 +251,62 @@
       while ($this->FetchArray ()) {
         $results[$count]['Name'] = $this->Name;
         $results[$count]['Amount'] = $this->Amount;
+        $results[$count]['Username'] = $this->Username;
+        $results[$count]['Domain'] = $this->Domain;
         if ($this->Amount > $max) $max = $this->Amount;
         $count++;
       } // while
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      global $gTAGPOSTDATA;
       
       foreach ($results as $count => $data) {
         global $gTAGNAME, $gTAGCLASS, $gTAGLINK;
-        $size = floor (($data['Amount'] / $max) * 10);
+        //$size = floor (($data['Amount'] / $max) * 10);
+        $size = $data['Amount'];
+        if ($size > 10) $size = 10;
         $gTAGNAME = strtolower ($data['Name']);
         $gTAGCLASS = 'tagsize' . $size;
         $gTAGLINK = $pLINK . $gTAGNAME . '/';
         $gTAGNAME = str_replace ('_', ' ', $gTAGNAME);
         
-        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        // Select from the tag listing.
+        $name = $data['Name'];
+        $username = $zAUTHUSER->Username;
+        $domain = $zAUTHUSER->Domain;
+        
+        $owner = NULL;
+        if ($view == 'write') {
+          // Check if authuser owns this tag.
+          $sql_query = "SELECT   $tagList.Username, $tagList.Domain
+                        FROM     $tagList, $tagInfo
+                        WHERE    $tagList.rID = $pREFERENCEID
+                        AND      $tagList.userAuth_uID = $pOWNERID
+                        AND      $tagList.tagInformation_tID = $tagInfo.tID
+                        AND      $tagInfo.Name = '$name'
+                        AND      $tagList.Username = '$username'
+                        AND      $tagList.Domain = '$domain'
+                        ORDER BY $tagInfo.Name ASC
+          ";
+          $this->Query ($sql_query);
+          if ($this->CountResult() > 0) $owner = '.owner';
+        } // if
+        
+        $gTAGPOSTDATA['TAGENTRIES'] = $data['Name'];
+      
+        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/middle$owner$restricted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
       
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $owner = NULL;
+      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/bottom$owner$restricted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       return ($return);
    } // Display
    
    function Handle ($pREFERENCEID, $pCONTEXT, $pLINK) {
      global $gTAGENTRIES, $gTAGFORMLINK;
+     
+     global $gACTION;
      
      global $zLOCALUSER, $zFOCUSUSER, $zAUTHUSER;
      global $zSTRINGS;
@@ -260,6 +315,58 @@
      
      if ($zAUTHUSER->Anonymous) return (FALSE);
      if (!$gTAGENTRIES) return (FALSE);
+     
+     // Handle the action
+     switch ($gACTION) {
+       case 'TAG_DELETE':
+       
+         $this->tagInformation->Select ("Name", $gTAGENTRIES);
+         $this->tagInformation->FetchArray();
+         $criteria = array ("rID"                   => $pREFERENCEID,
+                            "Context"               => $pCONTEXT,
+                            "tagInformation_tID"    => $this->tagInformation->tID,
+                            "Username"              => $zAUTHUSER->Username,
+                            "Domain"                => $zAUTHUSER->Domain);
+         $this->SelectByMultiple ($criteria);
+         $this->FetchArray();
+         $this->Delete();
+         $gTAGENTRIES = NULL;
+         $zSTRINGS->Lookup ('MESSAGE.DELETE', $this->Context);
+         $this->Message = $zSTRINGS->Output;
+         return (TRUE);
+       break;
+       case 'TAG_DELETE_ALL':
+         $zSTRINGS->Lookup ('MESSAGE.DELETE_ALL', $this->Context);
+         $this->tagInformation->Select ("Name", $gTAGENTRIES);
+         $this->tagInformation->FetchArray();
+         $criteria = array ("rID"                   => $pREFERENCEID,
+                            "Context"               => $pCONTEXT,
+                            "tagInformation_tID"    => $this->tagInformation->tID,
+                            "userAuth_uID"          => $zLOCALUSER->uID);
+         $this->DeleteByMultiple ($criteria);
+         $gTAGENTRIES = NULL;
+         $zSTRINGS->Lookup ('MESSAGE.DELETE_ALL', $this->Context);
+         $this->Message = $zSTRINGS->Output;
+         return (TRUE);
+       break;
+       case 'TAG_EMPHASIZE':
+         $this->tagInformation->Select ("Name", $gTAGENTRIES);
+         $this->tagInformation->FetchArray();
+         
+         $this->tagInformation_tID = $this->tagInformation->tID;
+         $this->Context = $pCONTEXT;
+         $this->userAuth_uID = $zFOCUSUSER->uID; 
+         $this->rID = $pREFERENCEID; 
+         $this->Username = $zAUTHUSER->Username;
+         $this->Domain = $zAUTHUSER->Domain;
+         $this->Stamp = SQL_NOW;
+         $this->Add ();
+         $gTAGENTRIES = NULL;
+         $zSTRINGS->Lookup ('MESSAGE.EMPHASIZE', $this->Context);
+         $this->Message = $zSTRINGS->Output;
+         return (TRUE);
+       break;
+     } // switch
      
      // Check what the tag limit for this user is.
      if ( ($zLOCALUSER->uID == $zFOCUSUSER->uID) or

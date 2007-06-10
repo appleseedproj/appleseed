@@ -3745,77 +3745,97 @@ form#compose p.error:hover {
  list-style-type:none;
 }
 
+#user #tags li span,
 #user #tags li a {
  float:left;
 }
 
-#user #tags li a:hover{
+#user #tags li .tag_emphasize input,
+#user #tags li .tag_delete_all input,
+#user #tags li .tag_delete input {
+ opacity:0.5;
+}
+
+#user #tags li .tag_emphasize input:hover,
+#user #tags li .tag_delete_all input:hover,
+#user #tags li .tag_delete input:hover {
+ opacity:1;
+}
+
+#user #tags li a:hover {
  color:#ffffff;
- background-color:#0232ff;
+}
+
+#user #tags span {
+ height:12px;
+ float:left;
 }
 
 #user #tags .tagsize0 {
- padding:5px 7px;
+ padding:21px 7px 1px 7px;
  font-size:10px; 
 }
 
 #user #tags .tagsize1 {
- padding:5px 7px;
+ padding:19px 7px 1px 7px;
  font-size:12px;
 }
 
 #user #tags .tagsize2 {
- padding:4px 8px;
+ padding:17px 8px 1px 8px;
  font-size:14px; 
 }
 
 #user #tags .tagsize3 {
- padding:4px 8px;
+ padding:15px 8px 1px 8px;
  font-size:16px; 
 }
 
 #user #tags .tagsize4 {
- padding:3px 9px;
+ padding:13px 9px 1px 9px;
  font-size:18px; 
 }
 
 #user #tags .tagsize5 {
- padding:3px 9px;
+ padding:11px 9px 1px 9px;
  font-size:20px; 
 }
 
 #user #tags .tagsize6 {
- padding:2px 10px;
+ padding:9px 10px 1px 10px;
  font-size:22px; 
 }
 
 #user #tags .tagsize7 {
- padding:2px 10px;
+ padding:7px 10px 1px 10px;
  font-size:24px; 
 }
 
 #user #tags .tagsize8 {
- padding:1px 11px;
+ padding:5px 11px 1px 11px;
  font-size:26px; 
 }
 
 #user #tags .tagsize9 {
- padding:1px 11px;
+ padding:3px 11px 1px 11px;
  font-size:28px; 
 }
 
 #user #tags .tagsize10 {
- padding:0px 12px;
+ padding:1px 12px 1px 12px;
  font-size:30px; 
-}
-
-#user #tags label {
 }
 
 #user #tags div#action {
  float:right;
+ margin-right:10px;
  clear:both;
 }
+
+#user #tags div#action span {
+ height:auto;
+}
+
 #user #tags div#action input.tags{
  width:200px;
 }

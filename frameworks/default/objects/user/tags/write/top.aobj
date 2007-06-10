@@ -1,0 +1,10 @@
+<div id='tags'>
+  <a name='tags'></a>
+
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PHOTO.TAGS'); ?>
+  </div> <!-- #caption -->
+
+ <div id='container'>
+   <?php $zTAGS->Broadcast(); ?>
+   <ul>

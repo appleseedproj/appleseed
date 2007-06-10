@@ -7,3 +7,4 @@
 
  <div id='container'>
    <ul>
+   <?php $zTAGS->Broadcast(); ?>
