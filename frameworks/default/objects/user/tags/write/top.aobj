@@ -6,5 +6,6 @@
   </div> <!-- #caption -->
 
  <div id='container'>
+  <div id='write'>
    <?php $zTAGS->Broadcast(); ?>
    <ul>

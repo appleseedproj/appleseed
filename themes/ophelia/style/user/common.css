@@ -3766,7 +3766,7 @@ form#compose p.error:hover {
  color:#ffffff;
 }
 
-#user #tags span {
+#user #tags li span {
  height:12px;
  float:left;
 }
@@ -3826,16 +3826,54 @@ form#compose p.error:hover {
  font-size:30px; 
 }
 
-#user #tags div#action {
+#user #tags #action {
  float:right;
  margin-right:10px;
- clear:both;
 }
 
-#user #tags div#action span {
+#user #tags #action input.tagentries {
+ width:160px;
+}
+
+#user #tags #edit li span {
+ float:left;
+ width:auto;
  height:auto;
+ margin:0 5px 0 0;
+ padding:0;
 }
 
-#user #tags div#action input.tags{
- width:200px;
+#user #tags #edit li span.tag {
+ width:auto;
+ margin:0;
+ padding:0;
+ height:24px;
+}
+#user #tags #edit li span.check {
+ width:18px;
+ height:auto;
+ margin:0 10px 0 0;
+ padding:0;
+}
+
+#user #tags #edit span.tag_select_none,
+#user #tags #edit span.tag_select_all {
+ float:left;
+ width:160px;
+}
+
+#user #tags #edit span.tag_emphasize_all {
+ float:left;
+ width:80px;
+}
+
+#user #tags #edit span.tag_deemphasize_all {
+ float:left;
+ width:140px;
+}
+
+#user #tags #edit span.tag_delete_all {
+ float:left;
+ width:100px;
+ text-align:right;
 }

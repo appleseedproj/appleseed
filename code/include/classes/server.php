@@ -291,7 +291,6 @@
     } // TokenStore
     
     function FriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
-      
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -405,7 +404,6 @@
     } // FriendRequest
     
     function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
-      
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
