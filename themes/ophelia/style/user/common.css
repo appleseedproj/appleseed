@@ -3846,8 +3846,8 @@ form#compose p.error:hover {
 #user #tags #edit li span.tag {
  width:auto;
  margin:0;
- padding:0;
- height:24px;
+ padding:1px;
+ height:28px;
 }
 #user #tags #edit li span.check {
  width:18px;

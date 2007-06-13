@@ -1,4 +1,5 @@
    </ul>
+   </form> <!-- #tagmasslist -->
    
    <div id='action'>
     <form id='tag' method='POST' action='<?php echo $gTAGFORMLINK; ?>'>
