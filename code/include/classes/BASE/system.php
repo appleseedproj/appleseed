@@ -761,3 +761,105 @@
 
 
  } // cBASESYSTEMTOOLTIPS
+
+  class cBASESYSTEMNODES extends cBASEDATACLASS {
+ 
+    var $tID, $Entry, $Trust, $Stamp, $EndStamp, $Share, $Source, $Inherit;
+
+    function cBASESYSTEMNODES ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemNodes';
+      $this->tID = '';
+      $this->tID = '';
+      $this->Entry = ''; 
+      $this->Trust = ''; 
+      $this->Stamp = ''; 
+      $this->EndStamp = ''; 
+      $this->Share = ''; 
+      $this->Source = ''; 
+      $this->Inherit = '';
+      $this->Error = 0;
+      $this->Message = '';
+      $this->Result = '';
+      $this->PrimaryKey = 'tID';
+      $this->ForiegnKey = 'userAuth_uID';
+ 
+      // Create extended field definitions
+      $this->FieldDefinitions = array (
+
+        'tID'            => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Entry'          => array ('max'        => '255',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Stamp'          => array ('max'        => '64',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'DATETIME'),
+
+        'EndStamp'       => array ('max'        => '64',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'DATETIME'),
+
+        'Share'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Source'         => array ('max'        => '64',
+                                   'min'        => '0',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+                                   
+        'Inherit'        => array ('max'        => '128',
+                                   'min'        => '0',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+      );
+
+      // Assign context from paramater.
+      $this->PageContext = $pDEFAULTCONTEXT;
+
+      // Grab the fields from the database.
+      $this->Fields();
+ 
+    } // Constructor
+ 
+  } // cBASESYSTEMNODES
+

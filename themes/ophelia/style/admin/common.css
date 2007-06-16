@@ -473,6 +473,44 @@
  padding:0 2px 0 0;
  margin:0px;
 } 
+/* CONTEXT: admin.system.nodes */
+
+/* titles, listing */
+
+#admin #system #nodes li {
+ height:14px;
+}
+
+#admin #system #nodes span.tid {
+ width:28px;
+ padding:0 0 0 2px;
+} 
+
+#admin #system #nodes span.entry {
+ width:125px;
+} 
+
+#admin #system #nodes span.trust {
+ width:53px;
+} 
+
+#admin #system #nodes span.endstamp {
+ width:140px;
+} 
+
+#admin #system #nodes span.source {
+ width:90px;
+} 
+
+/* listing */
+
+#admin #system #nodes #container span.checkbox {
+ text-align:right;
+ float:right;
+ width:18px;
+ padding:0 2px 0 0;
+ margin:0px;
+} 
 
 /* CONTEXT: admin.system.options */
 

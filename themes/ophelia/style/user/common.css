@@ -3767,8 +3767,8 @@ form#compose p.error:hover {
 }
 
 #user #tags li span {
- height:12px;
  float:left;
+ height:28px;
 }
 
 #user #tags .tagsize0 {

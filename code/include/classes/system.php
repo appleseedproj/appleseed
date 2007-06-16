@@ -112,3 +112,8 @@
 
   } // cSYSTEMTOOLTIPS
 
+  // System Tooltips class.
+  class cSYSTEMNODES extends cBASESYSTEMNODES {
+     
+  } // cSYSTEMNODES
+
