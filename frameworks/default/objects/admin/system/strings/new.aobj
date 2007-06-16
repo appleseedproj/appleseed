@@ -1,4 +1,4 @@
-<div id='strings'>
+<div id='nodes'>
  <div id='container'>
    <p id='top'>
     <?php $zSTRINGS->Display ('LABEL.NEW', $zAPPLE->Context); ?>
@@ -7,43 +7,43 @@
 
    <?php $ADMINDATA->Broadcast(); ?>
  
-   <form id='edit' method='POST' action='_admin/system/strings/'>
+   <form id='edit' method='POST' action='_admin/system/nodes/'>
  
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
 
-    <p id='title'> 
-     TITLE:
-     <?php $zTOOLTIPS->Display ('TITLE'); ?>
-    </p>
-    <?php $zHTML->TextBox ("TITLE", 64, $ADMINDATA->Title); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "Title"); ?>
+    <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
-    <p id='context'>
-     CONTEXT: 
-     <?php $zTOOLTIPS->Display ('CONTEXT'); ?>
+    <p id='entry'> 
+     ENTRY:
+     <?php $zTOOLTIPS->Display ('ENTRY'); ?>
     </p>
-    <?php $zHTML->TextBox ("CONTEXT", 70, $ADMINDATA->Context); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "Context"); ?>
+    <?php $zHTML->TextBox ("ENTRY", 64, $ADMINDATA->Entry); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Entry"); ?>
+ 
+    <p id='trust'>
+     TRUST: 
+     <?php $zTOOLTIPS->Display ('TRUST'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("TRUST", $ADMINDATA->Trust); ?><br />
 
-    <p id='output'>
-     OUTPUT: 
-     <?php $zTOOLTIPS->Display ('OUTPUT'); ?>
+    <p id='endstamp'>
+     END STAMP:
+     <?php $zTOOLTIPS->Display ('END STAMP'); ?>
     </p>
-    <?php $zHTML->TextArea ("OUTPUT", $ADMINDATA->Output); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "Output"); ?>
+    <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?><br />
 
-    <p id='formatting'>
-     FORMATTING: 
-     <?php $zTOOLTIPS->Display ('FORMATTING'); ?>
+    <p id='share'>
+     SHARE: 
+     <?php $zTOOLTIPS->Display ('SHARE'); ?>
     </p>
-    <?php $zOPTIONS->Menu ("FORMATTING", $ADMINDATA->Formatting); ?><br />
+    <?php $zOPTIONS->Menu ("SHARE", $ADMINDATA->Share); ?><br />
 
-    <p id='language'>
-     LANGUAGE: 
-     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
+    <p id='inherit'>
+     INHERIT: 
+     <?php $zTOOLTIPS->Display ('INHERIT'); ?>
     </p>
-    <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language); ?><br />
+    <?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?><br />
 
     <div id='actions'>
 
@@ -52,7 +52,7 @@
  
      <span class='delete'> &nbsp; </span>
 
-     <form id='cancel' method='POST' action='_admin/system/strings/'>
+     <form id='cancel' method='POST' action='_admin/system/nodes/'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
       <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
@@ -62,4 +62,4 @@
    </div> <!-- #actions -->
   
  </div> <!-- #container -->
-</div> <!-- #strings -->
+</div> <!-- #nodes -->

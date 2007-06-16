@@ -3,21 +3,21 @@
        <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
      </span>
 
-     <span class='title'>
-       <?php $zHTML->Link ($target, $ADMINDATA->Title, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #title -->
+     <span class='entry'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Entry, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #entry -->
 
-     <span class='output'>
-       <?php $zHTML->Link ($target, $output, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #output -->
+     <span class='trust'>
+       <?php $zHTML->Link ($target, $gTRUSTED, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #trust -->
 
-     <span class='context'>
-       <?php $zHTML->Link ($target, $ADMINDATA->Context, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #context -->
-
-     <span class='language'>
-       <?php $zHTML->Link ($target, $ADMINDATA->Language, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #language -->
+     <span class='endstamp'>
+       <?php $zHTML->Link ($target, $ADMINDATA->fEndStamp, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #endstamp -->
+     
+     <span class='source'>
+       <?php $zHTML->Link ($target, $ADMINDATA->Source, $gEXTRAPOSTDATA); ?>
+     </span> <!-- #source -->
 
      <span class='checkbox'>
        <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>

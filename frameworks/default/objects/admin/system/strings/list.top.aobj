@@ -1,7 +1,7 @@
-<div id='strings'>
+<div id='nodes'>
  <div id='container'>
 
-  <form id='list' method='post' action='_admin/system/strings/'>
+  <form id='list' method='post' action='_admin/system/nodes/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>
  
@@ -14,7 +14,7 @@
    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zAPPLE->Context); ?>
    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
  
-   <?php $zHTML->Titles ("ADMINDATA", "titles", "_admin/system/strings/"); ?>
+   <?php $zHTML->Titles ("ADMINDATA", "titles", "_admin/system/nodes/"); ?>
  
    <?php $ADMINDATA->Broadcast(); ?>
  
