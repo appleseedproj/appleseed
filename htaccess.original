@@ -2,6 +2,9 @@
 
 #------APPLESEED RULES--------------
 
+# Turn magic quotes off if possible
+php_flag magic_quotes_gpc off
+
 # Turn Rewrite Engine On
 RewriteEngine On
 
