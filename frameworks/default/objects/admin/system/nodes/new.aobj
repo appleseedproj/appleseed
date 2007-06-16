@@ -1,0 +1,65 @@
+<div id='nodes'>
+ <div id='container'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.NEW', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+
+   <?php $ADMINDATA->Broadcast(); ?>
+ 
+   <form id='edit' method='POST' action='_admin/system/nodes/'>
+ 
+    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+    <?php $zHTML->Post ($gPOSTDATA); ?>
+
+    <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
+ 
+    <p id='entry'> 
+     ENTRY:
+     <?php $zTOOLTIPS->Display ('ENTRY'); ?>
+    </p>
+    <?php $zHTML->TextBox ("ENTRY", 64, $ADMINDATA->Entry); ?><br />
+    <?php $ADMINDATA->Broadcast ("field", "Entry"); ?>
+ 
+    <p id='trust'>
+     TRUST: 
+     <?php $zTOOLTIPS->Display ('TRUST'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("TRUST", $ADMINDATA->Trust); ?><br />
+
+    <p id='endstamp'>
+     END STAMP:
+     <?php $zTOOLTIPS->Display ('END STAMP'); ?>
+    </p>
+    <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?><br />
+
+    <p id='share'>
+     SHARE: 
+     <?php $zTOOLTIPS->Display ('SHARE'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("SHARE", $ADMINDATA->Share); ?><br />
+
+    <p id='inherit'>
+     INHERIT: 
+     <?php $zTOOLTIPS->Display ('INHERIT'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?><br />
+
+    <div id='actions'>
+
+     <?php $zHTML->Button ('save'); ?>
+     </form> <!-- #edit -->
+ 
+     <span class='delete'> &nbsp; </span>
+
+     <form id='cancel' method='POST' action='_admin/system/nodes/'>
+      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
+      <?php $zHTML->Post ($gPOSTDATA); ?>
+      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
+      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     </form> <!-- #cancel -->
+ 
+   </div> <!-- #actions -->
+  
+ </div> <!-- #container -->
+</div> <!-- #nodes -->
