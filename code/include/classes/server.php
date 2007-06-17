@@ -291,6 +291,13 @@
     } // TokenStore
     
     function FriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
+      
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -404,6 +411,13 @@
     } // FriendRequest
     
     function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
+      
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -459,6 +473,12 @@
     } // FriendDeny
     
     function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
       
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
@@ -516,6 +536,12 @@
     
     function FriendDelete ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
+      
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -571,6 +597,12 @@
     } // FriendDelete
     
     function FriendApprove ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
       
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
@@ -628,6 +660,12 @@
     } // FriendApprove
     
     function FriendStatus ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
       
       $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
       
@@ -715,6 +753,12 @@
     } // UserInformation
     
     function LoginCheck ($pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
       
       $authVerification = $this->TablePrefix . "authVerification";
       $userProfile = $this->TablePrefix . "userProfile";
@@ -891,6 +935,12 @@
     
     function MessageNotify ($pRECIPIENT, $pFULLNAME, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {
       
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
+      
       global $gSUCCESS, $gFULLNAME;
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -1032,6 +1082,83 @@
       
       return (TRUE);
     } // MessageNotify
+    
+    function NodeCheck ($pUSERNAME, $pDOMAIN) {
+      
+      $systemNodes = $this->TablePrefix . "systemNodes";
+      
+      // First check if the user exists.
+      $sql_statement = "
+        SELECT $systemNodes.tID as tID,
+               $systemNodes.Entry as Entry,
+               $systemNodes.Trust as Trust
+        FROM   $systemNodes
+        WHERE  $systemNodes.Entry LIKE '#%s'
+        AND    $systemNodes.EndStamp > NOW()
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pDOMAIN));
+                                
+      $sql_statement = str_replace ('#', '%', $sql_statement);
+      
+      if (!$sql_result = mysql_query ($sql_statement)) {
+        // No entries were found.  Site is not blocked.
+        return (TRUE);
+      } // if
+      
+      // Loop through the entries.
+      while ($result = mysql_fetch_assoc ($sql_result)) {
+      
+        $entry = $result['Entry'];
+        $trust = $result['Trust'];
+      
+        // Check to see if we're looking for a domain.
+        if ($entry == $pDOMAIN) {
+          mysql_free_result ($sql_result);
+          
+          // If we're trusting domain.
+          if ($trust == 10) return (TRUE);
+          
+          // If we're blocking domain.
+          return (FALSE);
+        } // if
+        
+        // Check to see if we're looking for a subdomain.
+        list ($null, $subentry) = split ('\.', $pDOMAIN, 2);
+        if ($entry == '*.' . $subentry) {
+          
+          mysql_free_result ($sql_result);
+          
+          // If we're trusting subdomain.
+          if ($trust == 10) return (TRUE);
+          
+          // If we're blocking subdomain.
+          return (FALSE);
+        } // if
+        
+        // Check to see if we're looking for a specific user at this address.
+        if (strpos ($entry, '@') === TRUE) {
+          list ($username, $domain) = split ('@', $entry);
+          if ($username == $pUSERNAME) {
+             mysql_free_result ($sql_result);
+      
+             // If we're trusting user.
+             if ($trust == 10) return (TRUE);
+          
+             // If we're blocking user.
+             return (FALSE);
+          } // if
+        } // if
+        
+      } // while
+      
+      // If we get to this point, then activity is accepted.
+      
+      mysql_free_result ($sql_result);
+      
+      return (TRUE);
+    } // Check
     
   } // cSERVER
   

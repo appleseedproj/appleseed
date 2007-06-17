@@ -2458,12 +2458,12 @@
 
       $zXML->Parse ($zREMOTE->Return);
 
-      $errorcode = $zXML->GetValue ("code", 0);
       $version = ucwords ($zXML->GetValue ("version", 0));
       $success = ucwords ($zXML->GetValue ("success", 0));
 
-      if ( ($errorcode) or (!$version) or (!$success)) {
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
+      if ( (!$version) or (!$success)) {
+        $title = ucwords ($zXML->GetValue ("title", 0));
+        $zSTRINGS->Lookup ($title);
         $this->Message = $zSTRINGS->Output;
         return (FALSE);
       } // if

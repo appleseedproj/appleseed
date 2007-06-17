@@ -81,7 +81,7 @@
 
   // Load admin security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE, '/admin/users/');
-
+  
   global $gUSERTABS;
 
   // Check if focus user is logged in, or if administrator is viewing.

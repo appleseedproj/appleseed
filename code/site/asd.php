@@ -66,6 +66,9 @@
       // Create the Server class.
       $zSERVER = new cSERVER ($gDOMAIN);
       
+      // Check if this site is blocked.
+      $zSERVER->CheckDomain ($gDOMAIN);
+  
       // Check for an authentication token.
       if (!$gTOKEN) {
         $code = 1000;
