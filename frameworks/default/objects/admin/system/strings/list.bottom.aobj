@@ -14,6 +14,6 @@
 
  </div> <!-- #container -->
 
- <?php $zHTML->Scroll ($target, 'admin.system.nodes'); ?>
+ <?php $zHTML->Scroll ($target, 'admin.system.strings'); ?>
 
-</div> <!-- #nodes -->
+</div> <!-- #strings -->
