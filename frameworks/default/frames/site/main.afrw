@@ -14,9 +14,6 @@
 
     <div id='logoA'></div>
 
-    <!-- ## siteinfo obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/info.aobj", INCLUDE_SECURITY_NONE); ?>
-
     <!-- ## loginbox obj -->
     <?php echo $bLOGINBOX; ?>
 
