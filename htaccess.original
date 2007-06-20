@@ -66,6 +66,8 @@ RewriteRule .*^_admin\/users\/questions$ code/admin/users/questions.php [L]
 # Admin/System redirects
 RewriteRule .*^_admin\/system\/config\/$ code/admin/system/config.php [L]
 RewriteRule .*^_admin\/system\/config$ code/admin/system/config.php [L]
+RewriteRule .*^_admin\/system\/maintenance\/$ code/admin/system/maintenance.php [L]
+RewriteRule .*^_admin\/system\/maintenance$ code/admin/system/maintenance.php [L]
 RewriteRule .*^_admin\/system\/logs\/$ code/admin/system/logs.php [L]
 RewriteRule .*^_admin\/system\/logs$ code/admin/system/logs.php [L]
 RewriteRule .*^_admin\/system\/nodes\/$ code/admin/system/nodes.php [L]

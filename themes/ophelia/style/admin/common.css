@@ -672,3 +672,26 @@
  float:left;
  position:relative;
 }
+
+/* CONTEXT: admin.system.maintenance */
+
+#admin #system #maintenance span.refresh {
+ margin:10px 0;
+ float:right;
+}
+
+#admin #system #maintenance p.activity {
+ float:left;
+ width:280px;
+ padding:2px 5px; margin:7px 0;
+ border:1px solid #eaeaea;
+}
+
+#admin #system #maintenance span.result {
+ float:right;
+ text-align:right;
+ width:188px;
+ background-color:#eaeaea;
+ padding:2px 1% 2px 0; margin:7px 0;
+ border:1px solid #eaeaea;
+}

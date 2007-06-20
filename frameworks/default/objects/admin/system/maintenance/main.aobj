@@ -1,0 +1,77 @@
+<div id='maintenance'>
+ <div id='container'>
+   <p id='top'>
+    <?php $zSTRINGS->Display ('LABEL.MAINTENANCE', $zAPPLE->Context); ?>
+    <?php $zTOOLTIPS->Display ('TOP'); ?>
+   </p>
+   
+   <p class='activity' id='blocks'>
+    Delete expired systemNode blocks.
+   </p>
+   
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='sessions'>
+	  Delete expired sessions.
+	 </p>
+	 
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='notifications'>
+	  Send queued message notifications.
+	 </p>
+	 
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='callbacks'>
+	  Send trusted node callbacks.
+	 </p>
+	 
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='inherit'>
+	  Retrieve inherited node list from trusted nodes.
+	 </p>
+	 
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='rotate'>
+	  Rotate logs.
+	 </p>
+	 
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='update'>
+	  Contact node network requesting updates.
+	 </p>
+	 
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <p class='activity' id='blocked'>
+	  Remove from node network any blocked domains. 
+	 </p>
+   
+   <span class='result'>
+    SUCCESS
+   </span>
+   
+   <form id='manual' name='manual' method='POST' action='/_admin/system/maintenance/'>
+    <?php $zHTML->Button ('refresh'); ?>
+   </form>
+
+ </div> <!-- #container -->
+</div> <!-- #maintenance -->

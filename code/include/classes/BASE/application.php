@@ -888,7 +888,7 @@
       
       // Echo the debug information.
       $zDEBUG->DisplayDebugInformation();
-  
+      
       exit;
 
     } // End
