@@ -1,6 +1,8 @@
 <div id='options'>
  <div id='container'>
 
+  <?php $zSEARCH->Ask (); ?>
+
   <form id='list' method='post' action='_admin/system/options/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>

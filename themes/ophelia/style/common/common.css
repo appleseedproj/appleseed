@@ -604,3 +604,15 @@ a:hover span.linkinfo {
  text-align:left;
 } 
 
+div#search {
+ float:left;
+ clear:both;
+ margin:5px 0 15px 0;
+ padding-bottom:10px;
+ border-bottom:1px solid #dce0e5;
+ width:100%;
+}
+
+div#search span.criteria {
+ margin:0 5px 0 0;
+}

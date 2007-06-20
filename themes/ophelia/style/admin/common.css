@@ -21,7 +21,6 @@
  float:left;
  width:100%;
  margin-top:10px;
- border-bottom:1px solid #000000;
 } 
 
 #admin #titles a {
@@ -71,33 +70,19 @@
  color:#aa0000;
 } 
 
-#admin #container span.criteria {
- width:135px;
-}
-
-#admin #container span.searchby {
- width:100px;
-}
-
-#admin #container span.search {
- width:110px;
-}
-
-#admin #container span.show_all {
- width:80px;
-}
-
 #admin #container span.new {
- text-align:right;
- width:62px;
+ float:right;
 } 
 
 #admin #container ul {
  float:left;
  color:#ffffff;
- padding:0px;
- margin:10px 0px 30px 0px;
+ padding:10px 0px 10px 0px;
  text-align:left;
+ width:100%;
+ border:1px solid #000000;
+ border-left:none;
+ border-right:none;
 } 
 
 #admin #container li {
@@ -142,9 +127,9 @@
 
 #admin #container li:hover,
 #admin #container li:hover a {
- color:#311aff;
+ color:#ffffff;
+ background-color:#311aff;
  float:left;
- background-color:#cfd3d8;
  list-style-type:none;
  overflow:hidden;
 } 

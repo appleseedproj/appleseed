@@ -1,6 +1,8 @@
 <div id='pages'>
  <div id='container'>
 
+  <?php $zSEARCH->Ask (); ?>
+
   <form id='list' method='post' action='_admin/content/pages/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>

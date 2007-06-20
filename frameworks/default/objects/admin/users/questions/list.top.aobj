@@ -1,6 +1,8 @@
 <div id='questions'>
  <div id='container'>
 
+  <?php $zSEARCH->Ask (); ?>
+
   <form id='list' method='post' action='_admin/users/questions/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>

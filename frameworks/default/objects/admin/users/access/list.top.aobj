@@ -1,6 +1,8 @@
 <div id='access'>
  <div id='container'>
 
+  <?php $zSEARCH->Ask (); ?>
+
   <form id='list' method='post' action='_admin/users/access/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>

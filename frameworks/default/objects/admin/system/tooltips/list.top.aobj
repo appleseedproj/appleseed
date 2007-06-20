@@ -1,6 +1,8 @@
 <div id='tooltips'>
  <div id='container'>
 
+  <?php $zSEARCH->Ask (); ?>
+
   <form id='list' method='post' action='_admin/system/tooltips/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>
