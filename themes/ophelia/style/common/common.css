@@ -585,20 +585,39 @@ a:hover span.linkinfo {
 
 /* ADSENSE */
 
-#adsense #caption {
+#adsense {
  float:left;
+ position:absolute;
+ top:10;
+ left:20;
+}
+
+#adsense #caption {
+ position:absolute;
+ float:left;
+ width:160px;
  padding-left:15px;
- padding-top:10px;
- color:#000000;
+ color:#aaaaaa;
+ text-align:justify;
+}
+
+#adsense #caption a {
+ color:#614Aff;
+}
+#adsense #caption a:hover {
+ color:#ffffff;
 }
 
 #adsense #container {
+ position:absolute;
  float:left;
- width:96%;
+ top:50px;
+ left:0px;
+ width:160px;
  margin:0;
  background:#ffffff;
  border:1px solid #dddddd;
- padding:10px 2%;
+ padding:10px 10px;
  margin:0 0 0 5px;
  -moz-border-radius:12px;
  text-align:left;
