@@ -423,7 +423,7 @@
         list ($username, $domain) = split ('\@', $$value);
         
         $zNODE = new cSYSTEMNODES();
-        if (!$zNODE->Check ($username, $domain) ) {
+        if ($zNODE->Blocked ($username, $domain) ) {
           $redirect = "http://" . $host . '/login/remote/';
           $redirect = str_replace ($get, NULL, $redirect);
 
@@ -663,6 +663,8 @@
       define ("SQL_GT", '%!');
       define ("SQL_LT", '&!');
       define ("SQL_LIKE", '#!');
+      
+      define ("STAMP_NEVER", '0000-00-00 00:00:00');
 
       define ("SUCCESS", 1);
   
@@ -1212,7 +1214,7 @@
            $pPARSEDATA = preg_replace ($tagpattern, $fval, $pPARSEDATA);
          break;
   
-         case "global":
+         case 'global':
           // Parse out the global variable.
           $pval = "g" . strtoupper ($tagarray['name']);
           global $$pval;

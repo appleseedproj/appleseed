@@ -276,9 +276,9 @@
       $domain = $info[1];
 
       $zNODE = new cSYSTEMNODES();
-      if (!$zNODE->Check ($username, $domain) ) {
+      if ($errorcode = $zNODE->Blocked ($username, $domain) ) {
         $zLOCALUSER->Error = -1;
-        $zSTRINGS->Lookup ('ERROR.BLOCKED');
+        $zSTRINGS->Lookup ($errorcode);
         $zLOCALUSER->Message = $zSTRINGS->Output;
         break;
       } // if

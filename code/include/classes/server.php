@@ -309,8 +309,8 @@
     function FriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -433,8 +433,8 @@
     function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -499,8 +499,8 @@
     function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -565,8 +565,8 @@
     function FriendDelete ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -632,8 +632,8 @@
     function FriendApprove ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -700,8 +700,8 @@
     function FriendStatus ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -744,8 +744,8 @@
     function UserInformation ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -810,8 +810,8 @@
     function LoginCheck ($pUSERNAME, $pDOMAIN) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -881,8 +881,8 @@
     function IconList ($pUSERNAME, $pDOMAIN) {
       
       // Check if site is blocked.
-      if (!$this->NodeCheck ('*', $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ('*', $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -977,8 +977,8 @@
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $domain)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $domain)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -1005,8 +1005,8 @@
     function MessageNotify ($pRECIPIENT, $pFULLNAME, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {
       
       // Check if site or user is blocked.
-      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ("ERROR.BLOCKED");
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -1152,7 +1152,7 @@
       return (TRUE);
     } // MessageNotify
     
-    function NodeCheck ($pUSERNAME, $pDOMAIN) {
+    function Blocked ($pUSERNAME, $pDOMAIN) {
       
       // domain.com              = blocks domain.com and all subdomains.
       // *.domain.com            = same as above
@@ -1164,6 +1164,11 @@
       
       $systemNodes = $this->TablePrefix . "systemNodes";
       
+      $address = $_SERVER['REMOTE_ADDR'];
+      $host = gethostbyaddr ($address);
+      $split_host = split ('\.', $address);
+      $cblock = $split_host[0] . '.' . $split_host[1] . '.' . $split_host[2];
+      
       // First check if the user exists.
       $sql_statement = "
         SELECT $systemNodes.tID as tID,
@@ -1171,37 +1176,59 @@
                $systemNodes.Trust as Trust
         FROM   $systemNodes
         WHERE  $systemNodes.Entry LIKE '#%s'
+        OR     $systemNodes.Entry LIKE '%s#'
         AND    $systemNodes.EndStamp > NOW()
+        OR     $systemNodes.EndStamp = '0000-00-00 00:00:00'
       ";
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pDOMAIN));
+                                mysql_real_escape_string ($pDOMAIN),
+                                mysql_real_escape_string ($cblock));
                                 
       $sql_statement = str_replace ('#', '%', $sql_statement);
       
       if (!$sql_result = mysql_query ($sql_statement)) {
         // No entries were found.  Site is not blocked.
-        return (TRUE);
+        return (FALSE);
       } // if
-      
-      $address = $_SERVER['REMOTE_ADDR'];
-      $host = gethostbyaddr ($address);
       
       // Loop through the entries.
       while ($result = mysql_fetch_assoc ($sql_result)) {
       
         $entry = $result['Entry'];
         $trust = $result['Trust'];
-      
+        
+        // Check to see if we're looking for an ip address.
+        if ($entry == $address) {
+          mysql_free_result ($sql_result);
+          
+          // If we're trusting ip address.
+          if ($trust == 10) return (FALSE);
+          
+          // If we're blocking address.
+          return ("ERROR.BLOCKED.ADDRESS");
+        } // if
+        
+        // Check to see if we're looking for a C-block of addresses.
+        if ($entry == $cblock . '.*') {
+          mysql_free_result ($sql_result);
+          
+          // If we're trusting ip address.
+          if ($trust == 10) return (FALSE);
+          
+          // If we're blocking address.
+          return ("ERROR.BLOCKED.ADDRESS");
+        } // if
+        
         // Check to see if we're looking for a domain.
         if ( ($entry == $pDOMAIN) or 
              ($entry == '*.' . $pDOMAIN) ) {
           mysql_free_result ($sql_result);
           
           // If we're trusting domain.
-          if ($trust == 10) return (TRUE);
+          if ($trust == 10) return (FALSE);
           
           // If we're blocking domain.
-          return (FALSE);
+          return ("ERROR.BLOCKED");
         } // if
         
         // Check to see if we're looking for a subdomain.
@@ -1211,10 +1238,10 @@
           mysql_free_result ($sql_result);
           
           // If we're trusting subdomain.
-          if ($trust == 10) return (TRUE);
+          if ($trust == 10) return (FALSE);
           
           // If we're blocking subdomain.
-          return (FALSE);
+          return ("ERROR.BLOCKED");
         } // if
         
         // Check to see if we're looking for a specific user at this address.
@@ -1224,21 +1251,20 @@
              mysql_free_result ($sql_result);
       
              // If we're trusting user.
-             if ($trust == 10) return (TRUE);
+             if ($trust == 10) return (FALSE);
           
              // If we're blocking user.
-             return (FALSE);
+             return ("ERROR.BLOCKED.USER");
           } // if
         } // if
         
       } // while
       
       // If we get to this point, then activity is accepted.
-      
       mysql_free_result ($sql_result);
       
-      return (TRUE);
-    } // Check
+      return (FALSE);
+    } // Blocked
     
   } // cSERVER
   

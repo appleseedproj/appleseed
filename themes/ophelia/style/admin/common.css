@@ -664,3 +664,26 @@
  height:100px;
 }
 
+#admin #system #nodes #container input.endstamp_mo {
+ clear:both;
+}
+
+#admin #system #nodes #container input.endstamp_dy,
+#admin #system #nodes #container input.endstamp_mo,
+#admin #system #nodes #container input.endstamp_yr {
+ width:25%;
+ float:left;
+ display:inline;
+}
+
+
+#admin #system #nodes #container p#never {
+ clear:none;
+ float:left;
+ margin:0 0 0 10px; padding:0;
+}
+#admin #system #nodes #container input#never {
+ margin:0 0 0 10px; padding:0;
+ float:left;
+ position:relative;
+}

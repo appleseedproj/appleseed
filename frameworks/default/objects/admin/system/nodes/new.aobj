@@ -31,7 +31,13 @@
      END STAMP:
      <?php $zTOOLTIPS->Display ('END STAMP'); ?>
     </p>
-    <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?><br />
+    <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?>
+    
+    <p id='never'>
+     NEVER:
+     <?php $zTOOLTIPS->Display ('NEVER'); ?>
+    </p>
+    <?php $zHTML->CheckBox ('NEVER', TRUE, TRUE, $gNEVERCHECKED); ?>
 
     <p id='share'>
      SHARE: 
@@ -44,6 +50,12 @@
      <?php $zTOOLTIPS->Display ('INHERIT'); ?>
     </p>
     <?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?><br />
+
+    <p id='callback'>
+     CALLBACK: 
+     <?php $zTOOLTIPS->Display ('CALLBACK'); ?>
+    </p>
+    <?php $zOPTIONS->Menu ("CALLBACK", $ADMINDATA->Callback); ?><br />
 
     <div id='actions'>
 

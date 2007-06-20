@@ -420,12 +420,12 @@
       global $zFOCUSUSER;
       
       // Create the base menu.
-      $begin = array (CIRCLE_DEFAULT   => "Default View",
-                       CIRCLE_NEWEST    => "Newest",
-                       CIRCLE_VIEWALL   => "View All",
-                       CIRCLE_REQUESTS  => "Requests",
-                       CIRCLE_PENDING   => "Pending",
-                       CIRCLE_EDITOR    => "Editor View");
+      $begin = array (CIRCLE_DEFAULT    => "Default View",
+                      CIRCLE_NEWEST     => "Newest",
+                      CIRCLE_VIEWALL    => "View All",
+                      CIRCLE_REQUESTS   => "Requests",
+                      CIRCLE_PENDING    => "Pending",
+                      CIRCLE_EDITOR     => "Edit Friends");
                        
       $end = $this->AddCirclesToFriendsMenu ();
                        

@@ -202,6 +202,7 @@
       $ADMINDATA->Synchronize();
       $ADMINDATA->EndStamp = $zHTML->JoinDate ('ENDSTAMP');
       $ADMINDATA->Stamp = SQL_SKIP;
+      if ($gNEVER[0] == TRUE) $ADMINDATA->EndStamp = STAMP_NEVER;
       if (!$ADMINDATA->tID) $ADMINDATA->Stamp = SQL_NOW;
       if (!$ADMINDATA->Source) $ADMINDATA->Source = $gSITEDOMAIN;
       if ($ADMINDATA->tID == "") {
@@ -269,6 +270,9 @@
       
       global $gSTAMPLIST;
       $gSTAMPLIST = $zHTML->SplitDate ($ADMINDATA->Stamp); 
+      
+      global $gNEVERCHECKED;
+      if ($ADMINDATA->EndStamp == STAMP_NEVER) $gNEVERCHECKED = TRUE;
     break;
 
     case 'SELECT_ALL':
@@ -360,6 +364,12 @@
                 $gTRUSTED = $zSTRINGS->Output;
               break;
             } // switch
+      
+            if ($ADMINDATA->EndStamp == STAMP_NEVER) {
+              $zSTRINGS->Lookup ('LABEL.NEVER');
+              $ADMINDATA->fEndStamp = $zSTRINGS->Output;
+            } // if
+            
             $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/system/nodes/list.middle.aobj", INCLUDE_SECURITY_NONE);
             unset ($gEXTRAPOSTDATA);
 

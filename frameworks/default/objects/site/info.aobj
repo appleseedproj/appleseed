@@ -5,7 +5,7 @@
 
   <div id='container'>
 
-    (no text yet)
+    <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'SITE.MAIN.INFO'); ?>
 
   </div> <!-- #container -->
  </div> <!-- #photos -->

@@ -134,7 +134,6 @@
      echo $this->Output;
  
      return ($this->Error);
- 
    } // Display
 
    function Lookup ($pTITLE, $pCONTEXT = NULL) {
@@ -764,7 +763,7 @@
 
   class cBASESYSTEMNODES extends cBASEDATACLASS {
  
-    var $tID, $Entry, $Trust, $Stamp, $EndStamp, $Share, $Source, $Inherit;
+    var $tID, $Entry, $Trust, $Stamp, $EndStamp, $Share, $Source, $Inherit, $Callback;
 
     function cBASESYSTEMNODES ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
@@ -779,6 +778,7 @@
       $this->Share = ''; 
       $this->Source = ''; 
       $this->Inherit = '';
+      $this->Callback = ''; 
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
@@ -842,13 +842,22 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'STRING'),
                                    
-        'Inherit'        => array ('max'        => '128',
-                                   'min'        => '0',
+        'Inherit'        => array ('max'        => '',
+                                   'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
                                    'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => YES,
+                                   'null'       => YES,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'INTEGER'),
+
+        'Callback'       => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => YES,
+                                   'sanitize'   => NO,
                                    'datatype'   => 'INTEGER'),
 
       );
@@ -861,7 +870,7 @@
  
     } // Constructor
     
-    function Check ($pUSERNAME, $pDOMAIN) {
+    function Blocked ($pUSERNAME, $pDOMAIN) {
       
       // domain.com              = blocks domain.com and all subdomains.
       // *.domain.com            = same as above
@@ -871,17 +880,36 @@
       // ###.###.###.###         = blocks specific ip address
       // ###.###.###.*           = blocks C block.
       
-      $criteria = array ('Entry' => SQL_LIKE . '%' . $pDOMAIN,
-                         'EndStamp' => SQL_GT . SQL_NOW);
-      $this->SelectByMultiple ($criteria);
+      $address = $_SERVER['REMOTE_ADDR'];
+      $host = gethostbyaddr ($address);
+      $split_host = split ('\.', $address);
+      $cblock = $split_host[0] . '.' . $split_host[1] . '.' . $split_host[2];
+      
+      $systemNodes = $this->TablePrefix . "systemNodes";
+      
+      // First check if the user exists.
+      $sql_statement = "
+        SELECT $systemNodes.tID as tID,
+               $systemNodes.Entry as Entry,
+               $systemNodes.Trust as Trust
+        FROM   $systemNodes
+        WHERE  $systemNodes.Entry LIKE '#%s'
+        OR     $systemNodes.Entry LIKE '%s#'
+        AND    $systemNodes.EndStamp > NOW()
+        OR     $systemNodes.EndStamp = '0000-00-00 00:00:00'
+      ";
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pDOMAIN),
+                                mysql_real_escape_string ($cblock));
+                                
+      $sql_statement = str_replace ('#', '%', $sql_statement);
+      
+      $this->Query ($sql_statement);
       
       if (!$this->CountResult()) {
         // No entries were found.  Site is not blocked.
         return (TRUE);
       } // if
-      
-      $address = $_SERVER['REMOTE_ADDR'];
-      $host = gethostbyaddr ($address);
       
       // Loop through the entries.
       while ($this->FetchArray()) {
@@ -889,47 +917,60 @@
         $entry = $this->Entry;
         $trust = $this->Trust;
       
-        // Check to see if we're looking for a domain.
-        if ( ($entry == $pDOMAIN) or
-             ($entry == '*.' . $pDOMAIN) ) {
+        // Check to see if we're looking for an ip address.
+        if ($entry == $address) {
+          // If we're trusting ip address.
+          if ($trust == 10) return (FALSE);
           
+          // If we're blocking address.
+          return ("ERROR.BLOCKED.ADDRESS");
+        } // if
+        
+        // Check to see if we're looking for a C-block of addresses.
+        if ($entry == $cblock . '.*') {
+          // If we're trusting ip address.
+          if ($trust == 10) return (FALSE);
+          
+          // If we're blocking address.
+          return ("ERROR.BLOCKED.ADDRESS");
+        } // if
+        
+        // Check to see if we're looking for a domain.
+        if ( ($entry == $pDOMAIN) or 
+             ($entry == '*.' . $pDOMAIN) ) {
           // If we're trusting domain.
-          if ($trust == 10) return (TRUE);
+          if ($trust == 10) return (FALSE);
           
           // If we're blocking domain.
-          return (FALSE);
+          return ("ERROR.BLOCKED");
         } // if
         
         // Check to see if we're looking for a subdomain.
         list ($null, $subentry) = split ('\.', $pDOMAIN, 2);
         if ($entry == '*.' . $subentry) {
-          
           // If we're trusting subdomain.
-          if ($trust == 10) return (TRUE);
+          if ($trust == 10) return (FALSE);
           
           // If we're blocking subdomain.
-          return (FALSE);
+          return ("ERROR.BLOCKED");
         } // if
         
         // Check to see if we're looking for a specific user at this address.
         if (strpos ($entry, '@') === TRUE) {
           list ($username, $domain) = split ('@', $entry);
           if ($username == $pUSERNAME) {
-      
              // If we're trusting user.
-             if ($trust == 10) return (TRUE);
+             if ($trust == 10) return (FALSE);
           
              // If we're blocking user.
-             return (FALSE);
+             return ("ERROR.BLOCKED.USER");
           } // if
         } // if
         
       } // while
       
       // If we get to this point, then activity is accepted.
-      
       return (TRUE);
-    } // Check
+    } // Blocked
  
   } // cBASESYSTEMNODES
-
