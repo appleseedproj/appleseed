@@ -1,0 +1,9 @@
+<div id='latest'>
+ <div id='nodes'>
+  <div id='caption'>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.NODES'); ?>
+  </div> <!-- #caption -->
+
+ <div id='container'>
+
+ <ul>

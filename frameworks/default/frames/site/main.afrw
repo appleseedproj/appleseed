@@ -29,6 +29,9 @@
     <!-- ## latestphotos obj -->
     <?php echo $bLATESTPHOTOS; ?>
 
+    <!-- ## latestphotos obj -->
+    <?php echo $bLATESTNODES; ?>
+
    </div> <!-- #sectionA -->
 
    <div id='sectionBC'>

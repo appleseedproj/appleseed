@@ -1,0 +1,9 @@
+  </ul>
+  
+  <div id='view'>
+   <?php $zSTRINGS->Display ('OBJECT.VIEW', 'SITE.MAIN.NODES'); ?>
+  </div> <!-- #view -->
+  
+ </div> <!-- #container -->
+ </div> <!-- #nodes -->
+</div> <!-- #latest -->

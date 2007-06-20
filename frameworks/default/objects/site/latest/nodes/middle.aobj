@@ -1,0 +1,11 @@
+<?php $zHTML->Alternate(); ?>
+
+ <span class='nodedomain'>
+  <?php $zSTRINGS->Display ('LABEL.LINK', 'SITE.MAIN.NODES'); ?>
+ </span>
+ 
+ <span class='nodetitle'>
+  <?php echo $gNODETITLE; ?>
+ </span>
+ 
+ </li>

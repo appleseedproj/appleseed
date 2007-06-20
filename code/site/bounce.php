@@ -72,6 +72,7 @@
 
   $self = $_SERVER['HTTP_HOST'];
 
+
   // Check if requesting user is logged in
   if ($zLOCALUSER->Username) {
     // Set a database marker saying that this user is verified.

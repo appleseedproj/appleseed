@@ -578,3 +578,42 @@
  text-align:right;
  width:85px; 
 } 
+
+#site #nodes ul {
+ float:left;
+ clear:both;
+ margin:5px 0; padding:0;
+ width:100%;
+}
+
+#site #nodes li {
+ float:left;
+ list-style-type:none;
+ margin:0; padding:0;
+ width:100%;
+ -moz-border-radius:12px;
+}
+
+#site #nodes li.even,
+#site #nodes li.odd {
+}
+
+#site #nodes span {
+ float:left;
+ width:50%;
+}
+
+#site #nodes span.nodedomain {
+ width:99%;
+ text-align:center;
+ border:1px solid #888888;
+ background:#ccd0d5;
+ -moz-border-radius:12px 12px 0 0;
+}
+
+#site #nodes span.nodetitle {
+ text-align:center;
+ width:100%;
+ font-style:italic;
+ padding:3px 0;
+}

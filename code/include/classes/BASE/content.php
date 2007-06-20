@@ -257,3 +257,126 @@
 
   } // cCONTENTARTICLES
 
+  // Content nodes class.
+  class cBASECONTENTNODES extends cBASEDATACLASS {
+
+    var $tID, $Domain, $Title, $Stamp;
+    var $Users, $Groups, $Photos, $Journals, $Articles;
+
+    function cBASECONTENTNODES ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'contentNodes';
+
+      $this->tID = '';
+      $this->Title = '';
+      $this->Domain = '';
+      $this->Stamp = '';
+      $this->Users = 0;
+      $this->Groups = 0;
+      $this->Photos = 0;
+      $this->Journals = 0;
+      $this->Articles = 0;
+      $this->PageContext = '';
+      $this->Error = 0;
+      $this->Message = '';
+      $this->Result = '';
+      $this->FieldNames = '';
+      $this->PrimaryKey = 'tID';
+ 
+      // Create extended field definitions
+      $this->FieldDefinitions = array (
+
+        'tID'            => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Domain'         => array ('max'        => '128',
+                                   'min'        => '0',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Title'          => array ('max'        => '128',
+                                   'min'        => '0',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Stamp'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'DATETIME'),
+
+        'Users'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'INTEGER'),
+
+        'Photos'         => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'INTEGER'),
+
+        'Groups'         => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'INTEGER'),
+
+        'Journals'       => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'INTEGER'),
+
+        'Articles'       => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'INTEGER'),
+
+      );
+
+      // Assign context from paramater.
+      $this->PageContext = $pDEFAULTCONTEXT;
+
+      // Grab the fields from the database.
+      $this->Fields();
+ 
+   } // Constructor
+
+  } // cBASECONTENTNODES
+

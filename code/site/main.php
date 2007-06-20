@@ -96,6 +96,10 @@
   $zPHOTOS = new cPHOTOSETS();
   $bLATESTPHOTOS = $zPHOTOS->BufferLatestPhotos();
 
+  global $bLATESTNODES;
+  $zNODES = new cCONTENTNODES();
+  $bLATESTNODES = $zNODES->BufferLatestNodes();
+
   $zLOCALUSER->userInvites->CountInvites();
   $gINVITEAMOUNT = $zLOCALUSER->userInvites->Amount;
 

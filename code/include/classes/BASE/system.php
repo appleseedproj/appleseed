@@ -908,7 +908,7 @@
       
       if (!$this->CountResult()) {
         // No entries were found.  Site is not blocked.
-        return (TRUE);
+        return (FALSE);
       } // if
       
       // Loop through the entries.

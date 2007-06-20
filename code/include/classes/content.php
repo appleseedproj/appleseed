@@ -328,3 +328,44 @@
 
   } // cCONTENTARTICLES
 
+  class cCONTENTNODES extends cBASECONTENTNODES {
+     
+    function BufferLatestNodes () {
+      global $zAPPLE, $zAUTHUSER, $zSTRINGS;
+      
+      global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
+      global $gNODEDOMAIN, $gNODEDOMAINLINK, $gNODETITLE;
+      global $gNODEUSERS, $gNODEGROUPS, $gNODEJOURNALS, $gNODEPHOTOS, $gNODEARTICLES;
+      
+      $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      $this->Select (NULL, NULL, 'Stamp LIMIT 10');
+      
+      if ($this->CountResult() == 0) {
+        $buffer = NULL;
+        return (FALSE);
+      } else {
+        while ($this->FetchArray ()) {
+          $gNODEDOMAIN = $this->Domain;
+          $gNODEDOMAINLINK =  "http://" . $zAUTHUSER->Domain;
+          if ( (!$zAUTHUSER->Anonymous) and ($zAUTHUSER->Domain != $this->Domain) ) {
+            $target = $this->Domain;
+            $location = "/";
+            $gNODEDOMAINLINK .= "/login/bounce/?target=" . $target . "&location=" . $location;
+          } // if
+          $gNODETITLE = $this->Title;
+          $gNODEUSERS = $this->Users;
+          $gNODEGROUPS = $this->Groups;
+          $gNODEJOURNALS = $this->Journals;
+          $gNODEPHOTOS = $this->Photos;
+          $gNODEARTICLES = $this->Articles;
+          $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        } // while
+      } // if
+      
+      $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      return ($buffer);
+    } // BufferLatestNodes
+    
+  } // cCONTENTNODES
