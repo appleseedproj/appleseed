@@ -55,9 +55,19 @@
 
       global $gICONLIST;
 
+      $VERIFY = new cAUTHTOKENS ();
+      $token = $VERIFY->LoadToken ($this->Username, $this->Domain);
+
+      if (!$token) {
+        $token = $VERIFY->CreateToken ($this->Username, $this->Domain);
+      } // if
+
+      unset ($VERIFY);
+
       $zREMOTE = new cREMOTE ($this->Domain);
       $datalist = array ("gACTION"   => "ASD_ICON_LIST",
                          "gDOMAIN"   => $gSITEDOMAIN,
+                         "gTOKEN"    => $token,
                          "gUSERNAME" => $this->Username);
       $zREMOTE->Post ($datalist);
 
@@ -216,15 +226,6 @@
                                    'datatype'   => 'STRING'),
 
         'Host'           => array ('max'        => '',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => '',
-                                   'sanitize'   => NO,
-                                   'datatype'   => 'STRING'),
-
-        'Token'          => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -397,5 +398,132 @@
     } // LoadToken
  
   } // cAUTHVERIFICATION
+  
+  class cAUTHTOKENS extends cBASEDATACLASS {
+    var $tID, $Username, $Domain, $Token, $Stamp, $Source;
+ 
+    function cAUTHTOKENS ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'authTokens';
+      $this->tID = '';
+      $this->userAuth_uID = '';
+      $this->Domain = '';
+      $this->Token = '';
+      $this->Stamp = '';
+      $this->Source = '';
+      $this->Error = 0;
+      $this->Message = '';
+      $this->Result = '';
+      $this->PrimaryKey = 'tID';
+      $this->ForeignKey = '';
+ 
+      // Assign context from paramater.
+      $this->PageContext = $pDEFAULTCONTEXT;
+ 
+      // Create extended field definitions
+      $this->FieldDefinitions = array (
+
+        'tID'            => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Username'       => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Domain'         => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Token'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => '',
+                                   'sanitize'   => NO,
+                                   'datatype'   => 'STRING'),
+
+        'Stamp'          => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'DATETIME'),
+                                   
+        'Source'         => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+      );
+
+      // Grab the fields from the database.
+      $this->Fields();
+ 
+    } // Constructor
+    
+    function LoadToken ($pUSERNAME, $pDOMAIN) {
+      // Load tokens created in the last 30 min from the database.
+      $sql_query = "SELECT * FROM $this->TableName " .
+                   "WHERE Username = '$pUSERNAME' " .
+                   "AND Domain = '$pDOMAIN' " .
+                   "AND Stamp > DATE_SUB(now(), INTERVAL 30 MINUTE) " .
+                   "AND Source = " . TOKEN_LOCAL;
+      $this->Statement = $sql_query;
+      $this->Query ($sql_query);
+      
+      $this->FetchArray ();
+      
+      return ($this->Token);
+    } // LoadToken
+    
+    function CreateToken ($pUSERNAME, $pDOMAIN) {
+      
+      global $zAPPLE;
+      
+      // Load and delete current token.
+      $sql_query = "DELETE FROM $this->TableName " .
+                   "WHERE userAuth_uID = '$this->userAuth_uID' " .
+                   "AND Domain = '$pDOMAIN' " .
+                   "AND Source = " . TOKEN_LOCAL;
+      $this->Statement = $sql_query;
+      $this->Query ($sql_query);
+      
+      // Create new token information.
+      $this->Token = $zAPPLE->RandomString (32);
+      $this->Username = $pUSERNAME;
+      $this->Domain = $pDOMAIN;
+      $this->Source = TOKEN_LOCAL;
+      $this->Stamp = SQL_NOW;
+      
+      // Add new token.
+      $this->Add ();
+      
+      return ($this->Token);
+    } // CreateToken
+    
+  } // cAUTHTOKENS
 
 ?>

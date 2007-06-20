@@ -61,7 +61,7 @@
       $this->ForeignKey = '';
       $this->Cascade = array ('userSession', 'userAccess', 'userProfile', 
                               'userInformation', 'userIcons',
-                              'userSettings', 'userGroups', 'userTokens');
+                              'userSettings', 'userGroups');
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
@@ -123,7 +123,6 @@
       $this->userInvites      = new cUSERINVITES ($pDEFAULTCONTEXT);
       $this->userIcons        = new cUSERICONS ($pDEFAULTCONTEXT);
       $this->userGroups       = new cUSERGROUPS ($pDEFAULTCONTEXT);
-      $this->userTokens       = new cUSERTOKENS ($pDEFAULTCONTEXT);
 
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;

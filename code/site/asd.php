@@ -43,40 +43,33 @@
   error_reporting (E_ERROR);
   
   $gACTION = $_POST['gACTION'];
+  $gTOKEN = $_POST['gTOKEN'];
+  $gDOMAIN = $_POST['gDOMAIN'];
+  $gIDENTIFIER = $_POST['gIDENTIFIER'];
+  
+  // Create the Server class.
+  $zSERVER = new cSERVER ($gDOMAIN);
+    
+  // Check for an authentication token.
+  if ( (!$gTOKEN) and (!$gIDENTIFIER) ) {
+    $errortitle = "ERROR.NOTOKEN";
+    $return = $zSERVER->XML->ErrorData ($errortitle);
+    
+    echo $return; exit;
+  } // if
   
   switch ($gACTION) {
     case 'ASD_USER_INFORMATION':
     
       $gUSERNAME = $_POST['gUSERNAME'];
       
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
       // Get User Info.
-      $zSERVER->UserInformation ($gUSERNAME);
+      $zSERVER->UserInformation ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data; exit;
       
     break;
     case 'ASD_TOKEN_CHECK':
-      
-      $gTOKEN = $_POST['gTOKEN'];
-      $gDOMAIN = $_POST['gDOMAIN'];
-      
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check if this site is blocked.
-      $zSERVER->CheckDomain ($gDOMAIN);
-  
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        
-        echo $return; exit;
-      } // if
       
       // Check Friend Status.
       $zSERVER->TokenCheckLocal ($gTOKEN, $gDOMAIN);
@@ -87,21 +80,7 @@
       
     break;
     case 'ASD_FRIEND_STATUS':
-      $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
-      
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        
-        echo $return; exit;
-      } // if
       
       // Check Friend Status.
       $zSERVER->FriendStatus ($gTOKEN, $gUSERNAME, $gDOMAIN);
@@ -110,105 +89,40 @@
       
     break;
     case 'ASD_FRIEND_REQUEST':
-      $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
       
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
       // Check Friend Status.
       $zSERVER->FriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
     case 'ASD_FRIEND_CANCEL':
-      $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
       
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
       // Check Friend Status.
       $zSERVER->FriendCancel ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
     case 'ASD_FRIEND_DENY':
-      $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
       
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
       // Check Friend Status.
       $zSERVER->FriendDeny ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
     case 'ASD_FRIEND_DELETE':
-      $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
       
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
       // Check Friend Status.
       $zSERVER->FriendDelete ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data;
     break;
     case 'ASD_FRIEND_APPROVE':
-      $gTOKEN = $_POST['gTOKEN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
       
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
-      
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zSERVER->XML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
       // Check Friend Status.
       $zSERVER->FriendApprove ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
@@ -217,10 +131,6 @@
     case 'ASD_LOGIN_CHECK':
     
       $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
-      
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
       
       $zSERVER->LoginCheck ($gUSERNAME, $gDOMAIN);
       
@@ -229,14 +139,10 @@
     break;
     case 'ASD_ICON_LIST':
     
-      $gDOMAIN = $_POST['gDOMAIN'];
       $gUSERNAME = $_POST['gUSERNAME'];
-    
-      // Create the Server class.
-      $zSERVER = new cSERVER ($gDOMAIN);
       
       // Retrieve the icon list.
-      $zSERVER->IconList ($gUSERNAME);
+      $zSERVER->IconList ($gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data; exit;
       
@@ -245,9 +151,6 @@
     
       $gIDENTIFIER = $_POST['gIDENTIFIER'];
       $gUSERNAME = $_POST['gUSERNAME'];
-    
-      // Create the Server class.
-      $zSERVER = new cSERVER (NULL);
       
       // Retrieve a message. 
       $zSERVER->MessageRetrieve ($gUSERNAME, $gIDENTIFIER);
@@ -259,12 +162,8 @@
       $gRECIPIENT       = $_POST['gRECIPIENT'];
       $gFULLNAME        = $_POST['gFULLNAME'];
       $gUSERNAME        = $_POST['gUSERNAME'];
-      $gDOMAIN          = $_POST['gDOMAIN'];
       $gIDENTIFIER      = $_POST['gIDENTIFIER'];
       $gSUBJECT         = $_POST['gSUBJECT'];
-
-      // Create the Server class.
-      $zSERVER = new cSERVER (NULL);
       
       // Store a message notification. 
       $zSERVER->MessageNotify ($gRECIPIENT, $gFULLNAME, $gUSERNAME, $gDOMAIN, $gIDENTIFIER, $gSUBJECT);

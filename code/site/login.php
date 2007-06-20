@@ -128,9 +128,16 @@
 
       $self = $_SERVER['HTTP_HOST'];
       $self = str_replace ("www.", NULL, $self);
+      
+      $VERIFY = new cAUTHTOKENS ();
+      $token = $VERIFY->LoadToken ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN);
+      if (!$token) {
+        $token = $VERIFY->CreateToken ($zLOCALUSER->Username, $gREFERENCEDOMAIN);
+      } // if
 
       $datalist = array ("gACTION"   => "ASD_LOGIN_CHECK",
                          "gUSERNAME" => $gREFERENCEUSERNAME,
+                         "gTOKEN"    => $token,
                          "gDOMAIN"   => $self);
       $zREMOTE->Post ($datalist);
 
@@ -256,6 +263,7 @@
       } // if
     break;
     case 'REMOTELOGIN':
+      
       if (!$zAPPLE->CheckEmail ($gLOCATION) ) {
         $zLOCALUSER->Error = -1;
         $zLOCALUSER->Message = "An error occurred while logging in.";
@@ -267,6 +275,14 @@
       $username = $info[0];
       $domain = $info[1];
 
+      $zNODE = new cSYSTEMNODES();
+      if (!$zNODE->Check ($username, $domain) ) {
+        $zLOCALUSER->Error = -1;
+        $zSTRINGS->Lookup ('ERROR.BLOCKED');
+        $zLOCALUSER->Message = $zSTRINGS->Output;
+        break;
+      } // if
+      
       $self = $_SERVER['HTTP_HOST'];
       $self = str_replace ("www.", NULL, $self);
 

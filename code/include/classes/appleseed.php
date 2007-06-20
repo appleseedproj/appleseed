@@ -421,10 +421,29 @@
         if ($gREMOTELOGINSESSION) $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
         
         list ($username, $domain) = split ('\@', $$value);
+        
+        $zNODE = new cSYSTEMNODES();
+        if (!$zNODE->Check ($username, $domain) ) {
+          $redirect = "http://" . $host . '/login/remote/';
+          $redirect = str_replace ($get, NULL, $redirect);
+
+          // Redirect to the location without the home information.
+          Header ("Location: " . $redirect);
+          exit;
+        } // if
+      
         // Create the Remote class.
         $zREMOTE = new cREMOTE ($domain);
 
+        $VERIFY = new cAUTHTOKENS ();
+        $token = $VERIFY->LoadToken ($username, $domain);
+        if (!$token) {
+          $token = $VERIFY->CreateToken ($username, $domain);
+        } // if
+        unset ($VERIFY);
+
         $datalist = array ("gACTION"   => "ASD_LOGIN_CHECK",
+                           "gTOKEN"    => $token,
                            "gUSERNAME" => $username,
                            "gDOMAIN"   => $host);
         $zREMOTE->Post ($datalist);
@@ -567,6 +586,8 @@
   
       define ("DISABLED", "disabled");
       define ("ENABLED", "enabled");
+      
+      define ("PHANTOM_USER_ID", "0");
 
       define ("INCLUDE_SECURITY_NONE",  "0");
       define ("INCLUDE_SECURITY_BASIC", "1");
@@ -641,6 +662,7 @@
       define ("SQL_NOT", '^!');
       define ("SQL_GT", '%!');
       define ("SQL_LT", '&!');
+      define ("SQL_LIKE", '#!');
 
       define ("SUCCESS", 1);
   
@@ -720,6 +742,11 @@
       
       define ("NODE_TRUSTED", 10);
       define ("NODE_BLOCKED", 20);
+      
+      define ("NODE_ALL_USERS", '*');
+      
+      define ("TOKEN_LOCAL", 10);
+      define ("TOKEN_REMOTE", 20);
       
       $gERRORMSG = ''; $gERRORTITLE = 'ERROR';
   
@@ -1472,7 +1499,7 @@
       $FRIEND = new cFRIENDINFORMATION ();
       $FRIEND->Username = $pUSERNAME;
       $FRIEND->Domain = $pDOMAIN;
-      $returnarray = $FRIEND->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
+      $returnarray = $FRIEND->GetUserInformation();
       unset ($FRIEND);
 
       return ($returnarray);

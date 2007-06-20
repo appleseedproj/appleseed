@@ -784,7 +784,7 @@
     } // CountNewFriends
 
     function GetUserInformation () {
-      global $zREMOTE, $zAPPLE, $zXML;
+      global $zLOCALUSER, $zREMOTE, $zAPPLE, $zXML;
 
       global $gSITEDOMAIN;
 
@@ -794,14 +794,18 @@
         if (isset ($this->InformationCache[$this->Username][$this->Domain])) {
           $fullname = $this->InformationCache[$this->Username][$this->Domain]['FULLNAME'];
           $online = $this->InformationCache[$this->Username][$this->Domain]['ONLINE'];
-          $return = array ($fullname, $online, $email);
+          $return = array ($fullname, $online);
           return ($return);
         } // if
+
+        $token = $this->Token (NODE_ALL_USERS, $this->Domain);
 
         // Check Online (remote)
         $zREMOTE = new cREMOTE ($this->Domain);
         $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
-                           "gUSERNAME" => $this->Username);
+                           "gUSERNAME" => $this->Username,
+                           "gDOMAIN"   => $gSITEDOMAIN,
+                           "gTOKEN"    => $token);
         $zREMOTE->Post ($datalist, 1);
         $zXML->Parse ($zREMOTE->Return);
 
@@ -1169,7 +1173,7 @@
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
       
-      $token = $this->Token ($zLOCALUSER->uID, $pREMOTEDOMAIN);
+      $token = $this->Token ($zLOCALUSER->Username, $pREMOTEDOMAIN);
 
       // Step 1: Check remote friend relationship status.
       $status = $this->LongDistanceStatus ($token, $zLOCALUSER->Username, $gSITEDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);
@@ -1593,7 +1597,7 @@
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
-      $token = $this->Token ($zLOCALUSER->uID, $pDOMAIN);
+      $token = $this->Token ($zLOCALUSER->Username, $pDOMAIN);
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
@@ -1639,7 +1643,7 @@
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
-      $token = $this->Token ($zLOCALUSER->uID, $pDOMAIN);
+      $token = $this->Token ($zLOCALUSER->Username, $pDOMAIN);
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
@@ -1685,7 +1689,7 @@
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
-      $token = $this->Token ($zLOCALUSER->uID, $pDOMAIN);
+      $token = $this->Token ($zLOCALUSER->Username, $pDOMAIN);
 
       // Send request to delete remote friend.
       $zREMOTE = new cREMOTE ($pDOMAIN);
@@ -1787,18 +1791,18 @@
       return ($verification);
     } // if
     
-    function Token ($pUID, $pDOMAIN) {
-      $VERIFY = new cUSERTOKENS ();
+    function Token ($pUSERNAME, $pDOMAIN) {
+      $VERIFY = new cAUTHTOKENS ();
       
-      $VERIFY->userAuth_uID = $pUID;
-      $VERIFY->LoadToken ($pDOMAIN);
+      $VERIFY->LoadToken ($pUSERNAME, $pDOMAIN);
       
       $token = $VERIFY->Token;
       
       if (!$token) {
-        $VERIFY->CreateToken ($pDOMAIN);
+        $VERIFY->CreateToken ($pUSERNAME, $pDOMAIN);
         $token = $VERIFY->Token;
       } // if
+      
       unset ($VERIFY);
       
       return ($token);

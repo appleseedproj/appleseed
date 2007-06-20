@@ -1041,12 +1041,25 @@
             $fval = substr ($fval, 2, strlen ($fval) - 2);
             $equals = "<";
           break;
+          case SQL_LIKE:
+            $fval = substr ($fval, 2, strlen ($fval) - 2);
+            $equals = " LIKE ";
+          break;
         } // switch
 
         if (substr ($fval, 0, 2) == SQL_NOT) {
           $fval = substr ($fval, 2, strlen ($fval) - 2);
           $equals = "<>";
         } // if
+        
+        $noquote = FALSE;
+        // If specified, set the time stamp to NOW().
+        if ($fval == SQL_NOW) {
+          $fval = "NOW()";
+          $noquote = TRUE;
+        } // if
+
+        // If specified, set the field to NULL.
 
         // Check if we're at the end of the definitions list.
         if ($def_count == $def_size) {
@@ -1055,7 +1068,11 @@
           if ($pLIKE) {
             $this->Statement .= "$fname LIKE '%$fval%' ";
           } else {
-            $this->Statement .= "$fname $equals '$fval' ";
+            if ($noquote) {
+              $this->Statement .= "$fname $equals $fval ";
+            } else {
+              $this->Statement .= "$fname $equals '$fval' ";
+            } // if
           } // if
           
         } else {

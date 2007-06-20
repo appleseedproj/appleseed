@@ -77,7 +77,7 @@
 
   // Set "Remember Me" as on by default.
   $gREMEMBER = 'on';
-
+  
   // Buffer the login box
   ob_start (); 
 

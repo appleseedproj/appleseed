@@ -1275,8 +1275,7 @@
 
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {
         $VERIFY = new cUSERVERIFICATION ();
-        $VERIFY->userAuth_uID = $zLOCALUSER->uID;
-        $token = $VERIFY->LoadToken ($pGROUPDOMAIN);
+        $token = $VERIFY->LoadToken ($zLOCALUSER->Username, $pGROUPDOMAIN);
         unset ($VERIFY);
 
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
@@ -1364,8 +1363,7 @@
       $success = FALSE;
 
       $VERIFY = new cUSERVERIFICATION ();
-      $VERIFY->userAuth_uID = $zLOCALUSER->uID;
-      $token = $VERIFY->LoadToken ($pGROUPDOMAIN);
+      $token = $VERIFY->LoadToken ($zLOCALUSER->Username, $pGROUPDOMAIN);
       unset ($VERIFY);
 
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {

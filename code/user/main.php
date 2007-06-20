@@ -61,7 +61,7 @@
 
   // Set Global Variables (Put this at the top of wrapper scripts)
   $zAPPLE->SetGlobals ();
-
+  
   // Initialize Appleseed.
   $zAPPLE->Initialize("user", TRUE);
   

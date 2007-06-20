@@ -135,13 +135,18 @@
     
     function TokenCheckLocal ($pTOKEN, $pDOMAIN) {
       
+      $authTokens = $this->TablePrefix . "authTokens";
+      $userAuth = $this->TablePrefix . "userAuthorization";
+      
       // Check our local database, see if this token exists.
+      
       $sql_statement = "
-        SELECT userAuth_uID 
-        FROM   " . $this->TablePrefix . "userTokens
-        WHERE  Token = '%s'
-        AND    Domain = '%s'
-        AND    Stamp > DATE_ADD(now(), INTERVAL -30 MINUTE) 
+        SELECT $authTokens.Username 
+        FROM   $authTokens
+        WHERE  $authTokens.Token = '%s'
+        AND    $authTokens.Domain = '%s'
+        AND    $authTokens.Stamp > DATE_ADD(now(), INTERVAL -30 MINUTE) 
+        AND    $authTokens.Source = 10
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -159,30 +164,32 @@
         return (FALSE);
       } else {
         // Load and send back the username.
+        global $gFULLNAME;
         global $gUSERNAME;
         $result = mysql_fetch_assoc ($sql_result);
-        $uid = $result['userAuth_uID'];
+        $username = $result['Username'];
         mysql_free_result ($sql_result);
+        if ($username == '*') {
+          $gUSERNAME = '*';
+          $gFULLNAME = '*';
+        } else {
+          $gUSERNAME = $result['Username'];
+          // Load and send back the fullname.
         
-        $sql_statement = "SELECT Username
-                          FROM   " . $this->TablePrefix . "userAuthorization
-                          WHERE uID = $uid
-        ";
-        $sql_result = mysql_query($sql_statement);
-        $result = mysql_fetch_assoc ($sql_result);
-        $gUSERNAME = $result['Username'];
-        
-        // Load and send back the fullname.
-        global $gFULLNAME;
-        
-        $sql_statement = "SELECT Fullname,Alias
-                          FROM   " . $this->TablePrefix . "userProfile
-                          WHERE userAuth_uID = $uid
-        ";
-        $sql_result = mysql_query($sql_statement);
-        $result = mysql_fetch_assoc ($sql_result);
-        $gFULLNAME = $result['Fullname'];
-        if ($result['Alias']) $gFULLNAME = $result['Alias'];
+          $sql_statement = "SELECT $userProfile.Fullname,$userProfile.Alias
+                            FROM   $userProfile,$userAuth
+                            WHERE  $userAuth.uID = $userProfile.userAuth_uID
+                            AND    $userAuth.Username = '%s'
+          ";
+          
+          $sql_statement = sprintf ($sql_statement,
+                                    mysql_real_escape_string ($gUSERNAME));
+                                
+          $sql_result = mysql_query($sql_statement);
+          $result = mysql_fetch_assoc ($sql_result);
+          $gFULLNAME = $result['Fullname'];
+          if ($result['Alias']) $gFULLNAME = $result['Alias'];
+        } // if
         
         $this->XML->Load ("code/include/data/xml/token_check.xml");
         mysql_free_result ($sql_result);
@@ -192,13 +199,17 @@
     } // TokenCheckLocal
     
     function TokenCheckRemote ($pTOKEN, $pDOMAIN) {
+     
+      $userAuth = $this->TablePrefix . 'userAuthorization'; 
+      $authTokens = $this->TablePrefix . 'authTokens'; 
       
       // First, check our remote cache database, see if this token exists.
       $sql_statement = "
-        SELECT Username 
-        FROM   " . $this->TablePrefix . "authTokens
-        WHERE  Token = '%s'
-        AND    Domain = '%s'
+        SELECT $authTokens.Username 
+        FROM   $authTokens
+        WHERE  $authTokens.Token = '%s'
+        AND    $authTokens.Domain = '%s'
+        AND    $authTokens.Source = 20
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -218,6 +229,7 @@
                            "gTOKEN"    => $pTOKEN,
                            "gDOMAIN"   => $this->SiteDomain);
         $REMOTE->Post ($datalist, 1);
+        
 
         $this->XML->Parse ($REMOTE->Return);
 
@@ -255,12 +267,14 @@
     
     function TokenStore ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
+      $authTokens = $this->TablePrefix . $authTokens;
+      
       // Delete all existing tokens.
       $sql_statement = "
-        DELETE FROM " . $this->TablePrefix . "authTokens
+        DELETE FROM $authTokens
         WHERE Username = '%s'
         AND   Domain   = '%s'
-
+        AND   Source   = 20;
       "; 
       
       $sql_statement = sprintf ($sql_statement,
@@ -269,11 +283,13 @@
                                 
       $sql_result = mysql_query ($sql_statement);
       
+      $authTokens = $this->TablePrefix . 'authTokens';
+      
       // Insert new token.
       $sql_statement = "
-        INSERT INTO " . $this->TablePrefix . "authTokens
-        (Username, Domain, Address, Host, Token, Stamp)
-        VALUES ('%s', '%s', '%s', '%s', '%s', NOW());
+        INSERT INTO $authTokens
+        (Username, Domain, Address, Host, Token, Stamp, Source)
+        VALUES ('%s', '%s', '%s', '%s', '%s', NOW(), 20);
       "; 
       
       $address = $_SERVER['REMOTE_ADDR'];
@@ -298,7 +314,11 @@
         return (FALSE);
       } // if
       
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -418,7 +438,11 @@
         return (FALSE);
       } // if
       
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -480,7 +504,11 @@
         return (FALSE);
       } // if
       
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -542,7 +570,12 @@
         return (FALSE);
       } // if
       
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -604,7 +637,12 @@
         return (FALSE);
       } // if
       
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -667,7 +705,12 @@
         return (FALSE);
       } // if
       
-      $this->TokenCheckRemote ($pTOKEN, $pDOMAIN); 
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -698,7 +741,19 @@
       return (TRUE);
     } // FriendStatus
     
-    function UserInformation ($pUSERNAME) {
+    function UserInformation ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
+      
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
       
       // Load and send back the fullname.
       global $gFULLNAME;
@@ -823,7 +878,13 @@
       return (TRUE);
     } // LoginCheck
     
-    function IconList ($pUSERNAME) {
+    function IconList ($pUSERNAME, $pDOMAIN) {
+      
+      // Check if site is blocked.
+      if (!$this->NodeCheck ('*', $pDOMAIN)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
       
       $userIcons = $this->TablePrefix . "userIcons";
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -881,6 +942,7 @@
                $messageStore.Subject AS Subject,  
                $messageStore.Body AS Body,
                $messageStore.Stamp AS Stamp,
+               $messageRecipient.Domain AS Domain,
                $userProfile.Fullname AS Fullname,
                $userProfile.Alias AS Alias
         FROM   $messageStore,$userProfile,$messageRecipient
@@ -911,7 +973,14 @@
       $gBODY = $result['Body'];
       $gSTAMP = $result['Stamp'];
       $gFULLNAME = $result['Fullname'];
+      $domain = $result['Domain'];
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
+      
+      // Check if site or user is blocked.
+      if (!$this->NodeCheck ($pUSERNAME, $domain)) {
+        $this->XML->ErrorData ("ERROR.BLOCKED");
+        return (FALSE);
+      } // if
       
       // Mark message as read.
       $sql_statement = "
@@ -1085,6 +1154,14 @@
     
     function NodeCheck ($pUSERNAME, $pDOMAIN) {
       
+      // domain.com              = blocks domain.com and all subdomains.
+      // *.domain.com            = same as above
+      // *.com                   = blocks all .com domains
+      // *.subdomain.domain.com  = blocks subdomain.domain.com and all (sub-)subdomains.
+      // ###.###.###.###         = blocks specific ip address
+      // ###.###.###.*           = blocks C block.
+      // user@domain.com         = blocks specific user at a domain.
+      
       $systemNodes = $this->TablePrefix . "systemNodes";
       
       // First check if the user exists.
@@ -1096,7 +1173,6 @@
         WHERE  $systemNodes.Entry LIKE '#%s'
         AND    $systemNodes.EndStamp > NOW()
       ";
-      
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($pDOMAIN));
                                 
@@ -1107,6 +1183,9 @@
         return (TRUE);
       } // if
       
+      $address = $_SERVER['REMOTE_ADDR'];
+      $host = gethostbyaddr ($address);
+      
       // Loop through the entries.
       while ($result = mysql_fetch_assoc ($sql_result)) {
       
@@ -1114,7 +1193,8 @@
         $trust = $result['Trust'];
       
         // Check to see if we're looking for a domain.
-        if ($entry == $pDOMAIN) {
+        if ( ($entry == $pDOMAIN) or 
+             ($entry == '*.' . $pDOMAIN) ) {
           mysql_free_result ($sql_result);
           
           // If we're trusting domain.
@@ -1197,10 +1277,17 @@
     
     function GetUserInformation ($pUSERNAME, $pDOMAIN) {
       
+      $token = $this->LoadToken ('*', $pDOMAIN);
+      
+      if (!$token) {
+        $token = $this->CreateToken ('*', $pDOMAIN);
+      } // if
+      
       $REMOTE = new cREMOTE ($pDOMAIN);
-      $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
+      $datalist = array ("gACTION"     => "ASD_USER_INFORMATION",
                          "gUSERNAME"   => $pUSERNAME,
-                         "gDOMAIN"   => $this->SiteDomain);
+                         "gDOMAIN"     => $this->SiteDomain,
+                         "gTOKEN"      => $token);
       $REMOTE->Post ($datalist, 1);
 
       $this->XML->Parse ($REMOTE->Return);
@@ -1221,6 +1308,87 @@
       
       return ($return);
     } // GetUserInformation
+    
+    function LoadToken ($pUSERNAME, $pDOMAIN) {
+      
+      $authTokens = $this->TablePrefix . 'authTokens';
+      
+      $sql_statement = "
+        SELECT $authTokens.Token 
+        FROM   $authTokens
+        WHERE  $authTokens.Username = '%s'
+        AND    $authTokens.Domain = '%s'
+        AND    $authTokens.Stamp > DATE_ADD(now(), INTERVAL -30 MINUTE) 
+        AND    $authTokens.Source = 10
+      ";
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($pDOMAIN));
+      $sql_result = mysql_query ($sql_statement);
+      
+      // Check if we got a result row.
+      $result_count = mysql_num_rows ($sql_result);
+      
+      if ($result_count == 0) {
+        return (NULL);
+      } else {
+        $result = mysql_fetch_assoc ($sql_result);
+        $token = $result['Token'];
+      } // if
+      
+      return ($token);
+    } // LoadToken
+    
+    function CreateToken ($pUSERNAME, $pDOMAIN) {
+      
+      $token = $this->RandomString (32);
+      
+      $authTokens = $this->TablePrefix . 'authTokens';
+      
+      // Insert new token.
+      $sql_statement = "
+        INSERT INTO $authTokens
+        (Username, Domain, Token, Stamp, Source)
+        VALUES ('%s', '%s', '%s', NOW(), 10);
+      "; 
+      
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($pDOMAIN),
+                                mysql_real_escape_string ($token));
+                                
+      $sql_result = mysql_query ($sql_statement);
+      
+      return ($token);
+    } // CreateToken
+    
+    // Generate a random string of characters.
+    function RandomString ($pSTRINGSIZE) {
+  
+      list($usec, $sec) = explode(' ', microtime());
+      $seed = (float) $sec + ((float) $usec * 100000);
+      mt_srand($seed);
+  
+      // Generate a random 32-byte string.
+      $return_string = ""; $return_count = 0;
+      for ($return_count = 0; $return_count < $pSTRINGSIZE; $return_count++) {
+        $randval_num = mt_rand(48, 57);
+        $randval_alpha = mt_rand(65, 90);
+  
+        // Randomly choose either the alpha or the numeric value.
+        $eitheror = mt_rand (0, 2);
+        if ($eitheror == 0) 
+          $randval = $randval_num;
+        else
+          $randval = $randval_alpha;
+        
+        $charval = chr($randval);
+        $return_string .= "$charval";
+      }
+  
+      return ($return_string);
+    } // RandomString
     
   } // cAJAX
   

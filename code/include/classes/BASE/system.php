@@ -860,6 +860,76 @@
       $this->Fields();
  
     } // Constructor
+    
+    function Check ($pUSERNAME, $pDOMAIN) {
+      
+      // domain.com              = blocks domain.com and all subdomains.
+      // *.domain.com            = same as above
+      // *.com                   = blocks all .com domains
+      // *.subdomain.domain.com  = blocks subdomain.domain.com and all (sub-)subdomains.
+      // user@domain.com         = blocks specific user at a domain.
+      // ###.###.###.###         = blocks specific ip address
+      // ###.###.###.*           = blocks C block.
+      
+      $criteria = array ('Entry' => SQL_LIKE . '%' . $pDOMAIN,
+                         'EndStamp' => SQL_GT . SQL_NOW);
+      $this->SelectByMultiple ($criteria);
+      
+      if (!$this->CountResult()) {
+        // No entries were found.  Site is not blocked.
+        return (TRUE);
+      } // if
+      
+      $address = $_SERVER['REMOTE_ADDR'];
+      $host = gethostbyaddr ($address);
+      
+      // Loop through the entries.
+      while ($this->FetchArray()) {
+      
+        $entry = $this->Entry;
+        $trust = $this->Trust;
+      
+        // Check to see if we're looking for a domain.
+        if ( ($entry == $pDOMAIN) or
+             ($entry == '*.' . $pDOMAIN) ) {
+          
+          // If we're trusting domain.
+          if ($trust == 10) return (TRUE);
+          
+          // If we're blocking domain.
+          return (FALSE);
+        } // if
+        
+        // Check to see if we're looking for a subdomain.
+        list ($null, $subentry) = split ('\.', $pDOMAIN, 2);
+        if ($entry == '*.' . $subentry) {
+          
+          // If we're trusting subdomain.
+          if ($trust == 10) return (TRUE);
+          
+          // If we're blocking subdomain.
+          return (FALSE);
+        } // if
+        
+        // Check to see if we're looking for a specific user at this address.
+        if (strpos ($entry, '@') === TRUE) {
+          list ($username, $domain) = split ('@', $entry);
+          if ($username == $pUSERNAME) {
+      
+             // If we're trusting user.
+             if ($trust == 10) return (TRUE);
+          
+             // If we're blocking user.
+             return (FALSE);
+          } // if
+        } // if
+        
+      } // while
+      
+      // If we get to this point, then activity is accepted.
+      
+      return (TRUE);
+    } // Check
  
   } // cBASESYSTEMNODES
 
