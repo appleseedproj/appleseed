@@ -334,8 +334,7 @@
       global $zAPPLE, $zAUTHUSER, $zSTRINGS;
       
       global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
-      global $gNODEDOMAIN, $gNODEDOMAINLINK, $gNODETITLE;
-      global $gNODEUSERS, $gNODEGROUPS, $gNODEJOURNALS, $gNODEPHOTOS, $gNODEARTICLES;
+      global $gNODETITLE;
       
       $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
@@ -346,19 +345,17 @@
         return (FALSE);
       } else {
         while ($this->FetchArray ()) {
-          $gNODEDOMAIN = $this->Domain;
-          $gNODEDOMAINLINK =  "http://" . $zAUTHUSER->Domain;
+          $nodedomain = $this->Domain;
+          $nodedomainlink =  "http://" . $zAUTHUSER->Domain;
           if ( (!$zAUTHUSER->Anonymous) and ($zAUTHUSER->Domain != $this->Domain) ) {
             $target = $this->Domain;
             $location = "/";
-            $gNODEDOMAINLINK .= "/login/bounce/?target=" . $target . "&location=" . $location;
+            $nodedomainlink .= "/login/bounce/?target=" . $target . "&location=" . $location;
           } // if
           $gNODETITLE = $this->Title;
-          $gNODEUSERS = $this->Users;
-          $gNODEGROUPS = $this->Groups;
-          $gNODEJOURNALS = $this->Journals;
-          $gNODEPHOTOS = $this->Photos;
-          $gNODEARTICLES = $this->Articles;
+          $zAPPLE->SetTag ('NODEDOMAINLINK', $nodedomainlink);
+          $zAPPLE->SetTag ('NODEDOMAIN', $nodedomain);
+          $zAPPLE->SetTag ('NODEUSERS', $this->Users);
           $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // while
       } // if

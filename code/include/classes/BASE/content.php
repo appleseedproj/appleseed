@@ -260,8 +260,7 @@
   // Content nodes class.
   class cBASECONTENTNODES extends cBASEDATACLASS {
 
-    var $tID, $Domain, $Title, $Stamp;
-    var $Users, $Groups, $Photos, $Journals, $Articles;
+    var $tID, $Domain, $Title, $Stamp, $Users;
 
     function cBASECONTENTNODES ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
@@ -273,10 +272,6 @@
       $this->Domain = '';
       $this->Stamp = '';
       $this->Users = 0;
-      $this->Groups = 0;
-      $this->Photos = 0;
-      $this->Journals = 0;
-      $this->Articles = 0;
       $this->PageContext = '';
       $this->Error = 0;
       $this->Message = '';
@@ -324,42 +319,6 @@
                                    'datatype'   => 'DATETIME'),
 
         'Users'          => array ('max'        => '',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => NO,
-                                   'datatype'   => 'INTEGER'),
-
-        'Photos'         => array ('max'        => '',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => NO,
-                                   'datatype'   => 'INTEGER'),
-
-        'Groups'         => array ('max'        => '',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => NO,
-                                   'datatype'   => 'INTEGER'),
-
-        'Journals'       => array ('max'        => '',
-                                   'min'        => '',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => NO,
-                                   'datatype'   => 'INTEGER'),
-
-        'Articles'       => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
