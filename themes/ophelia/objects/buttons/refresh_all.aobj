@@ -1,0 +1,5 @@
+<span class='refresh_all'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/refresh_all.gif' />
+ <asd id='tooltip' title='refresh_all' />
+</span> <!-- .refresh_all -->

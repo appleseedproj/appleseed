@@ -675,23 +675,49 @@
 
 /* CONTEXT: admin.system.maintenance */
 
-#admin #system #maintenance span.refresh {
- margin:10px 0;
- float:right;
+#admin #system #maintenance span.refresh_all {
+ float:left;
+ width:100%;
+ margin-top:10px;
+ text-align:center;
+ clear:both;
 }
 
-#admin #system #maintenance p.activity {
+#admin #system #maintenance p.interval,
+#admin #system #maintenance p.activity,
+#admin #system #maintenance p.timer {
  float:left;
+ clear:none;
  width:280px;
- padding:2px 5px; margin:7px 0;
+ padding:2px 5px; margin:7px 0 0 0;
  border:1px solid #eaeaea;
 }
 
-#admin #system #maintenance span.result {
+#admin #system #maintenance p.timer {
+ width:102px;
+ margin:1px 0 8px 0;
+ border:none;
+}
+
+#admin #system #maintenance p.interval {
+ width:170px;
+ text-align:right;
+ margin:1px 0 8px 0;
+ border:none;
+}
+
+#admin #system #maintenance span.result,
+#admin #system #maintenance span.refresh {
+ clear:none;
  float:right;
  text-align:right;
  width:188px;
  background-color:#eaeaea;
- padding:2px 1% 2px 0; margin:7px 0;
+ padding:2px 1% 2px 0; margin:7px 0 0 0;
  border:1px solid #eaeaea;
+}
+#admin #system #maintenance span.refresh {
+ margin:0 0 7px 0;
+ background:none;
+ border:none;
 }

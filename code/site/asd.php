@@ -58,7 +58,8 @@
     echo $return; exit;
   } // if
   
-  switch ($gACTION) {
+  switch (strtoupper ($gACTION)) {
+    case 'USER_INFORMATION':
     case 'ASD_USER_INFORMATION':
     
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -69,6 +70,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    case 'TOKEN_CHECK':
     case 'ASD_TOKEN_CHECK':
       
       // Check Friend Status.
@@ -79,6 +81,7 @@
       exit;
       
     break;
+    case 'FRIEND_STATUS':
     case 'ASD_FRIEND_STATUS':
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -88,6 +91,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    case 'FRIEND_REQUEST':
     case 'ASD_FRIEND_REQUEST':
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -96,6 +100,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'FRIEND_CANCEL':
     case 'ASD_FRIEND_CANCEL':
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -104,6 +109,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'FRIEND_DENY':
     case 'ASD_FRIEND_DENY':
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -112,6 +118,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'FRIEND_DELETE':
     case 'ASD_FRIEND_DELETE':
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -120,6 +127,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'FRIEND_APPROVE':
     case 'ASD_FRIEND_APPROVE':
       $gUSERNAME = $_POST['gUSERNAME'];
       
@@ -128,6 +136,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    case 'LOGIN_CHECK':
     case 'ASD_LOGIN_CHECK':
     
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -137,6 +146,7 @@
       echo $zSERVER->XML->Data; exit;
     
     break;
+    case 'ICON_LIST':
     case 'ASD_ICON_LIST':
     
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -147,6 +157,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    case 'MESSAGE_RETRIEVE':
     case 'ASD_MESSAGE_RETRIEVE':
     
       $gIDENTIFIER = $_POST['gIDENTIFIER'];
@@ -158,6 +169,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    case 'MESSAGE_NOTIFY':
     case 'ASD_MESSAGE_NOTIFY':
       $gRECIPIENT       = $_POST['gRECIPIENT'];
       $gFULLNAME        = $_POST['gFULLNAME'];
@@ -171,6 +183,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    case 'GROUP_JOIN':
     case 'ASD_GROUP_JOIN':
       // Check for an authentication token.
       if (!$gTOKEN) {
@@ -245,6 +258,7 @@
      $return = $zAPPLE->ParseTags ($data);
      echo $return;
     break;
+    case 'GROUP_LEAVE':
     case 'ASD_GROUP_LEAVE':
       // Check for an authentication token.
       if (!$gTOKEN) {
@@ -306,6 +320,7 @@
      $return = $zAPPLE->ParseTags ($data);
      echo $return;
     break;
+    case 'GROUP_INFORMATION':
     case 'ASD_GROUP_INFORMATION':
      $GROUP = new cGROUPINFORMATION ();
      $GROUP->Select ("Name", $gGROUPNAME);

@@ -13,6 +13,18 @@
     SUCCESS
    </span>
    
+   <p class='timer'>
+     n/a
+   </p>
+   
+   <p class='interval'>
+    On Refresh
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
+   
    <p class='activity' id='sessions'>
 	  Delete expired sessions.
 	 </p>
@@ -20,6 +32,18 @@
    <span class='result'>
     SUCCESS
    </span>
+   
+   <p class='timer'>
+     n/a
+   </p>
+   
+   <p class='interval'>
+     On Refresh
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
    
    <p class='activity' id='notifications'>
 	  Send queued message notifications.
@@ -29,6 +53,18 @@
     SUCCESS
    </span>
    
+   <p class='timer'>
+     n/a
+   </p>
+   
+   <p class='interval'>
+     On Refresh
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
+   
    <p class='activity' id='callbacks'>
 	  Send trusted node callbacks.
 	 </p>
@@ -36,6 +72,18 @@
    <span class='result'>
     SUCCESS
    </span>
+   
+   <p class='timer'>
+     1 Hour 47 Min
+   </p>
+   
+   <p class='interval'>
+     Every 2 Hours
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
    
    <p class='activity' id='inherit'>
 	  Retrieve inherited node list from trusted nodes.
@@ -45,6 +93,18 @@
     SUCCESS
    </span>
    
+   <p class='timer'>
+     1 Hour 47 Min
+   </p>
+   
+   <p class='interval'>
+     Every 1 Hour
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
+   
    <p class='activity' id='rotate'>
 	  Rotate logs.
 	 </p>
@@ -52,6 +112,18 @@
    <span class='result'>
     SUCCESS
    </span>
+   
+   <p class='timer'>
+     n/a
+   </p>
+   
+   <p class='interval'>
+     On Refresh
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
    
    <p class='activity' id='update'>
 	  Contact node network requesting updates.
@@ -61,6 +133,18 @@
     SUCCESS
    </span>
    
+   <p class='timer'>
+     1 Hour 47 Min
+   </p>
+   
+   <p class='interval'>
+     Every 12 Hours
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
+   
    <p class='activity' id='blocked'>
 	  Remove from node network any blocked domains. 
 	 </p>
@@ -69,8 +153,20 @@
     SUCCESS
    </span>
    
+   <p class='timer'>
+     n/a
+   </p>
+   
+   <p class='interval'>
+     On Refresh
+   </p>
+   
+   <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
+     <?php $zHTML->Button ('refresh'); ?>
+   </form>
+   
    <form id='manual' name='manual' method='POST' action='/_admin/system/maintenance/'>
-    <?php $zHTML->Button ('refresh'); ?>
+    <?php $zHTML->Button ('refresh_all'); ?>
    </form>
 
  </div> <!-- #container -->
