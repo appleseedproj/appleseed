@@ -222,7 +222,7 @@
         $parameters = 'gACTION=' . $this->Action;
         
         // NOTE:  Duplicates requests.  Figure out why.
-        $fp = fsockopen($gSITEDOMAIN, 80, $errno, &$errstr, 1);
+        $fp = fsockopen($gSITEDOMAIN, 80, $errno, $errstr, 1);
       
         if ($fp) {
           fputs($fp, "POST $path HTTP/1.0\r\n");
