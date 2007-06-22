@@ -122,7 +122,7 @@
     function SendNodeNetworkUpdate () {
       global $gSITEDOMAIN;
       
-      global $zSTRINGS;
+      global $zSTRINGS, $zXML;
       
       // Create node class.
       $zNODES = new cSYSTEMNODES ();
