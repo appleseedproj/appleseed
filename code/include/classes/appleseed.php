@@ -330,6 +330,9 @@
 
       $this->SetTag ('FOCUSUSERNAME', $gFOCUSUSERNAME);
       
+      global $zJANITOR;
+      $zJANITOR = new cSYSTEMMAINTENANCE();
+      
       return (TRUE); 
       
     } // Initialize

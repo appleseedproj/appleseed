@@ -611,7 +611,7 @@
  -moz-border-radius:12px 12px 0 0;
 }
 
-#site #nodes span.nodetitle {
+#site #nodes span.nodesummary {
  text-align:center;
  width:100%;
  font-style:italic;

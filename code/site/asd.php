@@ -70,17 +70,17 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    
     case 'TOKEN_CHECK':
     case 'ASD_TOKEN_CHECK':
       
       // Check Friend Status.
       $zSERVER->TokenCheckLocal ($gTOKEN, $gDOMAIN);
       
-      echo $zSERVER->XML->Data; 
-      
-      exit;
+      echo $zSERVER->XML->Data; exit;
       
     break;
+    
     case 'FRIEND_STATUS':
     case 'ASD_FRIEND_STATUS':
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -91,6 +91,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    
     case 'FRIEND_REQUEST':
     case 'ASD_FRIEND_REQUEST':
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -100,6 +101,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    
     case 'FRIEND_CANCEL':
     case 'ASD_FRIEND_CANCEL':
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -109,6 +111,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    
     case 'FRIEND_DENY':
     case 'ASD_FRIEND_DENY':
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -118,6 +121,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    
     case 'FRIEND_DELETE':
     case 'ASD_FRIEND_DELETE':
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -127,6 +131,7 @@
       
       echo $zSERVER->XML->Data;
     break;
+    
     case 'FRIEND_APPROVE':
     case 'ASD_FRIEND_APPROVE':
       $gUSERNAME = $_POST['gUSERNAME'];
@@ -136,27 +141,30 @@
       
       echo $zSERVER->XML->Data;
     break;
+    
     case 'LOGIN_CHECK':
     case 'ASD_LOGIN_CHECK':
     
       $gUSERNAME = $_POST['gUSERNAME'];
       
-      $zSERVER->LoginCheck ($gUSERNAME, $gDOMAIN);
+      $zSERVER->LoginCheck ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data; exit;
     
     break;
+    
     case 'ICON_LIST':
     case 'ASD_ICON_LIST':
     
       $gUSERNAME = $_POST['gUSERNAME'];
       
       // Retrieve the icon list.
-      $zSERVER->IconList ($gUSERNAME, $gDOMAIN);
+      $zSERVER->IconList ($gTOKEN, $gUSERNAME, $gDOMAIN);
       
       echo $zSERVER->XML->Data; exit;
       
     break;
+    
     case 'MESSAGE_RETRIEVE':
     case 'ASD_MESSAGE_RETRIEVE':
     
@@ -169,6 +177,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    
     case 'MESSAGE_NOTIFY':
     case 'ASD_MESSAGE_NOTIFY':
       $gRECIPIENT       = $_POST['gRECIPIENT'];
@@ -183,6 +192,7 @@
       echo $zSERVER->XML->Data; exit;
       
     break;
+    
     case 'GROUP_JOIN':
     case 'ASD_GROUP_JOIN':
       // Check for an authentication token.
@@ -244,6 +254,7 @@
          $zGROUPS->groupMembers->Verification = GROUP_VERIFICATION_APPROVED;
        } else {
          $gMESSAGE = "MESSAGE.PENDING";
+         
          $zGROUPS->groupMembers->Verification = GROUP_VERIFICATION_PENDING;
        } // if
 
@@ -258,6 +269,7 @@
      $return = $zAPPLE->ParseTags ($data);
      echo $return;
     break;
+    
     case 'GROUP_LEAVE':
     case 'ASD_GROUP_LEAVE':
       // Check for an authentication token.
@@ -320,6 +332,7 @@
      $return = $zAPPLE->ParseTags ($data);
      echo $return;
     break;
+    
     case 'GROUP_INFORMATION':
     case 'ASD_GROUP_INFORMATION':
      $GROUP = new cGROUPINFORMATION ();
@@ -343,6 +356,28 @@
 
      echo $return;
     break;
+    
+    case 'UPDATE_NODE_NETWORK':
+    case 'ASD_UPDATE_NODE_NETWORK':
+    
+      $gSUMMARY = $_POST['gSUMMARY'];
+      $gUSERS = $_POST['gUSERS'];
+      
+      $zSERVER->UpdateNodeNetwork ($gTOKEN, $gDOMAIN, $gSUMMARY, $gUSERS);
+      
+      echo $zSERVER->XML->Data; exit;
+    
+    break;
+    
+    case 'TRUSTED_LIST':
+    case 'ASD_TRUSTED_LIST':
+    
+      $zSERVER->TrustedList ($gTOKEN, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data; exit;
+    
+    break;
+    
     default:
     break;
   } // switch

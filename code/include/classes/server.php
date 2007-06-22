@@ -308,15 +308,15 @@
     
     function FriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -432,15 +432,15 @@
     
     function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -498,15 +498,15 @@
     
     function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -564,15 +564,15 @@
     
     function FriendDelete ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -631,18 +631,17 @@
     
     function FriendApprove ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
         return (FALSE);
       } // if
       
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
+        return (FALSE);
+      } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -699,15 +698,15 @@
     
     function FriendStatus ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -743,15 +742,15 @@
     
     function UserInformation ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
-      // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
-      } // if
-      
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.
         $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked (NULL, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
       
@@ -807,7 +806,13 @@
       return (TRUE);
     } // UserInformation
     
-    function LoginCheck ($pUSERNAME, $pDOMAIN) {
+    function LoginCheck ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
       
       // Check if site or user is blocked.
       if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
@@ -878,10 +883,16 @@
       return (TRUE);
     } // LoginCheck
     
-    function IconList ($pUSERNAME, $pDOMAIN) {
+    function IconList ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+      
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
       
       // Check if site is blocked.
-      if ($errorcode = $this->Blocked ('*', $pDOMAIN)) {
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
         $this->XML->ErrorData ($errorcode);
         return (FALSE);
       } // if
@@ -1265,6 +1276,79 @@
       
       return (FALSE);
     } // Blocked
+    
+    function UpdateNodeNetwork ($pTOKEN, $pDOMAIN, $pSUMMARY, $pUSERS) {
+      
+      $pSUMMARY = strip_tags ($pSUMMARY);
+      
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked (NULL, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
+        return (FALSE);
+      } // if
+      
+      $contentNodes = $this->TablePrefix . "contentNodes";
+      
+      $sql_statement = "
+        SELECT tID
+          FROM $contentNodes
+         WHERE Domain = '%s'
+      ";
+      $sql_statement = sprintf ($sql_statement,
+                                mysql_real_escape_string ($pDOMAIN));
+                                
+      $sql_result = mysql_query ($sql_statement);
+      $result_count = mysql_num_rows ($sql_result);
+      
+      mysql_free_result ($sql_result);
+      
+      if ($result_count) {
+        // Result was found, update.
+        $sql_statement = "
+          UPDATE $contentNodes
+           SET   Users = '%s',
+                 Summary = '%s',
+                 Stamp = NOW()
+           WHERE Domain = '%s'
+        ";
+        $sql_statement = sprintf ($sql_statement,
+                                  mysql_real_escape_string ($pUSERS),
+                                  mysql_real_escape_string ($pSUMMARY),
+                                  mysql_real_escape_string ($pDOMAIN));
+                                
+      } else {
+        $sql_statement = "
+          INSERT INTO $contentNodes
+                      (Domain, Summary, Users, Stamp)
+               VALUES ('%s', '%s', '%s', NOW());
+        ";
+        $sql_statement = sprintf ($sql_statement,
+                                  mysql_real_escape_string ($pDOMAIN),
+                                  mysql_real_escape_string ($pSUMMARY),
+                                  mysql_real_escape_string ($pUSERS));
+                                
+        // No result found, add.
+      } // if
+                                
+      if (!$sql_result = mysql_query ($sql_statement)) {
+        $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return (FALSE);
+      } // if;
+      
+      global $gMESSAGE, $gSUCCESS;
+      
+      $gMESSAGE = "MESSAGE.UPDATED";
+      $gSUCCESS = TRUE;
+      $this->XML->Load ("code/include/data/xml/update_node_network.xml");
+      
+      return (TRUE);
+    } // UpdateNodeNetwork
     
   } // cSERVER
   

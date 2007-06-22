@@ -90,6 +90,8 @@
   // Set which tab to highlight.
   $gADMINSYSTEMMAINTENANCETAB = '';
 
+  $zJANITOR->SendNodeNetworkUpdate ();
+  
   // Buffer the main section.
   ob_start ();  
 

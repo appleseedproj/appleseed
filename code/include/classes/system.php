@@ -116,4 +116,130 @@
   class cSYSTEMNODES extends cBASESYSTEMNODES {
      
   } // cSYSTEMNODES
+  
+  class cSYSTEMMAINTENANCE extends cBASESYSTEMMAINTENANCE {
+    
+    function SendNodeNetworkUpdate () {
+      global $gSITEDOMAIN;
+      
+      global $zSTRINGS;
+      
+      // Create node class.
+      $zNODES = new cSYSTEMNODES ();
+      
+      // Select all trusted nodes.
+      $zNODES->Select ('Trust', NODE_TRUSTED);
+      
+      // Count the number of users on the system.
+      $USER = new cUSERAUTHORIZATION();
+      $USER->Select (NULL, NULL);
+      $users = $USER->CountResult();
+      unset ($USER);
+      
+      $zSTRINGS->Lookup ('NODE.SUMMARY', 'SITE');
+      $summary = $zSTRINGS->Output;
+        
+      while ($zNODES->FetchArray()) {
+        
+        $domain = $zNODES->Entry;
+        
+        // Create the Remote class.
+        $zREMOTE = new cREMOTE ($domain);
+
+        $VERIFY = new cAUTHTOKENS ();
+        $token = $VERIFY->LoadToken (NODE_ALL_USERS, $domain);
+        if (!$token) {
+          $token = $VERIFY->CreateToken (NODE_ALL_USERS, $domain);
+        } // if
+        unset ($VERIFY);
+        
+        $datalist = array ("gACTION"   => "ASD_UPDATE_NODE_NETWORK",
+                           "gTOKEN"    => $token,
+                           "gSUMMARY"    => $summary,
+                           "gUSERS"    => $users,
+                           "gDOMAIN"   => $gSITEDOMAIN);
+        $zREMOTE->Post ($datalist);
+
+        $zXML->Parse ($zREMOTE->Return);
+
+        $ip_address = $zXML->GetValue ("address", 0);
+        $zREMOTEUSER->Username = $zXML->GetValue ("username", 0);
+        $zREMOTEUSER->Fullname = $zXML->GetValue ("fullname", 0);
+        $zREMOTEUSER->Domain = $zXML->GetValue ("domain", 0);
+        unset ($zREMOTE);
+      } // while
+      
+      return (TRUE);
+    } // SendNodeNetworkUpdate
+    
+    function GetTrustedList () {
+      return (TRUE);
+    } // GetTrustedList
+    
+    // Check if we're on a unix system capable of creating background processes.
+    function CheckUnix () {
+      
+      $server = strtoupper (getenv('SERVER_SOFTWARE'));
+      
+      if (strstr ($server, 'UNIX')) {
+        return (TRUE);
+      } // if
+      
+      return (FALSE);
+    } // CheckUnix
+    
+    // Perform system maintenance
+    function Maintenance () {
+      
+      // Use an HTTP request which times out quickly to 
+      global $gSITEDOMAIN;
+      $path = "/maintenance/";
+      
+      // Check if any maintenance actions are due.
+      $this->Select (NULL, NULL);
+      
+      // Loop through action timestamps.
+      while ($this->FetchArray ()) {
+        $timestamp = strtotime ($this->Stamp);
+        $now = strtotime ("now");
+        $seconds = $this->Time * 60;
+        $future = $timestamp + $seconds;
+        
+        // Check if we've hit the update time yet.
+        if ($now < $future) {
+          // We haven't.  On to the next action.
+          continue;
+        } // if
+        
+        // Update the time stamp.
+        $TEMP = new cSYSTEMMAINTENANCE();
+        $TEMP->Select ("tID", $this->tID);
+        $TEMP->FetchArray();
+        $TEMP->Stamp = SQL_NOW;
+        $TEMP->Update();
+        unset ($TEMP);
+        
+        $parameters = 'gACTION=' . $this->Action;
+        
+        // NOTE:  Duplicates requests.  Figure out why.
+        $fp = fsockopen($gSITEDOMAIN, 80, $errno, &$errstr, 1);
+      
+        if ($fp) {
+          fputs($fp, "POST $path HTTP/1.0\r\n");
+          fputs($fp, "Host: " . $gSITEDOMAIN . "\r\n");
+          fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+          fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
+          fputs($fp, "Connection: close\r\n\r\n");
+          fputs($fp, $parameters);
+        } else {
+          // FAILED
+        } // if
+        
+        fclose ($fp);
+      } // while
+      
+      return (TRUE);
+    } // Maintenance
+    
+  } // cSYSTEMMAINTENANCE
 

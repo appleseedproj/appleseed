@@ -974,3 +974,72 @@
     } // Blocked
  
   } // cBASESYSTEMNODES
+  
+  class cBASESYSTEMMAINTENANCE extends cBASEDATACLASS {
+ 
+    var $tID, $Action, $Stamp, $Time;
+
+    function cBASESYSTEMMAINTENANCE ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemMaintenance';
+      $this->tID = '';
+      $this->Action = ''; 
+      $this->Stamp = ''; 
+      $this->Time = ''; 
+      $this->Error = 0;
+      $this->Message = '';
+      $this->Result = '';
+      $this->PrimaryKey = 'tID';
+      $this->ForiegnKey = 'userAuth_uID';
+ 
+      // Create extended field definitions
+      $this->FieldDefinitions = array (
+
+        'tID'            => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Action'         => array ('max'        => '255',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Stamp'          => array ('max'        => '64',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'DATETIME'),
+
+        'Time'           => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+      );
+
+      // Assign context from paramater.
+      $this->PageContext = $pDEFAULTCONTEXT;
+
+      // Grab the fields from the database.
+      $this->Fields();
+ 
+    } // Constructor
+ 
+  } // cBASESYSTEMMAINTENANCE
+  

@@ -334,7 +334,7 @@
       global $zAPPLE, $zAUTHUSER, $zSTRINGS;
       
       global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
-      global $gNODETITLE;
+      global $gNODESUMMARY;
       
       $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
@@ -352,7 +352,7 @@
             $location = "/";
             $nodedomainlink .= "/login/bounce/?target=" . $target . "&location=" . $location;
           } // if
-          $gNODETITLE = $this->Title;
+          $gNODESUMMARY = $this->Summary;
           $zAPPLE->SetTag ('NODEDOMAINLINK', $nodedomainlink);
           $zAPPLE->SetTag ('NODEDOMAIN', $nodedomain);
           $zAPPLE->SetTag ('NODEUSERS', $this->Users);

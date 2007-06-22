@@ -94,6 +94,10 @@ RewriteRule .*^_admin\/content\/pages$ code/admin/content/pages.php [L]
 # Redirect appleseed data request attempts to 403 Forbidden message.
 RewriteRule .*adat$ code/error/403.php [L]
 
+# Redirect utilities 
+RewriteRule .*^maintenance\/$ utilities/maintenance.php [L]
+RewriteRule .*^maintenance$ utilities/maintenance.php [L]
+
 # Redirect image links
 
 # Go directly to these files, do not process through image.php

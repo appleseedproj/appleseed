@@ -883,8 +883,10 @@
 
     // End Application.
     function End () {
-      global $zDEBUG;
+      global $zDEBUG, $zJANITOR;
       
+      // Perform system maintenance.
+      $zJANITOR->Maintenance ();
       
       // Echo the debug information.
       $zDEBUG->DisplayDebugInformation();

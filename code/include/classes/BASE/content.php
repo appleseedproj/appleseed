@@ -260,7 +260,7 @@
   // Content nodes class.
   class cBASECONTENTNODES extends cBASEDATACLASS {
 
-    var $tID, $Domain, $Title, $Stamp, $Users;
+    var $tID, $Domain, $Summary, $Stamp, $Users;
 
     function cBASECONTENTNODES ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
@@ -268,7 +268,7 @@
       $this->TableName = $gTABLEPREFIX . 'contentNodes';
 
       $this->tID = '';
-      $this->Title = '';
+      $this->Summary = '';
       $this->Domain = '';
       $this->Stamp = '';
       $this->Users = 0;
@@ -300,7 +300,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'STRING'),
 
-        'Title'          => array ('max'        => '128',
+        'Summary'          => array ('max'        => '128',
                                    'min'        => '0',
                                    'illegal'    => '',
                                    'required'   => '',

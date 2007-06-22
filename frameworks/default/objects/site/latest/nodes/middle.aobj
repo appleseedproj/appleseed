@@ -4,8 +4,8 @@
   <?php $zSTRINGS->Display ('LABEL.LINK', 'SITE.MAIN.NODES'); ?>
  </span>
  
- <span class='nodetitle'>
-  <?php echo $gNODETITLE; ?>
+ <span class='nodesummary'>
+  <?php echo $gNODESUMMARY; ?>
  </span>
  
  </li>

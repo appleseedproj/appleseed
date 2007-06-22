@@ -413,8 +413,8 @@
 #admin #users #access #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 
@@ -454,8 +454,8 @@
 #admin #system #tooltips #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 /* CONTEXT: admin.system.nodes */
@@ -492,8 +492,8 @@
 #admin #system #nodes #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 
@@ -527,8 +527,8 @@
 #admin #system #options #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 
@@ -566,8 +566,8 @@
 #admin #system #logs #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 
@@ -601,8 +601,8 @@
 #admin #content #pages #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 
@@ -636,8 +636,8 @@
 #admin #content #articles #container span.checkbox {
  text-align:right;
  float:right;
- width:18px;
- padding:0 2px 0 0;
+ width:16px;
+ padding:5px 4px 0 0;
  margin:0px;
 } 
 
