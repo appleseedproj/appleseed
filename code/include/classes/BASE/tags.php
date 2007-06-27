@@ -247,7 +247,7 @@
       ";
       $this->Query ($sql_query);
       
-      $count = 0; $max = 0;
+      $count = 0; $max = 10;
       $results = array ();
       
       while ($this->FetchArray ()) {
@@ -265,9 +265,8 @@
       foreach ($results as $count => $data) {
         $gTAGCHECKED = FALSE;
         global $gTAGNAME, $gTAGCLASS, $gTAGLINK;
-        //$size = floor (($data['Amount'] / $max) * 10);
-        $size = $data['Amount'];
-        if ($size > 10) $size = 10;
+        
+        $size = floor (($data['Amount'] / $max) * 10);
         $gTAGNAME = strtolower ($data['Name']);
         $gTAGCLASS = 'tagsize' . $size;
         $gTAGLINK = $pLINK . $gTAGNAME . '/';

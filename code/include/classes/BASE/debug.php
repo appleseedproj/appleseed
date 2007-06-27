@@ -169,12 +169,13 @@
     function DisplayTotalBenchmark () {
       global $zAPPLE;
       global $gFRAMELOCATION;
-      global $gTOTALTIME, $gSQLTIME;
+      global $gTOTALTIME, $gSQLTIME, $gMEMORYUSE;
       
       
       $this->BenchmarkStop ('SITE');
       $gTOTALTIME = $this->Benchmark ('SITE');
       $gSQLTIME = $this->BenchmarkTotal['STATEMENT'];
+      $gMEMORYUSE = number_format (memory_get_usage() / 1048756, 6). ' mb';
       
       $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/benchmark.aobj", INCLUDE_SECURITY_NONE);
       

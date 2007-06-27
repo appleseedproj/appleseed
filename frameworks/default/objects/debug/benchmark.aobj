@@ -13,5 +13,11 @@
     <span class='value'><?php echo $gTOTALTIME; ?></span>
    </div> <!-- #total -->
   </li>
+  <li class='odd'>
+   <div id='memory'>
+    <span class='label'>MEMORY USAGE:</span>
+    <span class='value'><?php echo $gMEMORYUSE; ?></span>
+   </div> <!-- #memory -->
+  </li>
  </ul>
 </div> <!-- #benchmark -->

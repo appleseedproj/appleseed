@@ -369,6 +369,11 @@
     
     break;
     
+    case 'NODE_INFORMATION':
+    case 'ASD_NODE_INFORMATION':
+    
+    break;
+    
     case 'TRUSTED_LIST':
     case 'ASD_TRUSTED_LIST':
     

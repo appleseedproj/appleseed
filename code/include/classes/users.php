@@ -60,7 +60,7 @@
       $this->PrimaryKey = 'uID';
       $this->ForeignKey = '';
       $this->Cascade = array ('userSession', 'userAccess', 'userProfile', 
-                              'userInformation', 'userIcons',
+                              'userInformation', 'userIcons', 'userInvites',
                               'userSettings', 'userGroups');
  
       // Create extended field definitions
@@ -1241,8 +1241,8 @@
       $this->Fields();
 
       // Push the Amount field onto list of fieldnames.
-      array_push ($this->FieldNames, "Amount");
-
+      // array_push ($this->FieldNames, "Amount");
+      
     } // Constructor
 
     function CountInvites () {
