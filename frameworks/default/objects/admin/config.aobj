@@ -1,0 +1,45 @@
+<div id='config'>
+<div id='caption'>
+ <?php $zSTRINGS->Display ('OBJECT.TITLE'); ?>
+</div> <!-- #caption -->
+
+<div id='container'>
+ <?php $zSTRINGS->Display ('OBJECT.CONTENT'); ?>
+ 
+ <form id='config' name='config' method='POST' action='_admin/config/'>
+ 
+   <p id='summary'> 
+    <?php $zSTRINGS->Display ('LABEL.SUMMARY'); ?>
+    <?php $zTOOLTIPS->Display ('SUMMARY'); ?>
+   </p>
+   <?php $zHTML->TextArea ("SUMMARY", $gSUMMARY); ?><br />
+   
+   <p id='language'> 
+    <?php $zSTRINGS->Display ('LABEL.LANGUAGE'); ?>
+    <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
+   </p>
+   <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?>
+   
+   <p id='theme'> 
+    <?php $zSTRINGS->Display ('LABEL.THEME'); ?>
+    <?php $zTOOLTIPS->Display ('THEME'); ?>
+   </p>
+   <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?>
+   
+   <p id='storage'> 
+    <?php $zSTRINGS->Display ('LABEL.STORAGE'); ?>
+    <?php $zTOOLTIPS->Display ('STORAGE'); ?>
+   </p>
+   <?php $zHTML->TextBox ("STORAGE", 5, $gSTORAGE); ?><br />
+   
+   <p id='Default Invites'> 
+    <?php $zSTRINGS->Display ('LABEL.INVITES'); ?>
+    <?php $zTOOLTIPS->Display ('INVITES'); ?>
+   </p>
+   <?php $zHTML->TextBox ("INVITES", 5, $gINVITES); ?><br />
+   
+ </form> <!-- #config -->
+ 
+</div> <!-- #container -->
+
+</div>

@@ -2172,9 +2172,13 @@
         $classname = strtolower ($pINPUTNAME);
       } // if
 
-      $this->Output = "<input $disabled type='$type' name='$pINPUTNAME' " .
+      $style = strtolower ($pINPUTNAME);
+
+      $this->Output = "<span class='$style'>";
+      $this->Output .= "<input $disabled type='$type' name='$pINPUTNAME' " .
                        "class='$classname' " . 
                        "maxlength='$pINPUTMAX' value=\"$pINPUTVALUE\" />\n";
+      $this->Output .= "</span>";
 
       echo ($this->Output);
 

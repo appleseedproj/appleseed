@@ -721,3 +721,39 @@
  background:none;
  border:none;
 }
+
+#admin #config form {
+ width:467px;
+ float:left;
+ padding:10px;
+ margin:10px 0;
+ border:1px solid #eaeaea;
+ -moz-border-radius:12px;
+}
+
+#admin #config form p {
+ float:left;
+ display:inline;
+ width:45%;
+ padding:0; margin:0 0 10px 0;
+} 
+
+#admin #config form span {
+ float:left;
+ text-align:right;
+ display:inline;
+ width:55%;
+ padding:0; margin:0 0 10px 0;
+}
+
+#admin #config form textarea {
+ width:256px; 
+ height:60px;
+ margin-bottom:10px;
+}
+
+#admin #config form input.invites,
+#admin #config form input.storage {
+ width:40px;
+ text-align:right;
+}

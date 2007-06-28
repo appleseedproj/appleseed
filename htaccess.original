@@ -44,6 +44,8 @@ RewriteRule .*logout$ code/site/logout.php [L]
 # Redirect the admin pages
 RewriteRule .*^_admin\/$ code/admin/main.php [L]
 RewriteRule .*^_admin$ code/admin/main.php [L]
+RewriteRule .*^_admin\/config\/$ code/admin/config.php [L]
+RewriteRule .*^_admin\/config$ code/admin/config.php [L]
 RewriteRule .*^_admin\/users\/$ code/admin/users/main.php [L]
 RewriteRule .*^_admin\/users$ code/admin/users/main.php [L]
 RewriteRule .*^_admin\/content\/$ code/admin/content/main.php [L]

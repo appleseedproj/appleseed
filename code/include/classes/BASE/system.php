@@ -125,7 +125,7 @@
  
    } // Constructor
 
-   function Display ($pTITLE, $pCONTEXT) {
+   function Display ($pTITLE, $pCONTEXT = NULL) {
 
      // Look up the string.
      $this->Lookup ($pTITLE, $pCONTEXT);
