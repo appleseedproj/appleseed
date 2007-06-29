@@ -1279,7 +1279,7 @@
     
     function UpdateNodeNetwork ($pTOKEN, $pDOMAIN, $pSUMMARY, $pUSERS) {
       
-      $pSUMMARY = strip_tags ($pSUMMARY);
+      $pSUMMARY = strip_tags ($pSUMMARY, '<a>');
       
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
         // Invalid token, exit.

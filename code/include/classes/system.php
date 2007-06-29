@@ -153,9 +153,12 @@
         } // if
         unset ($VERIFY);
         
+        global $zAPPLE;
+        $summary = $zAPPLE->ParseTags ($summary);
+        
         $datalist = array ("gACTION"   => "ASD_UPDATE_NODE_NETWORK",
                            "gTOKEN"    => $token,
-                           "gSUMMARY"    => $summary,
+                           "gSUMMARY"  => $summary,
                            "gUSERS"    => $users,
                            "gDOMAIN"   => $gSITEDOMAIN);
         $zREMOTE->Post ($datalist);
