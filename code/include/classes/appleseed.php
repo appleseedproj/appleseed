@@ -100,9 +100,24 @@
       // Connect to the database.
       $this->DBConnect ();
 
+      global $gSETTINGS;
+      
+      $gSETTINGS = $this->LoadConfiguration ();
+      
+      global $gUSERTHEME, $gFRAMEWORK;
+      
+      $gUSERTHEME = $gSETTINGS['Theme'];
+      $this->SetTag ('USERTHEME', $gUSERTHEME);
+      $gFRAMEWORK = $gSETTINGS['Framework'];
+      
+      global $gFRAMELOCATION, $gTHEMELOCATION;
+  
+      $gFRAMELOCATION = "frameworks/$gFRAMEWORK/";
+      $gTHEMELOCATION = "themes/$gUSERTHEME/";
+  
       // Global Variables
       global $gUSERTHEME;
-      global $gSETTINGS, $gLOGINSESSION, $gREMOTELOGINSESSION;
+      global $gLOGINSESSION, $gREMOTELOGINSESSION;
       global $gSITETITLE, $gSITEURL, $gSITEDOMAIN;
       global $gFOCUSUSERID, $gFOCUSUSERNAME;
       global $gFOCUSFULLNAME;
@@ -276,9 +291,9 @@
       $this->SetTag ('SITEDOMAIN', $gSITEDOMAIN);
       
       // Set default theme.
-      if ($zLOCALUSER->userSettings->Get ("DefaultTheme")) {
+      if ($zLOCALUSER->userSettings->Get ("Theme")) {
         global $gTHEMELOCATION;
-        $gUSERTHEME = $zLOCALUSER->userSettings->Get ("DefaultTheme");
+        $gUSERTHEME = $zLOCALUSER->userSettings->Get ("Theme");
         $this->SetTag ('USERTHEME', $gUSERTHEME);
         $gTHEMELOCATION = "themes/$gUSERTHEME/";
       } // if
@@ -510,9 +525,6 @@
   
       global $gPROFILEREQUEST;
   
-      global $gFRAMELOCATION, $gTHEMELOCATION;
-      global $gUSERTHEME, $gFRAMEWORK;
-  
       global $gADMINUSERSACCOUNTSTAB, $gADMINUSERSBILLINGTAB;
       global $gADMINUSERSACCESSTAB, $gADMINUSERSOPTIONSTAB;
       global $gADMINUSERSQUESTIONSTAB;
@@ -551,8 +563,6 @@
       global $gLOGINSESSION;
   
       global $gPOSTDATA, $gEXTRAPOSTDATA;
-  
-      global $gSETTINGS;
   
       global $gDBERROR;
   
@@ -791,23 +801,6 @@
       $gADMINCONTROLSWITCH = '_off';
   
       $gCOMMENTREADTAB = "_off"; $gCOMMENTADDTAB = "_off";
-  
-      $gSETTINGS['UserTheme'] = 'ophelia';
-      $gSETTINGS['Framework'] = 'default';
-      $gSETTINGS['Language'] = 'en';
-      $gSETTINGS['CascadeStrings'] = ON;
-      $gSETTINGS['CascadeTooltips'] = ON;
-      $gSETTINGS['UseInvites'] = ON;
-      $gSETTINGS['InviteAmount'] = 2;
-  
-      $gUSERTHEME = $gSETTINGS['UserTheme'];
-      $this->SetTag ('USERTHEME', $gUSERTHEME);
-      $gFRAMEWORK = $gSETTINGS['Framework'];
-  
-      global $gFRAMELOCATION, $gTHEMELOCATION;
-  
-      $gFRAMELOCATION = "frameworks/$gFRAMEWORK/";
-      $gTHEMELOCATION = "themes/$gUSERTHEME/";
   
       $gALTERNATE = 0;
   
@@ -1495,9 +1488,57 @@
     // Get a list of directories in the themes directory.
     function GetThemeList () {
 
-      return ($this->ListDirectories ("themes/"));
+      $return = $this->ListDirectories ("themes/");
+      
+      // Remove all hidden directories.
+      foreach ($return as $count => $theme) {
+        if (substr ($theme, 0, 1) == '.') {
+          unset ($return[$count]);
+        } // if
+      } // foreach
+      
+      return ($return);
 
     } // GetThemeList
+    
+    // Get a list of installed language packs.
+    function GetLanguageList () {
+      
+      global $zSTRINGS;
+      
+      $query = "
+        SELECT DISTINCT(Language) AS Language
+        FROM   $zSTRINGS->TableName
+      ";
+      
+      $zSTRINGS->Query ($query);
+      
+      $return = array ();
+      while ($zSTRINGS->FetchArray()) {
+        $return[$zSTRINGS->Language] = $zSTRINGS->Language;
+      } // while
+      
+      return ($return);
+    } // GetLanguageList
+    
+    function LoadConfiguration () {
+      
+      global $gTABLEPREFIX;
+      
+      $return = array();
+      
+      $zCONFIG = new cSYSTEMCONFIG();
+      
+      $zCONFIG->Select (NULL, NULL);
+      
+      while ($zCONFIG->FetchArray()) {
+        $return[$zCONFIG->Concern] = $zCONFIG->Value;
+      } // while
+      
+      unset ($zCONFIG);
+      
+      return ($return);
+    } // LoadConfiguration
   
     function GetUserInformation ($pUSERNAME, $pDOMAIN) {
 

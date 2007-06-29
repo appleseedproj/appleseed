@@ -112,15 +112,16 @@
 
   } // cSYSTEMTOOLTIPS
 
-  // System Tooltips class.
+  // System Nodes class.
   class cSYSTEMNODES extends cBASESYSTEMNODES {
      
   } // cSYSTEMNODES
   
+  // System Maintenance Class
   class cSYSTEMMAINTENANCE extends cBASESYSTEMMAINTENANCE {
     
     function SendNodeNetworkUpdate () {
-      global $gSITEDOMAIN;
+      global $gSITEDOMAIN, $gSETTINGS;
       
       global $zSTRINGS, $zXML;
       
@@ -136,8 +137,7 @@
       $users = $USER->CountResult();
       unset ($USER);
       
-      $zSTRINGS->Lookup ('NODE.SUMMARY', 'SITE');
-      $summary = $zSTRINGS->Output;
+      $summary = $gSETTINGS['NodeSummary'];
         
       while ($zNODES->FetchArray()) {
         
@@ -243,3 +243,35 @@
     
   } // cSYSTEMMAINTENANCE
 
+  // System Configuration class.
+  class cSYSTEMCONFIG extends cBASESYSTEMCONFIG {
+    
+    function SaveConfiguration ($pCONFIGURATION) {
+      
+      global $zSTRINGS;
+      
+      foreach ($pCONFIGURATION as $Concern => $Value) {
+        $this->Select ("Concern", $Concern);
+        $this->FetchArray();
+        if ($this->CountResult() == 0) {
+          // No entries, add.
+          $this->Concern = $Concern;
+          $this->Value = $Value;
+          $this->Add();
+        } else {
+          // Update.
+          $this->Value = $Value;
+          $this->Update();
+        } // if
+      } // foreach
+      
+      $zSTRINGS->Lookup ('MESSAGE.SAVE');
+      
+      $this->Message = $zSTRINGS->Output;
+      $this->Error = 0;
+      
+      return (TRUE);
+    } // SaveConfiguration
+     
+  } // cSYSTEMCONFIG
+  

@@ -71,13 +71,36 @@
     $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);
     $zAPPLE->End();
   } // if
+  
+  global $zCONFIG;
+  $zCONFIG = new cSYSTEMCONFIG ();
 
   // Set the page title.
   $gPAGESUBTITLE = ' - Admin';
  
   // Set which tab to highlight.
   $gADMINCONFIGSWITCH = '';
-
+  
+  // Load configuration options.
+  
+  global $gSETTINGS, $gTHEMELISTING, $gLANGUAGELISTING;
+  
+  // Take action.
+  switch ($gACTION) {
+    case 'SAVE':
+      $update = array ();
+      $update['NodeSummary'] = $gSUMMARY;  
+      $update['Language'] = $gLANGUAGE;  
+      $update['Theme'] = $gTHEME;  
+      $update['StorageLimit'] = $gSTORAGE;  
+      $update['InviteAmount'] = $gINVITES;  
+      $zCONFIG->SaveConfiguration ($update);
+    break;
+  } // switch
+  
+  $gTHEMELISTING = $zAPPLE->GetThemeList();
+  $gLANGUAGELISTING = $zAPPLE->GetLanguageList();
+  
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/config.afrw", INCLUDE_SECURITY_NONE);
   

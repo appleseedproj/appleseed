@@ -1043,3 +1043,63 @@
  
   } // cBASESYSTEMMAINTENANCE
   
+  class cBASESYSTEMCONFIG extends cBASEDATACLASS {
+ 
+    var $tID, $Action, $Stamp, $Time;
+
+    function cBASESYSTEMCONFIG ($pDEFAULTCONTEXT = '') {
+      global $gTABLEPREFIX;
+
+      $this->TableName = $gTABLEPREFIX . 'systemConfig';
+      $this->tID = '';
+      $this->Action = ''; 
+      $this->Stamp = ''; 
+      $this->Time = ''; 
+      $this->Error = 0;
+      $this->Message = '';
+      $this->Result = '';
+      $this->PrimaryKey = 'tID';
+      $this->ForiegnKey = 'userAuth_uID';
+ 
+      // Create extended field definitions
+      $this->FieldDefinitions = array (
+
+        'tID'            => array ('max'        => '',
+                                   'min'        => '',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => 'unique',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'INTEGER'),
+
+        'Concern'        => array ('max'        => '255',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+        'Value'          => array ('max'        => '255',
+                                   'min'        => '1',
+                                   'illegal'    => '',
+                                   'required'   => '',
+                                   'relation'   => '',
+                                   'null'       => NO,
+                                   'sanitize'   => YES,
+                                   'datatype'   => 'STRING'),
+
+      );
+
+      // Assign context from paramater.
+      $this->PageContext = $pDEFAULTCONTEXT;
+
+      // Grab the fields from the database.
+      $this->Fields();
+ 
+    } // Constructor
+ 
+  } // cBASESYSTEMCONFIG
+  

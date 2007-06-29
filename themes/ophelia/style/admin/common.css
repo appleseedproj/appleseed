@@ -723,31 +723,43 @@
 }
 
 #admin #config form {
- width:467px;
+ width:487px;
  float:left;
- padding:10px;
+ padding:10px 0 0 0;
  margin:10px 0;
- border:1px solid #eaeaea;
- -moz-border-radius:12px;
 }
 
 #admin #config form p {
  float:left;
  display:inline;
- width:45%;
- padding:0; margin:0 0 10px 0;
+ width:179px;
+ padding:0; margin:5px 0;
+ border:none;
 } 
 
 #admin #config form span {
  float:left;
  text-align:right;
  display:inline;
- width:55%;
- padding:0; margin:0 0 10px 0;
+ width:288px;
+ padding:0; margin:5px 0;
+}
+
+#admin #config form span.save {
+ text-align:left;
+ width:100%;
+ margin:20px 0 0 0;
+ padding:10px 0;
+ border-top:1px solid #eaeaea;
+}
+
+#admin #config p {
+ padding:5px 0;
+ border-bottom:1px solid #eaeaea;
 }
 
 #admin #config form textarea {
- width:256px; 
+ width:288px; 
  height:60px;
  margin-bottom:10px;
 }
