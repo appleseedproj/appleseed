@@ -88,6 +88,15 @@
   // Take action.
   switch ($gACTION) {
     case 'SAVE':
+      if (strlen($gSUMMARY) > 255) {
+        global $gFIELDNAME, $gMAXSIZE;
+        $gFIELDNAME = 'SUMMARY';
+        $gMAXSIZE = '255';
+        $zSTRINGS->Lookup ("ERROR.TOOLONG");
+        $zCONFIG->Message = $zSTRINGS->Output;
+        $zCONFIG->Error = -1;
+        break;
+      } // if
       $update = array ();
       $update['NodeSummary'] = $gSUMMARY;  
       $update['Language'] = $gLANGUAGE;  
