@@ -993,7 +993,7 @@
     function SelectByAll ($pCRITERIA = "", $pORDERBY = "", $pLIKE = "") {
 
       if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
-        $return = $this->CascadeSelectByAll ($pWHERECLAUSE, $pORDERBY);
+        $return = $this->CascadeSelectByAll ($pCRITERIA, $pORDERBY, $pLIKE);
         return ($return);
       } // if
       
@@ -1009,6 +1009,24 @@
       return ($resulting);
       
     } // SelectByAll
+    
+    function CascadeSelectByAll ($pCRITERIA = "", $pORDERBY = "", $pLIKE = "") {
+
+      // NOTE: Incomplete.  Does not actually cascade.
+      
+      $finaldef = array ();
+
+      // Loop through the field names and create the where clause.
+      foreach ($this->FieldNames as $fieldname) {
+          $finaldef[$fieldname] = $pCRITERIA;
+      } // foreach
+      
+      $resulting = $this->SelectByMultiple ($finaldef, $pORDERBY, $pLIKE, "OR");
+
+      return ($resulting);
+      
+    } // CascadeSelectByAll
+    
 
     function SelectByMultiple ($pDEFINITIONS, $pORDERBY = "", $pLIKE = "", $pANDOR = "AND") {
 
