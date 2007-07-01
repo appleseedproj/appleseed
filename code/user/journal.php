@@ -6,7 +6,7 @@
   // | FILE: journal.php                             CREATED: 01-01-2005 + 
   // | LOCATION: /code/user/                        MODIFIED: 04-11-2007 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2006 Appleseed Project                         |
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.0                                               |
+  // | VERSION:      0.7.2                                               |
   // | DESCRIPTION:  Displays journal section of user profile page.      |
   // | WRAPPED BY:   /code/user/main.php                                 |
   // +-------------------------------------------------------------------+

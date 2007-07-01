@@ -30,7 +30,7 @@
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
   // | Part of the Appleseed BASE API                                    |
-  // | VERSION:      0.7.0                                               |
+  // | VERSION:      0.7.2                                               |
   // | DESCRIPTION:  Tag class definitions. Reusable functions for       |
   // |               managing tags.                                      |
   // +-------------------------------------------------------------------+

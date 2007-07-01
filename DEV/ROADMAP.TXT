@@ -1,7 +1,7 @@
 
 Appleseed Roadmap
 
-Updated:  06-22-2007
+Updated:  06-30-2007
 Version:  0.7.2
 
 
@@ -13,13 +13,13 @@ bug-free point.
 0.7.0  -  Friends Component 
 0.7.1  -  Messaging Component 
 0.7.2  -  Tags, Node Network Management
-0.7.3  -  Groups Component
+0.7.3  -  Search Component
 0.7.4  -  Front Pages (ie, photos/groups/site/etc)
 0.7.5  -  Journal Component
 0.7.6  -  Content Component
 0.7.7  -  Photo Component
 0.7.8  -  Options Component
-0.7.9  -  Search Component
+0.7.9  -  Groups Component
 0.7.A  -  Miscellaneous Features
 
 0.8 SERIES

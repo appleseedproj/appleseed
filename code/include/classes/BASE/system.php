@@ -6,7 +6,7 @@
   // | FILE: system.php                              CREATED: 02-25-2005 + 
   // | LOCATION: /code/include/classes/BASE/        MODIFIED: 04-25-2005 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2006 Appleseed Project                         |
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -30,7 +30,7 @@
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
   // | Part of the Appleseed BASE API                                    |
-  // | VERSION:      0.7.0                                               |
+  // | VERSION:      0.7.2                                               |
   // | DESCRIPTION:  System class definitions. Reusable functions not    |
   // |               specifically tied to Appleseed.                     |
   // +-------------------------------------------------------------------+

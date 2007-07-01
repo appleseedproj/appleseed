@@ -6,7 +6,7 @@
   // | FILE: photos.php                              CREATED: 07-07-2007 + 
   // | LOCATION: /code/user/tags/                   MODIFIED: 07-07-2007 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2006 Appleseed Project                         |
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |

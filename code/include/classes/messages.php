@@ -6,7 +6,7 @@
   // | FILE: messages.php                            CREATED: 01-29-2006 + 
   // | LOCATION: /code/include/classes/             MODIFIED: 11-08-2006 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2006 Appleseed Project                         |
+  // | Copyright (c) 2004-2007 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
