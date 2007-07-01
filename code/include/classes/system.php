@@ -209,8 +209,7 @@
         $NOW = new cBASEDATACLASS();
         $NOW->Query ("SELECT NOW() AS NowStamp");
         $NOW->FetchArray();
-        $NOW->NowStamp;
-        $now = strtotime ($this->NowStamp);
+        $now = strtotime ($NOW->NowStamp);
         unset ($NOW);
         
         $seconds = $this->Time * 60;
