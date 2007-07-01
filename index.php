@@ -480,7 +480,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS;
     
-    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.0', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.2', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
