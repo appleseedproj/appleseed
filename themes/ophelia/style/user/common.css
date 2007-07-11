@@ -3877,8 +3877,11 @@ form#compose p.error:hover {
 #user #summary #journals,
 #user #summary #photos {
  float:left;
- margin:10px 0;
+ margin:5px 0;
  padding:0;
+}
+#user #summary #journals {
+ margin:10px 0 5px 0;
 }
 
 #user #summary #journals p,
