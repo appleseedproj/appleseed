@@ -869,7 +869,7 @@ form#compose p.error:hover {
 #user #photos span {
 }
 
-#user #photos span.description {
+#user #photos p#description {
  clear:both;
 }
 
@@ -3881,7 +3881,7 @@ form#compose p.error:hover {
  padding:0;
 }
 #user #summary #journals {
- margin:10px 0 5px 0;
+ margin:10px 0;
 }
 
 #user #summary #journals p,
