@@ -71,7 +71,7 @@
   // Create the Articles class.
   global $zARTICLES; 
   $zARTICLES = new cEXTENDEDCONTENTARTICLES  ("content.articles");
-
+  
   // Initialize Articles.
   $zARTICLES->Initialize ();
 

@@ -1,0 +1,12 @@
+  
+ <div id='info'>
+
+  <div id='container'>
+ 
+    <p id='description'>
+     <?php echo $bDESCRIPTION; ?>
+    </p>
+    
+  </div> <!-- #container -->
+ 
+ </div> <!-- #info -->

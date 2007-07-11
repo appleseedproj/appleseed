@@ -1,6 +1,4 @@
   </ul> 
   </div> <!-- #listing -->
 
-  <?php $zSEARCH->Ask (); ?>
-    
  </div> <!-- #container -->

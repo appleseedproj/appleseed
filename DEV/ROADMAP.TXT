@@ -1,9 +1,8 @@
 
 Appleseed Roadmap
 
-Updated:  06-30-2007
-Version:  0.7.2
-
+Updated:  07-08-2007
+Version:  0.7.3
 
 0.7 SERIES
 ----------
@@ -13,7 +12,7 @@ bug-free point.
 0.7.0  -  Friends Component 
 0.7.1  -  Messaging Component 
 0.7.2  -  Tags, Node Network Management
-0.7.3  -  Search Component
+0.7.3  -  Search Component, Login & Account Creation.
 0.7.4  -  Front Pages (ie, photos/groups/site/etc)
 0.7.5  -  Journal Component
 0.7.6  -  Content Component
@@ -25,7 +24,8 @@ bug-free point.
 0.8 SERIES
 ----------
 Optimization and Administration.  Optimize components and add full
-functionality to the Admin section to administer the site.
+functionality to the Admin section to administer the site, and Options
+section for users.
 
 0.8.0  -  User Admin
 0.8.1  -  System Admin

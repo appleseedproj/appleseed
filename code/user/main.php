@@ -276,8 +276,8 @@
 
     case "":
       // Grab user's default page from database.
-      $zAPPLE->SetContext ("user.info");
-      $zAPPLE->IncludeFile ('code/user/info.php', INCLUDE_SECURITY_NONE);
+      $zAPPLE->SetContext ("user.summary");
+      $zAPPLE->IncludeFile ('code/user/summary.php', INCLUDE_SECURITY_NONE);
     break;
 
     default:

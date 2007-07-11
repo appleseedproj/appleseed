@@ -1,4 +1,4 @@
-<div id='search'>
+<div class='search'>
 
 <form id='search' method='POST' action='<?php echo $gTARGET; ?>'>
  <span class='criteria'>
@@ -12,4 +12,4 @@
 
 <?php $zHTML->ShowAll (); ?>
 
-</div>
+</div> <!-- .search -->

@@ -14,6 +14,11 @@
  border:none;
 } 
 
+#content div.search {
+ width:572px;
+ left:-6px;
+}
+
 #content form p.error:hover {
  color:#aa0000;
  background:none;
@@ -83,7 +88,7 @@
  border-bottom:2px solid #999999;
  margin:0 0 10px 0;
  text-align:justify;
- padding:6px;
+ padding:0 6px;
  -moz-border-radius:12px;
 }
 
@@ -570,7 +575,7 @@
  float:left;
  width:583px;
  position:relative;
- left:-11px;
+ left:-6px;
  color:#ffffff;
  cursor:crosshair;
  border:1px solid #a31a31;
@@ -593,7 +598,7 @@
  float:left;
  width:583px;
  position:relative;
- left:-11px;
+ left:-6px;
  color:#ffffff;
  cursor:crosshair;
  border:1px solid #311aff;

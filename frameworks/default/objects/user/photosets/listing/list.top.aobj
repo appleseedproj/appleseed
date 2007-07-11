@@ -5,6 +5,8 @@
 
  <div id='container'>
 
+  <?php $zSEARCH->Ask (); ?>
+   
   <p id='heading'>
    <?php $zSTRINGS->Display ("LABEL.PHOTOSETS", "USER.PHOTOSETS"); ?></h1>
    <?php $zTOOLTIPS->Display ('HEADING'); ?>

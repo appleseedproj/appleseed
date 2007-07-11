@@ -4,6 +4,8 @@
  <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
+  <?php $zSEARCH->Ask (); ?>
+
   <?php $zJOURNAL->Broadcast (); ?>
 
   <div id='editor'>

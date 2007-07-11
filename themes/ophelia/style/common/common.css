@@ -616,3 +616,26 @@ div#search {
 div#search span.criteria {
  margin:0 5px 0 0;
 }
+
+div.search {
+ clear:both;
+ border-bottom:1px solid #dce0e5;
+ background-color:#f4f4f4;
+ width:497px;
+ padding:5px 5px 4px 5px;
+ -moz-border-radius-topleft:12px;
+ -moz-border-radius-topright:12px;
+ margin:0 0 10px 0; 
+ position:relative;
+ left:-10px;
+}
+
+div.search input.criteria {
+ height:13px;
+}
+
+div.search input {
+ background-color:#fafafa;
+ padding:0px 5px;
+}
+

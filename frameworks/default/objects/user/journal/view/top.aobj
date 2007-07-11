@@ -5,6 +5,8 @@
 
   <div id='container'>
  
+  <?php $zSEARCH->Ask (); ?>
+
    <form id='journalview' enctype="multipart/form-data" name='returnback' method='post' action='<?php echo $gTARGET; ?>'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
     <?php $zOPTIONS->Menu ($gJOURNALVIEWTYPE, $gJOURNALVIEW, "", TRUE); ?>

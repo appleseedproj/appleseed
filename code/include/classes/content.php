@@ -38,6 +38,52 @@
   // Content articles class.
   class cEXTENDEDCONTENTARTICLES extends cCONTENTARTICLES {
 
+    // Convert ASD tags to tags that HTMLPurifier will skip.
+    function ASDToSafe ($pFIELDNAME) {
+
+      // NOTE: Find a centralized way to do this.
+
+      $pattern = "/<asd\s+(.*?)\s*\/>/s";
+      $replacement = "[@#[asd $1 ]#@]";
+      $this->$pFIELDNAME = preg_replace ($pattern, $replacement, $this->$pFIELDNAME);
+       
+      return (TRUE);
+    } // ASDToSafe
+
+    // Convert safe tags back to ASD tags.
+    function SafeToASD ($pFIELDNAME) {
+
+      // NOTE: Find a centralized way to do this.
+
+      $pattern = "/\[\@\#\[asd\s+(.*?)\s*\]\#\@\]/s";
+      $replacement = "<asd $1 />";
+      $this->$pFIELDNAME = preg_replace ($pattern, $replacement, $this->$pFIELDNAME);
+
+      return (TRUE);
+    } // SafeToASD
+
+    // Purify all string data.
+    function Purify () {
+      
+      // NOTE: Find a centralized way to do this.
+
+      global $zAPPLE;
+
+      foreach ($this->FieldNames as $fieldname) {
+        switch ($this->FieldDefinitions[$fieldname]['datatype']) {
+          case 'STRING':
+            $this->ASDtoSafe ($fieldname);
+            $this->$fieldname = $zAPPLE->Purifier->purify ($this->$fieldname);
+            $this->SafeToASD ($fieldname);
+          break;
+
+          default:
+          break;
+        } // if
+      } // foreach
+
+    } // Purify
+
     // Buffer the articles listing.
     function BufferArticlesListing () {
       global $zAPPLE, $zSTRINGS;
@@ -50,38 +96,44 @@
       // Select the latest articles.
       $this->Select ("Verification", 1, "Stamp DESC");
 
+      if ($this->CountResult() == 0) {
+        $zSTRINGS->Lookup ('MESSAGE.NONE');
+        $this->Message = $zSTRINGS->Output;
+      } // if
+      
       $bARTICLES = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
       // Loop through the results.
       while ($this->FetchArray ()) {
         // Format the date stamp.
         $this->FormatVerboseDate ("Stamp");
-  
-      global $gUSERNAME;
+   
+        global $gUSERNAME;
         $COMMENTS = new cCOMMENTINFORMATION ();
       
         // NOTE: Why do I have to redeclare the scope for this variable to work?
         global $gCOMMENTCOUNT;
         $gCOMMENTCOUNT = $COMMENTS->CountComments ($this->tID, $this->PageContext);
-
+ 
         $zSTRINGS->Lookup ("LABEL.COUNT", $this->PageContext);
         $bCOMMENTCOUNT = $zSTRINGS->Output;
-
+ 
         global $bARTICLEICON;
         $bARTICLEICON = $zAPPLE->BufferUserIcon ($this->Submitted_Username, $this->Submitted_Domain);
-    
+     
         $bARTICLES .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-  
+   
         unset ($gCOMMENTCOUNT);
-  
-        } // while
-    
+   
+      } // while
+      
       $bARTICLES .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
     } // BufferArticlesListing
     
     function Initialize () {
 
-      global $zLOCALUSER;
+      global $zLOCALUSER, $zAPPLE;
 
       global $gSITEURL;
       global $gACTION, $gTARGET, $gARTICLEREQUEST;
@@ -90,8 +142,12 @@
 
       global $gCONTENTARTICLESVIEWTAB, $gCONTENTARTICLESSUBMITTAB;
       global $gCONTENTARTICLESQUEUETAB;
+      
+      global $gSCROLLSTEP;
+      
+      $gSCROLLSTEP[$zAPPLE->Context] = 10;
 
-      $gTARGET = $gSITEURL . "articles/";
+      $gTARGET = $gSITEURL . "/articles/";
     
       // Determine which tab to display.
       switch (strtoupper ($gARTICLEREQUEST) ) {
@@ -326,7 +382,7 @@
       parent::Add ();
     } // Add
 
-  } // cCONTENTARTICLES
+  } // cEXTENDEDCONTENTARTICLES
 
   class cCONTENTNODES extends cBASECONTENTNODES {
      

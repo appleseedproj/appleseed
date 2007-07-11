@@ -4,6 +4,8 @@
  <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
+  <?php $zSEARCH->Ask (); ?>
+   
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
 
    <?php $zHTML->Post ($gPOSTDATA); ?>

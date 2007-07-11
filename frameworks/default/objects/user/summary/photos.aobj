@@ -1,0 +1,11 @@
+  
+ <div id='photos'>
+  
+  <div id='container'>
+    <p class='title'>
+     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.SUMMARY.PHOTOS'); ?>
+    </p>
+ 
+  </div> <!-- #container -->
+
+ </div> <!-- #photos -->

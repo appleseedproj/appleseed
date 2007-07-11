@@ -5,7 +5,7 @@
 
   <div id='container'>
    <div id='image'>
-    <img alt='Profile Image' src='<?php echo $gPROFILEPICTURE; ?>'>
+    <a href='/profile/<?php echo $zFOCUSUSER->Username; ?>/'><img alt='Profile Image' border='0' src='<?php echo $gPROFILEPICTURE; ?>'></a>
    </div> <!-- .image -->
   </div> <!-- #image -->
  </div> <!-- #profilephoto -->

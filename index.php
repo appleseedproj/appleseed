@@ -493,13 +493,10 @@ class cINSTALL {
     
     if ($ErrorString) $ErrorString = "<p class='error'>$ErrorString</p>";
     
-    if (in_array(TRUE, $Error)) {
-      return (TRUE);
-    } else {
-      return (FALSE);
-    } // if
+    if (in_array(TRUE, $Error)) return (TRUE);
     
-    return (TRUE);
+    return (FALSE);
+    
   } // CheckError
   
   function ViewStepOne () {
@@ -513,7 +510,7 @@ class cINSTALL {
         
     <body>
      <div id='install'>
-      <div class='caption'>APPLESEED INSTALL v0.7.0</div>
+      <div class='caption'>APPLESEED INSTALL v0.7.3</div>
       <div class='container'>
       
        <?php echo $ErrorString; ?>

@@ -5,6 +5,8 @@
 
  <div id='container'>
    <a name='photos'></a>
+   
+  <?php $zSEARCH->Ask (); ?>
 
   <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/'>
    <?php $zHTML->Post ($gBACKPOSTDATA); ?>
