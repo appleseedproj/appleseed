@@ -186,7 +186,6 @@
       
       while ($NODES->FetchArray()) {
         
-        $summary = $zAPPLE->ParseTags ($summary);
         $zREMOTE = new cREMOTE ($NODES->Domain);
         
         $VERIFY = new cAUTHTOKENS ();
@@ -211,7 +210,9 @@
           $NODE->Select ("Domain", $NODES->Domain);
           $NODE->FetchArray();
           
-          $NODE->Delete();
+          // NOTE: Disable for now until the next version.
+          // NOTE: Possible don't delete?  Set flag in database instead?
+          //$NODE->Delete();
           
           unset ($NODE);
         } // if
