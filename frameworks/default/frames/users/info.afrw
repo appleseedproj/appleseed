@@ -33,8 +33,8 @@
     <!-- ## info obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/info/main.aobj", INCLUDE_SECURITY_NONE); ?>
 
-    <!-- ## comments obj -->
-    <?php echo $bCOMMENTS; ?>
+    <!-- ## statistics obj -->
+    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/info/statistics.aobj", INCLUDE_SECURITY_NONE); ?>
 
    </div> <!-- #sectionBC -->
 

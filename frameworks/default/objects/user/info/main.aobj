@@ -6,13 +6,8 @@
 
   <div id='container'>
  
-    <?php echo $bDESCRIPTION; ?>
-    <br /><br />
- 
-    <hr class='thin' />
- 
-    <br />
- 
-    <?php $zSTRINGS->Display ("LABEL.STATS", "USER.INFO"); ?>
+    <p class='description'>
+     <?php echo $bDESCRIPTION; ?>
+    </p>
  
   </div> <!-- #container -->

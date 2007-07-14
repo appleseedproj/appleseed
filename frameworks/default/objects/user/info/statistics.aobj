@@ -1,0 +1,10 @@
+  
+ <div id='statistics'>
+  <div id='container'>
+ 
+    <p id='title'>
+     <?php $zSTRINGS->Display ("LABEL.STATS", "USER.INFO"); ?>
+    </p>
+ 
+  </div> <!-- #container -->
+ </div> <!-- #statistics -->

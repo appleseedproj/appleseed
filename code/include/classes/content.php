@@ -407,6 +407,8 @@
             $target = $this->Domain;
             $location = "/";
             $nodedomainlink .= "/login/bounce/?target=" . $target . "&location=" . $location;
+          } else { 
+            $nodedomainlink = 'http://' . $this->Domain;
           } // if
           $gNODESUMMARY = $this->Summary;
           $zAPPLE->SetTag ('NODEDOMAINLINK', $nodedomainlink);
