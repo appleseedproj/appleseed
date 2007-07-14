@@ -175,6 +175,55 @@
       return (TRUE);
     } // SendNodeNetworkUpdate
     
+    function VerifyNodeNetwork () {
+      global $zAPPLE, $zXML;
+      
+      global $gSITEDOMAIN;
+      
+      $NODES = new cCONTENTNODES();
+      
+      $NODES->Select (NULL, NULL);
+      
+      while ($NODES->FetchArray()) {
+        
+        $summary = $zAPPLE->ParseTags ($summary);
+        $zREMOTE = new cREMOTE ($NODES->Domain);
+        
+        $VERIFY = new cAUTHTOKENS ();
+        $token = $VERIFY->LoadToken (NODE_ALL_USERS, $NODES->Domain);
+        if (!$token) {
+          $token = $VERIFY->CreateToken (NODE_ALL_USERS, $NODES->Domain);
+        } // if
+        unset ($VERIFY);
+        
+        $datalist = array ("gACTION"   => "SITE_VERSION",
+                           "gTOKEN"    => $token,
+                           "gDOMAIN"   => $gSITEDOMAIN);
+        $zREMOTE->Post ($datalist);
+
+        $zXML->Parse ($zREMOTE->Return);
+        
+        $version = $zXML->GetValue ("version", 0);
+        
+        if (!$version) {
+          // No Appleseed Version was found.  Delete from ContentNodes.
+          $NODE = new cCONTENTNODES;
+          $NODE->Select ("Domain", $NODES->Domain);
+          $NODE->FetchArray();
+          
+          $NODE->Delete();
+          
+          unset ($NODE);
+        } // if
+        
+        unset ($zREMOTE);
+      } // while
+      
+      unset ($NODES);
+      
+      return (TRUE);
+    } // VerifyNodeNetwork
+    
     function GetTrustedList () {
       return (TRUE);
     } // GetTrustedList

@@ -59,6 +59,14 @@
   } // if
   
   switch (strtoupper ($gACTION)) {
+    case 'SITE_VERSION':
+    case 'ASD_SITE_VERSION':
+    
+      $zSERVER->SiteVersion ($gTOKEN, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data; exit;
+    break;
+    
     case 'USER_INFORMATION':
     case 'ASD_USER_INFORMATION':
     

@@ -79,6 +79,11 @@
       // Update the node network.
       $zJANITOR->SendNodeNetworkUpdate();
     break;
+    
+    case 'VERIFY_NODE_NETWORK':
+      // Verify the node network.
+      $zJANITOR->VerifyNodeNetwork();
+    break;
   } // switch
   
 ?>

@@ -740,6 +740,19 @@
       return (TRUE);
     } // FriendStatus
     
+    function SiteVersion ($pTOKEN, $pDOMAIN) {
+      
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      $this->XML->Load ("code/include/data/xml/site_version.xml");
+      
+      return (TRUE);
+    } // SiteVersion
+      
     function UserInformation ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
