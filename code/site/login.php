@@ -132,7 +132,7 @@
       $VERIFY = new cAUTHTOKENS ();
       $token = $VERIFY->LoadToken ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN);
       if (!$token) {
-        $token = $VERIFY->CreateToken ($zLOCALUSER->Username, $gREFERENCEDOMAIN);
+        $token = $VERIFY->CreateToken ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN);
       } // if
 
       $datalist = array ("gACTION"   => "ASD_LOGIN_CHECK",

@@ -88,7 +88,7 @@
   switch ($gACTION) {
     case 'SUBMIT':
      $zARTICLES->Synchronize();
-     if ($zAUTHUSER->Username) {
+     if (!$zAUTHUSER->Anonymous) {
        $zARTICLES->Submitted_Username = $zAUTHUSER->Username;
        $zARTICLES->Submitted_Domain = $zAUTHUSER->Domain;
      } else {

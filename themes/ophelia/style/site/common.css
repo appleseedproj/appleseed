@@ -3,6 +3,24 @@
   left:-6px;
  }
 
+#site p.message {
+ float:left;
+ width:508px;
+ position:relative;
+ left:-6px;
+ color:#ffffff;
+ cursor:crosshair;
+ border:1px solid #311aff;
+ border-left:none;
+ border-right:none;
+ padding:1px 0;
+ margin-bottom:10px;
+ text-align:center;
+ font-style:italic;
+ background:#311Aff;
+} 
+
+
 /* -- ERROR BOX DEFINITION -- */
 
  #site #common #error { 
@@ -423,13 +441,14 @@
 }
 
 #site #articles #container span.title {
- width:225px;
+ width:245px;
  font-size:13px;
  font-weight:bold;
+ text-align:left;
 }
 
 #site #articles #container span.stamp {
- width:150px;
+ width:130px;
  text-align:right;
  font-size:10px;
  font-style:italic;

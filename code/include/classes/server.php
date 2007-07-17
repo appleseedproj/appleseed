@@ -229,7 +229,6 @@
                            "gTOKEN"    => $pTOKEN,
                            "gDOMAIN"   => $this->SiteDomain);
         $REMOTE->Post ($datalist, 1);
-        
 
         $this->XML->Parse ($REMOTE->Return);
 
