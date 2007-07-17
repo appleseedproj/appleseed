@@ -97,8 +97,8 @@ RewriteRule .*^_admin\/content\/pages$ code/admin/content/pages.php [L]
 RewriteRule .*adat$ code/error/403.php [L]
 
 # Redirect utilities 
-RewriteRule .*^maintenance\/$ utilities/maintenance.php [L]
-RewriteRule .*^maintenance$ utilities/maintenance.php [L]
+RewriteRule .*^maintenance\/$ code/site/maintenance.php [L]
+RewriteRule .*^maintenance$ code/site/maintenance.php [L]
 
 # Redirect image links
 
