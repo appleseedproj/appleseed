@@ -4,15 +4,9 @@
  /* -- NEW DEFINITIONS -- */
 
  #sectionA {
+  position:relative;
   float:left;width:255px;
- }
-
- #logoA {
-  margin-top:0px;
-  left:0px;
-  width:177px;
-  height:131px;
-  background:url(/themes/ophelia/images/header/header_bottom.gif) no-repeat;
+  top:0px;
  }
 
  #sectionB {
@@ -20,28 +14,18 @@
   width:280px;
  }
 
- #logoB {
- }
-
  #sectionC {
   float:right;width:230px;
- }
-
- #logoC {
  }
 
  #sectionAB {
   float:left;width:510px;
  }
 
- #logoAB {
- }
-
  #sectionBC {
+  position:relative;
   float:right;width:510px;
- }
-
- #logoBC {
+  top:-102px;
  }
 
  #browserFULL {
@@ -256,32 +240,32 @@ a:hover {
    float:left;
    clear:both;
  }
-
-  #header_top {
-   clear:both;
+ 
+ #header #logo {
    float:left;
-   height:24px;
-   padding-top:5px;
-   background:url(/themes/ophelia/images/header/header_top.gif) no-repeat;
-  }
+   margin-top:5px;
+   width:170px;
+   background:url(/themes/ophelia/images/header/header.gif) no-repeat;
+   height:162px;
+ }
 
-  #header_friends {
+  #header #friends {
    display:inline;
    float:left;
    text-align:right;
+   width:100px;
    color:#0232ff;
    font-style:italic;
    text-align:right;
-   width:350px;
    margin-right:10px;
   }
 
-  #header_friends a {
+  #header #friends a {
    padding-right:2px;
    padding-left:2px;
   }
 
-  #header_email {
+  #header #email {
    float:left;
    display:inline;
    color:#0232ff;
@@ -290,12 +274,12 @@ a:hover {
    text-align:center;
   }
 
-  #header_email a {
+  #header #email a {
    padding-right:2px;
    padding-left:2px;
   }
 
-  #header_loggedin {
+  #header #loggedin {
    float:right;
    display:inline;
    width:235px;
@@ -303,12 +287,9 @@ a:hover {
    text-align:right;
   } 
 
-  #header_menu {
+  #header #menu {
    height:21px;
    float:right;
-  }
-
-  #header_bottom {
   }
 
   a.anonymoususer {

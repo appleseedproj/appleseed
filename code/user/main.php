@@ -84,6 +84,9 @@
   
   global $gUSERTABS;
 
+  global $bCONTACTBOX;
+  $bCONTACTBOX = NULL;
+
   // Check if focus user is logged in, or if administrator is viewing.
   if ($zAUTHUSER->uID == $gFOCUSUSERID) {
     // Authorized user is viewing.
@@ -97,9 +100,6 @@
     global $gINVITECOUNT;
     $zFOCUSUSER->userInvites->CountInvites ();
     $gINVITECOUNT = $zFOCUSUSER->userInvites->Amount;
-
-    global $bCONTACTBOX;
-    $bCONTACTBOX = NULL;
 
     // Process invite action.
     if ($gACTION == "INVITE") {

@@ -137,6 +137,7 @@
       
       $authTokens = $this->TablePrefix . "authTokens";
       $userAuth = $this->TablePrefix . "userAuthorization";
+      $userProfile = $this->TablePrefix . "userProfile";
       
       // Check our local database, see if this token exists.
       
@@ -163,10 +164,10 @@
         $this->XML->ErrorData ("ERROR.NOTFOUND");
         return (FALSE);
       } else {
-        // Load and send back the username.
         global $gFULLNAME;
         global $gUSERNAME;
         $result = mysql_fetch_assoc ($sql_result);
+        // Load and send back the username.
         $username = $result['Username'];
         mysql_free_result ($sql_result);
         if ($username == '*') {

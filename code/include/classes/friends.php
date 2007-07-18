@@ -1044,7 +1044,7 @@
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
       
-      $token = $this->Token ($zLOCALUSER->uID, $pREMOTEDOMAIN);
+      $token = $this->Token ($zLOCALUSER->Username, $pREMOTEDOMAIN);
 
       // Step 1: Check remote friend relationship status.
       $status = $this->LongDistanceStatus ($token, $zLOCALUSER->Username, $gSITEDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN);

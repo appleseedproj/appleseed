@@ -1,26 +1,26 @@
 <div id='adminheader'>
  <div id='header'>
-  <div id='header_top'>
 
-   <p id='header_friends'>
+   <div id='logo'>&nbsp;</div>
+   <p id='friends'>
     %NEWFRIENDS%
-    <asd id='tooltip' title='HEADER_FRIENDS' context='COMMON' />
-   </p> <!-- #header_friends -->
+    <asd id='tooltip' title='FRIENDS' context='COMMON' />
+   </p> <!-- #friends -->
 
-   <p id='header_email'>
+   <p id='email'>
     %NEWMESSAGES%
-    <asd id='tooltip' title='HEADER_EMAIL' context='COMMON' />
-   </p> <!-- #header_email -->
+    <asd id='tooltip' title='FRIENDS' context='COMMON' />
+   </p> <!-- #email -->
 
-   <p id='header_loggedin'>
+   <p id='loggedin'>
     <asd id='string' title='LABEL.ADMINLOGIN' />
-    <asd id='tooltip' title='HEADER_LOGGEDIN' context='COMMON' />
-   </p> <!-- #header_loggedin -->
+    <asd id='tooltip' title='LOGGEDIN' context='COMMON' />
+   </p> <!-- #loggedin -->
 
-  </div> <!-- #header_top -->
+  
+  <div id='menu'>
+   <a href='/'><img src='themes/%USERTHEME%/images/header/header_home.gif' width='52' height='21' border='0' /></a><a href='about/'><img src='themes/%USERTHEME%/images/header/header_aboutus.gif' width='65' height='21' border='0' /></a><a href='photos/'><img src='themes/%USERTHEME%/images/header/header_photos.gif' width='67' height='21' border='0' /></a><a href='groups/'><img src='themes/%USERTHEME%/images/header/header_groups.gif' width='70' height='21' border='0' /></a><a href='journals/'><img src='themes/%USERTHEME%/images/header/header_journals.gif' width='74' height='21' border='0' /></a><a href='search/'><img src='themes/%USERTHEME%/images/header/header_search.gif' width='61' height='21' border='0' /></a><a href='profile/%AUTHUSERNAME%/options/'><img src='themes/%USERTHEME%/images/header/header_options.gif' width='75' height='21' border='0' /></a><a href='_admin/'><img src='themes/%USERTHEME%/images/header/header_admin.gif' width='59' height='21' border='0' /></a><a href='logout/'><img src='themes/%USERTHEME%/images/header/header_logout.gif' width='61' height='21' border='0' /></a>
+  </div> <!-- #menu -->
  </div> <!-- #header -->
 
- <div id='header_menu'>
-   <img src='themes/%USERTHEME%/images/header/header_left.gif' width='181' height='21' border='0' /><a href='/'><img src='themes/%USERTHEME%/images/header/header_home.gif' width='52' height='21' border='0' /></a><a href='about/'><img src='themes/%USERTHEME%/images/header/header_aboutus.gif' width='65' height='21' border='0' /></a><a href='photos/'><img src='themes/%USERTHEME%/images/header/header_photos.gif' width='67' height='21' border='0' /></a><a href='groups/'><img src='themes/%USERTHEME%/images/header/header_groups.gif' width='70' height='21' border='0' /></a><a href='journals/'><img src='themes/%USERTHEME%/images/header/header_journals.gif' width='74' height='21' border='0' /></a><a href='search/'><img src='themes/%USERTHEME%/images/header/header_search.gif' width='61' height='21' border='0' /></a><a href='profile/%AUTHUSERNAME%/options/'><img src='themes/%USERTHEME%/images/header/header_options.gif' width='75' height='21' border='0' /></a><a href='_admin/'><img src='themes/%USERTHEME%/images/header/header_admin.gif' width='59' height='21' border='0' /></a><a href='logout/'><img src='themes/%USERTHEME%/images/header/header_logout.gif' width='61' height='21' border='0' /></a>
- </div> <!-- #header_menu -->
 </div> <!-- #adminheader -->
