@@ -1012,13 +1012,14 @@
     
     function CascadeSelectByAll ($pCRITERIA = "", $pORDERBY = "", $pLIKE = "") {
 
-      // NOTE: Incomplete.  Does not actually cascade.
-      
       $finaldef = array ();
 
       // Loop through the field names and create the where clause.
-      foreach ($this->FieldNames as $fieldname) {
-          $finaldef[$fieldname] = $pCRITERIA;
+      foreach ($this->Cascade as $tablename) {
+        foreach ($this->FieldNames as $fieldname) {
+           $finalfieldname = $this->TableName . '.' . $fieldname;
+       	   $finaldef[$finalfieldname] = $pCRITERIA;
+        } // foreach
       } // foreach
       
       $resulting = $this->SelectByMultiple ($finaldef, $pORDERBY, $pLIKE, "OR");
@@ -1031,6 +1032,11 @@
     function SelectByMultiple ($pDEFINITIONS, $pORDERBY = "", $pLIKE = "", $pANDOR = "AND") {
 
       global $gDEBUG;
+      
+      if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
+        $return = $this->CascadeSelectByMultiple ($pDEFINITIONS, $pORDERBY, $pLIKE, $pANDOR);
+        return ($return);
+      } // if
 
       $this->Statement = "SELECT * FROM $this->TableName WHERE ";
 
@@ -1125,6 +1131,123 @@
 
       return (0);
     } // SelectByMultiple
+
+    function CascadeSelectByMultiple ($pDEFINITIONS, $pORDERBY = "", $pLIKE = "", $pANDOR = "AND") {
+
+      global $gDEBUG;
+      
+      $thistable = $this->TableName;
+      
+      foreach ($this->Cascade as $cascadeclass) {
+        foreach ($this->$cascadeclass->FieldNames as $fieldname) {
+          $fieldarray[] = $this->$cascadeclass->TableName . '.' . $fieldname . ' AS ' . $this->$cascadeclass->TableName . '__' . $fieldname;
+        } // foreach
+        
+        $joinarray[] = "LEFT JOIN " .  $this->$cascadeclass->TableName . 
+                       " ON " . $this->$cascadeclass->TableName . ".userAuth_uID=$thistable.uID ";
+      } // foreach
+      
+      $fields = join (", \n", $fieldarray);
+      $leftjoin = join ("\n", $joinarray);
+      
+      $this->Statement = "
+        SELECT $fields
+        FROM $thistable
+        $leftjoin
+        WHERE 
+      ";
+      
+      // Find out how many definitions are listed.
+      $def_size = sizeof ($pDEFINITIONS);
+      $def_count = 1;
+
+      // Loop through the definitions array.
+      foreach ($pDEFINITIONS as $dkey => $dvalue) {
+
+        $fname = mysql_real_escape_string ($dkey);
+        $fval = mysql_real_escape_string ($dvalue);
+
+        $equals = "=";
+
+        switch (substr ($fval, 0, 2)) {
+          case SQL_NOT:
+            $fval = substr ($fval, 2, strlen ($fval) - 2);
+            $equals = "<>";
+          break;
+          case SQL_GT:
+            $fval = substr ($fval, 2, strlen ($fval) - 2);
+            $equals = ">";
+          break;
+          case SQL_LT:
+            $fval = substr ($fval, 2, strlen ($fval) - 2);
+            $equals = "<";
+          break;
+          case SQL_LIKE:
+            $fval = substr ($fval, 2, strlen ($fval) - 2);
+            $equals = " LIKE ";
+          break;
+        } // switch
+
+        if (substr ($fval, 0, 2) == SQL_NOT) {
+          $fval = substr ($fval, 2, strlen ($fval) - 2);
+          $equals = "<>";
+        } // if
+        
+        $noquote = FALSE;
+        // If specified, set the time stamp to NOW().
+        if ($fval == SQL_NOW) {
+          $fval = "NOW()";
+          $noquote = TRUE;
+        } // if
+
+        // If specified, set the field to NULL.
+
+        // Check if we're at the end of the definitions list.
+        if ($def_count == $def_size) {
+
+          // Append the 'like' statement, if available.
+          if ($pLIKE) {
+            $this->Statement .= "$fname LIKE '%$fval%' ";
+          } else {
+            if ($noquote) {
+              $this->Statement .= "$fname $equals $fval ";
+            } else {
+              $this->Statement .= "$fname $equals '$fval' ";
+            } // if
+          } // if
+          
+        } else {
+
+          // Append the 'like' statement, if available.
+          if ($pLIKE) {
+            $this->Statement .= "$fname LIKE '%$fval%' $pANDOR ";
+          } else {
+            $this->Statement .= "$fname $equals '$fval' $pANDOR ";
+          } // if
+
+        } // if
+
+        $def_count++;
+      } // foreach
+
+      // Append the order by/sort information.
+      if ($pORDERBY) {
+        $this->Statement .= " ORDER BY " . $pORDERBY;
+      } // if
+
+      if ($gDEBUG['echostatement'] == TRUE) {
+        echo "<!-- SQL: $this->Statement -->\n";
+      } // if
+
+      if ($this->Result = $this->Query($this->Statement)) {
+      } else {
+        $this->Error = -1;
+        $this->Message = mysql_error();
+        return (-1);
+      } // if
+
+      return (0);
+    } // CascadeSelectByMultiple
 
     function DeleteByMultiple ($pDEFINITIONS, $pLIKE = "", $pANDOR = "AND") {
       
