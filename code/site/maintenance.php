@@ -73,7 +73,7 @@
 
   // Initialize Appleseed.
   $zAPPLE->Initialize("site", TRUE);
- 
+  
   switch ($gACTION) {
     case 'UPDATE_NODE_NETWORK':
       // Update the node network.

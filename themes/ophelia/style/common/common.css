@@ -564,27 +564,6 @@ a:hover span.linkinfo {
  padding:0 20px;
 }
 
-/* ADSENSE */
-
-#adsense #caption {
- float:left;
- padding-left:15px;
- padding-top:10px;
- color:#000000;
-}
-
-#adsense #container {
- float:left;
- width:96%;
- margin:0;
- background:#ffffff;
- border:1px solid #dddddd;
- padding:10px 2%;
- margin:0 0 0 5px;
- -moz-border-radius:12px;
- text-align:left;
-} 
-
 div#search {
  float:left;
  clear:both;

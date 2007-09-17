@@ -3716,6 +3716,13 @@ form#compose p.error:hover {
 #user #groups li span.link a:hover {
  color:#ffffff;
 }
+
+/* user.statistics */
+
+#user #statistics #container {
+ margin-top:5px;
+}
+
 /* edit, new */
 
 #user #comments #editor p {

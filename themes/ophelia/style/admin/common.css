@@ -12,6 +12,10 @@
  height:200px;
 }
 
+#admin #container p {
+ padding:10px 0 0 0;
+}
+
 /* titles */
 
 #admin #caption {
