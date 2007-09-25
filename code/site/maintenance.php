@@ -74,6 +74,8 @@
   // Initialize Appleseed.
   $zAPPLE->Initialize("site", TRUE);
   
+  $zJANITOR->VerifyNodeNetwork();
+  
   switch ($gACTION) {
     case 'UPDATE_NODE_NETWORK':
       // Update the node network.

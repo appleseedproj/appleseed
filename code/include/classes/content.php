@@ -394,7 +394,7 @@
       
       $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
-      $this->Select (NULL, NULL, 'Stamp LIMIT 10');
+      $this->Select ('Verification', NODE_VERIFIED, 'Stamp LIMIT 10');
       
       if ($this->CountResult() == 0) {
         $buffer = NULL;

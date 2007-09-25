@@ -1338,8 +1338,8 @@
       } else {
         $sql_statement = "
           INSERT INTO $contentNodes
-                      (Domain, Summary, Users, Stamp)
-               VALUES ('%s', '%s', '%s', NOW());
+                      (Domain, Summary, Users, Stamp, Verification)
+               VALUES ('%s', '%s', '%s', NOW(), 0);
         ";
         $sql_statement = sprintf ($sql_statement,
                                   mysql_real_escape_string ($pDOMAIN),

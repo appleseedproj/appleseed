@@ -204,19 +204,19 @@
         
         $version = $zXML->GetValue ("version", 0);
         
+        $NODE = new cCONTENTNODES;
+        $NODE->Select ("Domain", $NODES->Domain);
+        $NODE->FetchArray();
+        $NODE->Verification = NODE_VERIFIED;
+        
         if (!$version) {
-          // No Appleseed Version was found.  Delete from ContentNodes.
-          $NODE = new cCONTENTNODES;
-          $NODE->Select ("Domain", $NODES->Domain);
-          $NODE->FetchArray();
-          
-          // NOTE: Disable for now until the next version.
-          // NOTE: Possible don't delete?  Set flag in database instead?
-          //$NODE->Delete();
-          
-          unset ($NODE);
+          // No Appleseed Version was found.  Set to invalid.
+          $NODE->Verification = NODE_INVALID;   
         } // if
         
+        $NODE->Update();
+        
+        unset ($NODE);
         unset ($zREMOTE);
       } // while
       

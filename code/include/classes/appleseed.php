@@ -758,6 +758,10 @@
       define ("NODE_TRUSTED", 10);
       define ("NODE_BLOCKED", 20);
       
+      define ("NODE_UNVERIFIED", 0);
+      define ("NODE_VERIFIED", 10);
+      define ("NODE_INVALID", -10);
+      
       define ("NODE_ALL_USERS", '*');
       
       define ("TOKEN_LOCAL", 10);
