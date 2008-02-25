@@ -895,8 +895,8 @@
         FROM   $systemNodes
         WHERE  $systemNodes.Entry LIKE '#%s'
         OR     $systemNodes.Entry LIKE '%s#'
-        AND    $systemNodes.EndStamp > NOW()
-        OR     $systemNodes.EndStamp = '0000-00-00 00:00:00'
+        AND    ( $systemNodes.EndStamp > NOW()
+                 OR     $systemNodes.EndStamp = '0000-00-00 00:00:00' )
       ";
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($pDOMAIN),

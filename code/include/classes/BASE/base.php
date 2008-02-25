@@ -930,7 +930,7 @@
       $this->Statement = "SELECT * FROM $this->TableName WHERE " . $pWHERECLAUSE;
 
       if ($pORDERBY) {
-       $this->Statement .= " ORDER BY " . $pSORT;
+       $this->Statement .= " ORDER BY " . $pORDERBY;
       } // if
 
       if ($gDEBUG['echostatement'] == TRUE) {
