@@ -274,6 +274,10 @@
       $zAPPLE->IncludeFile ('code/user/options.php', INCLUDE_SECURITY_NONE);
     break;
 
+    case "summary":
+      $zAPPLE->IncludeFile ('code/user/summary.php', INCLUDE_SECURITY_NONE);
+    break;
+
     case "":
       // Grab user's default page from database.
       $zAPPLE->SetContext ("user.summary");
