@@ -54,7 +54,7 @@
   
   $INSTALL->CheckForSubDirectory ();
   $INSTALL->CheckPHPVersion ();
-  $INSTALL->CheckMysqlVersion ();
+  $INSTALL->CheckMysqlClientVersion ();
   $INSTALL->CheckMagicQuotes ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckPhotoDirectory ();
@@ -147,10 +147,10 @@ class cINSTALL {
     return (TRUE);
   } // CheckPHPVersion
   
-  function CheckMysqlVersion () {
+  function CheckMysqlClientVersion () {
     global $Error, $ErrorMark;
     
-    $version = $this->GetMysqlVersion();
+    $version = $this->GetMysqlClientVersion();
     
     $VersionArray = explode ('.', $version);
     $main = $VersionArray[0];
@@ -158,22 +158,50 @@ class cINSTALL {
     $micro = $VersionArray[2];
     
     if ($main > 4) {
-      $Error['mysql_version'] = FALSE;
-      $ErrorMark['mysql_version'] = "<span class='yes'>Y</span>";
+      $Error['mysql_client_version'] = FALSE;
+      $ErrorMark['mysql_client_version'] = "<span class='yes'>Y</span>";
     } else {
-      $Error['mysql_version'] = TRUE;
-      $ErrorMark['mysql_version'] = "<span class='no'>N</span>";
+      $Error['mysql_client_version'] = TRUE;
+      $ErrorMark['mysql_client_version'] = "<span class='no'>N</span>";
     } // if
     
     return (TRUE);
-  } // CheckMysqlVersion
+  } // CheckMysqlClientVersion
   
-  function GetMysqlVersion () {
-    $output = shell_exec('mysql -V');
-    preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version);
+  function GetMysqlClientVersion () {
+  	
+  	$return = mysql_get_client_info ();
+  	
+    return ($return);
+  } // GetMysqlClientVersion
+  
+  function CheckMysqlServerVersion () {
+    global $Error, $ErrorMark;
     
-    return ($version[0]);
-  } // GetMysqlVersion
+    $version = $this->GetMysqlServerVersion();
+    
+    $VersionArray = explode ('.', $version);
+    $main = $VersionArray[0];
+    $minor = $VersionArray[1];
+    $micro = $VersionArray[2];
+    
+    if ($main >= 5) {
+      $Error['mysql_server_version'] = FALSE;
+      $ErrorMark['mysql_server_version'] = "<span class='yes'>Y</span>";
+    } else {
+      $Error['mysql_server_version'] = TRUE;
+      $ErrorMark['mysql_server_version'] = "<span class='no'>N</span>";
+    } // if
+    
+    return (TRUE);
+  } // CheckMysqlServerVersion
+  
+  function GetMysqlServerVersion () {
+  	
+  	$return = mysql_get_server_info ();
+  	
+    return ($return);
+  } // GetMysqlServerVersion
   
   function CheckMagicQuotes () {
     global $Error, $ErrorMark;
@@ -460,6 +488,12 @@ class cINSTALL {
       return (FALSE);
     } // if
     
+    $this->CheckMysqlServerVersion ();
+    if ($Error['mysql_server_version']) {
+      $ErrorString = "Selected MySQL server version is too low. (Version is " . $this->GetMysqlServerVersion() . ", Appleseed requires > 5.0)";
+      return (FALSE);
+    } // if
+    
     if (!is_readable ("install.sql")) {
       $ErrorString = "Could not open install.sql for reading.";
       return (FALSE);
@@ -472,7 +506,7 @@ class cINSTALL {
     global $MysqlLink;
     
     // Check if form has not been submitted.
-    if (empty ($_POST)) return (FALSE);
+    if ((empty ($_POST)) or ($_POST['submit'] == 'Refresh'))   return (FALSE);
     
     // Check if form input validates.
     if (!$this->ValidateForm()) return (FALSE);
@@ -542,11 +576,13 @@ class cINSTALL {
         <span class='label'>PHP version 5.0 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
-        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
-        <?php echo $ErrorMark['mysql_version']; ?>
+        <span class='label'>Mysql version 5.0 or higher? (Client is <?php echo $this->GetMysqlClientVersion (); ?>)</span>
+        <?php echo $ErrorMark['mysql_client_version']; ?>
+        
        </div>
-       
        <form id='main' name='main' method='POST'>
+        <input type='submit' name='submit' class='submit' value="Refresh" />
+       
        <div id='database'>
         <p class='title'>Database Settings</p>
         <p class='information'>Enter your database information in the following fields.</p>
@@ -640,8 +676,8 @@ class cINSTALL {
         <span class='label'>PHP version 5.0 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
-        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlVersion (); ?>)</span>
-        <?php echo $ErrorMark['mysql_version']; ?>
+        <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlClientVersion (); ?>)</span>
+        <?php echo $ErrorMark['mysql_client_version']; ?>
        </div> <!-- #check -->
        
       <div id='completed'>
