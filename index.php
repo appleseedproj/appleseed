@@ -6,7 +6,7 @@
   // | FILE: index.php                               CREATED: 04-12-2007 + 
   // | LOCATION: /                                  MODIFIED: 04-13-2007 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2007 Appleseed Project                         |
+  // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -29,9 +29,17 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.2                                               |
+  // | VERSION:      0.7.3                                               |
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
+  
+  // HANDLE AJAX REQUEST.
+  if ($_POST['gACTION'] == 'CHECK') {
+  	$host = $_POST['gHOST']; $database = $_POST['gDATABASE']; $username = $_POST['gUSERNAME']; $password = $_POST['gPASSWORD'];
+  	if (!$db = @mysql_connect($host, $username, $password)) { echo "0"; exit; }
+  	if (!@mysql_select_db($database, $db)) { echo "0"; exit; }
+  	echo "1"; exit;
+  } // if
   
   $INSTALL = new cINSTALL;
   
@@ -45,6 +53,7 @@
   $gHOST = ($gHOST) ? $gHOST : 'localhost';
   $gDOMAIN = ($_POST['gDOMAIN']) ? $_POST['gDOMAIN'] : $gDOMAIN;
   $gDOMAIN = ($gDOMAIN) ? $gDOMAIN : 'http://' . $_SERVER['HTTP_HOST'];
+  $gUPGRADE = $_POST['gUPGRADE'];
   $gADMINUSER = ($_POST['gADMINUSER']) ? $_POST['gADMINUSER'] : 'Admin';
   $gADMINPASS = $_POST['gADMINPASS'];
   $gADMINPASSCONFIRM = $_POST['gADMINPASSCONFIRM'];
@@ -87,18 +96,21 @@
  div#copyright { float:left; text-align:center; width:800px; margin:20px 0; }
  div.caption { float:left; width:796px; margin-left:10px; text-align:left; }
  div { text-align:left; }
- div.container { float:left; clear:both; width:800px; background-color:#fafafa; border:1px solid #cccccc; border-right:2px solid #999999; border-bottom:2px solid #999999; -moz-border-radius:12px; }
- div#check, div#completed, div#site, div#database {  float:left; clear:both; width:590px; margin:10px 100px; padding:5px; border:1px solid #cccccc; -moz-border-radius:12px; }
+ div.container { float:left; clear:both; width:800px; background-color:#fafafa; border:1px solid #cccccc; border-right:2px solid #999999; border-bottom:2px solid #999999; }
+ div#check, div#completed, div#site, div#database {  float:left; clear:both; width:590px; margin:10px 100px; padding:5px; border:1px solid #cccccc; }
  p { float:left; clear:both; width:100%; border-bottom:1px solid #aaaaaa; }
  p.information { border:none; }
  p.done { border:none; border-top:1px solid #aaaaaa; margin-top:10px; padding-top:10px; }
  p.final { border:none; width:400px; margin:0 150px; }
- p.final a { text-decoration:none; float:left; clear:both; font-size:14px; color:#00ff00; background:#ccffcc; padding:2px 4px; -moz-border-radius:12px; }
+ p.final a { text-decoration:none; float:left; clear:both; font-size:14px; color:#00ff00; background:#ccffcc; padding:2px 4px; }
  span.label, label { float:left; width:270px; margin:5px 0 5px 100px; }
- input, textarea { width:150px; margin:5px 50px 5px 0; font:10px Arial; color:#8c9095; background:#ecf0f5; vertical-align:top; border:1px solid #ccd0d5; padding:1px 3px; -moz-border-radius:12px; }
- input:hover, select:hover, textarea:hover { background:#fafafa; color:#4c5055; border-color:#acb0b5 } 
- input.submit { float:right; width:auto; padding:2px 10px; margin:20px 98px; font-weight:bold; }
- span.done, span.yes, span.no { float:left; width:8px; font-weight:bold; text-align:center; margin:5px 0px 5px 130px; padding:1px 3px; -moz-border-radius:12px; }
+ input, textarea { width:150px; margin:5px 50px 5px 0; font:10px Arial; color:#4c5055; background:#ecf0f5; vertical-align:top; border:1px solid #ccd0d5; padding:1px 3px; }
+ select { float:left; width:150px; }
+ input:hover, textarea:hover { background:#fafafa; color:#2a2a2a; border-color:#acb0b5 } 
+ input.submit, input.refresh { float:right; width:auto; padding:2px 10px; margin:20px 98px; font-weight:bold; }
+ div#confirmDatabaseConnection { float:left; clear:both; width:100%; padding:5px; text-align:center;}
+ input.checkConnection { width:100px; margin:0; padding:0;}
+ span.done, span.yes, span.no { float:left; width:8px; font-weight:bold; text-align:center; margin:5px 0px 5px 130px; padding:1px 3px; }
  span.done { width:auto; color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
  span.yes { color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
  span.no { color:#ff0000; background:#ffcccc; border:1px solid #ffcccc; }
@@ -116,6 +128,78 @@
   background:#cc151a;
  }
 </style>
+
+<script>
+	// Primes input elements so javascript degrades properly.
+	function initialize() {
+	    var inputs = document.getElementsByTagName('input');
+	    
+	    for ( i = 0; i < inputs.length; i++) {
+	    	// Enable the 'Check Connection' button and attach the proper function.
+	    	if (inputs[i].className == 'checkConnection') {
+	    		inputs[i].disabled = false;
+	    		inputs[i].onclick = function() {
+	    			checkConnect();
+	    			return (false);
+	    		} // onclick
+	    	} // if
+	    } // for
+	    
+	    return (false);
+	} // initialize
+	
+	function checkConnect() {
+		var checkButton = document.getElementById('checkConnection');
+		
+		// Step 0: Create visual indicator something is happening.
+		checkButton.style.color = '#4c5055';
+		checkButton.style.background = '#ecf0f5';
+		checkButton.value = 'Checking...';
+		
+		// Step 1: Create the query string.
+	    var form = document.forms['main'];
+	    var host = form.gHOST.value;
+	    var database = form.gDATABASE.value;
+	    var username = form.gUSERNAME.value;
+	    var password = form.gPASSWORD.value;
+	    
+	    if ((!host) || (!database) || (!username) || (!password)) {
+	    	alert ('Fill out database information before checking the connection!');
+			checkButton.value = 'Check Connection';
+	    	return (false);
+	    } // if
+	    
+	    var queryString = 'gACTION=CHECK&gHOST=' + host + '&gDATABASE=' + database + '&gUSERNAME=' + username + '&gPASSWORD=' + password;
+	    var URL = 'index.php';
+	    
+		// Step 2: Create the ajax variables.
+	    var xmlHttpReq = false;
+	    if (window.XMLHttpRequest)  {
+	        var ajax = this.xmlHttpReq = new XMLHttpRequest();
+	    } else if (window.ActiveXObject)  {
+	        var ajax = this.xmlHttpReq = new ActiveXObject("Microsoft.XMLHTTP");
+	    } // if
+	    
+	    // Step 3: Send the request.
+	    ajax.open('POST', URL, true);
+	    ajax.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	    ajax.onreadystatechange = function() {
+	        if (ajax.readyState == 4)  {
+	            if (ajax.responseText == true) {
+					checkButton.value = 'Connection OK';
+					checkButton.style.color = '#00ff00';
+					checkButton.style.background = '#ccffcc';
+	            } else {
+	            	alert ('Connection to database failed!');
+					checkButton.value = 'Check Connection';
+	            } // if
+	        } // if
+	    } // if
+	    ajax.send(queryString);
+		
+		return (false);
+	} // checkConnect
+</script>
 
 <?php if ($CurrentStep == 1) $INSTALL->ViewStepOne (); ?>
 <?php if ($CurrentStep == 2) $INSTALL->ViewStepTwo (); ?>
@@ -506,7 +590,7 @@ class cINSTALL {
     global $MysqlLink;
     
     // Check if form has not been submitted.
-    if ((empty ($_POST)) or ($_POST['submit'] == 'Refresh'))   return (FALSE);
+    if ((empty ($_POST)) or ($_POST['refresh'] == 'Refresh'))   return (FALSE);
     
     // Check if form input validates.
     if (!$this->ValidateForm()) return (FALSE);
@@ -514,7 +598,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS;
     
-    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.2', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.3', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
@@ -536,13 +620,13 @@ class cINSTALL {
   function ViewStepOne () {
     
     global $Error, $ErrorString, $ErrorMark;
-    global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
+    global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN, $gUPGRADE;
     global $gADMINUSER, $gADMINPASS, $gADMINPASSCONFIRM;
     global $submit_label, $submit_disabled;
     
     ?>
         
-    <body>
+    <body onload='initialize();'>
      <div id='install'>
       <div class='caption'>APPLESEED INSTALL v0.7.3</div>
       <div class='container'>
@@ -581,7 +665,7 @@ class cINSTALL {
         
        </div>
        <form id='main' name='main' method='POST'>
-        <input type='submit' name='submit' class='submit' value="Refresh" />
+        <input type='submit' name='refresh' class='refresh' value="Refresh" />
        
        <div id='database'>
         <p class='title'>Database Settings</p>
@@ -596,11 +680,22 @@ class cINSTALL {
          <input type='text' name='gUSERNAME' value='<?php echo $gUSERNAME; ?>' />
          
          <label for='gPASSWORD'>DB Password:</label>
-         <input type='password' name='gPASSWORD' value='' />
+         <input type='text' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' />
          
          <label for='gPREFIX'>DB Table Prefix:</label>
          <input type='text' name='gPREFIX' value='<?php echo $gPREFIX; ?>' />
      
+     	 <div id='confirmDatabaseConnection'>
+       	  <input type='submit' id='checkConnection' name='checkConnection' class='checkConnection' value="Check Connection" disabled=disabled />
+       	 </div>
+     
+         <label for='gUPGRADE'>Upgrade if tables exist?</label>
+         <select name='gUPGRADE'>
+         	<option <?php if ($gUPGRADE == '0') echo "selected"; ?> value='0'>No (Delete Existing)</option>
+         	<option <?php if ($gUPGRADE == '1') echo "selected"; ?> value='1'>Yes (Backup Tables)</option>
+         	<option <?php if ($gUPGRADE == '2') echo "selected"; ?> value='2'>Yes (No Backup)</option>
+         </select>
+         
        </div> <!-- #database -->
        
        <div id='site'>
@@ -613,19 +708,19 @@ class cINSTALL {
          <input type='text' name='gADMINUSER' value='<?php echo $gADMINUSER; ?>' />
      
          <label for='gADMINPASS'>Default Admin Password:</label>
-         <input type='password' maxlength=20 name='gADMINPASS' value='' />
+         <input type='text' maxlength=20 name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' />
      
          <label for='gADMINPASSCONFIRM'>Default Admin Password (Confirm):</label>
-         <input type='password' maxlength=20 name='gADMINPASSCONFIRM' value='' />
+         <input type='text' maxlength=20 name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' />
      
        </div> <!-- #site -->
-         <input type='submit' name='submit' class='submit' <?php echo $submit_disabled; ?> value="<?php echo $submit_label; ?>" />
+         <input type='submit' id='submit' name='submit' class='submit' <?php echo $submit_disabled; ?> value="<?php echo $submit_label; ?>" />
        </form> <!-- #main -->
    
       </div> <!-- .container -->
      </div> <!-- .install -->
      <div id='copyright'>
-      Copyleft &copy; 2004-2007 by the Appleseed Collective. All Rights Reversed.
+      Copyleft &copy; 2004-2008 by the Appleseed Collective. All Rights Reversed.
      </div>
     </body>
     </html> <?php
@@ -712,7 +807,7 @@ class cINSTALL {
       
      </div> <!-- .install -->
      <div id='copyright'>
-      Copyleft &copy; 2004-2007 by the Appleseed Collective. All Rights Reversed.
+      Copyleft &copy; 2004-2008 by the Appleseed Collective. All Rights Reversed.
      </div>
     </body>
     </html> <?php

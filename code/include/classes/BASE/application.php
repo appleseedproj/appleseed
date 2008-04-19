@@ -6,7 +6,7 @@
   // | FILE: application.php                         CREATED: 05-04-2006 + 
   // | LOCATION: /code/include/classes/BASE/        MODIFIED: 05-04-2006 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2007 Appleseed Project                         |
+  // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -30,7 +30,7 @@
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
   // | Part of the Appleseed BASE API                                    |
-  // | VERSION:      0.7.2                                               |
+  // | VERSION:      0.7.3                                               |
   // | DESCRIPTION:  Application class definitions. Reusable functions   |
   // |               not specifically tied to Appleseed.                 |
   // +-------------------------------------------------------------------+

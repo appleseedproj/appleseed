@@ -6,7 +6,7 @@
   // | FILE: comments.php                            CREATED: 09-05-2005 + 
   // | LOCATION: /code/include/classes/             MODIFIED: 09-05-2005 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2007 Appleseed Project                         |
+  // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.2                                               |
+  // | VERSION:      0.7.3                                               |
   // | DESCRIPTION.  Comments class definitions.                         |
   // +-------------------------------------------------------------------+
 
