@@ -109,6 +109,8 @@
  input:hover, textarea:hover { background:#fafafa; color:#2a2a2a; border-color:#acb0b5 } 
  input.submit, input.refresh { float:right; width:auto; padding:2px 10px; margin:20px 98px; font-weight:bold; }
  div#confirmDatabaseConnection { float:left; clear:both; width:100%; padding:5px; text-align:center;}
+ input#adminPassConfirm { margin-right:0; }
+ div#checkPasswords { float:right; width:230px; text-align:right; padding:2px 0px; margin:0px 70px; font-weight:bold; }
  input.checkConnection { width:100px; margin:0; padding:0;}
  span.done, span.yes, span.no { float:left; width:8px; font-weight:bold; text-align:center; margin:5px 0px 5px 130px; padding:1px 3px; }
  span.done { width:auto; color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
@@ -130,6 +132,16 @@
 </style>
 
 <script>
+
+    <?php if ($submit_disabled) { ?>
+    var okPermanent = false;
+    <?php } else { ?>
+    var okPermanent = true;
+    <?php } // if ?>
+    
+    var okPassword = false;
+    var okDatabase = false;
+
 	// Primes input elements so javascript degrades properly.
 	function initialize() {
 	    var inputs = document.getElementsByTagName('input');
@@ -143,13 +155,81 @@
 	    			return (false);
 	    		} // onclick
 	    	} // if
+	    	
+	    	// Add the onChange to each admin password field.
+	    	if ((inputs[i].className == 'gADMINPASS') ||
+	    		(inputs[i].className == 'gADMINPASSCONFIRM')) {
+	    		inputs[i].onfocus = inputs[i].onkeyup = function() {
+	    			matchPasswords();
+	    			return (false);
+	    		} // onclick
+	    	} // if
+	    	
+	    	// Set the submit button to disabled.
+	    	if (inputs[i].className == 'submit') {
+	    		inputs[i].disabled = true;
+	    		inputs[i].value = 'Cannot Continue';
+	    		inputs[i].onclick = function() {
+	    			finalValidation();
+	    		} // if
+	    	} // if
 	    } // for
+	    
+	    matchPasswords();
 	    
 	    return (false);
 	} // initialize
 	
+	function finalValidation() {
+		return (true);
+	} // if
+	
+	function matchPasswords() {
+		submit = document.getElementById ('submit');
+		pass = document.getElementById ('adminPass');
+		passConfirm = document.getElementById ('adminPassConfirm');
+		check = document.getElementById ('checkPasswords');
+		
+		// If either is null, don't show anything.
+		if ( (pass.value == '') || (passConfirm.value == '') ) {
+			check.innerHTML = '&nbsp;';
+			check.style.color = '#2a2a2a';
+			okPassword = false;
+			return (false);
+		} // if
+		
+		// If password is less than 6 characters, error.
+		if (pass.value.length < 6) {
+			check.innerHTML = 'Password must be at least 6 characters!';
+			check.style.color = '#ff0000';
+			okPassword = false;
+			return (false);
+		} // if
+		
+		if (pass.value == passConfirm.value) {
+			check.innerHTML = 'Passwords match!';
+			check.style.color = '#00ff00';
+			okPassword = true;
+		} else {
+			check.innerHTML = 'Passwords do not match!';
+			check.style.color = '#ff0000';
+			okPassword = false;
+		} // if
+		
+		if ((okPassword) && (okDatabase) && (okPermanent)) {
+    		submit.disabled = false;
+	    	submit.value = 'Continue';
+		} else {
+    		submit.disabled = true;
+	    	submit.value = 'Cannot Continue';
+		} // if
+		
+		return (true);
+	} // matchPasswords
+	
 	function checkConnect() {
 		var checkButton = document.getElementById('checkConnection');
+		var submitButton = document.getElementById('submit');
 		
 		// Step 0: Create visual indicator something is happening.
 		checkButton.style.color = '#4c5055';
@@ -189,9 +269,18 @@
 					checkButton.value = 'Connection OK';
 					checkButton.style.color = '#00ff00';
 					checkButton.style.background = '#ccffcc';
+					
+					okDatabase = true;
+					if ((okPassword) && (okDatabase) && (okPermanent)) {
+    					submitButton.disabled = false;
+	    				submitButton.value = 'Continue';
+					} // if
 	            } else {
 	            	alert ('Connection to database failed!');
 					checkButton.value = 'Check Connection';
+					okDatabase = false;
+    				submitButton.disabled = true;
+	    			submitButton.value = 'Cannot Continue';
 	            } // if
 	        } // if
 	    } // if
@@ -470,6 +559,8 @@ class cINSTALL {
       return (FALSE);
     } // if
     
+    @mysql_select_db ($pDATABASE);
+    
     $sql = NULL;
     while (!feof($sql_file)) {
         $sql .= fgets($sql_file, 4096);
@@ -477,17 +568,14 @@ class cINSTALL {
     
     $sql = str_replace ("%PREFIX%", $gPREFIX, $sql);
     
-    $final_sql_filename = tempnam("/tmp", "asdsql");
-    $final_sql_file = fopen ($final_sql_filename, "w");
-    
-    fwrite ($final_sql_file, $sql);
-    
-    $message = shell_exec("mysql -h $pHOST -u $pUSERNAME -p$pPASSWORD $pDATABASE < $final_sql_filename");
-    fclose ($final_sql_file);
-    if ($message) {
-      $ErrorString = "MYSQL ERROR: " . $message;
-      return (FALSE);
-    } 
+    $sql_lines = preg_split('/[\n\r]+/',$sql);
+    foreach ($sql_lines as $l => $line) {
+    	if ($line == '') continue;
+    	if (!$result = @mysql_query ($line)) {
+    		$ErrorString = "MYSQL ERROR: " . mysql_error();
+    		return (FALSE);
+    	} // if
+    } // foreach
     
     return (TRUE);
   } // ImportData
@@ -708,10 +796,12 @@ class cINSTALL {
          <input type='text' name='gADMINUSER' value='<?php echo $gADMINUSER; ?>' />
      
          <label for='gADMINPASS'>Default Admin Password:</label>
-         <input type='text' maxlength=20 name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' />
+         <input type='text' maxlength=20 id='adminPass' class='gADMINPASS' name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' />
      
          <label for='gADMINPASSCONFIRM'>Default Admin Password (Confirm):</label>
-         <input type='text' maxlength=20 name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' />
+         <input type='text' maxlength=20 id='adminPassConfirm' class='gADMINPASSCONFIRM' name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' />
+         
+         <div id='checkPasswords'>&nbsp;</div>
      
        </div> <!-- #site -->
          <input type='submit' id='submit' name='submit' class='submit' <?php echo $submit_disabled; ?> value="<?php echo $submit_label; ?>" />
