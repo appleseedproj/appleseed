@@ -66,8 +66,8 @@
       $zCACHE = new cBASEDATACACHE();
       
       // Load cache data if we can find it.
-      if (file_exists ('data/cache/fields.acache')) include_once ('data/cache/fields.acache');
-      if (file_exists ('data/cache/columns.acache')) include_once ('data/cache/columns.acache');
+      if (file_exists ('code/include/data/cache/fields.acache')) include_once ('code/include/data/cache/fields.acache');
+      if (file_exists ('code/include/data/cache/columns.acache')) include_once ('code/include/data/cache/columns.acache');
       
       return (TRUE);
     } // Constructor
@@ -347,6 +347,8 @@
       
       global $zJANITOR;
       $zJANITOR = new cSYSTEMMAINTENANCE();
+      
+      global $zCACHE;
       
       return (TRUE); 
       
