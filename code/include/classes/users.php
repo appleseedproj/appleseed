@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: users.php                               CREATED: 04-04-2005 + 
-  // | LOCATION: /code/include/classes/             MODIFIED: 01-13-2006 +
+  // | LOCATION: /code/include/classes/             MODIFIED: 04-19-2008 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
