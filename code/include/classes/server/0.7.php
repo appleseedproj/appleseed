@@ -430,6 +430,69 @@
       return (TRUE);
     } // FriendRequest
     
+    function GroupJoin ($pTOKEN, $gGROUPNAME, $pUSERNAME, $pDOMAIN) {
+    	
+      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+        // Invalid token, exit.
+        $this->XML->ErrorData ("ERROR.TOKEN");
+        return (FALSE);
+      } // if
+      
+      // Check if site or user is blocked.
+      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
+        $this->XML->ErrorData ($errorcode);
+        return (FALSE);
+      } // if
+      
+      $zGROUPS = new cGROUPINFORMATION ();
+      $zGROUPS->Select ("Name", $gGROUPNAME);
+ 
+      if ($zGROUPS->CountResult() == 0) {
+        $gSUCCESS = FALSE;
+        $gMESSAGE = "ERROR.NOTFOUND";
+        $data = implode ("", file ("code/include/data/xml/group_join.xml"));
+        $return = $zAPPLE->ParseTags ($data);
+        echo $return;
+        exit;
+      } // if
+      $remoteusername = $pUSERNAME;
+      $remotedomain = $pDOMAIN;
+ 
+      $zGROUPS->FetchArray ();
+      $membercriteria = array ("Username"                 => $remoteusername,
+                               "Domain"                   => $remotedomain,
+                               "groupInformation_tID"     => $zGROUPS->tID);
+      $zGROUPS->groupMembers->SelectByMultiple ($membercriteria);
+      $zGROUPS->groupMembers->FetchArray ();
+ 
+      // Check for existing group membership record.
+      if ($zGROUPS->groupMembers->CountResult() == 0) {
+        $zGROUPS->groupMembers->groupInformation_tID = $zGROUPS->tID;
+        $zGROUPS->groupMembers->Username = $remoteusername;
+        $zGROUPS->groupMembers->Domain = $remotedomain;
+        if ( ($zGROUPS->Access == GROUP_ACCESS_OPEN) or
+             ($zGROUPS->Access == GROUP_ACESSS_OPEN_MEMBERSHIP) ) {
+          $gMESSAGE = "MESSAGE.JOINED";
+          $zGROUPS->groupMembers->Verification = GROUP_VERIFICATION_APPROVED;
+        } else {
+          $gMESSAGE = "MESSAGE.PENDING";
+          
+          $zGROUPS->groupMembers->Verification = GROUP_VERIFICATION_PENDING;
+        } // if
+ 
+        $zGROUPS->groupMembers->Stamp = SQL_NOW;
+        $zGROUPS->groupMembers->Add ();
+      } // if
+      $gSUCCESS = TRUE;
+ 
+      unset ($zGROUPS);
+ 
+      $data = implode ("", file ("code/include/data/xml/group_join.xml"));
+      $this->XML->Data = $zAPPLE->ParseTags ($data);
+       
+       return (TRUE);
+     } // GroupJoin
+    
     function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
       
       if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {

@@ -37,7 +37,7 @@
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
   // Include Lightweight Server Classes
-  require_once ('code/include/classes/server.php'); 
+  require_once ('code/include/classes/server/0.7.php'); 
   
   // Suppress warning reports.
   error_reporting (E_ERROR);
@@ -203,79 +203,15 @@
     
     case 'GROUP_JOIN':
     case 'ASD_GROUP_JOIN':
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      // Authenticate token.
-      /* TEMPORARILY REMOVED
-      $AUTH = new cAUTHSESSIONS ();
-      $AUTH->Select ("Token", $gTOKEN);
-
-      if ($AUTH->CountResult () == 0) {
-        $code = 1000;
-        $message = "ERROR.INVALIDTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      $AUTH->FetchArray ();
-      */
+      $gGROUPNAME = $_POST['gGROUPNAME'];
+      $gUSERNAME = $_POST['gUSERNAME'];
       
-      $remoteusername = $AUTH->Username;
-      $remotedomain = $AUTH->Domain;
-      list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
-
-      unset ($AUTH);
-
-     $zGROUPS = new cGROUPINFORMATION ();
-     $zGROUPS->Select ("Name", $gGROUPNAME);
-
-     if ($zGROUPS->CountResult() == 0) {
-       $gSUCCESS = FALSE;
-       $gMESSAGE = "ERROR.NOTFOUND";
-       $data = implode ("", file ("code/include/data/xml/group_join.xml"));
-       $return = $zAPPLE->ParseTags ($data);
-       echo $return;
-       exit;
-     } // if
-
-     $zGROUPS->FetchArray ();
-     $membercriteria = array ("Username"                 => $remoteusername,
-                              "Domain"                   => $remotedomain,
-                              "groupInformation_tID"     => $zGROUPS->tID);
-     $zGROUPS->groupMembers->SelectByMultiple ($membercriteria);
-     $zGROUPS->groupMembers->FetchArray ();
-
-     // Check for existing group membership record.
-     if ($zGROUPS->groupMembers->CountResult() == 0) {
-       $zGROUPS->groupMembers->groupInformation_tID = $zGROUPS->tID;
-       $zGROUPS->groupMembers->Username = $remoteusername;
-       $zGROUPS->groupMembers->Domain = $remotedomain;
-       if ( ($zGROUPS->Access == GROUP_ACCESS_OPEN) or
-            ($zGROUPS->Access == GROUP_ACESSS_OPEN_MEMBERSHIP) ) {
-         $gMESSAGE = "MESSAGE.JOINED";
-         $zGROUPS->groupMembers->Verification = GROUP_VERIFICATION_APPROVED;
-       } else {
-         $gMESSAGE = "MESSAGE.PENDING";
-         
-         $zGROUPS->groupMembers->Verification = GROUP_VERIFICATION_PENDING;
-       } // if
-
-       $zGROUPS->groupMembers->Stamp = SQL_NOW;
-       $zGROUPS->groupMembers->Add ();
-     } // if
-     $gSUCCESS = TRUE;
-
-     unset ($zGROUPS);
-
-     $data = implode ("", file ("code/include/data/xml/group_join.xml"));
-     $return = $zAPPLE->ParseTags ($data);
-     echo $return;
+      // Check Friend Status.
+      $zSERVER->GroupJoin ($gTOKEN, $gGROUPNAME, $gUSERNAME, $gDOMAIN);
+      
+      echo $zSERVER->XML->Data;
+      exit;
+      
     break;
     
     case 'GROUP_LEAVE':
@@ -289,7 +225,6 @@
       } // if
 
       // Authenticate token.
-      /* TEMPORARILY REMOVED
       $AUTH = new cAUTHSESSIONS ();
       $AUTH->Select ("Token", $gTOKEN);
 
@@ -302,8 +237,6 @@
 
       $AUTH->FetchArray ();
 
-      */
-      
       $remoteusername = $AUTH->Username;
       $remotedomain = $AUTH->Domain;
       list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);

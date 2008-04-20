@@ -1274,14 +1274,14 @@
       $success = FALSE;
 
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {
-        $VERIFY = new cUSERVERIFICATION ();
-        $token = $VERIFY->LoadToken ($zLOCALUSER->Username, $pGROUPDOMAIN);
-        unset ($VERIFY);
+        $token = $this->Token ($zLOCALUSER->Username, $pGROUPDOMAIN);
 
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
         $datalist = array ("gACTION"        => "ASD_GROUP_JOIN",
                            "gTOKEN"         => $token,
-                           "gGROUPNAME"     => $pGROUPNAME);
+                           "gGROUPNAME"     => $pGROUPNAME,
+                           "gUSERNAME"      => $zLOCALUSER->Username,
+                           "gDOMAIN"        => $gSITEDOMAIN);
         $zREMOTE->Post ($datalist);
 
         $zXML->Parse ($zREMOTE->Return);
@@ -1362,9 +1362,7 @@
 
       $success = FALSE;
 
-      $VERIFY = new cUSERVERIFICATION ();
-      $token = $VERIFY->LoadToken ($zLOCALUSER->Username, $pGROUPDOMAIN);
-      unset ($VERIFY);
+      $token = $this->Token ($zLOCALUSER->Username, $pGROUPDOMAIN);
 
       if ($pGROUPDOMAIN != $gSITEDOMAIN) {
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
@@ -1723,6 +1721,23 @@
       unset ($FIND);
       return (TRUE);
     } // SetLatest
+
+    function Token ($pUSERNAME, $pDOMAIN) {
+      $VERIFY = new cAUTHTOKENS ();
+      
+      $VERIFY->LoadToken ($pUSERNAME, $pDOMAIN);
+      
+      $token = $VERIFY->Token;
+      
+      if (!$token) {
+        $VERIFY->CreateToken ($pUSERNAME, $pDOMAIN);
+        $token = $VERIFY->Token;
+      } // if
+      
+      unset ($VERIFY);
+      
+      return ($token);
+    } // Token
 
   } // cGROUPINFORMATION
 

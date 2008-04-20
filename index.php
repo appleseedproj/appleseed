@@ -144,6 +144,11 @@
     
     var okPassword = false;
     var okDatabase = false;
+    
+    var confirmHost = false;
+    var confirmDatabase = false;
+    var confirmUsername = false;
+    var confirmPassword = false;
 
 	// Primes input elements so javascript degrades properly.
 	function initialize() {
@@ -157,6 +162,16 @@
 	    			checkConnect();
 	    			return (false);
 	    		} // onclick
+	    	} // if
+	    	
+	    	if ((inputs[i].className == 'gHOST') ||
+	    		(inputs[i].className == 'gDATABASE') ||
+	    		(inputs[i].className == 'gUSERNAME') ||
+	    		(inputs[i].className == 'gPASSWORD')) {
+	    			inputs[i].onkeyup = function() {
+	    				resetCheck();
+	    				return (true);
+	    			} // onchange
 	    	} // if
 	    	
 	    	// Add the onChange to each admin password field.
@@ -298,6 +313,11 @@
 					checkButton.style.color = '#00ff00';
 					checkButton.style.background = '#ccffcc';
 					
+					confirmHost = host;
+					confirmDatabase = database;
+					confirmUsername = username;
+					confirmPassword = password;
+					
 					okDatabase = true;
 					if ((okPassword) && (okDatabase) && (okPermanent)) {
     					submitButton.disabled = false;
@@ -317,6 +337,40 @@
 		
 		return (false);
 	} // checkConnect
+	
+	function resetCheck () {
+		var submitButton = document.getElementById('submit');
+		var checkButton = document.getElementById('checkConnection');
+		
+	    var form = document.forms['main'];
+	    var host = form.gHOST.value;
+	    var database = form.gDATABASE.value;
+	    var username = form.gUSERNAME.value;
+	    var password = form.gPASSWORD.value;
+	    
+	    if ( (host == confirmHost) &&
+	    	 (database == confirmDatabase) &&
+	    	 (username == confirmUsername) &&
+	    	 (password == confirmPassword) ) {
+			checkButton.value = 'Connection OK';
+			checkButton.style.color = '#00ff00';
+			checkButton.style.background = '#ccffcc';
+			okDatabase = true;
+			if ((okPassword) && (okDatabase) && (okPermanent)) {
+   				submitButton.disabled = false;
+	  			submitButton.value = 'Continue';
+			} // if
+	     } else {
+			checkButton.value = 'Check Connection';
+			checkButton.style.color = '#ff0000';
+			checkButton.style.background = '#ecf0f5';
+			okDatabase = false;
+ 			submitButton.disabled = true;
+			submitButton.value = 'Cannot Continue';
+	     } // if
+		
+		return (true);
+	} // resetCheck
 </script>
 
 <?php if ($CurrentStep == 1) $INSTALL->ViewStepOne (); ?>
@@ -953,16 +1007,16 @@ class cINSTALL {
         <p class='title'>Database Settings</p>
         <p class='information'>Enter your database information in the following fields.</p>
          <label for='gHOST'>DB Host Name:</label>
-         <input type='text' name='gHOST' value='<?php echo $gHOST; ?>' />
+         <input type='text' class='gHOST' name='gHOST' value='<?php echo $gHOST; ?>' />
          
          <label for='gDATABASE'>DB Name:</label>
-         <input type='text' name='gDATABASE' value='<?php echo $gDATABASE; ?>' />
+         <input type='text' class='gDATABASE' name='gDATABASE' value='<?php echo $gDATABASE; ?>' />
          
          <label for='gUSERNAME'>DB Username:</label>
-         <input type='text' name='gUSERNAME' value='<?php echo $gUSERNAME; ?>' />
+         <input type='text' class='gUSERNAME' name='gUSERNAME' value='<?php echo $gUSERNAME; ?>' />
          
          <label for='gPASSWORD'>DB Password:</label>
-         <input type='text' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' />
+         <input type='text' class='gPASSWORD' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' />
          
          <label for='gPREFIX'>DB Table Prefix:</label>
          <input type='text' name='gPREFIX' value='<?php echo $gPREFIX; ?>' />
