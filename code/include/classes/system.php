@@ -225,6 +225,35 @@
       return (TRUE);
     } // VerifyNodeNetwork
     
+    function ClearExpiredTokensAndSessions () {
+    	
+    	// Remove tokens over a day old.
+    	$AUTHTOKENS = new cAUTHTOKENS ();
+   		$deletestatement = "DELETE FROM " . $AUTHTOKENS->TableName . " WHERE Stamp <  DATE_ADD(now(),INTERVAL -1 DAY)";
+    	$AUTHTOKENS->Query ($deletestatement);
+    	unset ($AUTHTOKENS);
+    	
+    	// Remove verification over a month old.
+    	$AUTHVERIFICATION = new cAUTHVERIFICATION ();
+   		$deletestatement = "DELETE FROM " . $AUTHVERIFICATION->TableName . " WHERE Stamp <  DATE_ADD(now(),INTERVAL -1 MONTH)";
+    	$AUTHVERIFICATION->Query ($deletestatement);
+    	unset ($AUTHVERIFICATION);
+    	
+    	// Remove tokens over a month old.
+    	$AUTHSESSIONS = new cAUTHSESSIONS ();
+   		$deletestatement = "DELETE FROM " . $AUTHSESSIONS->TableName . " WHERE Stamp <  DATE_ADD(now(),INTERVAL -1 MONTh)";
+    	$AUTHSESSIONS->Query ($deletestatement);
+    	unset ($AUTHSESSIONS);
+    	
+    	// Remove sessions over a month old.
+    	$USERSESSIONS = new cUSERSESSIONS ();
+   		$deletestatement = "DELETE FROM " . $USERSESSIONS->TableName . " WHERE Stamp <  DATE_ADD(now(),INTERVAL -1 MONTH)";
+    	$USERSESSIONS->Query ($deletestatement);
+    	unset ($USERSESSIONS);
+    	
+    	return (TRUE);
+    } // ClearExpiredTokens
+    
     function GetTrustedList () {
       return (TRUE);
     } // GetTrustedList

@@ -74,8 +74,6 @@
   // Initialize Appleseed.
   $zAPPLE->Initialize("site", TRUE);
   
-  $zJANITOR->VerifyNodeNetwork();
-  
   switch ($gACTION) {
     case 'UPDATE_NODE_NETWORK':
       // Update the node network.
@@ -85,6 +83,11 @@
     case 'VERIFY_NODE_NETWORK':
       // Verify the node network.
       $zJANITOR->VerifyNodeNetwork();
+    break;
+    
+    case 'CLEAR_EXPIRED_TOKENS_AND_SESSIONS':
+      // Clear any expired tokens.
+      $zJANITOR->ClearExpiredTokensAndSessions();
     break;
   } // switch
   
