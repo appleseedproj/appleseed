@@ -58,6 +58,8 @@
   $gADMINPASS = $_POST['gADMINPASS'];
   $gADMINPASSCONFIRM = $_POST['gADMINPASSCONFIRM'];
   
+  $gSTAMP = '_archive_' . date ('mdy_Hi', strtotime ('now'));
+  
   // Add http:// to Domain if not already there.
   if (strtolower(substr ($gDOMAIN, 0, 7)) != 'http://') $gDOMAIN = 'http://' . $gDOMAIN;
   
@@ -111,7 +113,8 @@
  div#confirmDatabaseConnection { float:left; clear:both; width:100%; padding:5px; text-align:center;}
  input#adminPassConfirm { margin-right:0; }
  div#checkPasswords { float:right; width:230px; text-align:right; padding:2px 0px; margin:0px 70px; font-weight:bold; }
- input.checkConnection { width:100px; margin:0; padding:0;}
+ div#upgradeWarning { float:right; width:100%; color:#ff0000; display:none; text-align:right; padding:2px 0px; margin:0px 70px; font-weight:bold; }
+ input.checkConnection { width:100px; color:#ff0000; margin:0; padding:0;}
  span.done, span.yes, span.no { float:left; width:8px; font-weight:bold; text-align:center; margin:5px 0px 5px 130px; padding:1px 3px; }
  span.done { width:auto; color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
  span.yes { color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
@@ -175,12 +178,36 @@
 	    	} // if
 	    } // for
 	    
+	    upgrade = document.getElementById('gUPGRADE');
+	    upgrade.onchange = function() {
+	    	upgradeWarning();
+	    	return (true);
+	    } // upgrade
+	    
 	    matchPasswords();
+	    upgradeWarning();
 	    
 	    return (false);
 	} // initialize
 	
+	function upgradeWarning () {
+		upgrade = document.getElementById('gUPGRADE');
+		warning = document.getElementById('upgradeWarning');
+		
+		if (upgrade.value == 0) {
+			warning.style.display = '';
+		} else {
+			warning.style.display = 'block';
+		} // if
+		
+		return (true);
+	} // upgradeWarning
+	
 	function finalValidation() {
+		submit = document.getElementById ('submit');
+		
+		submit.value = 'Please Wait...';
+		submit.style.color = '#8a8a8a';
 		return (true);
 	} // if
 	
@@ -278,6 +305,7 @@
 	            } else {
 	            	alert ('Connection to database failed!');
 					checkButton.value = 'Check Connection';
+					checkButton.style.color = '#ff0000';
 					okDatabase = false;
     				submitButton.disabled = true;
 	    			submitButton.value = 'Cannot Continue';
@@ -549,7 +577,7 @@ class cINSTALL {
     return (TRUE);
   } // WriteHtaccess
   
-  function ImportData ($pUSERNAME, $pPASSWORD, $pHOST, $pDATABASE, $gPREFIX) {
+  function ImportData ($pUSERNAME, $pPASSWORD, $pHOST, $pDATABASE, $pPREFIX, $pUPGRADE= FALSE) {
     global $ErrorString;
     
     $sql_install = "install.sql";
@@ -566,19 +594,176 @@ class cINSTALL {
         $sql .= fgets($sql_file, 4096);
     } // while
     
-    $sql = str_replace ("%PREFIX%", $gPREFIX, $sql);
+    $sql = str_replace ("%PREFIX%", $pPREFIX, $sql);
     
     $sql_lines = preg_split('/[\n\r]+/',$sql);
+    $result = true;
+    
+    // Perform backup first.
+    if (($pUPGRADE == 1) or ($pUPGRADE == 2)) {
+    	foreach ($sql_lines as $l => $line) {
+    		$commands = split (' ', $line);
+    		$command = $commands[0];
+    		if ($command != 'DROP') continue;
+    		$table = str_replace ('`', '', $commands[4]);
+    		$table = str_replace (';', '', $table);
+    		if (!$this->BackupTable ($table)) {
+   				$ErrorString = "Table backup could not be completed";
+   				return (FALSE);
+    		} // if
+    	} // foreach
+    } // if 
+    
     foreach ($sql_lines as $l => $line) {
     	if ($line == '') continue;
-    	if (!$result = @mysql_query ($line)) {
+    	$commands = split (' ', $line);
+    	$command = $commands[0];
+    	switch ($command) {
+    		case 'DROP':
+    			$table = str_replace ('`', '', $commands[4]);
+    			$table = str_replace (';', '', $table);
+    			@mysql_query ("LOCK TABLES `$table` WRITE");
+    			$result = @mysql_query ($line);
+    			@mysql_query ("UNLOCK TABLES");
+    		break;
+    		case 'CREATE':
+    			$table = str_replace ('`', '', $commands[2]);
+    			$result = @mysql_query ($line);
+    		break;
+    		case 'INSERT':
+    			$table = str_replace ('`', '', $commands[2]);
+			    if (($pUPGRADE == 1) or ($pUPGRADE == 2)) {
+    				$this->UpgradeTable($table, $line);
+    			} else { // if
+    		 		$result = @mysql_query ($line);
+			    } 
+    		break;
+    	} // switch
+    	if (!$result) {
     		$ErrorString = "MYSQL ERROR: " . mysql_error();
     		return (FALSE);
     	} // if
     } // foreach
     
+    // Delete backup tables if necessary.
+    if ($pUPGRADE == 2) {
+    	foreach ($sql_lines as $l => $line) {
+    		$commands = split (' ', $line);
+    		$command = $commands[0];
+    		if ($command != 'DROP') continue;
+    		$table = str_replace ('`', '', $commands[4]);
+    		$table = str_replace (';', '', $table);
+    		$this->DropBackupTable ($table);
+    	} // foreach
+    } // if 
+    
     return (TRUE);
   } // ImportData
+  
+  function UpgradeTable ($pTABLENAME, $pSQL) {
+  	global $gSTAMP;
+  	$backupTable = $gSTAMP . '_' . $pTABLENAME;
+  	
+  	// Grab the fields from the new table.
+  	$query = "
+		SHOW FIELDS FROM `$pTABLENAME`;
+	";
+	
+	$link = @mysql_query ($query);
+	while ($result = @mysql_fetch_object ($link)) {
+		$newFields[$result->Field] = $result;
+	}
+	
+  	// Grab the fields from the old table.
+  	$query = "
+		SHOW FIELDS FROM `$backupTable`;
+	";
+	
+	$link = @mysql_query ($query);
+	while ($result = @mysql_fetch_object ($link)) {
+		$oldFields[$result->Field] = $result;
+	}
+	
+	// Determine the common fields between them.
+	foreach ($newFields as $newFieldName=> $newField) {
+		if ($newField->Key == 'PRI') $newPrimaryKey = $newFieldName;
+		
+		foreach ($oldFields as $oldFieldName => $oldField) {
+			if ($oldField->Key == 'PRI') $oldPrimaryKey = $oldFieldName;
+			if ($newField == $oldField) {
+				$commonFields[$newFieldName] = $oldField;
+				$insertFields[] = $oldFieldName;
+				$selectFields[] = 'first.' . $oldFieldName;
+			} // if
+		} // foreach
+	} // foreach
+	
+	// If the primary keys are different, we can't merge.
+	if ($oldPrimaryKey != $newPrimaryKey) return (false);
+	
+	// Insert the SQL line.
+	$link = @mysql_query ($pSQL);
+	
+	$insert = join (', ', $insertFields);
+	$select = join (', ', $selectFields);
+	
+	// Merge the old data into the new one.
+	$query = "
+		REPLACE INTO `$pTABLENAME` ($insert) 
+		SELECT $select FROM `$backupTable` AS first, `$pTABLENAME` AS second 
+	";
+	
+	$link = @mysql_query ($query);
+	
+  	return (TRUE);
+  } // UpgradeTable
+  
+  function BackupTable ($pTABLENAME) {
+  	global $gSTAMP;
+  	$backupTable = $gSTAMP . '_' . $pTABLENAME;
+  	
+  	$query = "
+		DESC `$pTABLENAME`
+	";
+	
+	// Return if table doesn't already exist.
+    if (!$link = @mysql_query ($query)) return (TRUE);
+  	
+  	// Copy the structure.
+  	$query = "
+	  CREATE TABLE `$backupTable` LIKE `$pTABLENAME`
+	";
+	
+	// Error out if we couldn't backup the table.
+    if (!$link = @mysql_query ($query)) {
+    	return (FALSE);
+    }
+  	
+  	// Copy the data.
+  	$query = "
+	  INSERT INTO `$backupTable` SELECT * FROM `$pTABLENAME`
+	";
+	
+	// Error out if we couldn't backup the table.
+    if (!$link = @mysql_query ($query)) {
+    	return (FALSE);
+    }
+    
+  	return (TRUE);
+  } // BackupTable
+  
+  function DropBackupTable ($pTABLENAME) {
+  	global $gSTAMP;
+  	$backupTable = $gSTAMP . '_' . $pTABLENAME;
+  	
+  	$query = "
+		DROP TABLE IF EXISTS `$backupTable`
+	";
+	
+    $link = @mysql_query ($query);
+  	
+  	return (TRUE);
+  } // DropBackupTable
   
   function UpdateAdminUserPass ($pADMINUSER, $pADMINPASS) {
     global $gDATABASE, $gPREFIX;
@@ -684,11 +869,11 @@ class cINSTALL {
     if (!$this->ValidateForm()) return (FALSE);
     
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
-    global $gADMINUSER, $gADMINPASS;
+    global $gADMINUSER, $gADMINPASS, $gUPGRADE;
     
-    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.3', $gHOST, $gDOMAIN)) return (FALSE);
-    if (!$this->WriteHtaccess ()) return (FALSE);
-    if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX)) return (FALSE);
+    //if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.3', $gHOST, $gDOMAIN)) return (FALSE);
+    //if (!$this->WriteHtaccess ()) return (FALSE);
+    if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
     
     return (TRUE);
@@ -778,11 +963,15 @@ class cINSTALL {
        	 </div>
      
          <label for='gUPGRADE'>Upgrade if tables exist?</label>
-         <select name='gUPGRADE'>
+         <select id='gUPGRADE' name='gUPGRADE'>
          	<option <?php if ($gUPGRADE == '0') echo "selected"; ?> value='0'>No (Delete Existing)</option>
          	<option <?php if ($gUPGRADE == '1') echo "selected"; ?> value='1'>Yes (Backup Tables)</option>
          	<option <?php if ($gUPGRADE == '2') echo "selected"; ?> value='2'>Yes (No Backup)</option>
          </select>
+         
+     	 <div id='upgradeWarning'>
+     	 	Upgrading tables is still experimental.  Please use at your own risk.
+       	 </div>
          
        </div> <!-- #database -->
        
