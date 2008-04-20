@@ -58,7 +58,7 @@
   $gADMINPASS = $_POST['gADMINPASS'];
   $gADMINPASSCONFIRM = $_POST['gADMINPASSCONFIRM'];
   
-  $gSTAMP = '_archive_' . date ('mdy_Hi', strtotime ('now'));
+  $gSTAMP = '_archive_' . date ('mdy_His', strtotime ('now'));
   
   // Add http:// to Domain if not already there.
   if (strtolower(substr ($gDOMAIN, 0, 7)) != 'http://') $gDOMAIN = 'http://' . $gDOMAIN;
@@ -629,14 +629,11 @@ class cINSTALL {
     		case 'CREATE':
     			$table = str_replace ('`', '', $commands[2]);
     			$result = @mysql_query ($line);
+    			$tableList[$table] = $table;
     		break;
     		case 'INSERT':
     			$table = str_replace ('`', '', $commands[2]);
-			    if (($pUPGRADE == 1) or ($pUPGRADE == 2)) {
-    				$this->UpgradeTable($table, $line);
-    			} else { // if
-    		 		$result = @mysql_query ($line);
-			    } 
+   		 		$result = @mysql_query ($line);
     		break;
     	} // switch
     	if (!$result) {
@@ -644,6 +641,11 @@ class cINSTALL {
     		return (FALSE);
     	} // if
     } // foreach
+    
+    // Upgrade tables.
+    if (($pUPGRADE == 1) or ($pUPGRADE == 2)) {
+    	$this->UpgradeTables($tableList);
+    } // if
     
     // Delete backup tables if necessary.
     if ($pUPGRADE == 2) {
@@ -660,7 +662,16 @@ class cINSTALL {
     return (TRUE);
   } // ImportData
   
-  function UpgradeTable ($pTABLENAME, $pSQL) {
+  function UpgradeTables ($pTABLENAMES) {
+  	
+  	foreach ($pTABLENAMES as $table) {
+  		$this->UpgradeTable ($table);
+  	} // foreach
+  	
+  	return (true);
+  } // UpgradeTables
+  
+  function UpgradeTable ($pTABLENAME) {
   	global $gSTAMP;
   	$backupTable = $gSTAMP . '_' . $pTABLENAME;
   	
@@ -701,16 +712,13 @@ class cINSTALL {
 	// If the primary keys are different, we can't merge.
 	if ($oldPrimaryKey != $newPrimaryKey) return (false);
 	
-	// Insert the SQL line.
-	$link = @mysql_query ($pSQL);
-	
 	$insert = join (', ', $insertFields);
 	$select = join (', ', $selectFields);
 	
 	// Merge the old data into the new one.
 	$query = "
 		REPLACE INTO `$pTABLENAME` ($insert) 
-		SELECT $select FROM `$backupTable` AS first, `$pTABLENAME` AS second 
+		SELECT $select FROM `$backupTable` AS first
 	";
 	
 	$link = @mysql_query ($query);
