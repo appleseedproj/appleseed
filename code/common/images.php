@@ -53,6 +53,8 @@
   $zIMAGE = new cIMAGE();
   $zSERVER = new cSERVER();
   
+  $zSERVER->Initialize(NULL, FALSE);
+  
   // Load Site Information.
   $zSERVER->LoadSiteInfo ();
   
@@ -76,7 +78,6 @@
   
   // Split the URL information into a list.
   list ($null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = split ('/', $requested_pic);
-  
   
   // If we're not looking within the photos directory, then exit.
   if ($ROOTDIR != 'photos') exit;
