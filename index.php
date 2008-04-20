@@ -223,6 +223,7 @@
 		
 		submit.value = 'Please Wait...';
 		submit.style.color = '#8a8a8a';
+		submit.disabled = true;
 		return (true);
 	} // if
 	
@@ -934,10 +935,10 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS, $gUPGRADE;
     
-    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.3', $gHOST, $gDOMAIN)) return (FALSE);
-    if (!$this->WriteHtaccess ()) return (FALSE);
-    if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
-    if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
+    //if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.3', $gHOST, $gDOMAIN)) return (FALSE);
+    //if (!$this->WriteHtaccess ()) return (FALSE);
+    //if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
+    //if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
     
     return (TRUE);
   } // ProcessPost
