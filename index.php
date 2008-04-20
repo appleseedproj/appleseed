@@ -273,6 +273,7 @@
 	    if ((!host) || (!database) || (!username) || (!password)) {
 	    	alert ('Fill out database information before checking the connection!');
 			checkButton.value = 'Check Connection';
+			checkButton.style.color = '#ff0000';
 	    	return (false);
 	    } // if
 	    
