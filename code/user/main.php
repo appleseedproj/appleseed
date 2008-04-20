@@ -233,7 +233,7 @@
 
   // Set the page title.
   $gPAGESUBTITLE = ' - ' . $zFOCUSUSER->Username;
-
+  
   // Reroute to proper location.
   switch ($gPROFILEACTION) {
 

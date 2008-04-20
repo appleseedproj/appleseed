@@ -36,293 +36,171 @@
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
-  // Include Lightweight Server Classes
-  require_once ('code/include/classes/server/0.7.php'); 
-  
   // Suppress warning reports.
   error_reporting (E_ERROR);
   
+  // Retrieve variables from POST.
   $gACTION = $_POST['gACTION'];
-  $gTOKEN = $_POST['gTOKEN'];
+  $gVERSION = $_POST['gVERSION'];
   $gDOMAIN = $_POST['gDOMAIN'];
-  $gIDENTIFIER = $_POST['gIDENTIFIER'];
   
-  // Create the Server class.
-  $zSERVER = new cSERVER ($gDOMAIN);
-    
-  // Check for an authentication token.
-  if ( (!$gTOKEN) and (!$gIDENTIFIER) ) {
-    $errortitle = "ERROR.NOTOKEN";
-    $return = $zSERVER->XML->ErrorData ($errortitle);
-    
-    echo $return; exit;
+  // Determine which server to load.
+  $versions = split ('\.', $gVERSION);
+  $major = $versions[0]; $minor = $versions[1]; $micro = $versions[2];
+  if (!$minor) $minor = 0; if (!$micro) $micro = 0;
+  
+  // Load list of available server versions.
+  $handle = opendir('code/include/classes/asd/');
+  while (false !== ($file = readdir($handle))) {
+  		$file_exts = split ('\.', $file);
+  		if ($file_exts[count($file_exts)-1] != 'php') continue;
+  		$serverVersions[] = $file;
   } // if
   
+  if (!file_exists ('code/include/classes/asd/' . $gVERSION . '.php')) {
+  	// Loop through and find the latest version.
+  	foreach ($serverVersions as $serverVersion) {
+  	  $versions = split ('\.', $serverVersion);
+  	  $serverMajor = $versions[0]; $serverMinor = $versions[1]; $serverMicro = $versions[2];
+ 	  if (!$serverMinor) $serverMinor = 0; if (!$serverMicro) $serverMicro = 0;
+  	  if ($serverMajor > $major) continue; 
+  	  if (($serverMajor == $major) and ($serverMinor > $minor)) continue; 
+  	  if (($serverMajor == $major) and ($serverMinor == $minor) and ($serverMicro > $micro)) continue; 
+  	  $useVersion = $serverVersion;
+  	} // foreach
+  } else {
+  	$useVersion = $gVERSION . '.php';
+  } // if
+  
+  // Default to the earliest known server version if no version was supplied, and error out.
+  if (!$useVersion) {
+  	require_once ("code/include/classes/asd/0.7.3.php"); 
+  	$zSERVER = new cSERVER ();
+  	echo $zSERVER->NoVersion();
+  	exit;
+  } // if
+  
+  // Include Lightweight Server Classes
+  require_once ("code/include/classes/asd/$useVersion"); 
+  
+  // Create the Server class.
+  $zSERVER = new cSERVER ();
+    
   switch (strtoupper ($gACTION)) {
     case 'SITE_VERSION':
     case 'ASD_SITE_VERSION':
-    
-      $zSERVER->SiteVersion ($gTOKEN, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
+      echo $zSERVER->SiteVersion ();
+      exit;
     break;
     
     case 'USER_INFORMATION':
     case 'ASD_USER_INFORMATION':
-    
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Get User Info.
-      $zSERVER->UserInformation ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
-      
+      echo $zSERVER->UserInformation ();
+      exit;
     break;
     
     case 'TOKEN_CHECK':
     case 'ASD_TOKEN_CHECK':
-      
-      // Check Friend Status.
-      $zSERVER->TokenCheckLocal ($gTOKEN, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
-      
+      echo $zSERVER->TokenCheckLocal ();
+      exit;
     break;
     
     case 'FRIEND_STATUS':
     case 'ASD_FRIEND_STATUS':
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->FriendStatus ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
-      
+      echo $zSERVER->FriendStatus ();
+      exit;
     break;
     
     case 'FRIEND_REQUEST':
     case 'ASD_FRIEND_REQUEST':
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->FriendRequest ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data;
+      echo $zSERVER->FriendRequest ();
+      exit;
     break;
     
     case 'FRIEND_CANCEL':
     case 'ASD_FRIEND_CANCEL':
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->FriendCancel ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data;
+      echo $zSERVER->FriendCancel ();
+      exit;
     break;
     
     case 'FRIEND_DENY':
     case 'ASD_FRIEND_DENY':
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->FriendDeny ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data;
+      echo $zSERVER->FriendDeny ();
+      exit;
     break;
     
     case 'FRIEND_DELETE':
     case 'ASD_FRIEND_DELETE':
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->FriendDelete ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data;
+      echo $zSERVER->FriendDelete ();
+      exit;
     break;
     
     case 'FRIEND_APPROVE':
     case 'ASD_FRIEND_APPROVE':
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->FriendApprove ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data;
+      echo $zSERVER->FriendApprove ();
+      exit;
     break;
     
     case 'LOGIN_CHECK':
     case 'ASD_LOGIN_CHECK':
-    
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      $zSERVER->LoginCheck ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
-    
+      echo $zSERVER->LoginCheck ();
+      exit;
     break;
     
     case 'ICON_LIST':
     case 'ASD_ICON_LIST':
-    
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Retrieve the icon list.
-      $zSERVER->IconList ($gTOKEN, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
-      
+      echo $zSERVER->IconList ();
+      exit;
     break;
     
     case 'MESSAGE_RETRIEVE':
     case 'ASD_MESSAGE_RETRIEVE':
-    
-      $gIDENTIFIER = $_POST['gIDENTIFIER'];
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Retrieve a message. 
-      $zSERVER->MessageRetrieve ($gUSERNAME, $gIDENTIFIER);
-      
-      echo $zSERVER->XML->Data; exit;
-      
+      echo $zSERVER->MessageRetrieve ();
+      exit;
     break;
     
     case 'MESSAGE_NOTIFY':
     case 'ASD_MESSAGE_NOTIFY':
-      $gRECIPIENT       = $_POST['gRECIPIENT'];
-      $gFULLNAME        = $_POST['gFULLNAME'];
-      $gUSERNAME        = $_POST['gUSERNAME'];
-      $gIDENTIFIER      = $_POST['gIDENTIFIER'];
-      $gSUBJECT         = $_POST['gSUBJECT'];
-      
-      // Store a message notification. 
-      $zSERVER->MessageNotify ($gRECIPIENT, $gFULLNAME, $gUSERNAME, $gDOMAIN, $gIDENTIFIER, $gSUBJECT);
-      
-      echo $zSERVER->XML->Data; exit;
-      
+      echo $zSERVER->MessageNotify ();
+      exit;
     break;
     
     case 'GROUP_JOIN':
     case 'ASD_GROUP_JOIN':
-      $gGROUPNAME = $_POST['gGROUPNAME'];
-      $gUSERNAME = $_POST['gUSERNAME'];
-      
-      // Check Friend Status.
-      $zSERVER->GroupJoin ($gTOKEN, $gGROUPNAME, $gUSERNAME, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data;
+      echo $zSERVER->GroupJoin ();
       exit;
-      
     break;
     
     case 'GROUP_LEAVE':
     case 'ASD_GROUP_LEAVE':
-      // Check for an authentication token.
-      if (!$gTOKEN) {
-        $code = 1000;
-        $message = "ERROR.NOTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      // Authenticate token.
-      $AUTH = new cAUTHSESSIONS ();
-      $AUTH->Select ("Token", $gTOKEN);
-
-      if ($AUTH->CountResult () == 0) {
-        $code = 1000;
-        $message = "ERROR.INVALIDTOKEN";
-        $return = $zXML->ErrorData ($code, $message);
-        echo $return; exit;
-      } // if
-
-      $AUTH->FetchArray ();
-
-      $remoteusername = $AUTH->Username;
-      $remotedomain = $AUTH->Domain;
-      list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
-
-      unset ($AUTH);
-
-
-     $zGROUPS = new cGROUPINFORMATION ();
-     $zGROUPS->Select ("Name", $gGROUPNAME);
-
-     if ($zGROUPS->CountResult() == 0) {
-       $gSUCCESS = FALSE;
-       $gMESSAGE = "ERROR.NOTFOUND";
-       $data = implode ("", file ("code/include/data/xml/group_leave.xml"));
-       $return = $zAPPLE->ParseTags ($data);
-       echo $return;
-       exit;
-     } // if
-
-     $zGROUPS->FetchArray ();
-     $membercriteria = array ("Username"                 => $remoteusername,
-                              "Domain"                   => $remotedomain,
-                              "groupInformation_tID"     => $zGROUPS->tID);
-     $zGROUPS->groupMembers->SelectByMultiple ($membercriteria);
-     $zGROUPS->groupMembers->FetchArray ();
-     $zGROUPS->groupMembers->Delete ();
-
-     $gSUCCESS = TRUE;
-     $gMESSAGE = "MESSAGE.LEFT";
-
-     unset ($zGROUPS);
-
-     $data = implode ("", file ("code/include/data/xml/group_leave.xml"));
-     $return = $zAPPLE->ParseTags ($data);
-     echo $return;
+      echo $zSERVER->GroupLeave ();
+      exit;
     break;
     
     case 'GROUP_INFORMATION':
     case 'ASD_GROUP_INFORMATION':
-     $GROUP = new cGROUPINFORMATION ();
-     $GROUP->Select ("Name", $gGROUPNAME);
-
-     if ($GROUP->CountResult() == 0) {
-       $gSUCCESS = FALSE;
-       $gFULLNAME = "unknown";
-     } else {
-       $GROUP->FetchArray ();
-       $gSUCCESS = TRUE;
-       $gFULLNAME = $GROUP->Fullname;
-       $gDESCRIPTION = $GROUP->Description;
-       $gMEMBERS = $GROUP->groupMembers->CountMembers($gGROUPNAME);
-       $gSTAMP = $GROUP->Stamp;
-       $gTAGS = $GROUP->Tags . " ";
-     } // if
-
-     $data = implode ("", file ("code/include/data/xml/group_information.xml"));
-     $return = $zAPPLE->ParseTags ($data);
-
-     echo $return;
+      echo $zSERVER->GroupInformation ();
+      exit;
     break;
     
     case 'UPDATE_NODE_NETWORK':
     case 'ASD_UPDATE_NODE_NETWORK':
-    
-      $gSUMMARY = $_POST['gSUMMARY'];
-      $gUSERS = $_POST['gUSERS'];
-      
-      $zSERVER->UpdateNodeNetwork ($gTOKEN, $gDOMAIN, $gSUMMARY, $gUSERS);
-      
-      echo $zSERVER->XML->Data; exit;
-    
+      echo $zSERVER->UpdateNodeNetwork ();
+      exit;
     break;
     
     case 'NODE_INFORMATION':
     case 'ASD_NODE_INFORMATION':
-    
+      echo $zSERVER->NodeInformation ();
+      exit; 
     break;
     
     case 'TRUSTED_LIST':
     case 'ASD_TRUSTED_LIST':
-    
-      $zSERVER->TrustedList ($gTOKEN, $gDOMAIN);
-      
-      echo $zSERVER->XML->Data; exit;
-    
+      echo $zSERVER->TrustedList ();
+      exit;
     break;
+    
     
     default:
     break;

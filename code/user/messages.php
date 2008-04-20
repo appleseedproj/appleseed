@@ -206,7 +206,7 @@
 
     case 'LABEL_ALL':
       // NOTE:  Find a way to resolve conflict between global and POST variable.
-      $gLABELVALUE = $_POST['gLABELVALUE'];
+      $gLABELVALUE = $_REQUEST['gLABELVALUE'];
       $zMESSAGE->AddLabelToList ($gMASSLIST);
     break;
 
@@ -219,7 +219,7 @@
     case 'LABEL':
       $zMESSAGE->SelectMessage ($gIDENTIFIER);
       $zMESSAGE->LoadDraft ();
-      $gLABELVALUE = $_POST['gLABELVALUE'];
+      $gLABELVALUE = $_REQUEST['gLABELVALUE'];
       $zMESSAGE->Label ($gLABELVALUE);
     break;
 

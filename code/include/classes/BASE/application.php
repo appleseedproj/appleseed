@@ -93,34 +93,14 @@
       // Capture all errors and warnings.
       set_error_handler (array ($zDEBUG, 'HandleError'));
   
-      // Strip all slashes from POST data.
-      foreach ($_POST as $key => $value) {
+      // Strip all slashes from REQUEST data.
+      foreach ($_REQUEST as $key => $value) {
        
         // Put the global variable in local scope.
         global $$key;
-        $$key = $_POST[$key];
+        $$key = $_REQUEST[$key];
       
-        // Strip slashes off of post variable.
-        if (is_array ($$key) ) {
-          foreach ($$key as $k => $v) {
-            // Must create a reference to $$key, instead of using directly.
-            $array = &$$key;
-            $array[$k] = stripslashes ($v);
-          } // foreach
-        } else {
-           $$key = stripslashes ($value);
-        } // if
-      
-      } //foreach
-  
-      // Strip all slashes from GET data.
-      foreach ($_GET as $key => $value) {
-       
-        // Put the global variable in local scope.
-        global $$key;
-        $$key = $_GET[$key];
-      
-        // Strip slashes off of post variable.
+        // Strip slashes off of request variable.
         if (is_array ($$key) ) {
           foreach ($$key as $k => $v) {
             // Must create a reference to $$key, instead of using directly.

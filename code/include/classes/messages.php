@@ -590,7 +590,7 @@
 
       // Adjust for a recently deleted entry.
       $zAPPLE->AdjustScroll ('user.messages', $this);
-
+      
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
@@ -1808,6 +1808,8 @@
 
     function RetrieveMessage () {
       global $zXML, $zAPPLE, $zFOCUSUSER;
+      
+      global $gAPPLESEEDVERSION;
 
       // Message is a remote notification.
       $this->messageNotification->Select ("Identifier", $this->Identifier);
@@ -1817,6 +1819,7 @@
       $zREMOTE = new cREMOTE ($this->messageNotification->Sender_Domain);
       $datalist = array ("gACTION"          => "ASD_MESSAGE_RETRIEVE",
                          "gUSERNAME"        => $zFOCUSUSER->Username,
+                         "gVERSION"         => $gAPPLESEEDVERSION,
                          "gIDENTIFIER"      => $this->messageNotification->Identifier);
       $zREMOTE->Post ($datalist);
 
@@ -2433,6 +2436,8 @@
     function RemoteMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {
       global $zXML, $zREMOTE, $zSTRINGS;
       
+      global $gAPPLESEEDVERSION;
+      
       global $gSITEDOMAIN;
       
       // Get the information about the sender.
@@ -2453,6 +2458,7 @@
                          "gUSERNAME"        => $senderusername,
                          "gDOMAIN"          => $gSITEDOMAIN,
                          "gIDENTIFIER"      => $pIDENTIFIER,
+                         "gVERSION"         => $gAPPLESEEDVERSION,
                          "gSUBJECT"         => $pSUBJECT);
       $zREMOTE->Post ($datalist);
 

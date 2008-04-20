@@ -1267,8 +1267,9 @@
    } // BufferMemberList
 
     function Join ($pGROUPNAME, $pGROUPDOMAIN) {
+    	
       global $gSITEDOMAIN;
-
+      
       global $zSTRINGS, $zLOCALUSER, $zXML;
 
       $success = FALSE;

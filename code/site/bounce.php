@@ -3,8 +3,8 @@
   // | Appleseed Web Community Management Software                       |
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
-  // | FILE: login.php                               CREATED: 01-01-2005 + 
-  // | LOCATION: /code/site/                        MODIFIED: 04-11-2007 +
+  // | FILE: bounce.php                              CREATED: 01-01-2005 + 
+  // | LOCATION: /code/site/                        MODIFIED: 04-20-2008 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -59,7 +59,7 @@
 
   // Set Global Variables (Put this at the top of wrapper scripts)
   $zAPPLE->SetGlobals ();
-
+  
   // Initialize Appleseed.
   $zAPPLE->Initialize("site.login", TRUE);
 
@@ -71,7 +71,6 @@
   } // if
 
   $self = $_SERVER['HTTP_HOST'];
-
 
   // Check if requesting user is logged in
   if ($zLOCALUSER->Username) {

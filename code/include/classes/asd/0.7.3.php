@@ -3,8 +3,8 @@
   // | Appleseed Web Community Management Software                       |
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
-  // | FILE: server.php                              CREATED: 04-24-2007 + 
-  // | LOCATION: /code/include/classes/             MODIFIED: 04-24-2007 +
+  // | FILE: 0.7.3.php                               CREATED: 04-24-2007 + 
+  // | LOCATION: /code/include/classes/asd/         MODIFIED: 04-20-2008 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -52,13 +52,16 @@
     var $Token_Uid;
     var $ReturnUsername;
 
-    function cSERVER ($pHOST = NULL) {
-      
-      // Create XML object.
-      $this->XML = new cXML ();
+    function Initialize ($pHOST = NULL, $pTOKENCHECK = TRUE) {
+    	
+      $gTOKEN = $_POST['gTOKEN'];
+      $gIDENTIFIER = $_POST['gIDENTIFIER'];
       
       // Create REMOTE object.
       $this->REMOTE = new cREMOTE ($pHOST);
+      
+      // Create XML object.
+      $this->XML = new cXML ();
       
       // Initialize Variables.
       $this->SiteURL = null;
@@ -76,6 +79,13 @@
       // Load Site Information.
       $this->LoadSiteInfo ();
       
+      // Check for an authentication token.
+      if ( (!$gTOKEN) and (!$gIDENTIFIER) and ($pTOKENCHECK) ) {
+        $errortitle = "ERROR.NOTOKEN";
+        echo $this->XML->ErrorData ($errortitle);
+        exit;
+      } // if
+      
       // Create JSON Object
       $this->JSON = new cJSON ();
       
@@ -83,7 +93,19 @@
       $this->Connect ();
       
       return (TRUE);
-    } // Constructor
+    } // Initialize
+    
+    function NoVersion () {
+    	
+      // Initialize Class
+      $this->Initialize(NULL, FALSE);
+      
+      $errortitle = "ERROR.NOVERSION";
+      $return = $this->XML->ErrorData ($errortitle);
+      echo $return; exit;
+      
+      return ($return);
+    } // NoVersion
     
     function LoadSiteInfo () {
       $settings = file ("data/site.adat"); 
@@ -133,7 +155,12 @@
       return (TRUE);
     } // Connect
     
-    function TokenCheckLocal ($pTOKEN, $pDOMAIN) {
+    function TokenCheckLocal () {
+    	
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      $this->Initialize ($gDOMAIN);
       
       $authTokens = $this->TablePrefix . "authTokens";
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -151,8 +178,8 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pTOKEN),
-                                mysql_real_escape_string ($pDOMAIN));
+                                mysql_real_escape_string ($gTOKEN),
+                                mysql_real_escape_string ($gDOMAIN));
                                 
       $sql_result = mysql_query ($sql_statement);
       
@@ -161,8 +188,8 @@
       
       if ($result_count == 0) {
         // No results found.  Unauthenticated. Send back an error.
-        $this->XML->ErrorData ("ERROR.NOTFOUND");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return ($return);
       } else {
         global $gFULLNAME;
         global $gUSERNAME;
@@ -196,10 +223,14 @@
         mysql_free_result ($sql_result);
       } // if
       
-      return (TRUE);
+      $return = $this->XML->Data;
+      
+      return ($return);
     } // TokenCheckLocal
     
     function TokenCheckRemote ($pTOKEN, $pDOMAIN) {
+    	
+      global $gAPPLESEEDVERSION;
      
       $userAuth = $this->TablePrefix . 'userAuthorization'; 
       $authTokens = $this->TablePrefix . 'authTokens'; 
@@ -228,6 +259,7 @@
         $REMOTE = new cREMOTE ($pDOMAIN);
         $datalist = array ("gACTION"   => "ASD_TOKEN_CHECK",
                            "gTOKEN"    => $pTOKEN,
+                           "gVERSION"  => $gAPPLESEEDVERSION,
                            "gDOMAIN"   => $this->SiteDomain);
         $REMOTE->Post ($datalist, 1);
 
@@ -306,18 +338,24 @@
       return (TRUE);
     } // TokenStore
     
-    function FriendRequest ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendRequest () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -336,7 +374,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME)
+                                mysql_real_escape_string ($gUSERNAME)
                                 );
       
       $sql_result = mysql_query ($sql_statement);
@@ -357,8 +395,8 @@
       
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($uID),
-                                mysql_real_escape_string ($pUSERNAME),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gUSERNAME),
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query ($sql_statement);
@@ -396,7 +434,7 @@
                                 mysql_real_escape_string ($uID),
                                 mysql_real_escape_string ($sID),
                                 mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query($sql_statement);
@@ -417,7 +455,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -426,22 +464,30 @@
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/friend_request.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      return ($return);
     } // FriendRequest
     
-    function GroupJoin ($pTOKEN, $gGROUPNAME, $pUSERNAME, $pDOMAIN) {
+    function GroupJoin () {
     	
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $gGROUPNAME = $_POST['gGROUPNAME'];
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+    	
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $zGROUPS = new cGROUPINFORMATION ();
@@ -455,8 +501,8 @@
         echo $return;
         exit;
       } // if
-      $remoteusername = $pUSERNAME;
-      $remotedomain = $pDOMAIN;
+      $remoteusername = $gUSERNAME;
+      $remotedomain = $gDOMAIN;
  
       $zGROUPS->FetchArray ();
       $membercriteria = array ("Username"                 => $remoteusername,
@@ -490,21 +536,102 @@
       $data = implode ("", file ("code/include/data/xml/group_join.xml"));
       $this->XML->Data = $zAPPLE->ParseTags ($data);
        
-       return (TRUE);
+      return (TRUE);
      } // GroupJoin
-    
-    function FriendDeny ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+     
+     function GroupLeave () {
+     	
+     	$AUTH->Select ("Token", $gTOKEN);
+
+        if ($AUTH->CountResult () == 0) {
+          $code = 1000;
+          $message = "ERROR.INVALIDTOKEN";
+          $return = $zXML->ErrorData ($code, $message);
+          echo $return; exit;
+        } // if
+  
+        $AUTH->FetchArray ();
+  
+        $remoteusername = $AUTH->Username;
+        $remotedomain = $AUTH->Domain;
+        list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
+  
+        unset ($AUTH);
+  
+  
+       $zGROUPS = new cGROUPINFORMATION ();
+       $zGROUPS->Select ("Name", $gGROUPNAME);
+  
+       if ($zGROUPS->CountResult() == 0) {
+         $gSUCCESS = FALSE;
+         $gMESSAGE = "ERROR.NOTFOUND";
+         $data = implode ("", file ("code/include/data/xml/group_leave.xml"));
+         $return = $zAPPLE->ParseTags ($data);
+         echo $return;
+         exit;
+       } // if
+  
+       $zGROUPS->FetchArray ();
+       $membercriteria = array ("Username"                 => $remoteusername,
+                                "Domain"                   => $remotedomain,
+                                "groupInformation_tID"     => $zGROUPS->tID);
+       $zGROUPS->groupMembers->SelectByMultiple ($membercriteria);
+       $zGROUPS->groupMembers->FetchArray ();
+       $zGROUPS->groupMembers->Delete ();
+  
+       $gSUCCESS = TRUE;
+       $gMESSAGE = "MESSAGE.LEFT";
+  
+       unset ($zGROUPS);
+  
+       $data = implode ("", file ("code/include/data/xml/group_leave.xml"));
+       $return = $zAPPLE->ParseTags ($data);
+       echo $return;
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+     } // GroupLeave
+     
+     function GroupInformation () {
+       $GROUP = new cGROUPINFORMATION ();
+       $GROUP->Select ("Name", $gGROUPNAME);
+
+       if ($GROUP->CountResult() == 0) {
+         $gSUCCESS = FALSE;
+         $gFULLNAME = "unknown";
+       } else {
+         $GROUP->FetchArray ();
+         $gSUCCESS = TRUE;
+         $gFULLNAME = $GROUP->Fullname;
+         $gDESCRIPTION = $GROUP->Description;
+         $gMEMBERS = $GROUP->groupMembers->CountMembers($gGROUPNAME);
+         $gSTAMP = $GROUP->Stamp;
+         $gTAGS = $GROUP->Tags . " ";
+       } // if
+  
+       $data = implode ("", file ("code/include/data/xml/group_information.xml"));
+       $return = $zAPPLE->ParseTags ($data);
+  
+       echo $return;
+    	
+    } // GroupInformation
+    
+    function FriendDeny () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -526,9 +653,9 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($gUSERNAME),
                                 mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query($sql_statement);
@@ -546,7 +673,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -555,22 +682,30 @@
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/friend_deny.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      
+      return ($return);
     } // FriendDeny
     
-    function FriendCancel ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendCancel () {
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -592,9 +727,9 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($gUSERNAME),
                                 mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query($sql_statement);
@@ -612,7 +747,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -621,22 +756,30 @@
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/friend_cancel.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      
+      return ($return);
     } // FriendCancel
     
-    function FriendDelete ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendDelete () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       
@@ -659,9 +802,9 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($gUSERNAME),
                                 mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query($sql_statement);
@@ -679,7 +822,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -688,22 +831,29 @@
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/friend_delete.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      return ($return);
     } // FriendDelete
     
-    function FriendApprove ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendApprove () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
@@ -725,9 +875,9 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($gUSERNAME),
                                 mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query($sql_statement);
@@ -746,7 +896,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -755,24 +905,31 @@
       mysql_free_result ($sql_result);
       
       $this->XML->Load ("code/include/data/xml/friend_approve.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      
+      return ($return);
     } // FriendApprove
     
-    function FriendStatus ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function FriendStatus () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize ($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
-      
       
       $userAuth = $this->TablePrefix . "userAuthorization";
       $friendInfo = $this->TablePrefix . "friendInformation";
@@ -786,9 +943,9 @@
         AND $friendInfo.Domain='%s';
       ";
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
+                                mysql_real_escape_string ($gUSERNAME),
                                 mysql_real_escape_string ($this->ReturnUsername),
-                                mysql_real_escape_string ($pDOMAIN)
+                                mysql_real_escape_string ($gDOMAIN)
                                 );
                                 
       $sql_result = mysql_query ($sql_statement);
@@ -799,35 +956,50 @@
       if (!$gFRIENDSTATUS = $result['Verification']) $gFRIENDSTATUS = 0;
       
       $this->XML->Load ("code/include/data/xml/friend_status.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      
+      return ($return);
     } // FriendStatus
     
-    function SiteVersion ($pTOKEN, $pDOMAIN) {
+    function SiteVersion () {
+    	
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       $this->XML->Load ("code/include/data/xml/site_version.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      
+      return ($return);
     } // SiteVersion
       
-    function UserInformation ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function UserInformation () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize($gDOMAIN);
+    	
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked (NULL, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked (NULL, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       // Load and send back the fullname.
@@ -845,7 +1017,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -862,7 +1034,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query($sql_statement);
       $result = mysql_fetch_assoc ($sql_result);
@@ -878,22 +1050,31 @@
       if ($difference < 180) $gONLINE = "ONLINE";
             
       $this->XML->Load ("code/include/data/xml/user_information.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      
+      return ($return);
     } // UserInformation
     
-    function LoginCheck ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function LoginCheck () {
+    	
+      global $gUSERNAME;
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $this->Initialize($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $authVerification = $this->TablePrefix . "authVerification";
@@ -911,9 +1092,9 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
-                                mysql_real_escape_string ($pDOMAIN),
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME),
+                                mysql_real_escape_string ($gDOMAIN),
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query ($sql_statement);
 
@@ -923,9 +1104,8 @@
       if ($result_count) {
         $result = mysql_fetch_assoc ($sql_result);
         
-        global $gUSERNAME, $gFULLNAME, $gTIME, $gDOMAIN;
+        global $gFULLNAME, $gTIME, $gDOMAIN;
         global $gADDRESS, $gHOST;
-        $gUSERNAME = $pUSERNAME;
         $gFULLNAME = $result['Fullname'];
         if ($result['Alias']) $gFULLNAME = $result['Alias'];
         $gTIME = time ();
@@ -950,27 +1130,34 @@
         
       } else {
         // No results found.  Unauthenticated. Send back an error.
-        $this->XML->ErrorData ("ERROR.UNVERIFIED");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.UNVERIFIED");
+        return ($return);
       } // if
       
       $this->XML->Load ("code/include/data/xml/login_check.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      return ($return);
     } // LoginCheck
     
-    function IconList ($pTOKEN, $pUSERNAME, $pDOMAIN) {
+    function IconList () {
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
+      
+      $this->Initialize($gDOMAIN);
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $userIcons = $this->TablePrefix . "userIcons";
@@ -989,9 +1176,9 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
-                                mysql_real_escape_string ($pDOMAIN),
-                                mysql_real_escape_string ($pUSERNAME));
+                                mysql_real_escape_string ($gUSERNAME),
+                                mysql_real_escape_string ($gDOMAIN),
+                                mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query ($sql_statement);
 
@@ -1011,12 +1198,17 @@
       $this->XML->Load ("code/include/data/xml/icon_list/bottom.xml");
       $finaldata .= $this->XML->Data;
       
-      $this->XML->Data = $finaldata;
+      $return = $this->XML->Data = $finaldata;
       
-      return (TRUE);
+      return ($return);
     } // IconList
     
-    function MessageRetrieve ($pUSERNAME, $pIDENTIFIER) {
+    function MessageRetrieve () {
+    	
+      $this->Initialize();
+      
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gIDENTIFIER = $_POST['gIDENTIFIER'];
       
       $messageStore = $this->TablePrefix . "messageStore";
       $messageRecipient = $this->TablePrefix . "messageRecipient";
@@ -1039,19 +1231,13 @@
         AND    $messageRecipient.messageStore_tID = $messageStore.tID;
       ";
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pUSERNAME),
-                                mysql_real_escape_string ($pIDENTIFIER));
+                                mysql_real_escape_string ($gUSERNAME),
+                                mysql_real_escape_string ($gIDENTIFIER));
                                 
       $sql_result = mysql_query ($sql_statement);
       
       // Check if we got a result row.
       $result_count = mysql_num_rows ($sql_result);
-      
-      if ($result_count == 0) {
-        // No results found.  Unauthenticated. Send back an error.
-        $this->XML->ErrorData ("ERROR.NOTFOUND");
-        return (FALSE);
-      } // if
       
       $result = mysql_fetch_assoc ($sql_result);
       global $gSUBJECT, $gBODY, $gSTAMP, $gFULLNAME;
@@ -1063,10 +1249,16 @@
       $domain = $result['Domain'];
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
       
+      if ($result_count == 0) {
+        // No results found.  Unauthenticated. Send back an error.
+        $return = $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return ($return);
+      } // if
+      
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $domain)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $domain)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       // Mark message as read.
@@ -1079,22 +1271,33 @@
       ";
                        
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pIDENTIFIER),
+                                mysql_real_escape_string ($gIDENTIFIER),
                                 $tID);
                                 
       $sql_result = mysql_query ($sql_statement);
       
       $this->XML->Load ("code/include/data/xml/message_retrieve.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      return ($return);
     } // MessageRetrieve
     
-    function MessageNotify ($pRECIPIENT, $pFULLNAME, $pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT) {
+    function MessageNotify () {
+      
+      $gRECIPIENT       = $_POST['gRECIPIENT'];
+      $gFULLNAME        = $_POST['gFULLNAME'];
+      $gUSERNAME        = $_POST['gUSERNAME'];
+      $gSUBJECT         = $_POST['gSUBJECT'];
+      $gTOKEN           = $_POST['gTOKEN'];
+      $gDOMAIN          = $_POST['gDOMAIN'];
+      $gIDENTIFIER      = $_POST['gIDENTIFIER'];
+      
+      $this->Initialize($gDOMAIN);
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked ($pUSERNAME, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked ($gUSERNAME, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       global $gSUCCESS, $gFULLNAME;
@@ -1114,7 +1317,7 @@
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pRECIPIENT));
+                                mysql_real_escape_string ($gRECIPIENT));
                                 
       $sql_result = mysql_query ($sql_statement);
       
@@ -1123,8 +1326,8 @@
       
       if ($result_count == 0) {
         // No results found.  No such user.
-        $this->XML->ErrorData ("ERROR.NOTFOUND");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return ($return);
       } // if
       
       $result = mysql_fetch_assoc ($sql_result);
@@ -1148,15 +1351,15 @@
       
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($uid),
-                                mysql_real_escape_string ($pUSERNAME),
-                                mysql_real_escape_string ($pDOMAIN),
-                                mysql_real_escape_string ($pIDENTIFIER),
-                                mysql_real_escape_string ($pSUBJECT));
+                                mysql_real_escape_string ($gUSERNAME),
+                                mysql_real_escape_string ($gDOMAIN),
+                                mysql_real_escape_string ($gIDENTIFIER),
+                                mysql_real_escape_string ($gSUBJECT));
       
       if (!$sql_result = mysql_query ($sql_statement)) {
         // Unable to insert notification.
-        $this->XML->ErrorData ("ERROR.FAILED");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.FAILED");
+        return ($return);
       } // if
       
       mysql_free_result ($sql_result);
@@ -1221,10 +1424,10 @@
       
       $gSUCCESS = TRUE;
       
-      $messagesurl = "http://" . $this->SiteDomain . "/profile/" . $pRECIPIENT . "/messages/";
+      $messagesurl = "http://" . $this->SiteDomain . "/profile/" . $gRECIPIENT . "/messages/";
       $from = str_replace ('%SITEDOMAIN%', $this->SiteDomain, $from);
       $subject = str_replace ('%SITEDOMAIN%', $this->SiteDomain, $subject);
-      $message = str_replace ('%SENDERNAME%', $pFULLNAME, $message);
+      $message = str_replace ('%SENDERNAME%', $gFULLNAME, $message);
       $message = str_replace ('%RECIPIENTFULLNAME%', $gFULLNAME, $message);
       $message = str_replace ('%MESSAGESURL%', $messagesurl, $message);
       
@@ -1235,12 +1438,13 @@
       mail ($email, $subject, $message, $headers);
       
       $this->XML->Load ("code/include/data/xml/message_notify.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      return ($return);
     } // MessageNotify
     
     function Blocked ($pUSERNAME, $pDOMAIN) {
-      
+    	
       // domain.com              = blocks domain.com and all subdomains.
       // *.domain.com            = same as above
       // *.com                   = blocks all .com domains
@@ -1353,20 +1557,27 @@
       return (FALSE);
     } // Blocked
     
-    function UpdateNodeNetwork ($pTOKEN, $pDOMAIN, $pSUMMARY, $pUSERS) {
+    function UpdateNodeNetwork () {
+    	
+      $gSUMMARY = $_POST['gSUMMARY'];
+      $gUSERS = $_POST['gUSERS'];
+      $gTOKEN = $_POST['gTOKEN'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      $pSUMMARY = strip_tags ($pSUMMARY, '<a>');
+      $this->Initialize ($gDOMAIN);
       
-      if (!$this->TokenCheckRemote ($pTOKEN, $pDOMAIN) ) {
+      $gSUMMARY = strip_tags ($gSUMMARY, '<a>');
+      
+      if (!$this->TokenCheckRemote ($gTOKEN, $gDOMAIN) ) {
         // Invalid token, exit.
-        $this->XML->ErrorData ("ERROR.TOKEN");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.TOKEN");
+        return ($return);
       } // if
       
       // Check if site or user is blocked.
-      if ($errorcode = $this->Blocked (NULL, $pDOMAIN)) {
-        $this->XML->ErrorData ($errorcode);
-        return (FALSE);
+      if ($errorcode = $this->Blocked (NULL, $gDOMAIN)) {
+        $return = $this->XML->ErrorData ($errorcode);
+        return ($return);
       } // if
       
       $contentNodes = $this->TablePrefix . "contentNodes";
@@ -1377,7 +1588,7 @@
          WHERE Domain = '%s'
       ";
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($pDOMAIN));
+                                mysql_real_escape_string ($gDOMAIN));
                                 
       $sql_result = mysql_query ($sql_statement);
       $result_count = mysql_num_rows ($sql_result);
@@ -1394,9 +1605,9 @@
            WHERE Domain = '%s'
         ";
         $sql_statement = sprintf ($sql_statement,
-                                  mysql_real_escape_string ($pUSERS),
-                                  mysql_real_escape_string ($pSUMMARY),
-                                  mysql_real_escape_string ($pDOMAIN));
+                                  mysql_real_escape_string ($gUSERS),
+                                  mysql_real_escape_string ($gSUMMARY),
+                                  mysql_real_escape_string ($gDOMAIN));
                                 
       } else {
         $sql_statement = "
@@ -1405,16 +1616,16 @@
                VALUES ('%s', '%s', '%s', NOW(), 0);
         ";
         $sql_statement = sprintf ($sql_statement,
-                                  mysql_real_escape_string ($pDOMAIN),
-                                  mysql_real_escape_string ($pSUMMARY),
-                                  mysql_real_escape_string ($pUSERS));
+                                  mysql_real_escape_string ($gDOMAIN),
+                                  mysql_real_escape_string ($gSUMMARY),
+                                  mysql_real_escape_string ($gUSERS));
                                 
         // No result found, add.
       } // if
                                 
       if (!$sql_result = mysql_query ($sql_statement)) {
-        $this->XML->ErrorData ("ERROR.NOTFOUND");
-        return (FALSE);
+        $return = $this->XML->ErrorData ("ERROR.NOTFOUND");
+        return ($return);
       } // if;
       
       global $gMESSAGE, $gSUCCESS;
@@ -1422,11 +1633,19 @@
       $gMESSAGE = "MESSAGE.UPDATED";
       $gSUCCESS = TRUE;
       $this->XML->Load ("code/include/data/xml/update_node_network.xml");
+      $return = $this->XML->Data;
       
-      return (TRUE);
+      return ($return);
     } // UpdateNodeNetwork
     
+    function TrustedList () {
+    } // TrustedList
+    
   } // cSERVER
+  
+  // Client class for node communication.
+  class cCLIENT {
+  } // cCLIENT
   
   class cAJAX extends cSERVER {
     
@@ -1458,20 +1677,24 @@
       $this->Connect ();
       
       return (TRUE);
-      
     } // Constructor
     
-    function GetUserInformation ($pUSERNAME, $pDOMAIN) {
+    function GetUserInformation () {
+    	
+      $gUSERNAME = $_POST['gUSERNAME'];
+      $gDOMAIN = $_POST['gDOMAIN'];
       
-      $token = $this->LoadToken ('*', $pDOMAIN);
+      $this->Initialize ($gDOMAIN);
+      
+      $token = $this->LoadToken ('*', $gDOMAIN);
       
       if (!$token) {
-        $token = $this->CreateToken ('*', $pDOMAIN);
+        $token = $this->CreateToken ('*', $gDOMAIN);
       } // if
       
-      $REMOTE = new cREMOTE ($pDOMAIN);
+      $REMOTE = new cREMOTE ($gDOMAIN);
       $datalist = array ("gACTION"     => "ASD_USER_INFORMATION",
-                         "gUSERNAME"   => $pUSERNAME,
+                         "gUSERNAME"   => $gUSERNAME,
                          "gDOMAIN"     => $this->SiteDomain,
                          "gTOKEN"      => $token);
       $REMOTE->Post ($datalist, 1);

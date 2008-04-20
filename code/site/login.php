@@ -53,10 +53,11 @@
   require_once ('code/include/classes/users.php'); 
   require_once ('code/include/classes/auth.php'); 
   require_once ('code/include/classes/search.php'); 
+  require_once ('code/include/classes/asd/0.7.3.php'); 
 
   // Create the Application class.
   $zAPPLE = new cAPPLESEED ();
-
+  
   // Set Global Variables (Put this at the top of wrapper scripts)
   $zAPPLE->SetGlobals ();
 
@@ -123,6 +124,9 @@
       $gLOGINBOX = "remotelogin";
     break;
     case 'return':
+    
+      //****** BEGIN    ******/
+      
       // Create the Remote class.
       $zREMOTE = new cREMOTE ($gREFERENCEDOMAIN);
 
@@ -138,6 +142,7 @@
       $datalist = array ("gACTION"   => "ASD_LOGIN_CHECK",
                          "gUSERNAME" => $gREFERENCEUSERNAME,
                          "gTOKEN"    => $token,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
                          "gDOMAIN"   => $self);
       $zREMOTE->Post ($datalist);
 
@@ -148,6 +153,8 @@
       $zREMOTEUSER->Fullname = $zXML->GetValue ("fullname", 0);
       $zREMOTEUSER->Domain = $zXML->GetValue ("domain", 0);
 
+      //****** END    ******/
+      
       if ($zREMOTEUSER->Username) {
         $zREMOTEUSER->Create (FALSE, "gREMOTELOGINSESSION");
       } // if

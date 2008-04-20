@@ -33,6 +33,9 @@
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
   
+  // Turn off error reporting.
+  error_reporting (E_NONE);
+
   // HANDLE AJAX REQUEST.
   if ($_POST['gACTION'] == 'CHECK') {
   	$host = $_POST['gHOST']; $database = $_POST['gDATABASE']; $username = $_POST['gUSERNAME']; $password = $_POST['gPASSWORD'];

@@ -2034,7 +2034,8 @@ form#compose p.error:hover {
 } 
 
 #user #messages #container li span.subject {
- width:370px;
+ width:360px;
+ 
  overflow:hidden;
  display:inline;
  top:0px;
@@ -2057,7 +2058,7 @@ form#compose p.error:hover {
 } 
 
 #user #messages #container li span.stamp {
- width:50px;
+ width:60px;
  overflow:hidden;
  display:inline;
  top:0px;

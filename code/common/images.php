@@ -39,7 +39,7 @@
   
   // Only include base and server.
   require_once ('code/include/classes/base.php'); 
-  require_once ('code/include/classes/server/0.7.php'); 
+  require_once ('code/include/classes/asd/0.7.3.php'); 
   
   define ("PRIVACY_ALLOW",     "0");
   define ("PRIVACY_SCREEN",    "1");

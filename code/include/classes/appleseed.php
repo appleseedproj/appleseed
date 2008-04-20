@@ -153,11 +153,11 @@
       if ($pREGISTERGLOBALS) {
 
         // Strip all slashes from POST data.
-        foreach ($_POST as $key => $value) {
+        foreach ($_REQUEST as $key => $value) {
        
           // Put the global variable in local scope.
           global $$key;
-          $$key = $_POST[$key];
+          $$key = $_REQUEST[$key];
         
           // Strip slashes off of post variable.
           if (is_array ($$key) ) {
@@ -172,27 +172,6 @@
         
         } //foreach
     
-        // Strip all slashes from GET data.
-        foreach ($_GET as $key => $value) {
-         
-          // Put the global variable in local scope.
-          global $$key;
-          if ($$key) continue;
-        
-          $$key = $_GET[$key];
-  
-          // Strip slashes off of post variable.
-          if (is_array ($$key) ) {
-            foreach ($$key as $k => $v) {
-              // Must create a reference to $$key, instead of using directly.
-              $array = &$$key;
-              $array[$k] = stripslashes ($v);
-            } // foreach
-          } else {
-             $$key = stripslashes ($value);
-          } // if
-      
-        } //foreach
       } // if
   
       // Load site title and url into global variable.
@@ -424,6 +403,7 @@
       
       global $zLOCALUSER, $zREMOTEUSER, $zXML;
       global $gLOGINSESSION, $gREMOTELOGINSESSION;
+      global $gAPPLESEEDVERSION;
 
       $host = $_SERVER['HTTP_HOST'];
       $self = $_SERVER['REQUEST_URI'];
@@ -435,7 +415,7 @@
       list ($value, $bounce) = split ('\=', $get);
       $get = '?' . $get;
       
-      if ($$value) {
+      if (($value == 'bounce') and ($$value)) {
         // Remove any logged in users.
         if ($gLOGINSESSION) $zLOCALUSER->userSession->Destroy ('gLOGINSESSION');
         if ($gREMOTELOGINSESSION) $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
@@ -465,6 +445,7 @@
         $datalist = array ("gACTION"   => "ASD_LOGIN_CHECK",
                            "gTOKEN"    => $token,
                            "gUSERNAME" => $username,
+                           "gVERSION"  => $gAPPLESEEDVERSION,
                            "gDOMAIN"   => $host);
         $zREMOTE->Post ($datalist);
 

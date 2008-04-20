@@ -2893,9 +2893,11 @@
       } // if
 
       if ($pIMAGE) {
-        $this->Output = "<a " . $styledef . "href=\"$pTARGET\" onClick=\"javascript:jPOSTLINK('$pTARGET', '$finalstring', '$pCONFIRM'); return false;\" ><img src='$pIMAGE' $pWIDTH $pHEIGHT border='0' /></a>";
+        //$this->Output = "<a " . $styledef . "href=\"$pTARGET\" onClick=\"javascript:jPOSTLINK('$pTARGET', '$finalstring', '$pCONFIRM'); return false;\" ><img src='$pIMAGE' $pWIDTH $pHEIGHT border='0' /></a>";
+        $this->Output = "<a " . $styledef . "href=\"$pTARGET?$finalstring\" confirm=\"$pCONFIRM\"><img src='$pIMAGE' $pWIDTH $pHEIGHT border='0' /></a>";
       } else {
-        $this->Output = "<a " . $styledef . "href=\"$pTARGET\" onClick=\"jPOSTLINK('$pTARGET', '$finalstring', '$pCONFIRM'); return false;\">$pTEXT</a>";
+        //$this->Output = "<a " . $styledef . "href=\"$pTARGET\" onClick=\"jPOSTLINK('$pTARGET', '$finalstring', '$pCONFIRM'); return false;\">$pTEXT</a>";
+        $this->Output = "<a " . $styledef . "href=\"$pTARGET?$finalstring\" confirm=\"$pCONFIRM\">$pTEXT</a>";
       } // if
 
       return ($this->Output);
