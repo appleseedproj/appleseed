@@ -785,6 +785,7 @@
 
     function GetUserInformation () {
       global $zLOCALUSER, $zREMOTE, $zAPPLE, $zXML;
+      global $zSTRINGS;
 
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
