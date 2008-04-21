@@ -37,7 +37,7 @@
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
   // Include Lightweight Server Classes
-  require_once ('code/include/classes/server.php'); 
+  require_once ('code/include/classes/asd/0.7.3.php'); 
   
   // Suppress warning reports.
   error_reporting (E_ERROR);

@@ -79,7 +79,7 @@
         username: username, 
         domain: domain
       });
-    
+      
 	    var currentElement   = $$('.unloaded')[0];
 	    var currentElementFullname = $$('.unloaded .fullname')[0];
 	    var currentElementOnline = $$('.unloaded .online')[0];

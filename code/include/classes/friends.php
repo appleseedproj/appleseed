@@ -798,37 +798,28 @@
           $return = array ($fullname, $online);
           return ($return);
         } // if
-
-        $token = $this->Token (NODE_ALL_USERS, $this->Domain);
-
-        // Check Online (remote)
-        $zREMOTE = new cREMOTE ($this->Domain);
-        $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
-                           "gUSERNAME" => $this->Username,
-                           "gVERSION"  => $gAPPLESEEDVERSION,
-                           "gDOMAIN"   => $gSITEDOMAIN,
-                           "gTOKEN"    => $token);
-        $zREMOTE->Post ($datalist, 1);
-        $zXML->Parse ($zREMOTE->Return);
-
-        // If no appleseed version was retrieved, an invalid url was used.
-        $version = ucwords ($zXML->GetValue ("version", 0));
-        if (!$version) return (FALSE);
-
-        // If no user was found, return FALSE.
-        $errorcode = ucwords ($zXML->GetValue ("code", 0));
-        if ($errorcode) return (FALSE);
-
-        $fullname = ucwords ($zXML->GetValue ("fullname", 0));
-        $email = $zXML->GetValue ("email", 0);
-
-        $online = FALSE;
-        if ($zXML->GetValue ("online", 0) == "ONLINE") $online = TRUE;
-
+        
+        // Select which server to use.
+        $useServer = $zAPPLE->ChooseServerVersion ($this->Domain);
+        if (!$useServer) {
+          $this->Error = -1;
+          $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
+          $this->Message = $zSTRINGS->Output;
+      	  return (FALSE);
+        } // if
+      
+        require_once ('code/include/classes/asd/' . $useServer);
+      
+        $CLIENT = new cCLIENT();
+        $remotedata = $CLIENT->GetUserInformation($this->Username, $this->Domain);
+        unset ($CLIENT);
+        
+        $fullname = $remotedata->Fullname;
+        $online = $remotedata->Online;
+      
         // Cache Information
-        $this->InformationCache[$this->Username][$this->Domain]['FULLNAME'] = $fullname;
-        $this->InformationCache[$this->Username][$this->Domain]['EMAIL'] = $email;
-        $this->InformationCache[$this->Username][$this->Domain]['ONLINE'] = $online;
+        $this->InformationCache[$this->Username][$this->Domain]['FULLNAME'] = $remotedata->Fullname;
+        $this->InformationCache[$this->Username][$this->Domain]['ONLINE'] = $remotedata->Online;
 
         unset ($zREMOTE);
       } elseif ($this->Username == ANONYMOUS) {
@@ -858,7 +849,7 @@
 
       } // if
 
-      $return = array ($fullname, $online, $email);
+      $return = array ($fullname, $online);
 
       return ($return);
 

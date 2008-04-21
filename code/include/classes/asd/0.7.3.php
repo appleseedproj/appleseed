@@ -1712,7 +1712,7 @@
         $remotedata->Stamp = $zXML->GetValue ("stamp", 0);
         if ( (!$remotedata->Subject) or (!$remotedata->Body) or (!$remotedata->Stamp) ) {
           $remotedata->Error = TRUE;
-          $remotedata->ErrorCode = "ERROR.INVALIDMESSAGE";
+          $remotedata->ErrorTitle = "ERROR.INVALIDMESSAGE";
         } // if
       } // if
       	
@@ -1754,6 +1754,49 @@
 
   	} // RemoteMessage
   	
+  	function GetUserInformation ($pUSERNAME, $pDOMAIN) {
+  	  global $zXML;
+  	  
+  	  global $gAPPLESEEDVERSION, $gSITEDOMAIN;
+  	  
+      $VERIFY = new cAUTHTOKENS ();
+      $token = $VERIFY->LoadToken ($pUSERNAME, $pDOMAIN);
+
+      if (!$token) {
+        $token = $VERIFY->CreateToken ($pUSERNAME, $pDOMAIN);
+      } // if
+      
+      unset ($VERIFY);
+      
+      // Check Online (remote)
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
+                         "gUSERNAME" => $pUSERNAME,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
+                         "gDOMAIN"   => $gSITEDOMAIN,
+                         "gTOKEN"    => $token);
+      $zREMOTE->Post ($datalist, 1);
+      $zXML->Parse ($zREMOTE->Return);
+
+      // If no user was found, return FALSE.
+      $errorcode = ucwords ($zXML->GetValue ("code", 0));
+      if ($errorcode) {
+      	$remotedata->Error = TRUE;
+      	$remotedata->ErrorTitle = $errorcode;
+        return (FALSE);
+      } // if
+      
+      $remotedata = new stdClass();
+
+      $remotedata->Fullname = ucwords ($zXML->GetValue ("fullname", 0));
+
+      $remotedata->Online = FALSE;
+      if ($zXML->GetValue ("online", 0) == "ONLINE") $remotedata->Online = TRUE;
+      
+      return ($remotedata);
+
+  	} // GetUserInformation
+  	
   } // cCLIENT
   
   class cAJAX extends cSERVER {
@@ -1788,22 +1831,22 @@
       return (TRUE);
     } // Constructor
     
-    function GetUserInformation () {
+    function GetUserInformation ($pUSERNAME, $pDOMAIN) {
     	
-      $gUSERNAME = $_POST['gUSERNAME'];
-      $gDOMAIN = $_POST['gDOMAIN'];
+      global $gAPPLESEEDVERSION;
+    	
+      $this->Initialize ($pDOMAIN, FALSE);
       
-      $this->Initialize ($gDOMAIN);
-      
-      $token = $this->LoadToken ('*', $gDOMAIN);
+      $token = $this->LoadToken ('*', $pDOMAIN);
       
       if (!$token) {
-        $token = $this->CreateToken ('*', $gDOMAIN);
+        $token = $this->CreateToken ('*', $pDOMAIN);
       } // if
       
-      $REMOTE = new cREMOTE ($gDOMAIN);
+      $REMOTE = new cREMOTE ($pDOMAIN);
       $datalist = array ("gACTION"     => "ASD_USER_INFORMATION",
-                         "gUSERNAME"   => $gUSERNAME,
+                         "gUSERNAME"   => $pUSERNAME,
+                         "gVERSION"    => $gAPPLESEEDVERSION,
                          "gDOMAIN"     => $this->SiteDomain,
                          "gTOKEN"      => $token);
       $REMOTE->Post ($datalist, 1);
@@ -1814,11 +1857,9 @@
       $version = ucwords ($this->XML->GetValue ("version", 0));
       if (!$version) return (FALSE);
       
-      $result = $this->XML->GetValue ("result", 0);
       $fullname = $this->XML->GetValue ("fullname", 0);
       $online = $this->XML->GetValue ("online", 0);
       
-      $val['result'] = $result;
       $val['fullname'] = $fullname;
       $val['online'] = $online;
       
