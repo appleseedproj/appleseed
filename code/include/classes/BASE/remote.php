@@ -48,7 +48,7 @@
       return (TRUE);
 
     } // Constructor
-
+    
     // Send a post request to a host, and store the return information.
     function Post ($pDATALIST, $pTIMEOUT = 2) {
 

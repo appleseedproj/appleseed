@@ -414,6 +414,9 @@
       
       global $gSITEURL;
       $gSITEURL = $setting_url;
+      
+      // If we're just looking for the version, spit it out and exit as soon as we know it.
+      if (isset($_REQUEST['version'])) { echo $gAPPLESEEDVERSION; exit; } 
   
       global $gSITEDOMAIN;
       $gSITEDOMAIN = str_replace('http://', '', $gSITEURL); 
@@ -430,7 +433,7 @@
   
       // Load data from site.adat
       $this->LoadSiteData ();
-
+      
       // If we already have a database link, return from function.
       if ($gDBLINK) return (0);
   
@@ -457,6 +460,26 @@
   
       return (1);
     } // DBConnect
+
+    // Get the appleseed version of a node in the simplest manner possible.
+    function GetNodeVersion ($pDOMAIN) {
+    	
+      $domain = 'http://' . $pDOMAIN . '/';
+    	
+      $handle = fopen("$domain?version", "r");
+      $version = fread($handle, 8);
+      fclose ($handle);
+      
+      $versions = split ('\.', $version);
+      
+      $major = $versions[0];
+      $minor = $versions[1];
+      $micro = $versions[2];
+      
+      if ( (!is_int($major) ) or (!is_int($minor) ) or (!is_int($micro) ) ) $versions = FALSE;
+      
+      return ($version);
+    } // GetVersion
 
     // Adjust for a recently deleted entry.
     function AdjustScroll ($pCONTEXT, $pDATACLASS) {

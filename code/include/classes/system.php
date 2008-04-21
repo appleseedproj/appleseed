@@ -124,7 +124,7 @@
       global $gSITEDOMAIN, $gSETTINGS;
       global $gAPPLESEEDVERSION;
       
-      global $zSTRINGS, $zXML;
+      global $zAPPLE, $zSTRINGS, $zXML;
       
       // Create node class.
       $zNODES = new cSYSTEMNODES ();
@@ -146,9 +146,12 @@
         
         $domain = $zNODES->Entry;
         
+        // Get the ASD version of the node.
+        $version = $zAPPLE->GetNodeVersion ($domain);
+
         // Create the Remote class.
         $zREMOTE = new cREMOTE ($domain);
-
+        
         $VERIFY = new cAUTHTOKENS ();
         $token = $VERIFY->LoadToken (NODE_ALL_USERS, $domain);
         if (!$token) {
