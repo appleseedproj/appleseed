@@ -479,7 +479,48 @@
       if ( (!is_int($major) ) or (!is_int($minor) ) or (!is_int($micro) ) ) $versions = FALSE;
       
       return ($version);
-    } // GetVersion
+    } // GetNodeVersion
+    
+    // Choose the closest server version available.
+    function ChooseServerVersion ($pDOMAIN) {
+    	
+      $version = $this->GetNodeVersion ($pDOMAIN);
+    	
+      // Determine which server to load.
+      $versions = split ('\.', $version);
+      $major = $versions[0]; $minor = $versions[1]; $micro = $versions[2];
+      if (!$minor) $minor = 0; if (!$micro) $micro = 0;
+  
+      // Load list of available server versions.
+      $handle = opendir('code/include/classes/asd/');
+      while (false !== ($file = readdir($handle))) {
+  		    $file_exts = split ('\.', $file);
+  		    if ($file_exts[count($file_exts)-1] != 'php') continue;
+  		    $serverVersions[] = $file;
+      } // if
+  
+      if (!file_exists ('code/include/classes/asd/' . $version . '.php')) {
+  	    // Loop through and find the latest version.
+  	    foreach ($serverVersions as $serverVersion) {
+  	      $versions = split ('\.', $serverVersion);
+  	      $serverMajor = $versions[0]; $serverMinor = $versions[1]; $serverMicro = $versions[2];
+ 	      if (!$serverMinor) $serverMinor = 0; if (!$serverMicro) $serverMicro = 0;
+  	      if ($serverMajor > $major) continue; 
+  	      if (($serverMajor == $major) and ($serverMinor > $minor)) continue; 
+  	      if (($serverMajor == $major) and ($serverMinor == $minor) and ($serverMicro > $micro)) continue; 
+  	      $useVersion = $serverVersion;
+  	    } // foreach
+      } else {
+  	    $useVersion = $version . '.php';
+      } // if
+  
+      // Default to the earliest known server version if no version was supplied, and error out.
+      if (!$useVersion) {
+  	    return (FALSE);
+      } // if
+      
+      return ($useVersion);
+    } // ChooseServerVersion
 
     // Adjust for a recently deleted entry.
     function AdjustScroll ($pCONTEXT, $pDATACLASS) {

@@ -1645,6 +1645,44 @@
   
   // Client class for node communication.
   class cCLIENT {
+  	
+  	function BuildIconList ($pUSERNAME, $pDOMAIN) {
+      global $zXML;
+      global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
+      
+      $VERIFY = new cAUTHTOKENS ();
+      $token = $VERIFY->LoadToken ($pUSERNAME, $pDOMAIN);
+
+      if (!$token) {
+        $token = $VERIFY->CreateToken ($pUSERNAME, $pDOMAIN);
+      } // if
+      
+      unset ($VERIFY);
+
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"   => "ASD_ICON_LIST",
+                         "gDOMAIN"   => $gSITEDOMAIN,
+                         "gTOKEN"    => $token,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
+                         "gUSERNAME" => $pUSERNAME);
+      $zREMOTE->Post ($datalist);
+
+      $zXML->Parse ($zREMOTE->Return);
+
+      $iconcount = $zXML->GetNumberOfElements ("icon");
+      
+      for ($count = 0; $count < $iconcount; $count++) {
+        $filename = $zXML->GetValue ("icon", $count);
+        $keyword = $zXML->GetId ("icon", $count);
+        $remotedata[] = new stdClass();
+        $remotedata[count($remotedata)-1]->Filename = $filename;
+        $remotedata[count($remotedata)-1]->Keyword = $keyword;
+      } // for
+
+      return ($remotedata);
+  	} // BuildIconList
+  	
   } // cCLIENT
   
   class cAJAX extends cSERVER {

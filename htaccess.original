@@ -118,11 +118,8 @@ RewriteRule .*^themes.*\.png$ - [L]
 # Redirect the newswire.
 RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^news\/(.*)$ code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^news\/(.*)\/$ code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^articles\/(.*)\/$ code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^articles\/(.*)$ code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
 
 # Redirect the discussion groups

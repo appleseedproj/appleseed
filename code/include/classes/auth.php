@@ -49,42 +49,25 @@
     } // Constructor
 
     function BuildIconList () {
-
-      global $zXML;
-      global $gSITEDOMAIN;
-      global $gAPPLESEEDVERSION;
+      global $zAPPLE;
 
       global $gICONLIST;
-
-      $VERIFY = new cAUTHTOKENS ();
-      $token = $VERIFY->LoadToken ($this->Username, $this->Domain);
-
-      if (!$token) {
-        $token = $VERIFY->CreateToken ($this->Username, $this->Domain);
-      } // if
-
-      unset ($VERIFY);
-
-      $zREMOTE = new cREMOTE ($this->Domain);
-      $datalist = array ("gACTION"   => "ASD_ICON_LIST",
-                         "gDOMAIN"   => $gSITEDOMAIN,
-                         "gTOKEN"    => $token,
-                         "gVErSION"  => $gAPPLESEEDVERSION,
-                         "gUSERNAME" => $this->Username);
-      $zREMOTE->Post ($datalist);
-
-      $zXML->Parse ($zREMOTE->Return);
-
-      $iconcount = $zXML->GetNumberOfElements ("icon");
-
-      for ($count = 0; $count < $iconcount; $count++) {
-        $filename = $zXML->GetValue ("icon", $count);
-        $keyword = $zXML->GetId ("icon", $count);
-        $gICONLIST[$filename] = $keyword;
-      } // for
-
+      
+      // Select which server to use.
+      $useServer = $zAPPLE->ChooseServerVersion ($this->Domain);
+      if (!$useServer) return (FALSE);
+      
+      require_once ('code/include/classes/asd/' . $useServer);
+      
+      $CLIENT = new cCLIENT();
+      $remotedata = $CLIENT->BuildIconList($this->Username, $this->Domain);
+      
+      // Convert data into usable form.
+      foreach ($remotedata as $icon) {
+        $gICONLIST[$icon->Filename] = $icon->Keyword;
+      } // foreach
+      
       return (TRUE);
-
     } // BuildIconList
 
     function BuildIconMenu ($pUID) {
