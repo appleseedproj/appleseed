@@ -34,5 +34,5 @@
  <b><br />NOTE: If this site looks messy, it's because Internet Explorer is not CSS2 compliant. Please upgrade to <a href='http://www.mozilla.org/firefox/'>Mozilla Firefox</a><br /></b><br />
     <a style='background:none;' href="http://www.spreadfirefox.com/?q=affiliates&id=0&t=70"><img border="0" alt="Get Firefox!" title="Get Firefox!" src="http://sfx-images.mozilla.org/affiliates/Buttons/88x31/get.gif"/></a>
 
- <body>
+ <body onload='Initialize();'>
  <a name='top'></a>

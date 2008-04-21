@@ -1,3 +1,29 @@
+
+function Initialize () {
+
+	ChangeLinksToPost ();
+
+} // Initialize
+
+function ChangeLinksToPost () {
+
+	links = document.getElementsByTagName('a');
+	
+	for ( i = 0; i < links.length; i++) {
+	    href = links[i].href;
+	    if (href.search(/\?/) > -1) {
+	    	var elements = links[i].href.split(/\?/);
+	    	links[i].href = elements[0];
+	    	links[i].query = elements[1];
+	    	links[i].onclick = function () {
+	    		PostLink (this.href, this.query, null);
+	    		return (false);
+	    	}
+	    } // if
+	} // for
+	
+} // ChangeLinksToPost
+
 function jCONFIRM(message) {
   if (message) {
     var agree=confirm(message);
@@ -20,7 +46,7 @@ function jACTIONSUBMIT (action) {
 
 } // jACTIONSUBMIT
 
-function jPOSTLINK(href, datalist, confirm) {
+function PostLink(href, datalist, confirm) {
 
   if (!jCONFIRM (confirm)) return (false);
 
@@ -46,7 +72,7 @@ function jPOSTLINK(href, datalist, confirm) {
   document.body.appendChild (formElement);
   document.getElementById ("hideurl").submit();
 
-} // jPOSTLINK
+} // PostLink
 
 function jTOGGLEFORM (source) {
 

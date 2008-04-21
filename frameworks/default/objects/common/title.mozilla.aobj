@@ -31,5 +31,5 @@
 
  </head>
 
- <body>
+ <body onload='Initialize();'>
  <a name='top'></a>
