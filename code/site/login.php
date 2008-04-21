@@ -124,7 +124,6 @@
       $gLOGINBOX = "remotelogin";
     break;
     case 'return':
-    
       //****** BEGIN    ******/
       
       // Create the Remote class.

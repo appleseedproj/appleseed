@@ -32,7 +32,7 @@
   // | VERSION:      0.7.3                                               |
   // | DESCRIPTION:  ASD Network traffic hub.                            |
   // +-------------------------------------------------------------------+
-
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 

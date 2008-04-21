@@ -122,6 +122,7 @@
     
     function SendNodeNetworkUpdate () {
       global $gSITEDOMAIN, $gSETTINGS;
+      global $gAPPLESEEDVERSION;
       
       global $zSTRINGS, $zXML;
       
@@ -129,7 +130,9 @@
       $zNODES = new cSYSTEMNODES ();
       
       // Select all trusted nodes.
-      $zNODES->Select ('Trust', NODE_TRUSTED);
+      $criteria = array ("Trust"    => NODE_TRUSTED,
+      					 "Callback" => TRUE);
+      $zNODES->SelectByMultiple ($criteria);
       
       // Count the number of users on the system.
       $USER = new cUSERAUTHORIZATION();
@@ -160,6 +163,7 @@
                            "gTOKEN"    => $token,
                            "gSUMMARY"  => $summary,
                            "gUSERS"    => $users,
+                           "gVERSION"  => $gAPPLESEEDVERSION,
                            "gDOMAIN"   => $gSITEDOMAIN);
         $zREMOTE->Post ($datalist);
 
@@ -177,6 +181,7 @@
     
     function VerifyNodeNetwork () {
       global $zAPPLE, $zXML;
+      global $gAPPLESEEDVERSION;
       
       global $gSITEDOMAIN;
       
