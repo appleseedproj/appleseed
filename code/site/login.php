@@ -72,9 +72,10 @@
   $gLOCALLOGINTAB = ""; $gREMOTELOGINTAB = "_off";
 
   $parameters = split ('/', $gLOGINREQUEST);
+  
+  $gLOGINREQUEST = $parameters[0];
 
   if ($parameters[1]) {
-    $gLOGINREQUEST = $parameters[0];
     $reference = $parameters[1];
     list ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN) = split ('@', $reference);
   } // if
