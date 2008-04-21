@@ -37,8 +37,8 @@
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
-   // Pull from _GET since we haven't initalized yet.
-  $gICONUSER = $_GET['gICONUSER'];
+   // Pull from _REQUEST since we haven't initalized yet.
+  $gICONUSER = $_REQUEST['gICONUSER'];
 
   if (!$gICONUSER) {
     chdir ("code/site/error/");

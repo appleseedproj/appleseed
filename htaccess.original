@@ -23,6 +23,7 @@ RewriteRule .*^ajax\/$ code/site/ajax.php [L]
 RewriteRule .*^join$ code/site/join.php [L]
 RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^join\/(.*)\/$ code/site/join.php?gVALUE=$1&%1 [L]
+RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^join\/(.*)$ code/site/join.php?gVALUE=$1&%1 [L]
 
 # Redirect if user directory is accessed
@@ -36,6 +37,7 @@ RewriteRule .*login\/$ code/site/login.php [L]
 RewriteRule .*login$ code/site/login.php [L]
 RewriteRule .*^login\/bounce\/(.*)$ code/site/bounce.php [L]
 RewriteRule .*^login\/bounce$ code/site/bounce.php [L]
+RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^login\/(.*)\/$ code/site/login.php?gLOGINREQUEST=$1&%1 [L]
 RewriteRule .*^login\/(.*)$ code/site/login.php?gLOGINREQUEST=$1&%1 [L]
 

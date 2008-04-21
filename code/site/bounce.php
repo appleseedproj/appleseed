@@ -63,7 +63,7 @@
   // Initialize Appleseed.
   $zAPPLE->Initialize("site.login", TRUE);
 
-  $target = $_GET['target']; $location = $_GET['location'];
+  $target = $_REQUEST['target']; $location = $_REQUEST['location'];
   if (!$target) { 
     $zAPPLE->IncludeFile ('code/site/error/404.php', INCLUDE_SECURITY_NONE);
     $zAPPLE->End();
