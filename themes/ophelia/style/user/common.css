@@ -2782,13 +2782,14 @@ form#compose p.error:hover {
  border-right:2px solid #999999;
  border-bottom:2px solid #999999;
  text-align:justify;
- padding:6px;
+ padding:5px;
+ padding-right:7px;
  -moz-border-radius:12px;
 }
 
 #user #profilephoto #container #image {
  float:left;
- width:228px;
+ width:230px;
 }
 
 #user #profilephoto #container img {
