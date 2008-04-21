@@ -229,6 +229,7 @@
         break;
       } // if
     case 'VIEW':
+    // NOTE: ADD ERROR HANDLING.
       if (!$zMESSAGE->SelectMessage ($gIDENTIFIER)) {
         // Message could not be retrieved, default to listing.
         $gACTION = NULL;

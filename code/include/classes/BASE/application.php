@@ -476,7 +476,7 @@
       $minor = $versions[1];
       $micro = $versions[2];
       
-      if ( (!is_int($major) ) or (!is_int($minor) ) or (!is_int($micro) ) ) $versions = FALSE;
+      if ( (!is_numeric($major) ) or (!is_numeric($minor) ) or (!is_numeric($micro) ) ) $version = FALSE;
       
       return ($version);
     } // GetNodeVersion
@@ -485,6 +485,7 @@
     function ChooseServerVersion ($pDOMAIN) {
     	
       $version = $this->GetNodeVersion ($pDOMAIN);
+      if (!$version) return (FALSE);
     	
       // Determine which server to load.
       $versions = split ('\.', $version);

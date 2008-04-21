@@ -1646,6 +1646,7 @@
   // Client class for node communication.
   class cCLIENT {
   	
+  	// Build a remote icon list. 
   	function BuildIconList ($pUSERNAME, $pDOMAIN) {
       global $zXML;
       global $gSITEDOMAIN;
@@ -1682,6 +1683,76 @@
 
       return ($remotedata);
   	} // BuildIconList
+  	
+  	function RetrieveMessage ($pUSERNAME, $pDOMAIN, $pIDENTIFIER) {
+  	  global $zXML;
+  		
+      global $gAPPLESEEDVERSION;
+      
+      // Retrieve message data.
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"          => "ASD_MESSAGE_RETRIEVE",
+                         "gUSERNAME"        => $pUSERNAME,
+                         "gVERSION"         => $gAPPLESEEDVERSION,
+                         "gIDENTIFIER"      => $pIDENTIFIER);
+      $zREMOTE->Post ($datalist);
+
+      $zXML->Parse ($zREMOTE->Return);
+
+      $errorcode = $zXML->GetValue ("title", 0);
+      
+      $remotedata = new stdClass();
+      if ($errorcode) {
+        $remotedata->Error = TRUE;
+        $remotedata->ErrorTitle = $errorcode;
+        return ($remotedata);
+      } else {
+        $remotedata->Subject = $zXML->GetValue ("subject", 0);
+        $remotedata->Body = $zXML->GetValue ("body", 0);
+        $remotedata->Stamp = $zXML->GetValue ("stamp", 0);
+        if ( (!$remotedata->Subject) or (!$remotedata->Body) or (!$remotedata->Stamp) ) {
+          $remotedata->Error = TRUE;
+          $remotedata->ErrorCode = "ERROR.INVALIDMESSAGE";
+        } // if
+      } // if
+      	
+      return ($remotedata);
+  	} // RetrieveMessage
+  	
+  	function RemoteMessage ($pUSERNAME, $pDOMAIN, $pIDENTIFIER, $pSUBJECT, $pSENDERUSERNAME, $pSENDERFULLNAME) {
+  	  global $zXML;
+  	  
+  	  global $gSITEDOMAIN, $gAPPLESEEDVERSION;
+  		
+      // Send the notification. 
+      $zREMOTE = new cREMOTE ($pDOMAIN);
+      $datalist = array ("gACTION"          => "ASD_MESSAGE_NOTIFY",
+                         "gRECIPIENT"       => $pUSERNAME,
+                         "gFULLNAME"        => $pSENDERFULLNAME,
+                         "gUSERNAME"        => $pSENDERUSERNAME,
+                         "gDOMAIN"          => $gSITEDOMAIN,
+                         "gIDENTIFIER"      => $pIDENTIFIER,
+                         "gVERSION"         => $gAPPLESEEDVERSION,
+                         "gSUBJECT"         => $pSUBJECT);
+      $zREMOTE->Post ($datalist);
+
+      $zXML->Parse ($zREMOTE->Return);
+
+      $version = ucwords ($zXML->GetValue ("version", 0));
+      $success = ucwords ($zXML->GetValue ("success", 0));
+      
+      $remotedata = new stdClass();
+
+      if (!$success) {
+        $remotedata->Error = TRUE;
+        $remotedata->ErrorTitle = ucwords ($zXML->GetValue ("title", 0));
+        return ($remotedata);
+      } else {
+        $remotedata->Error = FALSE;
+        return ($remotedata);
+      } // if
+
+  	} // RemoteMessage
   	
   } // cCLIENT
   

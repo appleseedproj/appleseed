@@ -1807,48 +1807,53 @@
     } // CreateSpecificLabelMenu
 
     function RetrieveMessage () {
-      global $zXML, $zAPPLE, $zFOCUSUSER;
+      global $zAPPLE, $zFOCUSUSER;
+      global $zSTRINGS;
       
-      global $gAPPLESEEDVERSION;
-
       // Message is a remote notification.
       $this->messageNotification->Select ("Identifier", $this->Identifier);
       $this->messageNotification->FetchArray ();
 
-      // Retrieve message data.
-      $zREMOTE = new cREMOTE ($this->messageNotification->Sender_Domain);
-      $datalist = array ("gACTION"          => "ASD_MESSAGE_RETRIEVE",
-                         "gUSERNAME"        => $zFOCUSUSER->Username,
-                         "gVERSION"         => $gAPPLESEEDVERSION,
-                         "gIDENTIFIER"      => $this->messageNotification->Identifier);
-      $zREMOTE->Post ($datalist);
-
-      $zXML->Parse ($zREMOTE->Return);
-
-      $errorcode = $zXML->GetValue ("code", 0);
-      $body = $zXML->GetValue ("body", 0);
-
-      //  NOTE: It's important to have good error checking for remote messages.
-      switch ($errorcode) {
-        case 3000:
-          $this->Error = -1;
-          $this->Message = "This message could not be retrieved.";
-          return (FALSE);
-        break;
-        default:
-          $this->tID = $this->messageNotification->tID;
-          $this->userAuth_uID = $this->messageNotification->userAuth_uID;
-          $this->Subject = $zAPPLE->Purifier->Purify ($zXML->GetValue ("subject", 0));
-          $this->Body = html_entity_decode ($zAPPLE->Purifier->Purify ( $zXML->GetValue ("body", 0)));
-          $this->Stamp = ucwords ($zXML->GetValue ("stamp", 0));
-          $this->Identifier = $this->messageNotification->Identifier;
-          $this->Location = $this->messageNotification->Location;
-          $this->FormatDate ("Stamp");
-          $this->Sender_Username = $this->messageNotification->Sender_Username;
-          $this->Sender_Domain = $this->messageNotification->Sender_Domain;
-        break;
-      } // switch
-
+      // Select which server to use.
+      $useServer = $zAPPLE->ChooseServerVersion ($this->messageNotification->Sender_Domain);
+      if (!$useServer) {
+      	$this->Error = -1;
+        $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
+        $this->Message = $zSTRINGS->Output;
+      	return (FALSE);
+      } // if
+      
+      require_once ('code/include/classes/asd/' . $useServer);
+      
+      // Use backwards compatible client class.
+      $CLIENT = new cCLIENT();
+      $remotedata = $CLIENT->RetrieveMessage($zFOCUSUSER->Username, $this->messageNotification->Sender_Domain, $this->messageNotification->Identifier);
+      unset ($CLIENT);
+      
+      $body = $remotedata->Body;
+      $subject = $remotedata->Subject;
+      $stamp = $remotedata->Stamp;
+      
+      if ($remotedata->Error) {
+      	$this->Error = -1;
+        $zSTRINGS->Lookup ($remotedata->ErrorTitle);
+        $this->Message = $zSTRINGS->Output;
+        return (FALSE);
+      } else {
+        // Convert data into usable form.
+        $this->tID = $this->messageNotification->tID;
+        $this->userAuth_uID = $this->messageNotification->userAuth_uID;
+        $this->Subject = $zAPPLE->Purifier->Purify ($subject);
+        $this->Body = html_entity_decode ($zAPPLE->Purifier->Purify ($body));
+        $this->Stamp = ucwords ($stamp);
+        $this->Identifier = $this->messageNotification->Identifier;
+        $this->Location = $this->messageNotification->Location;
+        $this->FormatDate ("Stamp");
+        $this->Sender_Username = $this->messageNotification->Sender_Username;
+        $this->Sender_Domain = $this->messageNotification->Sender_Domain;
+        return (TRUE);
+      } // if
+     
       return (TRUE);
     } // RetrieveMessage
 
@@ -2056,8 +2061,12 @@
     function MoveToTrash () {
       global $zSTRINGS, $zFOCUSUSER;
 
+      $classlocation = $this->LocateMessage ($this->Identifier);
+      $this->$classlocation->Select ("Identifier", $this->Identifier);
+      $this->$classlocation->FetchArray ();
+
       // Check if user owns this message.
-      if ($this->CheckReadAccess () == FALSE) {
+      if ($this->$classlocation->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
         $zSTRINGS->Lookup ('ERROR.ACCESS');
@@ -2066,25 +2075,9 @@
         return (FALSE);
       } // if 
 
-      $classlocation = $this->LocateMessage ($this->Identifier);
-
-      switch ($classlocation) {
-        case 'messageNotification':
-          // Select existing message with this Identifier.
-          $this->messageNotification->Select ("Identifier", $this->Identifier);
-          $this->messageNotification->FetchArray ();
-          $this->messageNotification->Location = FOLDER_TRASH;
-          $this->messageNotification->Update ();
-        break;
-        case 'messageInformation':
-          // Select existing message with this Identifier.
-          $this->messageInformation->Select ("Identifier", $this->Identifier);
-          $this->messageInformation->FetchArray ();
-          $this->messageInformation->Location = FOLDER_TRASH;
-          $this->messageInformation->Update ();
-        break;
-      } // switch
-
+      $this->$classlocation->Location = FOLDER_TRASH;
+      $this->$classlocation->Update ();
+      
       $zSTRINGS->Lookup ('MESSAGE.TRASH');
       $this->Message = $zSTRINGS->Output;
 
@@ -2103,19 +2096,8 @@
 
       foreach ($pDATALIST as $key => $id) {
 
-        // Select the message in question.
-        $this->SelectMessage ($id);
-
-        // Check if user owns this message.
-        if ($this->CheckReadAccess () == FALSE) {
-          global $gMESSAGEID;
-          $gMESSAGEID = $id;
-          $zSTRINGS->Lookup ('ERROR.ACCESS');
-          $this->Message = $zSTRINGS->Output;
-          $this->Error = -1;
-          continue;
-        } // if 
-
+        $this->Identifier = $id;
+        
         $this->MoveToTrash ();
       } // if
 
@@ -2286,10 +2268,14 @@
       
       $this->RemoveDraft ($gtID);
       
-      $zSTRINGS->Lookup ('MESSAGE.SENT');
-      $this->Message = $zSTRINGS->Output;
+      if ($this->Error) {
+      	return (FALSE);
+      } else {
+        $zSTRINGS->Lookup ('MESSAGE.SENT');
+        $this->Message = $zSTRINGS->Output;
+        return (TRUE);
+      }
 
-      return (TRUE);
     } // Send
     
     function CreateAddressList ($pADDRESSES) {
@@ -2434,6 +2420,7 @@
     
     // Send a remote message notification.
     function RemoteMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {
+      global $zAPPLE;
       global $zXML, $zREMOTE, $zSTRINGS;
       
       global $gAPPLESEEDVERSION;
@@ -2449,42 +2436,40 @@
       
       // Get the information about the reciever.
       list ($username, $domain) = split ('@', $pRECIEVERADDRESS);
+
+      // Select which server to use.
+      $useServer = $zAPPLE->ChooseServerVersion ($domain);
+      if (!$useServer) {
+      	$this->Error = -1;
+        $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
+        $this->Message = $zSTRINGS->Output;
+      	return (FALSE);
+      } // if
       
-      // Send the notification. 
-      $zREMOTE = new cREMOTE ($domain);
-      $datalist = array ("gACTION"          => "ASD_MESSAGE_NOTIFY",
-                         "gRECIPIENT"       => $username,
-                         "gFULLNAME"        => $senderfullname,
-                         "gUSERNAME"        => $senderusername,
-                         "gDOMAIN"          => $gSITEDOMAIN,
-                         "gIDENTIFIER"      => $pIDENTIFIER,
-                         "gVERSION"         => $gAPPLESEEDVERSION,
-                         "gSUBJECT"         => $pSUBJECT);
-      $zREMOTE->Post ($datalist);
-
-      $zXML->Parse ($zREMOTE->Return);
-
-      $version = ucwords ($zXML->GetValue ("version", 0));
-      $success = ucwords ($zXML->GetValue ("success", 0));
-
-      if ( (!$version) or (!$success)) {
-        $title = ucwords ($zXML->GetValue ("title", 0));
-        $zSTRINGS->Lookup ($title);
+      require_once ('code/include/classes/asd/' . $useServer);
+      
+      // Use backwards compatible client class.
+      $CLIENT = new cCLIENT();
+      $remotedata = $CLIENT->RemoteMessage($username, $domain, $pIDENTIFIER, $pSUBJECT, $senderusername, $senderfullname);
+      unset ($CLIENT);
+      
+      if ($remotedata->Error) {
+      	$this->Error = -1;
+        $zSTRINGS->Lookup ($remotedata->ErrorTitle);
         $this->Message = $zSTRINGS->Output;
         return (FALSE);
+      } else {
+        // Add the recipient.
+        $this->messageRecipient->messageStore_tID = $pMESSAGEID;
+        $this->messageRecipient->userAuth_uID = $pSENDERID;
+        $this->messageRecipient->Identifier = $pIDENTIFIER;
+        $this->messageRecipient->Username = $username;
+        $this->messageRecipient->Domain = $domain;
+        $this->messageRecipient->Standing = $pSTANDING;
+        $this->messageRecipient->Add ();
+        return (TRUE);
       } // if
-
-      // Add the recipient.
-      $this->messageRecipient->messageStore_tID = $pMESSAGEID;
-      $this->messageRecipient->userAuth_uID = $pSENDERID;
-      $this->messageRecipient->Identifier = $pIDENTIFIER;
-      $this->messageRecipient->Username = $username;
-      $this->messageRecipient->Domain = $domain;
-      $this->messageRecipient->Standing = $pSTANDING;
       
-      $this->messageRecipient->Add ();
-      
-      return (TRUE);
     } // RemoteMessage
     
     function VerifyAddress ($pADDRESS) {
@@ -2637,8 +2622,12 @@
 
       global $zSTRINGS;
 
+      $classlocation = $this->LocateMessage ($this->Identifier);
+      $this->$classlocation->Select ("Identifier", $this->Identifier);
+      $this->$classlocation->FetchArray ();
+
       // Check if user owns this message.
-      if ($this->CheckReadAccess () == FALSE) {
+      if ($this->$classlocation->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
         $zSTRINGS->Lookup ('ERROR.ACCESS');
@@ -2647,15 +2636,13 @@
         return (FALSE);
       } // if 
 
-      $classlocation = $this->LocateMessage ($this->Identifier);
-      $this->$classlocation->tID = $this->tID;
+      $this->$classlocation->tID = $this->$classlocation->tID;
       $this->$classlocation->Delete ();
 
       $zSTRINGS->Lookup ('MESSAGE.DELETE');
       $this->Message = $zSTRINGS->Output;
 
       return (TRUE);
-
     } // DeleteForever
 
     function DeleteListForever ($pDATALIST) {
@@ -2686,7 +2673,7 @@
 
       return (TRUE);
 
-    } // DeleteForever
+    } // DeleteListForever
 
     // Create the label list buffer.
     function BufferLabelList () {

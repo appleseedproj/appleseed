@@ -61,6 +61,7 @@
       
       $CLIENT = new cCLIENT();
       $remotedata = $CLIENT->BuildIconList($this->Username, $this->Domain);
+      unset ($CLIENT);
       
       // Convert data into usable form.
       foreach ($remotedata as $icon) {
