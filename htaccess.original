@@ -137,10 +137,8 @@ RewriteCond %{QUERY_STRING} ^([^/]+)
 RewriteRule .*^groups\/(.*)$ code/content/groups.php?gGROUPSECTION=$1&%1 [L]
 
 # Redirect to icon.php for default icon.
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^icon\/(.*)\/$ code/common/icon.php?gICONUSER=$1&%1 [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^icon\/(.*)$ code/common/icon.php?gICONUSER=$1&%1 [L]
+RewriteRule .*^icon\/(.*)\/$ code/common/icon.php?gICONUSER=$1 [L]
+RewriteRule .*^icon\/(.*)$ code/common/icon.php?gICONUSER=$1 [L]
 
 # Redirect to image.php
 RewriteRule .*\.jpg$ code/common/images.php [L]
