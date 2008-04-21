@@ -202,6 +202,7 @@
         
         $datalist = array ("gACTION"   => "SITE_VERSION",
                            "gTOKEN"    => $token,
+                           "gVERSION"  => $gAPPLESEEDVERSION,
                            "gDOMAIN"   => $gSITEDOMAIN);
         $zREMOTE->Post ($datalist);
 

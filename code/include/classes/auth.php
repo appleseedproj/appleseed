@@ -52,6 +52,7 @@
 
       global $zXML;
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $gICONLIST;
 
@@ -68,6 +69,7 @@
       $datalist = array ("gACTION"   => "ASD_ICON_LIST",
                          "gDOMAIN"   => $gSITEDOMAIN,
                          "gTOKEN"    => $token,
+                         "gVErSION"  => $gAPPLESEEDVERSION,
                          "gUSERNAME" => $this->Username);
       $zREMOTE->Post ($datalist);
 

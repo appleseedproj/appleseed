@@ -787,6 +787,7 @@
       global $zLOCALUSER, $zREMOTE, $zAPPLE, $zXML;
 
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       if (($this->Domain) and ($this->Domain != $gSITEDOMAIN)) {
 
@@ -804,6 +805,7 @@
         $zREMOTE = new cREMOTE ($this->Domain);
         $datalist = array ("gACTION"   => "ASD_USER_INFORMATION",
                            "gUSERNAME" => $this->Username,
+                           "gVERSION"  => $gAPPLESEEDVERSION,
                            "gDOMAIN"   => $gSITEDOMAIN,
                            "gTOKEN"    => $token);
         $zREMOTE->Post ($datalist, 1);
@@ -1041,6 +1043,7 @@
       global $zAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
       
@@ -1089,6 +1092,7 @@
           $datalist = array ("gACTION"   => "ASD_FRIEND_APPROVE",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gVERSION"  => $gAPPLESEEDVERSION,
                              "gDOMAIN"   => $gSITEDOMAIN);
           $zREMOTE->Post ($datalist);
         
@@ -1127,6 +1131,7 @@
           $datalist = array ("gACTION"   => "FRIEND_REQUEST",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gVERSION"  => $gAPPLESEEDVERSION,
                              "gDOMAIN"   => $gSITEDOMAIN);
           $zREMOTE->Post ($datalist);
         
@@ -1170,6 +1175,7 @@
       global $zAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
       
@@ -1220,6 +1226,7 @@
           $datalist = array ("gACTION"   => "ASD_FRIEND_APPROVE",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gVERSION"  => $gAPPLESEEDVERSION,
                              "gDOMAIN"   => $gSITEDOMAIN);
           $zREMOTE->Post ($datalist);
         
@@ -1258,6 +1265,7 @@
           $datalist = array ("gACTION"   => "ASD_FRIEND_REQUEST",
                              "gTOKEN"    => $token,
                              "gUSERNAME" => $pREMOTEUSERNAME,
+                             "gVERSION"  => $gAPPLESEEDVERSION,
                              "gDOMAIN"   => $gSITEDOMAIN);
           $zREMOTE->Post ($datalist);
         
@@ -1299,11 +1307,13 @@
       global $zREMOTE, $zAPPLE, $zXML;
 
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       $zREMOTE = new cREMOTE ($pREMOTEDOMAIN);
       $datalist = array ("gACTION"   => "ASD_FRIEND_STATUS",
                          "gTOKEN"    => $pTOKEN,
                          "gUSERNAME" => $pREMOTEUSERNAME,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
                          "gDOMAIN"   => $pLOCALDOMAIN);
       $zREMOTE->Post ($datalist);
       
@@ -1594,6 +1604,7 @@
       global $zLOCALUSER, $zSTRINGS, $zXML;
 
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
@@ -1604,6 +1615,7 @@
       $datalist = array ("gACTION"   => "ASD_FRIEND_CANCEL",
                          "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
                          "gDOMAIN"   => $gSITEDOMAIN);
       $zREMOTE->Post ($datalist);
         
@@ -1640,6 +1652,7 @@
       global $zLOCALUSER, $zSTRINGS, $zXML;
 
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
@@ -1650,6 +1663,7 @@
       $datalist = array ("gACTION"   => "ASD_FRIEND_DENY",
                          "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
                          "gDOMAIN"   => $gSITEDOMAIN);
       $zREMOTE->Post ($datalist);
         
@@ -1686,6 +1700,7 @@
       global $zLOCALUSER, $zSTRINGS, $zXML;
 
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $gCIRCLEVIEWADMIN, $gCIRCLEVIEW;
 
@@ -1696,6 +1711,7 @@
       $datalist = array ("gACTION"   => "ASD_FRIEND_DELETE",
                          "gTOKEN"    => $token,
                          "gUSERNAME" => $pUSERNAME,
+                         "gVERSION"  => $gAPPLESEEDVERSION,
                          "gDOMAIN"   => $gSITEDOMAIN);
       $zREMOTE->Post ($datalist);
         

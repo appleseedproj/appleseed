@@ -1192,10 +1192,12 @@
 
    function GetInformation ($pGROUPNAME, $pGROUPDOMAIN) {
      global $gSITEDOMAIN, $zXML;
+      global $gAPPLESEEDVERSION;
 
      if ($gSITEDOMAIN != $pGROUPDOMAIN) {
        $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
        $datalist = array ("gACTION"        => "ASD_GROUP_INFORMATION",
+                          "gVERSION"       => $gAPPLESEEDVERSION,
                           "gGROUPNAME"     => $pGROUPNAME);
        $zREMOTE->Post ($datalist);
 
@@ -1269,6 +1271,7 @@
     function Join ($pGROUPNAME, $pGROUPDOMAIN) {
     	
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
       
       global $zSTRINGS, $zLOCALUSER, $zXML;
 
@@ -1282,6 +1285,7 @@
                            "gTOKEN"         => $token,
                            "gGROUPNAME"     => $pGROUPNAME,
                            "gUSERNAME"      => $zLOCALUSER->Username,
+                           "gVERSION"       => $gAPPLESEEDVERSION,
                            "gDOMAIN"        => $gSITEDOMAIN);
         $zREMOTE->Post ($datalist);
 
@@ -1358,6 +1362,7 @@
 
     function Leave ($pGROUPNAME, $pGROUPDOMAIN) {
       global $gSITEDOMAIN;
+      global $gAPPLESEEDVERSION;
 
       global $zSTRINGS, $zLOCALUSER, $zXML;
 
@@ -1369,6 +1374,7 @@
         $zREMOTE = new cREMOTE ($pGROUPDOMAIN);
         $datalist = array ("gACTION"        => "ASD_GROUP_LEAVE",
                            "gTOKEN"         => $token,
+                           "gVERSION"       => $gAPPLESEEDVERSION,
                            "gGROUPNAME"     => $pGROUPNAME);
         $zREMOTE->Post ($datalist);
         $zXML->Parse ($zREMOTE->Return);
