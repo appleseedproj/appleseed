@@ -2125,14 +2125,23 @@
 
   // Cache storage class for table information.
   class cBASEDATACACHE {
+    var $ServerCache;
     var $ColumnCache;
     var $FieldCache;
     var $FieldCount;
 
     function cBASEDATACACHE () {
+    	
+      global $gTABLEPREFIX;
+
       $this->ColumnCache = array ();
       $this->FieldCache = array ();
       $this->FieldCount = array ();
+      $this->ServerCache = array ();
+      
+      $this->NodeCache = new cBASEDATACLASS ();
+      $this->NodeCache->TableName = $gTABLEPREFIX . "cacheNodes";
+      $this->NodeCache->Fields();
 
       return (TRUE);
     } // Constructor

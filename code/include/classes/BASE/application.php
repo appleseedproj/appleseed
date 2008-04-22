@@ -464,33 +464,92 @@
     // Get the appleseed version of a node in the simplest manner possible.
     function GetNodeVersion ($pDOMAIN) {
     	
-      $parameters = 'version=1';
- 
-      $path = "/"; // path to cgi, asp, php program
- 
-      // Open a socket and set timeout to 2 seconds.
-      $fp = fsockopen($pDOMAIN, 80, $errno, $errstr, 2);
- 
-      fputs($fp, "POST $path HTTP/1.0\r\n");
-      fputs($fp, "Host: " . $pDOMAIN . "\r\n");
-      fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
-      fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
-      fputs($fp, "Connection: close\r\n\r\n");
-      fputs($fp, $parameters);
- 
-      while (!feof($fp)) {
-         $data .= fgets($fp,128);
-      } // while
-      $version = substr(strstr($data,"\r\n\r\n"),4);
-      $versions = split ('\.', $version);
-      $major = $versions[0]; $minor = $versions[1]; $micro = $versions[2];
-      $version = "$major.$minor.$micro";
+      global $zCACHE;
       
-      if ( (!is_numeric($major) ) or (!is_numeric($minor) ) or (!is_numeric($micro) ) ) $version = FALSE;
+      // Pull from memory cache
+      if (isset($zCACHE->ServerCache[$pDOMAIN]->Version)) {
+      	$version = $zCACHE->ServerCache[$pDOMAIN]->Version;
+      	return ($version);
+      } // if
+      
+      // Pull from database cache
+      $sql_statement = "
+			SELECT * FROM `%s`
+            WHERE Domain = '%s'
+			AND Stamp > DATE_ADD(now(), INTERVAL -1 DAY)
+      ";
+      $sql_statement = sprintf ($sql_statement,
+                                $zCACHE->NodeCache->TableName,
+                                mysql_real_escape_string ($pDOMAIN));
+      $zCACHE->NodeCache->Query ($sql_statement);
+      if ($zCACHE->NodeCache->CountResult() > 0) {
+      	$zCACHE->NodeCache->FetchArray();
+      	if ($zCACHE->NodeCache->Version) {
+      	  $version = $zCACHE->NodeCache->Version;
+      	  return ($version);
+      	} // if
+      } // if
+    	
+      // Pull from node
+      if (function_exists ("curl_exec")) {
+      	$ch = curl_init();
+      	
+      	$URL = 'http://' . $pDOMAIN . '/?version';
+
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        // grab URL and pass it to the browser
+        ob_start();
+        curl_exec($ch);
+        $version = ob_get_clean();
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+      } else {
+        $parameters = 'version=1';
+ 
+        $path = "/"; // path to cgi, asp, php program
+ 
+        // Open a socket and set timeout to 2 seconds.
+        $fp = fsockopen($pDOMAIN, 80, $errno, $errstr, 2);
+ 
+        fputs($fp, "POST $path HTTP/1.0\r\n");
+        fputs($fp, "Host: " . $pDOMAIN . "\r\n");
+        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+        fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
+        fputs($fp, "Connection: close\r\n\r\n");
+        fputs($fp, $parameters);
+   
+        while (!feof($fp)) {
+           $data .= fgets($fp,128);
+        } // while
+        $version = substr(strstr($data,"\r\n\r\n"),4);
+        $versions = split ('\.', $version);
+        $major = $versions[0]; $minor = $versions[1]; $micro = $versions[2];
+        $version = "$major.$minor.$micro";
+        
+        if ( (!is_numeric($major) ) or (!is_numeric($minor) ) or (!is_numeric($micro) ) ) $version = FALSE;
+      } // if
+      
+      // Add version to memory cache.
+      $zCACHE->ServerCache[$pDOMAIN]->Version = $version;
+        
+      // Delete from database cache.
+      $zCACHE->NodeCache->Select ("Domain", $pDOMAIN);
+      $zCACHE->NodeCache->FetchArray();
+      $zCACHE->NodeCache->Delete();
+      
+      // Add version to database cache.
+      $zCACHE->NodeCache->Domain = $pDOMAIN;
+      $zCACHE->NodeCache->Version = $version;
+      $zCACHE->NodeCache->Stamp = SQL_NOW;
+      $zCACHE->NodeCache->Add();
       
       return ($version);
     } // GetNodeVersion
-    
+      
     // Choose the closest server version available.
     function ChooseServerVersion ($pDOMAIN) {
     	

@@ -61,14 +61,6 @@
       // Initialize ASD tags array.
       $this->Tags = array ();
 
-      // Create global caching class.
-      global $zCACHE;
-      $zCACHE = new cBASEDATACACHE();
-      
-      // Load cache data if we can find it.
-      if (file_exists ('code/include/data/cache/fields.acache')) include_once ('code/include/data/cache/fields.acache');
-      if (file_exists ('code/include/data/cache/columns.acache')) include_once ('code/include/data/cache/columns.acache');
-      
       return (TRUE);
     } // Constructor
 
@@ -100,6 +92,14 @@
       // Connect to the database.
       $this->DBConnect ();
 
+      // Create global caching class.
+      global $zCACHE;
+      $zCACHE = new cBASEDATACACHE();
+      
+      // Load cache data if we can find it.
+      if (file_exists ('code/include/data/cache/fields.acache')) include_once ('code/include/data/cache/fields.acache');
+      if (file_exists ('code/include/data/cache/columns.acache')) include_once ('code/include/data/cache/columns.acache');
+      
       global $gSETTINGS;
       
       $gSETTINGS = $this->LoadConfiguration ();
