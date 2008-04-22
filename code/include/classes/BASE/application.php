@@ -464,17 +464,27 @@
     // Get the appleseed version of a node in the simplest manner possible.
     function GetNodeVersion ($pDOMAIN) {
     	
-      $domain = 'http://' . $pDOMAIN . '/';
-    	
-      $handle = fopen("$domain?version", "r");
-      $version = fread($handle, 8);
-      fclose ($handle);
-      
+      $parameters = 'version=1';
+ 
+      $path = "/"; // path to cgi, asp, php program
+ 
+      // Open a socket and set timeout to 2 seconds.
+      $fp = fsockopen($pDOMAIN, 80, $errno, $errstr, 2);
+ 
+      fputs($fp, "POST $path HTTP/1.0\r\n");
+      fputs($fp, "Host: " . $pDOMAIN . "\r\n");
+      fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+      fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
+      fputs($fp, "Connection: close\r\n\r\n");
+      fputs($fp, $parameters);
+ 
+      while (!feof($fp)) {
+         $data .= fgets($fp,128);
+      } // while
+      $version = substr(strstr($data,"\r\n\r\n"),4);
       $versions = split ('\.', $version);
-      
-      $major = $versions[0];
-      $minor = $versions[1];
-      $micro = $versions[2];
+      $major = $versions[0]; $minor = $versions[1]; $micro = $versions[2];
+      $version = "$major.$minor.$micro";
       
       if ( (!is_numeric($major) ) or (!is_numeric($minor) ) or (!is_numeric($micro) ) ) $version = FALSE;
       
