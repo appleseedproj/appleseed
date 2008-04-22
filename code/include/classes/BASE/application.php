@@ -538,21 +538,19 @@
         if ( (!is_numeric($major) ) or (!is_numeric($minor) ) or (!is_numeric($micro) ) ) $version = FALSE;
       } // if
       
-      if ($version) {
-        // Add version to memory cache.
-        $zCACHE->ServerCache[$pDOMAIN]->Version = $version;
+      // Add version to memory cache.
+      $zCACHE->ServerCache[$pDOMAIN]->Version = $version;
         
-        // Delete from database cache.
-        $zCACHE->NodeCache->Select ("Domain", $pDOMAIN);
-        $zCACHE->NodeCache->FetchArray();
-        $zCACHE->NodeCache->Delete();
+      // Delete from database cache.
+      $zCACHE->NodeCache->Select ("Domain", $pDOMAIN);
+      $zCACHE->NodeCache->FetchArray();
+      $zCACHE->NodeCache->Delete();
       
-        // Add version to database cache.
-        $zCACHE->NodeCache->Domain = $pDOMAIN;
-        $zCACHE->NodeCache->Version = $version;
-        $zCACHE->NodeCache->Stamp = SQL_NOW;
-        $zCACHE->NodeCache->Add();
-      } // if
+      // Add version to database cache.
+      $zCACHE->NodeCache->Domain = $pDOMAIN;
+      $zCACHE->NodeCache->Version = $version;
+      $zCACHE->NodeCache->Stamp = SQL_NOW;
+      $zCACHE->NodeCache->Add();
       
       return ($version);
     } // GetNodeVersion
