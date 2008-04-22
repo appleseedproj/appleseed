@@ -61,7 +61,7 @@
   $gADMINPASS = $_POST['gADMINPASS'];
   $gADMINPASSCONFIRM = $_POST['gADMINPASSCONFIRM'];
   
-  $gSTAMP = '_archive_' . date ('mdy_His', strtotime ('now'));
+  $gSTAMP = '_' . date ('mdy_His', strtotime ('now'));
   
   // Add http:// to Domain if not already there.
   if (strtolower(substr ($gDOMAIN, 0, 7)) != 'http://') $gDOMAIN = 'http://' . $gDOMAIN;

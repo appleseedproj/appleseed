@@ -484,10 +484,8 @@
       $zCACHE->NodeCache->Query ($sql_statement);
       if ($zCACHE->NodeCache->CountResult() > 0) {
       	$zCACHE->NodeCache->FetchArray();
-      	if ($zCACHE->NodeCache->Version) {
-      	  $version = $zCACHE->NodeCache->Version;
-      	  return ($version);
-      	} // if
+        $version = $zCACHE->NodeCache->Version;
+        return ($version);
       } // if
     	
       // Pull from node
