@@ -72,6 +72,14 @@
       
       exit;
     break;
+    
+    case 'AJAX_GET_STRING':
+      $title = $JSON->title;
+      $context = $JSON->context;
+      $string = $zAJAX->GetString($title, $context);
+      echo $string; 
+      exit;
+    break;
     default:
     break;
   } // switch

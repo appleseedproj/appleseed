@@ -92,8 +92,40 @@
       // Connect To The Database.
       $this->Connect ();
       
+      // Check if we are in shutdown mode.
+      if ($this->CheckShutdown()) {
+        $errortitle = "ERROR.SHUTDOWN";
+        echo $this->XML->ErrorData ($errortitle);
+        exit;
+      } // if
+      
       return (TRUE);
     } // Initialize
+    
+    function CheckShutdown () {
+    	
+      $systemConfig = $this->TablePrefix . "systemConfig";
+    	
+      $sql_statement = "
+		SELECT Value FROM $systemConfig WHERE Concern = 'Shutdown';
+      ";
+      
+      $sql_result = mysql_query ($sql_statement);
+      
+      $result = mysql_fetch_assoc ($sql_result);
+      
+      switch ($result['Value']) {
+      	case 'YES':
+      	case 'ADMIN':
+      		return (TRUE);
+      	break;
+      	case 'NO':
+      		return (FALSE);
+      	break;
+      } // switch
+      
+      return (FALSE);
+    } // CheckShutdown
     
     function NoVersion () {
     	
@@ -1857,8 +1889,13 @@
       $version = ucwords ($this->XML->GetValue ("version", 0));
       if (!$version) return (FALSE);
       
+      $error = $this->XML->GetValue ("title", 0);
+      if ($error) return ($error);
+      
       $fullname = $this->XML->GetValue ("fullname", 0);
       $online = $this->XML->GetValue ("online", 0);
+      
+      $error = $this->XML->GetValue ("online", 0);
       
       $val['fullname'] = $fullname;
       $val['online'] = $online;
@@ -1948,6 +1985,33 @@
   
       return ($return_string);
     } // RandomString
+    
+    function GetString ($pTITLE, $pCONTEXT) {
+    	
+        $systemStrings = $this->TablePrefix . "systemStrings";
+    	
+    	// Get the language associated with this user.
+    	// NOTE: For now, just use english.
+    	$language = 'en';
+    	
+      	$sql_statement = "
+			SELECT Output 
+			FROM $systemStrings 
+			WHERE Title = '%s' 
+			AND Context = '%s';
+      	";
+    
+      	$sql_statement = sprintf ($sql_statement,
+      	                          mysql_real_escape_string ($pTITLE),
+      	                          mysql_real_escape_string ($pCONTEXT));
+                                
+		$sql_result = mysql_query ($sql_statement);
+      
+		$result = mysql_fetch_assoc ($sql_result);
+    	
+    	return ($result['Output']);
+    	
+    } // GetString
     
   } // cAJAX
   
