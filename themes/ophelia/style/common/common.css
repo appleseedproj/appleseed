@@ -60,6 +60,7 @@
   background:none;
  }
 
+ #sectionSHUTDOWN,
  #sectionERROR {
   clear:both;
   width:300px;
@@ -327,6 +328,7 @@ a:hover {
   margin-top:10px;
  }
 
+ #sectionSHUTDOWN #footer,
  #sectionERROR #footer {
   clear:both;
   width:300px;

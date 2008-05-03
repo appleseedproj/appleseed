@@ -83,7 +83,7 @@
   
   // Load configuration options.
   
-  global $gSETTINGS, $gTHEMELISTING, $gLANGUAGELISTING;
+  global $gSETTINGS, $gTHEMELISTING, $gLANGUAGELISTING, $gSHUTDOWNLISTING;
   
   // Take action.
   switch ($gACTION) {
@@ -103,12 +103,15 @@
       $update['Theme'] = $gTHEME;  
       $update['StorageLimit'] = $gSTORAGE;  
       $update['InviteAmount'] = $gINVITES;  
+      $update['Shutdown'] = $gSHUTDOWN;  
       $zCONFIG->SaveConfiguration ($update);
     break;
   } // switch
   
   $gTHEMELISTING = $zAPPLE->GetThemeList();
   $gLANGUAGELISTING = $zAPPLE->GetLanguageList();
+  
+  $gSHUTDOWNLISTING = array (NO => 'No', YES => 'Yes', ADMIN => 'Administrators Only');
   
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/config.afrw", INCLUDE_SECURITY_NONE);

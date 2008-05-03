@@ -1,0 +1,5 @@
+<!-- ## title obj -->
+<?php $zHTML->Title (); ?>
+
+  <!-- ## error obj -->
+  <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/shutdown.aobj", INCLUDE_SECURITY_NONE); ?>

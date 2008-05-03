@@ -13,6 +13,12 @@
   
   <form id='config' name='config' method='POST' action='_admin/config/'>
   
+    <p id='shutdown'> 
+     <?php $zSTRINGS->Display ('LABEL.SHUTDOWN'); ?>
+     <?php $zTOOLTIPS->Display ('SHUTDOWN'); ?>
+    </p>
+    <?php $zHTML->Menu ('SHUTDOWN', $gSHUTDOWNLISTING, 1, $gSETTINGS['Shutdown']); ?>
+    
     <p id='summary'> 
      <?php $zSTRINGS->Display ('LABEL.SUMMARY'); ?>
      <?php $zTOOLTIPS->Display ('SUMMARY'); ?>

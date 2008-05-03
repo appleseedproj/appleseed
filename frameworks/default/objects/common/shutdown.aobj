@@ -1,0 +1,25 @@
+<div id='sectionSHUTDOWN'>
+
+ <div id='site'>
+  <div id='common'>
+
+   <div id='error'>
+    <div id='caption'>
+     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'COMMON.SHUTDOWN'); ?>
+    </div> <!-- #caption -->
+ 
+    <div id='container'>
+     <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'COMMON.SHUTDOWN'); ?>
+    </div> <!-- #container -->
+ 
+    </div> <!-- #error -->
+   </div> <!-- #comomn -->
+  </div> <!-- #site -->
+
+  <!-- ## footer obj -->
+  <?php $zHTML->Footer (); ?>
+
+ </div> <!-- #sectionSHUTDOWN -->
+
+ </body>
+</html>

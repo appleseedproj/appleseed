@@ -128,6 +128,7 @@
   
       // Initialize classes
       global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML, $zSEARCH, $zTAGS;
+      
       global $zAUTHUSER, $zREMOTEUSER, $zLOCALUSER, $zFOCUSUSER;
       global $zIMAGE;
 
@@ -276,6 +277,9 @@
         $this->SetTag ('USERTHEME', $gUSERTHEME);
         $gTHEMELOCATION = "themes/$gUSERTHEME/";
       } // if
+      
+      // Check whether site is in shutdown state.
+      $this->Shutdown ($gSETTINGS['Shutdown']);
 
       // Pull the focus user information
       if ($gPROFILEREQUEST) {
@@ -566,6 +570,9 @@
       define ("DOWN", "DOWN");
       define ("ON", "ON");
       define ("OFF", "OFF");
+      
+      // Defined for site shutdown 
+      define ("ADMIN_ONLY", "ADMIN_ONLY");
   
       define ("YES", "YES");
       define ("NO", "NO");
@@ -1537,5 +1544,31 @@
 
       return ($returnarray);
     } // GetUserInformation
+    
+    function Shutdown ($pSHUTDOWN) {
+    	global $zLOCALUSER;
+    	
+    	global $gFRAMELOCATION;
+    	
+      	// If we're viewing the admin area, shutdown doesn't apply.
+      	$self = $_SERVER['REQUEST_URI'];
+      	if (strstr ($self, '_admin')) return (FALSE);
+      	if (strstr ($self, 'login')) return (FALSE);
+    	
+    	switch ($pSHUTDOWN) {
+    		case YES:
+  				$this->IncludeFile ("$gFRAMELOCATION/frames/common/shutdown.afrw", INCLUDE_SECURITY_NONE);
+    			exit;
+    		break;
+    		case ADMIN:
+           		if ($zLOCALUSER->userAccess->a == TRUE) return (FALSE);
+  				$this->IncludeFile ("$gFRAMELOCATION/frames/common/shutdown.admin.afrw", INCLUDE_SECURITY_NONE);
+    			exit;
+    		break;
+    		case NO:
+    			return (FALSE);
+    		break;
+    	} // switch
+    } // Shutdown
 
   } // cAPPLESEED
