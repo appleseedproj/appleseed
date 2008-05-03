@@ -71,12 +71,13 @@
   global $gLOCALLOGINTAB, $gREMOTELOGINTAB;
   $gLOCALLOGINTAB = ""; $gREMOTELOGINTAB = "_off";
 
-  $parameters = split ('/', $gLOGINREQUEST);
+  $parameters = split ('/', $gLOGINREQUEST, 3);
   
   $gLOGINREQUEST = $parameters[0];
 
   if ($parameters[1]) {
     $reference = $parameters[1];
+    $redirect = $parameters[2];
     list ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN) = split ('@', $reference);
   } // if
   
@@ -115,7 +116,7 @@
       } // if
 
       // Redirect back to origin.
-      $location = 'http://' . $host . '/login/return/' . $username . '@' . $self . '/';
+      $location = 'http://' . $host . '/login/return/' . $username . '@' . $self . '/' . $redirect;
       Header ('Location: ' . $location);
       exit;
     break;
@@ -159,7 +160,11 @@
         $zREMOTEUSER->Create (FALSE, "gREMOTELOGINSESSION");
       } // if
 
-      $location = $gSITEURL;
+      if ($redirect) {
+      	$location = $gSITEURL . '/' . $redirect;
+      } else {
+      	$location = $gSITEURL;
+      } // if
       Header ('Location: ' . $location);
       exit;
     break;
@@ -293,7 +298,7 @@
       $self = $_SERVER['HTTP_HOST'];
       $self = str_replace ("www.", NULL, $self);
 
-      $location = 'http://' . $domain . '/login/check/' . $username . '@' . $self . '/';
+      $location = 'http://' . $domain . '/login/check/' . $username . '@' . $self . $gREDIRECT;
 
       // Redirect to Site B to check cookie.
       Header ('Location: ' . $location);
@@ -313,8 +318,13 @@
   // Refresh if successful in or if already logged in.
   if ( ($gACTION == "LOGIN") OR (!$zAUTHUSER->Anonymous) ) {
 
-    // Refresh to the user's profile page.
-    $refreshurl = "/profile/" . $zLOCALUSER->Username . "/";
+    if ($gREDIRECT) {
+  		global $gREDIRECT;
+  		$refreshurl = $gREDIRECT; 
+    } else {
+    	// Refresh to the user's profile page.
+    	$refreshurl = "/profile/" . $zLOCALUSER->Username . "/";
+    } // if
 
     // Create the meta refresh line.
     $bREFRESHLINE = $zHTML->Refresh ($refreshurl);
@@ -325,7 +335,7 @@
     // Exit fully from applicaton.
     $zAPPLE->End();
   } // if
-
+  
   // Set password to NULL.
   $gPASS = NULL;
 

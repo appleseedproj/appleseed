@@ -1,0 +1,76 @@
+<div id='sectionERROR'>
+
+ <div id='site'>
+  <div id='common'>
+
+   <div id='error'>
+    <div id='caption'>
+     <?php echo $gERRORTITLE; ?>
+    </div> <!-- #caption -->
+ 
+    <div id='container'>
+     <?php echo $gERRORMSG; ?>
+     <div id='return'>
+      <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
+     </div> <!-- #return -->
+   
+   <div id='local'>
+  <form id='userinfo' name='userinfo' action='login/' method='post'>
+   <input type='hidden' name='gACTION' value='LOGIN' />
+   <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
+
+   <p id='username'>
+    <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.LOGIN'); ?> <br />
+    <?php $zTOOLTIPS->Display ('USERNAME'); ?>
+   </p> <!-- #username -->
+   <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
+   <?php $zLOCALUSER->Broadcast ('field', 'Username'); ?>
+
+   <p id='password'>
+    <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.LOGIN'); ?> <br />
+    <?php $zTOOLTIPS->Display ('PASSWORD'); ?>
+   </p> <!-- #password -->
+   <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
+   <?php $zLOCALUSER->Broadcast ('field', 'Pass'); ?>
+
+   <p id='rememberme'>
+    <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.LOGIN'); ?>
+    <?php $zTOOLTIPS->Display ('REMEMBERME'); ?>
+   </p> <!-- #rememberme -->
+   <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
+
+   <?php $zHTML->Button ("login"); ?>
+   <?php $zHTML->Button ("forgot"); ?>
+
+  </form> <!-- #userinfo -->
+  </div> <!-- #local -->
+  
+  <div id='remote'>
+  <form id='remoteuserinfo' name='remoteuserinfo' action='login/remote/' method='post'>
+   <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
+
+   <p id='location'>
+    <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
+    <?php $zTOOLTIPS->Display ('LOCATION'); ?>
+   </p> <!-- #username -->
+   <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
+   <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>
+
+   <?php $zHTML->Button ("remotelogin"); ?>
+
+  </form> <!-- #remoteuserinfo -->
+  </div>
+
+     </div> <!-- #container -->
+ 
+    </div> <!-- #error -->
+   </div> <!-- #common -->
+  </div> <!-- #site -->
+
+  <!-- ## footer obj -->
+  <?php $zHTML->Footer (); ?>
+
+ </div> <!-- #sectionERROR -->
+
+ </body>
+</html>

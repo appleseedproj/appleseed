@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: 403.php                                 CREATED: 01-01-2005 + 
-  // | LOCATION: /code/site/error/                  MODIFIED: 04-11-2007 +
+  // | LOCATION: /code/site/error/                  MODIFIED: 05-03-2008 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -74,6 +74,10 @@
   // Lookup the content.
   $zSTRINGS->Lookup ('OBJECT.CONTENT', 'SITE.ERROR.403');
   $gERRORMSG = $zSTRINGS->Output;
+  
+  // Set up where to redirect to once we've logged in.
+  global $gREDIRECT;
+  $gREDIRECT = $_SERVER['REQUEST_URI'];
 
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/error/403.afrw", INCLUDE_SECURITY_NONE);
