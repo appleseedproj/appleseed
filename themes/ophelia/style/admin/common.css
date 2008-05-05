@@ -307,8 +307,16 @@
 }
 
 #admin #tabs a {
+ color:#888888;
+ float:left;
+ font-size:10px;
+ margin:0px 10px 0 15px;
  background:none;
-} 
+}
+
+#admin #tabs a.on {
+ color:#000000;
+}
 
 #admin #tabs img {
  margin-left:10px;

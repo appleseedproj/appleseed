@@ -95,6 +95,10 @@ RewriteRule .*^_admin\/content\/articles$ code/admin/content/articles.php [L]
 RewriteRule .*^_admin\/content\/pages\/$ code/admin/content/pages.php [L]
 RewriteRule .*^_admin\/content\/pages$ code/admin/content/pages.php [L]
 
+# Admin/Control redirects
+RewriteRule .*^_admin\/control\/update\/$ code/admin/control/update.php [L]
+RewriteRule .*^_admin\/control\/update$ code/admin/control/update.php [L]
+
 # Security redirects.
 
 # Redirect appleseed data request attempts to 403 Forbidden message.

@@ -372,4 +372,9 @@
     } // SaveConfiguration
      
   } // cSYSTEMCONFIG
+
+  // System Update class.
+  class cSYSTEMUPDATE extends cBASESYSTEMUPDATE {
+     
+  } // cSYSTEMUPDATE
   

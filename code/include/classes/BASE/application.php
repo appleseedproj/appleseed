@@ -409,14 +409,24 @@
       $gCONNECT['host'] = $setting_host;
       $gTABLEPREFIX = $setting_pre;
       
+      // Current Appleseed version.  Must be updated for each release.
       global $gAPPLESEEDVERSION;
-      $gAPPLESEEDVERSION = $setting_ver;
+      $gAPPLESEEDVERSION = '0.7.3';
       
       global $gSITEURL;
       $gSITEURL = $setting_url;
       
       // If we're just looking for the version, spit it out and exit as soon as we know it.
-      if (isset($_REQUEST['version'])) { echo $gAPPLESEEDVERSION; exit; } 
+      if (isset($_REQUEST['version'])) { 
+		// Use plain text header.
+  		header("Content-type: text/plain");
+      	
+      	// Echo version
+      	echo $gAPPLESEEDVERSION; 
+      	
+      	// Exit application
+      	exit; 
+      } // if
   
       global $gSITEDOMAIN;
       $gSITEDOMAIN = str_replace('http://', '', $gSITEURL); 
