@@ -360,7 +360,6 @@
       // Set the error reporting to fatal errors;
       error_reporting(E_ERROR);
   
-    
     } // SetGlobals
   
     // Load basic configuraton data from file.
@@ -1093,6 +1092,24 @@
 
       return (TRUE);
     } // UnsetTag
+    
+    // Check if local appleseed version is less than specified remote node version.
+    function CheckVersion ($pLOCALVERSION, $pREMOTEVERSION) {
+      $localVersions = split ('\.', $pLOCALVERSION);
+      $localMajor = $localVersions[0]; $localMinor = $localVersions[1]; $localMicro = $localVersions[2];
+      if (!$localMinor) $localMinor = 0; if (!$localMicro) $localMicro = 0;
+      
+      $remoteVersions = split ('\.', $pREMOTEVERSION);
+      $remoteMajor = $remoteVersions[0]; $remoteMinor = $remoteVersions[1]; $remoteMicro = $remoteVersions[2];
+      if (!$remoteMinor) $remoteMinor = 0; if (!$remoteMicro) $remoteMicro = 0;
+  
+      if (!$remoteMinor) $remoteMinor = 0; if (!$remoteMicro) $remoteMicro = 0;
+      if ($remoteMajor > $localMajor) return (true); 
+      if (($remoteMajor == $localMajor) and ($remoteMinor > $localMinor)) return (true); 
+      if (($remoteMajor == $localMajor) and ($remoteMinor == $localMinor) and ($remoteMicro > $localMicro)) return (true); 
+      
+      return (false);
+    } // CompareVersion
 
     // Return an ASD Tag value.
     function GetTag ($pTAGNAME) {

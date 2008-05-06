@@ -127,6 +127,14 @@
    -moz-border-radius:12px;
  }
  
+ input[type=submit] {
+   padding:0px 3px;
+   font-size:8px;
+   text-transform:uppercase;
+   color:#000000;
+   -moz-border-radius:6px;
+ }
+ 
  select {
   font:10px Arial;
   color:#8c9095;

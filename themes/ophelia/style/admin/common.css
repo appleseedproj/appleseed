@@ -786,3 +786,39 @@
  width:40px;
  text-align:right;
 }
+
+
+/* CONTEXT: admin.system.update */
+
+#admin #control p#content {
+	margin:0 0 10px 0;
+}
+
+#admin #control #update p {
+	clear:both;
+	float:left;
+	padding:0;
+	margin:0;
+	width:30%;
+}
+#admin #control #update select.server,
+#admin #control #update input.addserver {
+	width:220px;
+}
+#admin #control #update span {
+	width:auto;
+	margin-right:5px;
+}
+#admin #control #update p#results {
+	width:470px;
+	margin:10px 0;
+	padding:5px;
+	background-color:#eeeeee;
+	border:1px solid #cccccc;
+	height:100px;
+	-moz-border-radius:12px;
+}
+
+#admin #control #update span.continue {
+	float:right;
+}

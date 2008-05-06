@@ -1,4 +1,4 @@
-<span class='add'>
+<span class='choose'>
  <input type='submit' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%' />
- <asd id='tooltip' title='add' />
-</span> <!-- .add -->
+ <asd id='tooltip' title='choose' />
+</span> <!-- .choose -->

@@ -57,6 +57,9 @@
       $gTOKEN = $_POST['gTOKEN'];
       $gIDENTIFIER = $_POST['gIDENTIFIER'];
       
+      global $gAPPLESEEDVERSION;
+      $gAPPLESEEDVERSION = '0.7.3';
+      
       // Create REMOTE object.
       $this->REMOTE = new cREMOTE ($pHOST);
       
@@ -134,7 +137,6 @@
       
       $errortitle = "ERROR.NOVERSION";
       $return = $this->XML->ErrorData ($errortitle);
-      echo $return; exit;
       
       return ($return);
     } // NoVersion
@@ -160,9 +162,6 @@
         $$settingidentifier = rtrim (ltrim ($settingmethod));
   
       } // foreach 
-      
-      global $gAPPLESEEDVERSION;
-      $gAPPLESEEDVERSION = $setting_ver;
       
       $this->Database = $setting_db;
       $this->DatabaseUsername = $setting_un;

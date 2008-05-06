@@ -132,24 +132,21 @@ function getElementsByClass(node,searchClass,tag) {
   return classElements;
 }
 
-function loadString (Title, Context, ObjectName) {
+function loadString (Title, Context) {
 
-  var jsonString = Json.toString( { 
-    action: 'AJAX_GET_STRING', 
-    title: Title, 
-    context: Context
-  });
+	var jsonString = Json.toString( { 
+		action: 'AJAX_GET_STRING', 
+		title: Title, 
+		context: Context
+	});
   
-  var returnValue = '';
+	var returnValue = null;
   
-  var ajaxObject = new Ajax('/ajax/', {
-    postBody: jsonString, 
-    onComplete: function(req) {
-      if (req) {
-      	ObjectName.innerHTML = req;
-      } // if
-    }
-  }).request();
-  
-  return (returnValue);
+	var xhr = new XHR({
+		method: 'post',
+		async: false
+	}).send('/ajax/',jsonString);
+	returnValue = xhr.transport.responseText;
+	
+	return (returnValue);
 } // loadString

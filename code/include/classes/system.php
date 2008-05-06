@@ -375,6 +375,27 @@
 
   // System Update class.
   class cSYSTEMUPDATE extends cBASESYSTEMUPDATE {
-     
+  	
+  	function GetServerListing () {
+  		
+  	  // Retrieve all servers from database
+      $statement = "
+        SELECT DISTINCT(Server) FROM $this->TableName;
+      ";
+      $this->Query ($statement);
+      
+      $index = 1;
+      while ($this->FetchArray()) {
+      	$return[$index++] = $this->Server;
+      } // while
+      
+      // If update.appleseedproject.org isn't listed, add it to the list.
+      if (!in_array('update.appleseedproject.org', $return)) $return[0] = 'update.appleseedproject.org';
+      
+      ksort (&$return);
+      
+      return ($return);
+  	} // GetServerListing
+  	
   } // cSYSTEMUPDATE
   
