@@ -21,11 +21,16 @@
     <p id='addserver'> 
      <?php $zSTRINGS->Display ('LABEL.ADDSERVER'); ?>
      <?php $zTOOLTIPS->Display ('ADDSERVER'); ?>
-   
     </p>
     <?php $zHTML->TextBox ("ADDSERVER", 5, NULL); ?>
     <?php $zHTML->Button ('choose'); ?>
     <?php $zHTML->Button ('cancel'); ?>
+    
+    <p id='version'> 
+     <?php $zSTRINGS->Display ('LABEL.VERSION'); ?>
+     <?php $zTOOLTIPS->Display ('VERSION'); ?>
+    </p>
+    <?php $zHTML->Menu ('VERSION', $gVERSIONLISTING, 1, $gVERSION); ?>
     
     <p id='results'>
 		<?php $zSTRINGS->Display ('LABEL.RESULTS'); ?>

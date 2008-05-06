@@ -430,7 +430,7 @@
  
         $path = "/"; // path to cgi, asp, php program
  
-        // Open a socket and set timeout to 2 seconds.
+        // Open a socket and set timeout to 10 seconds.
         $fp = fsockopen($pSERVER, 80, $errno, $errstr, 10);
  
         fputs($fp, "POST $path HTTP/1.0\r\n");
@@ -487,6 +487,70 @@
       
       return ($files);
   	} // NodeFileListing
+  	
+  	function GetVersionListing ($pSERVER) {
+  		
+  	  global $zAPPLE;
+  	  
+  	  global $gAPPLESEEDVERSION;
+  		
+      // Pull from node
+      if (function_exists ("curl_exec")) {
+      	$ch = curl_init();
+      	
+      	$URL = 'http://' . $pSERVER . '/?versions';
+      	
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        // grab URL and pass it to the browser
+        ob_start();
+        curl_exec($ch);
+        $return = ob_get_clean();
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+        
+      } else {
+        $parameters = 'versions=1';
+        
+        $path = "/"; // path to cgi, asp, php program
+ 
+        // Open a socket and set timeout to 2 seconds.
+        $fp = fsockopen($pSERVER, 80, $errno, $errstr, 2);
+ 
+        fputs($fp, "POST $path HTTP/1.0\r\n");
+        fputs($fp, "Host: " . $pSERVER . "\r\n");
+        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+        fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
+        fputs($fp, "Connection: close\r\n\r\n");
+        fputs($fp, $parameters);
+   
+        while (!feof($fp)) {
+           $data .= fgets($fp,1024);
+        } // while
+        $return = substr(strstr($data,"\r\n\r\n"),4);
+      } // if
+      
+      $versions = split ("\n", $return);
+      
+      // Loop through and remove any previous versions.
+      foreach ($versions as $v => $version) {
+      	// Remove if blank
+      	if (!$version) continue;
+      	// Remove if less than current.
+        //if (!$zAPPLE->CheckVersion ($gAPPLESEEDVERSION, $version)) continue;
+        // Set up result.
+        $result[$version] = $version;
+      
+      } // foreach
+      
+      // Switch to ascending.
+      $result = array_reverse ($result);
+      
+      return ($result);
+  	} // GetVersionListing
   	
   } // cSYSTEMUPDATE
   

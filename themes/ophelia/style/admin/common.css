@@ -800,11 +800,16 @@
 	padding:0;
 	margin:0;
 	width:30%;
+	margin-bottom:15px;
 }
 #admin #control #update select.server,
+#admin #control #update select.version,
 #admin #control #update input.addserver {
 	width:220px;
 }
+#admin #control #update select {
+}
+
 #admin #control #update span {
 	width:auto;
 	margin-right:5px;

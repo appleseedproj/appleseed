@@ -87,9 +87,6 @@
   // Set the page title.
   $gPAGESUBTITLE = ' - Admin';
   
-  // Load list of servers.
-  $gSERVERLISTING = $zUPDATE->GetServerListing();
-  
   // Choose which action to take.
   switch ($gACTION) {
   	case 'CHOOSE':
@@ -97,6 +94,7 @@
   	case 'ADD':
   	break;
   	case 'REMOVE':
+  		echo $gSERVER; exit;
   	break;
   	case 'CANCEL':
   		$gADDSERVER = NULL;
@@ -107,13 +105,24 @@
   		// Set default server to update.appleseedproject.org
   		if (!$gSERVER) $gSERVER = 'update.appleseedproject.org';
   
-  		$files = $zUPDATE->NodeFileListing($gSERVER);
+  		//$files = $zUPDATE->NodeFileListing($gSERVER);
   	break;
   } // switch
   
-  $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ("update.appleseedproject.org");
+  // Load list of servers.
+  $gSERVERLISTING = $zUPDATE->GetServerListing();
   
+  // Load list of versions
+  global $gVERSIONLISTING;
+  $gVERSIONLISTING = $zUPDATE->GetVersionListing($gSERVER);
+  
+  $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
+  
+  // Temporary
   $gOFFICIALLATEST = '0.7.4';
+  
+  // If we're not specifying the version, select the latest.
+  if (!$gVERSION) $gVERSION = $gOFFICIALLATEST;
   
   if ($zAPPLE->CheckVersion ($gAPPLESEEDVERSION, $gOFFICIALLATEST)) {
   	$zAPPLE->SetTag ('NEWVERSION', $gOFFICIALLATEST);
