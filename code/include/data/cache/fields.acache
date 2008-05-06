@@ -248,6 +248,23 @@ array (
     2 => 'Stamp',
     3 => 'Time',
   ),
+  'cacheNodes' => 
+  array (
+    0 => 'tID',
+    1 => 'Domain',
+    2 => 'Version',
+    3 => 'Stamp',
+  ),
+  'systemUpdate' =>
+  array (
+    0 => 'tID',
+    1 => 'Server',
+    2 => 'Version',
+    3 => 'Filename',
+    4 => 'Directory',
+    5 => 'Magic',
+    6 => 'Checksum',
+  )
 )
 
 ?>

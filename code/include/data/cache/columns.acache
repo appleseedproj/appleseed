@@ -1998,6 +1998,127 @@ array (
       'primary' => false,
     ),
   ),
+  'cacheNodes' => 
+  array (
+    'tID' => 
+    array (
+      'null' => 'NO',
+      'datatype' => 'INTEGER',
+      'max' => 1.0E+10,
+      'min' => 0,
+      'primary' => true,
+    ),
+    'Domain' => 
+    array (
+      'null' => 'YES',
+      'datatype' => 'STRING',
+      'max' => '128',
+      'min' => 0,
+      'primary' => false,
+    ),
+    'Version' => 
+    array (
+      'null' => 'YES',
+      'datatype' => 'STRING',
+      'max' => '8',
+      'min' => 0,
+      'primary' => false,
+    ),
+    'Stamp' => 
+    array (
+      'null' => 'YES',
+      'datatype' => 'DATETIME',
+      'primary' => false,
+    ),
+  ),
+  'systemUpdate' => 
+  array (
+    'tID' => 
+    array (
+      'max' => '',
+      'min' => '',
+      'illegal' => '',
+      'required' => '',
+      'relation' => 'unique',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'INTEGER',
+      'primary' => true,
+    ),
+    'Server' => 
+    array (
+      'max' => '255',
+      'min' => '1',
+      'illegal' => '',
+      'required' => '',
+      'relation' => '',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'STRING',
+      'primary' => false,
+    ),
+    'Version' => 
+    array (
+      'max' => '8',
+      'min' => '1',
+      'illegal' => '',
+      'required' => '',
+      'relation' => '',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'STRING',
+      'primary' => false,
+    ),
+    'Filename' => 
+    array (
+      'max' => '255',
+      'min' => '1',
+      'illegal' => '',
+      'required' => '',
+      'relation' => '',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'STRING',
+      'primary' => false,
+    ),
+    'Directory' => 
+    array (
+      'max' => '8',
+      'min' => '1',
+      'illegal' => '',
+      'required' => '',
+      'relation' => '',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'BOOLEAN',
+      'primary' => false,
+    ),
+    'Magic' => 
+    array (
+      'max' => '1',
+      'min' => '1',
+      'illegal' => '',
+      'required' => '',
+      'relation' => '',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'BOOLEAN',
+      'primary' => false,
+    ),
+    'Checksum' => 
+    array (
+      'max' => '255',
+      'min' => '1',
+      'illegal' => '',
+      'required' => '',
+      'relation' => '',
+      'null' => 'NO',
+      'sanitize' => 'YES',
+      'datatype' => 'STRING',
+      'primary' => false,
+    ),
+  )
+    
 )
 
 ?>

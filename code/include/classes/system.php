@@ -384,18 +384,109 @@
       ";
       $this->Query ($statement);
       
-      $index = 1;
       while ($this->FetchArray()) {
-      	$return[$index++] = $this->Server;
+      	$return[$this->Server] = $this->Server;
       } // while
       
       // If update.appleseedproject.org isn't listed, add it to the list.
-      if (!in_array('update.appleseedproject.org', $return)) $return[0] = 'update.appleseedproject.org';
+      if (!in_array('update.appleseedproject.org', $return)) $return['update.appleseedproject.org'] = 'update.appleseedproject.org';
       
       ksort (&$return);
       
       return ($return);
   	} // GetServerListing
+  	
+  	// Get file listing from update server.
+  	function NodeFileListing ($pSERVER, $pVERSION = false) {
+  	  global $zAPPLE;
+  		
+  	  // If we don't have the version, get it.
+  	  if ($pVERSION) $version = $pVERSION; else $version = $zAPPLE->GetNodeVersion ($pSERVER);
+  		
+      // Pull from node
+      if (function_exists ("curl_exec")) {
+      	$ch = curl_init();
+      	
+      	$URL = 'http://' . $pSERVER . '/?files';
+      	
+      	if ($pVERSION) $URL .= '=' . $pVERSION;
+
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        // grab URL and pass it to the browser
+        ob_start();
+        curl_exec($ch);
+        $return = ob_get_clean();
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+        
+      } else {
+        $parameters = 'files';
+        
+      	if ($pVERSION) $parameters .= '=' . $pVERSION; else $parameters .= '=1';
+ 
+        $path = "/"; // path to cgi, asp, php program
+ 
+        // Open a socket and set timeout to 2 seconds.
+        $fp = fsockopen($pSERVER, 80, $errno, $errstr, 10);
+ 
+        fputs($fp, "POST $path HTTP/1.0\r\n");
+        fputs($fp, "Host: " . $pSERVER . "\r\n");
+        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+        fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
+        fputs($fp, "Connection: close\r\n\r\n");
+        fputs($fp, $parameters);
+   
+        while (!feof($fp)) {
+           $data .= fgets($fp,1024);
+        } // while
+        $return = substr(strstr($data,"\r\n\r\n"),4);
+      } // if
+      
+      $files = null;
+      
+      $lines = split ("\n", $return);
+      foreach ($lines as $line) {
+      	$values = split ("\t", $line);
+      	$index = count($files);
+      	$files[$index] = new stdClass();
+      	$files[$index]->File = $values[0];
+      	$files[$index]->Checksum = $values[1];
+      	$files[$index]->Directory = $values[2];
+      	$files[$index]->Magic = $values[3];
+      	
+      	// Remove any null values.
+      	if ($values[0] == null) unset ($files[$index]);
+      } // foreach
+      
+      // Delete all current records for this server and version.
+      $query = "
+		DELETE FROM $this->TableName 
+		WHERE Server = '%s'
+		AND Version = '%s'
+      ";
+      $query = sprintf ($query,
+                        mysql_real_escape_string ($pSERVER),
+                        mysql_real_escape_string ($version));
+      $this->Query($query);
+      
+      // Insert data into the database.
+      foreach ($files as $file) {
+      	$this->Server = $pSERVER;
+      	$this->Filename = $file->File;
+      	$this->Checksum = $file->Checksum;
+      	$this->Directory = $file->Directory;
+      	$this->Magic = $file->Magic;
+      	$this->Version = $version;
+      	
+      	$this->Add();
+      } // foreach
+      
+      return ($files);
+  	} // NodeFileListing
   	
   } // cSYSTEMUPDATE
   

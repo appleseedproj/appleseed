@@ -90,6 +90,27 @@
   // Load list of servers.
   $gSERVERLISTING = $zUPDATE->GetServerListing();
   
+  // Choose which action to take.
+  switch ($gACTION) {
+  	case 'CHOOSE':
+  	break;
+  	case 'ADD':
+  	break;
+  	case 'REMOVE':
+  	break;
+  	case 'CANCEL':
+  		$gADDSERVER = NULL;
+  	break;
+  	case 'CONTINUE':
+  	break;
+  	default:
+  		// Set default server to update.appleseedproject.org
+  		if (!$gSERVER) $gSERVER = 'update.appleseedproject.org';
+  
+  		$files = $zUPDATE->NodeFileListing($gSERVER);
+  	break;
+  } // switch
+  
   $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ("update.appleseedproject.org");
   
   $gOFFICIALLATEST = '0.7.4';
