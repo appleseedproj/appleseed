@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: base.php                                CREATED: 02-25-2005 + 
-  // | LOCATION: /code/include/classes/BASE/        MODIFIED: 04-10-2007 +
+  // | LOCATION: /code/include/classes/BASE/        MODIFIED: 05-05-2008 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -580,7 +580,6 @@
         $this->FieldCount = $fieldcount;
         $zCACHE->FieldCache[$this->TableName] = $this->FieldNames;
         $zCACHE->FieldCount[$this->TableName] = $this->FieldCount;
-
       } // if
    
       return (0);
@@ -2886,7 +2885,7 @@
 
           // Add slashes to prevent ' from breaking jPOSTLINK
           // NOTE: Still doesn't pass single quotes back to browser right.
-          $postvalue = addslashes ($postvalue);
+          if (!is_array ($postvalue)) $postvalue = addslashes ($postvalue);
 
         } // foreach
 
