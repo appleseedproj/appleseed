@@ -467,29 +467,6 @@
       // If no file listing exists, return false
       if (count($files) == 0) return (FALSE);
       
-      // Delete all current records for this server and version.
-      $query = "
-		DELETE FROM $this->TableName 
-		WHERE Server = '%s'
-		AND Version = '%s'
-      ";
-      $query = sprintf ($query,
-                        mysql_real_escape_string ($pSERVER),
-                        mysql_real_escape_string ($version));
-      $this->Query($query);
-      
-      // Insert data into the database.
-      foreach ($files as $file) {
-      	$this->Server = $pSERVER;
-      	$this->Filename = $file->File;
-      	$this->Checksum = $file->Checksum;
-      	$this->Directory = $file->Directory;
-      	$this->Magic = $file->Magic;
-      	$this->Version = $version;
-      	
-      	$this->Add();
-      } // foreach
-      
       return ($files);
   	} // NodeFileListing
   	
@@ -559,6 +536,17 @@
   	
   	function AddServer ($pSERVER) {
   	  global $zAPPLE, $zSTRINGS;
+  	  
+  	  $this->Select("Server", $pSERVER);
+  	  
+  	  // Already exists in database.
+  	  if ($this->CountResult() > 0) {
+  	    $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
+        $zSTRINGS->Lookup ('ERROR.ALREADY', $zAPPLE->Context);
+        $this->Message = $zSTRINGS->Output;
+        $this->Error = -1;
+        return (FALSE);
+  	  } // if
   		
       if ( (!$version = $zAPPLE->GetNodeVersion ($pSERVER)) or 
   	       (!$files = $this->NodeFileListing ($pSERVER)) ) {
@@ -567,6 +555,9 @@
         $this->Error = -1;
   	  	return (FALSE);
   	  } // if
+  	  
+  	  $this->Server = $pSERVER;
+  	  $this->Add();
   	  
   	  $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
   	  

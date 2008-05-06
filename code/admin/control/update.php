@@ -155,7 +155,7 @@
       } // if
   	break;
   	default:
-  		//$files = $zUPDATE->NodeFileListing($gSERVER);
+  		$files = $zUPDATE->NodeFileListing($gSERVER);
   	break;
   } // switch
   

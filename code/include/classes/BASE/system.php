@@ -1142,52 +1142,6 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'STRING'),
 
-        'Filename'       => array ('max'        => '255',
-                                   'min'        => '1',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'STRING'),
-
-        'Checksum'       => array ('max'        => '255',
-                                   'min'        => '1',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'STRING'),
-
-        'Magic'          => array ('max'        => '1',
-                                   'min'        => '1',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'BOOLEAN'),
-
-
-        'Version'        => array ('max'        => '8',
-                                   'min'        => '1',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'STRING'),
-
-        'Directory'      => array ('max'        => '8',
-                                   'min'        => '1',
-                                   'illegal'    => '',
-                                   'required'   => '',
-                                   'relation'   => '',
-                                   'null'       => NO,
-                                   'sanitize'   => YES,
-                                   'datatype'   => 'BOOLEAN'),
-
       );
 
       // Assign context from paramater.
