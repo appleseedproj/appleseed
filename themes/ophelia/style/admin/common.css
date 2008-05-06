@@ -826,4 +826,5 @@
 
 #admin #control #update span.continue {
 	float:right;
+	clear:both;
 }

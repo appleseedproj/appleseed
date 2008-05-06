@@ -1,0 +1,5 @@
+    <p id='results'>
+		<?php $zSTRINGS->Display ('LABEL.RESULTS'); ?>
+    	<?php echo $bRESULT; ?>
+    </p>
+

@@ -138,6 +138,7 @@
       // Reload list of servers.
       $gSERVERLISTING = $zUPDATE->GetServerListing();
       $gSERVER = 'update.appleseedproject.org';
+      $gVERSIONLISTING = $zUPDATE->GetVersionListing($gSERVER);
       $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
   	break;
   	case 'CANCEL':
@@ -153,6 +154,8 @@
         $zUPDATE->Error = -1;
         break;
       } // if
+      global $bRESULTS;
+      $bRESULTS =  $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.results.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	break;
   	default:
   		$files = $zUPDATE->NodeFileListing($gSERVER);
