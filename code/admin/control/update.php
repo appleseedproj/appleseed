@@ -87,27 +87,8 @@
   // Set the page title.
   $gPAGESUBTITLE = ' - Admin';
   
-  // Choose which action to take.
-  switch ($gACTION) {
-  	case 'CHOOSE':
-  	break;
-  	case 'ADD':
-  	break;
-  	case 'REMOVE':
-  		echo $gSERVER; exit;
-  	break;
-  	case 'CANCEL':
-  		$gADDSERVER = NULL;
-  	break;
-  	case 'CONTINUE':
-  	break;
-  	default:
-  		// Set default server to update.appleseedproject.org
-  		if (!$gSERVER) $gSERVER = 'update.appleseedproject.org';
-  
-  		//$files = $zUPDATE->NodeFileListing($gSERVER);
-  	break;
-  } // switch
+  // Set default server to update.appleseedproject.org
+  if (!$gSERVER) $gSERVER = 'update.appleseedproject.org';
   
   // Load list of servers.
   $gSERVERLISTING = $zUPDATE->GetServerListing();
@@ -131,6 +112,53 @@
     $zUPDATE->Message = $zSTRINGS->Output;
   }
  
+  // Choose which action to take.
+  switch ($gACTION) {
+  	case 'CHOOSE':
+  	  if ($zUPDATE->AddServer ($gADDSERVER)) {
+  	    $gSERVER = $gADDSERVER;
+  	    $gADDSERVER = NULL;
+  	  } // if
+      // Reload list of servers.
+      $gSERVERLISTING = $zUPDATE->GetServerListing();
+      $gVERSIONLISTING = $zUPDATE->GetVersionListing($gSERVER);
+      $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
+      $gVERSION = $gOFFICIALLATEST;
+  	break;
+  	case 'ADD':
+  	break;
+  	case 'REMOVE':
+  	  if ($gSERVER == 'update.appleseedproject.org') {
+        $zSTRINGS->Lookup ('ERROR.CANTDELETE', $zAPPLE->Context);
+        $zUPDATE->Message = $zSTRINGS->Output;
+        $zUPDATE->Error = -1;
+  	  } else {
+  	    $zUPDATE->RemoveServer ($gSERVER);
+  	  } // if
+      // Reload list of servers.
+      $gSERVERLISTING = $zUPDATE->GetServerListing();
+      $gSERVER = 'update.appleseedproject.org';
+      $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
+  	break;
+  	case 'CANCEL':
+  	  $gADDSERVER = NULL;
+  	break;
+  	case 'CONTINUE':
+  	  // If the version we're selecting is greater than the latest available.
+      if ($zAPPLE->CheckVersion ($gOFFICIALLATEST, $gVERSION)) {
+      	$zAPPLE->SetTag ('VERSION', $gVERSION);
+      	$zAPPLE->SetTag ('SERVER', $gSERVER);
+        $zSTRINGS->Lookup ('ERROR.INVALIDVERSION', $zAPPLE->Context);
+        $zUPDATE->Message = $zSTRINGS->Output;
+        $zUPDATE->Error = -1;
+        break;
+      } // if
+  	break;
+  	default:
+  		//$files = $zUPDATE->NodeFileListing($gSERVER);
+  	break;
+  } // switch
+  
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/control/update.afrw", INCLUDE_SECURITY_NONE);
   

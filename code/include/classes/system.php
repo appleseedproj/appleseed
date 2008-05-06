@@ -451,6 +451,8 @@
       $lines = split ("\n", $return);
       foreach ($lines as $line) {
       	$values = split ("\t", $line);
+      	// If we don't get four columns back, it's not a valid line.
+      	if (count($values) != 5) continue;
       	$index = count($files);
       	$files[$index] = new stdClass();
       	$files[$index]->File = $values[0];
@@ -461,6 +463,9 @@
       	// Remove any null values.
       	if ($values[0] == null) unset ($files[$index]);
       } // foreach
+      
+      // If no file listing exists, return false
+      if (count($files) == 0) return (FALSE);
       
       // Delete all current records for this server and version.
       $query = "
@@ -551,6 +556,47 @@
       
       return ($result);
   	} // GetVersionListing
+  	
+  	function AddServer ($pSERVER) {
+  	  global $zAPPLE, $zSTRINGS;
+  		
+      if ( (!$version = $zAPPLE->GetNodeVersion ($pSERVER)) or 
+  	       (!$files = $this->NodeFileListing ($pSERVER)) ) {
+        $zSTRINGS->Lookup ('ERROR.INVALIDSERVER', $zAPPLE->Context);
+        $this->Message = $zSTRINGS->Output;
+        $this->Error = -1;
+  	  	return (FALSE);
+  	  } // if
+  	  
+  	  $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
+  	  
+      $zSTRINGS->Lookup ('MESSAGE.ADDED', $zAPPLE->Context);
+      $this->Message = $zSTRINGS->Output;
+      $this->Error = 0;
+      
+  	  return (TRUE);
+  	} // AddServer
+  	
+  	function RemoveServer ($pSERVER) {
+  	  global $zAPPLE, $zSTRINGS;
+  		
+      // Delete all current records for this server and version.
+      $query = "
+		DELETE FROM $this->TableName 
+		WHERE Server = '%s'
+      ";
+      $query = sprintf ($query,
+                        mysql_real_escape_string ($pSERVER));
+      $this->Query($query);
+  	  
+  	  $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
+  	  
+      $zSTRINGS->Lookup ('MESSAGE.REMOVED', $zAPPLE->Context);
+      $this->Message = $zSTRINGS->Output;
+      $this->Error = 0;
+      
+  	  return (TRUE);
+  	} // RemoveServer
   	
   } // cSYSTEMUPDATE
   
