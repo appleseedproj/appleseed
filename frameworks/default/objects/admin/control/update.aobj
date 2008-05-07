@@ -32,6 +32,12 @@
     </p>
     <?php $zHTML->Menu ('VERSION', $gVERSIONLISTING, 1, $gVERSION); ?>
     
+    <p id='backupdirectory'> 
+     <?php $zSTRINGS->Display ('LABEL.BACKUPDIRECTORY'); ?>
+     <?php $zTOOLTIPS->Display ('BACKUPDIRECTORY'); ?>
+    </p>
+    <?php $zHTML->TextBox ("BACKUPDIRECTORY", 255, getcwd() . '/backup/'); ?>
+    
     <?php echo $bRESULTS; ?>
    
     <?php $zHTML->Button ('continue'); ?>

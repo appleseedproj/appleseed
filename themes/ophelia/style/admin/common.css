@@ -804,6 +804,7 @@
 }
 #admin #control #update select.server,
 #admin #control #update select.version,
+#admin #control #update input.backupdirectory,
 #admin #control #update input.addserver {
 	width:220px;
 }
@@ -815,15 +816,30 @@
 	margin-right:5px;
 }
 #admin #control #update p#results {
+	float:left;
+	clear:both;
 	width:470px;
 	margin:10px 0;
 	padding:5px;
 	background-color:#eeeeee;
 	border:1px solid #cccccc;
-	height:100px;
+	height:auto;
 	-moz-border-radius:12px;
 }
-
+#admin #control #update p#results span.warning,
+#admin #control #update p#results span.error,
+#admin #control #update p#results span.result {
+	clear:both;
+	float:left;
+ 	color:#311Aff;
+	margin-left:10px;
+}
+#admin #control #update p#results span.error {
+	color:#ff1A31;
+}
+#admin #control #update p#results span.warning {
+    font-style:italic;
+}
 #admin #control #update span.continue {
 	float:right;
 	clear:both;

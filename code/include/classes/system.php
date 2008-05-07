@@ -471,7 +471,6 @@
   	} // NodeFileListing
   	
   	function GetVersionListing ($pSERVER) {
-  		
   	  global $zAPPLE;
   	  
   	  global $gAPPLESEEDVERSION;
@@ -588,6 +587,363 @@
       
   	  return (TRUE);
   	} // RemoveServer
+  	
+  	// Traverse through directory tree, find unwritable files.
+  	function CheckDirectoryTree () {
+  		
+  		// If the current directory isn't writable, return it.
+  		if (!is_writable (getcwd())) {
+  			$files[] = getcwd();
+  			return ($files);
+  		} // if
+  		
+  		$code = getcwd() . "/code";
+  		$frameworks = getcwd() . "/frameworks";
+  		$themes = getcwd() . "/themes";
+  		
+  		$files = $this->ListDirectory ($code);
+  		$files = array_merge ($files, $this->ListDirectory ($frameworks));
+  		$files = array_merge ($files, $this->ListDirectory ($themes));
+  		
+  		foreach ($files as $f => $file) {
+  			if (is_writable ($file)) unset ($files[$f]);
+  		} // foreach
+  		
+  		return ($files);
+  	} // CheckDirectoryTree
+  	
+    function ListDirectory ($pBEGIN) {
+      $return = array();
+      
+      global $gLISTINGORIGIN;
+      if (!$gLISTINGORIGIN) $gLISTINGORIGIN = $pBEGIN;
+      
+      $skip = array ($gLISTINGORIGIN . "/photos", $gLISTINGORIGIN . "/attachments");
+      
+      $handle = opendir($pBEGIN);
+      
+      while (false !== ($file = readdir($handle))) {
+        if ($file != "." && $file != "..") {
+          if (is_dir($pBEGIN. "/" . $file)) {
+            $return = array_merge($return, $this->ListDirectory ($pBEGIN. "/" . $file));           
+            $file = $pBEGIN . "/" . $file;
+            $return[] = preg_replace("/\/\//si", "/", $file);
+          } else {
+            $file = $pBEGIN . "/" . $file;
+            $return[] = preg_replace("/\/\//si", "/", $file);
+          } // if
+        } // if
+      } // while
+
+      closedir($handle);
+
+      return ($return);
+    } // ListDirectory
+    
+    function CreateBackupDirectories ($pCURRENTREFERENCE) {
+      global $zAPPLE, $zSTRINGS;
+      
+      global $gAPPLESEEDVERSION, $gFRAMELOCATION;
+      global $gRESULT;
+      
+      global $bRESULT;
+      
+      $backupDirectory = 'backup/' . $gAPPLESEEDVERSION;
+      
+      // Create the main backup directory.
+      if (!mkdir ($backupDirectory)) {
+      	if (file_exists($backupDirectory)) {
+          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORYEXISTS', $zAPPLE->Context);
+      	} else {
+          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zAPPLE->Context);
+      	} // if
+        $gRESULT = $zSTRINGS->Output;
+        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        return (FALSE);
+      } // if
+      
+      $permissions = TRUE;
+      
+      if (!chmod ($backupDirectory, 0777)) {
+        $permissions = FALSE;
+      } // if
+      
+  	  $directories = null;
+  	  
+  	  foreach ($pCURRENTREFERENCE as $cur) {
+  	  	if ($cur->Directory) {
+  	  		if (!$cur->Magic) {
+  	  			$directories[] = $cur->File;
+  	  		} // if
+  	  	} // if
+  	  } // foreach
+  	  
+  	  sort (&$directories);
+  	  
+  	  foreach ($directories as $directory) {
+        if (!mkdir ($backupDirectory . '/' . $directory)) {
+          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	  return (FALSE);
+      	} // if
+        if (!chmod ($backupDirectory . '/' . $directory, 0777)) {
+          $permissions = FALSE;
+        } // if
+  	  } // foreach
+  	  
+  	  if (!$permissions) {
+          $zSTRINGS->Lookup ('WARNING.BACKUPPERMISSIONS', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+  	  } // if
+  	  
+      $zSTRINGS->Lookup ('RESULT.BACKUPDIRECTORY', $zAPPLE->Context);
+      $gRESULT = $zSTRINGS->Output;
+      $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+  	  return (TRUE);
+    } // CreateBackupDirectories
+    
+    function CreateNewDirectories ($pLATESTREFERENCE) {
+    	
+      global $zAPPLE, $zSTRINGS;
+      
+      global $gAPPLESEEDVERSION, $gFRAMELOCATION;
+      global $gRESULT;
+      
+      global $bRESULT;
+      
+  	  $directories = null;
+  	  
+  	  foreach ($pLATESTREFERENCE as $cur) {
+  	  	if ($cur->Directory) {
+  	  		if (!$cur->Magic) {
+  	  			$directories[] = $cur->File;
+  	  		} // if
+  	  	} // if
+  	  } // foreach
+  	  
+  	  sort (&$directories);
+  	  
+  	  $permissions = TRUE;
+  	  foreach ($directories as $directory) {
+  	  	if (!file_exists ($directory)) {
+          if (!mkdir ($directory)) {
+            $zSTRINGS->Lookup ('ERROR.NEWDIRECTORIES', $zAPPLE->Context);
+            $gRESULT = $zSTRINGS->Output;
+            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	    return (FALSE);
+      	  } // if
+          if (!chmod ($directory, 0777)) {
+      	  	$permissions = FALSE;
+      	  } // if
+  	  	} // if
+  	  } // foreach
+  	  
+  	  if (!$permissions) {
+          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+  	  } // if
+  	  
+      $zSTRINGS->Lookup ('RESULT.NEWDIRECTORIES', $zAPPLE->Context);
+      $gRESULT = $zSTRINGS->Output;
+      $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+  	  return (TRUE);
+    } // CreateNewDirectories
+    
+    function Merge ($pCURRENT, $pLATEST, $pSERVER, $pVERSION) {
+    	
+      global $zAPPLE, $zSTRINGS;
+      
+      global $gAPPLESEEDVERSION, $gFRAMELOCATION;
+      global $gRESULT;
+      
+      global $bRESULT;
+      
+      // Find all new files.
+      $new = null;
+      foreach ($pLATEST as $latest) {
+      	$found = false;
+      	foreach ($pCURRENT as $current) {
+      	  if ($latest->File == $current->File) {
+      	  	$found = true;
+      	  } // if
+      	} // foreach
+      	if ($found == false) $new[] = $latest->File;
+      } // foreach
+      
+      // Find all unused old files.
+      $old = null;
+      foreach ($pCURRENT as $current) {
+      	$found = false;
+        foreach ($pLATEST as $latest) {
+      	  if ($current->File == $latest->File) {
+      	  	$found = true;
+      	  } // if
+      	} // foreach
+      	if ($found == false) $old[] = $current->File;
+      } // foreach
+      
+      // Find all common files.
+      $common = null;
+      foreach ($pCURRENT as $current) {
+      	$found = false;
+        foreach ($pLATEST as $latest) {
+      	  if ($current->File == $latest->File) {
+      	  	$found = true;
+      	  } // if
+      	} // foreach
+      	if ($found == true) $common[] = $current->File;
+      } // foreach
+      
+      // Directory to start from.
+      //$content = $this->Retrieve ($pSERVER, $pVERSION, "retrieve.txt");
+      //$this->SaveFile ($content, "retrieve.txt");
+      //$this->FixPermissions ("retrieve.txt");
+      
+      $backup = "backup/" . $gAPPLESEEDVERSION . "/";
+      
+      global $zDEBUG;
+      
+      // Backup and delete all the old files.
+      foreach ($old as $o) {
+      	// Move file to backup directory.
+      	if (!rename ($o, $backup . $o)) {
+      		global $gBACKUPFILE;
+      		$gBACKUPFILE = $o;
+            $zSTRINGS->Lookup ('WARNING.BACKUP', $zAPPLE->Context);
+            $gRESULT = $zSTRINGS->Output;
+            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	} // if
+      } // foreach
+      
+      // Backup and retrieve all the common files.
+      foreach ($common as $c) {
+      	
+      	// Find the file in the list of latest files.
+        $index = $this->FindFile ($c, $pLATEST);
+        
+        // Do not handle directories.
+        if ($pLATEST[$index]->Directory) continue;
+        
+      	// Backup old file.
+      	if (!rename ($c, $backup . $c)) {
+      		global $gBACKUPFILE;
+      		$gBACKUPFILE = $o;
+            $zSTRINGS->Lookup ('WARNING.BACKUP', $zAPPLE->Context);
+            $gRESULT = $zSTRINGS->Output;
+            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	} // if
+      	
+      	// Retrieve new file.
+        $content = $this->Retrieve ($pSERVER, $pVERSION, $c);
+        
+        // If it's a magic file, retrieve it, and save it as a ".magic" file.
+        if ($pLATEST[$index]->Magic) {
+          $this->SaveFile ($content, $c . ".magic");
+    	  global $gMAGICFILE;
+          $gMAGICFILE = $o;
+          $zSTRINGS->Lookup ('WARNING.MAGIC', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        } else {
+          $this->SaveFile ($content, $c);
+        } // if
+        
+      	if (!$this->FixPermissions ($backup . $c)) {
+      	  global $gBACKUPFILE;
+          $gBACKUPFILE = $o;
+          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	} // if
+      } // foreach
+      
+      // Retrieve all the new files.
+      foreach ($new as $n) {
+      } // foreach
+      
+    } // Merge
+    
+    function Backup ($pVERSION) {
+    } // Backup
+    
+    function Restore ($pVERSION) {
+    } // Restore
+    
+  	function Retrieve ($pSERVER, $pVERSION, $pFILENAME) {
+      $release = 'releases/' . $pVERSION . '/';
+      
+      // Pull from node
+      if (function_exists ("curl_exec")) {
+      	$ch = curl_init();
+      	
+      	$URL = 'http://' . $pSERVER . '/?file=' . $release . $pFILENAME;
+      	
+        // set URL and other appropriate options
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+
+        // grab URL and pass it to the browser
+        ob_start();
+        curl_exec($ch);
+        $return = ob_get_clean();
+
+        // close cURL resource, and free up system resources
+        curl_close($ch);
+        
+      } else {
+        $parameters = 'file=' . $pFILENAME;
+        
+        $path = "/"; // path to cgi, asp, php program
+ 
+        // Open a socket and set timeout to 2 seconds.
+        $fp = fsockopen($pSERVER, 80, $errno, $errstr, 2);
+ 
+        fputs($fp, "POST $path HTTP/1.0\r\n");
+        fputs($fp, "Host: " . $pSERVER . "\r\n");
+        fputs($fp, "Content-type: application/x-www-form-urlencoded\r\n");
+        fputs($fp, "Content-length: " . strlen($parameters) . "\r\n");
+        fputs($fp, "Connection: close\r\n\r\n");
+        fputs($fp, $parameters);
+   
+        while (!feof($fp)) {
+           $data .= fgets($fp,1024);
+        } // while
+        $return = substr(strstr($data,"\r\n\r\n"),4);
+      } // if
+      
+      return ($return);
+  	} // Retrieve
+  	
+  	function SaveFile ($pCONTENT, $pFILENAME) {
+  		
+  	  if (!$handle = fopen($pFILENAME, 'w')) return (FALSE);
+  	  
+      fwrite($handle, $pCONTENT, strlen ($pCONTENT));
+      fclose($handle);
+      
+      return (TRUE);
+  	} // SaveFile
+  	
+  	// Fix permissions on a regular file.
+  	function FixPermissions ($pFILENAME) {
+      if (!chmod ($pFILENAME, 0666)) return (FALSE);
+      
+      return (TRUE);
+  	} // FixPermissions
+  	
+  	function FindFile ($pFILE, $pREFERENCE) {
+  	  foreach ($pREFERENCE as $r => $ref) {
+        if ($ref->File == $pFILE) {
+        	return ($r);
+        } // if
+  	  } // foreach
+  	  return (FALSE);
+  	} // FindFile
   	
   } // cSYSTEMUPDATE
   

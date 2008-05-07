@@ -111,7 +111,7 @@
   $gTHEMELISTING = $zAPPLE->GetThemeList();
   $gLANGUAGELISTING = $zAPPLE->GetLanguageList();
   
-  $gSHUTDOWNLISTING = array (NO => 'No', YES => 'Yes', ADMIN => 'Administrators Only');
+  $gSHUTDOWNLISTING = array (NO => 'No', YES => 'Yes', ADMIN_ONLY => 'Administrators Only');
   
   // Include the outline frame.
   $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/config.afrw", INCLUDE_SECURITY_NONE);

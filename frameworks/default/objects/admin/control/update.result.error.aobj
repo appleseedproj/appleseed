@@ -1,0 +1,1 @@
+<span class='error'><?php echo $gRESULT; ?></span>

@@ -1556,19 +1556,55 @@
       	if (strstr ($self, 'login')) return (FALSE);
     	
     	switch ($pSHUTDOWN) {
-    		case YES:
+    		case ON:
   				$this->IncludeFile ("$gFRAMELOCATION/frames/common/shutdown.afrw", INCLUDE_SECURITY_NONE);
     			exit;
     		break;
-    		case ADMIN:
+    		case ADMIN_ONLY:
            		if ($zLOCALUSER->userAccess->a == TRUE) return (FALSE);
   				$this->IncludeFile ("$gFRAMELOCATION/frames/common/shutdown.admin.afrw", INCLUDE_SECURITY_NONE);
     			exit;
     		break;
-    		case NO:
+    		case OFF:
     			return (FALSE);
     		break;
     	} // switch
     } // Shutdown
+    
+    // Set the current Shutdown status.
+    function SetShutdown ($pSHUTDOWN) {
+      global $gTABLEPREFIX;
+      
+      $CONFIG  = new cSYSTEMCONFIG ();
+      
+  	  switch ($pSHUTDOWN) {
+  	  	case ON:
+  	  	case OFF:
+  	  	case ADMIN_ONLY:
+  	  		$query = "
+				UPDATE $CONFIG->TableName SET Value = '$pSHUTDOWN' WHERE Concern = 'Shutdown';
+            ";
+            $CONFIG->Query ($query);
+  	  	break;
+      } // switch
+      
+      unset ($CONFIG);
+      
+      return (TRUE);
+    } // SetShutdown
+    
+    // Get the current Shutdown status.
+    function GetShutdown () {
+      $CONFIG  = new cSYSTEMCONFIG ();
+      
+      $CONFIG->Select ('Concern', 'Shutdown');
+      $CONFIG->FetchArray();
+      
+      $return = $CONFIG->Value;
+      
+      unset ($CONFIG);
+      
+      return ($return);
+    } // GetShutdown
 
   } // cAPPLESEED
