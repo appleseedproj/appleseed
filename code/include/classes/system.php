@@ -391,7 +391,7 @@
       // If update.appleseedproject.org isn't listed, add it to the list.
       if (!in_array('update.appleseedproject.org', $return)) $return['update.appleseedproject.org'] = 'update.appleseedproject.org';
       
-      ksort (&$return);
+      ksort ($return);
       
       return ($return);
   	} // GetServerListing
@@ -678,7 +678,7 @@
   	  	} // if
   	  } // foreach
   	  
-  	  sort (&$directories);
+  	  sort ($directories);
   	  
   	  foreach ($directories as $directory) {
         if (!mkdir ($backupDirectory . '/' . $directory)) {
@@ -724,7 +724,7 @@
   	  	} // if
   	  } // foreach
   	  
-  	  sort (&$directories);
+  	  sort ($directories);
   	  
   	  $permissions = TRUE;
   	  foreach ($directories as $directory) {
@@ -799,11 +799,11 @@
       	if ($found == true) $common[] = $current->File;
       } // foreach
       
-      // Directory to start from.
-      //$content = $this->Retrieve ($pSERVER, $pVERSION, "retrieve.txt");
-      //$this->SaveFile ($content, "retrieve.txt");
-      //$this->FixPermissions ("retrieve.txt");
+      // Check if compression is available.
+      $compression = FALSE;
+      if (function_exists ("gzuncompress")) $compression = TRUE;
       
+      // Directory to start from.
       $backup = "backup/" . $gAPPLESEEDVERSION . "/";
       
       global $zDEBUG;
@@ -839,11 +839,16 @@
       	} // if
       	
       	// Retrieve new file.
-        $content = $this->Retrieve ($pSERVER, $pVERSION, $c);
+        $content = $this->Retrieve ($pSERVER, $pVERSION, $c, $compression);
         
         // If it's a magic file, retrieve it, and save it as a ".magic" file.
         if ($pLATEST[$index]->Magic) {
-          $this->SaveFile ($content, $c . ".magic");
+          // If it doesn't exist, save it, but still warn the admin.
+          if (file_exists ($c)) {
+            $this->SaveFile ($content, $c . ".magic");
+          } else {
+            $this->SaveFile ($content, $c);
+          } // if
     	  global $gMAGICFILE;
           $gMAGICFILE = $o;
           $zSTRINGS->Lookup ('WARNING.MAGIC', $zAPPLE->Context);
@@ -853,7 +858,7 @@
           $this->SaveFile ($content, $c);
         } // if
         
-      	if (!$this->FixPermissions ($backup . $c)) {
+      	if (!$this->FixPermissions ($c)) {
       	  global $gBACKUPFILE;
           $gBACKUPFILE = $o;
           $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
@@ -864,8 +869,53 @@
       
       // Retrieve all the new files.
       foreach ($new as $n) {
+      	
+      	// Find the file in the list of latest files.
+        $index = $this->FindFile ($n, $pLATEST);
+        
+        // Create directories.
+        if ($pLATEST[$index]->Directory) {
+          mkdir ($n);
+      	  if (!chmod ($n, 0777)) {
+      	    global $gBACKUPFILE;
+            $gBACKUPFILE = $n;
+            $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+            $gRESULT = $zSTRINGS->Output;
+            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	  } // if
+      	  continue;
+        } // if
+        
+        // Retrieve new file.
+        $content = $this->Retrieve ($pSERVER, $pVERSION, $n, $compression);
+        
+        // If it's a magic file, retrieve it, and save it as a ".magic" file.
+        if ($pLATEST[$index]->Magic) {
+          // If it doesn't exist, save it, but still warn the admin.
+          if (file_exists ($n)) {
+            $this->SaveFile ($content, $n . ".magic");
+          } else {
+            $this->SaveFile ($content, $n);
+          } // if
+      	  global $gMAGICFILE;
+          $gMAGICFILE = $n;
+          $zSTRINGS->Lookup ('WARNING.MAGIC', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        } else {
+          $this->SaveFile ($content, $n);
+        } // if
+        
+      	if (!$this->FixPermissions ($n)) {
+      	  global $gBACKUPFILE;
+          $gBACKUPFILE = $n;
+          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+          $gRESULT = $zSTRINGS->Output;
+          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      	} // if
       } // foreach
       
+      return (TRUE);
     } // Merge
     
     function Backup ($pVERSION) {
@@ -874,14 +924,17 @@
     function Restore ($pVERSION) {
     } // Restore
     
-  	function Retrieve ($pSERVER, $pVERSION, $pFILENAME) {
+  	function Retrieve ($pSERVER, $pVERSION, $pFILENAME, $pCOMPRESSED = FALSE) {
       $release = 'releases/' . $pVERSION . '/';
       
       // Pull from node
       if (function_exists ("curl_exec")) {
       	$ch = curl_init();
       	
-      	$URL = 'http://' . $pSERVER . '/?file=' . $release . $pFILENAME;
+      	if ($pCOMPRESSED) 
+      	  $URL = 'http://' . $pSERVER . '/?cfile=' . $release . $pFILENAME;
+      	else
+      	  $URL = 'http://' . $pSERVER . '/?file=' . $release . $pFILENAME;
       	
         // set URL and other appropriate options
         curl_setopt($ch, CURLOPT_URL, $URL);
@@ -896,7 +949,10 @@
         curl_close($ch);
         
       } else {
-        $parameters = 'file=' . $pFILENAME;
+      	if ($pCOMPRESSED) 
+          $parameters = 'cfile=' . $pFILENAME;
+        else
+          $parameters = 'file=' . $pFILENAME;
         
         $path = "/"; // path to cgi, asp, php program
  
@@ -915,6 +971,8 @@
         } // while
         $return = substr(strstr($data,"\r\n\r\n"),4);
       } // if
+      
+      if ($pCOMPRESSED) $return = gzuncompress ($return);
       
       return ($return);
   	} // Retrieve

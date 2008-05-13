@@ -263,6 +263,9 @@
       $zSTRINGS->Lookup ('RESULT.ENDSHUTDOWN', $zAPPLE->Context);
       $gRESULT = $zSTRINGS->Output;
       $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      
+      $zSTRINGS->Lookup ('MESSAGE.SUCCESS', $zAPPLE->Context);
+      $zUPDATE->Message = $zSTRINGS->Output;
   	break;
   	default:
   	break;
