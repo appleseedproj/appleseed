@@ -2253,7 +2253,7 @@
       // Loop through the list of recipients.
       foreach ($addresslist as $id => $address) {
         // Split the address.
-        list ($username, $domain) = split ('@', $address);  
+        list ($username, $domain) = explode ('@', $address);  
         
         // Create a unique identifier.
         $identifier = $zAPPLE->RandomString (128);
@@ -2281,13 +2281,13 @@
     function CreateAddressList ($pADDRESSES) {
       
       // Find each address in list.
-      $addresslist = split (",", $pADDRESSES);
+      $addresslist = explode (",", $pADDRESSES);
       
       // Load circle requests from list.
       foreach ($addresslist as $id => $address) {
         $circles = null;
         if (strstr ($address, ':')) {
-          list ($type, $circlename) = split (':', $address);
+          list ($type, $circlename) = explode (':', $address);
           unset ($addresslist[$id]);
           if (!$circles = $this->LoadFromCircle($circlename)) continue;
           foreach ($circles as $cid => $address) {
@@ -2378,7 +2378,7 @@
       $fullname = $USER->userProfile->getAlias();
       
       // Get the information about the reciever.
-      list ($reciever_username, $reciever_domain) = split ('@', $pRECIEVERADDRESS);
+      list ($reciever_username, $reciever_domain) = explode ('@', $pRECIEVERADDRESS);
       $USER->Select ("Username", $reciever_username);
       $USER->FetchArray ();
       $reciever_id = $USER->uID;
@@ -2435,7 +2435,7 @@
       $senderusername = $USER->Username;
       
       // Get the information about the reciever.
-      list ($username, $domain) = split ('@', $pRECIEVERADDRESS);
+      list ($username, $domain) = explode ('@', $pRECIEVERADDRESS);
 
       // Select which server to use.
       $useServer = $zAPPLE->ChooseServerVersion ($domain);
@@ -2488,7 +2488,7 @@
       } // if
 
       // Step 2: Check if user exists.
-      list ($username, $domain) = split ('\@', $pADDRESS);
+      list ($username, $domain) = explode ('\@', $pADDRESS);
       if (!$zAPPLE->GetUserInformation ($username, $domain)) {
         $this->Error = -1;
         global $gWRONGADDRESS;
@@ -2574,7 +2574,7 @@
         $address = str_replace (' ', '', $address);
         $identifier = $zAPPLE->RandomString (128);
 
-        list ($username, $domain) = split ('@', $address);
+        list ($username, $domain) = explode ('@', $address);
         $this->messageRecipient->messageStore_tID = $table_id;
         $this->messageRecipient->userAuth_uID = $zFOCUSUSER->uID;
         $this->messageRecipient->Identifier = $identifier;

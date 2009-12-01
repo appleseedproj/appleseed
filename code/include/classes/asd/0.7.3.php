@@ -155,7 +155,7 @@
       foreach ($settings as $setting) {
         
         // Split the line into two parts, type and ethod.
-        list ($settingtype, $settingmethod) = split (":", $setting,2);
+        list ($settingtype, $settingmethod) = explode (":", $setting,2);
   
         // Create a php variable using the resulting data.
         $settingidentifier = 'setting_' . $settingtype;
@@ -1488,7 +1488,7 @@
       
       $address = $_SERVER['REMOTE_ADDR'];
       $host = gethostbyaddr ($address);
-      $split_host = split ('\.', $address);
+      $split_host = explode ('\.', $address);
       $cblock = $split_host[0] . '.' . $split_host[1] . '.' . $split_host[2];
       
       // First check if the user exists.
@@ -1554,7 +1554,7 @@
         } // if
         
         // Check to see if we're looking for a subdomain.
-        list ($null, $subentry) = split ('\.', $pDOMAIN, 2);
+        list ($null, $subentry) = explode ('\.', $pDOMAIN, 2);
         if ($entry == '*.' . $subentry) {
           
           mysql_free_result ($sql_result);
@@ -1568,7 +1568,7 @@
         
         // Check to see if we're looking for a specific user at this address.
         if (strpos ($entry, '@') === TRUE) {
-          list ($username, $domain) = split ('@', $entry);
+          list ($username, $domain) = explode ('@', $entry);
           if ($username == $pUSERNAME) {
              mysql_free_result ($sql_result);
       

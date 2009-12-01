@@ -284,7 +284,7 @@
       // Pull the focus user information
       if ($gPROFILEREQUEST) {
         // Split the request into username and action
-        $profile_array = split ('/', $gPROFILEREQUEST, 3);
+        $profile_array = explode ('/', $gPROFILEREQUEST, 3);
         if (isset($profile_array[0])) $gFOCUSUSERNAME = $profile_array[0];
         if (isset($profile_array[1])) $gPROFILEACTION = $profile_array[1];
         if (isset($profile_array[2])) {
@@ -387,8 +387,8 @@
       // Return FALSE if we're not bouncing.
       if (!strstr ($self, '?')) return (FALSE);
       
-      list ($NULL, $get) = split ('\?', $self);
-      list ($value, $bounce) = split ('\=', $get);
+      list ($NULL, $get) = explode ('\?', $self);
+      list ($value, $bounce) = explode ('\=', $get);
       $get = '?' . $get;
 
       if ($$value) {
@@ -415,8 +415,8 @@
       // Return FALSE if we're not bouncing.
       if (!strstr ($self, '?')) return (FALSE);
       
-      list ($NULL, $get) = split ('\?', $self);
-      list ($value, $bounce) = split ('\=', $get);
+      list ($NULL, $get) = explode ('\?', $self);
+      list ($value, $bounce) = explode ('\=', $get);
       $get = '?' . $get;
       
       if (($value == 'bounce') and ($$value)) {
@@ -424,7 +424,7 @@
         if ($gLOGINSESSION) $zLOCALUSER->userSession->Destroy ('gLOGINSESSION');
         if ($gREMOTELOGINSESSION) $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
         
-        list ($username, $domain) = split ('\@', $$value);
+        list ($username, $domain) = explode ('\@', $$value);
         
         $zNODE = new cSYSTEMNODES();
         if ($zNODE->Blocked ($username, $domain) ) {
@@ -1100,11 +1100,11 @@
         } // foreach
   
         // Split the values into pairs.
-        $tagpairs = split (" +", $tagstring);
+        $tagpairs = explode (" +", $tagstring);
   
         foreach ($tagpairs as $tagkey => $tagvalue) {
           // Split the pairs into associative array values
-          $tagdata = split ("=", $tagvalue);
+          $tagdata = explode ("=", $tagvalue);
           $tagname = $tagdata[0]; 
           $value = $tagdata[1];
           $value = preg_replace ("/^'/", "", $value);
@@ -1319,7 +1319,7 @@
            if ($tagarray['user']) {
 
              if (strstr ($tagarray['user'], '@')) {
-               list ($tagarray['user'], $tagarray['domain']) = split ('@', $tagarray['user']);
+               list ($tagarray['user'], $tagarray['domain']) = explode ('@', $tagarray['user']);
              } // if
 
              global $gSITEDOMAIN;
@@ -1360,7 +1360,7 @@
            if (isset ($tagarray['group'])) {
 
              if (strstr ($tagarray['group'], '@')) {
-               list ($tagarray['group'], $tagarray['domain']) = split ('@', $tagarray['group']);
+               list ($tagarray['group'], $tagarray['domain']) = explode ('@', $tagarray['group']);
              } // if
 
              global $gSITEDOMAIN;

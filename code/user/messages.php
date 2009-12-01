@@ -389,7 +389,7 @@
         $addresses[] = $zMESSAGE->messageRecipient->Username . '@' . $zMESSAGE->messageRecipient->Domain;
       }
       
-      list ($username, $domain) = split ('@', $addresses[0]);
+      list ($username, $domain) = explode ('@', $addresses[0]);
       
       unset ($addresses);
       

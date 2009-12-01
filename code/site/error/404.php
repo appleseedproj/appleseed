@@ -81,8 +81,8 @@
 
   if ($icon) {
     // Header redirect to default icon.
-    list ($location, $NULL) = split ('icons', $request);
-    list ($NULL, $profile) = split ('photos', $location);
+    list ($location, $NULL) = explode ('icons', $request);
+    list ($NULL, $profile) = explode ('photos', $location);
     $redirect = '/icon' . $profile;
     Header ('Location: ' . $redirect);
     exit;

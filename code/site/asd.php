@@ -45,14 +45,14 @@
   $gDOMAIN = $_POST['gDOMAIN'];
   
   // Determine which server to load.
-  $versions = split ('\.', $gVERSION);
+  $versions = explode ('\.', $gVERSION);
   $major = $versions[0]; $minor = $versions[1]; $micro = $versions[2];
   if (!$minor) $minor = 0; if (!$micro) $micro = 0;
   
   // Load list of available server versions.
   $handle = opendir('code/include/classes/asd/');
   while (false !== ($file = readdir($handle))) {
-  		$file_exts = split ('\.', $file);
+  		$file_exts = explode ('\.', $file);
   		if ($file_exts[count($file_exts)-1] != 'php') continue;
   		$serverVersions[] = $file;
   } // if
@@ -60,7 +60,7 @@
   if (!file_exists ('code/include/classes/asd/' . $gVERSION . '.php')) {
   	// Loop through and find the latest version.
   	foreach ($serverVersions as $serverVersion) {
-  	  $versions = split ('\.', $serverVersion);
+  	  $versions = explode ('\.', $serverVersion);
   	  $serverMajor = $versions[0]; $serverMinor = $versions[1]; $serverMicro = $versions[2];
  	  if (!$serverMinor) $serverMinor = 0; if (!$serverMicro) $serverMicro = 0;
   	  if ($serverMajor > $major) continue; 

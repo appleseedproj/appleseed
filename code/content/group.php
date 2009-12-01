@@ -78,7 +78,7 @@
   $zGROUPS->Initialize ();
 
   global $gGROUPSECTION;
-  list ($gGROUPREQUEST, $gGROUPSECTION, $gSTARTINGID) = split ('/', $gGROUPREQUEST);
+  list ($gGROUPREQUEST, $gGROUPSECTION, $gSTARTINGID) = explode ('/', $gGROUPREQUEST);
 
   // Check if the group we're looking for exists.
   $zGROUPS->Select ("Name", $gGROUPREQUEST);

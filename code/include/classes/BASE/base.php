@@ -381,7 +381,7 @@
         // NOTE: Regular expressions would probably work better here.
   
         // Retrieve the list of foreign keys.
-        $keystring = split ("CONSTRAINT ", $create);
+        $keystring = explode ("CONSTRAINT ", $create);
   
         // Get rid of the create information we don't need.
         unset ($keystring[0]);
@@ -390,8 +390,8 @@
         $keystring = array_reverse ($keystring);
   
         foreach ($keystring as $keycount => $constraint) {
-          $foreignlist = split ("FOREIGN KEY", $keystring[$keycount]);
-          $references = split ("REFERENCES ", $foreignlist[1]);
+          $foreignlist = explode ("FOREIGN KEY", $keystring[$keycount]);
+          $references = explode ("REFERENCES ", $foreignlist[1]);
   
           $keynames = $references[0];
   
@@ -400,25 +400,25 @@
           $keynames = str_replace ('`', '', $keynames);
           $keynames = str_replace (' ', '', $keynames);
   
-          $keylist = split (',', $keynames);
+          $keylist = explode (',', $keynames);
   
           // Retrieve their references.
-          $tablenames = split ('` \(`', $references[1]);
+          $tablenames = explode ('` \(`', $references[1]);
           $tablestring = $tablenames[0];
           $tablestring = str_replace ('`', '', $tablestring);
           $tablestring = str_replace ('`)', '', $tablestring);
   
           // List of Tables
-          $tablelist = split (', ', $tablestring);
+          $tablelist = explode (', ', $tablestring);
   
           // Retrieve their reference fields.
-          $fieldnames = split (' ON DELETE', $tablenames[1]);
+          $fieldnames = explode (' ON DELETE', $tablenames[1]);
           $fieldstring = $fieldnames[0];
           $fieldstring = str_replace ('`', '', $fieldstring);
           $fieldstring = str_replace (')', '', $fieldstring);
   
           // List of Tables
-          $fieldlist = split (', ', $fieldstring);
+          $fieldlist = explode (', ', $fieldstring);
           
           // Loop through the key list.
           foreach ($keylist as $kcount => $kkey) {
@@ -1332,7 +1332,7 @@
       
       foreach ($resultarray as $tbl => $data) {
         stripslashes ($data);
-        list ($tablename, $fieldname) = split ('__', $tbl);
+        list ($tablename, $fieldname) = explode ('__', $tbl);
         $dataarray[$tablename][$fieldname] = $data;
       } // foreach
       
@@ -1529,7 +1529,7 @@
         } // if
 
         // STEP 3: Check for illegal characters
-        $defillegal = split (" ", $this->FieldDefinitions[$fieldname]['illegal']);
+        $defillegal = explode (" ", $this->FieldDefinitions[$fieldname]['illegal']);
 
         foreach ($defillegal as $illegalchar) {
           // Check for spaces.
@@ -1553,7 +1553,7 @@
         } // foreach
 
         // STEP 4: Check for required characters.
-        $defrequired = split (" ", $this->FieldDefinitions[$fieldname]['required']);
+        $defrequired = explode (" ", $this->FieldDefinitions[$fieldname]['required']);
 
         foreach ($defrequired as $requiredchar) {
           // Check for spaces.
@@ -2286,10 +2286,10 @@
       // Check if POST variable is an array.
       if (strstr ($pINPUTNAME, '[')) {
         // Cannot use as a $$ reference unless you strip away the [] part.
-        list ($newinput, $right) = split ('\[', $pINPUTNAME);
+        list ($newinput, $right) = explode ('\[', $pINPUTNAME);
 
         // Retrieve array reference into $listid.
-        list ($listid, $right) = split ('\]', $right);
+        list ($listid, $right) = explode ('\]', $right);
 
         // Use a reference to access information.
         global $$newinput;
@@ -2387,10 +2387,10 @@
       // Check if POST variable is an array.
       if (strstr ($pINPUTNAME, '[')) {
         // Cannot use as a $$ reference unless you strip away the [] part.
-        list ($newinput, $right) = split ('\[', $pINPUTNAME);
+        list ($newinput, $right) = explode ('\[', $pINPUTNAME);
 
         // Retrieve array reference into $listid.
-        list ($listid, $right) = split ('\]', $right);
+        list ($listid, $right) = explode ('\]', $right);
 
         // Use a reference to access information.
         global $$newinput;
@@ -2550,10 +2550,10 @@
       // Check if POST variable is an array.
       if (strstr ($pINPUTNAME, '[')) {
         // Cannot use as a $$ reference unless you strip away the [] part.
-        list ($newinput, $right) = split ('\[', $pINPUTNAME);
+        list ($newinput, $right) = explode ('\[', $pINPUTNAME);
 
         // Retrieve array reference into $listid.
-        list ($listid, $right) = split ('\]', $right);
+        list ($listid, $right) = explode ('\]', $right);
 
         // Use a reference to access information.
         global $$newinput;
@@ -3345,7 +3345,7 @@
       } // if
 
       // Determine directory for CSS file.
-      $stylecontextarray = split ('\.', $zAPPLE->Context);
+      $stylecontextarray = explode ('\.', $zAPPLE->Context);
       $gSTYLELOCATION = $stylecontextarray[0];
 
       if ($pPAGETITLE) {
@@ -3577,7 +3577,7 @@
 
      // Split a database date into month/day/year
      function SplitDate ($pDATEVAL) {
-       $datelist = split (" ", date ("m d Y H i", strtotime ($pDATEVAL)));
+       $datelist = explode (" ", date ("m d Y H i", strtotime ($pDATEVAL)));
 
        $datearray['MONTH'] = $datelist[0];
        $datearray['DAY'] = $datelist[1];

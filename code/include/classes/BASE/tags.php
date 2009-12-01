@@ -458,7 +458,7 @@
          $taglist = str_replace ('+', ',', $taglist);
          
          // Split into an array.
-         $taglist = split (',', $taglist);
+         $taglist = explode (',', $taglist);
          
          // Check if the user has gone over their limit.
          $current = count ($taglist);
@@ -529,7 +529,7 @@
    // Detect whether the URL has a tag/ appended to it.
    function DetectTags () {
     
-      $url_split = split ('tag\/', $_SERVER['REQUEST_URI']);
+      $url_split = explode ('tag\/', $_SERVER['REQUEST_URI']);
       $tag = $url_split[1];
       $tag = str_replace ('/', '', $tag);
       $tag = strtolower ($tag);

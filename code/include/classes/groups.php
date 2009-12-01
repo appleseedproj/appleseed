@@ -1579,9 +1579,9 @@
       $groupaddress = $this->Name . '@' . $gSITEDOMAIN;
       $gGROUPURL = "!##asd group='$groupaddress' /##!";
 
-      $invitelist = split (',', $gINVITES);
+      $invitelist = explode (',', $gINVITES);
       foreach ($invitelist as $id => $address) {
-        list ($username, $domain) = split ('@', $address);
+        list ($username, $domain) = explode ('@', $address);
 
         $checkcriteria = array ("groupInformation_tID" => $this->tID,
                                 "Username"             => $username,

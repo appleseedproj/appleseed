@@ -80,7 +80,7 @@
   } // if
 
   // Check if a specific ID is being requested in the URL.
-  $profiledata = split ("/", $gPROFILEREQUEST);
+  $profiledata = explode ("/", $gPROFILEREQUEST);
   $requestid = $profiledata[2];
 
   // If the journal view isn't set, default to 'single'.

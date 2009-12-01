@@ -448,9 +448,9 @@
       
       $files = null;
       
-      $lines = split ("\n", $return);
+      $lines = explode ("\n", $return);
       foreach ($lines as $line) {
-      	$values = split ("\t", $line);
+      	$values = explode ("\t", $line);
       	// If we don't get four columns back, it's not a valid line.
       	if (count($values) != 5) continue;
       	$index = count($files);
@@ -514,7 +514,7 @@
         $return = substr(strstr($data,"\r\n\r\n"),4);
       } // if
       
-      $versions = split ("\n", $return);
+      $versions = explode ("\n", $return);
       
       // Loop through and remove any previous versions.
       foreach ($versions as $v => $version) {

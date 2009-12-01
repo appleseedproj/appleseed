@@ -77,7 +77,7 @@
   } // if (file_exists)
   
   // Split the URL information into a list.
-  list ($null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = split ('/', $requested_pic);
+  list ($null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = explode ('/', $requested_pic);
   
   // If we're not looking within the photos directory, then exit.
   if ($ROOTDIR != 'photos') exit;

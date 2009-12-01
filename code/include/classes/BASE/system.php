@@ -231,7 +231,7 @@
    function CascadeContext ($pCONTEXT) {
 
      // Split by '.'
-     $contextlist_array = split ('\.', $pCONTEXT);
+     $contextlist_array = explode ('\.', $pCONTEXT);
      
      // Loop through results.
      $list_array = $contextlist_array;
@@ -745,7 +745,7 @@
    function CascadeContext ($pCONTEXT) {
 
      // Split by '.'
-     $contextlist_array = split ('\.', $pCONTEXT);
+     $contextlist_array = explode ('\.', $pCONTEXT);
      
      // Loop through results.
      $list_array = $contextlist_array;
@@ -882,7 +882,7 @@
       
       $address = $_SERVER['REMOTE_ADDR'];
       $host = gethostbyaddr ($address);
-      $split_host = split ('\.', $address);
+      $split_host = explode ('\.', $address);
       $cblock = $split_host[0] . '.' . $split_host[1] . '.' . $split_host[2];
       
       $systemNodes = $this->TablePrefix . "systemNodes";
@@ -946,7 +946,7 @@
         } // if
         
         // Check to see if we're looking for a subdomain.
-        list ($null, $subentry) = split ('\.', $pDOMAIN, 2);
+        list ($null, $subentry) = explode ('\.', $pDOMAIN, 2);
         if ($entry == '*.' . $subentry) {
           // If we're trusting subdomain.
           if ($trust == 10) return (FALSE);
@@ -957,7 +957,7 @@
         
         // Check to see if we're looking for a specific user at this address.
         if (strpos ($entry, '@') === TRUE) {
-          list ($username, $domain) = split ('@', $entry);
+          list ($username, $domain) = explode ('@', $entry);
           if ($username == $pUSERNAME) {
              // If we're trusting user.
              if ($trust == 10) return (FALSE);

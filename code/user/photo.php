@@ -41,7 +41,7 @@
   global $gFILENAME;
 
   global $gDIRECTORY;
-  list ($gDIRECTORY, $gFILENAME) = split ('/', $gPROFILESUBACTION);
+  list ($gDIRECTORY, $gFILENAME) = explode ('/', $gPROFILESUBACTION);
   
   $zAPPLE->SetContext("user.photo");
 

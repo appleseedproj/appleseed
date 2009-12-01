@@ -71,20 +71,20 @@
   global $gLOCALLOGINTAB, $gREMOTELOGINTAB;
   $gLOCALLOGINTAB = ""; $gREMOTELOGINTAB = "_off";
 
-  $parameters = split ('/', $gLOGINREQUEST, 3);
+  $parameters = explode ('/', $gLOGINREQUEST, 3);
   
   $gLOGINREQUEST = $parameters[0];
 
   if ($parameters[1]) {
     $reference = $parameters[1];
     $redirect = $parameters[2];
-    list ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN) = split ('@', $reference);
+    list ($gREFERENCEUSERNAME, $gREFERENCEDOMAIN) = explode ('@', $reference);
   } // if
   
   switch ($gLOGINREQUEST) {
     case 'check':
       $self = $_SERVER['HTTP_HOST'];
-      $check = split ('@', $reference);
+      $check = explode ('@', $reference);
       $username = $check[0];
       $host = $check[1];
 
@@ -283,7 +283,7 @@
         break;
       } // if
 
-      $info = split ('@', $gLOCATION);
+      $info = explode ('@', $gLOCATION);
       $username = $info[0];
       $domain = $info[1];
 
