@@ -606,6 +606,9 @@ class cINSTALL {
     $gHOST = $SiteDataValues['host']; 
     $gDOMAIN = $SiteDataValues['url'];
     
+    // Set as default.
+    if (!$gPREFIX) $gPREFIX = 'asd_';
+    
     return (TRUE);
   } // PreLoadSiteData;
   
