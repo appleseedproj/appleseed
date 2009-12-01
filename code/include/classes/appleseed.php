@@ -131,7 +131,7 @@
       
       global $zAUTHUSER, $zREMOTEUSER, $zLOCALUSER, $zFOCUSUSER;
       global $zIMAGE;
-
+      
       $zSTRINGS = new cSYSTEMSTRINGS ();
       $zTOOLTIPS = new cSYSTEMTOOLTIPS ();
       $zOPTIONS = new cSYSTEMOPTIONS ();
@@ -985,7 +985,7 @@
 
           case QUESTION_CHECKLIST:
             // Explode the values, load their labels, and implode them together.
-            $answerlist = explode (",", $zFOCUSUSER->userAnswers->Answer);
+            $answerlist = explode (',', $zFOCUSUSER->userAnswers->Answer);
             $answerlabels = array ();
             foreach ($answerlist as $answercount => $answer) {
               $answerlabels[$answercount] = $zOPTIONS->Label ($QUESTIONSLIST->Concern, $answer);
@@ -1100,11 +1100,11 @@
         } // foreach
   
         // Split the values into pairs.
-        $tagpairs = explode (" +", $tagstring);
+        $tagpairs = preg_split ("/ +/", $tagstring);
   
         foreach ($tagpairs as $tagkey => $tagvalue) {
           // Split the pairs into associative array values
-          $tagdata = explode ("=", $tagvalue);
+          $tagdata = explode ('=', $tagvalue);
           $tagname = $tagdata[0]; 
           $value = $tagdata[1];
           $value = preg_replace ("/^'/", "", $value);
@@ -1316,7 +1316,7 @@
          default:
   
            // User homepage link tag.
-           if ($tagarray['user']) {
+           if (isset($tagarray['user'])) {
 
              if (strstr ($tagarray['user'], '@')) {
                list ($tagarray['user'], $tagarray['domain']) = explode ('@', $tagarray['user']);

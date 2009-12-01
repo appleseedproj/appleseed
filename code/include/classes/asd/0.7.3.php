@@ -155,7 +155,7 @@
       foreach ($settings as $setting) {
         
         // Split the line into two parts, type and ethod.
-        list ($settingtype, $settingmethod) = explode (":", $setting,2);
+        list ($settingtype, $settingmethod) = explode (':', $setting,2);
   
         // Create a php variable using the resulting data.
         $settingidentifier = 'setting_' . $settingtype;

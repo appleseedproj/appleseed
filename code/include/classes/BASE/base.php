@@ -381,7 +381,7 @@
         // NOTE: Regular expressions would probably work better here.
   
         // Retrieve the list of foreign keys.
-        $keystring = explode ("CONSTRAINT ", $create);
+        $keystring = explode ('CONSTRAINT ', $create);
   
         // Get rid of the create information we don't need.
         unset ($keystring[0]);
@@ -390,8 +390,8 @@
         $keystring = array_reverse ($keystring);
   
         foreach ($keystring as $keycount => $constraint) {
-          $foreignlist = explode ("FOREIGN KEY", $keystring[$keycount]);
-          $references = explode ("REFERENCES ", $foreignlist[1]);
+          $foreignlist = explode ('FOREIGN KEY', $keystring[$keycount]);
+          $references = explode ('REFERENCES ', $foreignlist[1]);
   
           $keynames = $references[0];
   
@@ -412,7 +412,7 @@
           $tablelist = explode (', ', $tablestring);
   
           // Retrieve their reference fields.
-          $fieldnames = explode (' ON DELETE', $tablenames[1]);
+          $fieldnames = explode (' ON DELETE', $tablenames[0]);
           $fieldstring = $fieldnames[0];
           $fieldstring = str_replace ('`', '', $fieldstring);
           $fieldstring = str_replace (')', '', $fieldstring);
@@ -1529,7 +1529,7 @@
         } // if
 
         // STEP 3: Check for illegal characters
-        $defillegal = explode (" ", $this->FieldDefinitions[$fieldname]['illegal']);
+        $defillegal = explode (' ', $this->FieldDefinitions[$fieldname]['illegal']);
 
         foreach ($defillegal as $illegalchar) {
           // Check for spaces.
@@ -1553,7 +1553,7 @@
         } // foreach
 
         // STEP 4: Check for required characters.
-        $defrequired = explode (" ", $this->FieldDefinitions[$fieldname]['required']);
+        $defrequired = explode (' ', $this->FieldDefinitions[$fieldname]['required']);
 
         foreach ($defrequired as $requiredchar) {
           // Check for spaces.
@@ -2172,21 +2172,21 @@
     
       if (!isset($HTTP_USER_AGENT)) $HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
    
-      if (ereg( 'MSIE ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version)) {
+      if (preg_match( '/MSIE ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version)) {
         $gBROWSERVER=$log_version[1];
         if (strstr ($HTTP_USER_AGENT, "Opera")) $gBROWSERAGENT = 'Opera';
         $gBROWSERAGENT='IE';
-      } elseif (ereg( 'Opera ([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version)) {
+      } elseif (preg_match( '/Opera ([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version)) {
         $gBROWSERVER=$log_version[1];
         $gBROWSERAGENT='OPERA';
-      } elseif (ereg( 'Mozilla/([0-9].[0-9]{1,2})',$HTTP_USER_AGENT,$log_version)) {
+      } elseif (preg_match( '/Mozilla\/([0-9].[0-9]{1,2})/',$HTTP_USER_AGENT,$log_version)) {
         $gBROWSERVER=$log_version[1];
         $gBROWSERAGENT='MOZILLA';
       } else {
         $gBROWSERVER=0;
         $gBROWSERAGENT='OTHER';
       } // if
-   
+      
      /* Determine platform */
      
       if (strstr($HTTP_USER_AGENT,'Win')) {
@@ -3577,7 +3577,7 @@
 
      // Split a database date into month/day/year
      function SplitDate ($pDATEVAL) {
-       $datelist = explode (" ", date ("m d Y H i", strtotime ($pDATEVAL)));
+       $datelist = explode (' ', date ("m d Y H i", strtotime ($pDATEVAL)));
 
        $datearray['MONTH'] = $datelist[0];
        $datearray['DAY'] = $datelist[1];

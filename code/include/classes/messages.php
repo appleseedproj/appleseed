@@ -2281,7 +2281,7 @@
     function CreateAddressList ($pADDRESSES) {
       
       // Find each address in list.
-      $addresslist = explode (",", $pADDRESSES);
+      $addresslist = explode (',', $pADDRESSES);
       
       // Load circle requests from list.
       foreach ($addresslist as $id => $address) {

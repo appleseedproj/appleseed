@@ -725,7 +725,7 @@
      if ($this->CountResult() == 0) return (FALSE);
 
      $this->FetchArray();
-
+     
      $zAPPLE->SetTag ('TOOLTIP', $this->Output);
 
      // Load the tooltip from the themes directory.

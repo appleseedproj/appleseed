@@ -547,7 +547,7 @@
     // Get the value from the database. 
     function Get ($pIDENTIFIER, $pCACHED = TRUE) {
 
-      if ($pCACHED) {
+      if ( ($pCACHED) && (isset($this->settingsCache[$pIDENTIFIER])) ) {
 
         // Load from the cache.
         return ($this->SettingsCache[$pIDENTIFIER]);
