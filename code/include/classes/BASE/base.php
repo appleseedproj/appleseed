@@ -403,7 +403,7 @@
           $keylist = explode (',', $keynames);
   
           // Retrieve their references.
-          $tablenames = explode ('` \(`', $references[1]);
+          $tablenames = preg_split ('/` \(`/', $references[1]);
           $tablestring = $tablenames[0];
           $tablestring = str_replace ('`', '', $tablestring);
           $tablestring = str_replace ('`)', '', $tablestring);
@@ -2286,10 +2286,10 @@
       // Check if POST variable is an array.
       if (strstr ($pINPUTNAME, '[')) {
         // Cannot use as a $$ reference unless you strip away the [] part.
-        list ($newinput, $right) = explode ('\[', $pINPUTNAME);
+        list ($newinput, $right) = explode ('[', $pINPUTNAME);
 
         // Retrieve array reference into $listid.
-        list ($listid, $right) = explode ('\]', $right);
+        list ($listid, $right) = explode (']', $right);
 
         // Use a reference to access information.
         global $$newinput;
@@ -2387,10 +2387,10 @@
       // Check if POST variable is an array.
       if (strstr ($pINPUTNAME, '[')) {
         // Cannot use as a $$ reference unless you strip away the [] part.
-        list ($newinput, $right) = explode ('\[', $pINPUTNAME);
+        list ($newinput, $right) = explode ('[', $pINPUTNAME);
 
         // Retrieve array reference into $listid.
-        list ($listid, $right) = explode ('\]', $right);
+        list ($listid, $right) = explode (']', $right);
 
         // Use a reference to access information.
         global $$newinput;
@@ -2550,10 +2550,10 @@
       // Check if POST variable is an array.
       if (strstr ($pINPUTNAME, '[')) {
         // Cannot use as a $$ reference unless you strip away the [] part.
-        list ($newinput, $right) = explode ('\[', $pINPUTNAME);
+        list ($newinput, $right) = explode ('[', $pINPUTNAME);
 
         // Retrieve array reference into $listid.
-        list ($listid, $right) = explode ('\]', $right);
+        list ($listid, $right) = explode (']', $right);
 
         // Use a reference to access information.
         global $$newinput;
@@ -3345,7 +3345,7 @@
       } // if
 
       // Determine directory for CSS file.
-      $stylecontextarray = explode ('\.', $zAPPLE->Context);
+      $stylecontextarray = explode ('.', $zAPPLE->Context);
       $gSTYLELOCATION = $stylecontextarray[0];
 
       if ($pPAGETITLE) {
