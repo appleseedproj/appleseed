@@ -2488,7 +2488,7 @@
       } // if
 
       // Step 2: Check if user exists.
-      list ($username, $domain) = explode ('\@', $pADDRESS);
+      list ($username, $domain) = explode ('@', $pADDRESS);
       if (!$zAPPLE->GetUserInformation ($username, $domain)) {
         $this->Error = -1;
         global $gWRONGADDRESS;

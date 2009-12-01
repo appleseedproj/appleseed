@@ -1488,7 +1488,7 @@
       
       $address = $_SERVER['REMOTE_ADDR'];
       $host = gethostbyaddr ($address);
-      $split_host = explode ('\.', $address);
+      $split_host = explode ('.', $address);
       $cblock = $split_host[0] . '.' . $split_host[1] . '.' . $split_host[2];
       
       // First check if the user exists.
@@ -1554,7 +1554,7 @@
         } // if
         
         // Check to see if we're looking for a subdomain.
-        list ($null, $subentry) = explode ('\.', $pDOMAIN, 2);
+        list ($null, $subentry) = explode ('.', $pDOMAIN, 2);
         if ($entry == '*.' . $subentry) {
           
           mysql_free_result ($sql_result);

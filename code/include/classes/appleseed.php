@@ -387,8 +387,8 @@
       // Return FALSE if we're not bouncing.
       if (!strstr ($self, '?')) return (FALSE);
       
-      list ($NULL, $get) = explode ('\?', $self);
-      list ($value, $bounce) = explode ('\=', $get);
+      list ($NULL, $get) = explode ('?', $self);
+      list ($value, $bounce) = explode ('=', $get);
       $get = '?' . $get;
 
       if ($$value) {
@@ -415,8 +415,8 @@
       // Return FALSE if we're not bouncing.
       if (!strstr ($self, '?')) return (FALSE);
       
-      list ($NULL, $get) = explode ('\?', $self);
-      list ($value, $bounce) = explode ('\=', $get);
+      list ($NULL, $get) = explode ('?', $self);
+      list ($value, $bounce) = explode ('=', $get);
       $get = '?' . $get;
       
       if (($value == 'bounce') and ($$value)) {
@@ -424,7 +424,7 @@
         if ($gLOGINSESSION) $zLOCALUSER->userSession->Destroy ('gLOGINSESSION');
         if ($gREMOTELOGINSESSION) $zREMOTEUSER->Destroy ('gREMOTELOGINSESSION');
         
-        list ($username, $domain) = explode ('\@', $$value);
+        list ($username, $domain) = explode ('@', $$value);
         
         $zNODE = new cSYSTEMNODES();
         if ($zNODE->Blocked ($username, $domain) ) {
