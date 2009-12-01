@@ -1,22 +1,22 @@
 <?php
 
-require_once 'HTMLPurifier/URIScheme.php';
-
 /**
  * Validates news (Usenet) as defined by generic RFC 1738
  */
 class HTMLPurifier_URIScheme_news extends HTMLPurifier_URIScheme {
-    
-    function validateComponents(
-        $userinfo, $host, $port, $path, $query, $config
-    ) {
-        list($userinfo, $host, $port, $path, $query) = 
-            parent::validateComponents(
-                $userinfo, $host, $port, $path, $query, $config );
+
+    public $browsable = false;
+
+    public function validate(&$uri, $config, $context) {
+        parent::validate($uri, $config, $context);
+        $uri->userinfo = null;
+        $uri->host     = null;
+        $uri->port     = null;
+        $uri->query    = null;
         // typecode check needed on path
-        return array(null, null, null, $path, null);
+        return true;
     }
-    
+
 }
 
-?>
+// vim: et sw=4 sts=4

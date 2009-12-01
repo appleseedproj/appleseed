@@ -5,32 +5,38 @@
  */
 class HTMLPurifier_URIScheme
 {
-    
+
     /**
      * Scheme's default port (integer)
-     * @public
      */
-    var $default_port = null;
-    
+    public $default_port = null;
+
+    /**
+     * Whether or not URIs of this schem are locatable by a browser
+     * http and ftp are accessible, while mailto and news are not.
+     */
+    public $browsable = false;
+
+    /**
+     * Whether or not the URI always uses <hier_part>, resolves edge cases
+     * with making relative URIs absolute
+     */
+    public $hierarchical = false;
+
     /**
      * Validates the components of a URI
      * @note This implementation should be called by children if they define
      *       a default port, as it does port processing.
-     * @note Fragment is omitted as that is scheme independent
-     * @param $userinfo User info found before at sign in authority
-     * @param $host Hostname in authority
-     * @param $port Port found after colon in authority
-     * @param $path Path of URI
-     * @param $query Query of URI, found after question mark
+     * @param $uri Instance of HTMLPurifier_URI
      * @param $config HTMLPurifier_Config object
+     * @param $context HTMLPurifier_Context object
+     * @return Bool success or failure
      */
-    function validateComponents(
-        $userinfo, $host, $port, $path, $query, $config
-    ) {
-        if ($this->default_port == $port) $port = null;
-        return array($userinfo, $host, $port, $path, $query);
+    public function validate(&$uri, $config, $context) {
+        if ($this->default_port == $uri->port) $uri->port = null;
+        return true;
     }
-    
+
 }
 
-?>
+// vim: et sw=4 sts=4

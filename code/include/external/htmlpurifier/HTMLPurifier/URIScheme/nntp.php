@@ -1,23 +1,20 @@
 <?php
 
-require_once 'HTMLPurifier/URIScheme.php';
-
 /**
  * Validates nntp (Network News Transfer Protocol) as defined by generic RFC 1738
  */
 class HTMLPurifier_URIScheme_nntp extends HTMLPurifier_URIScheme {
-    
-    var $default_port = 119;
-    
-    function validateComponents(
-        $userinfo, $host, $port, $path, $query, $config
-    ) {
-        list($userinfo, $host, $port, $path, $query) = 
-            parent::validateComponents(
-                $userinfo, $host, $port, $path, $query, $config );
-        return array(null, $host, $port, $path, null);
+
+    public $default_port = 119;
+    public $browsable = false;
+
+    public function validate(&$uri, $config, $context) {
+        parent::validate($uri, $config, $context);
+        $uri->userinfo = null;
+        $uri->query    = null;
+        return true;
     }
-    
+
 }
 
-?>
+// vim: et sw=4 sts=4

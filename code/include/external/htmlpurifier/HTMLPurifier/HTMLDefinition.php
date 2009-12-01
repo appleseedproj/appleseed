@@ -1,465 +1,420 @@
 <?php
 
-require_once 'HTMLPurifier/AttrDef.php';
-    require_once 'HTMLPurifier/AttrDef/Enum.php';
-    require_once 'HTMLPurifier/AttrDef/ID.php';
-    require_once 'HTMLPurifier/AttrDef/Class.php';
-    require_once 'HTMLPurifier/AttrDef/Text.php';
-    require_once 'HTMLPurifier/AttrDef/Lang.php';
-    require_once 'HTMLPurifier/AttrDef/Pixels.php';
-    require_once 'HTMLPurifier/AttrDef/Length.php';
-    require_once 'HTMLPurifier/AttrDef/MultiLength.php';
-    require_once 'HTMLPurifier/AttrDef/Integer.php';
-    require_once 'HTMLPurifier/AttrDef/URI.php';
-    require_once 'HTMLPurifier/AttrDef/CSS.php';
-require_once 'HTMLPurifier/AttrTransform.php';
-    require_once 'HTMLPurifier/AttrTransform/Lang.php';
-    require_once 'HTMLPurifier/AttrTransform/TextAlign.php';
-    require_once 'HTMLPurifier/AttrTransform/BdoDir.php';
-    require_once 'HTMLPurifier/AttrTransform/ImgRequired.php';
-require_once 'HTMLPurifier/ChildDef.php';
-require_once 'HTMLPurifier/Generator.php';
-require_once 'HTMLPurifier/Token.php';
-require_once 'HTMLPurifier/TagTransform.php';
-
 /**
- * Defines the purified HTML type with large amounts of objects.
- * 
- * The main function of this object is its $info array, which is an 
- * associative array of all the child and attribute definitions for
- * each allowed element. It also contains special use information (always
- * prefixed by info) for intelligent tag closing and global attributes.
- * 
- * For optimization, the definition generation may be moved to
- * a maintenance script and stipulate that definition be created
- * by a factory method that unserializes a serialized version of Definition.
- * Customization would entail copying the maintenance script, making the
- * necessary changes, generating the serialized object, and then hooking it
- * in via the factory method. We would also offer a LiveDefinition for
- * automatic recompilation, suggesting that we would have a DefinitionGenerator.
+ * Definition of the purified HTML that describes allowed children,
+ * attributes, and many other things.
+ *
+ * Conventions:
+ *
+ * All member variables that are prefixed with info
+ * (including the main $info array) are used by HTML Purifier internals
+ * and should not be directly edited when customizing the HTMLDefinition.
+ * They can usually be set via configuration directives or custom
+ * modules.
+ *
+ * On the other hand, member variables without the info prefix are used
+ * internally by the HTMLDefinition and MUST NOT be used by other HTML
+ * Purifier internals. Many of them, however, are public, and may be
+ * edited by userspace code to tweak the behavior of HTMLDefinition.
+ *
+ * @note This class is inspected by Printer_HTMLDefinition; please
+ *       update that class if things here change.
+ *
+ * @warning Directives that change this object's structure must be in
+ *          the HTML or Attr namespace!
  */
-
-class HTMLPurifier_HTMLDefinition
+class HTMLPurifier_HTMLDefinition extends HTMLPurifier_Definition
 {
-    
+
+    // FULLY-PUBLIC VARIABLES ---------------------------------------------
+
     /**
      * Associative array of element names to HTMLPurifier_ElementDef
-     * @public
      */
-    var $info = array();
-    
+    public $info = array();
+
     /**
      * Associative array of global attribute name to attribute definition.
-     * @public
      */
-    var $info_global_attr = array();
-    
+    public $info_global_attr = array();
+
     /**
      * String name of parent element HTML will be going into.
-     * @todo Allow this to be overloaded by user config
-     * @public
      */
-    var $info_parent = 'div';
-    
+    public $info_parent = 'div';
+
+    /**
+     * Definition for parent element, allows parent element to be a
+     * tag that's not allowed inside the HTML fragment.
+     */
+    public $info_parent_def;
+
+    /**
+     * String name of element used to wrap inline elements in block context
+     * @note This is rarely used except for BLOCKQUOTEs in strict mode
+     */
+    public $info_block_wrapper = 'p';
+
     /**
      * Associative array of deprecated tag name to HTMLPurifier_TagTransform
-     * @public
      */
-    var $info_tag_transform = array();
-    
+    public $info_tag_transform = array();
+
     /**
-     * List of HTMLPurifier_AttrTransform to be performed before validation.
-     * @public
+     * Indexed list of HTMLPurifier_AttrTransform to be performed before validation.
      */
-    var $info_attr_transform_pre = array();
-    
+    public $info_attr_transform_pre = array();
+
     /**
-     * List of HTMLPurifier_AttrTransform to be performed after validation/
-     * @public
+     * Indexed list of HTMLPurifier_AttrTransform to be performed after validation.
      */
-    var $info_attr_transform_post = array();
-    
+    public $info_attr_transform_post = array();
+
     /**
-     * Initializes the definition, the meat of the class.
+     * Nested lookup array of content set name (Block, Inline) to
+     * element name to whether or not it belongs in that content set.
      */
-    function setup($config) {
-        
-        // emulates the structure of the DTD
-        // these are condensed, however, with bad stuff taken out
-        // screening process was done by hand
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[] : initializes the definition objects
-        
-        // if you attempt to define rules later on for a tag not in this array
-        // PHP will create an stdclass
-        
-        $allowed_tags =
-            array(
-                'ins', 'del', 'blockquote', 'dd', 'li', 'div', 'em', 'strong',
-                'dfn', 'code', 'samp', 'kbd', 'var', 'cite', 'abbr', 'acronym',
-                'q', 'sub', 'tt', 'sup', 'i', 'b', 'big', 'small', 'u', 's',
-                'strike', 'bdo', 'span', 'dt', 'p', 'h1', 'h2', 'h3', 'h4',
-                'h5', 'h6', 'ol', 'ul', 'dl', 'address', 'img', 'br', 'hr',
-                'pre', 'a', 'table', 'caption', 'thead', 'tfoot', 'tbody',
-                'colgroup', 'col', 'td', 'th', 'tr'
-            );
-        
-        foreach ($allowed_tags as $tag) {
-            $this->info[$tag] = new HTMLPurifier_ElementDef();
+    public $info_content_sets = array();
+
+    /**
+     * Indexed list of HTMLPurifier_Injector to be used.
+     */
+    public $info_injector = array();
+
+    /**
+     * Doctype object
+     */
+    public $doctype;
+
+
+
+    // RAW CUSTOMIZATION STUFF --------------------------------------------
+
+    /**
+     * Adds a custom attribute to a pre-existing element
+     * @note This is strictly convenience, and does not have a corresponding
+     *       method in HTMLPurifier_HTMLModule
+     * @param $element_name String element name to add attribute to
+     * @param $attr_name String name of attribute
+     * @param $def Attribute definition, can be string or object, see
+     *             HTMLPurifier_AttrTypes for details
+     */
+    public function addAttribute($element_name, $attr_name, $def) {
+        $module = $this->getAnonymousModule();
+        if (!isset($module->info[$element_name])) {
+            $element = $module->addBlankElement($element_name);
+        } else {
+            $element = $module->info[$element_name];
         }
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[]->child : defines allowed children for elements
-        
-        // entities: prefixed with e_ and _ replaces . from DTD
-        // double underlines are entities we made up
-        
-        // we don't use an array because that complicates interpolation
-        // strings are used instead of arrays because if you use arrays,
-        // you have to do some hideous manipulation with array_merge()
-        
-        // todo: determine whether or not having allowed children
-        //       that aren't allowed globally affects security (it shouldn't)
-        // if above works out, extend children definitions to include all
-        //       possible elements (allowed elements will dictate which ones
-        //       get dropped
-        
-        $e_special_extra = 'img';
-        $e_special_basic = 'br | span | bdo';
-        $e_special = "$e_special_basic | $e_special_extra";
-        $e_fontstyle_extra = 'big | small';
-        $e_fontstyle_basic = 'tt | i | b | u | s | strike';
-        $e_fontstyle = "$e_fontstyle_basic | $e_fontstyle_extra";
-        $e_phrase_extra = 'sub | sup';
-        $e_phrase_basic = 'em | strong | dfn | code | q | samp | kbd | var'.
-          ' | cite | abbr | acronym';
-        $e_phrase = "$e_phrase_basic | $e_phrase_extra";
-        $e_inline_forms = ''; // humor the dtd
-        $e_misc_inline = 'ins | del';
-        $e_misc = "$e_misc_inline";
-        $e_inline = "a | $e_special | $e_fontstyle | $e_phrase".
-          " | $e_inline_forms";
-        // pseudo-property we created for convenience, see later on
-        $e__inline = "#PCDATA | $e_inline | $e_misc_inline";
-        // note the casing
-        $e_Inline = new HTMLPurifier_ChildDef_Optional($e__inline);
-        $e_heading = 'h1|h2|h3|h4|h5|h6';
-        $e_lists = 'ul | ol | dl';
-        $e_blocktext = 'pre | hr | blockquote | address';
-        $e_block = "p | $e_heading | div | $e_lists | $e_blocktext | table";
-        $e__flow = "#PCDATA | $e_block | $e_inline | $e_misc";
-        $e_Flow = new HTMLPurifier_ChildDef_Optional($e__flow);
-        $e_a_content = new HTMLPurifier_ChildDef_Optional("#PCDATA".
-          " | $e_special | $e_fontstyle | $e_phrase | $e_inline_forms".
-          " | $e_misc_inline");
-        $e_pre_content = new HTMLPurifier_ChildDef_Optional("#PCDATA | a".
-          " | $e_special_basic | $e_fontstyle_basic | $e_phrase_basic".
-          " | $e_inline_forms | $e_misc_inline");
-        $e_form_content = new HTMLPurifier_ChildDef_Optional('');//unused
-        $e_form_button_content = new HTMLPurifier_ChildDef_Optional('');//unused
-        
-        $this->info['ins']->child =
-        $this->info['del']->child =
-            new HTMLPurifier_ChildDef_Chameleon($e__inline, $e__flow);
-        
-        $this->info['blockquote']->child=
-        $this->info['dd']->child  =
-        $this->info['li']->child  =
-        $this->info['div']->child = $e_Flow;
-        
-        $this->info['caption']->child   = 
-        $this->info['em']->child   =
-        $this->info['strong']->child    =
-        $this->info['dfn']->child  =
-        $this->info['code']->child =
-        $this->info['samp']->child =
-        $this->info['kbd']->child  =
-        $this->info['var']->child  =
-        $this->info['cite']->child =
-        $this->info['abbr']->child =
-        $this->info['acronym']->child   =
-        $this->info['q']->child    =
-        $this->info['sub']->child  =
-        $this->info['tt']->child   =
-        $this->info['sup']->child  =
-        $this->info['i']->child    =
-        $this->info['b']->child    =
-        $this->info['big']->child  =
-        $this->info['small']->child=
-        $this->info['u']->child    =
-        $this->info['s']->child    =
-        $this->info['strike']->child    =
-        $this->info['bdo']->child  =
-        $this->info['span']->child =
-        $this->info['dt']->child   =
-        $this->info['p']->child    = 
-        $this->info['h1']->child   = 
-        $this->info['h2']->child   = 
-        $this->info['h3']->child   = 
-        $this->info['h4']->child   = 
-        $this->info['h5']->child   = 
-        $this->info['h6']->child   = $e_Inline;
-        
-        // the only three required definitions, besides custom table code
-        $this->info['ol']->child   =
-        $this->info['ul']->child   = new HTMLPurifier_ChildDef_Required('li');
-        
-        $this->info['dl']->child   = new HTMLPurifier_ChildDef_Required('dt|dd');
-        
-        $this->info['address']->child =
-          new HTMLPurifier_ChildDef_Optional("#PCDATA | p | $e_inline".
-              " | $e_misc_inline");
-        
-        $this->info['img']->child  =
-        $this->info['br']->child   =
-        $this->info['hr']->child   = new HTMLPurifier_ChildDef_Empty();
-        
-        $this->info['pre']->child  = $e_pre_content;
-        
-        $this->info['a']->child    = $e_a_content;
-        
-        $this->info['table']->child = new HTMLPurifier_ChildDef_Table();
-        
-        // not a real entity, watch the double underscore
-        $e__row = new HTMLPurifier_ChildDef_Required('tr');
-        $this->info['thead']->child = $e__row;
-        $this->info['tfoot']->child = $e__row;
-        $this->info['tbody']->child = $e__row;
-        $this->info['colgroup']->child = new HTMLPurifier_ChildDef_Optional('col');
-        $this->info['col']->child = new HTMLPurifier_ChildDef_Empty();
-        $this->info['tr']->child = new HTMLPurifier_ChildDef_Required('th | td');
-        $this->info['th']->child = $e_Flow;
-        $this->info['td']->child = $e_Flow;
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[]->type : defines the type of the element (block or inline)
-        
-        // reuses $e_Inline and $e_Block
-        
-        foreach ($e_Inline->elements as $name) {
-            $this->info[$name]->type = 'inline';
-        }
-        
-        $e_Block = new HTMLPurifier_ChildDef_Optional($e_block);
-        foreach ($e_Block->elements as $name) {
-            $this->info[$name]->type = 'block';
-        }
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[]->excludes : defines elements that aren't allowed in here
-        
-        // make sure you test using isset() and not !empty()
-        
-        $this->info['a']->excludes = array('a' => true);
-        $this->info['pre']->excludes = array_flip(array('img', 'big', 'small',
-            // technically useless, but good to be indepth
-            'object', 'applet', 'font', 'basefont'));
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[]->attr : defines allowed attributes for elements
-        
-        // this doesn't include REQUIRED declarations, those are handled
-        // by the transform classes. It will, however, do simple and slightly
-        // complex attribute value substitution
-        
-        // the question of varying allowed attributes is more entangling.
-        
-        $e_Text = new HTMLPurifier_AttrDef_Text();
-        
-        // attrs, included in almost every single one except for a few,
-        // which manually override these in their local definitions
-        $this->info_global_attr = array(
-            // core attrs
-            'id'    => new HTMLPurifier_AttrDef_ID(),
-            'class' => new HTMLPurifier_AttrDef_Class(),
-            'title' => $e_Text,
-            'style' => new HTMLPurifier_AttrDef_CSS(),
-            // i18n
-            'dir'   => new HTMLPurifier_AttrDef_Enum(array('ltr','rtl'), false),
-            'lang'  => new HTMLPurifier_AttrDef_Lang(),
-            'xml:lang' => new HTMLPurifier_AttrDef_Lang(),
-            );
-        
-        // required attribute stipulation handled in attribute transformation
-        $this->info['bdo']->attr = array(); // nothing else
-        
-        $this->info['br']->attr['dir'] = false;
-        $this->info['br']->attr['lang'] = false;
-        $this->info['br']->attr['xml:lang'] = false;
-        
-        $this->info['td']->attr['abbr'] = $e_Text;
-        $this->info['th']->attr['abbr'] = $e_Text;
-        
-        $this->setAttrForTableElements('align', new HTMLPurifier_AttrDef_Enum(
-            array('left', 'center', 'right', 'justify', 'char'), false));
-        
-        $this->setAttrForTableElements('valign', new HTMLPurifier_AttrDef_Enum(
-            array('top', 'middle', 'bottom', 'baseline'), false));
-        
-        $this->info['img']->attr['alt'] = $e_Text;
-        
-        $e_TFrame = new HTMLPurifier_AttrDef_Enum(array('void', 'above',
-            'below', 'hsides', 'lhs', 'rhs', 'vsides', 'box', 'border'), false);
-        $this->info['table']->attr['frame'] = $e_TFrame;
-        
-        $e_TRules = new HTMLPurifier_AttrDef_Enum(array('none', 'groups',
-            'rows', 'cols', 'all'), false);
-        $this->info['table']->attr['rules'] = $e_TRules;
-        
-        $this->info['table']->attr['summary'] = $e_Text;
-        
-        $this->info['table']->attr['border'] =
-            new HTMLPurifier_AttrDef_Pixels();
-        
-        $e_Length = new HTMLPurifier_AttrDef_Length();
-        $this->info['table']->attr['cellpadding'] =
-        $this->info['table']->attr['cellspacing'] =
-        $this->info['table']->attr['width'] =
-        $this->info['img']->attr['height'] =
-        $this->info['img']->attr['width'] = $e_Length;
-        $this->setAttrForTableElements('charoff', $e_Length);
-        
-        $e_MultiLength = new HTMLPurifier_AttrDef_MultiLength();
-        $this->info['col']->attr['width'] =
-        $this->info['colgroup']->attr['width'] = $e_MultiLength;
-        
-        $e__NumberSpan = new HTMLPurifier_AttrDef_Integer(false, false, true);
-        $this->info['colgroup']->attr['span'] =
-        $this->info['col']->attr['span']   =
-        $this->info['td']->attr['rowspan'] =
-        $this->info['th']->attr['rowspan'] = 
-        $this->info['td']->attr['colspan'] =
-        $this->info['th']->attr['colspan'] = $e__NumberSpan;
-        
-        $e_URI = new HTMLPurifier_AttrDef_URI();
-        $this->info['a']->attr['href'] =
-        $this->info['img']->attr['longdesc'] =
-        $this->info['img']->attr['src'] =
-        $this->info['del']->attr['cite'] =
-        $this->info['ins']->attr['cite'] =
-        $this->info['blockquote']->attr['cite'] =
-        $this->info['q']->attr['cite'] = $e_URI;
-        
-        //////////////////////////////////////////////////////////////////////
-        // info_tag_transform : transformations of tags
-        
-        $this->info_tag_transform['font']   = new HTMLPurifier_TagTransform_Font();
-        $this->info_tag_transform['menu']   = new HTMLPurifier_TagTransform_Simple('ul');
-        $this->info_tag_transform['dir']    = new HTMLPurifier_TagTransform_Simple('ul');
-        $this->info_tag_transform['center'] = new HTMLPurifier_TagTransform_Center();
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[]->auto_close : tags that automatically close another
-        
-        // todo: determine whether or not SGML-like modeling based on
-        // mandatory/optional end tags would be a better policy
-        
-        // make sure you test using isset() not !empty()
-        
-        // these are all block elements: blocks aren't allowed in P
-        $this->info['p']->auto_close = array_flip(array(
-                'address', 'blockquote', 'dd', 'dir', 'div', 'dl', 'dt',
-                'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr', 'ol', 'p', 'pre',
-                'table', 'ul'
-            ));
-        
-        $this->info['li']->auto_close = array('li' => true);
-        
-        // we need TABLE and heading mismatch code
-        // we may need to make this more flexible for heading mismatch,
-        // or we can just create another info
-        
-        //////////////////////////////////////////////////////////////////////
-        // info[]->attr_transform_* : attribute transformations in elements
-        // pre is applied before any validation is done, post is done after
-        
-        $this->info['h1']->attr_transform_pre[] =
-        $this->info['h2']->attr_transform_pre[] =
-        $this->info['h3']->attr_transform_pre[] =
-        $this->info['h4']->attr_transform_pre[] =
-        $this->info['h5']->attr_transform_pre[] =
-        $this->info['h6']->attr_transform_pre[] =
-        $this->info['p'] ->attr_transform_pre[] = 
-                    new HTMLPurifier_AttrTransform_TextAlign();
-        
-        $this->info['bdo']->attr_transform_post[] =
-                    new HTMLPurifier_AttrTransform_BdoDir();
-        
-        $this->info['img']->attr_transform_post[] =
-                    new HTMLPurifier_AttrTransform_ImgRequired();
-        
-        //////////////////////////////////////////////////////////////////////
-        // info_attr_transform_* : global attribute transformation that is
-        // unconditionally called. Good for transformations that have complex
-        // start conditions
-        // pre is applied before any validation is done, post is done after
-        
-        $this->info_attr_transform_post[] = new HTMLPurifier_AttrTransform_Lang();
-        
+        $element->attr[$attr_name] = $def;
     }
-    
-    function setAttrForTableElements($attr, $def) {
-        $this->info['col']->attr[$attr] = 
-        $this->info['colgroup']->attr[$attr] = 
-        $this->info['tbody']->attr[$attr] = 
-        $this->info['td']->attr[$attr] = 
-        $this->info['tfoot']->attr[$attr] = 
-        $this->info['th']->attr[$attr] = 
-        $this->info['thead']->attr[$attr] = 
-        $this->info['tr']->attr[$attr] = $def;
+
+    /**
+     * Adds a custom element to your HTML definition
+     * @note See HTMLPurifier_HTMLModule::addElement for detailed
+     *       parameter and return value descriptions.
+     */
+    public function addElement($element_name, $type, $contents, $attr_collections, $attributes = array()) {
+        $module = $this->getAnonymousModule();
+        // assume that if the user is calling this, the element
+        // is safe. This may not be a good idea
+        $element = $module->addElement($element_name, $type, $contents, $attr_collections, $attributes);
+        return $element;
     }
-    
+
+    /**
+     * Adds a blank element to your HTML definition, for overriding
+     * existing behavior
+     * @note See HTMLPurifier_HTMLModule::addBlankElement for detailed
+     *       parameter and return value descriptions.
+     */
+    public function addBlankElement($element_name) {
+        $module  = $this->getAnonymousModule();
+        $element = $module->addBlankElement($element_name);
+        return $element;
+    }
+
+    /**
+     * Retrieves a reference to the anonymous module, so you can
+     * bust out advanced features without having to make your own
+     * module.
+     */
+    public function getAnonymousModule() {
+        if (!$this->_anonModule) {
+            $this->_anonModule = new HTMLPurifier_HTMLModule();
+            $this->_anonModule->name = 'Anonymous';
+        }
+        return $this->_anonModule;
+    }
+
+    private $_anonModule;
+
+
+    // PUBLIC BUT INTERNAL VARIABLES --------------------------------------
+
+    public $type = 'HTML';
+    public $manager; /**< Instance of HTMLPurifier_HTMLModuleManager */
+
+    /**
+     * Performs low-cost, preliminary initialization.
+     */
+    public function __construct() {
+        $this->manager = new HTMLPurifier_HTMLModuleManager();
+    }
+
+    protected function doSetup($config) {
+        $this->processModules($config);
+        $this->setupConfigStuff($config);
+        unset($this->manager);
+
+        // cleanup some of the element definitions
+        foreach ($this->info as $k => $v) {
+            unset($this->info[$k]->content_model);
+            unset($this->info[$k]->content_model_type);
+        }
+    }
+
+    /**
+     * Extract out the information from the manager
+     */
+    protected function processModules($config) {
+
+        if ($this->_anonModule) {
+            // for user specific changes
+            // this is late-loaded so we don't have to deal with PHP4
+            // reference wonky-ness
+            $this->manager->addModule($this->_anonModule);
+            unset($this->_anonModule);
+        }
+
+        $this->manager->setup($config);
+        $this->doctype = $this->manager->doctype;
+
+        foreach ($this->manager->modules as $module) {
+            foreach($module->info_tag_transform as $k => $v) {
+                if ($v === false) unset($this->info_tag_transform[$k]);
+                else $this->info_tag_transform[$k] = $v;
+            }
+            foreach($module->info_attr_transform_pre as $k => $v) {
+                if ($v === false) unset($this->info_attr_transform_pre[$k]);
+                else $this->info_attr_transform_pre[$k] = $v;
+            }
+            foreach($module->info_attr_transform_post as $k => $v) {
+                if ($v === false) unset($this->info_attr_transform_post[$k]);
+                else $this->info_attr_transform_post[$k] = $v;
+            }
+            foreach ($module->info_injector as $k => $v) {
+                if ($v === false) unset($this->info_injector[$k]);
+                else $this->info_injector[$k] = $v;
+            }
+        }
+
+        $this->info = $this->manager->getElements();
+        $this->info_content_sets = $this->manager->contentSets->lookup;
+
+    }
+
+    /**
+     * Sets up stuff based on config. We need a better way of doing this.
+     */
+    protected function setupConfigStuff($config) {
+
+        $block_wrapper = $config->get('HTML.BlockWrapper');
+        if (isset($this->info_content_sets['Block'][$block_wrapper])) {
+            $this->info_block_wrapper = $block_wrapper;
+        } else {
+            trigger_error('Cannot use non-block element as block wrapper',
+                E_USER_ERROR);
+        }
+
+        $parent = $config->get('HTML.Parent');
+        $def = $this->manager->getElement($parent, true);
+        if ($def) {
+            $this->info_parent = $parent;
+            $this->info_parent_def = $def;
+        } else {
+            trigger_error('Cannot use unrecognized element as parent',
+                E_USER_ERROR);
+            $this->info_parent_def = $this->manager->getElement($this->info_parent, true);
+        }
+
+        // support template text
+        $support = "(for information on implementing this, see the ".
+                   "support forums) ";
+
+        // setup allowed elements -----------------------------------------
+
+        $allowed_elements = $config->get('HTML.AllowedElements');
+        $allowed_attributes = $config->get('HTML.AllowedAttributes'); // retrieve early
+
+        if (!is_array($allowed_elements) && !is_array($allowed_attributes)) {
+            $allowed = $config->get('HTML.Allowed');
+            if (is_string($allowed)) {
+                list($allowed_elements, $allowed_attributes) = $this->parseTinyMCEAllowedList($allowed);
+            }
+        }
+
+        if (is_array($allowed_elements)) {
+            foreach ($this->info as $name => $d) {
+                if(!isset($allowed_elements[$name])) unset($this->info[$name]);
+                unset($allowed_elements[$name]);
+            }
+            // emit errors
+            foreach ($allowed_elements as $element => $d) {
+                $element = htmlspecialchars($element); // PHP doesn't escape errors, be careful!
+                trigger_error("Element '$element' is not supported $support", E_USER_WARNING);
+            }
+        }
+
+        // setup allowed attributes ---------------------------------------
+
+        $allowed_attributes_mutable = $allowed_attributes; // by copy!
+        if (is_array($allowed_attributes)) {
+
+            // This actually doesn't do anything, since we went away from
+            // global attributes. It's possible that userland code uses
+            // it, but HTMLModuleManager doesn't!
+            foreach ($this->info_global_attr as $attr => $x) {
+                $keys = array($attr, "*@$attr", "*.$attr");
+                $delete = true;
+                foreach ($keys as $key) {
+                    if ($delete && isset($allowed_attributes[$key])) {
+                        $delete = false;
+                    }
+                    if (isset($allowed_attributes_mutable[$key])) {
+                        unset($allowed_attributes_mutable[$key]);
+                    }
+                }
+                if ($delete) unset($this->info_global_attr[$attr]);
+            }
+
+            foreach ($this->info as $tag => $info) {
+                foreach ($info->attr as $attr => $x) {
+                    $keys = array("$tag@$attr", $attr, "*@$attr", "$tag.$attr", "*.$attr");
+                    $delete = true;
+                    foreach ($keys as $key) {
+                        if ($delete && isset($allowed_attributes[$key])) {
+                            $delete = false;
+                        }
+                        if (isset($allowed_attributes_mutable[$key])) {
+                            unset($allowed_attributes_mutable[$key]);
+                        }
+                    }
+                    if ($delete) unset($this->info[$tag]->attr[$attr]);
+                }
+            }
+            // emit errors
+            foreach ($allowed_attributes_mutable as $elattr => $d) {
+                $bits = preg_split('/[.@]/', $elattr, 2);
+                $c = count($bits);
+                switch ($c) {
+                    case 2:
+                        if ($bits[0] !== '*') {
+                            $element = htmlspecialchars($bits[0]);
+                            $attribute = htmlspecialchars($bits[1]);
+                            if (!isset($this->info[$element])) {
+                                trigger_error("Cannot allow attribute '$attribute' if element '$element' is not allowed/supported $support");
+                            } else {
+                                trigger_error("Attribute '$attribute' in element '$element' not supported $support",
+                                    E_USER_WARNING);
+                            }
+                            break;
+                        }
+                        // otherwise fall through
+                    case 1:
+                        $attribute = htmlspecialchars($bits[0]);
+                        trigger_error("Global attribute '$attribute' is not ".
+                            "supported in any elements $support",
+                            E_USER_WARNING);
+                        break;
+                }
+            }
+
+        }
+
+        // setup forbidden elements ---------------------------------------
+
+        $forbidden_elements   = $config->get('HTML.ForbiddenElements');
+        $forbidden_attributes = $config->get('HTML.ForbiddenAttributes');
+
+        foreach ($this->info as $tag => $info) {
+            if (isset($forbidden_elements[$tag])) {
+                unset($this->info[$tag]);
+                continue;
+            }
+            foreach ($info->attr as $attr => $x) {
+                if (
+                    isset($forbidden_attributes["$tag@$attr"]) ||
+                    isset($forbidden_attributes["*@$attr"]) ||
+                    isset($forbidden_attributes[$attr])
+                ) {
+                    unset($this->info[$tag]->attr[$attr]);
+                    continue;
+                } // this segment might get removed eventually
+                elseif (isset($forbidden_attributes["$tag.$attr"])) {
+                    // $tag.$attr are not user supplied, so no worries!
+                    trigger_error("Error with $tag.$attr: tag.attr syntax not supported for HTML.ForbiddenAttributes; use tag@attr instead", E_USER_WARNING);
+                }
+            }
+        }
+        foreach ($forbidden_attributes as $key => $v) {
+            if (strlen($key) < 2) continue;
+            if ($key[0] != '*') continue;
+            if ($key[1] == '.') {
+                trigger_error("Error with $key: *.attr syntax not supported for HTML.ForbiddenAttributes; use attr instead", E_USER_WARNING);
+            }
+        }
+
+        // setup injectors -----------------------------------------------------
+        foreach ($this->info_injector as $i => $injector) {
+            if ($injector->checkNeeded($config) !== false) {
+                // remove injector that does not have it's required
+                // elements/attributes present, and is thus not needed.
+                unset($this->info_injector[$i]);
+            }
+        }
+    }
+
+    /**
+     * Parses a TinyMCE-flavored Allowed Elements and Attributes list into
+     * separate lists for processing. Format is element[attr1|attr2],element2...
+     * @warning Although it's largely drawn from TinyMCE's implementation,
+     *      it is different, and you'll probably have to modify your lists
+     * @param $list String list to parse
+     * @param array($allowed_elements, $allowed_attributes)
+     * @todo Give this its own class, probably static interface
+     */
+    public function parseTinyMCEAllowedList($list) {
+
+        $list = str_replace(array(' ', "\t"), '', $list);
+
+        $elements = array();
+        $attributes = array();
+
+        $chunks = preg_split('/(,|[\n\r]+)/', $list);
+        foreach ($chunks as $chunk) {
+            if (empty($chunk)) continue;
+            // remove TinyMCE element control characters
+            if (!strpos($chunk, '[')) {
+                $element = $chunk;
+                $attr = false;
+            } else {
+                list($element, $attr) = explode('[', $chunk);
+            }
+            if ($element !== '*') $elements[$element] = true;
+            if (!$attr) continue;
+            $attr = substr($attr, 0, strlen($attr) - 1); // remove trailing ]
+            $attr = explode('|', $attr);
+            foreach ($attr as $key) {
+                $attributes["$element.$key"] = true;
+            }
+        }
+
+        return array($elements, $attributes);
+
+    }
+
+
 }
 
-/**
- * Structure that stores an element definition.
- */
-class HTMLPurifier_ElementDef
-{
-    
-    /**
-     * Associative array of attribute name to HTMLPurifier_AttrDef
-     * @public
-     */
-    var $attr = array();
-    
-    /**
-     * List of tag's HTMLPurifier_AttrTransform to be done before validation
-     * @public
-     */
-    var $attr_transform_pre = array();
-    
-    /**
-     * List of tag's HTMLPurifier_AttrTransform to be done after validation
-     * @public
-     */
-    var $attr_transform_post = array();
-    
-    /**
-     * Lookup table of tags that close this tag.
-     * @public
-     */
-    var $auto_close = array();
-    
-    /**
-     * HTMLPurifier_ChildDef of this tag.
-     * @public
-     */
-    var $child;
-    
-    /**
-     * Type of the tag: inline or block or unknown?
-     * @public
-     */
-    var $type = 'unknown';
-    
-    /**
-     * Lookup table of tags excluded from all descendants of this tag.
-     * @public
-     */
-    var $excludes = array();
-    
-}
-
-?>
+// vim: et sw=4 sts=4
