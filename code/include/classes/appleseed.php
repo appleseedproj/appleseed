@@ -51,8 +51,8 @@
       $this->Context = "";
 
       $this->PurifierConfig = HTMLPurifier_Config::createDefault();
-      $this->PurifierConfig->set('Core', 'Encoding', 'UTF-8'); //replace with your encoding
-      $this->PurifierConfig->set('Core', 'XHTML', false); //replace with false if HTML 4.01
+      $this->PurifierConfig->set('Core.Encoding', 'UTF-8'); //replace with your encoding
+      $this->PurifierConfig->set('HTML.XHTML', false); //replace with false if HTML 4.01
       $this->Purifier = new HTMLPurifier($this->PurifierConfig);
 
       // Eventually remove and replace with PEAR/Mail::Queue.
