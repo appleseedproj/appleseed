@@ -61,7 +61,7 @@
       $gREADDATA = array ("Z" => MENU_DISABLED . "Mark As:",
                           "READ_ALL" => "&nbsp;Read+",
                           "UNREAD_ALL" => "&nbsp;Unread+");
-      $gREADACTION = 'Z';
+      if (!$gREADACTION) $gREADACTION = 'Z';
       
       $gLABELDATA = $this->CreateFullLabelMenu ();
       $gCIRCLEDATA = $this->CreateCircleMenu ();
