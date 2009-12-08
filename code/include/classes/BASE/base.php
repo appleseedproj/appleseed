@@ -1310,15 +1310,19 @@
         return ($return);
       } // if
 
+	
+      // Check if result is a valid resource.
+	  if (!is_resource($this->Result)) return (false);
+	  
       if ($resultarray = mysql_fetch_array($this->Result, MYSQL_ASSOC)) {
         foreach ($resultarray as $tbl => $data) {
           $this->$tbl = $data;
           stripslashes ($this->$tbl);
         } // foreach
 
-        return (1);
+        return (true);
       } else {
-        return (0);
+        return (false);
       } // if
 
     } // FetchArray
@@ -2952,7 +2956,7 @@
 
     // Output a button object.
     // NOTE: This should wrap CreateButton.
-    function Button ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME) {
+    function Button ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME = "") {
 
       global $gTARGET;
       global $gTHEMELOCATION;
