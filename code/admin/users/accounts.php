@@ -264,6 +264,8 @@
           $ADMINDATA->Initialize (FALSE);
 
           // Update the amount of invites available.
+					global $gAMOUNT;
+					$ADMINDATA->userInvites->Amount = $gAMOUNT;
           $ADMINDATA->userInvites->ChangeInvites ();
 
           // Look up the saved message.
@@ -300,6 +302,8 @@
           rename ($oldphotodir, $newphotodir);
           
           // Update the amount of invites available.
+					global $gAMOUNT;
+					$ADMINDATA->userInvites->Amount = $gAMOUNT;
           $ADMINDATA->userInvites->ChangeInvites ();
 
           if ($ADMINDATA->userProfile->userAuth_uID == "") {

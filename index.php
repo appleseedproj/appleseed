@@ -222,11 +222,15 @@
 	} // upgradeWarning
 	
 	function finalValidation() {
+	  form = document.forms['main'];
 		submit = document.getElementById ('submit');
 		
 		submit.value = 'Please Wait...';
 		submit.style.color = '#8a8a8a';
 		submit.disabled = true;
+
+		form.submit();
+
 		return (true);
 	} // if
 	
@@ -1069,7 +1073,7 @@ class cINSTALL {
       </div> <!-- .container -->
      </div> <!-- .install -->
      <div id='copyright'>
-      Copyleft &copy; 2004-2008 by the Appleseed Collective. All Rights Reversed.
+      Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reversed.
      </div>
     </body>
     </html> <?php
