@@ -85,7 +85,7 @@
       fclose($fp);
 
       // Check the header for a valid HTTP response.
-      if ( preg_match("200 OK", $data, $regs ) ) {
+      if ( preg_match("/200 OK/", $data, $regs ) ) {
         // strip header
         $this->Return = substr(strstr($data,"\r\n\r\n"),4);
 
