@@ -604,6 +604,13 @@
 
     } // Save
 
+	    function GetTheme () {
+				if ($this->SettingsCache['DefaultTheme'])
+					return ($this->SettingsCache['DefaultTheme']);
+				else
+					return false;
+			} // GetTheme
+
   } // cUSERSETTINGS
 
 ?>

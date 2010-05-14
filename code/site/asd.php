@@ -85,7 +85,7 @@
   
   // Create the Server class.
   $zSERVER = new cSERVER ();
-    
+
   switch (strtoupper ($gACTION)) {
     case 'SITE_VERSION':
     case 'ASD_SITE_VERSION':

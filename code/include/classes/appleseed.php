@@ -105,7 +105,7 @@
       $gSETTINGS = $this->LoadConfiguration ();
       
       global $gUSERTHEME, $gFRAMEWORK;
-      
+
       $gUSERTHEME = $gSETTINGS['Theme'];
       $this->SetTag ('USERTHEME', $gUSERTHEME);
       $gFRAMEWORK = $gSETTINGS['Framework'];
@@ -271,9 +271,9 @@
       $this->SetTag ('SITEDOMAIN', $gSITEDOMAIN);
       
       // Set default theme.
-      if ($zLOCALUSER->userSettings->Get ("Theme")) {
+      if ($zLOCALUSER->userSettings->GetTheme()) {
         global $gTHEMELOCATION;
-        $gUSERTHEME = $zLOCALUSER->userSettings->Get ("Theme");
+        $gUSERTHEME = $zLOCALUSER->userSettings->GetTheme();
         $this->SetTag ('USERTHEME', $gUSERTHEME);
         $gTHEMELOCATION = "themes/$gUSERTHEME/";
       } // if
