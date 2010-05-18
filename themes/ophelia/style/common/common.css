@@ -609,3 +609,31 @@ div.search input {
  padding:0px 5px;
 }
 
+p.systemstatus {
+ float:left;
+ width:100%;
+ position:relative;
+ color:#ffffff;
+ cursor:crosshair;
+ border:1px solid #311aff;
+ border-left:none;
+ border-right:none;
+ padding:1px 0;
+ margin-bottom:10px;
+ text-align:center;
+ font-style:italic;
+ background:#31aa1a;
+}
+
+p.systemstatus a {
+ color:#ffffff;
+ background:#31aa1a;
+ font-size:11px;
+}
+
+p.systemstatus a:hover {
+ color:#ffffff;
+ background:#31aa1a;
+ font-size:11px;
+ text-decoration:underline;
+}

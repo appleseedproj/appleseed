@@ -1,4 +1,7 @@
 <div id='remoteheader'>
+ <p class='systemstatus'>
+ 	 Appleseed is early beta software, expect bugs along the way, and send feedback to <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a>
+ </p>
  <div id='header'>
 
    <div id='logo'>&nbsp;</div>
@@ -19,7 +22,7 @@
 
   
   <div id='menu'>
-    <a href='/'><img src='themes/%USERTHEME%/images/header/header_home.gif' width='52' height='21' border='0' /></a><a href='about/'><img src='themes/%USERTHEME%/images/header/header_aboutus.gif' width='65' height='21' border='0' /></a><a href='photos/'><img src='themes/%USERTHEME%/images/header/header_photos.gif' width='67' height='21' border='0' /></a><a href='groups/'><img src='themes/%USERTHEME%/images/header/header_groups.gif' width='70' height='21' border='0' /></a><a href='journals/'><img src='themes/%USERTHEME%/images/header/header_journals.gif' width='74' height='21' border='0' /></a><a href='search/'><img src='themes/%USERTHEME%/images/header/header_search.gif' width='61' height='21' border='0' /></a><img src='themes/%USERTHEME%/images/header/header_options_off.gif' width='75' height='21' border='0' /><a href='help/'><img src='themes/%USERTHEME%/images/header/header_help.gif' width='59' height='21' border='0' /></a><a href='logout/'><img src='themes/%USERTHEME%/images/header/header_logout.gif' width='61' height='21' border='0' /></a>
+    <a href='/'><img src='themes/%USERTHEME%/images/header/header_home.gif' width='52' height='21' border='0' /></a><a href='about/'><img src='themes/%USERTHEME%/images/header/header_aboutus.gif' width='65' height='21' border='0' /></a><img src='themes/%USERTHEME%/images/header/header_photos_off.gif' width='67' height='21' border='0' /><img src='themes/%USERTHEME%/images/header/header_groups_off.gif' width='70' height='21' border='0' /><img src='themes/%USERTHEME%/images/header/header_journals_off.gif' width='74' height='21' border='0' /><img src='themes/%USERTHEME%/images/header/header_search_off.gif' width='61' height='21' border='0' /><img src='themes/%USERTHEME%/images/header/header_options_off.gif' width='75' height='21' border='0' /><a href='help/'><img src='themes/%USERTHEME%/images/header/header_help.gif' width='59' height='21' border='0' /></a><a href='logout/'><img src='themes/%USERTHEME%/images/header/header_logout.gif' width='61' height='21' border='0' /></a>
   </div> <!-- #menu -->
  </div> <!-- #header -->
 
