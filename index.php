@@ -34,7 +34,7 @@
   // +-------------------------------------------------------------------+
   
   // Turn off error reporting.
-  error_reporting (E_NONE);
+  error_reporting (0);
 
   // HANDLE AJAX REQUEST.
   if ($_POST['gACTION'] == 'CHECK') {
