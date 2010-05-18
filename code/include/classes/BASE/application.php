@@ -1029,9 +1029,6 @@
     // Application is terminated.
     function Abort ($pERRORMESSAGE = NULL) {
 
-      // A woman's right to choose is non-negotiable.
-      // http://www.naral.org
-
       exit ($pERRORMESSAGE);
 
     } // Abort
