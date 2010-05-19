@@ -206,6 +206,8 @@
         $this->parent_tID = 0;
       } // if
       if ($zAUTHUSER->Anonymous) {
+				// Disable 
+			 	$zAPPLE->Abort ("Anonymous commenting has been disabled.  <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a> (<a href='#' onClick='history.go(-1); return false;'>Go Back</a>)");
         // Anonymous User.
         $this->Owner_Icon = NO_ICON;
         $this->Owner_Username = ANONYMOUS; 
@@ -820,6 +822,11 @@
         break;
     
         case 'ADD':
+					global $zAUTHUSER;
+      		if ($zAUTHUSER->Anonymous) {
+						// Disable 
+			  		$zAPPLE->Abort ("Anonymous commenting has been disabled.  <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a> (<a href='#' onClick='history.go(-1); return false;'>Go Back</a>)");
+					}
           $gCOMMENTADDTAB = "";
           $zAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
           $bCOMMENTS .= $this->AddForm ($gREFERENCEID);
