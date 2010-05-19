@@ -1108,23 +1108,21 @@
         return ($return);
       } // if
       
-      $authVerification = $this->TablePrefix . "authVerification";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
+      $userSessions = $this->TablePrefix . "userSessions";
       
       // Check our local database, see if this token exists.
       $sql_statement = "
-        SELECT $authVerification.*,$userProfile.Fullname,$userProfile.Alias
-        FROM   $authVerification, $userProfile,$userAuth
-        WHERE  $authVerification.Username = '%s'
-        AND    $authVerification.Domain = '%s'
-        AND    $userProfile.userAuth_uID = $userAuth.uID
+        SELECT $userAuth.*,$userSessions.userAuth_uID,$userProfile.Fullname,$userProfile.Alias
+        FROM   $userAuth, $userProfile, $userSessions
+        WHERE  $userProfile.userAuth_uID = $userAuth.uID
+        AND    $userSessions.userAuth_uID = $userAuth.uID
         AND    $userAuth.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($gUSERNAME),
-                                mysql_real_escape_string ($gDOMAIN),
                                 mysql_real_escape_string ($gUSERNAME));
                                 
       $sql_result = mysql_query ($sql_statement);
