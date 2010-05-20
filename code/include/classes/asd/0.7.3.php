@@ -1120,7 +1120,7 @@
         AND    $authVerification.Domain = '%s'
         AND    $userProfile.userAuth_uID = $userAuth.uID
         AND    $userAuth.Username = '%s'
-		AND    Active = 1;
+		AND    Active = '1';
       ";
       
       $sql_statement = sprintf ($sql_statement,
