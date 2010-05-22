@@ -4,6 +4,4 @@
    <?php $zSTRINGS->Display ('OBJECT.VIEW', 'SITE.MAIN.PHOTOS'); ?>
   </div> <!-- #view -->
   
- </div> <!-- #container -->
- </div> <!-- #photos -->
-</div> <!-- #latest -->
+</section>

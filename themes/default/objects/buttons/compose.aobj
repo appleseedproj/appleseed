@@ -1,0 +1,6 @@
+<span class='compose'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/compose.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='compose' />
+</span> <!-- .compose -->

@@ -1,41 +1,32 @@
 <!-- ## title obj -->
 <?php $zHTML->Title ($zCONTENTPAGE->Title, $zCONTENTPAGE->Style); ?>
 
- <div id='browserFULL'>
-
-  <div id='sectionFULL'>
-
    <!-- ## header obj -->
    <?php $zHTML->Header (); ?>
   
-   <div id='content'>
+   <div id="page" class="container_12"> 
+   
+   <div id="page_left" class="grid_3"> &nbsp; </div>
 
-   <div id='sectionA'>
+   <div id="page_right" class="grid_9"> 
 
-    <div id='logoA'></div>
-
-   </div> <!-- #sectionA -->
-
-   <div id='sectionBC'>
-
-    <div id='<?php echo $zCONTENTPAGE->Location; ?>'>
-      <div id='caption'>
+    <section id='<?php echo $zCONTENTPAGE->Location; ?>'>
+      <hgroup> 
+      <h1>
        <?php echo $zCONTENTPAGE->Title; ?>
-      </div> <!-- #caption -->
+      </h1>
+      </hgroup>
 
-     <div id='container'>
        <?php echo $zAPPLE->Format ($zCONTENTPAGE->Output, $zCONTENTPAGE->Formatting); ?>
-     </div> <!-- #container -->
-    </div> <!-- #<?php echo $zCONTENTPAGE->Location; ?> -->
-   </div> <!-- #sectionBC -->
+    </section> <!-- #<?php echo $zCONTENTPAGE->Location; ?> -->
 
-   </div> <!-- #content -->
+   </div>
 
+   <div class="clear"></div> 
+   </div>
+   
    <!-- ## footer obj -->
    <?php $zHTML->Footer (); ?>
-
-  </div> <!-- #sectionFULL -->
-   </div> <!-- #browserFULL -->
 
  </body>
 </html>

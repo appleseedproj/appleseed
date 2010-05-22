@@ -580,7 +580,7 @@
           $gTARGETID = "";
           if ($countchildren > 0) $gTARGETID = $this->tID;
 
-          $bDELETEBUTTON = $zHTML->CreateButton ('comment_delete', $zAPPLE->ParseTags ($zSTRINGS->Output), "DELETE", "COMMENTACTION");
+          $bDELETEBUTTON = $zHTML->CreateButton ('comment_delete', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, "DELETE", "COMMENTACTION");
           $bADDRESS = "(" . $gCOMMENTADDRESS . ")";
 
           unset ($gPOSTDATA['tID']);

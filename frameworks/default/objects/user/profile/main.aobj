@@ -1,11 +1,8 @@
-  <div id='profile'>
-   <div id='caption'>
-    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE'); ?>
-  </div> <!-- #caption -->
-
-  <div id='container'>
+  <section id="user_profile"> 
+  	<h1>
+      <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE'); ?>
+    </h1>
 
   <?php echo $bPROFILEQUESTIONS; ?>
 
-  </div> <!-- #container -->
- </div> <!-- #profile -->
+ </section>

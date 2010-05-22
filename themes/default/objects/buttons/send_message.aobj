@@ -1,0 +1,5 @@
+<span class='send_message'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/send_message.gif' />
+ <asd id='tooltip' title='send_message' />
+</span> <!-- .send_message -->

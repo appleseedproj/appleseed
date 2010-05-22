@@ -38,17 +38,5 @@
 	// Initialize this javascript view.
 	function userInitialize () {
 	
-	  // Loop through images and set error handler.
-	  var images = document.getElementsByTagName ('img');
-	  
-	  for (var counter in images) {
-	    images[counter].onerror = badImage;
-	  } // for
-	  
 	  return (true);
 	} // userInitialize
-	
-	function badImage () {
-	  this.src = 'themes/' + asdTheme + '/images/common/unknown.gif';
-	  this.alt = 'Image Not Found!';
-	} // BadImage

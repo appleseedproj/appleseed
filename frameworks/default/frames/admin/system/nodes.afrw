@@ -1,48 +1,36 @@
 <!-- ## title obj -->
 <?php $zHTML->Title (); ?>
 
- <div id='browserFULL'>
-
-  <div id='sectionFULL'>
-
    <!-- ## header obj -->
    <?php $zHTML->Header (); ?>
 
-   <div id='admin'>
-
-    <div id='sectionA'>
-
-      <div id='logoA'></div>
+   <div id="page" class="container_12"> 
+   
+   <div id="page_left" class="grid_3"> 
 
       <!-- ## stats obj -->
       <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/common/stats.aobj", INCLUDE_SECURITY_NONE); ?>
   
-     </div> <!-- #sectionA -->
-  
-     <div id='sectionBC'>
-  
-      <div id='logoBC'></div>
-  
+   </div>
+
+   <div id="page_right" class="grid_9"> 
+   
       <!-- ## switches obj -->
       <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/switches/admin/main.aobj", INCLUDE_SECURITY_BASIC); ?>
   
-      <div id='system'>
        <!-- ## tabs obj -->
        <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/admin/system/main.aobj", INCLUDE_SECURITY_BASIC); ?>
         
        <!-- ## main -->
        <?php echo $bMAINSECTION; ?>
-      </div> <!-- #system -->
  
-     </div> <!-- #sectionBC -->
- 
-     </div> <!-- #admin -->
+   </div>
+
+   <div class="clear"></div> 
+   </div>
 
       <!-- ## footer obj -->
       <?php $zHTML->Footer (); ?>
-
-   </div> <!-- #sectionFULL -->
-  </div> <!-- #browserFULL -->
 
  </body>
 </html>

@@ -576,7 +576,7 @@
           $gTARGETID = "";
           if ($countchildren > 0) $gTARGETID = $this->groupContent->tID;
 
-          $bDELETEBUTTON = $zHTML->CreateButton ('group_delete', $zAPPLE->ParseTags ($zSTRINGS->Output), "DELETE", "ACTION");
+          $bDELETEBUTTON = $zHTML->CreateButton ('group_delete', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, "DELETE", "ACTION");
           $bADDRESS = "(" . $gADDRESS . ")";
 
           unset ($gPOSTDATA['tID']);

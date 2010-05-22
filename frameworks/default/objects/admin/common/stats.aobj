@@ -1,12 +1,7 @@
- <div id='stats'>
-
-  <div id='caption'>
+  <h1>
     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'ADMIN.STATS'); ?>
-  </div> <!-- #caption -->
+  </h1>
 
-  <div id='container'>
-   <br />
- 
     Generate site statistics.<br /><br />
     
     # of users.<br />
@@ -16,6 +11,3 @@
     # of posts.<br /><br />
       
     etc.<br /><br />
-  
-  </div> <!-- #container -->
- </div> <!-- #stats -->

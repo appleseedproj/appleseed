@@ -1,12 +1,3 @@
-  
- <div id='friends'>
-  
-  <div id='container'>
- 
-    <p class='title'>
-     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.SUMMARY.FRIENDS'); ?>
-    </p>
-    
-  </div> <!-- #container -->
-  
- </div> <!-- #friends -->
+ <section id="user_friends"> 
+   <h1>Latest Friends</h1> 
+ </section>

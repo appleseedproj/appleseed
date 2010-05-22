@@ -1,0 +1,9 @@
+        <nav class="grid_6"> 
+            <ul> 
+			   <li><a href='_admin/config/'>Config</a></li>
+			   <li><a href='_admin/users/'>Users</a></li>
+			   <li><a href='_admin/content/'>Content</a></li>
+			   <li><a href='_admin/system/'>System</a></li>
+			   <li><a href='_admin/control/'>Control</a></li>
+            </ul> 
+        </nav> 

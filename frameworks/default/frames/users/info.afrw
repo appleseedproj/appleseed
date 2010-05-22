@@ -1,18 +1,12 @@
 <!-- ## title obj -->
 <?php $zHTML->Title (); ?>
 
- <div id='browserFULL'>
-
-  <div id='sectionFULL'>
-
    <!-- ## header obj -->
    <?php $zHTML->Header (); ?>
   
-   <div id='user'>
-
-   <div id='sectionA'>
-
-    <div id='logoA'></div>
+   <div id="page" class="container_12"> 
+   
+   <div id="page_left" class="grid_3"> 
 
     <!-- ## profile/photo obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/photo.aobj", INCLUDE_SECURITY_NONE); ?>
@@ -26,9 +20,9 @@
     <!-- ## profile obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/main.aobj", INCLUDE_SECURITY_NONE); ?>
 
-   </div> <!-- #sectionA -->
+   </div>
 
-   <div id='sectionBC'>
+   <div id="page_right" class="grid_9"> 
 
     <!-- ## info obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/info/main.aobj", INCLUDE_SECURITY_NONE); ?>
@@ -36,15 +30,13 @@
     <!-- ## statistics obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/info/statistics.aobj", INCLUDE_SECURITY_NONE); ?>
 
-   </div> <!-- #sectionBC -->
+   </div>
 
-   </div> <!-- #user -->
+   <div class="clear"></div> 
+   </div>
 
    <!-- ## footer obj -->
    <?php $zHTML->Footer (); ?>
-
-  </div> <!-- #sectionFULL -->
-   </div> <!-- #browserFULL -->
 
  </body>
 </html>

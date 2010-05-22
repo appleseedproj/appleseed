@@ -1,0 +1,4 @@
+<span class='group_parent'>
+ <asd id='link' extra='PARENTDATA' target='%TARGET%' text='%PARENTLABEL%' />
+ <asd id='tooltip' title='group_parent' />
+</span> <!-- .group_parent -->

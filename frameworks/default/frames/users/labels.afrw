@@ -1,18 +1,12 @@
 <!-- ## title obj -->
 <?php $zHTML->Title (); ?>
 
- <div id='browserFULL'>
-
-  <div id='sectionFULL'>
-
    <!-- ## header obj -->
    <?php $zHTML->Header (); ?>
   
-   <div id='user'>
-
-   <div id='sectionA'>
-
-    <div id='logoA'></div>
+   <div id="page" class="container_12"> 
+   
+   <div id="page_left" class="grid_3"> 
 
     <!-- ## folders obj -->
     <?php $zAPPLE->IncludeFile ("frameworks/$gFRAMEWORK/objects/user/messages/folders.aobj", INCLUDE_SECURITY_NONE); ?>
@@ -20,22 +14,20 @@
     <!-- ## labels obj -->
     <?php $zAPPLE->IncludeFile ("frameworks/$gFRAMEWORK/objects/user/messages/labels.aobj", INCLUDE_SECURITY_NONE); ?>
 
-   </div> <!-- #sectionA -->
+   </div>
 
-   <div id='sectionBC'>
+   <div id="page_right" class="grid_9"> 
 
     <!-- ## labels obj -->
     <?php echo $bMAINSECTION; ?>
 
-   </div> <!-- #sectionBC -->
+   </div>
 
-   </div> <!-- #user -->
+   <div class="clear"></div> 
+   </div>
 
    <!-- ## footer obj -->
    <?php $zHTML->Footer (); ?>
-
-  </div> <!-- #sectionFULL -->
-   </div> <!-- #browserFULL -->
-
+   
  </body>
 </html>

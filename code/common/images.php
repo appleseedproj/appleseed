@@ -142,8 +142,7 @@
     case PRIVACY_HIDE:
     default:
       // NOTE: Add back when user themes are implemented.
-      // $theme = LoadThemeInformation ($Identifier);
-      $theme = 'ophelia';
+      $theme = LoadThemeInformation ($Identifier);
       $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/themes/$theme/images/error/block.png";
       
       // Show the blocked image.

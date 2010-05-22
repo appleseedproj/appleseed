@@ -1,0 +1,6 @@
+<span class='unread_all'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/unread_all.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='unread_all' />
+</span> <!-- .unread_all -->

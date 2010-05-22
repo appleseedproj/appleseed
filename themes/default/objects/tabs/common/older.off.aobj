@@ -1,0 +1,7 @@
+ <span class='next'>
+   
+  <img src='themes/%USERTHEME%/images/tabs/common/older_off.gif' border='0' />
+
+  <asd id='tooltip' title='next' />
+ </span> <!-- .next -->
+</div> <!-- #scroll -->

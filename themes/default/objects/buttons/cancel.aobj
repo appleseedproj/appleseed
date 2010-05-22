@@ -1,0 +1,4 @@
+<span class='cancel'>
+ <input type='submit' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%' />
+ <asd id='tooltip' title='cancel' />
+</span> <!-- .cancel -->

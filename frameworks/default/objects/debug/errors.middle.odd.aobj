@@ -1,9 +1,7 @@
-<li class='odd'>
- <div class='<?php echo strtolower($gTYPE); ?>'>
+<li class='odd <?php echo strtolower($gTYPE); ?>'>
   <span class='count'><?php echo $gCOUNT; ?></span>
   <span class='string'><?php echo $gSTRING; ?></span>
   <span class='type'><?php echo $gTYPE; ?></span>
   <span class='line'><?php echo $gLINE; ?></span>
   <span class='file'><?php echo $gFILE; ?></span>
- </div> <!-- .<?php echo strtolower($gTYPE); ?> -->
 </li>

@@ -1,18 +1,12 @@
 <!-- ## title obj -->
 <?php $zHTML->Title (); ?>
 
- <div id='browserFULL'>
-
-  <div id='sectionFULL'>
-
    <!-- ## header obj -->
    <?php $zHTML->Header (); ?>
-  
-   <div id='site'>
-   <div id='main'>
-   <div id='sectionA'>
 
-    <div id='logoA'></div>
+   <div id="page" class="container_12"> 
+   
+   <div id="page_left" class="grid_3"> 
 
     <!-- ## loginbox obj -->
     <?php echo $bLOGINBOX; ?>
@@ -29,22 +23,20 @@
     <!-- ## latestphotos obj -->
     <?php echo $bLATESTNODES; ?>
 
-   </div> <!-- #sectionA -->
+   </div>
 
-   <div id='sectionBC'>
+   <div id="page_right" class="grid_9"> 
 
     <!-- ## articles obj -->
     <?php echo $bARTICLES; ?>
 
-   </div> <!-- ## sectionBC -->
+   </div>
+
+   <div class="clear"></div> 
+   </div>
 
     <!-- ## footer obj -->
     <?php $zHTML->Footer (); ?>
-
-   </div> <!-- #sectionFULL -->
-   </div> <!-- #main -->
-   </div> <!-- #site -->
-  </div> <!-- #browserFULL -->
 
  </body>
 </html>

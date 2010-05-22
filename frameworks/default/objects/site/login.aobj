@@ -1,8 +1,6 @@
-<div id='login'>
+<section id='login'>
 
  <? $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
-
- <div id='container'>
 
   <?php $zLOCALUSER->Broadcast ('login'); ?>
 
@@ -34,6 +32,4 @@
 
   </form> <!-- #userinfo -->
 
- </div> <!-- #container -->
-
-</div> <!-- #login -->
+</section>

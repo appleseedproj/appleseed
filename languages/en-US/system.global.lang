@@ -1,0 +1,576 @@
+MESSAGE.NONE:=NO RESULTS FOUND.
+CONFIRM.CANCEL:=All changes will be lost!  Are you sure?
+BROWSER.TITLE:=<asd id='global' name='SITEDOMAIN' case='proper' />
+LABEL.REMOTELOGIN:=You are remotely logged in as <asd user='%AUTHUSERNAME%' domain='%AUTHDOMAIN%' popup='off' />
+CONFIRM.CANCEL:=All changes will be lost!  Are you sure?
+LABEL.ANONYMOUS:=(anonymous)
+ERROR.CANTWRITE:=INSUFFICIENT ACCESS TO MAKE MODIFICATIONS.
+LABEL.ANONYMOUS.FULLNAME:=An Anonymous User
+ERROR.NOTNULL:=Do not leave this field blank
+FOOTNOTE.PAGES:=Pages: %PAGESLIST%
+LABEL.COPYRIGHT:=Copyleft &copy; 2004-2007 by the Appleseed Collective.  All Rights Reversed.
+LABEL.ADMINLOGIN:=You are currently logged in as <asd user='%AUTHUSERNAME%' popup='off' />
+BROWSER.REFRESH:=\n<asd id='link' target='%SITEURL%' text='Click here to continue' style='outside' />
+LABEL.NEWMESSAGES:=%MESSAGECOUNT% new message(s).
+LABEL.NEWFRIENDS:=%FRIENDCOUNT% new friend request(s).
+LABEL.LOCALLOGIN:=You are currently logged in as <asd user='%AUTHUSERNAME%' popup='off' />
+FOOTNOTE.PAGEOF:=Page %CURRENTPAGE% of %MAXPAGES%
+CONFIRM.DELETE:ADMIN=Are you sure you want to delete this record?
+ERROR.BADEMAIL:ADMIN=BAD EMAIL ADDRESS.
+ERROR.CANTWRITE:ADMIN=INSUFFICIENT ACCESS TO WRITE DATA.
+ERROR.DENIED:ADMIN=ACCESS DENIED\n\nYou do not have sufficient permission to access this section.  If you feel this is in error, please contact <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a> with any questions.\n\nThank you,\nThe Staff @ %SITEDOMAIN%
+ERROR.ILLEGALCHAR:ADMIN=ILLEGAL CHARACTER '%ILLEGALCHAR%' IN '%FIELDNAME%'
+ERROR.NOTNULL:ADMIN=FIELD CANNOT BE NULL!
+ERROR.TOOLARGE:ADMIN=FIELD IS TOO LARGE! (> %MAXSIZE%)
+ERROR.TOOSHORT:ADMIN=FIELD IS TOO SHORT! (< %MINSIZE%)
+CONFIRM.DELETEALL:ADMIN=Are you sure you want to delete the selected records?
+ERROR.FROMONE:ADMIN=CANNOT MOVE RECORD #1 UP ANY FARTHER.
+ERROR.REQUIREDCHAR:ADMIN=REQUIRED CHARACTER '%REQUIREDCHAR%' NOT FOUND IN '%FIELDNAME%'
+ERROR.DUPLICATE:ADMIN=ENTRY FOR '<asd id='global' name='FIELDNAME' case='upper' />' ALREADY EXISTS IN DATABASE.
+ERROR.INTEGER:ADMIN=FIELD MUST BE AN INTEGER.
+ERROR.PAGE:ADMIN=AN ERROR HAS OCCURRED WHILE ATTEMPTING TO SAVE.
+LABEL.NEW:ADMIN=ADD NEW
+LABEL.EDIT:ADMIN=EDIT
+MESSAGE.SAVE:ADMIN=RECORD #%DATAID% HAS BEEN UPDATED.
+MESSAGE.DELETE:ADMIN=RECORD #%DATAID% HAS BEEN DELETED.
+MESSAGE.DELETEALL:ADMIN=RECORDS %DATALIST% HAVE BEEN DELETED.
+MESSAGE.NEW:ADMIN=RECORD #%DATAID% HAS BEEN ADDED.
+ERROR.TOOLONG:ADMIN=<asd id='global' name='FIELDNAME' case='upper' /> IS TOO LONG.  (> %MAXSIZE% CHARACTERS)
+OBJECT.TITLE:ADMIN.CONFIG=APPLESEED NODE CONFIGURATION
+OBJECT.CONTENT:ADMIN.CONFIG=Below are the most common Appleseed node configuration options.  
+LABEL.THEME:ADMIN.CONFIG=Default Theme
+LABEL.STORAGE:ADMIN.CONFIG=Default User Storage Limit <br />(mb, 0 = unlimited)
+LABEL.SUMMARY:ADMIN.CONFIG=Node Summary
+LABEL.INVITES:ADMIN.CONFIG=Default # Of Invites
+LABEL.LANGUAGE:ADMIN.CONFIG=Default Language
+MESSAGE.SAVE:ADMIN.CONFIG=Basic configuration has been saved.
+OBJECT.TITLE:ADMIN.MAIN=WELCOME TO THE APPLESEED ADMINISTRATION PAGE!
+OBJECT.CONTENT:ADMIN.MAIN=Here you will find everything you need to run and administer your Appleseed site.  If you have any questions, you can access the Appleseed documentation at <a href='http://www.appleseedproject.org/docs/'>http://www.appleseedproject.org/docs/</a>.\n\nFor easy configuration of the most common options, click on the <a href='/_admin/system/config'>config</a> section above.\n\nIf you aren't supposed to see this page, please contact the administrator at <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a> immediately.  All interactions are being logged.\n\nThank you,\nThe Staff @ %SITEDOMAIN%
+OBJECT.TITLE:ADMIN.STATS=SITE STATISTICS
+OBJECT.TITLE:ADMIN.SWITCHES=CHOOSE A SECTION:
+OBJECT.CONTENT:ADMIN.SYSTEM=WELCOME TO THE SYSTEM CONFIGURATION PAGE.\n\nHere you can change system and security settings.  Please choose an option from the menu above.
+LABEL.MAINTENANCE:ADMIN.SYSTEM.MAINTENANCE=ROUTINE MAINTENANCE
+LABEL.TRUSTED:ADMIN.SYSTEM.NODES=Trusted
+LABEL.BLOCKED:ADMIN.SYSTEM.NODES=Blocked
+LABEL.NEVER:ADMIN.SYSTEM.NODES=Never
+ERROR.NONESELECTED:ADMIN.SYSTEM.OPTIONS=NO OPTIONS HAVE BEEN SELECTED.  NO ACTION TAKEN.
+LABEL.NEW:ADMIN.SYSTEM.OPTIONS=NEW OPTION
+ERROR.NONESELECTED:ADMIN.SYSTEM.STRINGS=NO STRINGS HAVE BEEN SELECTED.  NO ACTION TAKEN.
+LABEL.EDIT:ADMIN.SYSTEM.STRINGS=EDIT SYSTEM STRING
+LABEL.NEW:ADMIN.SYSTEM.STRINGS=NEW STRING
+OBJECT.CONTENT:ADMIN.USERS=WELCOME TO THE USER CONFIGURATION PAGE.\n\nHere you can change user settings.  Please choose an option from the menu above.
+ERROR.NONESELECTED:ADMIN.USERS.ACCESS=NO ACCESS RECORDS HAVE BEEN SELECTED.  NO ACTION TAKEN.
+LABEL.EDIT:ADMIN.USERS.ACCOUNTS=EDIT <asd user='%EDITUSERNAME%' />
+LABEL.PRESERVE:ADMIN.USERS.ACCOUNTS= (To preserve password, leave this blank). 
+ERROR.NONESELECTED:ADMIN.USERS.ACCOUNTS=NO ACCOUNTS HAVE BEEN SELECTED.  NO ACTION TAKEN.
+ERROR.NONESELECTED:ADMIN.USERS.QUESTIONS=NO QUESTIONS HAVE BEEN SELECTED.  NO ACTION TAKEN.
+OBJECT.TITLE:CONTENT.ARTICLES=NEWEST ARTICLES
+LABEL.COUNT:CONTENT.ARTICLES=%COMMENTCOUNT% comment(s).
+LABEL.TITLE:CONTENT.ARTICLES=Title:
+LABEL.SUMMARY:CONTENT.ARTICLES=Summary:
+LABEL.FULL:CONTENT.ARTICLES=Full Article:
+LABEL.LANGUAGE:CONTENT.ARTICLES=Language:
+LABEL.SUBMIT:CONTENT.ARTICLES=Submit An Article.
+ERROR.PAGE:CONTENT.ARTICLES=Unable to submit this article.  Please check for errors below.
+ERROR.NOTNULL:CONTENT.ARTICLES=Do not leave this field blank.
+MESSAGE.SUBMITTED:CONTENT.ARTICLES=Your article has been submitted.  An editor will have to approve it for viewing.
+MESSAGE.NONE:CONTENT.ARTICLES=No pending articles were found.
+LABEL.EDIT:CONTENT.ARTICLES=Article Editor
+LABEL.SUBMITTED:CONTENT.ARTICLES=Submitted by: <asd user='%SUBMITTEDUSERNAME%' domain='%SUBMITTEDDOMAIN%' />
+LABEL.VERIFICATION:CONTENT.ARTICLES=Verification:
+LABEL.STAMP:CONTENT.ARTICLES=Time Stamp:
+LABEL.LANGUAGE:CONTENT.ARTICLES=Language
+MESSAGE.SAVE:CONTENT.ARTICLES=Article has been saved.
+MESSAGE.PENDING:CONTENT.ARTICLES=%PENDING% article(s) are awaiting editor approval.
+LABEL.SUBJECT:CONTENT.ARTICLES.COMMENT=%COMMENTINGUSER% has replied to your comment.
+MAIL.FROM:CONTENT.ARTICLES.COMMENTS=comments@%SITEDOMAIN%
+MAIL.BODY:CONTENT.ARTICLES.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has replied to your article.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.SUBJECT:CONTENT.ARTICLES.COMMENTS=%COMMENTINGUSER% has replied to your article.
+MAIL.FROMNAME:CONTENT.ARTICLES.COMMENTS=Appleseed Comments
+LABEL.FULLNAME:CONTENT.GROUP=Full Group Name:
+LABEL.DESCRIPTION:CONTENT.GROUP=Description:
+LABEL.ACCESS:CONTENT.GROUP=Access:
+LABEL.TAGS:CONTENT.GROUP=Tags:
+LABEL.NAME:CONTENT.GROUP=Name: %GROUPNAME%
+MESSAGE.SAVED:CONTENT.GROUP=Group options have been saved.
+ERROR.PAGE:CONTENT.GROUP=An Error Has Occurred While Attempting To Save This Group.  See Below.
+CONFIRM.DELETE:CONTENT.GROUP=Are you sure you want to delete this group?  This cannot be undone!
+MESSAGE.DELETED:CONTENT.GROUP=This group has been permanently deleted.
+MESSAGE.JOINED:CONTENT.GROUP=You have joined this group.
+MESSAGE.LEFT:CONTENT.GROUP=You have left this group.
+MESSAGE.PENDING:CONTENT.GROUP=Your membership in this group is currently pending approval.
+CONFIRM.LEAVE:CONTENT.GROUP=Are you sure you want to leave this group?
+LABEL.GENERAL:CONTENT.GROUP=GENERAL
+LABEL.MEMBEREDITOR:CONTENT.GROUP=MEMBERS (%MEMBERCOUNT%)
+LABEL.INVITE:CONTENT.GROUP=INVITE
+LABEL.USER:CONTENT.GROUP=User:
+LABEL.DOMAIN:CONTENT.GROUP=Domain:
+LABEL.ACTION:CONTENT.GROUP=Action:
+LABEL.PENDINGEDITOR:CONTENT.GROUP=PENDING (%PENDINGCOUNT%)
+LABEL.STAMP:CONTENT.GROUP=%DATE% at %TIME%
+LABEL.BYLINE:CONTENT.GROUP=by %AUTHOR%
+LABEL.NEW:CONTENT.GROUP=NEW ENTRY
+LABEL.SUBJECT:CONTENT.GROUP=SUBJECT
+LABEL.BODY:CONTENT.GROUP=BODY
+LABEL.ADD:CONTENT.GROUP=ADD AN ENTRY
+LABEL.ICON:CONTENT.GROUP=USER ICON
+OBJECT.TITLE:CONTENT.GROUP=READ POSTS
+LABEL.REPLY:CONTENT.GROUP=REPLY TO %PARENTAUTHOR%
+INFO.REPLY:CONTENT.GROUP=%PARENTBODY%
+LABEL.SUBJECTPREFIX:CONTENT.GROUP=Re:
+ERROR.PAGE:CONTENT.GROUP=Unable to save this entry.  See below for errors.
+ERROR.NOTNULL:CONTENT.GROUP=You can't leave the '%FIELDNAME%' field blank.
+CONFIRM.DELETE:CONTENT.GROUP=Are you sure you want to delete this entry?
+ERROR.NONE:CONTENT.GROUP=No entries have been posted.
+LABEL.THREAD:CONTENT.GROUP=%LINK% by %AUTHOR%  on %DATE% at %TIME%
+CONFIRM.DELETEALL:CONTENT.GROUP=Are  you sure you want to delete these entries?
+LINK.REPLY:CONTENT.GROUP=Reply
+LINK.THREAD:CONTENT.GROUP=Thread
+LINK.PARENT:CONTENT.GROUP=Parent
+LABEL.DELETED:CONTENT.GROUP=( Deleted Entry )
+MAIL.FROM:CONTENT.GROUP=group@%SITEDOMAIN%
+MAIL.BODY:CONTENT.GROUP=Hello, %REPLIEDUSER%.\n\n%REPLYINGUSER% has replied to your group post.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.SUBJECT:CONTENT.GROUp=%REPLYINGUSER% has replied to your group post.
+MAIL.FROMNAME:CONTENT.GROUP=Appleseed Groups
+ERROR.NONESELECTED:CONTENT.GROUP=No Entries Were Selected.
+CONFIRM.DELETE.ENTRY:CONTENT.GROUP=Are you sure you want to delete this entry?
+MESSAGE.MEMBER.EDITOR:CONTENT.GROUP=Member list has been saved.
+MESSAGE.PENDING.EDITOR:CONTENT.GROUP=Pending list has been saved.
+LINK.DELETE:CONTENT.GROUP=Delete
+ERROR.ILLEGALCHAR:CONTENT.GROUPS=Use only numbers and letters with no spaces for your group name.
+ERROR.TOOSHORT:CONTENT.GROUPS=Your group name is too short.  Try something longer (at least 6 characters).
+LABEL.NAME:CONTENT.GROUPS=Group URL Name:
+LABEL.FULLNAME:CONTENT.GROUPS=Full Group Name:
+LABEL.DESCRIPTION:CONTENT.GROUPS=Description
+LABEL.ACCESS:CONTENT.GROUPS=Access:
+LABEL.TAGS:CONTENT.GROUPS=Tags:
+LABEL.CREATED:CONTENT.GROUPS=NEW DISCUSSION GROUP HAS BEEN CREATED.
+INFO.CREATED:CONTENT.GROUPS=Your new discussion group has been created.  Below is the direct URL to the new group.  You can edit (or delete) this group at any time by going to this URL and then clicking on the 'EDITOR' tab.
+LABEL.CREATE:CONTENT.GROUPS=CREATE A NEW DISCUSSION GROUP
+ERROR.PAGE:CONTENT.GROUPS=An Error Has Occurred While Attempting To Create This Group.  See Below.
+ERROR.DUPLICATE:CONTENT.GROUPS=A group with this name already exists.  Choose another.
+OBJECT.RETURN:SITE.ERROR=<a href='%SITEURL%'>CLICK HERE TO RETURN</a>
+BROWSER.SUBTITLE:SITE.ERROR.403=- 403 Forbidden
+OBJECT.CONTENT:SITE.ERROR.403=ERROR: Forbidden (403)\n\nYou do not have access to the requested area.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a>\n\nThank You,\nThe Staff @ Appleseed
+OBJECT.TITLE:SITE.ERROR.403=403 ERROR
+OBJECT.TITLE:SITE.ERROR.404=404 ERROR
+OBJECT.CONTENT:SITE.ERROR.404=ERROR: File Not Found (404)\n\nThe file you are looking for could not be found.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a>\n\nThank You,\nThe Staff @ Appleseed
+BROWSER.SUBTITLE:SITE.ERROR.404= - 404 File Not Found
+BROWSER.SUBTITLE:SITE.ERROR.FORBIDDEN=- Forbidden Area
+OBJECT.CONTENT:SITE.ERROR.FORBIDDEN=ERROR: Forbidden Area\n\n\nYou do not have access to the requested area.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a>\n\n\nThank You,\nThe Staff @ %SITEDOMAIN%\n\n
+OBJECT.TITLE:SITE.ERROR.FORBIDDEN=SECURITY ERROR
+LABEL.USERNAME:SITE.JOIN=Choose a username:
+LABEL.PASSWORD:SITE.JOIN=Choose a password:
+LABEL.CONFIRM:SITE.JOIN=Confirm your password:
+LABEL.EMAIL:SITE.JOIN=Enter your email address:
+LABEL.INVITE:SITE.JOIN=Invite Code:
+OBJECT.CONTENT:SITE.JOIN=Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons.
+LABEL.FULLNAME:SITE.JOIN=Enter your full name:
+LABEL.ZIPCODE:SITE.JOIN=Enter your zip/postal code:
+OBJECT.TITLE:SITE.JOIN=JOIN <asd id='global' name='SITEDOMAIN' case='upper' />
+ERROR.PAGE:SITE.JOIN=Error creating account.
+ERROR.NOTNULL:SITE.JOIN=Do not leave %FIELDNAME% blank.
+ERROR.BADINVITE:SITE.JOIN=Your invitation is not valid for this email address.
+ERROR.BADEMAIL:SITE.JOIN=This is not a valid email address.
+ERROR.NOMATCH:SITE.JOIN=These passwords do not match.
+ERROR.TOOSHORT:SITE.JOIN=%FIELDNAME% is too short.
+ERROR.ILLEGALCHAR:SITE.JOIN=Letters and numbers only, no spaces.
+ERROR.DUPLICATE:SITE.JOIN=Somebody already has this username.  Try another.
+MESSAGE.SUCCESS:SITE.JOIN=Your Account Has Been Created!
+ERROR.BADPASS:SITE.JOIN=Invalid password.  Please try another.
+OBJECT.CONTENT:SITE.JOIN.CONFIRM=Welcome to Appleseed @ %SITEDOMAIN%!\n\nYour new account has been created!  Login above to set up your profile.\n
+OBJECT.TITLE:SITE.JOIN.INFO=WHY SHOULD YOU JOIN <asd id='global' name='SITEDOMAIN' case='upper' />?
+OBJECT.CONTENT:SITE.JOIN.INFO=Why You Should Join <asd id='global' name='SITETITLE' case='proper' />.
+ERROR.FAILED:SITE.LOGIN=Login Failed.  Please Try Again.
+ERROR.PAGE:SITE.LOGIN=Login Failed.  Please Try Again.
+ERROR.COOKIE:SITE.LOGIN=Cannot write cookie.  Please try again.
+ERROR.DISABLED:SITE.LOGIN=Your account has been disabled.  Please read the <a href='/faq/'>FAQ</a> to find out why.
+ERROR.INACTIVE:SITE.LOGIN=Your account is currently inactive.  Please read the <a href='/faq/'>FAQ</a> for more information.
+ERROR.NOTNULL:SITE.LOGIN=Do not leave any fields blank.  Please try again.
+ERROR.ILLEGALCHAR:SITE.LOGIN=Illegal character '%ILLEGALCHAR%' in field '%FIELDNAME%'
+ERROR.TOOSHORT:SITE.LOGIN=%FIELDNAME% is too short.
+ERROR.TOOLARGE:SITE.LOGIN=%FIELDNAME% is too large.
+ERROR.REQUIREDCHAR:SITE.LOGIN=Use a full email address to login.
+ERROR.BADEMAIL:SITE.LOGIN=This is an invalid email address.
+LABEL.PASSWORD:SITE.LOGIN=Password:
+LABEL.USERNAME:SITE.LOGIN=Username:
+LABEL.REMEMBER:SITE.LOGIN=Remember Me:
+LABEL.LOCATION:SITE.LOGIN=Remote Address (<i>username@domain</i>):
+INFO.LOCATION:SITE.LOGIN=NOTE: You must be logged in to your main appleseed site for remote login to work.
+MAIL.FROM:SITE.LOGIN=password@%SITEDOMAIN%
+MAIL.SUBJECT:SITE.LOGIN=Your new password for %SITEDOMAIN%
+MAIL.BODY:SITE.LOGIN=Hello, %FULLNAME%\n\nYour password has been reset.  Your new password is:\n\n%PASSWORD%\n\nThank You,\nThe Appleseed Collective\n
+ERROR.UPDATE:SITE.LOGIN=Database error while updating account.
+MESSAGE.SENT:SITE.LOGIN=A new password has been emailed.
+ERROR.USERNAME:SITE.LOGIN=You must  enter your username.
+ERROR.UNKNOWN:SITE.LOGIN=No such user on this site.
+MAIL.FROMNAME:SITE.LOGIN=Appleseed Password Retrieval
+OBJECT.TITLE:SITE.MAIN.GROUPS=NEWEST GROUPS
+OBJECT.VIEW:SITE.MAIN.GROUPS=VIEW NEWEST GROUPS
+OBJECT.CONTENT:SITE.MAIN.INFO=\n<asd id='global' name='sitedomain' case='proper' /> is a new appleseed  node.  \n\nMore information about appleseed is available at <a href='http://appleseed.sourceforge.net'>appleseed.sourceforge.net</a>.\n\n
+OBJECT.TITLE:SITE.MAIN.INFO=ABOUT THIS SITE:
+OBJECT.TITLE:SITE.MAIN.INVITE=SEND AN INVITE
+LABEL.EMAIL:SITE.MAIN.INVITE=EMAIL:
+OBJECT.CONTENT:SITE.MAIN.INVITE=You have <b>%INVITEAMOUNT%</b> invites left.  Enter an email address below to invite a friend to join the site.
+OBJECT.TITLE:SITE.MAIN.JOURNALS=RECENTLY UPDATED JOURNALS
+OBJECT.VIEW:SITE.MAIN.JOURNALS=VIEW NEWEST JOURNALS
+LABEL.PASSWORD:SITE.MAIN.LOGIN=Password:
+LABEL.REMEMBER:SITE.MAIN.LOGIN=Remember Me:
+LABEL.USERNAME:SITE.MAIN.LOGIN=Username:
+OBJECT.TITLE:SITE.MAIN.LOGIN=LOGIN
+OBJECT.TITLE:SITE.MAIN.NODES=<asd id='global' name='sitedomain' case='upper' />'S NETWORK
+OBJECT.VIEW:SITE.MAIN.NODES=VIEW FULL NETWORK
+LABEL.LINK:SITE.MAIN.NODES=<a href='%NODEDOMAINLINK%'>%NODEDOMAIN%</a> (%NODEUSERS% Users)
+OBJECT.TITLE:SITE.MAIN.PHOTOS=NEWEST PHOTOS
+OBJECT.VIEW:SITE.MAIN.PHOTOS=VIEW NEWEST PHOTOS
+OBJECT.TITLE:SITE.MAIN.USERS=NEWEST USERS
+OBJECT.VIEW:SITE.MAIN.USERS=VIEW NEWEST USERS
+LABEL.STAMP:USER.COMMENTS=%COMMENTDATE% at %COMMENTTIME%
+LABEL.BYLINE:USER.COMMENTS=by %COMMENTAUTHOR%
+LABEL.NEW:USER.COMMENTS=NEW COMMENT
+LABEL.SUBJECT:USER.COMMENTS=SUBJECT
+LABEL.BODY:USER.COMMENTS=BODY
+LABEL.ADD:USER.COMMENTS=ADD A COMMENT
+LABEL.ICON:USER.COMMENTS=USER ICON
+OBJECT.TITLE:USER.COMMENTS=READ COMMENTS
+LABEL.REPLY:USER.COMMENTS=REPLY TO %PARENTAUTHOR%
+INFO.REPLY:USER.COMMENTS=%PARENTBODY%
+LABEL.SUBJECTPREFIX:USER.COMMENTS=Re:
+ERROR.PAGE:USER.COMMENTS=Unable to save this comment.  See below for errors.
+ERROR.NOTNULL:USER.COMMENTS=You can't leave the '%FIELDNAME%' field blank.
+CONFIRM.DELETE:USER.COMMENTS=Are you sure you want to delete this comment?
+ERROR.NONE:USER.COMMENTS=No comments have been posted.
+LABEL.THREAD:USER.COMMENTS=%COMMENTLINK% by %COMMENTAUTHOR%  on %COMMENTDATE% at %COMMENTTIME%
+CONFIRM.DELETEALL:USER.COMMENTS=Are  you sure you want to delete these comments?
+LINK.REPLY:USER.COMMENTS=Reply
+LINK.THREAD:USER.COMMENTS=Thread
+LINK.PARENT:USER.COMMENTS=Parent
+LABEL.DELETED:USER.COMMENTS=( Deleted Comment )
+MAIL.SUBJECT:USER.COMMENTS=%COMMENTINGUSER% has replied to your comment.
+MAIL.FROM:USER.COMMENTS=comments@%SITEDOMAIN%
+MAIL.BODY:USER.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has replied to your comment.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.FROMNAME:USER.COMMENTS=Appleseed Comments
+MESSAGE.CANCELLED:USER.FRIENDS=The friend request from %DENIEDNAME% has been cancelled.
+CONFIRM.CANCEL:USER.FRIENDS=Are you sure you want to cancel this friend request?
+MESSAGE.NONE:USER.FRIENDS=No friends were found.
+ERROR.ALREADY:USER.FRIENDS=%REQUESTNAME% is already in your friends list!
+CONFIRM.DELETEALL:USER.FRIENDS=Are you sure you want to delete these profiles from your friends list?
+LABEL.FRIENDS:USER.FRIENDS=Friends Of <asd id='global' name='FOCUSFULLNAME' case='proper' />
+MESSAGE.ADDED:USER.FRIENDS='<asd id='global' name='REQUESTEDUSER' case='proper' />' has been added to your friends list.
+CONFIRM.DENY:USER.FRIENDS=Are you sure you want to deny this friends request?
+MESSAGE.APPROVED:USER.FRIENDS=The friend request from <asd id='global' name='NEWFRIEND' case='proper' /> has been approved.
+MESSAGE.REQUEST:USER.FRIENDS=<asd id='global' name='REQUESTEDUSER' case='proper' /> has been sent a friend request.
+ERROR.NONESELECTED:USER.FRIENDS=No friends were selected.
+MESSAGE.DELETEALL:USER.FRIENDS=The selected profiles have been removed from your friends list.
+MESSAGE.DENIED:USER.FRIENDS=Friend request from %DENIEDNAME% has been denied.
+LABEL.EDIT:USER.FRIENDS=EDIT FRIEND
+INFO.ALIAS:USER.FRIENDS=(This alias only shows up on your friends list)
+LABEL.ALIAS:USER.FRIENDS=Alias:
+CONFIRM.DELETE:USER.FRIENDS=Are you sure you want to remove this friend?
+MESSAGE.SAVE:USER.FRIENDS=Friend information has been saved.
+MESSAGE.DELETE:USER.FRIENDS=The profile for %FRIENDUSERNAME% has been removed from your friends list.
+LABEL.CIRCLES:USER.FRIENDS=Member of:
+LABEL.REMOVE:USER.FRIENDS=Remove From Circle:
+LABEL.APPLY:USER.FRIENDS=Add To Circle:
+MESSAGE.APPLY:USER.FRIENDS=This friend has been added to '%APPLYCIRCLENAME%'.
+MESSAGE.REMOVE:USER.FRIENDS=This friend has been removed from '%REMOVECIRCLENAME%'.
+ERROR.ALREADY.PENDING:USER.FRIENDS=%REQUESTNAME% has already been sent a friend request.
+MAIL.BODY:USER.FRIENDS.APPROVE=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has approved your friend request!\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.SUBJECT:USER.FRIENDS.APPROVE=%SOURCEUSER% has accepted!
+LABEL.CIRCLES:USER.FRIENDS.CIRCLES=Edit your friend circles.
+LABEL.COUNT:USER.FRIENDS.CIRCLES=%FRIENDSCOUNT% friend(s).
+CONFIRM.DELETE:USER.FRIENDS.CIRCLES=Are you sure you want to delete this circle?
+MESSAGE.NONE:USER.FRIENDS.CIRCLES=No friends circles have been created.
+CONFIRM.DELETEALL:USER.FRIENDS.CIRCLES=Are you sure you want to delete these friend circles?
+LABEL.COUNT:USER.FRIENDS.CIRCLES=%FRIENDSCOUNT% Friend(s)
+LABEL.EDIT:USER.FRIENDS.CIRCLES=Edit this friends circle.
+LABEL.NAME:USER.FRIENDS.CIRCLES=Circle Name:
+CONFIRM.DELETE:USER.FRIENDS.CIRCLES=Are you sure you want to delete this friends circle?
+ERROR.PAGE:USER.FRIENDS.CIRCLES=Unable to save this circle.  See below for errors.
+MESSAGE.SAVE:USER.FRIENDS.CIRCLES=Friends circle '<asd id='global' name='CIRCLENAME' case='proper' />' has been saved.
+LABEL.DESCRIPTION:USER.FRIENDS.CIRCLES=Description:
+LABEL.NEW:USER.FRIENDS.CIRCLES=Create a new friends circle.
+MESSAGE.NEW:USER.FRIENDS.CIRCLES=Friends circle '<asd id='global' name='CIRCLENAME' case='proper' />' has been added.
+MESSAGE.DELETEALL:USER.FRIENDS.CIRCLES=The selected friends circles have been deleted.
+ERROR.NOTNULL:USER.FRIENDS.CIRCLES=Do not leave this field blank.
+ERROR.NONESELECTED:USER.FRIENDS.CIRCLES=No friend circles were selected.
+ERROR.FROMONE:USER.FRIENDS.CIRCLES=Cannot move the first friends circle up any farther.
+ERROR.CANTWRITE:USER.FRIENDS.CIRCLES=INSUFFICIENT ACCESS TO MODIFY FRIENDS CIRCLES.
+MAIL.SUBJECT:USER.FRIENDS.DENY=%SOURCEUSER% has denied your friend request!
+MAIL.BODY:USER.FRIENDS.DENY=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has denied your friend request.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.BODY:USER.FRIENDS.REMOVE=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has removed you from their friends list.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.SUBJECT:USER.FRIENDS.REMOVE=%SOURCEUSER% has removed you as a friend.
+MAIL.SUBJECT:USER.FRIENDS.REQUEST=%SOURCEUSER% would like to be added as one of your friends! 
+MAIL.BODY:USER.FRIENDS.REQUEST=Hello, %TARGETUSER%.\n\n%SOURCEUSER% would like to be added to your friends list.\n\nClick here to approve your Appleseed friends requests:\n<a href='%FRIENDSURL%'>%FRIENDSURL%</a>\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MESSAGE.NONE:USER.GROUPS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> Is Not A Member Of Any Groups.
+LABEL.MEMBERS:USER.GROUPS=Members: %MEMBERCOUNT%
+LABEL.STATS:USER.INFO=STATISTICS FOR <asd id='global' name='FOCUSFULLNAME' case='upper' />
+ERROR.NONESELECTED:USER.INFO.COMMENTS=No Comments Were Selected.
+MAIL.SUBJECT:USER.INFO.COMMENTS=%COMMENTINGUSER% has left a comment on your profile.
+MAIL.FROM:USER.INFO.COMMENTS=comments@%SITEDOMAIN%
+MAIL.BODY:USER.INFO.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your profile.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+MAIL.FROMNAME:USER.INFO.COMMENTS=Appleseed Comments
+MAIL.FROM:USER.INVITE=webmaster@%SITEDOMAIN%
+MAIL.SUBJECT:USER.INVITE=Welcome To Appleseed @ %SITEDOMAIN%!
+MAIL.BODY:USER.INVITE=Congratulations!\n\nYou have been invited by %INVITEDBY% to open a free account at %SITEURL%.\n\nTo accept this invitation and set up an account, click this link:\n\n %INVITEURL%\n\nOnce your account has been created, %INVITEDBY% will be notified in order to add you to their friend's list!\n\nAppleseed is a new open source social networking software that is currently in development.  Planned features include: Journals, Photo Albums, Email, and Groups all in one place, and fully distributed social networking.  You can add friends from any Appleseed site.\n\nAppleseed is still in early beta, and many features are still not available. But if you set up an account, you'll be able to help us fix bugs and add features.\n\nThank You,\nThe Appleseed Collective\n
+OBJECT.TITLE:USER.INVITE=INVITE A FRIEND
+OBJECT.CONTENT:USER.INVITE=You have <b>%INVITECOUNT%</b> invite(s) available!  Enter an email address below and click the 'invite' button to tell a friend about <asd id='global' name='SITETITLE' case='proper' />.
+ERROR.BADEMAIL:USER.INVITE=This is not a valid email address.
+ERROR.DUPLICATE:USER.INVITE=This user has already been invited.
+ERROR.GENERAL:USER.INVITE=A general system error has occurred.
+MESSAGE.SENT:USER.INVITE=Your Invitation Has Been Sent!
+ERROR.PAGE:USER.INVITE=Unable to send invitation.
+MAIL.FROMNAME:USER.INVITE=Appleseed Webmaster 
+OBJECT.CONTENT:USER.INVITE.CONFIRM=Congratulations!  You have invited <u>%RECIPIENT%</u> to <asd id='global' name='SITETITLE' case='proper' />.  \n\nThey will recieve an email with instructions on how to sign up for an account, and you will recieve an email when their new account is created.
+MESSAGE.NONE:USER.JOURNAL=No journal entries were found.
+LABEL.NEW:USER.JOURNAL=Create a new journal entry.
+LABEL.TITLE:USER.JOURNAL=Title:
+LABEL.CONTENT:USER.JOURNAL=Content:
+LABEL.TAGLIST:USER.JOURNAL=<strong>Tags:</strong> %TAGS%
+LABEL.ICON:USER.JOURNAL=User Icon:
+LABEL.EDIT:USER.JOURNAL=Edit this journal entry.
+ERROR.PAGE:USER.JOURNAL=Unable to save this journal entry.  See below for errors.
+ERROR.NOTNULL:USER.JOURNAL=Do not leave '%FIELDNAME%' blank.
+ERROR.ILLEGALCHAR:USER.JOURNAL=You cannot use the '%ILLEGALCHAR%' character in '%FIELDNAME%'.
+CONFIRM.DELETEALL:USER.JOURNAL=Are you sure you want to delete these journal entries?
+CONFIRM.DELETE:USER.JOURNAL=Are you sure you want to delete this journal entry?
+MESSAGE.DELETE:USER.JOURNAL=This journal entry has been deleted.
+MESSAGE.DELETEALL:USER.JOURNAL=The selected journal entries have been deleted.
+LABEL.POSTED:USER.JOURNAL=Posted On:
+LABEL.TAGS:USER.JOURNAL=Tags:
+MAIL.SUBJECT:USER.JOURNAL.COMMENTS=%COMMENTINGUSER% has left a comment on your journal.
+MAIL.FROM:USER.JOURNAL.COMMENTS=comments@%SITEDOMAIN%
+MAIL.BODY:USER.JOURNAL.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your journal entry.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+ERROR.NONESELECTED:USER.JOURNAL.COMMENTS=No Comments Were Selected.
+MAIL.FROMNAME:USER.JOURNAL.COMMENTS=Appleseed Comments
+LABEL.COUNT:USER.JOURNALS=%COMMENTCOUNT% comment(s).
+ERROR.CANTWRITE:USER.JOURNALS=INSUFFICIENT ACCESS TO MODIFY JOURNAL.
+MESSAGE.DELETE:USER.MESSAGES=This message has been deleted and cannot be restored.
+MESSAGE.SPAM:USER.MESSAGES=This message has been marked as spam.
+MESSAGE.DELETEALL:USER.MESSAGES=%MESSAGECOUNT% message(s) have been deleted.
+ERROR.NONESELECTED:USER.MESSAGES=No messages have been selected.
+MESSAGE.SAVED:USER.MESSAGES=Message has been saved to the 'Drafts' folder.
+LABEL.RESTORE:USER.MESSAGES=RESTORE FROM DRAFT.
+LABEL.NOSUBJECT:USER.MESSAGES=(no subject)
+LABEL.RE:USER.MESSAGES=Re: 
+MAIL.FROM:USER.MESSAGES="New Message" <messages@%SITEDOMAIN%>
+MAIL.SUBJECT:USER.MESSAGES=New message from %SENDERNAME% on <asd id='global' name='SITEDOMAIN' case='proper' />
+MAIL.BODY:USER.MESSAGES=%RECIPIENTFULLNAME%,\n\nYou have a new message from %SENDERNAME% on AppleseedProject.org!\n\nClick here to read your Appleseed messages:\n%MESSAGESURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+LABEL.QUOTE:USER.MESSAGES=\n\n> From: "%AUTHORFULLNAME%" (%AUTHORUSERNAME%@%AUTHORDOMAIN%)\n> Date: %MESSAGEDATE%\n>\n
+LABEL.APPLY:USER.MESSAGES=Apply Label:
+LABEL.REMOVE:USER.MESSAGES=Remove Label:
+MESSAGE.APPLY:USER.MESSAGES=This message has been labeled '%LABELNAME%'
+MESSAGE.REMOVE:USER.MESSAGES=Label '%REMOVELABELNAME%' has been removed.
+LABEL.MAILCIRCLE:USER.MESSAGES=Send to:
+ERROR.NOCIRCLE:USER.MESSAGES=The friends circle '%BADCIRCLE%' does not exist.
+MESSAGE.TRASHALL:USEr.MESSAGES=The selected messages have been moved to the trash.
+MESSAGE.INBOXALL:USER.MESSAGES=The selected messages have been moved to the INBOX.
+ERROR.INVALID:USER.MESSAGES=The address, '%WRONGADDRESS%', is invalid.  Check your spelling and try again.
+CONFIRM.TRASH:USER.MESSAGES=Are you sure you want to move this message to the trash?
+MESSAGE.ARCHIVEALL:USER.MESSAGES=The selected messages have been archived.
+MESSAGE.SPAMALL:USER.MESSAGES=The selected messages have been reported as spam.
+LABEL.STATUS:USER.MESSAGES=(%READSTATUS%)
+LABEL.READ:USER.MESSAGES=Read
+LABEL.UNREAD:USER.MESSAGES=Unread
+MESSAGE.APPLYALL:USER.MESSAGES=The selected messages have been labelled '%LABELNAME%'.
+MESSAGE.REMOVEALL:USER.MESSAGES=The label '%LABELNAME%' has been removed from the selected messages.
+ERROR.NOBODY:USER.MESSAGES=You cannot send a message without any content!
+ERROR.NORECIPIENT:USER.MESSAGES=No recipients were provided!
+MAIL.FROMNAME:USER.MESSAGES=New Appleseed Message
+LABEL.BACK:USER.MESSAGES=BACK TO <asd id='link' target='%BACKTARGET%' text='%MESSAGELOCATION%' />
+ERROR.RETRIEVE:USER.MESSAGES=This message could not be retrieved.
+MESSAGE.NONE:USER.MESSAGES=No messages were found.
+ERROR.UNABLE:USER.MESSAGES=Unable to send this message.  See below for errors.
+LABEL.COMPOSE:USER.MESSAGES=COMPOSE A NEW MESSAGE
+ERROR.UNKNOWN:USER.MESSAGES=No user found at the address, '%WRONGADDRESS%'.  Check your spelling and try again.
+LABEL.SUBJECT:USER.MESSAGES=Subject:
+CONFIRM.DELETEALL:USER.MESSAGES=Are you sure you want to permanently delete the selected messages?
+LABEL.BODY:USER.MESSAGES=Enter your message:
+CONFIRM.TRASHALL:USER.MESSAGES=Are you sure you want to move the selected messages to the trash?
+LABEL.RECIPIENT:USER.MESSAGES=To:
+CONFIRM.DELETE:USER.MESSAGES=Are you sure you want to permanently delete this message?
+LABEL.INBOX:USER.MESSAGES=INBOX
+LABEL.FORWARD:USER.MESSAGES=FORWARD MESSAGE
+LABEL.FWD:USER.MESSAGES=Fwd: 
+ERROR.ACCESS:USER.MESSAGES=Access to message #%MESSAGEID% was denied.  Is this a hack attempt?
+LABEL.REPLY:USER.MESSAGES=REPLY TO MESSAGE
+MESSAGE.SENT:USER.MESSAGES=Your message has been sent.
+MESSAGE.UNREAD:USER.MESSAGES=This message has been marked as 'unread.'
+MESSAGE.INBOX:USER.MESSAGES=This message has been moved to your inbox.
+MESSAGE.TRASH:USER.MESSAGES=This message has been moved to the trash.
+MESSAGE.ARCHIVE:USER.MESSAGES=This message has been archived.
+OBJECT.TITLE:USER.MESSAGES.FOLDERS=FOLDERS
+LABEL.INBOX:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/inbox/'>Inbox</a>
+LABEL.SENT:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/sent/'>Sent</a>
+LABEL.DRAFTS:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/drafts/'>Drafts</a>
+LABEL.ALL:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/all/'>All Messages</a>
+LABEL.SPAM:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/spam/'>Spam</a>
+LABEL.TRASH:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/trash/'>Trash</a>
+LABEL.NEW:USER.MESSAGES.FOLDERS=<a href='/profile/%FOCUSUSERNAME%/messages/new/'>Create Message</a>
+OBJECT.TITLE:USER.MESSAGES.LABELS=LABELS
+LABEL.LABELNAME:USER.MESSAGES.LABELS=<a href='/profile/%FOCUSUSERNAME%/messages/%LABELNAME%/'>%LABELNAME%</a>
+LABEL.NEW:USER.MESSAGES.LABELS=New Label
+LABEL.COUNT:USER.MESSAGES.LABELS=%MESSAGECOUNT% message(s).
+CONFIRM.DELETE:USER.MESSAGES.LABELS=Are you sure you want to delete this label?
+ERROR.NOTNULL:USER.MESSAGES.LABELS=Do not leave this field blank!
+ERROR.PAGE:USER.MESSAGES.LABELS=Could not modify your labels.  See below for more information.
+MESSAGE.NONE:USER.MESSAGES.LABELS=No labels were found.
+LABEL.EDIT:USER.MESSAGES.LABELS=EDIT YOUR LABELS
+ERROR.ILLEGALCHAR:USER.MESSAGES.LABELS=Don't use the %ILLEGALCHAR% character when naming a label.
+OBJECT.CONTENT:USER.OPTIONS=Here you can change all of your settings for this site.  Click on a label below to open up that section of options.  You can use basic HTML for your profile questions and description.  More information is available in the <a href='/faq/'>FAQ</a>.
+LABEL.GENERAL:USER.OPTIONS=GENERAL PROFILE
+LABEL.ICONS:USER.OPTIONS=USER ICONS
+LABEL.JOURNAL:USER.OPTIONS=JOURNAL OPTIONS
+LABEL.MESSAGES:USER.OPTIONS=MESSAGE OPTIONS
+LABEL.PHOTOS:USER.OPTIONS=PHOTO OPTIONS
+LABEL.FRIENDS:USER.OPTIONS=FRIEND OPTIONS
+LABEL.GROUPS:USER.OPTIONS=GROUP OPTIONS
+LABEL.CONFIG:USER.OPTIONS=CUSTOM SETTINGS
+ERROR.DUPLICATE:USER.OPTIONS=<asd id='global' name='FIELDNAME' case='proper' /> already exists. Please choose another..
+ERROR.NOTNULL:USER.OPTIONS=Do not leave the %FIELDNAME% field blank.
+LABEL.SECURITY:USER.OPTIONS=SECURITY AND PRIVACY
+ERROR.PAGE:USER.OPTIONS=Unable to save your profile options.
+ERROR.ILLEGALCHAR:USER.OPTIONS=%FIELDNAME% cannot include the %ILLEGALCHAR% character.
+ERROR.TOOLARGE:USER.OPTIONS=%FIELDNAME% can't be more than %MAXSIZE% characters.
+ERROR.CANTWRITE:USER.OPTIONS=INSUFFICIENT ACCESS TO MODIFY USER OPTIONS.
+LABEL.QUESTIONS:USER.OPTIONS=PROFILE QUESTIONS & ANSWERS
+LABEL.EMAILS:USER.OPTIONS=E-MAIL NOTIFICATION
+LABEL.PHOTO:USER.OPTIONS=PROFILE PHOTO
+CONFIRM.DELETE.ICON:USER.OPTIONS=Are you sure you want to delete this icon?
+MESSAGE.SAVE.ALL:USER.OPTIONS=All Of Your Options Have Been Saved.
+LABEL.THEME:USER.OPTIONS.CONFIG=Default Theme:
+MESSAGE.SAVE:USER.OPTIONS.CONFIG=Your configuration options have been saved.
+LABEL.JOURNAL:USER.OPTIONS.EMAILS=Notification for comments on your Journal:
+MESSAGE.SAVE:USER.OPTIONS.EMAILS=Your e-mail notification options have been saved.
+LABEL.PROFILE:USER.OPTIONS.EMAILS=Notification for profile comments:
+LABEL.REPLY:USER.OPTIONS.EMAILS=Notification for replies to your comments?
+LABEL.EMAIL:USER.OPTIONS.GENERAL=Enter your email address:
+LABEL.FULLNAME:USER.OPTIONS.GENERAL=Enter your full name:
+LABEL.GENDER:USER.OPTIONS.GENERAL=Choose a gender:
+LABEL.BIRTHDAY:USER.OPTIONS.GENERAL=Enter your birthday information.
+LABEL.QUESTION:USER.OPTIONS.GENERAL=%FOCUSQUESTION%
+MESSAGE.SAVE:USER.OPTIONS.GENERAL=General options have been saved.
+LABEL.DESCRIPTION:USER.OPTIONS.GENERAL=Enter a custom description of yourself for your info page (HTML is allowed).
+LABEL.ZIPCODE:USER.OPTIONS.GENERAL=Enter your zip/postal code:
+LABEL.USERNAME:USER.OPTIONS.GENERAL=Enter your username:
+INFO.USERNAME:USER.OPTIONS.GENERAL=<i>WARNING</i>: Modifying this field will change your messaging and profile address!
+LABEL.ALIAS:USER.OPTIONS.GENERAL=Enter an alias to be displayed:
+ERROR.ONELEFT:USER.OPTIONS.ICONS=You must have at least one icon uploaded.
+LABEL.PROFILE:USER.OPTIONS.ICONS=<b>PROFILE PHOTO</b>\n\nChoose which profile photo you would like to upload.  The image you upload will be resized to fit the profile photo window, which is %PROFILEPHOTOX% pixels wide.
+ERROR.TOOBIG:USER.OPTIONS.ICONS=The file you uploaded was greater than %MAXSIZE%.  Try another file.
+ERROR.NOTIMAGE:USER.OPTIONS.ICONS=The file you uploaded is not a valid image file.  Try again.
+ERROR.CANTSAVE:USER.OPTIONS.ICONS=Could not save this image.  If problem persists, contact the administrator.
+ERROR.WRONGTYPE:USER.OPTIONS.ICONS=The image you uploaded is not a GIF, JPEG, or PNG file.  Try again.
+ERROR.WRONGSIZE:USER.OPTIONS.ICONS=The image you uploaded is bigger than %MAXWIDTH%x%MAXHEIGHT%.  Try again.
+ERROR.NOUPLOAD:USER.OPTIONS.ICONS=No file was uploaded.  Try again.
+ERROR.NOTEMP:USER.OPTIONS.ICONS=No temporary directory is available.  Please contact the administrator.
+ERROR.NOFILE:USER.OPTIONS.ICONS=No file was uploaded.  Please try again.
+ERROR.PARTIAL:USER.OPTIONS.ICONS=Only a partial file was uploaded.  Try again.
+MESSAGE.UPLOADED:USER.OPTIONS.ICONS=Image has been successfully uploaded.
+LABEL.CURRENT:USER.OPTIONS.ICONS=CURRENT ICONS
+LABEL.ICONS:USER.OPTIONS.ICONS=Choose a new user icon to upload.  Dimensions can be up to %USERICONX% pixels wide by %USERICONY% pixels high.  Your user icons cannot be larger than %USERICONX%x%USERICONY%.
+ERROR.NOICONS:USER.OPTIONS.ICONS=No Icons Found.  Upload A New Icon Below.
+LABEL.KEYWORD:USER.OPTIONS.ICONS=KEYWORD:
+LABEL.COMMENTS:USER.OPTIONS.ICONS=COMMENTS:
+CONFIRM.DELETE:USER.OPTIONS.ICONS=Are you sure you want to delete this icon?
+ERROR.ICONLIMIT:USER.OPTIONS.ICONS=Limit of %MAXICONS% icons reached.  Delete one before uploading.
+ERROR.UPLOAD:USER.OPTIONS.ICONS=An error occurred while uploading the image.
+ERROR.PAGE:USER.OPTIONS.ICONS=Unable to save your icon preferences.
+MESSAGE.DELETE:USER.OPTIONS.ICONS=Icon '<asd id='global' name='ICONFILENAME' case='lower' />' has been deleted.
+ERROR.EXISTS:USER.OPTIONS.ICONS=<asd id='global' name='ICONFILENAME' case='proper' /> already exists.  Try renaming the file.
+MESSAGE.SAVE:USER.OPTIONS.ICONS=Icon information has been saved.
+ERROR.FILE:USER.OPTIONS.ICONS=Could not delete icon file '%ICONFILENAME%'.  Please contact the administrator.
+LABEL.NEW:USER.OPTIONS.ICONS=UPLOAD A NEW ICON
+MESSAGE.SAVE:USER.OPTIONS.QUESTIONS=Your profile question answers have been saved.
+LABEL.DESCRIPTION:USER.PHOTO=DESCRIPTION
+LINK.ORIGINAL:USER.PHOTO=Original Size
+OBJECT.TITLE:USER.PHOTO=TAGS
+ERROR.NONESELECTED:USER.PHOTO.COMMENTS=No Comments Were Selected.
+MESSAGE.NOEXIF:USER.PHOTOS=No extended information available.
+LABEL.EXIFMAKE:USER.PHOTOS=Make:
+LABEL.EXIFMODEL:USER.PHOTOS=Model:
+LABEL.EXIFDIMENSIONS:USER.PHOTOS=Dimensions:
+LABEL.EXIFOWNER:USER.PHOTOS=Owner:
+LABEL.EXIFCOMMENT:USER.PHOTOS=Comments:
+LABEL.EXIFCOPYRIGHT:USER.PHOTOS=Copyright:
+LABEL.UPLOAD:USER.PHOTOS=Choose a new photo to upload.  Dimensions can be up to %MAXPHOTOX% pixels wide by %MAXPHOTOY% pixels high.  Your photos cannot be larger than %MAXPHOTOX%x%MAXPHOTOY%.
+LABEL.EXIFPHOTOGRAPHER:USER.PHOTOS=Photographer:
+ERROR.NONE:USER.PHOTOS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> has not uploaded any photos into this album.
+LABEL.EXIFSTAMP:USER.PHOTOS=Created:
+MESSAGE.UPLOADED:USER.PHOTOS=Photo '%PHOTOFILENAME%' has been successfully uploaded.
+ERROR.EXISTS:USER.PHOTOS=File '%PHOTOFILENAME%' already exists in this album.  Try renaming.
+ERROR.UPLOAD:USER.PHOTOS=An error occurred while uploading the image.
+MESSAGE.DELETE:USER.PHOTOS=Photo '%PHOTOFILENAME%' has been deleted.
+MESSAGE.DELETEALL:USER.PHOTOS=The selected photos have been deleted.
+CONFIRM.DELETEALL:USER.PHOTOS=Are you sure you want to delete these photos?
+CONFIRM.DELETE:USER.PHOTOS=Are you sure you want to delete this photo?
+LABEL.EDIT:USER.PHOTOS=EDIT PHOTO INFORMATION
+INFO.TAGS:USER.PHOTOS=<i>NOTE:</i> Separate tags with commas or periods.
+LABEL.TAGS:USER.PHOTOS=TAGS
+LABEL.DESCRIPTION:USER.PHOTOS=DESCRIPTION
+MESSAGE.SAVE:USER.PHOTOS=Photo '%PHOTOFILENAME%' has been successfully updated.
+INFO.FILENAME:USER.PHOTOS=<i>NOTE</i>: Only numbers and letters are allowed, no spaces or symbols.
+LABEL.FILENAME:USER.PHOTOS=FILENAME
+ERROR.FILE:USER.PHOTOS=Unable to rename file '%PHOTOFILENAME%'.  Please contact the administrator.
+ERROR.WRONGSIZE:USER.PHOTOS=The image you uploaded is bigger than %MAXWIDTH%x%MAXHEIGHT%.  Try again.
+ERROR.NOTNULL:USER.PHOTOS=Do not leave this field blank.
+ERROR.PAGE:USER.PHOTOS=Unable to save this photo.  See below for errors.
+ERROR.DUPLICATE:USER.PHOTOS=<asd id='global' name='FIELDNAME' case='proper' /> already exists. Please choose another..
+ERROR.NONESELECTED:USER.PHOTOS=No photos were selected.
+ERROR.FROMONE:USER.PHOTOS=Cannot move the first photo up any farther.
+ERROR.ILLEGALCHAR:USER.PHOTOS=This field can only contain words and numbers, no symbols or spaces.
+ERROR.CANTWRITE:USER.PHOTOS=INSUFFICIENT ACCESS TO MODIFY PHOTOS.
+ERROR.WRONGTYPE:USER.PHOTOS=The image you uploaded is not a GIF, JPEG, or PNG file.  Try again.
+LABEL.PHOTOSET:USER.PHOTOS=MOVE TO ALBUM:
+LABEL.HINT:USER.PHOTOS=HINT: %IMAGEHINT%
+INFO.HINT:USER.PHOTOS=<i>NOTE: </i>Use this to link this photo: &lt;asd id='image' hint='%IMAGEHINT%' /&gt;
+ERROR.NOTIMAGE:USER.PHOTOS=The file you uploaded is not a valid image file.  Try again.
+LABEL.COMMENTS:USER.PHOTOS=%COMMENTCOUNT% Comment(s).
+ERROR.NONESELECTED:USER.PHOTOS.COMMENTS=No Comments Were Selected.
+ERROR.NONE:USER.PHOTOSETS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> has not created any photo albums.
+LABEL.NEW:USER.PHOTOSETS=ADD A NEW ALBUM:
+ERROR.NOTNULL:USER.PHOTOSETS=Do not leave this field blank.
+MESSAGE.NEW:USER.PHOTOSETS=Album  '%SETNAME%' has been added.
+ERROR.ILLEGALCHAR:USER.PHOTOSETS=This field can only contain words and numbers, no symbols or spaces.
+MESSAGE.SAVE:USER.PHOTOSETS=Album '%SETNAME%' has been successfully updated.
+ERROR.DUPLICATE:USER.PHOTOSETS=<asd id='global' name='FIELDNAME' case='proper' /> already exists. Please choose another..
+ERROR.CANTWRITE:USER.PHOTOSETS=INSUFFICIENT ACCESS TO MODIFY PHOTO ALBUMS.
+LABEL.EDIT:USER.PHOTOSETS=EDIT ALBUM INFORMATION
+LABEL.NAME:USER.PHOTOSETS=NAME:
+LABEL.DESCRIPTION:USER.PHOTOSETS=DESCRIPTION:
+LABEL.DIRECTORY:USER.PHOTOSETS=DIRECTORY:
+LABEL.TAGS:USER.PHOTOSETS=TAGS
+LABEL.PRIVACY:USER.PHOTOSETS=PRIVACY:
+LABEL.RESTRICTIONS:USER.PHOTOSETS=RESTRICTIONS:
+INFO.DIRECTORY:USER.PHOTOSETS=<i>NOTE</i>: Only numbers and letters are allowed, no spaces or symbols.
+INFO.TAGS:USER.PHOTOSETS=<i>NOTE:</i> Separate tags with commas or periods.
+ERROR.PAGE:USER.PHOTOSETS=Unable to save this album.  See below for errors.
+CONFIRM.DELETEALL:USER.PHOTOSETS=Are you sure you want to delete these albums?
+CONFIRM.DELETE:USER.PHOTOSETS=Are you sure you want to delete this photo album?
+ERROR.NONESELECTED:USER.PHOTOSETS=No photo albums were selected.
+MESSAGE.DELETE:USER.PHOTOSETS=Album '%SETNAME%' has been deleted.
+MESSAGE.DELETEALL:USER.PHOTOSETS=The selected photo albums have been deleted.
+ERROR.DIR:USER.PHOTOSETS=Could not modify album directory.  Please contact the administrator.
+ERROR.TOOLONG:USER.PHOTOSETS=%FIELDNAME% is too long.  Cannot be longer than %MAXSIZE% characters.
+INFO.PHOTOCOUNT:USER.PHOTOSETS=<b>%PHOTOCOUNT% Photo(s).</b>
+ERROR.FROMONE:USER.PHOTOSETS=Cannot move the first photo up any farther.
+LABEL.PHOTOSETS:USER.PHOTOSETS=PHOTO ALBUMS
+ERROR.TOOLARGE:USER.PHOTOSETS=%FIELDNAME% is too large.  Cannot be bigger than %MAXSIZE%.
+LABEL.EVERYONE:USER.PRIVACY=Everyone
+LABEL.LOGGEDIN:USER.PRIVACY=Logged In Users
+LABEL.SETTINGS:USER.PRIVACY=PRIVACY SETTINGS:
+LABEL.ALLOW:USER.PRIVACY=Allow
+LABEL.SCREEN:USER.PRIVACY=Screen
+LABEL.RESTRICT:USER.PRIVACY=Restrict
+LABEL.BLOCK:USER.PRIVACY=Block
+LABEL.HIDE:USER.PRIVACY=Hide
+OBJECT.TITLE:USER.PROFILE=<asd id='global' name='FOCUSFULLNAME' case='upper' />'S PROFILE
+LABEL.FULLNAME:USER.PROFILE=<strong>FULL NAME:</strong>&nbsp; %FOCUSFULLNAME%
+LABEL.GENDER:USER.PROFILE=<strong>GENDER:</strong>&nbsp; %FOCUSGENDER%
+LABEL.AGE:USER.PROFILE=<strong>AGE:</strong> %FOCUSAGE%
+LABEL.QUESTION:USER.PROFILE=<strong>%FOCUSQUESTION%</strong> &nbsp;%FOCUSANSWER%
+OBJECT.TITLE:USER.PROFILE.CONTACT=CONTACT <asd id='global' name='FOCUSFULLNAME' case='upper' />
+OBJECT.TITLE:USER.PROFILE.PHOTO=<asd id='global' name='FOCUSFULLNAME' case='upper' />
+OBJECT.TITLE:USER.SUMMARY.FRIENDS=<asd id='global' name='FOCUSFULLNAME' case='proper' />'s Latest Friends
+OBJECT.TITLE:USER.SUMMARY.JOURNALS=<asd id='global' name='FOCUSFULLNAME' case='proper' />'s Latest Journal Entries
+OBJECT.TITLE:USER.SUMMARY.PHOTOS=<asd id='global' name='FOCUSFULLNAME' case='proper' />'s Latest Photos

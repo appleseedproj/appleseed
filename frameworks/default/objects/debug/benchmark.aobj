@@ -1,23 +1,17 @@
-<div id='benchmark'>
-<div id='title'><a name='benchmarks' href='#debug'>SYSTEM BENCHMARKS &uarr;</a></div>
+<section id='benchmark'>
+<h1><a name='benchmarks' href='#debug'>SYSTEM BENCHMARKS &uarr;</a></h1>
  <ul>
   <li class='odd'>
-   <div id='sql'>
     <span class='label'>SQL TIME:</span>
     <span class='value'><?php echo $gSQLTIME; ?></span>
-   </div> <!-- #sql -->
   </li>
   <li class='even'>
-   <div id='total'>
     <span class='label'>TOTAL TIME:</span>
     <span class='value'><?php echo $gTOTALTIME; ?></span>
-   </div> <!-- #total -->
   </li>
   <li class='odd'>
-   <div id='memory'>
     <span class='label'>MEMORY USAGE:</span>
     <span class='value'><?php echo $gMEMORYUSE; ?></span>
-   </div> <!-- #memory -->
   </li>
  </ul>
-</div> <!-- #benchmark -->
+</section>

@@ -1,0 +1,4 @@
+<span class='comment_parent'>
+ <asd id='link' extra='PARENTDATA' target='%TARGET%#comments' text='%PARENTLABEL%' />
+ <asd id='tooltip' title='comment_parent' />
+</span> <!-- .comment_parent -->

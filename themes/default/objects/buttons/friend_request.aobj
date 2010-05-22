@@ -1,0 +1,5 @@
+<span class='friend_request'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/friend_request.gif' />
+ <asd id='tooltip' title='add_friend' />
+</span> <!-- .friend_request -->

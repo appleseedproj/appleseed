@@ -1,12 +1,3 @@
-  
- <div id='journals'>
-  
-  <div id='container'>
-  
-    <p class='title'>
-     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.SUMMARY.JOURNALS'); ?>
-    </p>
-    
-  </div> <!-- #container -->
-
- </div> <!-- #journals -->
+ <section id="user_journals"> 
+   <h1>Latest Journals</h1> 
+ </section>

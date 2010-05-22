@@ -1,0 +1,6 @@
+<span class='friend_cancel'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/cancel.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='friend_cancel' />
+</span> <!-- .friend_cancel -->

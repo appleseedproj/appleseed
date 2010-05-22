@@ -1,0 +1,10 @@
+ <nav id='tabs'>
+
+  <ul>
+  	<li><a href='_admin/content/articles/'>Articles</a></li>
+  	<li><a href='_admin/content/pages/'>Pages</a></li>
+    <li><a href='_admin/content/modules/'>Modules</a></li>
+    <li><a href='_admin/content/themes/'>Themes</a></li>
+  </ul>
+
+ </nav>

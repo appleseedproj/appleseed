@@ -1,8 +1,6 @@
-<div id='login'>
+<section id='login'>
 
  <? $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
-
- <div id='container'>
 
   <form id='login' action='login/' method='post'>
    <input type='hidden' name='gACTION' value='LOGIN' />
@@ -30,6 +28,5 @@
 
   </form> <!-- #login -->
 
- </div> <!-- #container -->
-</div> <!-- #login -->
+</section>
 

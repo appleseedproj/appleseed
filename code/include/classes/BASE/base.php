@@ -2686,7 +2686,6 @@
       $zAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
 
       if ($pUSERNAME == ANONYMOUS) {
-          $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output = str_replace("\n", "", $output);
           $output = str_replace("\r", "", $output);
@@ -2710,13 +2709,11 @@
           } else {
             $zAPPLE->SetTag ('LINKUSERTARGET', 'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/');
           } // if
-          $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/remoteuser.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remoteuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output = str_replace("\n", "", $output);
           $output = str_replace("\r", "", $output);
         } else {
           $zAPPLE->SetTag ('LINKUSERTARGET', '/profile/' . $pUSERNAME . '/');
-          $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/localuser.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/localuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output = str_replace("\n", "", $output);
           $output = str_replace("\r", "", $output);
@@ -2957,7 +2954,18 @@
     // Output a button object.
     // NOTE: This should wrap CreateButton.
     function Button ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME = "") {
+      
+      $button = $this->CreateButton ($pBUTTONNAME, $pCONFIRMATION, $pDISABLED, $pACTION, $pACTIONNAME);
+      
+      echo $button;
+      
+      return (true);
+    } // Button
 
+    // Format a button object.
+    // Note:  Button should encapsulate this function.
+    function CreateButton ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME = "") {
+      
       global $gTARGET;
       global $gTHEMELOCATION;
       global $gCONFIRM;  $gCONFIRM = $pCONFIRMATION;
@@ -2967,6 +2975,12 @@
       global $zAPPLE;
 
       $style = strtolower ($pBUTTONNAME);
+      
+      $disabled = false;
+      if ($pDISABLED == DISABLED) $disabled = 'disabled="disabled"';
+      
+      $confirm = false;
+      if ($gCONFIRM)  $confirm = "onClick='return jCONFIRM("%CONFIRM%")' />";
 
       if ($pACTION)
         $gBUTTONACTION = $pACTION;
@@ -2978,31 +2992,13 @@
       else
         $gACTIONNAME = 'gACTION';
 
-      if ($pDISABLED == DISABLED) $pBUTTONNAME .= ".disabled";
-
-      $gBUTTONNAME = str_replace ('_', ' ', $gBUTTONACTION);
-      $gBUTTONNAME = ucwords(strtolower($gBUTTONNAME));
-
-      $filelocation = "$gTHEMELOCATION/objects/buttons/$pBUTTONNAME.aobj";
-
-      // Check if the button we're requesting exists or not.
-      if (!file_exists ($filelocation) ) {
-        // Output a generic HTML button.
-        echo "<span class='$style'>\n";
-        echo " <input type='submit' name='$pBUTTONNAME' value='$pBUTTONNAME' />\n";
-        echo "</span> <!-- .$style -->\n";
-      } else {
-        $zAPPLE->IncludeFile ($filelocation, INCLUDE_SECURITY_BASIC);
-      } // if
-
+      // Output a generic HTML button.
+      $return = " <input $disabled $confirm type='submit' name='$pBUTTONNAME' value='$pBUTTONNAME' />\n";
+      
       unset ($gCONFIRM);
-
-      return (0);
-    } // Button
-
-    // Format a button object.
-    // Note:  Button should encapsulate this function.
-    function CreateButton ($pBUTTONNAME, $pCONFIRMATION = "", $pACTION = "", $pACTIONNAME = "") {
+      
+      return ($return);
+      
       global $gTHEMELOCATION;
       global $gCONFIRM;  $gCONFIRM = $pCONFIRMATION;
       global $gBUTTONACTION, $gBUTTONNAME, $gACTIONNAME; 
@@ -3135,7 +3131,7 @@
       global $gSORT, $gCURRENTPAGE, $gMAXPAGES;
       global $gPREVSTYLE, $gFOOTSTYLE, $gNEXTSTYLE;
 
-      global $zAPPLE;
+      global $zAPPLE, $zHTML;
  
       $gPREVSTYLE = ""; $gFOOTSTYLE = ""; $gFOOTSTYLE = "";
 
@@ -3209,9 +3205,9 @@
       } // if
 
       if ($gSCROLLSTART[$pCONTEXT] <= 0) {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/prev.off.aobj");
+        $zHTML->Button ('prev', null, DISABLED);
       } else {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/prev.aobj");
+        $zHTML->Button ('prev');
       } // if 
 
       // Footnote Object
@@ -3232,9 +3228,9 @@
       } // if
 
       if ($gSCROLLSTART[$pCONTEXT] + $gSCROLLSTEP[$pCONTEXT] >= $gSCROLLMAX[$pCONTEXT]) {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/next.off.aobj");
+        $zHTML->Button ('next', null, DISABLED);
       } else {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/next.aobj");
+        $zHTML->Button ('next');
       } // if 
   
       unset ($gPREVSTYLE); unset ($gFOOTSTYLE); unset ($gNEXTSTYLE);
@@ -3256,7 +3252,7 @@
       if ($gCRITERIA) {
         $output = $this->CreateButton ('show');
       } else {
-        $output = $this->CreateButton ('show_disabled');
+        $output = $this->CreateButton ('show', null, DISABLED);
       } // if
 
       echo $output;
@@ -3368,13 +3364,7 @@
         $gUSERDEFINEDSTYLE = $pUSERDEFINEDSTYLE;
       } // if
   
-      if ($this->GetBrowserAgent() == "IE") {
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/title.ie.aobj", INCLUDE_SECURITY_NONE);
-      } elseif ($this->GetBrowserAgent() == "MOZILLA") {
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/title.mozilla.aobj", INCLUDE_SECURITY_NONE);
-      } elseif ($this->GetBrowserAgent() == "OTHER") {
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/title.opera.aobj", INCLUDE_SECURITY_NONE);
-      } // if
+      $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/common/title.aobj", INCLUDE_SECURITY_NONE);
   
     } // Title  
 

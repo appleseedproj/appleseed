@@ -1,12 +1,11 @@
-<div id='join'>
-  <div id='caption'>
+<section id='join'>
+  <h1>
    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.JOIN'); ?>
- </div> <!-- #caption -->
+  </h1>
 
-<div id='container'>
  <?php $zFOCUSUSER->Broadcast ('join'); ?>
 
- <p id='content'>
+ <p class='content'>
   <?php $zSTRINGS->Display ("OBJECT.CONTENT", "SITE.JOIN"); ?>
   <?php $zTOOLTIPS->Display ('CONTENT'); ?>
  </p> <!-- .content -->
@@ -66,5 +65,4 @@
 
  </form> <!-- #join -->
 
- </div> <!-- #container -->
-</div> <!-- #join -->
+</section> <!-- #join -->

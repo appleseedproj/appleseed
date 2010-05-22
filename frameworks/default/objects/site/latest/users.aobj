@@ -1,17 +1,8 @@
-<div id='latest'>
- <div id='users'>
-  <div id='caption'>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.USERS'); ?>
-  </div> <!-- #caption -->
+<section id="latest_users"> 
 
-<div id='container'>
+  <h1>
+   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.USERS'); ?>
+  </h1>
 
   (no text yet)
-
- <div id='view'>
-  <?php $zSTRINGS->Display ('OBJECT.VIEW', 'SITE.MAIN.USERS'); ?>
- </div> <!-- #view -->
-
-</div> <!-- #container -->
- </div> <!-- #users -->
-</div> <!-- #latest -->
+</section>

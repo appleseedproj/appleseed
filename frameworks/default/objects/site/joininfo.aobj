@@ -1,9 +1,7 @@
-<div id='joininfo'>
-  <div id='caption'>
+<section id='joininfo'>
+  <h1>
    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.JOIN.INFO'); ?>
-  </div> <!-- #caption -->
+  </h1>
 
- <div id='container'>
   <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'SITE.JOIN.INFO'); ?>
- </div> <!-- #container -->
-</div> <!-- #joininfo -->
+</section> <!-- #joininfo -->

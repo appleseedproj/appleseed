@@ -1,0 +1,5 @@
+<span class='tag_emphasize_all'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/tag_emphasize_all.gif' />
+ <asd id='tooltip' title='tag_emphaize_all' />
+</span> <!-- .tag_emphasize_all -->

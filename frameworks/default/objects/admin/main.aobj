@@ -1,7 +1,5 @@
-<div id='caption'>
+<h1>
  <?php $zSTRINGS->Display ('OBJECT.TITLE', 'ADMIN.MAIN'); ?>
-</div> <!-- #caption -->
+</h1>
 
-<div id='container'>
- <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'ADMIN.MAIN'); ?>
-</div> <!-- #container -->
+<?php $zSTRINGS->Display ('OBJECT.CONTENT', 'ADMIN.MAIN'); ?>

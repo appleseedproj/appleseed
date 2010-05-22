@@ -1,8 +1,12 @@
-<div id='debug'>
- <div id='caption'><a name='debug'>DEBUG INFORMATION</a></div>
- <div id='container'>
-  <div id='quick'>
-   <a href='#benchmarks'>SYSTEM BENCHMARKS &darr;</a>
-   <a href='#errors'>ERRORS & WARNINGS &darr;</a>
-   <a href='#statements'>SQL STATEMENTS &darr;</a>
-  </div> <!-- #quick -->
+<div class='container_12'>
+  <div id='debug'>
+
+    <h1>DEBUG INFORMATION</h1>
+    
+    <nav id='quick'>
+      <ul>
+        <li><a href='#benchmarks'>SYSTEM BENCHMARKS &darr;</a></li>
+        <li><a href='#errors'>ERRORS & WARNINGS &darr;</a></li>
+        <li><a href='#statements'>SQL STATEMENTS &darr;</a></li>
+      </ul>
+    </nav> <!-- #quick -->

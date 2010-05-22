@@ -1,12 +1,4 @@
-  
- <div id='info'>
-
-  <div id='container'>
- 
-    <p id='description'>
-     <?php echo $bDESCRIPTION; ?>
-    </p>
-    
-  </div> <!-- #container -->
- 
- </div> <!-- #info -->
+ <section id="user_info"> 
+   <h1>Info</h1> 
+   <?php echo $bDESCRIPTION; ?>
+ </section>

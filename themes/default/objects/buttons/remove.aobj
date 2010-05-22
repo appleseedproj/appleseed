@@ -1,0 +1,4 @@
+<span class='remove'>
+ <input type='submit' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%' />
+ <asd id='tooltip' title='remove' />
+</span> <!-- .remove -->

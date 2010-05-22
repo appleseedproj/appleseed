@@ -1,0 +1,35 @@
+/*  Author: Justin Fuhrer       */
+
+html { background-color: #fff; color: #000; }
+
+p, nav, li, img { padding: 10px 0 0 0; }
+
+header hgroup h1 { font-size: 200%; }
+header hgroup h2 { font-size: 120%; }
+header nav, #page nav { width: 100%; min-height: 20px; }
+header nav ul li, #page nav ul li, #user_comments nav ol li { float: left; padding: 0px 10px 0px 0px; }
+
+header, section, footer { padding: 10px 0; }
+#page section h1 { font-size: 140%; }
+#page section li h1 { font-size: 110%; }
+#page section hgroup h1 { font-size: 200%; margin: 0px 0px 10px 0px; }
+#page section hgroup h2 { font-size: 140%; }
+
+time { font-size: 85%; }
+
+#user_login { text-align: right; }
+#user_profile li h1 { font-size: 100%; }
+#user_photos ol, #user_friends ol { width: 100%; height: 60px; }
+#user_photos li, #user_friends li { list-style: none; float: left; padding: 0px 10px 0px 0px; }
+#user_journals li, #user_comments li, #user_contact li, #user_profile li { list-style: none; }
+#page { padding: 10px; }
+
+#user_comments li { min-height: 80px; }
+#user_comments li img { float: left; padding: 0px 10px 0px 0px; }
+#user_comments ol ol { margin: 0px 0px 0px 40px; clear: left; }
+#user_comments ol li { clear: left; }
+#user_comments nav ul li { clear: none; min-height: 20px; }
+#user_comments nav ol li { clear: none; min-height: 10px; }
+#user_comments img { margin: 0px 0px 10px 0px; }
+
+footer ul li { list-style: none; }

@@ -1,0 +1,6 @@
+<span class='leave_group'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/leave_group.gif'
+  onClick='return jCONFIRM("%CONFIRM%")' />
+ <asd id='tooltip' title='leave_group' />
+</span> <!-- .leave_group -->

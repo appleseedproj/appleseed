@@ -1,0 +1,4 @@
+<span class='delete_comment'>
+ <asd id='link' target='%TARGET%#comments%TARGETID%' image='themes/%USERTHEME%/images/buttons/delete.gif' confirm='%CONFIRM%' />
+ <asd id='tooltip' title='delete_comment' />
+</span> <!-- .delete_comment -->

@@ -1,0 +1,5 @@
+<span class='tag_deemphasize_all'>
+ <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
+  src='themes/%USERTHEME%/images/buttons/tag_deemphasize_all.gif' />
+ <asd id='tooltip' title='tag_deemphasize_all' />
+</span> <!-- .tag_deemphasize_all -->

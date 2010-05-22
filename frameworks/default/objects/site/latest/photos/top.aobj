@@ -1,9 +1,6 @@
-<div id='latest'>
- <div id='photos'>
-  <div id='caption'>
+<section id="latest_users"> 
+  <h1>
    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.PHOTOS'); ?>
-  </div> <!-- #caption -->
-
- <div id='container'>
+  </h1>
 
  <ul>
