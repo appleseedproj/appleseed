@@ -1,6 +1,12 @@
- <ul>
   <li>
 
+    <article>
+                                <a href="#"><img src="images/unknown_avatar.gif" alt="Commenter Icon" /></a> 
+                            <h2><a href="#">Comment Subject</a></h2> 
+                            <h3>by <a href="#">OtherUser</a></h3> 
+                            <time datetime="2010-05-19T20:27:47-07:00" pubdate> 
+                                May 19, 2009 8:27pm MST
+                            </time> 
    <span class='icon'>
     <?php echo $bCOMMENTICON; ?>
    </span> <!-- .icon -->
@@ -11,4 +17,5 @@
 
    <?php $zHTML->Button ('delete', NULL, ENABLED, NULL, "COMMENTACTION"); ?>
 
+    </article>
   </li>

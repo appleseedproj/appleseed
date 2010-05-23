@@ -2993,7 +2993,9 @@
         $gACTIONNAME = 'gACTION';
 
       // Output a generic HTML button.
-      $return = " <input $disabled $confirm type='submit' name='$pBUTTONNAME' value='$pBUTTONNAME' />\n";
+      $return = " <input $disabled $confirm type='submit' name='$gACTIONNAME' value='$gBUTTONACTION' />\n";
+      
+      $return = " <button $disabled $confirm type='submit' name='$gACTIONNAME' value='$gBUTTONACTION'>$pBUTTONNAME</button>";
       
       unset ($gCONFIRM);
       

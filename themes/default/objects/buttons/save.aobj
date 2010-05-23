@@ -1,5 +1,0 @@
-<span class='save'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/save.gif' />
- <asd id='tooltip' title='save' />
-</span> <!-- .save -->

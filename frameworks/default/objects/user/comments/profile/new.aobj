@@ -5,10 +5,9 @@
  <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
  
  <div id='container'>
-    <p id='heading'>
+    <h1>
      <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.COMMENTS'); ?>
-     <?php $zTOOLTIPS->Display ('HEADING'); ?>
-    </p> <!-- #heading -->
+    </h1>
 
     <?php $zCOMMENTS->Broadcast(); ?>
 
@@ -33,14 +32,14 @@
        <?php echo $bUSERICONLISTING; ?>
 
   <div id='actions'>
-     <?php $zHTML->Button ('comment_submit', NULL, ENABLED, "SUBMIT", "COMMENTACTION"); ?>
+     <?php $zHTML->Button ('Save', NULL, ENABLED, "SUBMIT", "COMMENTACTION"); ?>
      </form> <!-- #add -->
 
      <form name='cancel' method='POST' action='<?php echo $gCOMMENTTARGET; ?>'>
      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
      <?php $zHTML->Post ($gPOSTDATA); ?>
      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.COMMENTS'); ?>
-     <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "COMMENTACTION"); ?>
+     <?php $zHTML->Button ('Cancel', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "COMMENTACTION"); ?>
      </form> <!-- ## comment.cancel -->
   </div> <!-- #actions -->
   </div> <!-- #editor -->

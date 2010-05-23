@@ -1,6 +1,0 @@
-<span class='friend_deny'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/deny.gif'
-  onClick='return jCONFIRM("%CONFIRM%")' />
- <asd id='tooltip' title='friend_deny' />
-</span> <!-- .friend_deny -->

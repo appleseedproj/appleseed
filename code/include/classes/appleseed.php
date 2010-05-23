@@ -110,6 +110,8 @@
       $this->SetTag ('USERTHEME', $gUSERTHEME);
       $gFRAMEWORK = $gSETTINGS['Framework'];
       
+      if (!file_exists ("themes/$gUSERTHEME")) $gUSERTHEME = 'default';
+      
       global $gFRAMELOCATION, $gTHEMELOCATION;
   
       $gFRAMELOCATION = "frameworks/$gFRAMEWORK/";

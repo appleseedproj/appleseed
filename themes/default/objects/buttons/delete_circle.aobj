@@ -1,6 +1,0 @@
-<span class='delete_circle'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/delete.gif'
-  onClick='return jCONFIRM("%CONFIRM%")' />
- <asd id='tooltip' title='delete_circle' />
-</span> <!-- .delete_circle -->

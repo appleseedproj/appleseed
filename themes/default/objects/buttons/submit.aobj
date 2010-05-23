@@ -1,5 +1,0 @@
-<span class='submit'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/submit.gif' />
- <asd id='tooltip' title='submit' />
-</span> <!-- .submit -->

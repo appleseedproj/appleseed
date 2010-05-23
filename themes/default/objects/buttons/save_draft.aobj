@@ -1,5 +1,0 @@
-<span class='save_draft'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/save_draft.gif' />
- <asd id='tooltip' title='save_draft' />
-</span> <!-- .save_draft -->

@@ -1,5 +1,0 @@
-<span class='invite'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/invite.gif' />
- <asd id='tooltip' title='invite' />
-</span> <!-- .invite -->

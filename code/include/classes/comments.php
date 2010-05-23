@@ -580,7 +580,7 @@
           $gTARGETID = "";
           if ($countchildren > 0) $gTARGETID = $this->tID;
 
-          $bDELETEBUTTON = $zHTML->CreateButton ('comment_delete', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, "DELETE", "COMMENTACTION");
+          $bDELETEBUTTON = $zHTML->CreateButton ('Delete', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, "DELETE", "COMMENTACTION");
           $bADDRESS = "(" . $gCOMMENTADDRESS . ")";
 
           unset ($gPOSTDATA['tID']);
@@ -590,11 +590,11 @@
 
         global $bPARENTBUTTON;
         $bPARENTBUTTON = NULL;
-        if ($this->parent_tID) $bPARENTBUTTON = $zHTML->CreateButton ('comment_parent', NULL, ENABLED, NULL, "COMMENTACTION");
+        if ($this->parent_tID) $bPARENTBUTTON = $zHTML->CreateButton ('Parent', NULL, ENABLED, NULL, "COMMENTACTION");
 
         global $bTHREADBUTTON;
         $bTHREADBUTTON = NULL;
-        if ($countchildren > 0) $bTHREADBUTTON = $zHTML->CreateButton ('comment_thread', NULL, ENABLED, NULL, "COMMENTACTION");
+        if ($countchildren > 0) $bTHREADBUTTON = $zHTML->CreateButton ('Thread', NULL, ENABLED, NULL, "COMMENTACTION");
 
         global $gCOMMENTID;
         $gCOMMENTID = $this->tID;
@@ -822,11 +822,11 @@
         break;
     
         case 'ADD':
-					global $zAUTHUSER;
-      		if ($zAUTHUSER->Anonymous) {
-						// Disable 
-			  		$zAPPLE->Abort ("Anonymous commenting has been disabled.  <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a> (<a href='#' onClick='history.go(-1); return false;'>Go Back</a>)");
-					}
+          global $zAUTHUSER;
+          if ($zAUTHUSER->Anonymous) {
+            // Disable 
+            $zAPPLE->Abort ("Anonymous commenting has been disabled.  <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a> (<a href='#' onClick='history.go(-1); return false;'>Go Back</a>)");
+          }
           $gCOMMENTADDTAB = "";
           $zAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
           $bCOMMENTS .= $this->AddForm ($gREFERENCEID);

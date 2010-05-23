@@ -1,5 +1,0 @@
-<span class='submit_disabled'>
- <input disabled='disabled' class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/submit_disabled.gif' />
- <asd id='tooltip' title='submit_disabled' />
-</span> <!-- .submit_disabled -->

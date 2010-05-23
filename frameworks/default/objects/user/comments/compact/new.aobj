@@ -4,11 +4,7 @@
 
  <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
  
- <div id='container'>
-    <p id='heading'>
-     <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.COMMENTS'); ?>
-     <?php $zTOOLTIPS->Display ('HEADING'); ?>
-    </p> <!-- #heading -->
+    <h1> <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.COMMENTS'); ?> </h1>
 
     <?php $zCOMMENTS->Broadcast(); ?>
 
@@ -36,7 +32,7 @@
        <?php echo $bUSERICONLISTING; ?>
 
   <div id='actions'>
-     <?php $zHTML->Button ('comment_submit', NULL, ENABLED, "SUBMIT", "COMMENTACTION"); ?>
+     <?php $zHTML->Button ('Submit Comment', NULL, ENABLED, "SUBMIT", "COMMENTACTION"); ?>
      </form> <!-- #add -->
 
      <form name='cancel' method='POST' action='<?php echo $gCOMMENTTARGET; ?>'>

@@ -1,5 +1,0 @@
-<span class='new_label'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/new.gif' />
- <asd id='tooltip' title='new_label' />
-</span> <!-- .new_label -->
