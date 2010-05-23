@@ -21,7 +21,6 @@
     <!-- ## joininfo obj -->
     <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/joininfo.aobj", INCLUDE_SECURITY_NONE); ?>
 
-
    </div>
 
    <div class="clear"></div> 
