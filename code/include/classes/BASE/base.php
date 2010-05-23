@@ -2668,7 +2668,7 @@
 
     // Create a user profile link.
     function CreateUserLink ($pUSERNAME, $pDOMAIN = NULL, $pLINKICON = TRUE) {
-
+    	
       global $gUSERTHEME, $gTHEMELOCATION;
       global $gLINKICON;
       global $gLINKDOMAIN;
@@ -2686,7 +2686,8 @@
       $zAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
 
       if ($pUSERNAME == ANONYMOUS) {
-          $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          //$output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          $output .= "<a class='anonymoususer'><asd id='string' title='LABEL.ANONYMOUS' /></a>";
           $output = str_replace("\n", "", $output);
           $output = str_replace("\r", "", $output);
       } else {
@@ -2705,18 +2706,18 @@
             // Redirect to home domain for remote authentication.
             $target = $pDOMAIN;
             $location = "/profile/" . $pUSERNAME . "/";
-            $zAPPLE->SetTag ('LINKUSERTARGET', "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location);
+            $gLINKUSERTARGET =  "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location;
           } else {
-            $zAPPLE->SetTag ('LINKUSERTARGET', 'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/');
+            $gLINKUSERTARGET =  'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/';
           } // if
+          $gLINKFULLNAME = $pUSERNAME . '@' . $pDOMAIN;
+          $output = "<a class='remoteuser' href='$gLINKUSERTARGET'>$gLINKFULLNAME</a></span>";
+          
           $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remoteuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
-          $output = str_replace("\n", "", $output);
-          $output = str_replace("\r", "", $output);
         } else {
-          $zAPPLE->SetTag ('LINKUSERTARGET', '/profile/' . $pUSERNAME . '/');
-          $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/localuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
-          $output = str_replace("\n", "", $output);
-          $output = str_replace("\r", "", $output);
+          $gLINKUSERTARGET = '/profile/' . $pUSERNAME . '/';
+          $gLINKFULLNAME = $pUSERNAME;
+          $output = "<a class='localuser' href='$gLINKUSERTARGET'>$gLINKFULLNAME</a></span>";
         } // if
       } // if
   
