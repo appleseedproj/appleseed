@@ -518,7 +518,7 @@
         $bONLINENOW = OUTPUT_NBSP;
 
         // If user activity in the last 3 minutes, consider them online.
-        list ($gCOMMENTAUTHORFULLNAME, $online) = $zAPPLE->GetUserInformation();
+        list ($gCOMMENTAUTHORFULLNAME, $online) = $zAPPLE->GetUserInformation($this->Owner_Username, $this->Owner_Domain);
         if ($online) {
           $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
         } // if
