@@ -3279,7 +3279,7 @@
         } else {
           if ($zAUTHUSER->Remote) {
             // Push the local logged-in header.
-            $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/remote.aobj");
+            $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/remote.aobj", INCLUDE_SECURITY_NONE);
           } else {
             // Push the local logged-in header.
             $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/focus.aobj");
