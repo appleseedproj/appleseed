@@ -24,7 +24,6 @@
 
    <div id="page_right" class="grid_9"> 
    
-
     <!-- ## journal obj -->
     <?php echo $bMAINSECTION; ?>
 

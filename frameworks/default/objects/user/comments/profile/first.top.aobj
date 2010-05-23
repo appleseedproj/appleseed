@@ -2,23 +2,23 @@
  <li> 
   <article> 
 
-    						<?php echo $bCOMMENTICON; ?>
-                            <h2><a href="#">Comment Subject</a></h2> 
-                            <h3>by <a href="#"> <?php echo $gCOMMENTAUTHORFULLNAME; ?></a></h3> 
-                            <time datetime="2010-05-19T20:27:47-07:00" pubdate> 
-							    <?php echo $gCOMMENTSTAMP; ?>
-                            </time> 
-                            
-                            <p>
-                              <?php echo $gCOMMENTBODY; ?>
-                            </p>
-                            
-                            <nav> 
-                                <ul> 
-                                    <li><a href="#"><span>Reply</span></a></li> 
-                                    <li><a href="#"><span>Hide</span></a></li> 
-                                    <li><a href="#"><span>Delete</span></a></li> 
-                                </ul> 
-                            </nav> 
+		<?php echo $bCOMMENTICON; ?>
+                    <h2><a href="#">Comment Subject</a></h2> 
+                    <h3>by <?php echo $gCOMMENTAUTHOR; ?></h3> 
+                    <time datetime="2010-05-19T20:27:47-07:00" pubdate> 
+   <?php echo $gCOMMENTSTAMP; ?>
+                    </time> 
+                    
+                    <p>
+                      <?php echo $gCOMMENTBODY; ?>
+                    </p>
+                    
+                    <nav> 
+                        <ul> 
+                            <li><a href="#"><span>Reply</span></a></li> 
+                            <li><a href="#"><span>Hide</span></a></li> 
+                            <li><a href="#"><span>Delete</span></a></li> 
+                        </ul> 
+                    </nav> 
    </article>
   </li>
