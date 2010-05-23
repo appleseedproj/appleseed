@@ -1,5 +1,0 @@
-<span class='tag_select_all'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/select_all.gif' />
- <asd id='tooltip' title='tag_select_all' />
-</span> <!-- .tag_select_all -->

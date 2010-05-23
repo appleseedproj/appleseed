@@ -1,5 +1,0 @@
-<span class='approve'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/approve.gif' />
- <asd id='tooltip' title='approve' />
-</span> <!-- .approve -->

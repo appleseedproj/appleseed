@@ -1,7 +1,0 @@
-<span class='show_all'>
- <form id='show_all' name='show_all' method='POST' action='%SHOWTARGET%'>
-  <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-   src='themes/%USERTHEME%/images/buttons/show.gif' />
- </form> <!-- #show_all -->
- <asd id='tooltip' title='show_all' />
-</span> <!-- .show_all -->

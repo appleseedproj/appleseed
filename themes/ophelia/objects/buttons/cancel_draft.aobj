@@ -1,6 +1,0 @@
-<span class='cancel_draft'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/cancel.gif'
-  onClick='return jCONFIRM("%CONFIRM%")' />
- <asd id='tooltip' title='cancel_draft' />
-</span> <!-- .cancel_draft -->

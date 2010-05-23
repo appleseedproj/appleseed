@@ -1,5 +1,0 @@
-<span class='move_up'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/move_up.gif' />
- <asd id='tooltip' title='move_up' />
-</span> <!-- .move_up -->

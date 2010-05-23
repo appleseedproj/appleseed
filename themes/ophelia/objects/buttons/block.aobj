@@ -1,5 +1,0 @@
-<span class='block'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/block.gif' />
- <asd id='tooltip' title='block' />
-</span> <!-- .block -->

@@ -1,6 +1,0 @@
-<span class='tag_emphasize'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/tag_emphasize.gif'
-  onClick='return jCONFIRM("%CONFIRM%")' />
- <asd id='tooltip' title='tag_delete_all' />
-</span> <!-- .tag_emphasize -->

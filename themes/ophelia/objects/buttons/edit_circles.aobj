@@ -1,5 +1,0 @@
-<span class='edit_circles'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/edit_circles.gif' />
- <asd id='tooltip' title='edit_circles' />
-</span> <!-- .edit_circles -->

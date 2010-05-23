@@ -1,6 +1,0 @@
-<span class='delete_forever_all'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/delete_forever_all.gif'
-  onClick='return jCONFIRM("%CONFIRM%")' />
- <asd id='tooltip' title='delete_forever_all' />
-</span> <!-- .delete_forever_all -->

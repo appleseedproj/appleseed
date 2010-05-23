@@ -1,5 +1,0 @@
- <div id='tabs'>
-
-  <asd id='link' extra='READDATA' target='%COMMENTTARGET%#comments' image='themes/%USERTHEME%/images/tabs/comments/read%COMMENTREADTAB%.gif' border='0' /><asd id='link' extra='ADDDATA' target='%COMMENTTARGET%#comments' image='themes/%USERTHEME%/images/tabs/comments/add%COMMENTADDTAB%.gif' />
-
- </div> <!-- #tabs -->

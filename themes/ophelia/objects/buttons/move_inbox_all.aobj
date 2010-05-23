@@ -1,6 +1,0 @@
-<span class='move_inbox_all'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/move_inbox_all.gif'
-  onClick='return jCONFIRM("%CONFIRM%")' />
- <asd id='tooltip' title='move_inbox_all' />
-</span> <!-- .move_inbox_all -->

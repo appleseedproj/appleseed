@@ -1,4 +1,0 @@
-<span class='comment_reply'>
- <asd id='link' extra='REPLYDATA' target='%TARGET%#comments' text='%REPLYLABEL%' />
- <asd id='tooltip' title='comment_reply' />
-</span> <!-- .comment_reply -->

@@ -1,5 +1,0 @@
-<span class='select_none'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/select_none.gif' />
- <asd id='tooltip' title='select_none' />
-</span> <!-- .select_none -->

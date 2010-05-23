@@ -1,5 +1,0 @@
-<span class='search'>
- <input class='image' type='image' name='%ACTIONNAME%' id='%ACTIONNAME%' value='%BUTTONACTION%'
-  src='themes/%USERTHEME%/images/buttons/search.gif' />
- <asd id='tooltip' title='search' />
-</span> <!-- .search -->

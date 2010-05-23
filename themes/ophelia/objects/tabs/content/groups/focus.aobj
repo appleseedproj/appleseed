@@ -1,6 +1,0 @@
- <div id='tabs'>
-
-  <a href='/groups/search/'><img src='themes/%USERTHEME%/images/tabs/content/groups/search%SEARCHTAB%.gif' border='0' /></a>
-  <a href='/groups/create/'><img src='themes/%USERTHEME%/images/tabs/content/groups/create%CREATETAB%.gif' border='0' /></a>
-
- </div> <!-- #tabs -->
