@@ -1,9 +1,3 @@
-   <div class='container_12'>
-     <div id='systemstatus'>
-       Appleseed is early beta software, expect bugs along the way, and send feedback to <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a>
-     </div>
-   </div>
- 		
    <header class="container_12"> 
     
         <hgroup class="grid_3"> 

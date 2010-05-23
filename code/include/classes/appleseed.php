@@ -36,7 +36,11 @@
   require_once 'code/include/external/htmlpurifier/HTMLPurifier.auto.php';
   require_once 'code/include/external/phpmailer/class.phpmailer.php';
   require_once 'code/include/external/phpmailer/class.smtp.php';
-
+  
+  error_reporting (E_ALL);
+  ini_set ("display_errors", 1);
+  require_once 'system/language.php';
+  
   class cAPPLESEED extends cAPPLICATION {
 
     var $Context;

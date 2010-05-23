@@ -2686,7 +2686,6 @@
       $zAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
 
       if ($pUSERNAME == ANONYMOUS) {
-          //$output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/anonymoususer.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           $output .= "<a class='anonymoususer'><asd id='string' title='LABEL.ANONYMOUS' /></a>";
           $output = str_replace("\n", "", $output);
           $output = str_replace("\r", "", $output);
