@@ -1,4 +1,4 @@
- <div id='tabs'>
+ <div class='tabs'>
 
   <a href='/groups/search/'><img src='themes/%USERTHEME%/images/tabs/content/groups/search%SEARCHTAB%.gif' border='0' /></a>
 

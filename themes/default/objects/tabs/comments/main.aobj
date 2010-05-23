@@ -1,4 +1,4 @@
- <nav id='tabs'>
+ <nav class='tabs'>
 
   <ul>
   	<li><asd id='link' extra='READDATA' target='%COMMENTTARGET%#comments' text='Read Comments' /></li>

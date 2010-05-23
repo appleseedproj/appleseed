@@ -49,7 +49,7 @@ function jACTIONSUBMIT (action) {
 function PostLink(href, datalist, confirm) {
 
   if (!jCONFIRM (confirm)) return (false);
-
+  
   formElement = document.createElement ('form');
   formElement.setAttribute ("method", "post");
   formElement.setAttribute ("action", href);

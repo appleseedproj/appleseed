@@ -1,5 +1,12 @@
- <div id='tabs'>
+ <nav class='tabs'>
 
-  <a href='_admin/system/strings/'><img src='themes/%USERTHEME%/images/tabs/admin/system/strings%ADMINSYSTEMSTRINGSTAB%.gif' border='0' /></a><a href='_admin/system/options/'><img src='themes/%USERTHEME%/images/tabs/admin/system/options%ADMINSYSTEMOPTIONSTAB%.gif' border='0' /></a><a href='_admin/system/tooltips/'><img src='themes/%USERTHEME%/images/tabs/admin/system/tooltips%ADMINSYSTEMTOOLTIPSTAB%.gif' border='0' /></a><a href='_admin/system/nodes/'><img src='themes/%USERTHEME%/images/tabs/admin/system/nodes%ADMINSYSTEMNODESTAB%.gif' border='0' /></a><a href='_admin/system/logs/'><img src='themes/%USERTHEME%/images/tabs/admin/system/logs%ADMINSYSTEMLOGSTAB%.gif' border='0' /></a><a href='_admin/system/maintenance/'><img src='themes/%USERTHEME%/images/tabs/admin/system/maintenance%ADMINSYSTEMMAINTENANCETAB%.gif' border='0' /></a> 
+  <ul>
+ 	<li><a href='_admin/system/strings/'>Strings</a></li>
+ 	<li><a href='_admin/system/options/'>Options</a></li>
+    <li><a href='_admin/system/tooltips/'>Tooltips</a></li>
+    <li><a href='_admin/system/nodes/'>Nodes</a></li>
+    <li><a href='_admin/system/logs/'>Logs</a></li>
+    <li><a href='_admin/system/maintenance/'>Maintenance</a></li>
+  </ul>
 
- </div> <!-- #tabs -->
+ </nav> <!-- #tabs -->

@@ -1,3 +1,8 @@
-<div id='tabs'>
-  <a class='%ADMINCONTROLSECURITYTAB%' href='_admin/control/security/'>SECURITY</a><a href='_admin/control/defaults/'>DEFAULTS</a><a href='_admin/control/storage/'>STORAGE</a><a class='%ADMINCONTROLUPDATETAB%' href='_admin/control/update/'>UPDATE</a>
+<nav class='tabs'>
+  <ul>
+    <li><a class='%ADMINCONTROLSECURITYTAB%' href='_admin/control/security/'>Security</a></li>
+    <li>Defaults</a></li>
+    <li>Storage</a></li>
+    <li><a class='%ADMINCONTROLUPDATETAB%' href='_admin/control/update/'>Update</a></li>
+  </ul>
 </div> <!-- #tabs -->

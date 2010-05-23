@@ -1,4 +1,4 @@
- <nav id='tabs'>
+ <nav class='tabs'>
 
   <ul>
   	<li><a href='_admin/content/articles/'>Articles</a></li>

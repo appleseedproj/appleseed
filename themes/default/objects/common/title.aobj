@@ -36,4 +36,4 @@
     
 </head> 
 
-<body id="www-website-com"> 
+<body onload = "Initialize();" id="www-website-com"> 
