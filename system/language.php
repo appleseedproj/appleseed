@@ -9,15 +9,33 @@
  
  class cLanguage {
  	
+ 	/*
+ 	 * @access public
+ 	 * @param string Which language to load.  Example: en-US
+ 	 * @param string Which language file to load.
+ 	 * @return bool True on success, false on error.
+ 	 */
  	function Load ($pLanguage, $pContextFile) {
  		global $gCache;
  		
  		$location = 'languages/' . $pLanguage . '/' . $pContextFile;
- 		$data = parse_ini_file ($location) or die ("Couldn't Find");
  		
+ 		// File does not exist, return false. 
+ 		// _set _system _error
+ 		if (!file_exists ($location)) return (false);
+ 		
+ 		// File can not be parsed, return false.
+ 		// _set _system _error
+ 		if (!$data = parse_ini_file ($location)) {
+ 			return (false);
+ 		} // if
+ 		
+ 		// Put data into the global cache.
  		foreach ($data as $key => $value) {
  	        $gCache['Language'][$key] = $value;	
  		} // foreach
+ 		
+ 		return (true);
  	} // Load
  	
  	/**

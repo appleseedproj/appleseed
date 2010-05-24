@@ -2,6 +2,7 @@
 
 [site]
 YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as <a href=\"http://%domain$s/profile/%username$s\">%username$s@%domain$s</a>"
+ANONYMOUS=(anonymous)
 
 [admin]
 

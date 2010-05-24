@@ -1,28 +1,25 @@
-<div id='sectionERROR'>
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
 
- <div id='site'>
-  <div id='common'>
+<div id='page' class='container_12'>
 
-   <div id='error'>
-    <div id='caption'>
-     <?php echo $gERRORTITLE; ?>
-    </div> <!-- #caption -->
+   <div id="page_left" class="grid_3"> 
+   	&nbsp;
+   </div>
+
+   <div id="page_right" class="grid_9"> 
+   <h1><?php echo $gERRORTITLE; ?></h1>
  
-    <div id='container'>
      <?php echo $gERRORMSG; ?>
-     <div id='return'>
+     
       <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
-     </div> <!-- #return -->
-     </div> <!-- #container -->
- 
-    </div> <!-- #error -->
-   </div> <!-- #comomn -->
-  </div> <!-- #site -->
+   </div>
 
+   <div class="clear"></div> 
+   </div>
+ 
   <!-- ## footer obj -->
   <?php $zHTML->Footer (); ?>
-
- </div> <!-- #sectionERROR -->
 
  </body>
 </html>
