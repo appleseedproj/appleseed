@@ -282,6 +282,9 @@
         global $gTHEMELOCATION;
         $gUSERTHEME = $zLOCALUSER->userSettings->GetTheme();
         $this->SetTag ('USERTHEME', $gUSERTHEME);
+
+        if (!file_exists ("themes/$gUSERTHEME")) $gUSERTHEME = 'default';
+      
         $gTHEMELOCATION = "themes/$gUSERTHEME/";
       } // if
       
