@@ -1011,7 +1011,7 @@ class cINSTALL {
         <?php echo $ErrorMark['mysql_client_version']; ?>
         
        </div>
-       <form id='main' name='main' method='POST'>
+       <form id='main' name='main' method='POST' action='/'>
         <input type='submit' name='refresh' class='refresh' value="Refresh" />
        
        <div id='database'>
