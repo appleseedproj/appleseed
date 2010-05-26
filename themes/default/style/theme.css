@@ -21,27 +21,45 @@ nav { font-weight: bold; }
 header hgroup h1 { color: #406300; }
 header hgroup h2 { color: #639a00; }
 
-header hgroup h1 a { background: url('/themes/default/images/asp_logo_150.png') no-repeat; color: #c0d895; font-size: 1px; height: 32px; display: block; }
-header hgroup h1 a:hover { background: url('/themes/default/images/asp_logo_150_red.png') no-repeat; text-decoration: none; color: #c0d895; }
+header hgroup h1 a { background: url('/themes/default/images/asp_logo_150x66.png') no-repeat; color: #c0d895; font-size: 1px; height: 32px; display: block; }
+header hgroup h1 a:hover { background: url('/themes/default/images/asp_logo_150x66.png') 0px -33px no-repeat; text-decoration: none; color: #c0d895; }
 
 time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4px 0px 0px 22px; min-height: 16px; display: block; }
 #user_comments article time { margin-left: 70px; }
 
-#page { background: #f1ffd6; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; }
+#sys_message { background: #82b22c; color: #d9fa9e; padding: 0px 10px 5px 10px; margin-bottom: 5px; }
+#sys_message {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+}
+#sys_message p { text-align: center; padding: 5px 10px 0px 10px; }
+#sys_message a { color: #fff; }
 
-#page section h1 { font-size: 150%; border-bottom: 1px solid #c0d895; }
-#page section h2 { font-size: 125%; }
+#page { background: #f1ffd6; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; padding: 0px 10px; }
+
+#page section h1 { font-size: 130%; border-bottom: 1px solid #c0d895; }
+#page section h2 { font-size: 120%; }
 #page section h3 { font-size: 110%; }
 
 #user_journals ol li { list-style: disc; margin-left: 20px; }
 
-footer { padding-bottom: 40px; }
-footer h1 { font-size: 110%; border-bottom: 1px solid #639a00; }
-footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
-
 #user_id h1 { display: none; }
+#user_id img { max-width: 220px; }
 
-#user_nav ul { padding: 10px 0px; min-height: 10px; }
+#user_nav { padding: 0px; }
+#user_nav ul { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
+#user_nav ul {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+}
 
 #user_comments article { background: #d9fa9e; border-left: 10px solid #c0d895; padding: 10px; }
 #user_comments article {
@@ -52,14 +70,28 @@ footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
     -webkit-border-bottom-right-radius: 10px;
     -webkit-border-top-right-radius: 10px;
 }
-#user_comments nav ol { border-top: 1px solid #c0d895; padding: 10px 0px 0px 0px; }
 #user_comments .user {
     background: #fff;
-    border-left: 10px solid #639a00;
-    border-top: 1px solid #639a00;
-    border-bottom: 1px solid #639a00;
-    border-right: 1px solid #639a00;
+    border-left: 10px solid #c0d895;
+    border-top: 1px solid #c0d895;
+    border-bottom: 1px solid #c0d895;
+    border-right: 1px solid #c0d895;
 }
+#user_comments { padding-bottom: 0px; }
+#user_comments nav ol { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
+#user_comments nav ol {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-topleft: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+}
+
+footer { padding-bottom: 40px; }
+footer h1 { font-size: 110%; border-bottom: 1px solid #639a00; }
+footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
+--
 
 #systemstatus { width:100%; background: #f1ffd6; text-align:center; padding:5px 0px; margin:0 0 10px 0; border-radius: 0 0 20px 20px; -moz-border-radius: 0 0 20px 20px; -webkit-border-radius: 0 0 20px 20px; }
 #debug { width:920px; clear:both; float:left; background: #f1ffd6; padding:20px; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; }
