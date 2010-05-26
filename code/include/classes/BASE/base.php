@@ -2686,9 +2686,7 @@
       $zAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
 
       if ($pUSERNAME == ANONYMOUS) {
-          $output .= "<a class='anonymoususer'><asd id='string' title='LABEL.ANONYMOUS' /></a>";
-          $output = str_replace("\n", "", $output);
-          $output = str_replace("\r", "", $output);
+      	  $output = __("Anonymous");
       } else {
         $usericon = '.noicon';
         if ($pLINKICON) { 
