@@ -3,6 +3,9 @@
 [site]
 YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as <a href=\"http://%domain$s/profile/%username$s\">%username$s@%domain$s</a>"
 ANONYMOUS=(anonymous)
+COPYRIGHT_NOTICE="Copyright &copy; 2004-2010 by the Appleseed Project under the GNU General Public License.  All Rights Reserved."
+
+
 
 [admin]
 

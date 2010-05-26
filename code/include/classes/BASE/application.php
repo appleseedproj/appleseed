@@ -624,7 +624,7 @@
     } // AdjustScroll
 
     // Include based on a specified security setting.
-    function IncludeFile ($pFILENAME, $pSECURITY = INCLUDE_SECURITY_BASIC, $pOUTPUT = OUTPUT_SCREEN) {
+    function IncludeFile ($pFILENAME, $pSECURITY = INCLUDE_SECURITY_NONE, $pOUTPUT = OUTPUT_SCREEN) {
   
       $return = 0;
 

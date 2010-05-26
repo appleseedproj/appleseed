@@ -37,7 +37,7 @@
         </section> 
     
         <section id="footer_about" class="grid_3"> 
-            <p> <asd id='string' title='LABEL.COPYRIGHT' /> </p>
+            <p><?php echo __("Copyright Notice"); ?></p>
         </section> 
         
         <div class="clear"></div> 
