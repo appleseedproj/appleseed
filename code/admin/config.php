@@ -78,9 +78,14 @@
   // Set the page title.
   $gPAGESUBTITLE = ' - Admin';
  
+  // Set which switch to highlight.
+  global $gSelectedSwitch;
+  $gSelectedSwitch['admin_config'] = 'selected';
+
   // Set which tab to highlight.
-  $gADMINCONFIGSWITCH = '';
-  
+  global $gSelectedTab;
+  $gSelectedTab['admin_config_main'] = 'selected';
+
   // Load configuration options.
   
   global $gSETTINGS, $gTHEMELISTING, $gLANGUAGELISTING, $gSHUTDOWNLISTING;

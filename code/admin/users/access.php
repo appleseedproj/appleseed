@@ -97,10 +97,12 @@
                       "SORT"            => $gSORT);
 
   // Set which switch to highlight.
-  $gADMINUSERSSWITCH = '';
+  global $gSelectedSwitch;
+  $gSelectedSwitch['admin_users'] = 'selected';
 
   // Set which tab to highlight.
-  $gADMINUSERSACCESSTAB = '';
+  global $gSelectedTab;
+  $gSelectedTab['admin_users_access'] = 'selected';
 
   // Display the select all button by default.
   $gSELECTBUTTON = 'select_all';

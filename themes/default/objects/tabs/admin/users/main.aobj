@@ -1,10 +1,10 @@
  <nav id="admin_controls">
 
   <ul>
-    <li><a href='_admin/users/accounts/'>Accounts</a></li>
-    <li><a href='_admin/users/questions/'>Questions</a></li>
-    <li>Settings</li>
-    <li><a href='_admin/users/access/'>Access</a></li>
+    <li class="<?php echo $gSelectedTab['admin_users_accounts']; ?>"><a href='_admin/users/accounts/'>Accounts</a></li>
+    <li class="<?php echo $gSelectedTab['admin_users_questions']; ?>"><a href='_admin/users/questions/'>Questions</a></li>
+    <li class="<?php echo $gSelectedTab['admin_users_settings']; ?>">Settings</li>
+    <li class="<?php echo $gSelectedTab['admin_users_access']; ?>"><a href='_admin/users/access/'>Access</a></li>
   </ul>
 
  </nav>
