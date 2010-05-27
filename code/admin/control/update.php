@@ -66,12 +66,14 @@
   // Add javascript to top of page.
   $zHTML->AddScript ("admin/system/update.js");
   
-  // Set which tab to highlight.
-  $gADMINCONTROLUPDATETAB = 'on';
-
   // Set which switch to highlight.
-  $gADMINCONTROLSWITCH = '';
-  
+  global $gSelectedSwitch;
+  $gSelectedSwitch['admin_control'] = 'selected';
+
+  // Set which tab to highlight.
+  global $gSelectedTab;
+  $gSelectedTab['admin_control_update'] = 'selected';
+
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
   

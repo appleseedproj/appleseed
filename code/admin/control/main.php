@@ -80,8 +80,13 @@
   // Push the title object
   $zHTML->Title ();
 
-  // Set which switch to highlight
-  $gADMINCONTROLSWITCH = '';
+  // Set which switch to highlight.
+  global $gSelectedSwitch;
+  $gSelectedSwitch['admin_control'] = 'selected';
+
+  // Set which tab to highlight.
+  global $gSelectedTab;
+  $gSelectedTab['admin_control_main'] = 'selected';
 
   // Check if user has admin access to this page.
   if ($zLOCALUSER->userAccess->a == TRUE) {

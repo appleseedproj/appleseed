@@ -2467,7 +2467,7 @@
     function Alternate ($pSTYLEPREFIX = NULL, $pSTYLESUFFIX = NULL, $pADDITIONALCLASS = NULL) {
       global $gFRAMELOCATION;
       global $gALTERNATE;
-      global $gSTYLEID, $gSTYLEEXTRA;
+      global $gSTYLEID;
 
       global $zAPPLE;
 
@@ -2475,13 +2475,13 @@
       // Load alternate.top object
       $output = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/alternate.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      // Echo output.
-      echo $output;
-
+      $return = $gSTYLEID;
+      
       // Unset style variables.
-      unset ($gSTYLEID); unset ($gSTYLEEXTRA);
+      unset ($gSTYLEID);
 
-      return (0);
+      // Echo output.
+      return $return;
 
     } // Alternate
 

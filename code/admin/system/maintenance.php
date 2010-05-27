@@ -85,10 +85,12 @@
   $gPAGESUBTITLE = ' - Admin';
   
   // Set which switch to highlight.
-  $gADMINSYSTEMSWITCH = '';
+  global $gSelectedSwitch;
+  $gSelectedSwitch['admin_system'] = 'selected';
 
   // Set which tab to highlight.
-  $gADMINSYSTEMMAINTENANCETAB = '';
+  global $gSelectedTab;
+  $gSelectedTab['admin_system_maintenance'] = 'selected';
 
   $zJANITOR->SendNodeNetworkUpdate ();
   

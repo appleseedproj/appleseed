@@ -1,4 +1,5 @@
-   </ul>
+   </tbody>
+   </table>
   </form>
 
   <form id='new' method='POST' action=''>
@@ -10,8 +11,6 @@
    <?php $zHTML->Button ('new'); ?>
   </form> <!-- ## new -->
 
- </div> <!-- #container -->
-
  <?php $zHTML->Scroll ($target, 'admin.system.strings'); ?>
 
-</div> <!-- #strings -->
+</section> <!-- #strings -->

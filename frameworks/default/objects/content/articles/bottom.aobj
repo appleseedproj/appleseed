@@ -1,4 +1,4 @@
-  </div> <!-- #container -->
-</div> <!-- #articles -->
+  </ol>
+</section> <!-- #articles -->
 
 <?php $zHTML->Scroll(); ?>

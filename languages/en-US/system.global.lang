@@ -2,12 +2,21 @@
 
 [site]
 YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as <a href=\"http://%domain$s/profile/%username$s\">%username$s@%domain$s</a>"
+YOU_ARE_LOGGED_IN_AS="Currently logged in as <a href=\"http://%domain$s/profile/%username$s\">%username$s@%domain$s</a>"
+LOGGED_IN_AS_ADMINISTRATOR="Currently logged in as <a href=\"http://%domain$s/profile/%username$s\">%username$s@%domain$s</a>"
 ANONYMOUS=(anonymous)
 COPYRIGHT_NOTICE="Copyright &copy; 2004-2010 by the Appleseed Project under the GNU General Public License.  All Rights Reserved."
 
-
-
 [admin]
+ADMINISTRATION_TITLE=Administration
+ADMIN_CONFIG_MENU=Config
+ADMIN_USERS_MENU=Users
+ADMIN_CONTENT_MENU=Content
+ADMIN_SYSTEM_MENU=System
+ADMIN_CONTROL_MENU=Control
+
+STRINGS_ADMIN_TITLE=Strings
+STRINGS_ADMIN_DESCRIPTION=
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?

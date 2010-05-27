@@ -1,8 +1,11 @@
-<div id='strings'>
- <div id='container'>
+<section id="admin_page"> 
 
   <?php $zSEARCH->Ask (); ?>
 
+  <h1><?php echo __("Strings Admin Title"); ?></h1> 
+                
+  <p><?php echo __("Strings Admin Description"); ?></p> 
+ 
   <form id='list' method='post' action='_admin/system/strings/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>
@@ -15,9 +18,18 @@
  
    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zAPPLE->Context); ?>
    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+   
+   <table>
+   	<?php //$zHTML->Titles ("ADMINDATA", "titles", "_admin/system/strings/"); ?>
  
-   <?php $zHTML->Titles ("ADMINDATA", "titles", "_admin/system/strings/"); ?>
- 
-   <?php $ADMINDATA->Broadcast(); ?>
- 
-   <ul>
+   	<?php $ADMINDATA->Broadcast(); ?>
+   	<thead> 
+     <tr> 
+       <th scope="col"><a href="#"># &uarr;</a></th> 
+       <th scope="col"><a href="#">Name</a></th> 
+       <th scope="col"><a href="#">Type</a></th> 
+       <th scope="col"><a href="#">Lang</a></th> 
+       <th scope="col"><input type="checkbox" /></th> 
+     </tr> 
+   </thead> 
+   <tbody>

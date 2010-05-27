@@ -1,9 +1,8 @@
-<div id='articles'>
+<section id='site_articles'>
 
 <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
  
-  <div id='container'>
-  
   <?php $zSEARCH->Ask (); ?>
 
   <?php $zARTICLES->Broadcast (); ?>
+  <ol>

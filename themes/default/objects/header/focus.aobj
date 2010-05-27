@@ -26,7 +26,7 @@
         
         <div id="user_login" class="grid_3"> 
         	<p>
-        		<span><asd id='string' title='LABEL.LOCALLOGIN' /></span>
+        		<span><?php echo __("You are logged in as", array ('username' => $zAUTHUSER->Username, 'domain' => $zAUTHUSER->Domain)); ?></span>
         		<span><a href="/logout/">Logout</a></span> 
         	</p>
         </div> 

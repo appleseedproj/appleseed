@@ -77,8 +77,13 @@
   // Set the page title.
   $gPAGESUBTITLE = ' - Admin';
 
-  // Set which switch to highlight
-  $gADMINCONTENTSWITCH = '';
+  // Set which switch to highlight.
+  global $gSelectedSwitch;
+  $gSelectedSwitch['admin_content'] = 'selected';
+
+  // Set which tab to highlight.
+  global $gSelectedTab;
+  $gSelectedTab['admin_content_main'] = 'selected';
 
   // Check if user has admin access to this page.
   if ($zLOCALUSER->userAccess->a == TRUE) {

@@ -24,8 +24,10 @@ header hgroup h2 { color: #639a00; }
 header hgroup h1 a { background: url('/themes/default/images/asp_logo_150x66.png') no-repeat; color: #c0d895; font-size: 1px; height: 32px; display: block; }
 header hgroup h1 a:hover { background: url('/themes/default/images/asp_logo_150x66.png') 0px -33px no-repeat; text-decoration: none; color: #c0d895; }
 
-time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4px 0px 0px 22px; min-height: 16px; display: block; }
+time { background: url('/themes/default/images/icons/date.png') 2px 2px no-repeat; padding: 4px 0px 0px 22px; min-height: 16px; display: block; }
 #user_comments article time { margin-left: 70px; }
+
+li.selected a { text-decoration: underline; color: #bf4630; }
 
 #sys_message { background: #82b22c; color: #d9fa9e; padding: 0px 10px 5px 10px; margin-bottom: 5px; }
 #sys_message {
@@ -39,7 +41,7 @@ time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4
 #sys_message p { text-align: center; padding: 5px 10px 0px 10px; }
 #sys_message a { color: #fff; }
 
-#page { background: #f1ffd6; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; padding: 0px 10px; }
+#page { background: #f1ffd6; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; padding: 0px 10px; min-height: 200px; }
 
 #page section h1 { font-size: 130%; border-bottom: 1px solid #c0d895; }
 #page section h2 { font-size: 120%; }
@@ -50,9 +52,9 @@ time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4
 #user_id h1 { display: none; }
 #user_id img { max-width: 220px; }
 
-#user_nav { padding: 0px; }
-#user_nav ul { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
-#user_nav ul {
+#user_nav, #admin_controls { padding: 0px; }
+#user_nav ul, #admin_controls ul { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
+#user_nav ul, #admin_controls ul {
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     -moz-border-radius-bottomright: 10px;
@@ -77,9 +79,9 @@ time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4
     border-bottom: 1px solid #c0d895;
     border-right: 1px solid #c0d895;
 }
-#user_comments { padding-bottom: 0px; }
-#user_comments nav ol { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
-#user_comments nav ol {
+#user_comments, #admin_page { padding-bottom: 0px; }
+#user_comments nav ol, #admin_page nav ol { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
+#user_comments nav ol, #admin_page nav ol {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     -moz-border-radius-topright: 10px;
@@ -87,6 +89,31 @@ time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4
     -webkit-border-top-right-radius: 10px;
     -webkit-border-top-left-radius: 10px;
 }
+
+#admin_menu { margin-top: 10px; }
+#admin_menu nav { padding: 0px; }
+#admin_menu nav ul li { float: none; }
+#admin_menu nav ul li a { display: block; width: 182px; padding: 10px 10px 10px 28px; }
+#admin_menu nav ul #admin_config a { background: url('/themes/default/images/icons/cog.png') 5px 10px no-repeat; }
+#admin_menu nav ul #admin_users a { background: url('/themes/default/images/icons/group.png') 5px 10px no-repeat; }
+#admin_menu nav ul #admin_content a { background: url('/themes/default/images/icons/application_view_gallery.png') 5px 10px no-repeat; }
+#admin_menu nav ul #admin_system a { background: url('/themes/default/images/icons/database.png') 5px 10px no-repeat; }
+#admin_menu nav ul #admin_control a { background: url('/themes/default/images/icons/lock.png') 5px 10px no-repeat; }
+
+#admin_menu nav ul #admin_config a:hover { background: #d9fa9e url('/themes/default/images/icons/cog.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_users a:hover { background: #d9fa9e url('/themes/default/images/icons/group.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_content a:hover { background: #d9fa9e url('/themes/default/images/icons/application_view_gallery.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_system a:hover { background: #d9fa9e url('/themes/default/images/icons/database.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_control a:hover { background: #d9fa9e url('/themes/default/images/icons/lock.png') 5px 10px no-repeat; text-decoration: none; }
+
+#admin_menu nav ul #admin_config.selected a { background: #d9fa9e url('/themes/default/images/icons/cog.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_users.selected a { background: #d9fa9e url('/themes/default/images/icons/group.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_content.selected a { background: #d9fa9e url('/themes/default/images/icons/application_view_gallery.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_system.selected a { background: #d9fa9e url('/themes/default/images/icons/database.png') 5px 10px no-repeat; text-decoration: none; }
+#admin_menu nav ul #admin_control.selected a { background: #d9fa9e url('/themes/default/images/icons/lock.png') 5px 10px no-repeat; text-decoration: none; }
+
+#admin_page table th { background: #c0d895; }
+#admin_page table tr.odd td { background: #fff; }
 
 footer { padding-bottom: 40px; }
 footer h1 { font-size: 110%; border-bottom: 1px solid #639a00; }

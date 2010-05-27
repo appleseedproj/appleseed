@@ -8,6 +8,9 @@
    
    <div id="page_left" class="grid_3"> 
 
+      <!-- ## switches obj -->
+      <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/switches/admin/main.aobj"); ?>
+  
       <!-- ## stats obj -->
       <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/common/stats.aobj", INCLUDE_SECURITY_NONE); ?>
   
@@ -15,11 +18,8 @@
 
    <div id="page_right" class="grid_9"> 
   
-      <!-- ## switches obj -->
-      <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/switches/admin/main.aobj", INCLUDE_SECURITY_BASIC); ?>
-  
        <!-- ## tabs obj -->
-       <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/admin/system/main.aobj", INCLUDE_SECURITY_BASIC); ?>
+       <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/admin/system/main.aobj"); ?>
         
        <!-- ## main -->
        <?php echo $bMAINSECTION; ?>

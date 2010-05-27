@@ -1,4 +1,4 @@
- <nav class='tabs'>
+ <nav id="admin_controls">
 
   <ul>
     <li><a href='_admin/users/accounts/'>Accounts</a></li>

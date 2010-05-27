@@ -22,7 +22,7 @@
         
         <div id="user_login" class="grid_3"> 
         	<p>
-        		<span><asd id='string' title='LABEL.ADMINLOGIN' /></span>
+        		<span><?php echo __("Logged in as administrator", array ('username' => $zAUTHUSER->Username, 'domain' => $zAUTHUSER->Domain)); ?></span>
         		<span><a href="/logout/">Logout</a></span> 
         	</p>
         </div> 

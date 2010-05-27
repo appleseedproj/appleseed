@@ -1,10 +1,10 @@
- <nav class='tabs'>
+ <nav id="admin_controls">
 
   <ul>
-  	<li><a href='_admin/content/articles/'>Articles</a></li>
-  	<li><a href='_admin/content/pages/'>Pages</a></li>
-    <li><a href='_admin/content/modules/'>Modules</a></li>
-    <li><a href='_admin/content/themes/'>Themes</a></li>
+  	<li class="<?php echo $gSelectedTab['admin_content_articles']; ?>"><a href='_admin/content/articles/'>Articles</a></li>
+  	<li class="<?php echo $gSelectedTab['admin_content_pages']; ?>"><a href='_admin/content/pages/'>Pages</a></li>
+    <li class="<?php echo $gSelectedTab['admin_content_modules']; ?>">Modules</li>
+    <li class="<?php echo $gSelectedTab['admin_content_themes']; ?>">Themes</li>
   </ul>
 
  </nav>

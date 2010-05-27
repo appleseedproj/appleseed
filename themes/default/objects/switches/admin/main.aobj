@@ -1,9 +1,13 @@
-        <nav class="grid_6"> 
+<section id="admin_menu"> 
+   <h1><?php echo __("Administration Title"); ?></h1> 
+        <nav> 
             <ul> 
-			   <li><a href='_admin/config/'>Config</a></li>
-			   <li><a href='_admin/users/'>Users</a></li>
-			   <li><a href='_admin/content/'>Content</a></li>
-			   <li><a href='_admin/system/'>System</a></li>
-			   <li><a href='_admin/control/'>Control</a></li>
+            	
+			   <li id="admin_config" class="<?php echo $gSelectedSwitch['admin_config']; ?>" ><a href='_admin/config/'><?php echo __("Admin Config Menu"); ?></a></li>
+			   <li id="admin_users" class="<?php echo $gSelectedSwitch['admin_users']; ?>" ><a href='_admin/users/'><?php echo __("Admin Users Menu"); ?></a></li>
+			   <li id="admin_content" class="<?php echo $gSelectedSwitch['admin_content']; ?>" ><a href='_admin/content/'><?php echo __("Admin Content Menu"); ?></a></li>
+			   <li id="admin_system" class="<?php echo $gSelectedSwitch['admin_system']; ?>" ><a href='_admin/system/'><?php echo __("Admin System Menu"); ?></a></li>
+			   <li id="admin_control" class="<?php echo $gSelectedSwitch['admin_control']; ?>" ><a href='_admin/control/'><?php echo __("Admin Control Menu"); ?></a></li>
             </ul> 
         </nav> 
+</section>

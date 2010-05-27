@@ -1,12 +1,12 @@
- <nav class='tabs'>
+ <nav id="admin_controls"> 
 
   <ul>
- 	<li><a href='_admin/system/strings/'>Strings</a></li>
- 	<li><a href='_admin/system/options/'>Options</a></li>
-    <li><a href='_admin/system/tooltips/'>Tooltips</a></li>
-    <li><a href='_admin/system/nodes/'>Nodes</a></li>
-    <li><a href='_admin/system/logs/'>Logs</a></li>
-    <li><a href='_admin/system/maintenance/'>Maintenance</a></li>
+ 	<li class="<?php echo $gSelectedTab['admin_system_strings']; ?>"><a href='_admin/system/strings/'>Strings</a></li>
+ 	<li class="<?php echo $gSelectedTab['admin_system_options']; ?>"><a href='_admin/system/options/'>Options</a></li>
+    <li class="<?php echo $gSelectedTab['admin_system_tooltips']; ?>"><a href='_admin/system/tooltips/'>Tooltips</a></li>
+    <li class="<?php echo $gSelectedTab['admin_system_nodes']; ?>"><a href='_admin/system/nodes/'>Nodes</a></li>
+    <li class="<?php echo $gSelectedTab['admin_system_logs']; ?>"><a href='_admin/system/logs/'>Logs</a></li>
+    <li class="<?php echo $gSelectedTab['admin_system_maintenance']; ?>"><a href='_admin/system/maintenance/'>Maintenance</a></li>
   </ul>
 
- </nav> <!-- #tabs -->
+ </nav>

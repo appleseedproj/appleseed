@@ -1,8 +1,8 @@
-<nav class='tabs'>
+<nav id="admin_controls">
   <ul>
-    <li><a class='%ADMINCONTROLSECURITYTAB%' href='_admin/control/security/'>Security</a></li>
-    <li>Defaults</a></li>
-    <li>Storage</a></li>
-    <li><a class='%ADMINCONTROLUPDATETAB%' href='_admin/control/update/'>Update</a></li>
+    <li class="<?php echo $gSelectedTab['admin_control_security']; ?>">Security</li>
+    <li class="<?php echo $gSelectedTab['admin_control_defaults']; ?>">Defaults</li>
+    <li class="<?php echo $gSelectedTab['admin_control_storage']; ?>">Storage</li>
+    <li class="<?php echo $gSelectedTab['admin_control_update']; ?>"><a class='%ADMINCONTROLUPDATETAB%' href='_admin/control/update/'>Update</a></li>
   </ul>
-</div> <!-- #tabs -->
+</nav>
