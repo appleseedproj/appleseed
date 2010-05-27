@@ -1,9 +1,7 @@
- <div id='invite'>
-  <div id='caption'>
+ <section id='user_invite'>
+  <h1>
     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.INVITE'); ?>
-  </div> <!-- #caption -->
-
-  <div id='container'>
+  </h1>
 
    <?php $zFOCUSUSER->userInvites->Broadcast(); ?>
 
@@ -19,9 +17,6 @@
  
      <?php $zHTML->Button ("invite"); ?>
  
-    <br /><br />
-
    </form> <!-- #invite -->
 
-  </div> <!-- #container -->
- </div> <!-- #invite -->
+ </section> <!-- #invite -->
