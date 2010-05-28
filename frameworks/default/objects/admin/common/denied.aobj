@@ -1,3 +1,3 @@
 <div class='admin' id='content'>
- <? $zSTRINGS->Display ('ERROR.DENIED', $zAPPLE->Context); ?>
+  <?php echo __("Access Denied", array ('adminemail' => $gADMINEMAIL)); ?>
 </div> <!-- ## admin.content -->

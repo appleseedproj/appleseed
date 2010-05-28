@@ -188,14 +188,12 @@
 
       // If no errors, output a successful message.
       if (!$ADMINDATA->Error) {
-        global $gDATALIST; $gDATALIST = implode(", ", $datalist);
         // Use proper grammer depending on how many records chosen.
         if (count ($gMASSLIST) == 1) {
           $ADMINDATA->Message = __("Record Deleted", array ('id' => $datalist[0]));
         } else {
           $ADMINDATA->Message = __("Records Deleted");
         } // if
-        unset ($gDATALIST);
         unset ($gMASSLIST);
       } // if
     break;
@@ -215,15 +213,12 @@
         $ADMINDATA->Sanity();
         if (!$ADMINDATA->Error) {
           $ADMINDATA->Add();
-          global $gDATAID;  $gDATAID = $ADMINDATA->LastIncrement;
-          $zSTRINGS->Lookup ('MESSAGE.NEW', $zAPPLE->Context);
-          $ADMINDATA->Message = $zSTRINGS->Output;
-          unset ($gDATAID);
+          $ADMINDATA->Message = __("Record Added", array ('id' => $ADMINDATA->LastIncrement));
         } // if
       } else {
         $ADMINDATA->Sanity();
         if (!$ADMINDATA->Error) {
-          $ADMINDATA->Message = __("Save Successful", array ('id' => $ADMINDATA->tID));
+          $ADMINDATA->Message = __("Record Updated", array ('id' => $ADMINDATA->tID));
           $ADMINDATA->Update();
         } // if
       } // if

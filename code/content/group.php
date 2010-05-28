@@ -146,7 +146,7 @@
       switch ($gSECTION) {
         case 'GENERAL':
           if ($zGROUPS->SaveGeneral ()) {
-            $zGROUPS->Message = __("Save Successful");
+            $zGROUPS->Message = __("Record Updated");
             $gGROUPSECTION = 'info';
           } // if
         break;
@@ -183,7 +183,7 @@
       $zGROUPS->SavePendingEditor ();
       if ($zGROUPS->Error) {
       } else {
-        $zGROUPS->Message = __("Save Successful");
+        $zGROUPS->Message = __("Record Updated");
         $gGROUPSECTION = 'info';
       } // if
     break;

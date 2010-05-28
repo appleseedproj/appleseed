@@ -266,10 +266,7 @@
           $ADMINDATA->userInvites->ChangeInvites ();
 
           // Look up the saved message.
-          global $gDATAID;  $gDATAID = $ADMINDATA->LastIncrement;
-          $zSTRINGS->Lookup ('MESSAGE.NEW', $zAPPLE->Context);
-          $ADMINDATA->Message = $zSTRINGS->Output;
-          unset ($gDATAID);
+          $ADMINDATA->Message = __("Record Added", array ('id' => $ADMINDATA->LastIncrement));
         } // if
       } else {
         // If password is null, then set to SQL_SKIP to skip it.
@@ -289,7 +286,7 @@
 
         if ( (!$ADMINDATA->Error) AND (!$ADMINDATA->userProfile->Error) AND
              (!$ADMINDATA->userInvites->Error) ) {
-          $ADMINDATA->Message = __("Save Successful", array ('id' => $ADMINDATA->uID));
+          $ADMINDATA->Message = __("Record Updated", array ('id' => $ADMINDATA->uID));
           $ADMINDATA->Update();
 
           // Rename the user's photo directory.

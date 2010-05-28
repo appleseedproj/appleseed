@@ -1,5 +1,6 @@
 [global]
-SAVE_SUCCESSFUL="Record #%id$s has been updated."
+RECORD_UPDATED="Record #%id$s has been updated."
+RECORD_ADDED="Record #%id$s has been added."
 RECORD_DELETED="Record #%id$s has been deleted."
 RECORDS_DELETED="The selected records have been deleted."
 

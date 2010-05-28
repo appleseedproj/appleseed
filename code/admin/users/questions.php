@@ -202,15 +202,12 @@
         $ADMINDATA->Sanity();
         if (!$ADMINDATA->Error) {
           $ADMINDATA->Add();
-          global $gDATAID;  $gDATAID = $ADMINDATA->LastIncrement;
-          $zSTRINGS->Lookup ('MESSAGE.NEW');
-          $ADMINDATA->Message = $zSTRINGS->Output;
-          unset ($gDATAID);
+          $ADMINDATA->Message = __("Record Added", array ('id' => $ADMINDATA->LastIncrement));
         } // if
       } else {
         $ADMINDATA->Sanity();
         if (!$ADMINDATA->Error) {
-          $ADMINDATA->Message = __("Save Successful", array ('id' => $ADMINDATA->tID));
+          $ADMINDATA->Message = __("Record Updated", array ('id' => $ADMINDATA->tID));
           $ADMINDATA->Update();
         } // if
       } // if

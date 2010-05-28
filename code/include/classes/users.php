@@ -1426,7 +1426,7 @@
 
         // NOTE: Move to object.
         echo "<p id='icon'>";
-        $zSTRINGS->Display ('LABEL.ICON', 'USER.COMMENTS');
+        echo __("User Icon");
         echo "</p>";
         $zHTML->Menu ("USERICON", $gICONLIST, "", $gUSERICON);
         $this->Broadcast ("field", "Usericons");

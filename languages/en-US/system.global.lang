@@ -8,12 +8,14 @@ ANONYMOUS="(anonymous)"
 COPYRIGHT_NOTICE="Copyright &copy; 2004-2010 by the Appleseed Project under the GNU General Public License.  All Rights Reserved."
 WRITE_ACCESS_DENIED="Insufficient Access To Make Modifications."
 NONE_SELECTED="Error: Nothing was selected."
-SAVE_SUCCESSFUL="Saved successfully!"
+RECORD_UPDATED="Saved successfully!"
 RECORD_DELETED="Item #%id$s has been deleted."
 RECORDS_DELETED="The selected items have been deleted."
 CONFIRM_CANCEL="Are you sure you want to cancel?"
 CONFIRM_DELETE="Are you sure you want to delete this item?"
 CONFIRM_DELETE_SELECTED="Are you sure you want to delete the selected item?"
+ACCESS_DENIED="ACCESS DENIED\n\nYou do not have sufficient permission to access this section.  If you feel this is in error, please contact <a href='mailto:%adminemail$s'>%adminemail$s</a> with any questions.\n\nThank you,\nThe Staff @ %SITEDOMAIN%"
+ALL_OPTIONS_SAVED="All Of Your Options Have Been Saved."
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?

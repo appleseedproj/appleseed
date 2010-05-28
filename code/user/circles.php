@@ -237,8 +237,7 @@
         $gCIRCLENAME = $zCIRCLES->Name;
   
         if (!$zCIRCLES->Error) {
-          $zSTRINGS->Lookup ('MESSAGE.NEW', $zAPPLE->Context);
-          $zCIRCLES->Message = $zSTRINGS->Output;
+          $zCIRCLES->Message = __("Record Added");
           $zCIRCLES->Add();
           $gACTION = "";
         } // if

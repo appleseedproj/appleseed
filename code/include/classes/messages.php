@@ -2577,7 +2577,7 @@
         $this->messageRecipient->Add ();
       } // foreach
       
-      $this->Message = __("Save Successful");
+      $this->Message = __("Record Updated");
 
       return (TRUE);
       

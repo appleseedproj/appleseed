@@ -171,8 +171,7 @@
 
       $zICON->Message = NULL;
       $zPHOTO->Message = NULL;
-      $zSTRINGS->Lookup ('MESSAGE.SAVE.ALL', 'USER.OPTIONS');
-      $zFOCUSUSER->Message = $zSTRINGS->Output;
+      $zFOCUSUSER->Message = __("All options saved");
     break;
 
     default:
@@ -194,9 +193,9 @@
   $QuestionCount = 0;
   while ($QUESTIONSLIST->FetchArray ()) {
     $gFOCUSQUESTION = $QUESTIONSLIST->FullQuestion;
-    echo "<p id='question" . $QUESTIONSLIST->tID . "'>\n";
-    $zSTRINGS->Display ("LABEL.QUESTION", "USER.OPTIONS.GENERAL");
-    echo "</p> <!-- #question" . $QUESTIONSLIST->tID . " -->\n";
+    echo "<label id='question" . $QUESTIONSLIST->tID . "'>\n";
+    echo "$gFOCUSQUESTION";
+    echo "</label>\n";
 
     // Select the user answer.
     $questionid = $QUESTIONSLIST->tID;

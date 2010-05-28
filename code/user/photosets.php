@@ -262,10 +262,7 @@
           } else {
             // Add the record to the database.
             $gVIEWDATA->Add();
-            global $gSETNAME;  $gSETNAME = $gVIEWDATA->Name;
-            $zSTRINGS->Lookup ('MESSAGE.NEW', $zAPPLE->Context);
-            $gVIEWDATA->Message = $zSTRINGS->Output;
-            unset ($gSETNAME);
+            $zSTRINGS->Message = __("Record Added", array ('setname' => $gVIEWDATA->Name));
 
             // Retrieve the last inserted ID.
             $gVIEWDATA->tID = $gVIEWDATA->AutoIncremented ();
