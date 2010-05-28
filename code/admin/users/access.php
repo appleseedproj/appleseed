@@ -70,6 +70,9 @@
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
 
+  // Load admin strings into cache.
+  cLanguage::Load ('en-US', 'system.admin.lang');
+
   // Check to see if user has read access for this area.
   if ($zLOCALUSER->userAccess->r == FALSE) {
 
@@ -80,8 +83,7 @@
 
   // Create a warning message if user has no write access.
   if ($zLOCALUSER->userAccess->w == FALSE) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-    $ADMINDATA->Message = $zSTRINGS->Output;
+    $ADMINDATA->Message = __("Write Access Denied");
     $ADMINDATA->Error = 0;
   } // if
 
@@ -124,8 +126,7 @@
     case 'MOVE_UP':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $ADMINDATA->Message = $zSTRINGS->Output;
+        $ADMINDATA->Message = __("None Selected");
         $ADMINDATA->Error = -1;
         break;
       } // if
@@ -143,8 +144,7 @@
     case 'MOVE_DOWN':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $ADMINDATA->Message = $zSTRINGS->Output;
+        $ADMINDATA->Message = __("None Selected");
         $ADMINDATA->Error = -1;
         break;
       } // if
@@ -162,8 +162,7 @@
     case 'DELETE_ALL':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $ADMINDATA->Message = $zSTRINGS->Output;
+        $ADMINDATA->Message = __("None Selected");
         $ADMINDATA->Error = -1;
         break;
       } // if
@@ -180,13 +179,10 @@
         global $gDATALIST; $gDATALIST = implode(", ", $datalist);
         // Use proper grammer depending on how many records chosen.
         if (count ($gMASSLIST) == 1) {
-          global $gDATAID; $gDATAID = $datalist[0];
-          $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-          unset ($gDATAID);
+          $ADMINDATA->Message = __("Record Deleted", array ('id' => $datalist[0]));
         } else {
-          $zSTRINGS->Lookup ('MESSAGE.DELETEALL', $zAPPLE->Context);
+          $ADMINDATA->Message = __("Records Deleted");
         } // if
-        $ADMINDATA->Message = $zSTRINGS->Output;
         unset ($gDATALIST);
         unset ($gMASSLIST);
       } // if
@@ -195,8 +191,7 @@
     case 'SAVE':
       // Check if user has write access;
       if ($zLOCALUSER->userAccess->w == FALSE) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $ADMINDATA->Message = $zSTRINGS->Output;
+        $ADMINDATA->Message = __("Write Access Denied");
         $ADMINDATA->Error = -1;
         break;        
       } // if
@@ -216,10 +211,7 @@
       } else {
         $ADMINDATA->Sanity();
         if (!$ADMINDATA->Error) {
-          global $gDATAID;  $gDATAID = $ADMINDATA->tID;
-          $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-          $ADMINDATA->Message = $zSTRINGS->Output;
-          unset ($gDATAID);
+          $ADMINDATA->Message = __("Save Successful", array ('id' => $ADMINDATA->tID));
           $ADMINDATA->Update();
         } // if
       } // if
@@ -234,8 +226,7 @@
     case 'DELETE':
       // Check if user has write access;
       if ($zLOCALUSER->userAccess->w == FALSE) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $ADMINDATA->Message = $zSTRINGS->Output;
+        $ADMINDATA->Message = __("Write Access Denied");
         $ADMINDATA->Error = -1;
         break;        
       } // if
@@ -244,10 +235,7 @@
       $ADMINDATA->Synchronize();
       $ADMINDATA->Delete();
       if (!$ADMINDATA->Error) {
-        global $gDATAID;  $gDATAID = $ADMINDATA->tID;
-        $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-        $ADMINDATA->Message = $zSTRINGS->Output;
-        unset ($gDATAID);
+        $ADMINDATA->Message = __("Record Deleted", array ('id' => $ADMINDATA->tID));
         $ADMINDATA->Update();
       } // if
       $ADMINDATA->Select("", "", $gSORT);

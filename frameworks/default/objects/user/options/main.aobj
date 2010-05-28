@@ -172,8 +172,7 @@
  </form> <!-- #options -->
 
     <form id='cancel' name='cancel' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/'>
-     <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
-     <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
     </form>
 
   </div> <!-- #actions -->

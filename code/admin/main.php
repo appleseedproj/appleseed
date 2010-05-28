@@ -72,6 +72,9 @@
     $zAPPLE->End();
   } // if
 
+  // Load admin strings into cache.
+  cLanguage::Load ('en-US', 'system.admin.lang');
+
   // Set the page title.
   $gPAGESUBTITLE = ' - Admin';
  

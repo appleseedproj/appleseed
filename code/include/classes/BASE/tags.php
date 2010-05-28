@@ -386,14 +386,12 @@
          $this->FetchArray();
          $this->Delete();
          $gTAGENTRIES = NULL;
-         $zSTRINGS->Lookup ('MESSAGE.DELETE', $this->Context);
-         $this->Message = $zSTRINGS->Output;
+         $this->Message = __("Record Deleted");
          return (TRUE);
        break;
        case 'TAG_DELETE_ALL':
          // NOTE!! Check if null mass list and error out.
          foreach ($gTAGMASSLIST as $count => $tagentry) {
-           $zSTRINGS->Lookup ('MESSAGE.DELETE_ALL', $this->Context);
            $this->tagInformation->Select ("Name", $tagentry);
            $this->tagInformation->FetchArray();
            $criteria = array ("rID"                   => $pREFERENCEID,
@@ -402,8 +400,7 @@
                               "userAuth_uID"          => $zLOCALUSER->uID);
            $this->DeleteByMultiple ($criteria);
            $gTAGENTRIES = NULL;
-           $zSTRINGS->Lookup ('MESSAGE.DELETE_ALL', $this->Context);
-           $this->Message = $zSTRINGS->Output;
+           $this->Message = __("Records Deleted");
          } // foreach
          
          // NOTE!! Check if null mass list and error out.

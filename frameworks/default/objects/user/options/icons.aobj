@@ -22,8 +22,7 @@
  <?php $zFOCUSUSER->userIcons->Broadcast ("field", "Comments", $gBROADCASTUNIQUE); ?>
 
  <span class='delete'>
-  <?php $zSTRINGS->Lookup ('CONFIRM.DELETE.ICON', $zAPPLE->Context); ?>
-  <?php $zHTML->ButtonLink ('delete_icon', "/profile/$gFOCUSUSERNAME/options/", $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+  <?php $zHTML->ButtonLink ('delete_icon', "/profile/$gFOCUSUSERNAME/options/", __("Confirm Delete")) ?>
  </span>
 
 </li>

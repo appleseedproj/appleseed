@@ -22,8 +22,7 @@
 
     <?php $zHTML->Button ("approve", NULL, ENABLED, NULL, 'COMMENTACTION'); ?>
 
-    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', 'USER.COMMENTS', ENABLED, NULL, 'COMMENTACTION'); ?>
-    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "COMMENTACTION") ?>
+    <?php $zHTML->Button ('delete_all', __("Confirm Delete Selected"), ENABLED, NULL, "COMMENTACTION"); ?>
    </div> <!-- #buttons_top -->
 
    <?php $zCOMMENTS->Broadcast(); ?>

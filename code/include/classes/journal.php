@@ -196,8 +196,7 @@
         $this->Message = $zSTRINGS->Output;
         return (FALSE);
       } else {
-        $zSTRINGS->Lookup ('MESSAGE.DELETEALL');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Records Deleted");
       } // if
      
       return (TRUE);

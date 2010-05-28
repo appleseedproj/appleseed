@@ -11,8 +11,7 @@
  
     <?php $zHTML->Button ($gSELECTBUTTON); ?>
  
-   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zAPPLE->Context); ?>
-   <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+   <?php $zHTML->Button ('delete_all', __("Confirm Delete Selected")) ?>
  
    <?php $zHTML->Titles ("ADMINDATA", "titles", "%TARGET%"); ?>
  

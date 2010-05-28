@@ -76,8 +76,7 @@
   if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
        ($zLOCALUSER->userAccess->a == TRUE) and 
        ($zLOCALUSER->userAccess->w == FALSE) ) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-    $gVIEWDATA->Message = $zSTRINGS->Output;
+    $gVIEWDATA->Message = __("Write Access Denied");
     $gVIEWDATA->Error = 0;
   } // if
 
@@ -111,8 +110,7 @@
     case 'MOVE_UP':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("None Selected");
         $gVIEWDATA->Error = -1;
         break;
       } // if
@@ -133,8 +131,7 @@
     case 'MOVE_DOWN':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("None Selected");
         $gVIEWDATA->Error = -1;
         break;
       } // if
@@ -162,8 +159,7 @@
     case 'DELETE_ALL':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("None Selected");
         $gVIEWDATA->Error = -1;
         break;
       } // if
@@ -210,14 +206,10 @@
           $gVIEWDATA->Select("tID", $datalist[0]);
           $gVIEWDATA->FetchArray ();
 
-          global $gSETNAME; $gSETNAME = $gVIEWDATA->Name;
-
-          $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-          unset ($gSETNAME);
+          $gVIEWDATA->Message = __("Record Deleted", array ('setname' => $gVIEWDATA->Name));
         } else {
-          $zSTRINGS->Lookup ('MESSAGE.DELETEALL', $zAPPLE->Context);
+          $gVIEWDATA->Message = __("Records Deleted");
         } // if
-        $gVIEWDATA->Message = $zSTRINGS->Output;
         unset ($gMASSLIST);
       } // if
 
@@ -231,8 +223,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("Write Access Denied");
         $gVIEWDATA->Error = -1;
         break;        
       } // if
@@ -349,8 +340,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("Write Access Denied");
         $gVIEWDATA->Error = -1;
         break;        
       } // if
@@ -370,13 +360,8 @@
       } // if
 
       if (!$gVIEWDATA->Error) {
-        // Look up the name of the deleted photoset.
-        global $gSETNAME; $gSETNAME = $gVIEWDATA->Name;
-
-        $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("Record Deleted", array ('setname' => $gVIEWDATA->Name));
         $gVIEWDATA->Delete();
-        unset ($gSETNAME);
       } // if
 
       // Adjust the Sort ID (sID) listing.
@@ -548,8 +533,7 @@
 
         // Check if any results were found.
         if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-          $zSTRINGS->Lookup ('ERROR.NONE', $zAPPLE->Context);
-          $gVIEWDATA->Message = $zSTRINGS->Output;
+          $gVIEWDATA->Message = __("None Selected");
           $gVIEWDATA->Broadcast();
         } // if
 

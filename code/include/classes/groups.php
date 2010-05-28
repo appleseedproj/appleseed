@@ -566,7 +566,6 @@
         $bDELETEBUTTON = OUTPUT_NBSP;
         $bADDRESS = OUTPUT_NBSP;
         if ($this->CheckGroupAccess () ) {
-          $zSTRINGS->Lookup ('CONFIRM.DELETE.ENTRY'); 
 
           global $gPOSTDATA;
           $gPOSTDATA['tID'] = $this->groupContent->tID;
@@ -576,7 +575,7 @@
           $gTARGETID = "";
           if ($countchildren > 0) $gTARGETID = $this->groupContent->tID;
 
-          $bDELETEBUTTON = $zHTML->CreateButton ('group_delete', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, "DELETE", "ACTION");
+          $bDELETEBUTTON = $zHTML->CreateButton ('group_delete', __("Confirm Delete"), ENABLED, "DELETE", "ACTION");
           $bADDRESS = "(" . $gADDRESS . ")";
 
           unset ($gPOSTDATA['tID']);
@@ -810,8 +809,7 @@
         case 'DELETE_ALL':
           // Check if any items were selected.
           if (!$gMASSLIST) {
-            $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-            $this->groupContent->Message = $zSTRINGS->Output;
+            $this->groupContent->Message = __("None Selected");
             $this->groupContent->Error = -1;
             break;
           } // if

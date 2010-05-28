@@ -456,8 +456,7 @@
 
         ob_start ();
         
-        $zSTRINGS->Lookup ('ERROR.NONE', 'USER.COMMENTS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Broadcast();
 
         $returnbuffer = ob_get_clean ();
@@ -567,7 +566,6 @@
         $bDELETEBUTTON = OUTPUT_NBSP;
         $bADDRESS = OUTPUT_NBSP;
         if ($this->CheckCommentAccess () ) {
-          $zSTRINGS->Lookup ('CONFIRM.DELETE', 'USER.COMMENTS'); 
 
           global $gPOSTDATA;
           $gPOSTDATA['tID'] = $this->tID;
@@ -578,7 +576,7 @@
           $gTARGETID = "";
           if ($countchildren > 0) $gTARGETID = $this->tID;
 
-          $bDELETEBUTTON = $zHTML->CreateButton ('Delete', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, "DELETE", "COMMENTACTION");
+          $bDELETEBUTTON = $zHTML->CreateButton ('Delete', __("Confirm Delete"), ENABLED, "DELETE", "COMMENTACTION");
           $bADDRESS = "(" . $gCOMMENTADDRESS . ")";
 
           unset ($gPOSTDATA['tID']);
@@ -768,8 +766,7 @@
         case 'DELETE_ALL':
           // Check if any items were selected.
           if (!$gCOMMENTMASSLIST) {
-            $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context . ".COMMENTS");
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("None Selected");
             $this->Error = -1;
             break;
           } // if

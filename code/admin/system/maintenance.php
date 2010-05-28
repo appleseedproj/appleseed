@@ -66,6 +66,9 @@
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
 
+  // Load admin strings into cache.
+  cLanguage::Load ('en-US', 'system.admin.lang');
+
   // Check to see if user has read access for this area.
   if ($zLOCALUSER->userAccess->r == FALSE) {
 
@@ -76,8 +79,7 @@
 
   // Create a warning message if user has no write access.
   if ($zLOCALUSER->userAccess->w == FALSE) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-    $ADMINDATA->Message = $zSTRINGS->Output;
+    $ADMINDATA->Message = __("Write Access Denied");
     $ADMINDATA->Error = 0;
   } // if
 

@@ -146,8 +146,7 @@
       switch ($gSECTION) {
         case 'GENERAL':
           if ($zGROUPS->SaveGeneral ()) {
-            $zSTRINGS->Lookup ("MESSAGE.SAVED");
-            $zGROUPS->Message = $zSTRINGS->Output;
+            $zGROUPS->Message = __("Save Successful");
             $gGROUPSECTION = 'info';
           } // if
         break;
@@ -184,8 +183,7 @@
       $zGROUPS->SavePendingEditor ();
       if ($zGROUPS->Error) {
       } else {
-        $zSTRINGS->Lookup ("MESSAGE.SAVED");
-        $zGROUPS->Message = $zSTRINGS->Output;
+        $zGROUPS->Message = __("Save Successful");
         $gGROUPSECTION = 'info';
       } // if
     break;
@@ -271,8 +269,7 @@
         $zAPPLE->IncludeFile ('code/site/error/403.php', INCLUDE_SECURITY_NONE);
         $zAPPLE->End();
       } // if
-      $zSTRINGS->Lookup ('MESSAGE.DELETED');
-      $zGROUPS->Message = $zSTRINGS->Output;
+      $zGROUPS->Message = __("Record Deleted", array ('id' => $ADMINDATA->tID));
       $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/deleted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
     default:

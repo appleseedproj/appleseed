@@ -143,8 +143,7 @@
   if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
        ($zLOCALUSER->userAccess->a == TRUE) and 
        ($zLOCALUSER->userAccess->w == FALSE) ) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-    $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+    $gVIEWDATA->photoInfo->Message = __("Write Access Denied");
     $gVIEWDATA->photoInfo->Error = 0;
   } // if
 
@@ -186,8 +185,7 @@
     case 'MOVE_UP':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("None Selected");
         $gVIEWDATA->photoInfo->Error = -1;
         break;
       } // if
@@ -208,8 +206,7 @@
     case 'MOVE_DOWN':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("None Selected");
         $gVIEWDATA->photoInfo->Error = -1;
         break;
       } // if
@@ -237,8 +234,7 @@
     case 'DELETE_ALL':
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("None Selected");
         $gVIEWDATA->photoInfo->Error = -1;
         break;
       } // if
@@ -296,14 +292,10 @@
           $gVIEWDATA->photoInfo->Select("tID", $datalist[0]);
           $gVIEWDATA->photoInfo->FetchArray ();
 
-          global $gPHOTOFILENAME; $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-
-          $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-          unset ($gPHOTOFILENAME);
+          $gVIEWDATA->photoInfo->Message = __("Record Deleted", array ('filename' => $gVIEWDATA->photoInfo->Filename));
         } else {
-          $zSTRINGS->Lookup ('MESSAGE.DELETEALL', $zAPPLE->Context);
+          $gVIEWDATA->photoInfo->Message = __("Records Deleted");
         } // if
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
         unset ($gMASSLIST);
 
       } // if
@@ -318,8 +310,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("Write Access Denied");
         $gVIEWDATA->photoInfo->Error = -1;
         break;        
       } // if
@@ -454,8 +445,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("Write Access Denied");
         $gVIEWDATA->photoInfo->Error = -1;
         break;        
       } // if
@@ -572,8 +562,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("Write Access Denied");
         $gVIEWDATA->photoInfo->Error = -1;
         break;        
       } // if
@@ -604,8 +593,7 @@
         // Look up the name of the deleted photoset.
         global $gPHOTOFILENAME; $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
 
-        $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-        $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+        $gVIEWDATA->photoInfo->Message = __("Record Deleted");
         $gVIEWDATA->photoInfo->Delete();
         $gVIEWDATA->photoInfo->AdjustSort ("sID", "photoSets_tID", $photosetid);
 
@@ -716,8 +704,7 @@
 
         // Check if any results were found.
         if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-          $zSTRINGS->Lookup ('ERROR.NONE', $zAPPLE->Context);
-          $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+          $gVIEWDATA->photoInfo->Message = __("None Selected");
           $gVIEWDATA->photoInfo->Broadcast();
         } // if
 

@@ -74,8 +74,7 @@
   if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
        ($zLOCALUSER->userAccess->a == TRUE) and
        ($zLOCALUSER->userAccess->w == FALSE) ) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.JOURNAL');
-    $zLOCALUSER->Message = $zSTRINGS->Output;
+    $zLOCALUSER->Message = __("Write Access Denied");
     $zLOCALUSER->Error = 0;
   } // if
 
@@ -173,8 +172,7 @@
       $zJOURNAL->Delete ();
 
       if ($zJOURNAL->Error != -1) {
-        $zSTRINGS->Lookup ('MESSAGE.DELETE', 'USER.JOURNAL');
-        $zJOURNAL->Message = $zSTRINGS->Output;
+        $zJOURNAL->Message = __("Record Deleted");
       } // if
     break;
 

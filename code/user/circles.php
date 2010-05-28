@@ -50,8 +50,7 @@
   if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
        ($zLOCALUSER->userAccess->a == TRUE) and
        ($zLOCALUSER->userAccess->w == FALSE) ) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-    $zLOCALUSER->Message = $zSTRINGS->Output;
+    $zLOCALUSER->Message = __("Write Access Denied");
     $zLOCALUSER->Error = 0;
   } // if
 
@@ -103,8 +102,7 @@
       $zCIRCLES->Delete ();
 
       if (!$zCIRCLES->Error) {
-        $zSTRINGS->Lookup ('MESSAGE.DELETE', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("Record Deleted");
       } // if
 
     break;
@@ -114,16 +112,14 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("Write Access Denied");
         $zCIRCLES->Error = -1;
         break;        
       } // if
 
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("None Selected");
         $zCIRCLES->Error = -1;
         break;
       } // if
@@ -146,16 +142,14 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("Write Access Denied");
         $zCIRCLES->Error = -1;
         break;        
       } // if
 
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("None Selected");
         $zCIRCLES->Error = -1;
         break;
       } // if
@@ -185,8 +179,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("Write Access Denied");
         $zCIRCLES->Error = -1;
         $gMASSLIST = array ();
         break;        
@@ -194,8 +187,7 @@
 
       // Check if any items were selected.
       if (!$gMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("None Selected");
         $zCIRCLES->Error = -1;
         break;
       } // if
@@ -213,8 +205,7 @@
       } // foreach
 
       if (!$zCIRCLES->Error) {
-        $zSTRINGS->Lookup ('MESSAGE.DELETEALL', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("Records Deleted");
       } // if
 
     break;
@@ -227,8 +218,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $zCIRCLES->Message = $zSTRINGS->Output;
+        $zCIRCLES->Message = __("Write Access Denied");
         $zCIRCLES->Error = -1;
         break;        
       } // if

@@ -47,8 +47,7 @@
   if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
        ($zLOCALUSER->userAccess->a == TRUE) and
        ($zLOCALUSER->userAccess->w == FALSE) ) {
-    $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
-    $zLOCALUSER->Message = $zSTRINGS->Output;
+    $zLOCALUSER->Message = __("Write Access Denied");
     $zLOCALUSER->Error = 0;
   } // if
 
@@ -102,8 +101,7 @@
       // Check if admin user has proper access.
       if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
-        $zLOCALUSER->Message = $zSTRINGS->Output;
+        $zLOCALUSER->Message = __("Write Access Denied");
         $zLOCALUSER->Error = -1;
         break;
       } // if
@@ -145,8 +143,7 @@
       // Check if admin user has proper access.
       if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
-        $zLOCALUSER->Message = $zSTRINGS->Output;
+        $zLOCALUSER->Message = __("Write Access Denied");
         $zLOCALUSER->Error = -1;
         break;
       } // if
@@ -159,8 +156,7 @@
       // Check if admin user has proper access.
       if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', 'USER.OPTIONS');
-        $zLOCALUSER->Message = $zSTRINGS->Output;
+        $zLOCALUSER->Message = __("Write Access Denied");
         $zLOCALUSER->Error = -1;
         break;
       } // if

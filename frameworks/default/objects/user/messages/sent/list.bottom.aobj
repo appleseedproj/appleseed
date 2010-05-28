@@ -5,7 +5,6 @@
    
    <span class='spam_all'>&nbsp;</span>
   
-   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL'); ?>
    <?php $zHTML->Button ('delete_forever_all', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
 
    <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>

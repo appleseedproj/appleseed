@@ -141,8 +141,7 @@
       if ( ($gFOCUSUSERID != $zAUTHUSER->uID) and 
            ($zLOCALUSER->userAccess->a == TRUE) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
-        $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-        $zFRIENDS->Message = $zSTRINGS->Output;
+        $zFRIENDS->Message = __("Write Access Denied");
         $zFRIENDS->Error = -1;
         break;        
       } // if

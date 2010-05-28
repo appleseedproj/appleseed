@@ -327,8 +327,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ("ERROR.NONESELECTED", $this->PageContext);
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -1553,8 +1552,7 @@
       global $gFRIENDUSERNAME;
       $gFRIENDUSERNAME = $USER->userProfile->GetAlias ();
 
-      $zSTRINGS->Lookup ('MESSAGE.DELETE', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Record Deleted");
 
       return (TRUE);
     } // Remove
@@ -1568,8 +1566,7 @@
 
       // Check if any items were selected.
       if (!$pMASSLIST) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED', $zAPPLE->Context);
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -1582,8 +1579,7 @@
         $this->Remove ($this->Username);
       
         if (!$this->Error) {
-          $zSTRINGS->Lookup ('MESSAGE.DELETEALL', $zAPPLE->Context);
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Records Deleted");
         } // if
       } // foreach
 
@@ -1726,8 +1722,7 @@
           
       global $gFRIENDNAME;
       $gFRIENDNAME = $fullname;
-      $zSTRINGS->Lookup ('MESSAGE.DELETED', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Record Deleted");
 
       $gCIRCLEVIEWADMIN = CIRCLE_EDITOR;
       $gCIRCLEVIEW = CIRCLE_EDITOR;

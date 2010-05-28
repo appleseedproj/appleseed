@@ -65,14 +65,12 @@
       <?php $zHTML->Post ($gPOSTDATA); ?>
       <input type='hidden' id='gtID' name='gtID' 
              value='<?php echo $gVIEWDATA->tID ?>'>
-      <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', 'USER.PHOTOSETS'); ?>
-      <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+      <?php $zHTML->Button ('delete', __("Confirm Delete")) ?>
      </form> <!-- #delete -->
      <form id='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.PHOTOSETS'); ?>
-      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
     </div> <!-- #actions -->
 

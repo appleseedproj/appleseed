@@ -46,8 +46,7 @@
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <input type='hidden' id='gIDENTIFIER' name='gIDENTIFIER' value='<?php echo $gIDENTIFIER; ?>'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.MESSAGES'); ?>
-      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
    </div> <!-- #buttons -->
  

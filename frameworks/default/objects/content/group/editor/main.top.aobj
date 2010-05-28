@@ -29,8 +29,7 @@
    <div id='buttons_top'>
     <?php $zHTML->Button ($gSELECTBUTTON, NULL, ENABLED, NULL, 'ACTION'); ?>
 
-    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL'); ?>
-    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "ACTION") ?>
+    <?php $zHTML->Button ('delete_all', __("Confirm Delete All")) ?>
    </div> <!-- #buttons_top -->
 
    <?php $zGROUPS->groupContent->Broadcast(); ?>

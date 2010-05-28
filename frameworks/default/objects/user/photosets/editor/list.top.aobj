@@ -16,8 +16,7 @@
 
     <?php $zHTML->Button ($gSELECTBUTTON); ?>
 
-    <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', 'USER.PHOTOSETS'); ?>
-    <?php $zHTML->Button ('delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+    <?php $zHTML->Button ('delete_all', __("Confirm Delete Selected")) ?>
    </div> <!-- #buttons_top -->
 
   <p id='heading'>

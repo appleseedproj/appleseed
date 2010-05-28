@@ -204,12 +204,8 @@
            $gLABEL = $zMESSAGE->messageLabels->Label;
          } // if
  
-         global $gCONFIRMDELETE;
-         $zSTRINGS->Lookup ('CONFIRM.DELETE', 'USER.MESSAGES.LABELS'); 
-         $gCONFIRMDELETE = $zSTRINGS->Output;
          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.middle.aobj", INCLUDE_SECURITY_NONE);
          unset ($gEXTRAPOSTDATA);
-         unset ($gCONFIRMDELETE);
 
        } else {
         break;

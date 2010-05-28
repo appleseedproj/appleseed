@@ -60,8 +60,7 @@
      <form id='cancel' method='POST' action='_admin/users/accounts/'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', $zAPPLE->Context); ?>
-      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
  
    </div> <!-- #actions -->

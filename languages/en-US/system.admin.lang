@@ -1,0 +1,18 @@
+[global]
+SAVE_SUCCESSFUL="Record #%id$s has been updated."
+RECORD_DELETED="Record #%id$s has been deleted."
+RECORDS_DELETED="The selected records have been deleted."
+
+[menu]
+ADMINISTRATION_TITLE=Administration
+ADMIN_CONFIG_MENU=Config
+ADMIN_USERS_MENU=Users
+ADMIN_CONTENT_MENU=Content
+ADMIN_SYSTEM_MENU=System
+ADMIN_CONTROL_MENU=Control
+ADMIN_CONFIG_TITLE=APPLESEED NODE CONFIGURATION
+ADMIN_CONFIG_DESCRIPTION=Below are the most common Appleseed node configuration options.
+
+[admin.strings]
+STRINGS_ADMIN_TITLE=Strings
+STRINGS_ADMIN_DESCRIPTION=

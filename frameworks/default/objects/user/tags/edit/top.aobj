@@ -17,7 +17,6 @@
    
    <?php $zHTML->Button ('tag_deemphasize_all'); ?>
    
-   <?php $zSTRINGS->Lookup ('CONFIRM.DELETEALL', $zTAGS->Context); ?>
-   <?php $zHTML->Button ('tag_delete_all', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+   <?php $zHTML->Button ('tag_delete_all', __("Confirm Delete Selected")) ?>
    
    <ul>

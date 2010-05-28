@@ -43,8 +43,7 @@
      <form name='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
      <?php $zHTML->Post ($gPOSTDATA); ?>
-     <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL'); ?>
-     <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output), ENABLED, NULL, "ACTION"); ?>
+     <?php $zHTML->Button ('cancel', __("Confirm Cancel"), ENABLED, NULL, "ACTION"); ?>
      </form> <!-- #cancel -->
   </div> <!-- #actions -->
 

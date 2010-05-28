@@ -15,7 +15,7 @@
 
      <form method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gtID' value='<?php echo $gtID; ?>' />
-      <?php $zHTML->Button ('delete_label', $zAPPLE->ParseTags ($gCONFIRMDELETE)); ?>
+      <?php $zHTML->Button ('delete_label', __("Confirm Delete")); ?>
      </form>
      <?php echo $gFIELDERROR; ?>
    </li> <!-- .[alternate] -->

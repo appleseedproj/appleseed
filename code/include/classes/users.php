@@ -630,8 +630,7 @@
           $zICON->Message = $zSTRINGS->Output;
           $zICON->Error = -1;;
         } else {
-          $zSTRINGS->Lookup ('MESSAGE.DELETE', 'USER.OPTIONS.ICONS');
-          $zICON->Message = $zSTRINGS->Output;
+          $zICON->Message = __("Record Deleted");
         } // if
 
         // Update all references to this icon, replace with newest icon.

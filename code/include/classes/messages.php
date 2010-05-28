@@ -1410,8 +1410,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -1462,8 +1461,7 @@
       global $zSTRINGS;
     
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -1584,8 +1582,7 @@
       } // if
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2088,8 +2085,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2113,8 +2109,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2149,8 +2144,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2185,8 +2179,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2584,8 +2577,7 @@
         $this->messageRecipient->Add ();
       } // foreach
       
-      $zSTRINGS->Lookup ('MESSAGE.SAVED');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Save Successful");
 
       return (TRUE);
       
@@ -2639,8 +2631,7 @@
       $this->$classlocation->tID = $this->$classlocation->tID;
       $this->$classlocation->Delete ();
 
-      $zSTRINGS->Lookup ('MESSAGE.DELETE');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Record Deleted");
 
       return (TRUE);
     } // DeleteForever
@@ -2650,8 +2641,7 @@
       global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
-        $zSTRINGS->Lookup ('ERROR.NONESELECTED');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("None Selected");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2663,13 +2653,7 @@
 
       } // foreach
 
-      global $gMESSAGECOUNT;
-
-      $gMESSAGECOUNT = count ($pDATALIST);
-      $zSTRINGS->Lookup ('MESSAGE.DELETEALL');
-      $this->Message = $zSTRINGS->Output;
-
-      unset ($gMESSAGECOUNT);
+      $this->Message = __("Records Deleted", array ('count' => count($pDATALIST)));
 
       return (TRUE);
 

@@ -195,8 +195,7 @@
         case 'SAVE':
           // Check if user has write access;
           if ($zLOCALUSER->userAccess->e == FALSE) {
-            $zSTRINGS->Lookup ('ERROR.CANTWRITE', $zAPPLE->Context);
-            $this->Message = $zSTRINGS->Output;
+            $ADMINDATA->Message = __("Write Access Denied");
             $this->Error = -1;
             break;        
           } // if

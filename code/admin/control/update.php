@@ -77,6 +77,9 @@
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
   
+  // Load admin strings into cache.
+  cLanguage::Load ('en-US', 'system.admin.lang');
+
   // Create the update class.
   $zUPDATE = new cSYSTEMUPDATE ();
 

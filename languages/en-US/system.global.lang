@@ -6,19 +6,14 @@ YOU_ARE_LOGGED_IN_AS="Currently logged in as <a href=""http://%domain$s/profile/
 LOGGED_IN_AS_ADMINISTRATOR="Administrator logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 ANONYMOUS="(anonymous)"
 COPYRIGHT_NOTICE="Copyright &copy; 2004-2010 by the Appleseed Project under the GNU General Public License.  All Rights Reserved."
-
-[admin]
-ADMINISTRATION_TITLE=Administration
-ADMIN_CONFIG_MENU=Config
-ADMIN_USERS_MENU=Users
-ADMIN_CONTENT_MENU=Content
-ADMIN_SYSTEM_MENU=System
-ADMIN_CONTROL_MENU=Control
-ADMIN_CONFIG_TITLE=APPLESEED NODE CONFIGURATION
-ADMIN_CONFIG_DESCRIPTION=Below are the most common Appleseed node configuration options.
-
-STRINGS_ADMIN_TITLE=Strings
-STRINGS_ADMIN_DESCRIPTION=
+WRITE_ACCESS_DENIED="Insufficient Access To Make Modifications."
+NONE_SELECTED="Error: Nothing was selected."
+SAVE_SUCCESSFUL="Saved successfully!"
+RECORD_DELETED="Item #%id$s has been deleted."
+RECORDS_DELETED="The selected items have been deleted."
+CONFIRM_CANCEL="Are you sure you want to cancel?"
+CONFIRM_DELETE="Are you sure you want to delete this item?"
+CONFIRM_DELETE_SELECTED="Are you sure you want to delete the selected item?"
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?
@@ -26,7 +21,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;LABEL.REMOTELOGIN:=You are remotely logged in as <asd user='%AUTHUSERNAME%' domain='%AUTHDOMAIN%' popup='off' />
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?
 ;LABEL.ANONYMOUS:=(anonymous)
-;ERROR.CANTWRITE:=INSUFFICIENT ACCESS TO MAKE MODIFICATIONS.
 ;LABEL.ANONYMOUS.FULLNAME:=An Anonymous User
 ;ERROR.NOTNULL:=Do not leave this field blank
 ;FOOTNOTE.PAGES:=Pages: %PAGESLIST%
@@ -75,17 +69,12 @@ STRINGS_ADMIN_DESCRIPTION=
 ;LABEL.TRUSTED:ADMIN.SYSTEM.NODES=Trusted
 ;LABEL.BLOCKED:ADMIN.SYSTEM.NODES=Blocked
 ;LABEL.NEVER:ADMIN.SYSTEM.NODES=Never
-;ERROR.NONESELECTED:ADMIN.SYSTEM.OPTIONS=NO OPTIONS HAVE BEEN SELECTED.  NO ACTION TAKEN.
 ;LABEL.NEW:ADMIN.SYSTEM.OPTIONS=NEW OPTION
-;ERROR.NONESELECTED:ADMIN.SYSTEM.STRINGS=NO STRINGS HAVE BEEN SELECTED.  NO ACTION TAKEN.
 ;LABEL.EDIT:ADMIN.SYSTEM.STRINGS=EDIT SYSTEM STRING
 ;LABEL.NEW:ADMIN.SYSTEM.STRINGS=NEW STRING
 ;OBJECT.CONTENT:ADMIN.USERS=WELCOME TO THE USER CONFIGURATION PAGE.\n\nHere you can change user settings.  Please choose an option from the menu above.
-;ERROR.NONESELECTED:ADMIN.USERS.ACCESS=NO ACCESS RECORDS HAVE BEEN SELECTED.  NO ACTION TAKEN.
 ;LABEL.EDIT:ADMIN.USERS.ACCOUNTS=EDIT <asd user='%EDITUSERNAME%' />
 ;LABEL.PRESERVE:ADMIN.USERS.ACCOUNTS= (To preserve password, leave this blank). 
-;ERROR.NONESELECTED:ADMIN.USERS.ACCOUNTS=NO ACCOUNTS HAVE BEEN SELECTED.  NO ACTION TAKEN.
-;ERROR.NONESELECTED:ADMIN.USERS.QUESTIONS=NO QUESTIONS HAVE BEEN SELECTED.  NO ACTION TAKEN.
 ;OBJECT.TITLE:CONTENT.ARTICLES=NEWEST ARTICLES
 ;LABEL.COUNT:CONTENT.ARTICLES=%COMMENTCOUNT% comment(s).
 ;LABEL.TITLE:CONTENT.ARTICLES=Title:
@@ -154,7 +143,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;MAIL.BODY:CONTENT.GROUP=Hello, %REPLIEDUSER%.\n\n%REPLYINGUSER% has replied to your group post.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
 ;MAIL.SUBJECT:CONTENT.GROUp=%REPLYINGUSER% has replied to your group post.
 ;MAIL.FROMNAME:CONTENT.GROUP=Appleseed Groups
-;ERROR.NONESELECTED:CONTENT.GROUP=No Entries Were Selected.
 ;CONFIRM.DELETE.ENTRY:CONTENT.GROUP=Are you sure you want to delete this entry?
 ;MESSAGE.MEMBER.EDITOR:CONTENT.GROUP=Member list has been saved.
 ;MESSAGE.PENDING.EDITOR:CONTENT.GROUP=Pending list has been saved.
@@ -282,7 +270,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;CONFIRM.DENY:USER.FRIENDS=Are you sure you want to deny this friends request?
 ;MESSAGE.APPROVED:USER.FRIENDS=The friend request from <asd id='global' name='NEWFRIEND' case='proper' /> has been approved.
 ;MESSAGE.REQUEST:USER.FRIENDS=<asd id='global' name='REQUESTEDUSER' case='proper' /> has been sent a friend request.
-;ERROR.NONESELECTED:USER.FRIENDS=No friends were selected.
 ;MESSAGE.DELETEALL:USER.FRIENDS=The selected profiles have been removed from your friends list.
 ;MESSAGE.DENIED:USER.FRIENDS=Friend request from %DENIEDNAME% has been denied.
 ;LABEL.EDIT:USER.FRIENDS=EDIT FRIEND
@@ -315,7 +302,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;MESSAGE.NEW:USER.FRIENDS.CIRCLES=Friends circle '<asd id='global' name='CIRCLENAME' case='proper' />' has been added.
 ;MESSAGE.DELETEALL:USER.FRIENDS.CIRCLES=The selected friends circles have been deleted.
 ;ERROR.NOTNULL:USER.FRIENDS.CIRCLES=Do not leave this field blank.
-;ERROR.NONESELECTED:USER.FRIENDS.CIRCLES=No friend circles were selected.
 ;ERROR.FROMONE:USER.FRIENDS.CIRCLES=Cannot move the first friends circle up any farther.
 ;ERROR.CANTWRITE:USER.FRIENDS.CIRCLES=INSUFFICIENT ACCESS TO MODIFY FRIENDS CIRCLES.
 ;MAIL.SUBJECT:USER.FRIENDS.DENY=%SOURCEUSER% has denied your friend request!
@@ -327,7 +313,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;MESSAGE.NONE:USER.GROUPS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> Is Not A Member Of Any Groups.
 ;LABEL.MEMBERS:USER.GROUPS=Members: %MEMBERCOUNT%
 ;LABEL.STATS:USER.INFO=STATISTICS FOR <asd id='global' name='FOCUSFULLNAME' case='upper' />
-;ERROR.NONESELECTED:USER.INFO.COMMENTS=No Comments Were Selected.
 ;MAIL.SUBJECT:USER.INFO.COMMENTS=%COMMENTINGUSER% has left a comment on your profile.
 ;MAIL.FROM:USER.INFO.COMMENTS=comments@%SITEDOMAIN%
 ;MAIL.BODY:USER.INFO.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your profile.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
@@ -363,14 +348,12 @@ STRINGS_ADMIN_DESCRIPTION=
 ;MAIL.SUBJECT:USER.JOURNAL.COMMENTS=%COMMENTINGUSER% has left a comment on your journal.
 ;MAIL.FROM:USER.JOURNAL.COMMENTS=comments@%SITEDOMAIN%
 ;MAIL.BODY:USER.JOURNAL.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your journal entry.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
-;ERROR.NONESELECTED:USER.JOURNAL.COMMENTS=No Comments Were Selected.
 ;MAIL.FROMNAME:USER.JOURNAL.COMMENTS=Appleseed Comments
 ;LABEL.COUNT:USER.JOURNALS=%COMMENTCOUNT% comment(s).
 ;ERROR.CANTWRITE:USER.JOURNALS=INSUFFICIENT ACCESS TO MODIFY JOURNAL.
 ;MESSAGE.DELETE:USER.MESSAGES=This message has been deleted and cannot be restored.
 ;MESSAGE.SPAM:USER.MESSAGES=This message has been marked as spam.
 ;MESSAGE.DELETEALL:USER.MESSAGES=%MESSAGECOUNT% message(s) have been deleted.
-;ERROR.NONESELECTED:USER.MESSAGES=No messages have been selected.
 ;MESSAGE.SAVED:USER.MESSAGES=Message has been saved to the 'Drafts' folder.
 ;LABEL.RESTORE:USER.MESSAGES=RESTORE FROM DRAFT.
 ;LABEL.NOSUBJECT:USER.MESSAGES=(no subject)
@@ -507,7 +490,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;LABEL.DESCRIPTION:USER.PHOTO=DESCRIPTION
 ;LINK.ORIGINAL:USER.PHOTO=Original Size
 ;OBJECT.TITLE:USER.PHOTO=TAGS
-;ERROR.NONESELECTED:USER.PHOTO.COMMENTS=No Comments Were Selected.
 ;MESSAGE.NOEXIF:USER.PHOTOS=No extended information available.
 ;LABEL.EXIFMAKE:USER.PHOTOS=Make:
 ;LABEL.EXIFMODEL:USER.PHOTOS=Model:
@@ -538,7 +520,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;ERROR.NOTNULL:USER.PHOTOS=Do not leave this field blank.
 ;ERROR.PAGE:USER.PHOTOS=Unable to save this photo.  See below for errors.
 ;ERROR.DUPLICATE:USER.PHOTOS=<asd id='global' name='FIELDNAME' case='proper' /> already exists. Please choose another..
-;ERROR.NONESELECTED:USER.PHOTOS=No photos were selected.
 ;ERROR.FROMONE:USER.PHOTOS=Cannot move the first photo up any farther.
 ;ERROR.ILLEGALCHAR:USER.PHOTOS=This field can only contain words and numbers, no symbols or spaces.
 ;ERROR.CANTWRITE:USER.PHOTOS=INSUFFICIENT ACCESS TO MODIFY PHOTOS.
@@ -548,7 +529,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;INFO.HINT:USER.PHOTOS=<i>NOTE: </i>Use this to link this photo: &lt;asd id='image' hint='%IMAGEHINT%' /&gt;
 ;ERROR.NOTIMAGE:USER.PHOTOS=The file you uploaded is not a valid image file.  Try again.
 ;LABEL.COMMENTS:USER.PHOTOS=%COMMENTCOUNT% Comment(s).
-;ERROR.NONESELECTED:USER.PHOTOS.COMMENTS=No Comments Were Selected.
 ;ERROR.NONE:USER.PHOTOSETS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> has not created any photo albums.
 ;LABEL.NEW:USER.PHOTOSETS=ADD A NEW ALBUM:
 ;ERROR.NOTNULL:USER.PHOTOSETS=Do not leave this field blank.
@@ -569,7 +549,6 @@ STRINGS_ADMIN_DESCRIPTION=
 ;ERROR.PAGE:USER.PHOTOSETS=Unable to save this album.  See below for errors.
 ;CONFIRM.DELETEALL:USER.PHOTOSETS=Are you sure you want to delete these albums?
 ;CONFIRM.DELETE:USER.PHOTOSETS=Are you sure you want to delete this photo album?
-;ERROR.NONESELECTED:USER.PHOTOSETS=No photo albums were selected.
 ;MESSAGE.DELETE:USER.PHOTOSETS=Album '%SETNAME%' has been deleted.
 ;MESSAGE.DELETEALL:USER.PHOTOSETS=The selected photo albums have been deleted.
 ;ERROR.DIR:USER.PHOTOSETS=Could not modify album directory.  Please contact the administrator.

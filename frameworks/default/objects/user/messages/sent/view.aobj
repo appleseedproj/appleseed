@@ -20,8 +20,7 @@
  
     <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zSTRINGS->Lookup ('CONFIRM.DELETE'); ?>
-     <?php $zHTML->Button ('delete_forever', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+     <?php $zHTML->Button ('delete_forever', __("Confirm Delete")); ?>
     </form> <!-- #delete -->
  
    </div> <!-- #buttons -->

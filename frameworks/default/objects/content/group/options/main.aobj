@@ -83,15 +83,13 @@
    <form id='delete' method='POST' action='<?php echo $gTARGET; ?>'>
     <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-    <?php $zSTRINGS->Lookup ('CONFIRM.DELETE'); ?>
-    <?php $zHTML->Button ('delete_group', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+    <?php $zHTML->Button ('delete', __("Confirm Delete")) ?>
    </form> <!-- #delete -->
 
    <form id='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
     <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-    <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL'); ?>
-    <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+    <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
    </form> <!-- #cancel -->
   </div> <!-- #actions -->
    </div> <!-- #options -->

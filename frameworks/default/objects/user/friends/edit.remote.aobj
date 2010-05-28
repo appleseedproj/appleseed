@@ -69,14 +69,12 @@
       <?php $zHTML->Post ($gPOSTDATA); ?>
       <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username ?>'>
       <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain ?>'>
-      <?php $zSTRINGS->Lookup ('CONFIRM.DELETE', 'USER.FRIENDS'); ?>
-      <?php $zHTML->Button ('delete', $zAPPLE->ParseTags ($zSTRINGS->Output)) ?>
+      <?php $zHTML->Button ('delete', __("Confirm Delete")) ?>
      </form> <!-- #delete -->
      <form id='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zSTRINGS->Lookup ('CONFIRM.CANCEL', 'USER.FRIENDS'); ?>
-      <?php $zHTML->Button ('cancel', $zAPPLE->ParseTags ($zSTRINGS->Output)); ?>
+      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
     </div> <!-- #actions -->
 
