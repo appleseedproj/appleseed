@@ -195,7 +195,6 @@
         } else {
           $ADMINDATA->Message = __("Records Deleted");
         } // if
-        $ADMINDATA->Message = $zSTRINGS->Output;
         unset ($gDATALIST);
         unset ($gMASSLIST);
       } // if
