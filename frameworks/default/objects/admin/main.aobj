@@ -1,5 +1,7 @@
-<h1>
- <?php $zSTRINGS->Display ('OBJECT.TITLE', 'ADMIN.MAIN'); ?>
-</h1>
+<section id='admin'>
+  <h1>
+   <?php echo __("Admin Title"); ?>
+  </h1>
 
-<?php $zSTRINGS->Display ('OBJECT.CONTENT', 'ADMIN.MAIN'); ?>
+   <?php echo __("Admin Description"); ?>
+ </section>
