@@ -1,3 +1,12 @@
-<div id='container'>
- <?php $zSTRINGS->Display ('OBJECT.CONTENT', $zAPPLE->Context); ?>
-</div> <!-- #container -->
+<section id='admin_system'>
+  <h1>
+    <?php echo __("Admin System Title"); ?>
+  </h1>
+
+  <p>
+    <?php echo __("Admin System Description"); ?>
+  </p>
+
+</section>
+
+

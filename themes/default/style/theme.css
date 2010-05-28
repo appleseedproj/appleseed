@@ -118,7 +118,12 @@ li.selected a { text-decoration: underline; color: #bf4630; }
 footer { padding-bottom: 40px; }
 footer h1 { font-size: 110%; border-bottom: 1px solid #639a00; }
 footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
---
+
+/* -- */
+
+p.message { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:#639a00; color:#f1ffd6; }
+
+p.error { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:#639a00; background-color:#bf4630; color:#f1ffd6; }
 
 #systemstatus { width:100%; background: #f1ffd6; text-align:center; padding:5px 0px; margin:0 0 10px 0; border-radius: 0 0 20px 20px; -moz-border-radius: 0 0 20px 20px; -webkit-border-radius: 0 0 20px 20px; }
 #debug { width:920px; clear:both; float:left; background: #f1ffd6; padding:20px; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; }
@@ -133,3 +138,7 @@ footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
 #debug .type { float:left; width:100px; }
 #debug .line { float:left; width:40px; }
 #debug .file { float:left; clear:both; width:100%; color:#999999; }
+
+button[disabled] {
+		display:none;
+}

@@ -1,5 +1,11 @@
- <div id='container'>
+ <section id='admin_content'>
+  <h1>
+    <?php echo __("Admin Content Title"); ?>
+  </h1>
 
-  (No text yet)
+  <p>
+    <?php echo __("Admin Content Description"); ?>
+  </p>
 
- </div> <!-- #container -->
+</section>
+ 

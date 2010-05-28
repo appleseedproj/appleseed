@@ -1,5 +1,11 @@
- <div id='container'>
+<section id='admin_control'>
+  <h1>
+    <?php echo __("Admin Control Title"); ?>
+  </h1>
 
-  (No text yet)
+  <p>
+    <?php echo __("Admin Control Description"); ?>
+  </p>
 
- </div> <!-- #container -->
+</section>
+

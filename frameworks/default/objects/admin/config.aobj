@@ -1,9 +1,7 @@
-<div id='config'>
- <div id='caption'>
-  <?php $zSTRINGS->Display ('OBJECT.TITLE'); ?>
- </div> <!-- #caption -->
- 
- <div id='container'>
+<section id='admin_config'>
+ <h1>
+ 	<?php echo __("Admin Config Title"); ?>
+ </h1>
  
   <?php $zCONFIG->Broadcast(); ?>
  
@@ -13,46 +11,38 @@
   
   <form id='config' name='config' method='POST' action='_admin/config/'>
   
-    <p id='shutdown'> 
-     <?php $zSTRINGS->Display ('LABEL.SHUTDOWN'); ?>
-     <?php $zTOOLTIPS->Display ('SHUTDOWN'); ?>
-    </p>
+    <label for='shutdown'> 
+    	<?php echo __("System Shutdown"); ?>
+    </label>
     <?php $zHTML->Menu ('SHUTDOWN', $gSHUTDOWNLISTING, 1, $gSETTINGS['Shutdown']); ?>
     
-    <p id='summary'> 
-     <?php $zSTRINGS->Display ('LABEL.SUMMARY'); ?>
-     <?php $zTOOLTIPS->Display ('SUMMARY'); ?>
-    </p>
+    <label for='summary'> 
+    	<?php echo __("Node Summary"); ?>
+    </label>
     <?php $zHTML->TextArea ("SUMMARY", $gSETTINGS['NodeSummary']); ?><br />
     
-    <p id='language'> 
+    <label for='language'> 
      <?php $zSTRINGS->Display ('LABEL.LANGUAGE'); ?>
-     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
-    </p>
+    </label>
     <?php $zHTML->Menu ('LANGUAGE', $gLANGUAGELISTING, 1, $gSETTINGS['Language']); ?>
     
-    <p id='theme'> 
+    <label for='theme'> 
      <?php $zSTRINGS->Display ('LABEL.THEME'); ?>
-     <?php $zTOOLTIPS->Display ('THEME'); ?>
-    </p>
+    </label>
     <?php $zHTML->Menu ('THEME', $gTHEMELISTING, 1, $gSETTINGS['DefaultTheme']); ?>
     
-    <p id='storage'> 
+    <label for='storage'> 
      <?php $zSTRINGS->Display ('LABEL.STORAGE'); ?>
-     <?php $zTOOLTIPS->Display ('STORAGE'); ?>
-    </p>
+    </label>
     <?php $zHTML->TextBox ("STORAGE", 5, $gSETTINGS['StorageLimit']); ?><br />
    
-    <p id='Default Invites'> 
+    <label for='Default Invites'> 
      <?php $zSTRINGS->Display ('LABEL.INVITES'); ?>
-     <?php $zTOOLTIPS->Display ('INVITES'); ?>
-    </p>
+    </label>
     <?php $zHTML->TextBox ("INVITES", 5, $gSETTINGS['InviteAmount']); ?><br />
     
-    <?php $zHTML->Button ('save'); ?>
+    <?php $zHTML->Button ('Save'); ?>
    
   </form> <!-- #config -->
  
- </div> <!-- #container -->
-
-</div> <!-- #config -->
+</section> <!-- #config -->
