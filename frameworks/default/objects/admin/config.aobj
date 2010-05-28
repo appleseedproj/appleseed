@@ -6,7 +6,7 @@
   <?php $zCONFIG->Broadcast(); ?>
  
   <p id='content'>
-   <?php $zSTRINGS->Display ('OBJECT.CONTENT'); ?>
+ 	<?php echo __("Admin Config Description"); ?>
   </p>
   
   <form id='config' name='config' method='POST' action='_admin/config/'>
@@ -22,12 +22,12 @@
     <?php $zHTML->TextArea ("SUMMARY", $gSETTINGS['NodeSummary']); ?><br />
     
     <label for='language'> 
-     <?php $zSTRINGS->Display ('LABEL.LANGUAGE'); ?>
+      <?php echo __("Default Language"); ?>
     </label>
     <?php $zHTML->Menu ('LANGUAGE', $gLANGUAGELISTING, 1, $gSETTINGS['Language']); ?>
     
     <label for='theme'> 
-     <?php $zSTRINGS->Display ('LABEL.THEME'); ?>
+      <?php echo __("Default Theme"); ?>
     </label>
     <?php $zHTML->Menu ('THEME', $gTHEMELISTING, 1, $gSETTINGS['DefaultTheme']); ?>
     
@@ -37,7 +37,7 @@
     <?php $zHTML->TextBox ("STORAGE", 5, $gSETTINGS['StorageLimit']); ?><br />
    
     <label for='Default Invites'> 
-     <?php $zSTRINGS->Display ('LABEL.INVITES'); ?>
+      <?php echo __("Default Invites"); ?>
     </label>
     <?php $zHTML->TextBox ("INVITES", 5, $gSETTINGS['InviteAmount']); ?><br />
     

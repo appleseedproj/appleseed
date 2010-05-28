@@ -3587,8 +3587,6 @@
        global $zSTRINGS;
        global $gREFRESHWAIT;
    
-       $zSTRINGS->Lookup ('BROWSER.REFRESH', $zAPPLE->Context);
-   
        $returnvalue = "  <meta http-equiv='Refresh' content='$gREFRESHWAIT;url=$pLOCATION'>";
    
        return ($returnvalue);

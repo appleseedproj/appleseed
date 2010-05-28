@@ -1,13 +1,14 @@
 <!-- ## title obj -->
 <?php $zHTML->Title (); ?>
 
- <div class='sectionFULL' id='refresh'>
+   <!-- ## refresh buf -->
+   <?php echo $bREFRESHLINE; ?>
+   
+   <!-- ## header obj --> 
+   <div id="sys_message" class="container_12"> 
+     <p> <a href="<?php echo $gSITEURL; ?>"><?php echo __("Click here to continue"); ?></a> </p> 
 
- <!-- ## refresh buf -->
- <?php echo $bREFRESHLINE; ?>
+   </div>
 
- <?php $zSTRINGS->Display ('BROWSER.REFRESH', $zAPPLE->Context); ?>
-
- </div> <!-- ## sectionFULL.refresh -->
-</div> <!-- ## sectionFULL -->
-
+ </body>
+</html>
