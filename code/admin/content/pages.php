@@ -186,7 +186,7 @@
         if (!$ADMINDATA->Error) $datalist[$number] = $tidvalue;
       } // if
 
-      // If no errors, output a successful message.
+      // If no errors, output a successful message
       if (!$ADMINDATA->Error) {
         global $gDATALIST; $gDATALIST = implode(", ", $datalist);
         // Use proper grammer depending on how many records chosen.

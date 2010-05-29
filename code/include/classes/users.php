@@ -244,8 +244,7 @@
 
       // Load the success message.
       if (!$this->Error) {
-        $zSTRINGS->Lookup ('MESSAGE.SAVE', 'USER.OPTIONS.QUESTIONS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Record Updated");
       } // 
 
       return (TRUE);
@@ -259,8 +258,7 @@
       global $gZIPCODE, $gFULLNAME, $gALIAS;
 
       // Load the saved message.
-      $zSTRINGS->Lookup ('MESSAGE.SAVE', 'USER.OPTIONS.GENERAL');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Record Updated");
 
       $oldphotodir = "photos/" . $this->Username;
       $newphotodir = "photos/" . $gUSERNAME;
@@ -380,8 +378,7 @@
 
             $zICON->Save ($iconfile, $zICON->Type);
             if ($zICON->Error != -1) {
-              $zSTRINGS->Lookup ('MESSAGE.UPLOADED', 'USER.OPTIONS.ICONS');
-              $zICON->Message = $zSTRINGS->Output;
+              $zICON->Message = __("File uploaded");
 
               // Add the reference to the database.
               $this->userIcons->Add ();
@@ -448,8 +445,7 @@
           } // if
         } else {
           $this->userIcons->Update();
-          $zSTRINGS->Lookup ('MESSAGE.SAVE', 'USER.OPTIONS.ICONS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Record Updated");
         } // if
       } // foreach
 
@@ -488,8 +484,7 @@
         $zPHOTO->Resize ($gPROFILEPHOTOX, $gPROFILEPHOTOY, TRUE, TRUE, FALSE);
         $zPHOTO->Save ($profilepicture, IMAGETYPE_JPEG);
 
-        $zSTRINGS->Lookup ('MESSAGE.UPLOADED', 'USER.OPTIONS.ICONS');
-        $zPHOTO->Message = $zSTRINGS->Output;
+        $zPHOTO->Message = __("File uploaded");
 
         // Check if no default icon exists.
         $defaultcriteria = array ("userAuth_uID" => $this->uID,
@@ -551,9 +546,8 @@
       $gUSERTABSLOCATION = $gTHEMELOCATION . $gUSERTABS;
 
       if (!$this->userSettings->Error) {
-        $zSTRINGS->Lookup ('MESSAGE.SAVE', 'USER.OPTIONS.CONFIG');
+        $this->Message = __("Record Updated");
         $this->Error = 0;
-        $this->Message = $zSTRINGS->Output;;
       } else {
         $zSTRINGS->Lookup ('ERROR.PAGE', 'USER.OPTIONS.JOURNAL');
         $this->Error = -1;
@@ -578,9 +572,8 @@
         $this->Error = -1;
         $this->Message = $zSTRINGS->Output;;
       } else {
-        $zSTRINGS->Lookup ('MESSAGE.SAVE', 'USER.OPTIONS.EMAILS');
         $this->Error = 0;
-        $this->Message = $zSTRINGS->Output;;
+        $this->Message = __("Record Updated");
       } // if
 
       return (TRUE);

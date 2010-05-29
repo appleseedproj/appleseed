@@ -388,11 +388,7 @@
           } // while
           
           if ($zIMAGE->Error != -1) {
-            global $gPHOTOFILENAME;
-            $gPHOTOFILENAME = $filename;
-            $zSTRINGS->Lookup ('MESSAGE.UPLOADED', $zAPPLE->Context);
-            $zIMAGE->Message = $zSTRINGS->Output;
-            unset ($gPHOTOFILENAME);
+            $zIMAGE->Message = __("File uploaded", array ('filename' => $filename));
 
             // Add the reference to the database.
             $gVIEWDATA->photoInfo->Add ();
@@ -481,10 +477,7 @@
         $gVIEWDATA->photoInfo->ForeignKey = "userAuth_uID";
 
         if (!$gVIEWDATA->photoInfo->Error) {
-          global $gPHOTOFILENAME;  $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-          $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-          $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
-          unset ($gPHOTOFILENAME);
+          $gVIEWDATA->Message = __("Record Updated", array ("photofilename" => $gVIEWDATA->photoInfo->Filename));
           $gVIEWDATA->photoInfo->Update();
 
           // Rename the files.

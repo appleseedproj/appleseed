@@ -2978,8 +2978,8 @@
       if ($pDISABLED == DISABLED) $disabled = 'disabled="disabled"';
       
       $confirm = false;
-      if ($gCONFIRM)  $confirm = "onClick='return jCONFIRM("%CONFIRM%")' />";
-
+      if ($pCONFIRMATION) $confirm = "onClick='return jCONFIRM(\"$pCONFIRMATION\")'";
+      
       if ($pACTION)
         $gBUTTONACTION = $pACTION;
       else

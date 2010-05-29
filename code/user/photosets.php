@@ -300,10 +300,7 @@
         $gVIEWDATA->photoPrivacy->SaveSettings ($gPRIVACY, "photoSets_tID", $gVIEWDATA->tID);
 
         if ( (!$gVIEWDATA->Error) and (!$gVIEWDATA->photoPrivacy->Error) ) {
-          global $gSETNAME;  $gSETNAME = $gVIEWDATA->Name;
-          $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-          $gVIEWDATA->Message = $zSTRINGS->Output;
-          unset ($gSETNAME);
+          $gVIEWDATA->Message = __("Record Updated", array ("setname" => $gVIEWDATA->Name));
           $gVIEWDATA->Update();
           $gACTION = "";
 

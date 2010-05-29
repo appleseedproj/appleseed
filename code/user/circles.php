@@ -251,8 +251,7 @@
         $gCIRCLENAME = $zCIRCLES->Name;
   
         if (!$zCIRCLES->Error) {
-          $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-          $zCIRCLES->Message = $zSTRINGS->Output;
+          $zCIRCLES->Message = __("Record Updated");
           $zCIRCLES->Update();
           $gACTION = "";
         } // if

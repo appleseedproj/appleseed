@@ -135,7 +135,7 @@
     <?php echo $bICONLIST ?>
 
     <p id='newicon'>
-     <?php $zSTRINGS->Display ("LABEL.NEW", "USER.OPTIONS.ICONS"); ?>
+     <?php __("Add New"); ?>
      <?php $zTOOLTIPS->Display ('NEWICON'); ?>
     </p> <!-- #newicon -->
     <?php $zHTML->FileBox ("USERICON", 25, 64, $gUSERICONSIZE, $gNEWUPLOAD); ?>

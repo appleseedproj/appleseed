@@ -158,8 +158,7 @@
       $zFRIENDS->Sanity();
 
       if (!$zFRIENDS->Error) {
-        $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-        $zFRIENDS->Message = $zSTRINGS->Output;
+        $zFRIENDS->Message = __("Record Updated");
         $zFRIENDS->Update();
         $gACTION = "";
       } // if

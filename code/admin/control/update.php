@@ -119,8 +119,7 @@
   if ($zAPPLE->CheckVersion ($gAPPLESEEDVERSION, $gOFFICIALLATEST)) {
   	$zAPPLE->SetTag ('NEWVERSION', $gOFFICIALLATEST);
   	$zAPPLE->SetTag ('OLDVERSION', $gAPPLESEEDVERSION);
-    $zSTRINGS->Lookup ('MESSAGE.AVAILABLE', $zAPPLE->Context);
-    $zUPDATE->Message = $zSTRINGS->Output;
+    $zUPDATE->Message = __("An update is available");
   }
  
   // Choose which action to take.
@@ -269,8 +268,7 @@
       $gRESULT = $zSTRINGS->Output;
       $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
-      $zSTRINGS->Lookup ('MESSAGE.SUCCESS', $zAPPLE->Context);
-      $zUPDATE->Message = $zSTRINGS->Output;
+      $zUPDATE->Message = __("System updated successfully");
   	break;
   	default:
   	break;

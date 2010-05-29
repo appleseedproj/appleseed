@@ -1,7 +1,7 @@
 <div id='tooltips'>
  <div id='container'>
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.EDIT', $zAPPLE->Context); ?>
+   <?php echo __("Edit"); ?>
     <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 

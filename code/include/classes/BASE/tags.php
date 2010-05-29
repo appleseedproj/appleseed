@@ -350,8 +350,7 @@
            $this->Add ();
          } // if
          
-         $zSTRINGS->Lookup ('MESSAGE.EMPHASIZE_ALL', $this->Context);
-         $this->Message = $zSTRINGS->Output;
+         $this->Message = __("Emphasize all");
          return (TRUE);
        break;
        case 'TAG_DEEMPHASIZE_ALL':
@@ -368,8 +367,7 @@
            } // if
          } // if
          
-         $zSTRINGS->Lookup ('MESSAGE.EMPHASIZE_ALL', $this->Context);
-         $this->Message = $zSTRINGS->Output;
+         $this->Message = __("Emphasize all");
          return (TRUE);
        break;
        case 'TAG_DELETE':
@@ -420,8 +418,7 @@
          $this->Stamp = SQL_NOW;
          $this->Add ();
          $gTAGENTRIES = NULL;
-         $zSTRINGS->Lookup ('MESSAGE.EMPHASIZE', $this->Context);
-         $this->Message = $zSTRINGS->Output;
+         $this->Message = __("Emphasize");
          return (TRUE);
        break;
        case 'TAG':

@@ -1,7 +1,7 @@
 <div id='%STYLECLASS%'>
  <div id='content'>
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.EDIT', '%CONTEXT%'); ?>
+   <?php echo __("Edit"); ?>
     <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 

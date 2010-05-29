@@ -97,11 +97,7 @@
   switch ($gACTION) {
     case 'SAVE':
       if (strlen($gSUMMARY) > 255) {
-        global $gFIELDNAME, $gMAXSIZE;
-        $gFIELDNAME = 'SUMMARY';
-        $gMAXSIZE = '255';
-        $zSTRINGS->Lookup ("ERROR.TOOLONG");
-        $zCONFIG->Message = $zSTRINGS->Output;
+        $zCONFIG->Message = __("Field is too long", array ("fieldname" => 'summary', 'maxsize' => '255'));
         $zCONFIG->Error = -1;
         break;
       } // if

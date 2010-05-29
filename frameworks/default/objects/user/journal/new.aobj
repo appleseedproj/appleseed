@@ -6,7 +6,7 @@
  <div id='container'>
 
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.JOURNAL'); ?>
+    <?php __("Add New"); ?>
     <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p> <!-- .top -->
 

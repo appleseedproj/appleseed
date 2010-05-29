@@ -7,7 +7,7 @@
    <?php $zMESSAGE->messageLabels->Broadcast (); ?>
  
    <p id='top'>
-    <?php $zSTRINGS->Display ("LABEL.EDIT", "USER.MESSAGES.LABELS"); ?>
+   <?php echo __("Edit"); ?>
     <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 

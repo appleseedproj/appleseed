@@ -101,8 +101,7 @@
      $zARTICLES->Sanity();
      if ($zARTICLES->Error == 0) {
        $zARTICLES->Add();
-       $zSTRINGS->Lookup ('MESSAGE.SUBMITTED', $zAPPLE->Context);
-       $zARTICLES->Message = $zSTRINGS->Output;
+       $zARTICLES->Message = __("Article has been submitted");
        $gARTICLEREQUEST = '';
      } else {
        $gARTICLEREQUEST = 'submit';

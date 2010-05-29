@@ -212,8 +212,7 @@
           } else {
             $this->Sanity();
             if (!$this->Error) {
-              $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-              $this->Message = $zSTRINGS->Output;
+              $this->Message = __("Record Updated");
               $this->Update();
             } // if
           } // if

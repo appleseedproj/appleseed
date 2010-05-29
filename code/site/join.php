@@ -198,8 +198,7 @@
       // Set a success message.
 
       $zFOCUSUSER->Error = 0;
-      $zSTRINGS->Lookup ('MESSAGE.SUCCESS', 'SITE.JOIN');
-      $zFOCUSUSER->Message = $zSTRINGS->Output;
+      $zFOCUSUSER->Message = __("Your account has been created.");
       
       // Set the password variable to blank.
       $gPASS = "";

@@ -4,7 +4,7 @@
 
  <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
  
-    <h1> <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.COMMENTS'); ?> </h1>
+    <h1>  <?php __("Add New"); ?> </h1>
 
     <?php $zCOMMENTS->Broadcast(); ?>
 

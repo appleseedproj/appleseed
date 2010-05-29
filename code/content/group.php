@@ -216,8 +216,7 @@
       if (!$zGROUPS->CheckApproval()) {
         $zSTRINGS->Lookup ("CONFIRM.LEAVE");
         $bJOINBUTTON = $zHTML->CreateButton ("leave_group", $zSTRINGS->Output);
-        $zSTRINGS->Lookup ("MESSAGE.PENDING");
-        $zGROUPS->Message = $zSTRINGS->Output;
+        $zGROUPS->Message = __("Pending approval");
       } else {
         if (!$zGROUPS->CheckJoinAccess()) {
         } else {

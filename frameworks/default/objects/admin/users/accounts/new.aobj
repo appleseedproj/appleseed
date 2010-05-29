@@ -1,7 +1,7 @@
 <div id='accounts'>
  <div id='container'>
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.NEW', $zAPPLE->Context); ?>
+     <?php __("Add New"); ?>
     <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 

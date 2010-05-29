@@ -4,7 +4,7 @@
  
  <div id='container'>
     <p id='heading'>
-     <?php $zSTRINGS->Display ('LABEL.NEW'); ?>
+     <?php __("Add New"); ?>
      <?php $zTOOLTIPS->Display ('HEADING'); ?>
     </p> <!-- #heading -->
 

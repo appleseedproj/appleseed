@@ -363,9 +363,8 @@
         } // if
       } // foreach
       
-      $zSTRINGS->Lookup ('MESSAGE.SAVE');
+      $this->Message = __("Record Updated");
       
-      $this->Message = $zSTRINGS->Output;
       $this->Error = 0;
       
       return (TRUE);

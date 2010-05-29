@@ -410,8 +410,7 @@
           if ($zIMAGE->Error != -1) {
             global $gPHOTOFILENAME;
             $gPHOTOFILENAME = $filename;
-            $zSTRINGS->Lookup ('MESSAGE.UPLOADED', $zAPPLE->Context);
-            $zIMAGE->Message = $zSTRINGS->Output;
+            $zIMAGE->Message = __("File uploaded");
             unset ($gPHOTOFILENAME);
 
             // Add the reference to the database.
@@ -502,8 +501,7 @@
 
         if (!$gVIEWDATA->photoInfo->Error) {
           global $gPHOTOFILENAME;  $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-          $zSTRINGS->Lookup ('MESSAGE.SAVE', $zAPPLE->Context);
-          $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+          $gVIEWDATA->photoInfo->Message = __("Record Updated");
           unset ($gPHOTOFILENAME);
           $gVIEWDATA->photoInfo->Update();
 

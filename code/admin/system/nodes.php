@@ -340,20 +340,17 @@
             global $gTRUSTED;
             switch ($ADMINDATA->Trust) {
               case NODE_TRUSTED:
-                $zSTRINGS->Lookup ('LABEL.TRUSTED', $zAPPLE->Context);
-                $ADMINDATA->Message = $zSTRINGS->Output;
-                $gTRUSTED = $zSTRINGS->Output;
+                $ADMINDATA->Message = __("Node Trusted");
+                $gTRUSTED = __("Node Trusted");
               break;
               case NODE_BLOCKED:
-                $zSTRINGS->Lookup ('LABEL.BLOCKED', $zAPPLE->Context);
-                $ADMINDATA->Message = $zSTRINGS->Output;
-                $gTRUSTED = $zSTRINGS->Output;
+                $ADMINDATA->Message = __("Node Blocked");
+                $gTRUSTED = __("Node Blocked");
               break;
             } // switch
       
             if ($ADMINDATA->EndStamp == STAMP_NEVER) {
-              $zSTRINGS->Lookup ('LABEL.NEVER');
-              $ADMINDATA->fEndStamp = $zSTRINGS->Output;
+              $ADMINDATA->fEndStamp = __("Node Never Expires");
             } // if
             
             $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/system/nodes/list.middle.aobj", INCLUDE_SECURITY_NONE);

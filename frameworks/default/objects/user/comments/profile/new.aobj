@@ -6,7 +6,7 @@
  
  <div id='container'>
     <h1>
-     <?php $zSTRINGS->Display ('LABEL.NEW', 'USER.COMMENTS'); ?>
+    <?php __("Add New"); ?>
     </h1>
 
     <?php $zCOMMENTS->Broadcast(); ?>

@@ -94,8 +94,7 @@
     break;
 
     case 'NEW_LABEL':
-     $zSTRINGS->Lookup ("LABEL.NEW", "USER.MESSAGES.LABELS");
-     $zMESSAGE->messageLabels->Label = $zSTRINGS->Output;
+     $zMESSAGE->messageLabels->Label = __("Add New");
      $zMESSAGE->messageLabels->userAuth_uID = $zFOCUSUSER->uID;
      $zMESSAGE->messageLabels->Add ();
     break;

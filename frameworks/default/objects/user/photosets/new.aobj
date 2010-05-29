@@ -5,7 +5,7 @@
 
  <div id='container'>
   <p id='heading'>
-   <?php $zSTRINGS->Display ('LABEL.EDIT', 'USER.PHOTOSETS'); ?>
+   	<?php echo __("Edit"); ?>
    <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p>
 
