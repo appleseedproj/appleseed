@@ -1,9 +1,7 @@
- <div id='invite'>
-  <div id='caption'>
+ <section id='invite'>
+  <h1>
     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.INVITE'); ?>
-  </div> <!-- #caption -->
-
-  <div id='container'>
+  </h1>
 
     <p id='content'>
      <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'SITE.MAIN.INVITE'); ?>
@@ -20,6 +18,4 @@
     <br /><br />
 
    </form> <!-- #invite -->
-
-  </div> <!-- #container -->
- </div> <!-- #invite -->
+ </section> <!-- #invite -->
