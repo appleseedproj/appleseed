@@ -456,7 +456,7 @@
 
         ob_start ();
         
-        $this->Message = __("None Selected");
+        $this->Message = __("No Results Found");
         $this->Broadcast();
 
         $returnbuffer = ob_get_clean ();
