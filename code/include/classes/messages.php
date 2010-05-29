@@ -478,8 +478,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -594,8 +593,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -711,8 +709,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -829,8 +826,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -932,8 +928,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -1039,8 +1034,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -1149,8 +1143,7 @@
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
         $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
         $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
@@ -2676,8 +2669,7 @@
       if ($this->messageLabels->CountResult () == 0) {
 
         // None found.  Output an error.
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES.LABELS');
-        $this->messageLabelList->Message = $zSTRINGS->Output;
+        $this->messageLabelList->Message = __("No Results Found");
 
         return (NULL);
 

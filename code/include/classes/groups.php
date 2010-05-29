@@ -455,8 +455,7 @@
 
         ob_start ();
         
-        $zSTRINGS->Lookup ('MESSAGE.NONE');
-        $this->groupContent->Message = $zSTRINGS->Output;
+        $this->groupContent->Message = __("No Results Found");
         $this->groupContent->Broadcast();
 
         $returnbuffer = ob_get_clean ();
@@ -1239,8 +1238,7 @@
   
       // Check if any results were found.
       if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $zSTRINGS->Lookup ('MESSAGE.NONE');
-        $this->groupMembers->Message = $zSTRINGS->Output;
+        $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast();
       } // if
 
@@ -1451,8 +1449,7 @@
       $gMEMBERCOUNT = $this->groupMembers->CountResult ();
       $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       if ($this->groupMembers->CountResult() == 0) {
-        $zSTRINGS->Lookup ("MESSAGE.NONE");
-        $this->groupMembers->Message = $zSTRINGS->Output;
+        $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast ();
       } else {
         while ($this->groupMembers->FetchArray ()) {
@@ -1477,8 +1474,7 @@
       $gPENDINGCOUNT = $this->groupMembers->CountResult ();
       $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       if ($this->groupMembers->CountResult() == 0) {
-        $zSTRINGS->Lookup ("MESSAGE.NONE");
-        $this->groupMembers->Message = $zSTRINGS->Output;
+        $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast ();
       } else {
         while ($this->groupMembers->FetchArray ()) {
@@ -1503,8 +1499,7 @@
       $gINVITECOUNT = $this->groupMembers->CountResult ();
       $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       if ($this->groupMembers->CountResult() == 0) {
-        $zSTRINGS->Lookup ("MESSAGE.NONE");
-        $this->groupMembers->Message = $zSTRINGS->Output;
+        $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast ();
       } else {
         while ($this->groupMembers->FetchArray ()) {

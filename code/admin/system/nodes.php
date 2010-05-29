@@ -323,8 +323,7 @@
 
           // Check if any results were found.
           if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-            $zSTRINGS->Lookup ('MESSAGE.NONE', $zAPPLE->Context);
-            $ADMINDATA->Message = $zSTRINGS->Output;
+            $ADMINDATA->Message = __("No Results Found");
             $ADMINDATA->Broadcast();
           } // if
 

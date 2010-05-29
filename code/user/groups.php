@@ -72,8 +72,7 @@
   $zFOCUSUSER->userGroups->Select ("userAuth_uID", $zFOCUSUSER->uID);
   
   if ($zFOCUSUSER->userGroups->CountResult() == 0) {
-    $zSTRINGS->Lookup ("MESSAGE.NONE");
-    $zFOCUSUSER->userGroups->Message = $zSTRINGS->Output;
+    $zFOCUSUSER->userGroups->Message = __("No Results Found");
     $bGROUPS = $zFOCUSUSER->userGroups->CreateBroadcast ();
   } else {
     $bGROUPS .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);

@@ -161,8 +161,7 @@
 
       // Check if any results were found.
       if ($gSCROLLMAX['user.messages.labels'] == 0) {
-        $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.MESSAGES.LABELS');
-        $zMESSAGE->messageLabels->Message = $zSTRINGS->Output;
+        $zMESSAGE->messageLabels->Message = __("No Results Found");
         $zMESSAGE->messageLabels->Broadcast();
       } // if
 

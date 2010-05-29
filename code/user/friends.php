@@ -352,8 +352,7 @@
   
         // Check if any results were found.
         if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-          $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.FRIENDS');
-          $zFRIENDS->Message = $zSTRINGS->Output;
+          $zFRIENDS->Message = __("No Results Found");
           $zFRIENDS->Broadcast();
         } // if
     

@@ -97,8 +97,7 @@
       $this->Select ("Verification", 1, "Stamp DESC");
 
       if ($this->CountResult() == 0) {
-        $zSTRINGS->Lookup ('MESSAGE.NONE');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("No Results Found");
       } // if
       
       $bARTICLES = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
@@ -296,8 +295,7 @@
     
               // Check if any results were found.
               if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-                $zSTRINGS->Lookup ('MESSAGE.NONE', $zAPPLE->Context);
-                $this->Message = $zSTRINGS->Output;
+                $this->Message = __("No Results Found");
                 $this->Broadcast();
               } // if
 

@@ -683,8 +683,7 @@
 
         // Check if any results were found.
         if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-          $zSTRINGS->Lookup ('MESSAGE.NONE', $zAPPLE->Context);
-          $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+          $gVIEWDATA->photoInfo->Message = __("No Results Found");
           $gVIEWDATA->photoInfo->Broadcast();
         } // if
 

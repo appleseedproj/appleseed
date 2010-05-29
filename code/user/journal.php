@@ -268,8 +268,7 @@
 
             // Check if any results were found.
             if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-              $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.JOURNAL');
-              $zJOURNAL->Message = $zSTRINGS->Output;
+              $zJOURNAL->Message = __("No Results Found");
               $zJOURNAL->Broadcast();
             } // if
 
@@ -345,8 +344,7 @@
 
             // Check if any results were found.
             if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-              $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.JOURNAL');
-              $zJOURNAL->Message = $zSTRINGS->Output;
+              $zJOURNAL->Message = __("No Results Found");
               $zJOURNAL->Broadcast();
             } // if
 
@@ -456,8 +454,7 @@
 
             // Check if any results were found.
             if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-              $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.JOURNAL');
-              $zJOURNAL->Message = $zSTRINGS->Output;
+              $zJOURNAL->Message = __("No Results Found");
               $zJOURNAL->Broadcast();
             } // if
 
@@ -610,8 +607,7 @@
 
           // Display a message if no journals have been posted.
           if ($countjournals == 0) {
-            $zSTRINGS->Lookup ('MESSAGE.NONE', 'USER.JOURNAL');
-            $zJOURNAL->Message = $zSTRINGS->Output;
+            $zJOURNAL->Message = __("No Results Found");
             $zJOURNAL->Broadcast ();
 
           } else {
