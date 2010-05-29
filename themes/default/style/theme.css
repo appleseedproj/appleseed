@@ -143,5 +143,5 @@ button[disabled] {
 		display:none;
 }
 
-#admin_page nav ol { list-style-type:none; }
-#admin_page nav ol li { float:left; padding:0px 5px; }
+.scroll ol { list-style-type:none; }
+.scroll ol li { float:left; padding:0px 5px; }
