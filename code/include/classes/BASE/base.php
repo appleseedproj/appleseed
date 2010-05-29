@@ -3122,7 +3122,7 @@
     function Scroll ($pTARGET, $pCONTEXT, $pSCROLLTYPE = "", $pPREVWIDTH = "", $pFOOTWIDTH = "", $pNEXTWIDTH = "") {
     	
     	echo '
-                <nav> 
+                <nav class="scroll"> 
                     <ol> 
                         <li><a href="#"><span>&laquo; First</span></a></li> 
                         <li><a href="#"><span>&lt; Prev</span></a></li> 
