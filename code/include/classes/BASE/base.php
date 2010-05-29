@@ -2962,7 +2962,7 @@
 
     // Format a button object.
     // Note:  Button should encapsulate this function.
-    function CreateButton ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME = "") {
+    function CreateButton ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = NULL, $pACTIONNAME = "") {
       
       global $gTARGET;
       global $gTHEMELOCATION;
@@ -2980,7 +2980,7 @@
       $confirm = false;
       if ($pCONFIRMATION) $confirm = "onClick='return jCONFIRM(\"$pCONFIRMATION\")'";
       
-      if ($pACTION)
+      if (isset($pACTION))
         $gBUTTONACTION = $pACTION;
       else
         $gBUTTONACTION = strtoupper ($pBUTTONNAME);
@@ -3135,21 +3135,41 @@
       exit;
       */
       
+      $previouspage = $gCURRENTPAGE - 1;
+      if ($previouspage < 1) $previouspage = 1;
+      
+      global $zHTML;
+      
+      echo '<form name="scroll" method="POST" action="' . $pTARGET . '">';
+      echo $this->PostData(); 
       echo '<nav class="scroll"> ';
       echo '  <ol> ';
-      echo '    <li><a href="#"><span>&laquo; First</span></a></li> ';
-      echo '    <li><a href="#"><span>&lt; Prev</span></a></li> ';
+      echo '    <li><span>' . $zHTML->CreateButton ('First', NULL, "", '0', 'SCROLLSTART') . '</span></li> ';
+      echo '    <li><span>' . $zHTML->CreateButton ('Previous', NULL, "", $previouspage, 'SCROLLSTART') . '</span></li> ';
       
+//    function CreateButton ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME = "") {
+
       $step = 1;
       if ($gMAXPAGES > 20) $step = 5;
       if ($gMAXPAGES > 100) $step = 10;
+      
+      // Put the page numbers together.
       for ($p = 1; $p <= $gMAXPAGES; $p += $step) {
-        echo '    <li><a href="#"><span>' . $p . '</span></a></li> ';
+      	$pagenumberlist[$p] = '    <li><span>' . $zHTML->CreateButton ($p, NULL, "", $p, 'SCROLLSTART') . '</span></li> ';
       }
-      echo '    <li><a href="#"><span>Next &gt;</span></a></li> ';
-      echo '    <li><a href="#"><span>Last &raquo;</span></a></li> ';
+      // Add the current page, in case we skipped it.
+      $pagenumberlist[$gCURRENTPAGE] = '    <li><span>' . $zHTML->CreateButton ($p, NULL, "", $p, 'SCROLLSTART') . '</span></li> ';
+      
+      // Echo the page numbers
+      foreach ($pagenumberlist as $p => $pnuml) {
+      	echo $pnuml;
+      } 
+      
+      echo '    <li><span>' . $zHTML->CreateButton ('Next', NULL, "", $previouspage, 'SCROLLSTART') . '</span></li> ';
+      echo '    <li><span>' . $zHTML->CreateButton ('Last', NULL, "", $gMAXPAGES, 'SCROLLSTART') . '</span></li> ';
       echo '  </ol> ';
       echo '</nav> ';
+      echo '</form>';
 
 return;
      

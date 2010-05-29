@@ -146,4 +146,7 @@ button[disabled] {
 .scroll ol { list-style-type:none; }
 .scroll ol li { float:left; padding:0px 5px; }
 
-.search { width:100%; text-align:right; float:right; clear:both; }
+.scroll button { background:none; border:none; font-weight:bold; color:#406300; padding:0; }
+.scroll button:hover { cursor:pointer; }
+
+.search {width:100%; text-align:right; float:right; clear:both; }
