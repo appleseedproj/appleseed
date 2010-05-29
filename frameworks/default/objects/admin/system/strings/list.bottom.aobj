@@ -8,7 +8,12 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <?php $zHTML->Button ('new'); ?>
+   <nav>
+     <ul>
+       <li> <?php $zHTML->Button ('New'); ?> </li>
+     </ul>
+   </nav>
+   
   </form> <!-- ## new -->
 
  <?php $zHTML->Scroll ($target, 'admin.system.strings'); ?>

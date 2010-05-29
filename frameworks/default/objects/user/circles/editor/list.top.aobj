@@ -15,12 +15,12 @@
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
    <div id='buttons_top'>
-    <?php $zHTML->Button ('move_down'); ?>
-    <?php $zHTML->Button ('move_up'); ?>
+    <?php $zHTML->Button ('Move Down'); ?>
+    <?php $zHTML->Button ('Move Up'); ?>
 
     <?php $zHTML->Button ($gSELECTBUTTON); ?>
 
-    <?php $zHTML->Button ('delete_all', __("Confirm Delete All")) ?>
+    <?php $zHTML->Button ('Delete All', __("Confirm Delete All")) ?>
 
    </div> <!-- #buttons_top -->
 

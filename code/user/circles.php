@@ -74,7 +74,7 @@
   $gSCROLLSTEP[$zAPPLE->Context] = 20;
 
   // Display the select all button by default.
-  $gSELECTBUTTON = 'select_all';
+  $gSELECTBUTTON = 'Select All';
 
   // Set which tab to highlight.
   $gUSERFRIENDSTAB = '';
@@ -86,12 +86,12 @@
   switch ($gACTION) {
 
     case 'SELECT_ALL':
-      $gSELECTBUTTON = 'select_none';
+      $gSELECTBUTTON = 'Select None';
     break;
 
     case 'SELECT_NONE':
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'DELETE':

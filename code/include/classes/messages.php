@@ -1597,7 +1597,7 @@
           $this->messageLabelList->Delete ();
         } // if
       } // foreach
-      if ($pDATALIST) $gSELECTBUTTON = 'select_none';
+      if ($pDATALIST) $gSELECTBUTTON = 'Select None';
 
       $this->messageLabels->Select ("tID", $gLABELVALUE);
       $this->messageLabels->FetchArray ();

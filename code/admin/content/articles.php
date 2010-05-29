@@ -107,7 +107,7 @@
   $gSelectedTab['admin_content_articles'] = 'selected';
 
   // Display the select all button by default.
-  $gSELECTBUTTON = 'select_all';
+  $gSELECTBUTTON = 'Select All';
 
   // Create the template list.
   global $gTEMPLATELIST;
@@ -122,17 +122,17 @@
   }
 
   // Change the select button if anything is selected.
-  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'select_none';
+  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
   // PART I: Determine appropriate action.
   switch ($gACTION) {
     case 'SELECT_ALL':
-      $gSELECTBUTTON = 'select_none';
+      $gSELECTBUTTON = 'Select None';
     break;
 
     case 'SELECT_NONE':
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'MOVE_UP':

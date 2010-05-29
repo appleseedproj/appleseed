@@ -725,7 +725,7 @@
                            "REFERENCEID" => $gREFERENCEID);
 
       // Change the select button if anything is eelected.
-      if ($zAPPLE->ArrayIsSet ($gCOMMENTMASSLIST) ) $gCOMMENTSELECTBUTTON = 'select_none';
+      if ($zAPPLE->ArrayIsSet ($gCOMMENTMASSLIST) ) $gCOMMENTSELECTBUTTON = 'Select None';
 
       // PART I: Take Action
       switch ($gCOMMENTACTION) {
@@ -793,16 +793,16 @@
             $this->CleanUp ();
           } // if
           $gCOMMENTMASSLIST = array ();
-          $gCOMMENTSELECTBUTTON = 'select_all';
+          $gCOMMENTSELECTBUTTON = 'Select All';
         break;
 
         case 'SELECT_ALL':
-          $gCOMMENTSELECTBUTTON = 'select_none';
+          $gCOMMENTSELECTBUTTON = 'Select None';
         break;
 
         case 'SELECT_NONE':
           $gCOMMENTMASSLIST = array ();
-          $gCOMMENTSELECTBUTTON = 'select_all';
+          $gCOMMENTSELECTBUTTON = 'Select All';
         break;
 
       } // switch
@@ -864,7 +864,7 @@
       $gCOMMENTVIEWTYPE = "COMMENTVIEW";
 
       // Display the select all button by default.
-      $gCOMMENTSELECTBUTTON = 'select_all';
+      $gCOMMENTSELECTBUTTON = 'Select All';
 
       // Depracate the commentview.
       if ($gCOMMENTVIEWADMIN != "") {

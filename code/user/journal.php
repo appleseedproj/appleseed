@@ -119,17 +119,17 @@
   ob_start ();  
 
   // Display the select all button by default.
-  $gSELECTBUTTON = 'select_all';
+  $gSELECTBUTTON = 'Select All';
 
   // STEP 1: Take appropriate action.
   switch ($gACTION) {
     case 'SELECT_ALL':
-      $gSELECTBUTTON = 'select_none';
+      $gSELECTBUTTON = 'Select None';
     break;
 
     case 'SELECT_NONE':
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'EDIT':
@@ -179,7 +179,7 @@
     case 'DELETE_ALL':
       $zJOURNAL->DeleteList ($gMASSLIST); 
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'COMMENT_READ':

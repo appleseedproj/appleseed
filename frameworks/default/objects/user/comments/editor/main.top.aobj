@@ -22,7 +22,7 @@
 
     <?php $zHTML->Button ("approve", NULL, ENABLED, NULL, 'COMMENTACTION'); ?>
 
-    <?php $zHTML->Button ('delete_all', __("Confirm Delete Selected"), ENABLED, NULL, "COMMENTACTION"); ?>
+    <?php $zHTML->Button ('Delete All', __("Confirm Delete Selected"), ENABLED, NULL, "COMMENTACTION"); ?>
    </div> <!-- #buttons_top -->
 
    <?php $zCOMMENTS->Broadcast(); ?>

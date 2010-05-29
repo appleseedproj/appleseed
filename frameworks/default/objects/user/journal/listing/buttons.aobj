@@ -2,7 +2,7 @@
 
  <div class='journal' id='listing_new'>
   <form id='newjournal' name='newjournal' method='POST' action='profile/<?php echo $zFOCUSUSER->Username ?>/journal/'>
-   <?php $zHTML->Button ('new'); ?>
+   <?php $zHTML->Button ('New'); ?>
   </form> <!-- ## newjournal -->
  </div> <!-- ## journal.new -->
 
@@ -12,7 +12,7 @@
  
  <div class='journal' id='listing_delete'>
   <form id='deletejournal' name='deletejournal' method='POST' action='profile/<?php echo $zFOCUSUSER->Username ?>/journal/'>
-   <?php $zHTML->Button ('delete_all'); ?>
+   <?php $zHTML->Button ('Delete All'); ?>
   </form> <!-- ## deletephoto -->
  </div> <!-- ## journal.delete -->
 </div> <!-- ## member.buttons -->

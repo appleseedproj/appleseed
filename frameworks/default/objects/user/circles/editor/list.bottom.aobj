@@ -12,7 +12,7 @@
 
    <form id='new' name='new' method='POST' action='<?php echo $gTARGET; ?>'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-    <?php $zHTML->Button ("new"); ?>
+    <?php $zHTML->Button ("New"); ?>
    </form> <!-- #new -->
 
   </div> <!-- #buttons_bottom -->
@@ -25,7 +25,7 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <?php $zHTML->Button ('new'); ?>
+   <?php $zHTML->Button ('New'); ?>
   </form> <!-- ## new -->
     
  </div> <!-- #container -->

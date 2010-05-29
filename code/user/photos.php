@@ -165,21 +165,21 @@
   $this->SetTag ('USERPHOTOSTAB', $gUSERPHOTOSTAB);
   
   // Display the select all button by default.
-  $gSELECTBUTTON = 'select_all';
+  $gSELECTBUTTON = 'Select All';
 
   global $gCOMMENTSELECTBUTTON;
   // Display the select all button by default.
-  $gCOMMENTSELECTBUTTON = 'select_all';
+  $gCOMMENTSELECTBUTTON = 'Select All';
   
   // PART I: Determine appropriate action.
   switch ($gACTION) {
     case 'SELECT_ALL':
-      $gSELECTBUTTON = 'select_none';
+      $gSELECTBUTTON = 'Select None';
     break;
 
     case 'SELECT_NONE':
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'MOVE_UP':
@@ -626,7 +626,7 @@
   // PART III: Pre-parse the html for the main window. 
   
   // Change the select button if anything is selected.
-  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'select_none';
+  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
   // Buffer the main listing.
   ob_start ();  

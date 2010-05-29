@@ -7,13 +7,13 @@
  
    <?php $zHTML->Post ($gPOSTDATA); ?>
  
-    <?php $zHTML->Button ('move_down'); ?>
+    <?php $zHTML->Button ('Move Down'); ?>
  
-    <?php $zHTML->Button ('move_up'); ?>
+    <?php $zHTML->Button ('Move Up'); ?>
  
     <?php $zHTML->Button ($gSELECTBUTTON); ?>
  
-   <?php $zHTML->Button ('delete_all', __("Confirm Delete Selected")) ?>
+   <?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?>
  
    <?php $zHTML->Titles ("ADMINDATA", "titles", "_admin/content/articles/"); ?>
  

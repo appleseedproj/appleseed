@@ -9,7 +9,7 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <?php $zHTML->Button ('new'); ?>
+   <?php $zHTML->Button ('New'); ?>
   </form> <!-- ## new -->
 
  </div> <!-- #content -->

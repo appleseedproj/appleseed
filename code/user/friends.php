@@ -54,7 +54,7 @@
   $zFRIENDS = new cFRIENDINFORMATION ($zAPPLE->Context);
 
   // Display the select all button by default.
-  $gSELECTBUTTON = 'select_all';
+  $gSELECTBUTTON = 'Select All';
 
   // Set which tab to highlight.
   $gUSERFRIENDSTAB = '';
@@ -89,11 +89,11 @@
     break;
 
     case 'SELECT_ALL':
-      $gSELECTBUTTON = 'select_none';
+      $gSELECTBUTTON = 'Select None';
     break;
 
     case 'SELECT_NONE':
-      $gMASSLIST = array (); $gSELECTBUTTON = 'select_all';
+      $gMASSLIST = array (); $gSELECTBUTTON = 'Select All';
     break;
 
     case 'DELETE':
@@ -105,7 +105,7 @@
 
     case 'DELETE_ALL':
       $zFRIENDS->RemoveAll ($gMASSLIST);
-      $gMASSLIST = array (); $gSELECTBUTTON = 'select_all';
+      $gMASSLIST = array (); $gSELECTBUTTON = 'Select All';
     break;
 
     case 'FRIEND_REQUEST':

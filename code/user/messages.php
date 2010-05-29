@@ -114,7 +114,7 @@
 
   $gSORT = "Stamp DESC";
 
-  $gSELECTBUTTON = 'select_all';
+  $gSELECTBUTTON = 'Select All';
 
   // STEP 1: Take appropriate action.
 
@@ -152,12 +152,12 @@
     break;
 
     case 'SELECT_ALL':
-      $gSELECTBUTTON = 'select_none';
+      $gSELECTBUTTON = 'Select None';
     break;
 
     case 'SELECT_NONE':
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'LABELS':
@@ -166,41 +166,41 @@
     case 'DELETE_FOREVER_ALL':
       $zMESSAGE->DeleteListForever ($gMASSLIST); 
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
 
     case 'SPAM_ALL':
       $zMESSAGE->ReportListAsSpam ($gMASSLIST); 
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
        
     case 'MOVE_INBOX_ALL':
       $zMESSAGE->MoveListToInbox ($gMASSLIST); 
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
        
     case 'TRASH_ALL':
       $zMESSAGE->MoveListToTrash ($gMASSLIST); 
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
        
     case 'ARCHIVE_ALL':
       $zMESSAGE->MoveListToArchive ($gMASSLIST); 
       $gMASSLIST = array ();
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
     break;
        
     case 'READ':
       if ($gREADACTION == "READ_ALL") {
         $zMESSAGE->MarkListAsRead ($gMASSLIST); 
-        if ($gMASSLIST) $gSELECTBUTTON = 'select_none';
+        if ($gMASSLIST) $gSELECTBUTTON = 'Select None';
       } // if
       if ($gREADACTION == "UNREAD_ALL") {
         $zMESSAGE->MarkListAsUnread ($gMASSLIST); 
-        if ($gMASSLIST) $gSELECTBUTTON = 'select_none';
+        if ($gMASSLIST) $gSELECTBUTTON = 'Select None';
       } // if
     break;
 

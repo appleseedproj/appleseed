@@ -2991,9 +2991,9 @@
         $gACTIONNAME = 'gACTION';
 
       // Output a generic HTML button.
-      $return = " <input $disabled $confirm type='submit' name='$gACTIONNAME' value='$gBUTTONACTION' />\n";
-      
-      $return = " <button $disabled $confirm type='submit' name='$gACTIONNAME' value='$gBUTTONACTION'>$pBUTTONNAME</button>";
+      $return  = " <button $disabled $confirm type='submit' name='$gACTIONNAME' value='$gBUTTONACTION'>";
+      $return .= __($pBUTTONNAME);
+      $return .= "</button>";
       
       unset ($gCONFIRM);
       
@@ -3121,34 +3121,35 @@
     // Output scroll buttons
     function Scroll ($pTARGET, $pCONTEXT, $pSCROLLTYPE = "", $pPREVWIDTH = "", $pFOOTWIDTH = "", $pNEXTWIDTH = "") {
     	
-    	echo '
-                <nav class="scroll"> 
-                    <ol> 
-                        <li><a href="#"><span>&laquo; First</span></a></li> 
-                        <li><a href="#"><span>&lt; Prev</span></a></li> 
-                        <li><a href="#"><span>1</span></a></li> 
-                        <li><a href="#"><span>2</span></a></li> 
-                        <li><a href="#"><span>3</span></a></li> 
-                        <li><a href="#"><span>4</span></a></li> 
-                        <li><a href="#"><span>5</span></a></li> 
-                        <li><a href="#"><span>6</span></a></li> 
-                        <li><a href="#"><span>7</span></a></li> 
-                        <li><a href="#"><span>8</span></a></li> 
-                        <li><a href="#"><span>9</span></a></li> 
-                        <li><a href="#"><span>10</span></a></li> 
-                        <li><a href="#"><span>12</span></a></li> 
-                        <li><a href="#"><span>13</span></a></li> 
-                        <li><a href="#"><span>14</span></a></li> 
-                        <li><a href="#"><span>15</span></a></li> 
-                        <li><a href="#"><span>16</span></a></li> 
-                        <li><a href="#"><span>17</span></a></li> 
-                        <li><a href="#"><span>18</span></a></li> 
-                        <li><a href="#"><span>19</span></a></li> 
-                        <li><a href="#"><span>Next &gt;</span></a></li> 
-                        <li><a href="#"><span>Last &raquo;</span></a></li> 
-                    </ol> 
-                </nav> 
-';
+      // Calculate scroll values.
+      $this->CalcScroll ($pCONTEXT);
+      global $gSCROLLMAX, $gSCROLLSTART, $gSCROLLSTEP;
+      global $gSORT, $gCURRENTPAGE, $gMAXPAGES;
+      
+      /*
+      echo $gSCROLLMAX[$pCONTEXT], "<br />";
+      echo $gSCROLLSTART[$pCONTEXT], "<br />";
+      echo $gSCROLLSTEP[$pCONTEXT], "<br />";
+      echo $gCURRENTPAGE, "<br />";
+      echo $gMAXPAGES, "<br />";
+      exit;
+      */
+      
+      echo '<nav class="scroll"> ';
+      echo '  <ol> ';
+      echo '    <li><a href="#"><span>&laquo; First</span></a></li> ';
+      echo '    <li><a href="#"><span>&lt; Prev</span></a></li> ';
+      
+      $step = 1;
+      if ($gMAXPAGES > 20) $step = 5;
+      if ($gMAXPAGES > 100) $step = 10;
+      for ($p = 1; $p <= $gMAXPAGES; $p += $step) {
+        echo '    <li><a href="#"><span>' . $p . '</span></a></li> ';
+      }
+      echo '    <li><a href="#"><span>Next &gt;</span></a></li> ';
+      echo '    <li><a href="#"><span>Last &raquo;</span></a></li> ';
+      echo '  </ol> ';
+      echo '</nav> ';
 
 return;
      
@@ -3173,9 +3174,6 @@ return;
         $gNEXTSTYLE = "style='width:$pNEXTWIDTH" . "px" . ";' ";
       } // if
 
-      // Calculate scroll values.
-      $this->CalcScroll ($pCONTEXT);
- 
       // If gSCROLLSTART[$pCONTEXT] isn't declared, set it to start at 0.
       if ($gSCROLLSTART[$pCONTEXT] == "") $gSCROLLSTART[$pCONTEXT] = 0;
  
@@ -3281,9 +3279,9 @@ return;
       } // if
 
       if ($gCRITERIA) {
-        $output = $this->CreateButton ('show');
+        $output = $this->CreateButton ('Reset Search');
       } else {
-        $output = $this->CreateButton ('show', null, DISABLED);
+        $output = $this->CreateButton ('Reset Search', null, DISABLED);
       } // if
 
       echo $output;

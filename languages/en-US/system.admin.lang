@@ -16,10 +16,16 @@ ADMIN_CONFIG_DESCRIPTION=Below are the most common Appleseed node configuration 
 
 [admin.strings]
 STRINGS_ADMIN_TITLE=Strings
-STRINGS_ADMIN_DESCRIPTION=
 
 [node]
 NODE_TRUSTED=Trusted
 NODE_BLOCKED=Blocked
 NODE_NEVER_EXPIRES=Never
 
+[buttons]
+SELECT_ALL="Select +"
+SELECT_NONE="Select -"
+DELETE_ALL="Delete +"
+MOVE_UP="Move &uarr;"
+MOVE_DOWN="Move &darr;"
+RESET_SEARCH="Reset"

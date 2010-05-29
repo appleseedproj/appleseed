@@ -344,7 +344,7 @@
           $this->friendCirclesList->Add ();
         } // if
       } // foreach
-      if ($pDATALIST) $gSELECTBUTTON = 'select_none';
+      if ($pDATALIST) $gSELECTBUTTON = 'Select None';
 
       $this->friendCircles->Select ("tID", $gCIRCLEVALUE);
       $this->friendCircles->FetchArray ();

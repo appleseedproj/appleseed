@@ -185,7 +185,7 @@
       $gGROUPVIEWTYPE = "GROUPVIEW";
 
       // Display the select all button by default.
-      $gSELECTBUTTON = 'select_all';
+      $gSELECTBUTTON = 'Select All';
 
       // Depracate the view.
       if ($gGROUPVIEWADMIN != "") {
@@ -767,7 +767,7 @@
       $gREADDATA  = array ("ACTION" => "READ");
 
       // Change the select button if anything is eelected.
-      if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'select_none';
+      if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
       // PART I: Take Action
       switch ($gACTION) {
@@ -835,16 +835,16 @@
             $this->CleanUp ();
           } // if
           $gMASSLIST = array ();
-          $gSELECTBUTTON = 'select_all';
+          $gSELECTBUTTON = 'Select All';
         break;
 
         case 'SELECT_ALL':
-          $gSELECTBUTTON = 'select_none';
+          $gSELECTBUTTON = 'Select None';
         break;
 
         case 'SELECT_NONE':
           $gMASSLIST = array ();
-          $gSELECTBUTTON = 'select_all';
+          $gSELECTBUTTON = 'Select All';
         break;
 
       } // switch

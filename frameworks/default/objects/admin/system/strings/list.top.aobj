@@ -1,25 +1,26 @@
 <section id="admin_page"> 
 
-  <?php $zSEARCH->Ask (); ?>
-
   <h1><?php echo __("Strings Admin Title"); ?></h1> 
                 
   <p><?php echo __("Strings Admin Description"); ?></p> 
  
+  <?php $zSEARCH->Ask (); ?>
+
   <form id='list' method='post' action='_admin/system/strings/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>
  
-    <?php $zHTML->Button ('move_down'); ?>
+    <nav>
+      <ul>
+        <li><?php $zHTML->Button ('Move Down'); ?></li>
+        <li><?php $zHTML->Button ('Move Up'); ?></li>
+        <li><?php $zHTML->Button ($gSELECTBUTTON); ?></li>
+        <li><?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?></li>
+      </ul>
+    </nav>
  
-    <?php $zHTML->Button ('move_up'); ?>
- 
-    <?php $zHTML->Button ($gSELECTBUTTON); ?>
- 
-   <?php $zHTML->Button ('delete_all', __("Confirm Delete Selected")) ?>
    
    <table>
-   	<?php //$zHTML->Titles ("ADMINDATA", "titles", "_admin/system/strings/"); ?>
  
    	<?php $ADMINDATA->Broadcast(); ?>
    	<thead> 
@@ -27,6 +28,7 @@
        <th scope="col"><a href="#"># &uarr;</a></th> 
        <th scope="col"><a href="#">Name</a></th> 
        <th scope="col"><a href="#">Type</a></th> 
+       <th scope="col"><a href="#">Context</a></th> 
        <th scope="col"><a href="#">Lang</a></th> 
        <th scope="col"><input type="checkbox" /></th> 
      </tr> 
