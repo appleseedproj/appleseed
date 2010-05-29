@@ -142,3 +142,6 @@ p.error { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:
 button[disabled] {
 		display:none;
 }
+
+#admin_page nav ol { list-style-type:none; }
+#admin_page nav ol li { float:left; padding:0px 5px; }
