@@ -274,7 +274,7 @@
         } // if
       } // if
     break;
-    case 'REMOTELOGIN':
+    case 'REMOTE_LOGIN':
       
       if (!$zAPPLE->CheckEmail ($gLOCATION) ) {
         $zLOCALUSER->Error = -1;

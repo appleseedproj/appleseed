@@ -27,8 +27,8 @@
    </p> <!-- #rememberme -->
    <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
 
-   <?php $zHTML->Button ("login"); ?>
-   <?php $zHTML->Button ("forgot"); ?>
+   <?php $zHTML->Button ("Login"); ?>
+   <?php $zHTML->Button ("Forgot Password"); ?>
 
   </form> <!-- #userinfo -->
 
