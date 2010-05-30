@@ -7,19 +7,16 @@
 
    <p id='username'>
     <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.MAIN.LOGIN'); ?>
-    <?php $zTOOLTIPS->Display ('USERNAME'); ?>
    </p> <!-- #username -->
    <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
 
    <p id='password'>
     <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.MAIN.LOGIN'); ?>
-    <?php $zTOOLTIPS->Display ('PASSWORD'); ?>
    </p> <!-- #password -->
    <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
 
    <p id='rememberme'>
     <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.MAIN.LOGIN'); ?>
-    <?php $zTOOLTIPS->Display ('REMEMBERME'); ?>
    </p> <!-- #rememberme -->
    <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
 

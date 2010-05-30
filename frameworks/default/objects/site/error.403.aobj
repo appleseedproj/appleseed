@@ -21,21 +21,18 @@
 
    <p id='username'>
     <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.LOGIN'); ?> <br />
-    <?php $zTOOLTIPS->Display ('USERNAME'); ?>
    </p> <!-- #username -->
    <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
    <?php $zLOCALUSER->Broadcast ('field', 'Username'); ?>
 
    <p id='password'>
     <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.LOGIN'); ?> <br />
-    <?php $zTOOLTIPS->Display ('PASSWORD'); ?>
    </p> <!-- #password -->
    <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
    <?php $zLOCALUSER->Broadcast ('field', 'Pass'); ?>
 
    <p id='rememberme'>
     <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.LOGIN'); ?>
-    <?php $zTOOLTIPS->Display ('REMEMBERME'); ?>
    </p> <!-- #rememberme -->
    <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
 
@@ -51,7 +48,6 @@
 
    <p id='location'>
     <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
-    <?php $zTOOLTIPS->Display ('LOCATION'); ?>
    </p> <!-- #username -->
    <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
    <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>

@@ -15,11 +15,9 @@
 
   <p class='name'>
    <?php echo $zFRIENDS->friendCircles->Name; ?>
-   <?php $zTOOLTIPS->Display ('NAME'); ?>
   </p>
   <p class='description'>
    <?php echo $zFRIENDS->friendCircles->Description; ?>
-   <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
   </p>
 
   <div id='listing'>

@@ -27,7 +27,6 @@
 
    <p class='full'>
     <?php echo $zAPPLE->Format ($zARTICLES->Full, $zARTICLES->Formatting); ?>
-    <?php $zTOOLTIPS->Display ('FULL'); ?>
    </p> <!-- #full -->
 
  </div> <!-- .article -->

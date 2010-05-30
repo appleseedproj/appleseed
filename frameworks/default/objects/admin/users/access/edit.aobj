@@ -2,7 +2,6 @@
  <div id='container'>
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -16,44 +15,37 @@
  
     <p id='userauth_uid'> 
      USER:
-     <?php $zTOOLTIPS->Display ('USERAUTH_UID'); ?>
     </p>
     <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?>
  
     <p id='fullquestion'>
      LOCATION: 
-     <?php $zTOOLTIPS->Display ('LOCATION'); ?>
     </p>
     <?php $zHTML->TextBox ("LOCATION", 70, $ADMINDATA->Location); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Location"); ?>
 
     <p id='r'>
      READ: 
-     <?php $zTOOLTIPS->Display ('READ'); ?>
     </p>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->r, "R"); ?>
 
     <p id='w'>
      WRITE: 
-     <?php $zTOOLTIPS->Display ('WRITE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->w, "W"); ?>
 
     <p id='e'>
      EDITOR: 
-     <?php $zTOOLTIPS->Display ('EDITOR'); ?>
     </p>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->e, "E"); ?>
 
     <p id='a'>
      ADMIN: 
-     <?php $zTOOLTIPS->Display ('ADMIN'); ?>
     </p>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->a, "A"); ?>
 
     <p id='inheritance'>
      INHERITANCE: 
-     <?php $zTOOLTIPS->Display ('INHERITANCE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?>
 

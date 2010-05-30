@@ -6,7 +6,6 @@
 
     <p id='heading'>
      <?php echo $zGROUPS->Fullname; ?>
-     <?php $zTOOLTIPS->Display ('HEADING'); ?>
     </p> <!-- #heading -->
 
     <?php $zGROUPS->Broadcast(); ?>
@@ -20,14 +19,12 @@
 
      <p id='name'>
       <?php $zSTRINGS->Display ('LABEL.NAME'); ?>
-      <?php $zTOOLTIPS->Display ('NAME'); ?>
      </p><!-- #title -->
 
      <?php $zGROUPS->Broadcast ("field", "Name"); ?>
 
      <p id='fullname'>
       <?php $zSTRINGS->Display ('LABEL.FULLNAME'); ?>
-      <?php $zTOOLTIPS->Display ('FULLNAME'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("FULLNAME", 32, $zGROUPS->Fullname); ?>
@@ -35,7 +32,6 @@
 
      <p id='description'>
       <?php $zSTRINGS->Display ('LABEL.DESCRIPTION'); ?>
-      <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
      </p><!-- #content -->
 
      <?php $zHTML->TextArea ("DESCRIPTION", $zGROUPS->Description); ?>
@@ -43,7 +39,6 @@
 
      <p id='access'>
       <?php $zSTRINGS->Display ('LABEL.ACCESS'); ?>
-      <?php $zTOOLTIPS->Display ('ACCESS'); ?>
      </p><!-- #content -->
 
      <?php $zOPTIONS->Menu ("GROUPACCESS", $zGROUPS->Access, "ACCESS"); ?>
@@ -51,7 +46,6 @@
 
      <p id='tags'>
       <?php $zSTRINGS->Display ('LABEL.TAGS'); ?>
-      <?php $zTOOLTIPS->Display ('TAGS'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TAGS", 128, $zGROUPS->Tags); ?>

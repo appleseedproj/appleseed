@@ -6,7 +6,6 @@
  <div id='container'>
   <p id='heading'>
    <?php echo __("Edit"); ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p>
 
   <div id='edit'>
@@ -33,14 +32,12 @@
 
     <p id='icon'>
      <?php $zHTML->ImageLink ($gTARGET, NULL, $gFRIENDSICON); ?>
-     <?php $zTOOLTIPS->Display ('ICON'); ?>
     </p> <!-- #icon -->
     
     <p class='domain'><?php echo $zFRIENDS->Domain; ?></p> <!-- #domain -->
 
     <p id='circles'>
      <?php $zSTRINGS->Display ('LABEL.CIRCLES', 'USER.FRIENDS'); ?>
-     <?php $zTOOLTIPS->Display ('CIRCLES'); ?>
     </p> <!-- #circles -->
     <span class='circles'>
      <?php echo $gCIRCLESLISTING; ?>
@@ -48,7 +45,6 @@
  
     <p id='alias'>
      <?php $zSTRINGS->Display ('LABEL.ALIAS', 'USER.FRIENDS'); ?>
-     <?php $zTOOLTIPS->Display ('ALIAS'); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("ALIAS", 70, $zFRIENDS->Alias); ?>
     <p id='info_alias'>

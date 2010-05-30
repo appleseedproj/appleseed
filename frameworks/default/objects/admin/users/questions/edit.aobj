@@ -2,7 +2,6 @@
  <div id='container'>
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -16,40 +15,34 @@
  
     <p id='shortquestion'> 
      SHORT QUESTION: 
-     <?php $zTOOLTIPS->Display ('SHORTQUESTION'); ?>
     </p>
     <?php $zHTML->TextBox ("SHORTQUESTION", 64, $ADMINDATA->ShortQuestion); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "ShortQuestion"); ?>
  
     <p id='fullquestion'>
      FULL QUESTION: 
-     <?php $zTOOLTIPS->Display ('FULLQUESTION'); ?>
     </p>
     <?php $zHTML->TextBox ("FULLQUESTION", 255, $ADMINDATA->FullQuestion); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "FullQuestion"); ?>
 
     <p id='typeof'>
      QUESTION TYPE: 
-     <?php $zTOOLTIPS->Display ('QUESTIONTYPE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("QUESTIONTYPE", $ADMINDATA->TypeOf, "TYPEOF"); ?><br />
 
     <p id='concern'>
      CONCERN: 
-     <?php $zTOOLTIPS->Display ('CONCERN'); ?>
     </p>
     <?php $zHTML->TextBox ("CONCERN", 70, $ADMINDATA->Concern); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Concern"); ?>
 
     <p id='language'>
      LANGUAGE: 
-     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language, "LANGUAGE"); ?><br />
       
     <p id='visibility'>
      VISIBILITY: 
-     <?php $zTOOLTIPS->Display ('VISIBILITY'); ?>
     </p>
     <?php $zOPTIONS->Menu ("QUESTIONVISIBILITY", $ADMINDATA->Visible, "VISIBLE"); ?><br />
     

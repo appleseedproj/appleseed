@@ -5,7 +5,6 @@
  <div id='container'>
     <p id='heading'>
      <?php $zSTRINGS->Display ('LABEL.REPLY'); ?>
-     <?php $zTOOLTIPS->Display ('HEADING'); ?>
     </p>
 
     <span class='parent'>
@@ -22,14 +21,12 @@
 
        <p id='subject'>
         <?php $zSTRINGS->Display ('LABEL.SUBJECT'); ?>
-        <?php $zTOOLTIPS->Display ('SUBJECT'); ?>
        </p> <!-- #subject -->
        <?php $zHTML->TextBox ("SUBJECT", 70, $gSUBJECT); ?><br />
        <?php $zGROUPS->groupContent->Broadcast ("field", "Subject"); ?>
 
        <p id='body'>
         <?php $zSTRINGS->Display ('LABEL.BODY'); ?>
-        <?php $zTOOLTIPS->Display ('BODY'); ?>
        </p> <!-- .body -->
        <?php $zHTML->TextArea ("BODY", $gBODY); ?><br />
        <?php $zGROUPS->groupContent->Broadcast ("field", "Body"); ?>

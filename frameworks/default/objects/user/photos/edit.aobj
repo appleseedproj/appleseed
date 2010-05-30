@@ -6,7 +6,6 @@
  <div id='container'>
   <p id='heading'>
    <?php echo __("Edit"); ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p> <!-- #heading -->
     
   <?php $gVIEWDATA->photoInfo->Broadcast(); ?>
@@ -21,7 +20,6 @@
 
      <p id='filename'>
       <?php $zSTRINGS->Display ('LABEL.FILENAME', 'USER.PHOTOS'); ?>
-      <?php $zTOOLTIPS->Display ('FILENAME'); ?>
      </p> <!-- #filename -->
      <?php $zHTML->TextBox ("FILENAME", 64, $gVIEWDATA->photoInfo->Filename); ?>
      <p id='filename_info'>
@@ -31,7 +29,6 @@
 
      <p id='hint'>
       <?php $zSTRINGS->Display ('LABEL.HINT', 'USER.PHOTOS'); ?>
-      <?php $zTOOLTIPS->Display ('HINT'); ?>
      </p> <!-- #hint -->
      <p id='hint_info'>
      <?php $zSTRINGS->Display ('INFO.HINT', 'USER.PHOTOS'); ?>
@@ -39,7 +36,6 @@
 
      <p id='tags'>
       <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.PHOTOS'); ?>
-      <?php $zTOOLTIPS->Display ('TAGS'); ?>
      </p> <!-- #tags_info -->
      <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->photoInfo->Tags); ?>
      <p id='tags_info'>
@@ -49,14 +45,12 @@
 
      <p id='description'>
       <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', 'USER.PHOTOS'); ?>
-      <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
      </p> <!-- #description -->
      <?php $zHTML->TextArea ("DESCRIPTION", $gVIEWDATA->photoInfo->Description); ?>
      <?php $gVIEWDATA->photoInfo->Broadcast ("field", "Description"); ?>
 
      <p id='photoset'>
       <?php $zSTRINGS->Display ('LABEL.PHOTOSET', 'USER.PHOTOS'); ?>
-      <?php $zTOOLTIPS->Display ('PHOTOSET'); ?>
      </p> <!-- #photoset -->
      <?php $zHTML->Menu ("PHOTOSET", $gSETLIST, "", $gPHOTOSET); ?>
 

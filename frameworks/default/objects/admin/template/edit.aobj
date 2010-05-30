@@ -2,7 +2,6 @@
  <div id='content'>
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -16,40 +15,34 @@
  
     <p id='username'>
      USERNAME: 
-     <?php $zTOOLTIPS->Display ('USERNAME'); ?>
     </p>
     <?php $zHTML->TextBox ("USERNAME", 255, $ADMINDATA->Username); ?>
     <?php $ADMINDATA->Broadcast ("field", "Username"); ?>
  
     <p id='password'> 
      PASSWORD: 
-     <?php $zTOOLTIPS->Display ('PASSWORD'); ?>
     </p>
     <?php $zHTML->TextBox ("PASS", 64, "", TRUE); ?>
     <?php $ADMINDATA->Broadcast ("field", "Pass"); ?>
 
     <p id='standing'>
      STANDING: 
-     <?php $zTOOLTIPS->Display ('STANDING'); ?>
     </p>
     <?php $zOPTIONS->Menu ("ACCOUNTSTANDING", $ADMINDATA->Standing, "STANDING"); ?>
  
     <p id='verified'>
      VERIFIED: 
-     <?php $zTOOLTIPS->Display ('VERIFIED'); ?>
     </p>
     <?php $zOPTIONS->Menu ("ACCOUNTVERIFICATION", $ADMINDATA->Verification, "VERIFICATION"); ?>
 
     <p id='email'>
      EMAIL: 
-     <?php $zTOOLTIPS->Display ('EMAIL'); ?>
     </p>
     <?php $zHTML->TextBox ("EMAIL", 64, $ADMINDATA->userProfile->Email); ?>
     <?php $ADMINDATA->userProfile->Broadcast ("field", "Email"); ?>
       
     <p id='amount'>
      INVITES AMOUNT:
-     <?php $zTOOLTIPS->Display ('AMOUNT'); ?>
     </p>
     <?php $zHTML->TextBox ("AMOUNT", 64, $ADMINDATA->userInvites->Amount); ?>
     <?php $ADMINDATA->userInvites->Broadcast ("field", "Amount"); ?>

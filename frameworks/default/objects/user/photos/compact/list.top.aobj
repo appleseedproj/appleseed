@@ -20,12 +20,10 @@
 
   <p id='heading'>
    <?php echo $gVIEWDATA->Name; ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p> <!-- #heading -->
 
   <p id='description'>
    <?php echo $gVIEWDATA->Description; ?>
-   <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
   </p> <!-- #description -->
 
   <?php $gVIEWDATA->photoInfo->Broadcast(); ?>

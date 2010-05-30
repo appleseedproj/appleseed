@@ -5,7 +5,6 @@
 
     <p id='content'>
      <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'SITE.MAIN.INVITE'); ?>
-     <?php $zTOOLTIPS->Display ('CONTENT'); ?>
     </p>
  
     <form id='invite' name='invite' method='POST' action='profile/<?php echo $zLOCALUSER->Username; ?>/'>

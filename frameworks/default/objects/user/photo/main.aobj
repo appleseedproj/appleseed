@@ -13,12 +13,10 @@
    
    <p id='heading'>
     <?php echo $gFILENAME; ?>
-    <?php $zTOOLTIPS->Display ('HEADING'); ?>
    </p> <!-- #heading -->
 
    <p id='description'>
     <?php echo $gDESCRIPTION; ?>
-    <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
    </p> <!-- #description -->
    
    <p id='original'>

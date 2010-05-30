@@ -1,6 +1,5 @@
 <p id='recipient'>
  <?php $zSTRINGS->Display ('LABEL.RECIPIENT', 'USER.MESSAGES'); ?>
- <?php $zTOOLTIPS->Display ('RECIPIENT'); ?>
 </p>
 
 <?php $zHTML->Hidden ("gRECIPIENTADDRESS", $gRECIPIENTNAME . '@' . $gRECIPIENTDOMAIN); ?>

@@ -9,7 +9,6 @@
 
     <p id='content'>
      <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'USER.INVITE.CONFIRM'); ?>
-     <?php $zTOOLTIPS->Display ('CONTENT', 'USER.INVITE.CONFIRM'); ?>
     </p> <!-- #content -->
  
   </div> <!-- #container -->

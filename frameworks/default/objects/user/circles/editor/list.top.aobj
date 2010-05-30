@@ -7,7 +7,6 @@
 
   <p id='heading'>
    <?php $zSTRINGS->Display ("LABEL.CIRCLES", $zAPPLE->Context); ?></h1>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p> <!-- #heading -->
 
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>

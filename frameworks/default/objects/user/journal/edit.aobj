@@ -7,7 +7,6 @@
 
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p> <!-- .top -->
 
  <div id='editor'>
@@ -20,7 +19,6 @@
 
      <p id='title'>
       <?php $zSTRINGS->Display ('LABEL.TITLE', 'USER.JOURNAL'); ?>
-      <?php $zTOOLTIPS->Display ('TITLE'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TITLE", 64, $zJOURNAL->Title); ?>
@@ -28,7 +26,6 @@
 
      <p id='content'>
       <?php $zSTRINGS->Display ('LABEL.CONTENT', 'USER.JOURNAL'); ?>
-      <?php $zTOOLTIPS->Display ('CONTENT'); ?>
      </p><!-- #content -->
 
      <?php $zHTML->TextArea ("CONTENT", $zJOURNAL->Content); ?>
@@ -36,7 +33,6 @@
 
      <p id='tags'>
       <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.JOURNAL'); ?>
-      <?php $zTOOLTIPS->Display ('TAGS'); ?>
      </p><!-- #tags -->
 
      <?php $zHTML->TextBox ("TAGS", 64, $zJOURNAL->Tags); ?>
@@ -44,14 +40,12 @@
 
      <p id='icon'>
       <?php $zSTRINGS->Display ('LABEL.ICON', 'USER.JOURNAL'); ?>
-      <?php $zTOOLTIPS->Display ('ICON'); ?>
      </p><!-- #icon -->
 
      <?php $zHTML->Menu ("USERICON", $gICONLIST, "", $zJOURNAL->userIcons_Filename); ?>
 
      <p id='posted'>
       <?php $zSTRINGS->Display ('LABEL.POSTED', 'USER.JOURNAL'); ?>
-      <?php $zTOOLTIPS->Display ('POSTED'); ?>
      </p><!-- #posted -->
 
      <?php $zHTML->DateMenu ("POSTED", $gPOSTEDLIST['MONTH'], $gPOSTEDLIST['DAY'], $gPOSTEDLIST['YEAR']); ?>

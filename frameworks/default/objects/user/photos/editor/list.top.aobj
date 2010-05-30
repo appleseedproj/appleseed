@@ -20,12 +20,10 @@
 
   <p id='heading'>
    <?php echo $gVIEWDATA->Name; ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p> <!-- #heading -->
 
   <p id='upload'>
    <?php $zSTRINGS->Display ("LABEL.UPLOAD", "USER.PHOTOS"); ?>
-   <?php $zTOOLTIPS->Display ('UPLOAD'); ?>
   </p> <!-- #upload -->
 
   <form enctype="multipart/form-data" id='newphoto' name='newphoto' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/<?php echo $gALBUMREQUEST; ?>/'>

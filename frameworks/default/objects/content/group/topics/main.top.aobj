@@ -6,7 +6,6 @@
 
   <p id='heading'>
    <?php echo $zGROUPS->Fullname; ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p> <!-- #heading -->
 
   <?php $zLOCALUSER->Broadcast (); ?>

@@ -12,7 +12,6 @@
 
   <p class='content'>
    <?php $zSTRINGS->Display ("OBJECT.CONTENT", "USER.OPTIONS"); ?>
-   <?php $zTOOLTIPS->Display ('CONTENT'); ?>
   </p>
 
  <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/sections/user/options.aobj", INCLUDE_SECURITY_BASIC); ?>
@@ -23,47 +22,40 @@
 
     <p id='fullname'>
      <?php $zSTRINGS->Display ("LABEL.FULLNAME", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('FULLNAME'); ?>
     </p> <!-- #fullname -->
     <?php $zHTML->TextBox ("FULLNAME", 64, $zFOCUSUSER->userProfile->Fullname); ?>
     <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Fullname"); ?>
 
     <p id='alias'>
      <?php $zSTRINGS->Display ("LABEL.ALIAS", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('ALIAS'); ?>
     </p> <!-- #fullname -->
     <?php $zHTML->TextBox ("ALIAS", 64, $zFOCUSUSER->userProfile->Alias); ?>
     <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Alias"); ?>
 
     <p id='email'>
      <?php $zSTRINGS->Display ("LABEL.EMAIL", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('EMAIL'); ?>
     </p> <!-- #email -->
     <?php $zHTML->TextBox ("EMAIL", 128, $zFOCUSUSER->userProfile->Email); ?>
     <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Email"); ?>
 
     <p id='gender'>
      <?php $zSTRINGS->Display ("LABEL.GENDER", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('GENDER'); ?>
     </p> <!-- #gender -->
     <?php $zOPTIONS->Menu ("GENDER", $zFOCUSUSER->userProfile->Gender); ?>
 
     <p id='birthday'>
      <?php $zSTRINGS->Display ("LABEL.BIRTHDAY", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('BIRTHDAY'); ?>
     </p> <!-- #birthday -->
     <?php $zHTML->BirthDateMenu ("BIRTHDAY", $gBIRTHDAYLIST['MONTH'], $gBIRTHDAYLIST['DAY'], $gBIRTHDAYLIST['YEAR']); ?>
 
     <p id='zipcode'>
      <?php $zSTRINGS->Display ("LABEL.ZIPCODE", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('ZIPCODE'); ?>
     </p> <!-- #zipcode -->
     <?php $zHTML->TextBox ("ZIPCODE", 64, $zFOCUSUSER->userProfile->Zipcode); ?>
     <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Zipcode"); ?>
 
     <p id='description'>
      <?php $zSTRINGS->Display ("LABEL.DESCRIPTION", "USER.OPTIONS.GENERAL"); ?>
-     <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
     </p> <!-- #description -->
     <?php $zHTML->TextArea ("DESCRIPTION", $zFOCUSUSER->userProfile->Description); ?>
     <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Description"); ?>
@@ -84,19 +76,16 @@
 
      <p class='profile'>
       <?php $zSTRINGS->Display ("LABEL.PROFILE", "USER.OPTIONS.EMAILS"); ?>
-      <?php $zTOOLTIPS->Display ('PROFILE'); ?>
      </p>
      <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['ProfileNotification'], "PROFILE"); ?>
 
      <p class='journal'>
       <?php $zSTRINGS->Display ("LABEL.JOURNAL", "USER.OPTIONS.EMAILS"); ?>
-      <?php $zTOOLTIPS->Display ('JOURNAL'); ?>
      </p>
      <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['JournalNotification'], "JOURNAL"); ?>
 
      <p class='journalreply'>
       <?php $zSTRINGS->Display ("LABEL.REPLY", "USER.OPTIONS.EMAILS"); ?>
-      <?php $zTOOLTIPS->Display ('JOURNALREPLY'); ?>
      </p>
      <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['ReplyNotification'], "REPLY"); ?>
 
@@ -106,7 +95,6 @@
 
      <p class='notification'>
       <?php $zSTRINGS->Display ("LABEL.THEME", "USER.OPTIONS.CONFIG"); ?>
-      <?php $zTOOLTIPS->Display ('NOTIFICATION'); ?>
      </p>
 
      <?php $zHTML->Menu ("DEFAULTTHEME", $gTHEMELIST, NULL, $zFOCUSUSER->userSettings->SettingsCache['DefaultTheme']); ?>
@@ -117,7 +105,6 @@
 
     <p id='profilephoto'>
      <?php $zSTRINGS->Display ("LABEL.PHOTO", "USER.OPTIONS.PHOTO"); ?>
-     <?php $zTOOLTIPS->Display ('PROFILEPHOTO'); ?>
     </p> <!-- #label -->
     <?php $zHTML->FileBox ("PROFILEPHOTO", 25, 64, $gPROFILEPHOTOSIZE); ?>
     <?php $zPHOTO->Broadcast ("field", "image"); ?>
@@ -129,14 +116,12 @@
 
     <p id='currenticon'>
      <?php $zSTRINGS->Display ("LABEL.CURRENT", "USER.OPTIONS.ICONS"); ?>
-     <?php $zTOOLTIPS->Display ('CURRENTICON'); ?>
     </p> <!-- #currenticon -->
 
     <?php echo $bICONLIST ?>
 
     <p id='newicon'>
      <?php __("Add New"); ?>
-     <?php $zTOOLTIPS->Display ('NEWICON'); ?>
     </p> <!-- #newicon -->
     <?php $zHTML->FileBox ("USERICON", 25, 64, $gUSERICONSIZE, $gNEWUPLOAD); ?>
     <?php $zICON->Broadcast ("field", "image"); ?>

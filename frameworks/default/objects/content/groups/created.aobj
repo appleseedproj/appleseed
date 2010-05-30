@@ -6,7 +6,6 @@
 
    <p id='top'>
     <?php $zSTRINGS->Display ('LABEL.CREATED'); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p> <!-- .top -->
 
  <div id='created'>

@@ -8,7 +8,6 @@
 
    <p id='top'>
     <?php $zSTRINGS->Display ('LABEL.COMPOSE', 'USER.MESSAGES'); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
  
    <?php $zMESSAGE->Broadcast(); ?>
@@ -23,14 +22,12 @@
  
     <p id='subject'>
      <?php $zSTRINGS->Display ('LABEL.SUBJECT', 'USER.MESSAGES'); ?>
-     <?php $zTOOLTIPS->Display ('SUBJECT'); ?>
     </p>
  
     <?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?>
  
     <p id='body'>
      <?php $zSTRINGS->Display ('LABEL.BODY', 'USER.MESSAGES'); ?>
-     <?php $zTOOLTIPS->Display ('BODY'); ?>
     </p>
  
     <?php $zHTML->TextArea ("BODY", $gBODY); ?>

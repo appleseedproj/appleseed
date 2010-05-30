@@ -7,7 +7,6 @@
 
     <p id='content'>
      <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'USER.INVITE'); ?>
-     <?php $zTOOLTIPS->Display ('CONTENT', 'USER.INVITE'); ?>
     </p> <!-- #content -->
  
     <form id='invite' name='invite' method='POST' action='profile/<?php echo $gPROFILEREQUEST; ?>/'>

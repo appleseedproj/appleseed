@@ -6,7 +6,6 @@
  <div id='container'>
   <p id='heading'>
    <?php echo __("Edit"); ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p>
 
   <div id='edit'>
@@ -20,14 +19,12 @@
 
     <p id='name'>
      <?php $zSTRINGS->Display ('LABEL.NAME', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('NAME'); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("NAME", 70, $zCIRCLES->Name); ?>
     <?php $zCIRCLES->Broadcast ("field", "Name"); ?>
  
     <p id='description'>
      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
     </p> <!-- #description -->
     <?php $zHTML->TextArea ("DESCRIPTION", $zCIRCLES->Description); ?>
     <?php $zCIRCLES->Broadcast ("field", "Description"); ?>

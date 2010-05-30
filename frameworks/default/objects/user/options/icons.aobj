@@ -5,7 +5,6 @@
 
  <p class='keyword'>
   <?php $zSTRINGS->Display ("LABEL.KEYWORD", "USER.OPTIONS.ICONS"); ?>
-  <?php $zTOOLTIPS->Display ('KEYWORD'); ?>
  </p> <!-- .keyword -->
  <span class='keyword'>
   <?php $zHTML->TextBox ("KEYWORD[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Keyword); ?>
@@ -14,7 +13,6 @@
 
  <p class='comments'>
   <?php $zSTRINGS->Display ("LABEL.COMMENTS", "USER.OPTIONS.ICONS"); ?>          
-  <?php $zTOOLTIPS->Display ('COMMENTS'); ?>
  </p> <!-- .comments -->
  <span class='comments'>
   <?php $zHTML->TextBox ("COMMENTS[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Comments); ?>

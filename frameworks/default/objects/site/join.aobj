@@ -7,7 +7,6 @@
 
  <p class='content'>
   <?php $zSTRINGS->Display ("OBJECT.CONTENT", "SITE.JOIN"); ?>
-  <?php $zTOOLTIPS->Display ('CONTENT'); ?>
  </p> <!-- .content -->
 
  <form name='join' id='join' action='join/' method='post'>
@@ -15,48 +14,41 @@
 
    <p id='fullname'>
     <?php $zSTRINGS->Display ("LABEL.FULLNAME", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('FULLNAME'); ?>
    </p> <!-- .fullname -->
    <?php $zHTML->TextBox ("FULLNAME", 16, $gFULLNAME); ?>
    <?php $zFOCUSUSER->userProfile->Broadcast ('field', 'Fullname'); ?>
 
    <p id='username'>
     <?php $zSTRINGS->Display ("LABEL.USERNAME", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('USERNAME'); ?>
    </p> <!-- .username -->
    <?php $zHTML->TextBox ("USERNAME", 16, $gUSERNAME); ?>
    <?php $zFOCUSUSER->Broadcast ('field', 'Username'); ?>
 
    <p id='email'>
     <?php $zSTRINGS->Display ("LABEL.EMAIL", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('EMAIL'); ?>
    </p> <!-- .email -->
    <?php $zHTML->TextBox ("EMAIL", 128, $gEMAIL); ?>
    <?php $zFOCUSUSER->Broadcast ('field', 'Email'); ?>
 
    <p id='password'>
     <?php $zSTRINGS->Display ("LABEL.PASSWORD", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('PASSWORD'); ?>
    </p> <!-- .password -->
    <?php $zHTML->TextBox ("PASS", 16, "", TRUE); ?>
 
    <p id='confirm'>
     <?php $zSTRINGS->Display ("LABEL.CONFIRM", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('CONFIRM'); ?>
    </p> <!-- .confirm -->
    <?php $zHTML->TextBox ("CONFIRM", 16, "", TRUE); ?>
    <?php $zFOCUSUSER->Broadcast ('field', 'Pass'); ?>
 
    <p id='zipcode'>
     <?php $zSTRINGS->Display ("LABEL.ZIPCODE", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('ZIPCODE'); ?>
    </p> <!-- .zipcode -->
    <?php $zHTML->TextBox ("ZIPCODE", 8, $gZIPCODE); ?>
    <?php $zFOCUSUSER->userProfile->Broadcast ('field', 'Zipcode'); ?>
 
    <p id='invite'>
     <?php $zSTRINGS->Display ("LABEL.INVITE", "SITE.JOIN"); ?>
-    <?php $zTOOLTIPS->Display ('INVITE'); ?>
    </p> <!-- .invite -->
    <?php $zHTML->TextBox ("VALUE", 32, $gVALUE); ?>
    <?php $zFOCUSUSER->userInvites->Broadcast ('field', 'Value'); ?>

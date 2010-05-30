@@ -6,7 +6,6 @@
  <div id='container'>
   <p id='heading'>
    <?php echo __("Edit"); ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p>
 
   <div id='edit'>
@@ -20,21 +19,18 @@
 
     <p id='name'>
      <?php $zSTRINGS->Display ('LABEL.NAME', 'USER.PHOTOSETS'); ?>
-     <?php $zTOOLTIPS->Display ('NAME'); ?>
     </p> <!-- #name -->
     <?php $zHTML->TextBox ("NAME", 70, $gVIEWDATA->Name); ?>
     <?php $gVIEWDATA->Broadcast ("field", "Name"); ?>
 
     <p id='description'>
      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', 'USER.PHOTOSETS'); ?>
-     <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
     </p> <!-- #description -->
     <?php $zHTML->TextArea ("DESCRIPTION", $gVIEWDATA->Description); ?>
     <?php $gVIEWDATA->Broadcast ("field", "Description"); ?>
 
     <p id='directory'>
      <?php $zSTRINGS->Display ('LABEL.DIRECTORY', 'USER.PHOTOSETS'); ?>
-     <?php $zTOOLTIPS->Display ('DIRECTORY'); ?>
     </p> <!-- #directory -->
     <?php $zHTML->TextBox ("DIRECTORY", 70, $gVIEWDATA->Directory); ?>
     <p id='directory_info'>
@@ -44,7 +40,6 @@
 
     <p id='tags'>
      <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.PHOTOSETS'); ?>
-     <?php $zTOOLTIPS->Display ('TAGS'); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->Tags); ?>
     <p id='tags_info'>

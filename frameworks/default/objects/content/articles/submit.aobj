@@ -7,7 +7,6 @@
 
    <p id='top'>
     <?php $zSTRINGS->Display ('LABEL.SUBMIT', 'CONTENT.ARTICLES'); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p> <!-- .top -->
 
  <div id='submit'>
@@ -20,7 +19,6 @@
 
      <p id='title'>
       <?php $zSTRINGS->Display ('LABEL.TITLE', 'CONTENT.ARTICLES'); ?>
-      <?php $zTOOLTIPS->Display ('TITLE'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TITLE", 64, $gTITLE); ?>
@@ -28,7 +26,6 @@
 
      <p id='summary'>
       <?php $zSTRINGS->Display ('LABEL.SUMMARY', 'CONTENT.ARTICLES'); ?>
-      <?php $zTOOLTIPS->Display ('SUMMARY'); ?>
      </p><!-- #summary -->
 
      <?php $zHTML->TextArea ("SUMMARY", $gSUMMARY); ?>
@@ -36,7 +33,6 @@
 
      <p id='full'>
       <?php $zSTRINGS->Display ('LABEL.FULL', 'CONTENT.ARTICLES'); ?>
-      <?php $zTOOLTIPS->Display ('FULL'); ?>
      </p><!-- #full -->
 
      <?php $zHTML->TextArea ("FULL", $gFULL); ?>

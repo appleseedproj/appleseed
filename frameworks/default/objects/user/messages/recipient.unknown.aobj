@@ -1,6 +1,5 @@
 <p id='recipient'>
  <?php $zSTRINGS->Display ('LABEL.RECIPIENT'); ?>
- <?php $zTOOLTIPS->Display ('RECIPIENT'); ?>
 </p>
 
 <?php $zHTML->TextArea ("RECIPIENTADDRESS", $gRECIPIENTADDRESS); ?>

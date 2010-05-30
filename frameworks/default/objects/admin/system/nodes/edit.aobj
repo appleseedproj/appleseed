@@ -2,7 +2,6 @@
  <div id='container'>
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -16,44 +15,37 @@
  
     <p id='entry'> 
      ENTRY:
-     <?php $zTOOLTIPS->Display ('ENTRY'); ?>
     </p>
     <?php $zHTML->TextBox ("ENTRY", 64, $ADMINDATA->Entry); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Entry"); ?>
  
     <p id='trust'>
      TRUST: 
-     <?php $zTOOLTIPS->Display ('TRUST'); ?>
     </p>
     <?php $zOPTIONS->Menu ("TRUST", $ADMINDATA->Trust); ?><br />
 
     <p id='endstamp'>
      END STAMP:
-     <?php $zTOOLTIPS->Display ('ENDSTAMP'); ?>
     </p>
     <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?>
     
     <p id='never'>
      NEVER:
-     <?php $zTOOLTIPS->Display ('NEVER'); ?>
     </p>
     <?php $zHTML->CheckBox ('NEVER', TRUE, TRUE, $gNEVERCHECKED); ?>
 
     <p id='share'>
      SHARE: 
-     <?php $zTOOLTIPS->Display ('SHARE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("SHARE", $ADMINDATA->Share); ?><br />
 
     <p id='inherit'>
      INHERIT: 
-     <?php $zTOOLTIPS->Display ('INHERIT'); ?>
     </p>
     <?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?><br />
 
     <p id='callback'>
      CALLBACK: 
-     <?php $zTOOLTIPS->Display ('CALLBACK'); ?>
     </p>
     <?php $zOPTIONS->Menu ("CALLBACK", $ADMINDATA->Callback); ?><br />
 

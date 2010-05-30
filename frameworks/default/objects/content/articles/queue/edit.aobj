@@ -5,7 +5,6 @@
  <div id='container'>
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $zARTICLES->Broadcast(); ?>
@@ -14,7 +13,6 @@
  
    <p id='submitted'> 
     <?php $zSTRINGS->Display ('LABEL.SUBMITTED', $zAPPLE->Context); ?>
-    <?php $zTOOLTIPS->Display ('SUBMITTED'); ?>
    </p>
 
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
@@ -24,34 +22,29 @@
  
     <p id='verification'>
      <?php $zSTRINGS->Display ('LABEL.VERIFICATION', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('VERIFICATION'); ?>
     </p>
     <?php $zOPTIONS->Menu ("VERIFICATION", $zARTICLES->Verification); ?><br />
 
     <p id='title'> 
      <?php $zSTRINGS->Display ('LABEL.TITLE', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('TITLE'); ?>
     </p>
     <?php $zHTML->TextBox ("TITLE", 64, $zARTICLES->Title); ?><br />
     <?php $zARTICLES->Broadcast ("field", "Title"); ?>
  
     <p id='summary'>
      <?php $zSTRINGS->Display ('LABEL.SUMMARY', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('SUMMARY'); ?>
     </p>
     <?php $zHTML->TextArea ("SUMMARY", $zARTICLES->Summary); ?><br />
     <?php $zARTICLES->Broadcast ("field", "Summary"); ?>
 
     <p id='full'>
      <?php $zSTRINGS->Display ('LABEL.FULL', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('FULL'); ?>
     </p>
     <?php $zHTML->TextArea ("FULL", $zARTICLES->Full); ?><br />
     <?php $zARTICLES->Broadcast ("field", "Full"); ?>
 
     <p id='stamp'>
      <?php $zSTRINGS->Display ('LABEL.STAMP', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('STAMP'); ?>
     </p><!-- #stamp -->
     <?php $zHTML->DateMenu ("STAMP", $gSTAMPLIST['MONTH'], $gSTAMPLIST['DAY'], $gSTAMPLIST['YEAR']); ?>
     @
@@ -59,7 +52,6 @@
 
     <p id='language'>
      <?php $zSTRINGS->Display ('LABEL.LANGUAGE', $zAPPLE->Context); ?>
-     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("LANGUAGE", $zARTICLES->Language); ?><br />
 

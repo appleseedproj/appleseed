@@ -6,7 +6,6 @@
 
    <p id='top'>
     <?php $zSTRINGS->Display ('LABEL.CREATE'); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p> <!-- .top -->
 
  <div id='create'>
@@ -17,7 +16,6 @@
 
      <p id='name'>
       <?php $zSTRINGS->Display ('LABEL.NAME'); ?>
-      <?php $zTOOLTIPS->Display ('NAME'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("NAME", 32, $gNAME); ?>
@@ -25,7 +23,6 @@
 
      <p id='fullname'>
       <?php $zSTRINGS->Display ('LABEL.FULLNAME'); ?>
-      <?php $zTOOLTIPS->Display ('FULLNAME'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("FULLNAME", 32, $gFULLNAME); ?>
@@ -33,7 +30,6 @@
 
      <p id='description'>
       <?php $zSTRINGS->Display ('LABEL.DESCRIPTION'); ?>
-      <?php $zTOOLTIPS->Display ('DESCRIPTION'); ?>
      </p><!-- #content -->
 
      <?php $zHTML->TextArea ("DESCRIPTION", $gDESCRIPTION); ?>
@@ -41,7 +37,6 @@
 
      <p id='access'>
       <?php $zSTRINGS->Display ('LABEL.ACCESS'); ?>
-      <?php $zTOOLTIPS->Display ('ACCESS'); ?>
      </p><!-- #content -->
 
      <?php $zOPTIONS->Menu ("GROUPACCESS", $gACCESS, "ACCESS"); ?>
@@ -49,7 +44,6 @@
 
      <p id='tags'>
       <?php $zSTRINGS->Display ('LABEL.TAGS'); ?>
-      <?php $zTOOLTIPS->Display ('TAGS'); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TAGS", 128, $gTAGS); ?>

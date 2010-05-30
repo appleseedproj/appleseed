@@ -5,7 +5,6 @@
   <div id='container'>
   <p id='heading'>
    <?php echo $zGROUPS->Fullname; ?>
-   <?php $zTOOLTIPS->Display ('HEADING'); ?>
   </p> <!-- #heading -->
 
    <div id='members'>

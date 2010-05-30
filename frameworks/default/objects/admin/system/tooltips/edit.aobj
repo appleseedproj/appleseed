@@ -2,7 +2,6 @@
  <div id='container'>
    <p id='top'>
    <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -16,34 +15,29 @@
  
     <p id='title'> 
      TITLE:
-     <?php $zTOOLTIPS->Display ('TITLE'); ?>
     </p>
     <?php $zHTML->TextBox ("TITLE", 64, $ADMINDATA->Title); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Title"); ?>
  
     <p id='context'>
      CONTEXT: 
-     <?php $zTOOLTIPS->Display ('CONTEXT'); ?>
     </p>
     <?php $zHTML->TextBox ("CONTEXT", 70, $ADMINDATA->Context); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Context"); ?>
 
     <p id='output'>
      OUTPUT: 
-     <?php $zTOOLTIPS->Display ('OUTPUT'); ?>
     </p>
     <?php $zHTML->TextArea ("OUTPUT", $ADMINDATA->Output); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Output"); ?>
 
     <p id='formatting'>
      FORMATTING: 
-     <?php $zTOOLTIPS->Display ('FORMATTING'); ?>
     </p>
     <?php $zOPTIONS->Menu ("FORMATTING", $ADMINDATA->Formatting); ?><br />
 
     <p id='language'>
      LANGUAGE: 
-     <?php $zTOOLTIPS->Display ('LANGUAGE'); ?>
     </p>
     <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language); ?><br />
 

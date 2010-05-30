@@ -2,7 +2,6 @@
  <div id='container'>
    <p id='top'>
      <?php __("Add New"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
    </p>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -14,28 +13,24 @@
 
     <p id='concern'> 
      CONCERN:
-     <?php $zTOOLTIPS->Display ('CONCERN'); ?>
     </p>
     <?php $zHTML->TextBox ("CONCERN", 64, $ADMINDATA->Concern); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Concern"); ?>
  
     <p id='label'>
      LABEL: 
-     <?php $zTOOLTIPS->Display ('LABEL'); ?>
     </p>
       <?php $zHTML->TextBox ("LABEL", 64, $ADMINDATA->Label); ?><br />
       <?php $ADMINDATA->Broadcast ("field", "Label"); ?>
 
     <p id='value'>
      VALUE: 
-     <?php $zTOOLTIPS->Display ('VALUE'); ?>
     </p>
     <?php $zHTML->TextBox ("VALUE", 64, $ADMINDATA->Value); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Value"); ?>
 
     <p id='chosen'>
      CHOSEN: 
-     <?php $zTOOLTIPS->Display ('CHOSEN'); ?>
     </p>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Chosen, "CHOSEN"); ?>
 

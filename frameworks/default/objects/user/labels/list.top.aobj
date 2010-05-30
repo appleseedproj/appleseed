@@ -7,8 +7,7 @@
    <?php $zMESSAGE->messageLabels->Broadcast (); ?>
  
    <p id='top'>
-   <?php echo __("Edit"); ?>
-    <?php $zTOOLTIPS->Display ('TOP'); ?>
+     <?php echo __("Edit"); ?>
    </p>
 
    <ul>
