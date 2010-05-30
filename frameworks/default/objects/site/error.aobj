@@ -8,7 +8,7 @@
    </div>
 
    <div id="page_right" class="grid_9"> 
-   <h1><?php echo $gERRORTITLE; ?></h1>
+     <h1><?php echo $gERRORTITLE; ?></h1>
  
      <?php echo $gERRORMSG; ?>
      

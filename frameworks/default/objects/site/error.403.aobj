@@ -1,72 +1,67 @@
-<div id='sectionERROR'>
-
- <div id='site'>
-  <div id='common'>
-
-   <div id='error'>
-    <div id='caption'>
-     <?php echo $gERRORTITLE; ?>
-    </div> <!-- #caption -->
- 
-    <div id='container'>
-     <?php echo $gERRORMSG; ?>
-     <div id='return'>
-      <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
-     </div> <!-- #return -->
+   <!-- ## header obj -->
+   <?php $zHTML->Header (); ?>
    
-   <div id='local'>
-  <form id='userinfo' name='userinfo' action='login/' method='post'>
-   <input type='hidden' name='gACTION' value='LOGIN' />
-   <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
+ <div id='page' class='container_12'>
 
-   <p id='username'>
-    <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.LOGIN'); ?> <br />
-   </p> <!-- #username -->
-   <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
-   <?php $zLOCALUSER->Broadcast ('field', 'Username'); ?>
+   <div id="page_left" class="grid_3"> 
+   	&nbsp;
+   </div>
 
-   <p id='password'>
-    <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.LOGIN'); ?> <br />
-   </p> <!-- #password -->
-   <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
-   <?php $zLOCALUSER->Broadcast ('field', 'Pass'); ?>
-
-   <p id='rememberme'>
-    <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.LOGIN'); ?>
-   </p> <!-- #rememberme -->
-   <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
-
-   <?php $zHTML->Button ("Login"); ?>
-   <?php $zHTML->Button ("Forgot Password"); ?>
-
-  </form> <!-- #userinfo -->
-  </div> <!-- #local -->
-  
-  <div id='remote'>
-  <form id='remoteuserinfo' name='remoteuserinfo' action='login/remote/' method='post'>
-   <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
-
-   <p id='location'>
-    <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
-   </p> <!-- #username -->
-   <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
-   <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>
-
-   <?php $zHTML->Button ("remotelogin"); ?>
-
-  </form> <!-- #remoteuserinfo -->
-  </div>
-
-     </div> <!-- #container -->
+   <div id="page_right" class="grid_9"> 
+     <section id='local'>
+       <h1> <?php echo $gERRORTITLE; ?> </h1>
  
-    </div> <!-- #error -->
-   </div> <!-- #common -->
-  </div> <!-- #site -->
+       <?php echo $gERRORMSG; ?>
+       <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
+   
+       <form id='userinfo' name='userinfo' action='login/' method='post'>
+         <input type='hidden' name='gACTION' value='LOGIN' />
+         <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
+
+         <p id='username'>
+           <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.LOGIN'); ?> <br />
+         </p> <!-- #username -->
+         
+         <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
+         <?php $zLOCALUSER->Broadcast ('field', 'Username'); ?>
+
+         <p id='password'>
+           <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.LOGIN'); ?> <br />
+         </p> <!-- #password -->
+         
+         <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
+         <?php $zLOCALUSER->Broadcast ('field', 'Pass'); ?>
+
+         <p id='rememberme'>
+           <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.LOGIN'); ?>
+         </p> <!-- #rememberme -->
+         <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
+
+         <?php $zHTML->Button ("Login"); ?>
+         <?php $zHTML->Button ("Forgot Password"); ?>
+
+       </form> <!-- #userinfo -->
+ 
+       <form id='remoteuserinfo' name='remoteuserinfo' action='login/remote/' method='post'>
+         <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
+
+         <p id='location'>
+           <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
+         </p> <!-- #username -->
+         <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
+         <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>
+
+         <?php $zHTML->Button ("Remote Login"); ?>
+
+       </form> <!-- #remoteuserinfo -->
+     </section>
+   </div>
+
+   <div class="clear"></div> 
+ </div>
 
   <!-- ## footer obj -->
   <?php $zHTML->Footer (); ?>
-
- </div> <!-- #sectionERROR -->
 
  </body>
 </html>

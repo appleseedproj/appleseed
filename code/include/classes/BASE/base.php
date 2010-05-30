@@ -3125,6 +3125,9 @@
       global $gSORT, $gCURRENTPAGE, $gMAXPAGES;
       global $gPOSTDATA;
       
+      // If gSCROLLSTART[$pCONTEXT] isn't declared, set it to start at 0.
+      if ($gSCROLLSTART[$pCONTEXT] == "") $gSCROLLSTART[$pCONTEXT] = 0;
+ 
       // Calculate scroll values.
       $this->CalcScroll ($pCONTEXT);
       
@@ -3185,120 +3188,8 @@
       echo '</nav> ';
       echo '</form>';
 
-return;
+      return (true);
      
-      // ASD TAG REFERENCE:
-      // + Page %CURRENTPAGE% of %MAXPAGES%.
-      // + Pages %PAGESLIST%
- 
-      global $gTHEMELOCATION, $gPOSTDATA;
-      global $gSCROLLID, $gTARGET, $gFOOTNOTE;
-      global $gSCROLLMAX, $gSCROLLSTART, $gSCROLLSTEP;
-      global $gSORT, $gCURRENTPAGE, $gMAXPAGES;
-      global $gPREVSTYLE, $gFOOTSTYLE, $gNEXTSTYLE;
-
-      global $zAPPLE, $zHTML;
- 
-      $gPREVSTYLE = ""; $gFOOTSTYLE = ""; $gFOOTSTYLE = "";
-
-      // Check if we're manually setting the widths.
-      if ( ($pPREVWIDTH) and ($pFOOTWIDTH) and ($pNEXTWIDTH) ) {
-        $gPREVSTYLE = "style='width:$pPREVWIDTH" . "px" . ";' ";
-        $gFOOTSTYLE = "style='width:$pFOOTWIDTH" . "px" . ";' ";
-        $gNEXTSTYLE = "style='width:$pNEXTWIDTH" . "px" . ";' ";
-      } // if
-
-      // If gSCROLLSTART[$pCONTEXT] isn't declared, set it to start at 0.
-      if ($gSCROLLSTART[$pCONTEXT] == "") $gSCROLLSTART[$pCONTEXT] = 0;
- 
-      // Create the pages list of direct links.
-      global $gPAGESLIST; $gPAGESLIST = "";
- 
-      // Loop through all the possible pages.
-      for ($pagecount = 1; $pagecount <= $gMAXPAGES; $pagecount++) {
-        // Calculate which page to target.
-        $pagetarget = ( ($pagecount - 1) * $gSCROLLSTEP[$pCONTEXT]);
-
-        $scrolltarget = $gSCROLLSTART;
-        $scrolltarget[$pCONTEXT] = $pagetarget;
- 
-        $gEXTRAPOSTDATA['SORT'] = $gSORT;
-        $gEXTRAPOSTDATA['SCROLLSTART'] = $scrolltarget;
- 
-        // Different css class for selected link.
-        $linkstyle = "";
-        if ($pagecount == $gCURRENTPAGE) $linkstyle = "selected";
- 
-        // Append the page link to the list.
-        if (is_array($pTARGET) ) {
-          $gPAGESLIST .= $this->CreateLink ($pTARGET[$pagecount-1], $pagecount, $gEXTRAPOSTDATA, $linkstyle) . " ";
-        } else {
-          $gPAGESLIST .= $this->CreateLink ($pTARGET, $pagecount, $gEXTRAPOSTDATA, $linkstyle) . " ";
-        } // if 
- 
-      } // for
- 
-      // Use the default footnote object.
-      $footnote = "footnote.pages.aobj";
-
-      switch ($pSCROLLTYPE) {
-        case 'SCROLL_PAGEOF':
-          $footnote = "footnote.pageof.aobj";
-        break;
-        case 'SCROLL_SPECIAL':
-          $footnote = "footnote.special.aobj";
-        break;
-        case 'SCROLL_NOFIRST':
-          $scrollnofirst = TRUE;
-        break;
-        case 'SCROLL_PAGES':
-        break;
-        default:
-        break;
-      } // switch
-
-      // Previous Object
-      $gPOSTDATA['SCROLLSTART'][$pCONTEXT] = $gSCROLLSTART[$pCONTEXT] - $gSCROLLSTEP[$pCONTEXT];
-      if ($gPOSTDATA['SCROLLSTART'][$pCONTEXT] < 0) $gPOSTDATA['SCROLLSTART'][$pCONTEXT] = 0;
-
-      if (is_array ($pTARGET) ) {
-        $gTARGET = $pTARGET[$gCURRENTPAGE - 2];
-      } else {
-        $gTARGET = $pTARGET;
-      } // if
-
-      if ($gSCROLLSTART[$pCONTEXT] <= 0) {
-        $zHTML->Button ('prev', null, DISABLED);
-      } else {
-        $zHTML->Button ('prev');
-      } // if 
-
-      // Footnote Object
-      if ($scrollnofirst) {
-        if ($gMAXPAGES > 1) $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/$footnote");
-      } else {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/$footnote");
-      } // if
-
-      // Next Object
-      $gPOSTDATA['SCROLLSTART'][$pCONTEXT] = $gSCROLLSTART[$pCONTEXT] + $gSCROLLSTEP[$pCONTEXT];
-      $gPOSTDATA['SORT'] = $gSORT;
-
-      if (is_array ($pTARGET) ) {
-        $gTARGET = $pTARGET[$gCURRENTPAGE];
-      } else {
-        $gTARGET = $pTARGET;
-      } // if
-
-      if ($gSCROLLSTART[$pCONTEXT] + $gSCROLLSTEP[$pCONTEXT] >= $gSCROLLMAX[$pCONTEXT]) {
-        $zHTML->Button ('next', null, DISABLED);
-      } else {
-        $zHTML->Button ('next');
-      } // if 
-  
-      unset ($gPREVSTYLE); unset ($gFOOTSTYLE); unset ($gNEXTSTYLE);
-      unset ($gTARGET);
-      
     } // Scroll
     
     // Output the Show All button.
