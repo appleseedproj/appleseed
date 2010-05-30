@@ -1,25 +1,21 @@
-   <?php $zHTML->Alternate(); ?>
-     <span class='tid'>
+   <tr class="<?php echo $zHTML->Alternate(); ?>"> 
+     <td class='tid'>
        <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='title'>
+     <td class='title'>
        <?php $zHTML->Link ($target, $ADMINDATA->Title, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #title -->
+     </td> <!-- #title -->
 
-     <span class='full'>
-       <?php $zHTML->Link ($target, $zAPPLE->Format ($ADMINDATA->Full, FORMAT_VIEW), $gEXTRAPOSTDATA); ?>
-     </span> <!-- #full -->
-
-     <span class='submitted_username'>
+     <td class='submitted_username'>
        <?php $zHTML->Link ($target, $ADMINDATA->Submitted_Username, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #submitted_username -->
+     </td> <!-- #submitted_username -->
 
-     <span class='language'>
+     <td class='language'>
        <?php $zHTML->Link ($target, $ADMINDATA->Language, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #language -->
+     </td> <!-- #language -->
 
-     <span class='checkbox'>
+     <td class='checkbox'>
        <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
-     </span> <!-- #checkbox -->
+     </td> <!-- #checkbox -->
    </li>

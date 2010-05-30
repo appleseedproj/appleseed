@@ -1,4 +1,6 @@
 ; English (US) Language File
+[theme]
+APPLESEED_TAGLINE="Open Source + Distributed"
 
 [buttons]
 SELECT_ALL="Select +"

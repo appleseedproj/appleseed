@@ -6,7 +6,7 @@
     
         <hgroup class="grid_3"> 
             <h1><a href="http://opensource.appleseedproject.org/" title="Click here to learn more about the Appleseed Project.">Appleseed</a></h1> 
-            <h2>Awesomely distributed.</h2> 
+            <h2><?php echo __("Appleseed Tagline"); ?></h2> 
         </hgroup> 
         
         <nav class="grid_6"> 

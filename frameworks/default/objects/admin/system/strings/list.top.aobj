@@ -1,8 +1,8 @@
 <section id="admin_page"> 
 
-  <h1><?php echo __("Strings Admin Title"); ?></h1> 
+  <h1><?php echo __("System Strings Admin Title"); ?></h1> 
                 
-  <p><?php echo __("Strings Admin Description"); ?></p> 
+  <p><?php echo __("System Strings Admin Description"); ?></p> 
  
   <?php $zSEARCH->Ask (); ?>
 
@@ -18,14 +18,13 @@
         <li><?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?></li>
       </ul>
     </nav>
- 
    
    <table>
  
    	<?php $ADMINDATA->Broadcast(); ?>
    	<thead> 
      <tr> 
-       <th scope="col"><a href="#"># &uarr;</a></th> 
+       <th scope="col"><a href="#">#</a></th> 
        <th scope="col"><a href="#">Name</a></th> 
        <th scope="col"><a href="#">Type</a></th> 
        <th scope="col"><a href="#">Context</a></th> 
