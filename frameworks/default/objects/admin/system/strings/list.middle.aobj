@@ -8,7 +8,7 @@
      </td> <!-- #title -->
 
      <td class='output'>
-      <?php $zHTML->Link ($target, $output, $gEXTRAPOSTDATA); ?>
+      <?php $zHTML->Link ($target, substr (strip_tags ($output), 0, 40), $gEXTRAPOSTDATA); ?>
      </td> <!-- #output -->
 
      <td class='context'>

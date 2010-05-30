@@ -121,7 +121,7 @@ footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
 
 /* -- */
 
-#admin_page table { width:100%; }
+#admin_page table { width:100%; clear:both; }
 
 p.message { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:#639a00; color:#f1ffd6; }
 
