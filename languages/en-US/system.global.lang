@@ -1,5 +1,12 @@
 ; English (US) Language File
 
+[buttons]
+SELECT_ALL="Select +"
+SELECT_NONE="Select -"
+DELETE_ALL="Delete +"
+MOVE_UP="Move &uarr;"
+MOVE_DOWN="Move &darr;"
+RESET_SEARCH="Reset"
 [global]
 PREVIOUS="&lt; Prev"
 FIRST="&lt;&lt; First"

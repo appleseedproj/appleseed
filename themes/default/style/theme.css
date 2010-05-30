@@ -121,6 +121,8 @@ footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
 
 /* -- */
 
+#admin_page table { width:100%; }
+
 p.message { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:#639a00; color:#f1ffd6; }
 
 p.error { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:#639a00; background-color:#bf4630; color:#f1ffd6; }
@@ -147,6 +149,7 @@ button[disabled] {
 .scroll ol li { float:left; padding:0px 5px; }
 
 .scroll button { background:none; border:none; font-weight:bold; color:#406300; padding:0; }
+.scroll li.selected button { text-decoration: underline; color: #bf4630; }
 .scroll button:hover { cursor:pointer; }
 
 .search {width:100%; text-align:right; float:right; clear:both; }

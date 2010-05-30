@@ -2980,7 +2980,7 @@
       $confirm = false;
       if ($pCONFIRMATION) $confirm = "onClick='return jCONFIRM(\"$pCONFIRMATION\")'";
       
-      if (isset($pACTION))
+      if ($pACTION)
         $gBUTTONACTION = $pACTION;
       else
         $gBUTTONACTION = strtoupper ($pBUTTONNAME);
@@ -3121,10 +3121,14 @@
     // Output scroll buttons
     function Scroll ($pTARGET, $pCONTEXT, $pSCROLLTYPE = "", $pPREVWIDTH = "", $pFOOTWIDTH = "", $pNEXTWIDTH = "") {
     	
-      // Calculate scroll values.
-      $this->CalcScroll ($pCONTEXT);
       global $gSCROLLMAX, $gSCROLLSTART, $gSCROLLSTEP;
       global $gSORT, $gCURRENTPAGE, $gMAXPAGES;
+      global $gPOSTDATA;
+      
+      // Calculate scroll values.
+      $this->CalcScroll ($pCONTEXT);
+      
+      if ($gMAXPAGES == 1) return (false);
       
       /*
       echo $gSCROLLMAX[$pCONTEXT], "<br />";
@@ -3137,36 +3141,46 @@
       
       $previouspage = $gCURRENTPAGE - 1;
       if ($previouspage < 1) $previouspage = 1;
+      $previouspage = ( ($previouspage- 1) * $gSCROLLSTEP[$pCONTEXT]);
       
+      $nextpage = $gCURRENTPAGE + 1;
+      if ($nextpage > $gMAXPAGES) $nextpage = $gMAXPAGES;
+      $nextpage = ( ($nextpage- 1) * $gSCROLLSTEP[$pCONTEXT]);
+      
+      $lastpage = ( ($gMAXPAGES- 1) * $gSCROLLSTEP[$pCONTEXT]);
       global $zHTML;
       
       echo '<form name="scroll" method="POST" action="' . $pTARGET . '">';
-      echo $this->PostData(); 
+      echo $this->PostData($gPOSTDATA); 
       echo '<nav class="scroll"> ';
       echo '  <ol> ';
-      echo '    <li><span>' . $zHTML->CreateButton ('First', NULL, "", '0', 'SCROLLSTART') . '</span></li> ';
-      echo '    <li><span>' . $zHTML->CreateButton ('Previous', NULL, "", $previouspage, 'SCROLLSTART') . '</span></li> ';
+      echo '    <li><span>' . $zHTML->CreateButton ('First', NULL, "", '0', 'SCROLLSTART[' . $pCONTEXT . ']') . '</span></li> ' . "\n";
+      echo '    <li><span>' . $zHTML->CreateButton ('Previous', NULL, "", $previouspage, 'SCROLLSTART[' . $pCONTEXT . ']') . '</span></li> ' . "\n";
       
-//    function CreateButton ($pBUTTONNAME, $pCONFIRMATION = "", $pDISABLED = ENABLED, $pACTION = "", $pACTIONNAME = "") {
-
       $step = 1;
       if ($gMAXPAGES > 20) $step = 5;
       if ($gMAXPAGES > 100) $step = 10;
       
       // Put the page numbers together.
       for ($p = 1; $p <= $gMAXPAGES; $p += $step) {
-      	$pagenumberlist[$p] = '    <li><span>' . $zHTML->CreateButton ($p, NULL, "", $p, 'SCROLLSTART') . '</span></li> ';
+        $pagetarget = ( ($p - 1) * $gSCROLLSTEP[$pCONTEXT]) - 1;
+        
+      	$pagenumberlist[$p] = '    <li><span>' . $zHTML->CreateButton ($p, NULL, "", $pagetarget, 'SCROLLSTART[' . $pCONTEXT . ']') . '</span></li> ';
       }
+      
       // Add the current page, in case we skipped it.
-      $pagenumberlist[$gCURRENTPAGE] = '    <li><span>' . $zHTML->CreateButton ($p, NULL, "", $p, 'SCROLLSTART') . '</span></li> ';
+      $currentpagetarget = ( ($gCURRENTPAGE - 1) * $gSCROLLSTEP[$pCONTEXT]) - 1;
+      $pagenumberlist[$gCURRENTPAGE] = '    <li class="selected"><span>' . $zHTML->CreateButton ($gCURRENTPAGE, NULL, "", $currentpagetarget, 'SCROLLSTART[' . $pCONTEXT . ']') . '</span></li> ';
+      
+      ksort ($pagenumberlist);
       
       // Echo the page numbers
       foreach ($pagenumberlist as $p => $pnuml) {
-      	echo $pnuml;
+      	echo $pnuml . "\n";
       } 
       
-      echo '    <li><span>' . $zHTML->CreateButton ('Next', NULL, "", $previouspage, 'SCROLLSTART') . '</span></li> ';
-      echo '    <li><span>' . $zHTML->CreateButton ('Last', NULL, "", $gMAXPAGES, 'SCROLLSTART') . '</span></li> ';
+      echo '    <li><span>' . $zHTML->CreateButton ('Next', NULL, "", $nextpage, 'SCROLLSTART[' . $pCONTEXT . ']') . '</span></li> ' . "\n";
+      echo '    <li><span>' . $zHTML->CreateButton ('Last', NULL, "", $lastpage, 'SCROLLSTART[' . $pCONTEXT . ']') . '</span></li> ' . "\n";
       echo '  </ol> ';
       echo '</nav> ';
       echo '</form>';
