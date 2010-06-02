@@ -14,36 +14,36 @@
     <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
     <p id='title'> 
-     TITLE:
+     <?php echo __("Title"); ?>
     </p>
     <?php $zHTML->TextBox ("TITLE", 64, $ADMINDATA->Title); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Title"); ?>
  
     <p id='context'>
-     CONTEXT: 
+     <?php echo __("Context"); ?> 
     </p>
     <?php $zHTML->TextBox ("CONTEXT", 70, $ADMINDATA->Context); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Context"); ?>
 
     <p id='output'>
-     OUTPUT: 
+     <?php echo __("Output"); ?> 
     </p>
     <?php $zHTML->TextArea ("OUTPUT", $ADMINDATA->Output); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Output"); ?>
 
     <p id='formatting'>
-     FORMATTING: 
+     <?php echo __("Formatting"); ?> 
     </p>
     <?php $zOPTIONS->Menu ("FORMATTING", $ADMINDATA->Formatting); ?><br />
 
     <p id='language'>
-     LANGUAGE: 
+     <?php echo __("Language"); ?> 
     </p>
     <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language); ?><br />
 
     <div id='actions'>
 
-     <?php $zHTML->Button ('save'); ?>
+     <?php $zHTML->Button ('Save'); ?>
      </form> <!-- #edit -->
  
      <form id='delete' method='POST' action='_admin/system/strings/'>
@@ -51,13 +51,13 @@
       <?php $zHTML->Post ($gPOSTDATA); ?>
       <input type='hidden' id='gtID' name='gtID' 
              value='<?php echo $ADMINDATA->tID ?>'>
-      <?php $zHTML->Button ('delete', __("Confirm Delete")) ?>
+      <?php $zHTML->Button ('Delete', __("Confirm Delete")) ?>
      </form> <!-- #delete -->
 
      <form id='cancel' method='POST' action='_admin/system/strings/'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
+      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
  
    </div> <!-- #actions -->

@@ -18,10 +18,11 @@
         <li><?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?></li>
       </ul>
     </nav>
+    
+   <?php $ADMINDATA->Broadcast(); ?>
    
    <table>
  
-   	<?php $ADMINDATA->Broadcast(); ?>
    	<thead> 
      <tr> 
        <th scope="col"><a href="#">#</a></th> 

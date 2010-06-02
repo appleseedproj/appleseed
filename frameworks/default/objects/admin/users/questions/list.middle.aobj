@@ -1,25 +1,25 @@
-   <?php $zHTML->Alternate(); ?>
-     <span class='tid'>
+   <tr class="<?php echo $zHTML->Alternate(); ?>">
+     <td class='tid'>
        <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='fullquestion'>
+     <td class='fullquestion'>
        <?php $zHTML->Link ($target, $ADMINDATA->FullQuestion, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='typeof'>
+     <td class='typeof'>
        <?php $zHTML->Link ($target, $zOPTIONS->Label("QUESTIONTYPE", $ADMINDATA->TypeOf), $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='concern'>
+     <td class='concern'>
        <?php $zHTML->Link ($target, $ADMINDATA->Concern, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='language'>
+     <td class='language'>
        <?php $zHTML->Link ($target, $ADMINDATA->Language, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='checkbox'>
+     <td class='checkbox'>
        <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
-     </span>
-   </li>
+     </td>
+   </tr>

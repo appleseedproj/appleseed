@@ -153,3 +153,8 @@ button[disabled] {
 .scroll button:hover { cursor:pointer; }
 
 .search {width:100%; text-align:right; float:right; clear:both; }
+
+label { margin-top:10px; clear:both; }
+select, input, textarea { clear:both; }
+
+textarea { min-width:500px; min-height:160px; }

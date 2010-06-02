@@ -1,4 +1,5 @@
-   </ul>
+   </tbody>
+   </table>
   </form>
 
   <form id='new' method='POST' action=''>
@@ -8,10 +9,8 @@
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
    <?php $zHTML->Button ('New'); ?>
-  </form> <!-- ## new -->
-
- </div> <!-- #container -->
+  </form> 
 
  <?php $zHTML->Scroll ($target, 'admin.users.questions'); ?>
 
-</div> <!-- #questions -->
+</section>

@@ -1,71 +1,57 @@
-<div id='questions'>
- <div id='container'>
-   <p id='top'>
-   <?php echo __("Edit"); ?>
-   </p>
+<section id='questions'>
+   <h1> <?php echo __("Edit"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
  
    <form id='edit' method='POST' action='_admin/users/questions/'>
  
-    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
 
     <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
-    <p id='shortquestion'> 
-     SHORT QUESTION: 
-    </p>
+    <label for='shortquestion'> 
+     <?php echo __("Short Question"); ?> 
+    </label>
     <?php $zHTML->TextBox ("SHORTQUESTION", 64, $ADMINDATA->ShortQuestion); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "ShortQuestion"); ?>
  
-    <p id='fullquestion'>
-     FULL QUESTION: 
-    </p>
+    <label for='fullquestion'>
+     <?php echo __("Full Question"); ?> 
+    </label>
     <?php $zHTML->TextBox ("FULLQUESTION", 255, $ADMINDATA->FullQuestion); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "FullQuestion"); ?>
 
-    <p id='typeof'>
-     QUESTION TYPE: 
-    </p>
+    <label for='typeof'>
+     <?php echo __("Question Type"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("QUESTIONTYPE", $ADMINDATA->TypeOf, "TYPEOF"); ?><br />
 
-    <p id='concern'>
-     CONCERN: 
-    </p>
+    <label for='concern'>
+     <?php echo __("Concern"); ?> 
+    </label>
     <?php $zHTML->TextBox ("CONCERN", 70, $ADMINDATA->Concern); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Concern"); ?>
 
-    <p id='language'>
-     LANGUAGE: 
-    </p>
+    <label for='language'>
+     <?php echo __("Language"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language, "LANGUAGE"); ?><br />
       
-    <p id='visibility'>
-     VISIBILITY: 
-    </p>
+    <label for='visibility'>
+     <?php echo __("Visibility"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("QUESTIONVISIBILITY", $ADMINDATA->Visible, "VISIBLE"); ?><br />
     
     <div id='actions'>
 
-     <?php $zHTML->Button ('save'); ?>
-     </form> <!-- #edit -->
+     <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
+      <input type='hidden' id='gtID' name='gtID'  value='<?php echo $ADMINDATA->tID ?>'>
+      
+      <?php $zHTML->Button ('Save'); ?>
+      <?php $zHTML->Button ('Delete', __("Confirm Delete")) ?>
+      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
  
-     <form id='delete' method='POST' action='_admin/users/questions/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <input type='hidden' id='gtID' name='gtID' 
-             value='<?php echo $ADMINDATA->tID ?>'>
-      <?php $zHTML->Button ('delete', __("Confirm Delete")) ?>
-     </form> <!-- #delete -->
- 
-     <form id='cancel' method='POST' action='_admin/users/questions/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
-     </form> <!-- #cancel -->
- 
+     </form>
    </div> <!-- #actions -->
   
- </div> <!-- #container -->
-</div> <!-- #questions -->
+</section>
