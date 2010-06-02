@@ -2,6 +2,9 @@
 [theme]
 APPLESEED_TAGLINE="Open Source + Distributed"
 
+[beta]
+APPLESEED_IS_EARLY_BETA="Appleseed is early beta software, expect bugs along the way, and send feedback to <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a> </p>"
+
 [buttons]
 SELECT_ALL="Select +"
 SELECT_NONE="Select -"
