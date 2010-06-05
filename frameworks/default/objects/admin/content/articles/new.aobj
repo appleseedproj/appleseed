@@ -1,7 +1,5 @@
 <section id='articles'>
-   <h1>
-     <?php echo __("Add New"); ?>
-   </h1>
+   <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
  
@@ -10,64 +8,66 @@
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
 
-    <p id='title'> 
-     TITLE:
-    </p>
+    <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
+ 
+    <label for='title'> 
+     <?php echo __("Title"); ?>
+    </label>
     <?php $zHTML->TextBox ("TITLE", 64, $ADMINDATA->Title); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Title"); ?>
  
-    <p id='submitted_username'> 
-     (SUBMIT) USERNAME:
-    </p>
+    <label for='submitted_username'> 
+     <?php echo __("Submit Username"); ?>
+    </label>
     <?php $zHTML->TextBox ("SUBMITTED_USERNAME", 64, $ADMINDATA->Submitted_Username); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Submitted_Username"); ?>
  
-    <p id='submitted_domain'> 
-     (SUBMIT) DOMAIN:
-    </p>
+    <label for='submitted_domain'> 
+     <?php echo __("Submit Domain"); ?>
+    </label>
     <?php $zHTML->TextBox ("SUBMITTED_DOMAIN", 64, $ADMINDATA->Submitted_Domain); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Submitted_Domain"); ?>
  
-    <p id='summary'>
-     SUMMARY: 
-    </p>
+    <label for='summary'>
+     <?php echo __("Summary"); ?> 
+    </label>
     <?php $zHTML->TextArea ("SUMMARY", $ADMINDATA->Summary); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Summary"); ?>
 
-    <p id='full'>
-     FULL: 
-    </p>
+    <label for='full'>
+     <?php echo __("Full"); ?> 
+    </label>
     <?php $zHTML->TextArea ("FULL", $ADMINDATA->Full); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Full"); ?>
 
-    <p id='formatting'>
-     FORMATTING: 
-    </p>
+    <label for='formatting'>
+     <?php echo __("Formatting"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("FORMATTING", $ADMINDATA->Formatting); ?><br />
 
-    <p id='verification'>
-     VERIFICATION: 
-    </p>
-    <?php $zOPTIONS->Menu ("VERIFICATION", $ADMINDATA->Formatting); ?><br />
+    <label for='verification'>
+     <?php echo __("Verification"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("VERIFICATION", $ADMINDATA->Verification); ?><br />
 
-    <p id='stamp'>
-     STAMP:
-    </p><!-- #stamp -->
+    <label for='stamp'>
+     <?php echo __("Stamp"); ?>
+    </label>
     <?php $zHTML->DateMenu ("STAMP", $gSTAMPLIST['MONTH'], $gSTAMPLIST['DAY'], $gSTAMPLIST['YEAR']); ?>
     @
-    <?php $zHTML->TimeMenu ("STAMP", $gSTAMPLIST['HOUR'], $gSTAMPLIST['MINUTE']); ?>
+    <?php $zHTML->TimeMenu ("STAMP", $gSTAMPLIST['HOUR'], $gSTAMPLIST['MINUTE']); ?><br />
 
-    <p id='language'>
-     LANGUAGE: 
-    </p>
+    <label for='language'>
+     <?php echo __("Language"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language); ?><br />
 
        <nav>
          <ul>
            <li><?php $zHTML->Button ('Save'); ?></li>
-           <il><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+           <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
          </ul>
        </nav>
+       
      </form> <!-- #edit -->
-
-</section> <!-- #articles -->
+</section>

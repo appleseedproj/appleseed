@@ -7,7 +7,11 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <?php $zHTML->Button ('New'); ?>
+   <nav>
+     <ul>
+       <li> <?php $zHTML->Button ('New'); ?> </li>
+     </ul>
+   </nav>
   </form> 
 
  <?php $zHTML->Scroll ($target, 'admin.users.access'); ?>

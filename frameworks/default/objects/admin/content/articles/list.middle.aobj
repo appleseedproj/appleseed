@@ -18,4 +18,4 @@
      <td class='checkbox'>
        <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
      </td> <!-- #checkbox -->
-   </li>
+   </tr>

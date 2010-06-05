@@ -47,8 +47,12 @@
 
       <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
-      <?php $zHTML->Button ('Save'); ?>
-      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
+      <nav>
+        <ul>
+          <li><?php $zHTML->Button ('Save'); ?></li>
+          <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+        </ul>
+      </nav>
  
      </form>
    </div> <!-- #actions -->

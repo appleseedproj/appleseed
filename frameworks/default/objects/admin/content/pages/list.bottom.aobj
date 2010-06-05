@@ -1,17 +1,20 @@
-   </ul>
+   </tbody>
+   </table>
   </form>
 
   <form id='new' method='POST' action=''>
    <input type='hidden' id='gtID' name='gtID' value='' />
-   <input type='hidden' id='gACTION' name='gACTION' value='NEW' />
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <?php $zHTML->Button ('New'); ?>
+   <nav>
+     <ul>
+       <li> <?php $zHTML->Button ('New'); ?> </li>
+     </ul>
+   </nav>
+   
   </form> <!-- ## new -->
-
- </div> <!-- #container -->
 
  <?php $zHTML->Scroll ($target, 'admin.content.pages'); ?>
 
-</div> <!-- #pages -->
+</section> <!-- #articles -->
