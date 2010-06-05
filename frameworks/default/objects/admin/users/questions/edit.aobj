@@ -44,7 +44,6 @@
     
     <div id='actions'>
 
-     <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
       <input type='hidden' id='gtID' name='gtID'  value='<?php echo $ADMINDATA->tID ?>'>
       
       <?php $zHTML->Button ('Save'); ?>

@@ -1,22 +1,39 @@
-<div id='access'>
- <div id='container'>
+<section id='admin_page'>
 
+  <h1><?php echo __("Users Access Admin Title"); ?></h1> 
+                
+  <p><?php echo __("Users Access Admin Description"); ?></p> 
+ 
   <?php $zSEARCH->Ask (); ?>
 
   <form id='list' method='post' action='_admin/users/access/'>
  
    <?php $zHTML->Post ($gPOSTDATA); ?>
  
-    <?php $zHTML->Button ('Move Down'); ?>
- 
-    <?php $zHTML->Button ('Move Up'); ?>
- 
-    <?php $zHTML->Button ($gSELECTBUTTON); ?>
- 
-    <?php $zHTML->Button ('Delete All', __("Confirm Delete All")) ?>
- 
-   <?php $zHTML->Titles ("ADMINDATA", "titles", "_admin/users/access/"); ?>
- 
+    <nav>
+      <ul>
+        <li><?php $zHTML->Button ('Move Down'); ?></li>
+        <li><?php $zHTML->Button ('Move Up'); ?></li>
+        <li><?php $zHTML->Button ($gSELECTBUTTON); ?></li>
+        <li><?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?></li>
+      </ul>
+    </nav>
+    
    <?php $ADMINDATA->Broadcast(); ?>
  
-   <ul>
+   <table>
+ 
+   	<thead> 
+     <tr> 
+       <th scope="col"><a href="#"><?php echo __("#"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Username"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Location"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Read"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Write"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Editor"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Admin"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Inheritance"); ?></a></th> 
+       <th scope="col"><input type="checkbox" /></th> 
+     </tr> 
+   </thead> 
+   <tbody>

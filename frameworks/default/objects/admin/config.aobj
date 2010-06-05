@@ -14,7 +14,7 @@
     <label for='shutdown'> 
     	<?php echo __("System Shutdown"); ?>
     </label>
-    <?php $zHTML->Menu ('SHUTDOWN', $gSHUTDOWNLISTING, 1, $gSETTINGS['Shutdown']); ?>
+    <?php $zHTML->Menu ('SHUTDOWN', $gSHUTDOWNLISTING, 1, $gSETTINGS['Shutdown']); ?><br />
     
     <label for='summary'> 
     	<?php echo __("Node Summary"); ?>
@@ -24,12 +24,12 @@
     <label for='language'> 
       <?php echo __("Default Language"); ?>
     </label>
-    <?php $zHTML->Menu ('LANGUAGE', $gLANGUAGELISTING, 1, $gSETTINGS['Language']); ?>
+    <?php $zHTML->Menu ('LANGUAGE', $gLANGUAGELISTING, 1, $gSETTINGS['Language']); ?><br />
     
     <label for='theme'> 
       <?php echo __("Default Theme"); ?>
     </label>
-    <?php $zHTML->Menu ('THEME', $gTHEMELISTING, 1, $gSETTINGS['DefaultTheme']); ?>
+    <?php $zHTML->Menu ('THEME', $gTHEMELISTING, 1, $gSETTINGS['DefaultTheme']); ?><br />
     
     <label for='storage'> 
      <?php $zSTRINGS->Display ('LABEL.STORAGE'); ?>

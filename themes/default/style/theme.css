@@ -148,7 +148,7 @@ button[disabled] {
 .scroll ol { list-style-type:none; }
 .scroll ol li { float:left; padding:0px 5px; }
 
-.scroll button { background:none; border:none; font-weight:bold; color:#406300; padding:0; }
+#admin_page nav button, .scroll button { background:none; border:none; font-weight:bold; color:#406300; padding:0; }
 .scroll li.selected button { text-decoration: underline; color: #bf4630; }
 .scroll button:hover { cursor:pointer; }
 

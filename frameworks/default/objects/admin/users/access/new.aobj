@@ -1,64 +1,56 @@
-<div id='access'>
- <div id='container'>
-   <p id='top'>
-     <?php __("Add New"); ?>
-   </p>
+<section id='access'>
+   <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
  
    <form id='edit' method='POST' action='_admin/users/access/'>
  
-    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
 
-    <p id='userauth_uid'> 
-     USER:
-    </p>
-    <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), $ADMINDATA->userAuth_uID, 1); ?>
+    <label for='userauth_uid'> 
+     <?php echo __("User"); ?>
+    </label>
+    <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?><br />
  
-    <p id='fullquestion'>
-     LOCATION: 
-    </p>
+    <label for='fullquestion'>
+     <?php echo __("Location"); ?> 
+    </label>
     <?php $zHTML->TextBox ("LOCATION", 70, $ADMINDATA->Location); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Location"); ?>
 
-    <p id='r'>
-     READ: 
-    </p>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->r, "R"); ?>
+    <label for='r'>
+     <?php echo __("Read"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->r, "R"); ?><br />
 
-    <p id='w'>
-     WRITE: 
-    </p>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->w, "W"); ?>
+    <label for='w'>
+     <?php echo __("Write"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->w, "W"); ?><br />
 
-    <p id='e'>
-     EDITOR: 
-    </p>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->e, "E"); ?>
+    <label for='e'>
+     <?php echo __("Editor"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->e, "E"); ?><br />
 
-    <p id='a'>
-     ADMIN: 
-    </p>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->a, "A"); ?>
+    <label for='a'>
+     <?php echo __("Admin"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->a, "A"); ?><br />
 
-    <p id='inheritance'>
-     INHERITANCE: 
-    </p>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?>
+    <label for='inheritance'>
+     <?php echo __("Inheritance"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?><br />
 
     <div id='actions'>
 
-     <?php $zHTML->Button ('save'); ?>
-     </form> <!-- #edit -->
+      <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
-     <form id='cancel' method='POST' action='_admin/users/access/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
-     </form> <!-- #cancel -->
+      <?php $zHTML->Button ('Save'); ?>
+      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
  
+     </form>
    </div> <!-- #actions -->
   
- </div> <!-- #container -->
-</div> <!-- #access -->
+</section>

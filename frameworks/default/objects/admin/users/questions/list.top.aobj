@@ -25,11 +25,11 @@
  
    	<thead> 
      <tr> 
-       <th scope="col"><a href="#">#</a></th> 
-       <th scope="col"><a href="#">Title</a></th> 
-       <th scope="col"><a href="#">Type</a></th> 
-       <th scope="col"><a href="#">Concern</a></th> 
-       <th scope="col"><a href="#">Lang</a></th> 
+       <th scope="col"><a href="#"><?php echo __("#"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Title"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Type"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Concern"); ?></a></th> 
+       <th scope="col"><a href="#"><?php echo __("Lang"); ?></a></th> 
        <th scope="col"><input type="checkbox" /></th> 
      </tr> 
    </thead> 

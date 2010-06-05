@@ -1,62 +1,54 @@
-<div id='accounts'>
- <div id='container'>
-   <p id='top'>
-     <?php __("Add New"); ?>
-   </p>
+<section id='accounts'>
+   <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
  
-   <form id='add' name='stringadmin' method='POST' action='_admin/users/accounts/'>
+   <form id='edit' method='POST' action='_admin/users/accounts/'>
  
-    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
- 
-    <p id='username'> 
-     USERNAME: 
-    </p>
-    <?php $zHTML->TextBox ("USERNAME", 255, $ADMINDATA->Username); ?>
+
+    <label for='username'>
+     <?php echo __("Username"); ?> 
+    </label>
+    <?php $zHTML->TextBox ("USERNAME", 255, $ADMINDATA->Username); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Username"); ?>
  
-    <p id='password'> 
-     PASSWORD: 
-    </p>
-    <?php $zHTML->TextBox ("PASS", 64, "", TRUE); ?>
+    <label for='password'> 
+     <?php echo __("Password"); ?> 
+    </label>
+    <?php $zHTML->TextBox ("PASS", 64, "", TRUE); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Pass"); ?>
 
-    <p id='standing'> 
-     STANDING: 
-    </p>
-    <?php $zOPTIONS->Menu ("ACCOUNTSTANDING", $ADMINDATA->Standing, "STANDING"); ?>
+    <label for='standing'>
+     <?php echo __("Standing"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("ACCOUNTSTANDING", $ADMINDATA->Standing, "STANDING"); ?><br />
  
-    <p id='verified'> 
-     VERIFIED: 
-    </p>
-    <?php $zOPTIONS->Menu ("ACCOUNTVERIFICATION", $ADMINDATA->Verification, "VERIFICATION"); ?>
+    <label for='verified'>
+     <?php echo __("Verified"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("ACCOUNTVERIFICATION", $ADMINDATA->Verification, "VERIFICATION"); ?><br />
 
-    <p id='email'> 
-     EMAIL: 
-    </p>
-    <?php $zHTML->TextBox ("EMAIL", 64, $ADMINDATA->userProfile->Email); ?>
+    <label for='email'>
+     <?php echo __("Email"); ?> 
+    </label>
+    <?php $zHTML->TextBox ("EMAIL", 64, $ADMINDATA->userProfile->Email); ?><br />
     <?php $ADMINDATA->userProfile->Broadcast ("field", "Email"); ?>
       
-    <p id='amount'> 
-     INVITES AMOUNT: 
-    </p>
-    <?php $zHTML->TextBox ("AMOUNT", 64, $ADMINDATA->userInvites->Amount); ?>
+    <label for='amount'>
+     <?php echo __("Invite Amount"); ?>
+    </label>
+    <?php $zHTML->TextBox ("AMOUNT", 64, $ADMINDATA->userInvites->Amount); ?><br />
     <?php $ADMINDATA->userInvites->Broadcast ("field", "Amount"); ?>
     
     <div id='actions'>
 
-     <?php $zHTML->Button ('save'); ?>
-     </form> <!-- #add -->
+      <?php $zHTML->Hidden ("uID", $ADMINDATA->uID); ?>
  
-     <form id='cancel' method='POST' action='_admin/users/accounts/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
-     </form> <!-- #cancel -->
+      <?php $zHTML->Button ('Save'); ?>
+      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
  
+     </form>
    </div> <!-- #actions -->
   
- </div> <!-- #container -->
-</div> <!-- #accounts -->
+</section>
