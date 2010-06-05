@@ -1,4 +1,5 @@
-   </ul>
+   </tbody>
+   </table>
   </form>
 
   <form id='new' method='POST' action=''>
@@ -7,11 +8,14 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <?php $zHTML->Button ('New'); ?>
+   <nav>
+     <ul>
+       <li> <?php $zHTML->Button ('New'); ?> </li>
+     </ul>
+   </nav>
+   
   </form> <!-- ## new -->
-
- </div> <!-- #container -->
 
  <?php $zHTML->Scroll ($target, 'admin.system.tooltips'); ?>
 
-</div> <!-- #tooltips -->
+</section> <!-- #strings -->

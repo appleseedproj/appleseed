@@ -1,76 +1,51 @@
-<div id='maintenance'>
- <div id='container'>
-   <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.MAINTENANCE', $zAPPLE->Context); ?>
-   </p>
+<section id="admin_page" class='maintenance'>
+
+  <h1><?php echo __("System Maintenence Admin Title"); ?></h1> 
+                
+  <p><?php echo __("System Maintenence Admin Description"); ?></p> 
+ 
+ <!--
+   <span> <?php echo __("Routine Maintenance"); ?> </span>
    
-   <p class='activity' id='blocks'>
-    Delete expired systemNode blocks.
-   </p>
+   <span> <?php echo __("Delete expired node blocks"); ?> </span>
    
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span class='result'><?php echo __("Success"); ?></span>
    
-   <p class='timer'>
-     n/a
-   </p>
+   <span='timer'> n/a </span>
    
-   <p class='interval'>
-    On Refresh
-   </p>
+   <span> On Refresh </span>
    
    <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
-     <?php $zHTML->Button ('refresh'); ?>
+     <?php $zHTML->Button ('Refresh'); ?>
    </form>
    
-   <p class='activity' id='sessions'>
-	  Delete expired sessions.
-	 </p>
+   <span> <?php echo __("Delete expired sessions"); ?> </span>
 	 
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
-   <p class='timer'>
-     n/a
-   </p>
+   <span> n/a </span>
    
-   <p class='interval'>
-     On Refresh
-   </p>
+   <span> <?php echo __("On Refresh"); ?> </span>
    
    <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
-     <?php $zHTML->Button ('refresh'); ?>
+     <?php $zHTML->Button ('Refresh'); ?>
    </form>
    
-   <p class='activity' id='notifications'>
-	  Send queued message notifications.
-	 </p>
+   <span> <?php echo __("Send queued message notifications"); ?> </span>
 	 
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
-   <p class='timer'>
-     n/a
-   </p>
+   <span> n/a </span>
    
-   <p class='interval'>
-     On Refresh
-   </p>
+   <span> <?php echo __("On Refresh"); ?></span>
    
    <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
-     <?php $zHTML->Button ('refresh'); ?>
+     <?php $zHTML->Button ('Refresh'); ?>
    </form>
    
-   <p class='activity' id='callbacks'>
-	  Send trusted node callbacks.
-	 </p>
+   <span> Send trusted node callbacks. </span>
 	 
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
    <p class='timer'>
      1 Hour 47 Min
@@ -81,16 +56,14 @@
    </p>
    
    <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
-     <?php $zHTML->Button ('refresh'); ?>
+     <?php $zHTML->Button ('Refresh'); ?>
    </form>
    
    <p class='activity' id='inherit'>
 	  Retrieve inherited node list from trusted nodes.
 	 </p>
 	 
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
    <p class='timer'>
      1 Hour 47 Min
@@ -101,16 +74,14 @@
    </p>
    
    <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
-     <?php $zHTML->Button ('refresh'); ?>
+     <?php $zHTML->Button ('Refresh'); ?>
    </form>
    
    <p class='activity' id='rotate'>
 	  Rotate logs.
 	 </p>
 	 
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
    <p class='timer'>
      n/a
@@ -128,9 +99,7 @@
 	  Contact node network requesting updates.
 	 </p>
 	 
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
    <p class='timer'>
      1 Hour 47 Min
@@ -148,9 +117,7 @@
 	  Remove from node network any blocked domains. 
 	 </p>
    
-   <span class='result'>
-    SUCCESS
-   </span>
+   <span> <?php echo __("Success"); ?> </span>
    
    <p class='timer'>
      n/a
@@ -161,12 +128,13 @@
    </p>
    
    <form id='inherit' name='inherit' method='POST' action='/_admin/system/maintenance/'>
-     <?php $zHTML->Button ('refresh'); ?>
+     <?php $zHTML->Button ('Refresh'); ?>
    </form>
    
    <form id='manual' name='manual' method='POST' action='/_admin/system/maintenance/'>
-    <?php $zHTML->Button ('refresh_all'); ?>
+    <?php $zHTML->Button ('Refresh All'); ?>
    </form>
+   
+   -->
 
- </div> <!-- #container -->
-</div> <!-- #maintenance -->
+</section> 

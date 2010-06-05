@@ -1,25 +1,25 @@
-   <?php $zHTML->Alternate(); ?>
-     <span class='tid'>
+   <tr class="<?php echo $zHTML->Alternate(); ?>"> 
+     <td class='tid'>
        <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='concern'>
+     <td class='concern'>
        <?php $zHTML->Link ($target, $ADMINDATA->Concern, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #concern -->
+     </td> <!-- #concern -->
 
-     <span class='label'>
+     <td class='label'>
        <?php $zHTML->Link ($target, $ADMINDATA->Label, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #label -->
+     </td> <!-- #label -->
 
-     <span class='value'>
+     <td class='value'>
        <?php $zHTML->Link ($target, $ADMINDATA->Value, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #value -->
+     </td> <!-- #value -->
 
-     <span class='chosen'>
+     <td class='chosen'>
        <?php $zHTML->Link ($target, $zOPTIONS->Label("BOOLEAN", $ADMINDATA->Chosen), $gEXTRAPOSTDATA); ?>
-     </span> <!-- #chosen -->
+     </td> <!-- #chosen -->
 
-     <span class='checkbox'>
+     <td class='checkbox'>
        <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
-     </span> <!-- #checkbox -->
-   </li>
+     </td> <!-- #checkbox -->
+   </tr>

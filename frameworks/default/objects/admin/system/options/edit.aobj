@@ -1,8 +1,5 @@
-<div id='options'>
- <div id='container'>
-   <p id='top'>
-   <?php echo __("Edit"); ?>
-   </p>
+<section id="admin_page" class='options'>
+   <h1> <?php echo __("Edit"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
  
@@ -13,54 +10,42 @@
 
     <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
-    <p id='concern'> 
-     CONCERN:
-    </p>
+    <label for='concern'> 
+     <?php echo __("Concern"); ?>
+    </label>
     <?php $zHTML->TextBox ("CONCERN", 64, $ADMINDATA->Concern); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Concern"); ?>
  
-    <p id='label'>
-     LABEL: 
-    </p>
+    <label for='label'>
+     <?php echo __("Label"); ?> 
+    </label>
       <?php $zHTML->TextBox ("LABEL", 64, $ADMINDATA->Label); ?><br />
       <?php $ADMINDATA->Broadcast ("field", "Label"); ?>
 
-    <p id='value'>
-     VALUE: 
-    </p>
+    <label for='value'>
+     <?php echo __("Value"); ?> 
+    </label>
     <?php $zHTML->TextBox ("VALUE", 64, $ADMINDATA->Value); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Value"); ?>
 
-    <p id='chosen'>
-     CHOSEN: 
-    </p>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Chosen, "CHOSEN"); ?>
+    <label for='chosen'>
+     <?php echo __("Chosen"); ?> 
+    </label>
+    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Chosen, "CHOSEN"); ?><br />
 
-    <p id='language'>
-     LANGUAGE: 
-    </p>
+    <label for='language'>
+     <?php echo __("Language"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language, "LANGUAGE"); ?>
 
-    <div id='actions'>
-
-     <?php $zHTML->Button ('save'); ?>
-     </form> <!-- #edit -->
- 
-     <form id='delete' method='POST' action='_admin/system/options/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <input type='hidden' id='gtID' name='gtID' 
-             value='<?php echo $ADMINDATA->tID ?>'>
-      <?php $zHTML->Button ('delete', __("Confirm Delete Selected")) ?>
-     </form> <!-- #delete -->
- 
-     <form id='cancel' method='POST' action='_admin/system/options/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
-     </form> <!-- #cancel -->
- 
-   </div> <!-- #actions -->
-  
- </div> <!-- #container -->
-</div> <!-- #options -->
+     <nav>
+       <ul>
+         <li><?php $zHTML->Button ('Save'); ?></li>
+         <li><?php $zHTML->Button ('Delete', __("Confirm Delete")) ?></li>
+         <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+       </ul>
+     </nav>
+     
+     </form>
+     
+</section>

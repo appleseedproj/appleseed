@@ -1,25 +1,25 @@
-   <?php $zHTML->Alternate(); ?>
-     <span class='tid'>
+   <tr class="<?php echo $zHTML->Alternate(); ?>"> 
+     <td class='tid'>
        <?php $zHTML->Link ($target, $ADMINDATA->tID, $gEXTRAPOSTDATA); ?>
-     </span>
+     </td>
 
-     <span class='entry'>
+     <td class='entry'>
        <?php $zHTML->Link ($target, $ADMINDATA->Entry, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #entry -->
+     </td> <!-- #entry -->
 
-     <span class='trust'>
+     <td class='trust'>
        <?php $zHTML->Link ($target, $gTRUSTED, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #trust -->
+     </td> <!-- #trust -->
 
-     <span class='endstamp'>
+     <td class='endstamp'>
        <?php $zHTML->Link ($target, $ADMINDATA->fEndStamp, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #endstamp -->
+     </td> <!-- #endstamp -->
      
-     <span class='source'>
+     <td class='source'>
        <?php $zHTML->Link ($target, $ADMINDATA->Source, $gEXTRAPOSTDATA); ?>
-     </span> <!-- #source -->
+     </td> <!-- #source -->
 
-     <span class='checkbox'>
+     <td class='checkbox'>
        <?php $zHTML->CheckBox ('MASSLIST', $ADMINDATA->tID, TRUE, $checked); ?>
-     </span> <!-- #checkbox -->
-   </li>
+     </td> <!-- #checkbox -->
+   </tr>
