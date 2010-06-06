@@ -105,7 +105,7 @@
   $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
   
   // Temporary
-  $gOFFICIALLATEST = '0.7.4';
+  $gOFFICIALLATEST = '0.7.3';
   
   // If we're not specifying the version, select the latest.
   if (!$gVERSION) $gVERSION = $gOFFICIALLATEST;

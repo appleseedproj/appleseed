@@ -1,4 +1,4 @@
- <div id='container'>
+ <section id="admin_page" class='update'>
  
   <?php $zUPDATE->Broadcast(); ?>
  
@@ -40,4 +40,4 @@
    
   </form> <!-- #update -->
  
- </div> <!-- #container -->
+ </section>
