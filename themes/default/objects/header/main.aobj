@@ -26,7 +26,6 @@
         
         <div id="user_login" class="grid_3"> 
         	<p>
-        		<span></span>
         		<span><a href="/login/">Login</a></span> 
         	</p>
         </div> 

@@ -17,7 +17,7 @@
     			<li>Groups</li>
     			<li>Journals</li>
     			<li>Search</li>
-    			<li><a href='profile/%AUTHUSERNAME%/options/'>Options</a></li>
+    			<li><a href='profile/<?php echo $zAUTHUSER->Username; ?>/options/'>Options</a></li>
     			<li>Help</li>
             </ul> 
             <span> <?php echo $gNEWFRIENDS; ?> </span>
