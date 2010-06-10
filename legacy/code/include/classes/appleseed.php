@@ -33,11 +33,13 @@
   // | DESCRIPTION.  Appleseed-specific class.                           |
   // +-------------------------------------------------------------------+
 
+  if (!defined ("APPLESEED")) define ("APPLESEED", true);
+  
   require_once 'legacy/code/include/external/htmlpurifier/HTMLPurifier.auto.php';
   require_once 'legacy/code/include/external/phpmailer/class.phpmailer.php';
   require_once 'legacy/code/include/external/phpmailer/class.smtp.php';
   
-  require_once 'system/language.php';
+  require_once 'libraries/language.php';
   
   class cAPPLESEED extends cAPPLICATION {
 
