@@ -1,13 +1,24 @@
 <?php
 /**
- * @author Michael Chisari <michael.chisari@gmail.com
- * @version 0.7.4
- * @package system/language
- * @copyright Copyright (C) 2004 - 2010 The Appleseed Project. All rights reserved.
- * @license GNU General Public License
+ * @version      $Id$
+ * @package      Appleseed.Framework
+ * @subpackage   Library
+ * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
+ * @link         http://opensource.appleseedproject.org
+ * @license      GNU General Public License version 2.0 (See LICENSE.txt)
  */
- 
- class cLanguage {
+
+// Restrict direct access
+defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
+
+/** Language Class
+ * 
+ * Language and internationalisation functionality.
+ * 
+ * @package     Appleseed.Framework
+ * @subpackage  Library
+ */
+class cLanguage {
  	
  	/*
  	 * @access public
@@ -100,9 +111,19 @@
         }
         return vsprintf($format, array_values($args));
     }
- 	
- } // cLanguage
+	
+} // cLanguage
 
- function __($pString, $pParams = array ()) {
-     return cLanguage::_ ($pString, $pParams);   
- }
+/** Lang Class
+ * 
+ * Shorthand alias for cLanguage class.
+ * 
+ * @package     Appleseed.Framework
+ * @subpackage  Library
+ */
+class cLang extends cLanguage {
+}
+
+function __($pString, $pParams = array ()) {
+    return cLanguage::_ ($pString, $pParams);   
+}
