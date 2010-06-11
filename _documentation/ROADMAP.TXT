@@ -1,0 +1,21 @@
+
+Appleseed Roadmap
+
+Updated:  06-10-2010
+Version:  0.7.4
+
+0.7 SERIES
+----------
+Base features, API, framework, themability, internationalisation.
+
+0.8 SERIES
+----------
+Optimization, Standards and Compatibility.  
+
+0.9 SERIES
+----------
+FEATURE FREEZE!  Bug testing, code cleanup, etc.
+
+1.0 SERIES
+----------
+Testing, security fixes, and optimization.
