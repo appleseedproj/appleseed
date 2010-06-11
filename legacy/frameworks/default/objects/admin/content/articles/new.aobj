@@ -1,4 +1,4 @@
-<section id='articles'>
+<section id="admin_page" class='articles'>
    <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -69,5 +69,6 @@
          </ul>
        </nav>
        
-     </form> <!-- #edit -->
+     </form>
+     
 </section>

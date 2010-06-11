@@ -2,36 +2,40 @@
  
   <?php $zUPDATE->Broadcast(); ?>
  
-  <p id='content'>
-   <?php $zSTRINGS->Display ('OBJECT.CONTENT'); ?>
+  <h1>
+    <?php echo __("Admin Control Update Title"); ?>
+  </h1>
+
+  <p>
+    <?php echo __("Admin Control Update Description"); ?>
   </p>
-  
+
   <form id='update' name='update' method='POST' action='_admin/control/update/'>
   
-    <p id='server'> 
-     <?php $zSTRINGS->Display ('LABEL.SERVER'); ?>
+    <label for='server'> 
+     <?php echo __("Update Server Location"); ?>
    
-    </p>
+    </label>
     <?php $zHTML->Menu ('SERVER', $gSERVERLISTING, 1, $gSERVER); ?>
 
     <?php $zHTML->Button ('add'); ?>
-    <?php $zHTML->Button ('remove'); ?>
+    <?php $zHTML->Button ('remove'); ?><br />
     
-    <p id='addserver'> 
-     <?php $zSTRINGS->Display ('LABEL.ADDSERVER'); ?>
-    </p>
+    <label for='addserver'> 
+     <?php echo __("Add Server Location"); ?>
+    </label>
     <?php $zHTML->TextBox ("ADDSERVER", 255, NULL); ?>
     <?php $zHTML->Button ('choose'); ?>
-    <?php $zHTML->Button ('cancel'); ?>
+    <?php $zHTML->Button ('cancel'); ?><br />
     
-    <p id='version'> 
-     <?php $zSTRINGS->Display ('LABEL.VERSION'); ?>
-    </p>
-    <?php $zHTML->Menu ('VERSION', $gVERSIONLISTING, 1, $gVERSION); ?>
+    <label for='version'> 
+     <?php echo __("Version"); ?>
+    </label>
+    <?php $zHTML->Menu ('VERSION', $gVERSIONLISTING, 1, $gVERSION); ?><br />
     
-    <p id='backupdirectory'> 
-     <?php $zSTRINGS->Display ('LABEL.BACKUPDIRECTORY'); ?>
-    </p>
+    <label for='backupdirectory'> 
+     <?php echo __("Backup Directory"); ?>
+    </label>
     <?php $zHTML->TextBox ("BACKUPDIRECTORY", 255, getcwd() . '/backup/'); ?>
     
     <?php echo $bRESULTS; ?>

@@ -1,4 +1,4 @@
-<section id='questions'>
+<section id="admin_page" class="questions">
    <h1> <?php echo __("Edit"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -42,8 +42,6 @@
     </label>
     <?php $zOPTIONS->Menu ("QUESTIONVISIBILITY", $ADMINDATA->Visible, "VISIBLE"); ?><br />
     
-    <div id='actions'>
-
       <input type='hidden' id='gtID' name='gtID'  value='<?php echo $ADMINDATA->tID ?>'>
       
       <nav>
@@ -55,6 +53,5 @@
       </nav>
  
      </form>
-   </div> <!-- #actions -->
   
 </section>

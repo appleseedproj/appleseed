@@ -1,5 +1,12 @@
-<div class='admin' id='content'>
+<section id="admin_page">
 
-  (No Text Yet)
+  <h1>
+    <?php echo __("Admin Groups Title"); ?>
+  </h1>
 
-</div> <!-- ## admin.content -->
+  <p>
+    <?php echo __("Admin Groups Description"); ?>
+  </p>
+
+</section>
+

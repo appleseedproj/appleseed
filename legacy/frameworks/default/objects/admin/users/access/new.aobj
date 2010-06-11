@@ -1,4 +1,4 @@
-<section id='access'>
+<section id="admin_page" class='access'>
    <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -43,8 +43,6 @@
     </label>
     <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?><br />
 
-    <div id='actions'>
-
       <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
  
       <nav>
@@ -55,6 +53,5 @@
       </nav>
  
      </form>
-   </div> <!-- #actions -->
   
 </section>

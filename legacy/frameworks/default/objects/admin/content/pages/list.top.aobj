@@ -1,4 +1,4 @@
-<section id='admin_page'>
+<section id="admin_page">
 
   <h1><?php echo __("Content Pages Admin Title"); ?></h1> 
                 

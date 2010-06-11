@@ -1,4 +1,4 @@
-<section id='accounts'>
+<section id="admin_page" class='accounts'>
    <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
@@ -41,8 +41,6 @@
     <?php $zHTML->TextBox ("AMOUNT", 64, $ADMINDATA->userInvites->Amount); ?><br />
     <?php $ADMINDATA->userInvites->Broadcast ("field", "Amount"); ?>
     
-    <div id='actions'>
-
       <?php $zHTML->Hidden ("uID", $ADMINDATA->uID); ?>
  
       <nav>
@@ -53,7 +51,5 @@
       </nav>
  
      </form>
-     </form>
-   </div> <!-- #actions -->
   
 </section>

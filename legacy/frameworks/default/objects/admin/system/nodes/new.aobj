@@ -1,8 +1,5 @@
-<div id='nodes'>
- <div id='container'>
-   <p id='top'>
-     <?php __("Add New"); ?>
-   </p>
+<section id="admin_page" class="nodes">
+   <h1> <?php echo __("Add New"); ?> </h1>
 
    <?php $ADMINDATA->Broadcast(); ?>
  
@@ -11,58 +8,47 @@
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
 
-    <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
- 
-    <p id='entry'> 
-     ENTRY:
-    </p>
+    <label for='entry'> 
+     <?php echo __("Entry"); ?>
+    </label>
     <?php $zHTML->TextBox ("ENTRY", 64, $ADMINDATA->Entry); ?><br />
     <?php $ADMINDATA->Broadcast ("field", "Entry"); ?>
  
-    <p id='trust'>
-     TRUST: 
-    </p>
+    <label for='trust'>
+     <?php echo __("Trust"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("TRUST", $ADMINDATA->Trust); ?><br />
 
-    <p id='endstamp'>
-     END STAMP:
-    </p>
+    <label for='endstamp'>
+     <?php echo __("End Stamp"); ?>
+    </label>
     <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?>
     
-    <p id='never'>
-     NEVER:
-    </p>
-    <?php $zHTML->CheckBox ('NEVER', TRUE, TRUE, $gNEVERCHECKED); ?>
+    <label for='never'>
+     <?php echo __("Never"); ?>
+    </label>
+    <?php $zHTML->CheckBox ('NEVER', TRUE, TRUE, $gNEVERCHECKED); ?><br />
 
-    <p id='share'>
-     SHARE: 
-    </p>
+    <label for='share'>
+     <?php echo __("Share"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("SHARE", $ADMINDATA->Share); ?><br />
 
-    <p id='inherit'>
-     INHERIT: 
-    </p>
+    <label for='inherit'>
+     <?php echo __("Inherit"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?><br />
 
-    <p id='callback'>
-     CALLBACK: 
-    </p>
+    <label for='callback'>
+     <?php echo __("Callback"); ?> 
+    </label>
     <?php $zOPTIONS->Menu ("CALLBACK", $ADMINDATA->Callback); ?><br />
 
-    <div id='actions'>
-
-     <?php $zHTML->Button ('save'); ?>
-     </form> <!-- #edit -->
+       <nav>
+         <ul>
+           <li><?php $zHTML->Button ('Save'); ?></li>
+           <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+         </ul>
+       </nav>
  
-     <span class='delete'> &nbsp; </span>
-
-     <form id='cancel' method='POST' action='_admin/system/nodes/'>
-      <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
-     </form> <!-- #cancel -->
- 
-   </div> <!-- #actions -->
-  
- </div> <!-- #container -->
-</div> <!-- #nodes -->
+</section>
