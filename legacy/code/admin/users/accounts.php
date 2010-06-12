@@ -33,6 +33,8 @@
   // | DESCRIPTION: User accounts editor.                                |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -55,16 +57,16 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.users.accounts", TRUE);
+  $zOLDAPPLE->Initialize("admin.users.accounts", TRUE);
 
   // Create local classes.
-  $ADMINDATA = new cUSER ($zAPPLE->Context);
+  $ADMINDATA = new cUSER ($zOLDAPPLE->Context);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
@@ -75,8 +77,8 @@
   // Check to see if user has read access for this area.
   if ($zLOCALUSER->userAccess->r == FALSE) {
 
-    $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
 
   } // if
 
@@ -90,7 +92,7 @@
   $gPAGESUBTITLE = ' - Admin';
 
   // Set how much to step when scrolling.
-  $gSCROLLSTEP[$zAPPLE->Context] = 10;
+  $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
 
   // Set the post data to move back and forth.
   $gPOSTDATA = Array ("CRITERIA"          => $gCRITERIA,
@@ -109,7 +111,7 @@
   $gSELECTBUTTON = 'Select All';
 
   // Change the select button if anything is selected.
-  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
+  if ($zOLDAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
   // PART I: Determine appropriate action.
   switch ($gACTION) {
@@ -180,9 +182,9 @@
 
         $ADMINDATA->Delete();
 
-        if (!$zAPPLE->RemoveDirectory ($phototarget, TRUE)) {
+        if (!$zOLDAPPLE->RemoveDirectory ($phototarget, TRUE)) {
           // Output error message if unsuccessful.
-          $zSTRINGS->Lookup ('ERROR.STORED', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.STORED', $zOLDAPPLE->Context);
           $ADMINDATA->Message = $zSTRINGS->Output;
           $ADMINDATA->Error = -1;
         } // if
@@ -373,9 +375,9 @@
         // Delete photo directory
         $phototarget = "photos/" . $ADMINDATA->Username . "/";
 
-        if (!$zAPPLE->RemoveDirectory ($phototarget, TRUE)) {
+        if (!$zOLDAPPLE->RemoveDirectory ($phototarget, TRUE)) {
           // Output error message if unsuccessful.
-          $zSTRINGS->Lookup ('ERROR.STORED', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.STORED', $zOLDAPPLE->Context);
           $ADMINDATA->Message = $zSTRINGS->Output;
           $ADMINDATA->Error = -1;
         } // if 
@@ -429,10 +431,10 @@
     switch ($gACTION) {
       case 'EDIT':
         global $gEDITUSERNAME; $gEDITUSERNAME = $ADMINDATA->Username;
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/edit.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/edit.aobj", INCLUDE_SECURITY_NONE);
       break;
       case 'NEW':
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/new.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/new.aobj", INCLUDE_SECURITY_NONE);
       break;
       case 'SAVE':
         // Skip to the default.
@@ -443,29 +445,29 @@
              ($gACTION == 'MOVE_UP') OR
              ($gACTION == 'MOVE_DOWN') ) {
 
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.top.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.top.aobj", INCLUDE_SECURITY_NONE);
 
           // Calculate scroll values.
-          $gSCROLLMAX[$zAPPLE->Context] = $ADMINDATA->CountResult();
+          $gSCROLLMAX[$zOLDAPPLE->Context] = $ADMINDATA->CountResult();
 
           // Adjust for a recently deleted entry.
-          $zAPPLE->AdjustScroll ('admin.users.accounts', $ADMINDATA);
+          $zOLDAPPLE->AdjustScroll ('admin.users.accounts', $ADMINDATA);
 
           // Check if any results were found.
-          if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+          if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
             $ADMINDATA->Message = __("No Results Found");
             $ADMINDATA->Broadcast();
           } // if
 
           // Loop through the list.
           $target = "_admin/users/accounts/";
-          for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+          for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
            if ($ADMINDATA->FetchArray()) {
             if ($gACTION == 'SELECT_ALL') $checked = TRUE;
 
             $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
             $gEXTRAPOSTDATA['uID']    = $ADMINDATA->uID;
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.middle.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.middle.aobj", INCLUDE_SECURITY_NONE);
             unset ($gEXTRAPOSTDATA);
 
            } else {
@@ -473,21 +475,21 @@
            } // if
           } // for
 
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.bottom.aobj", INCLUDE_SECURITY_NONE);
 
         } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
           if ($guID) {
             global $gEDITUSERNAME; $gEDITUSERNAME = $ADMINDATA->Username;
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/edit.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/edit.aobj", INCLUDE_SECURITY_NONE);
           } else {
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/new.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/new.aobj", INCLUDE_SECURITY_NONE);
           } // if
         } // if
       break;
     } // switch
   } else {
     // Access Denied
-    $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/common/denied.aobj", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/common/denied.aobj", INCLUDE_SECURITY_NONE);
   } // if
 
   // Retrieve output buffer.
@@ -497,9 +499,9 @@
   ob_end_clean (); 
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/users/accounts.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/users/accounts.afrw", INCLUDE_SECURITY_NONE);
 
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

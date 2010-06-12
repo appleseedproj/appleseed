@@ -43,16 +43,16 @@
   global $gDIRECTORY;
   list ($gDIRECTORY, $gFILENAME) = explode ('/', $gPROFILESUBACTION);
   
-  $zAPPLE->SetContext("user.photo");
+  $zOLDAPPLE->SetContext("user.photo");
 
   global $gPHOTOLOCATION;
   $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/" . $gFILENAME;
   
   // Set link to original photo.
-  $zAPPLE->SetTag ('ORIGINALLINK', "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/_og." . $gFILENAME);
+  $zOLDAPPLE->SetTag ('ORIGINALLINK', "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/_og." . $gFILENAME);
   
   global $gVIEWDATA;
-  $gVIEWDATA = new cPHOTOSETS ($zAPPLE->Context);
+  $gVIEWDATA = new cPHOTOSETS ($zOLDAPPLE->Context);
   
   // Load data about this photoset.
   $photosetcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
@@ -66,8 +66,8 @@
   // Exit out if user is unauthorized.
   if ( ( ($gPRIVACYSETTING == PRIVACY_BLOCK) or ($gPRIVACYSETTING == PRIVACY_HIDE) ) and
        ($zLOCALUSER->userAccess->r == FALSE) and ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
-    $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
   } // if
 
   // Set which tab to highlight.
@@ -88,8 +88,8 @@
 
   // Invalid filename, file not found in database.
   if ($gVIEWDATA->photoInfo->CountResult() == 0) {
-    $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
   } // if
 
   // Create the comment manipulation class.
@@ -117,12 +117,12 @@
   $gTAGS = $gVIEWDATA->photoInfo->Tags;
 
   // Handle the tagging actions.
-  $zTAGS->Context = $zAPPLE->Context . '.TAGS';
+  $zTAGS->Context = $zOLDAPPLE->Context . '.TAGS';
   $zTAGS->Handle($gVIEWDATA->photoInfo->tID, 'user.photo', 
                  "/profile/$zFOCUSUSER->Username/photos/$gVIEWDATA->Directory/" . $gVIEWDATA->photoInfo->Filename . '#tags');
 
   $gVIEWDATA->photoInfo->Select ("photoSets_tID", $gVIEWDATA->tID, "sID");
-  $gSCROLLMAX[$zAPPLE->Context] = $gVIEWDATA->photoInfo->CountResult();
+  $gSCROLLMAX[$zOLDAPPLE->Context] = $gVIEWDATA->photoInfo->CountResult();
   
   global $gTARGET;
   $gTARGET = $_SERVER[REQUEST_URI];
@@ -132,15 +132,15 @@
   while ($gVIEWDATA->photoInfo->FetchArray () ) {
     $gSCROLLTARGET[$count] = $gTARGETPREFIX . $gVIEWDATA->photoInfo->Filename;
     if ($gFILENAME == $gVIEWDATA->photoInfo->Filename) {
-      $gSCROLLSTART[$zAPPLE->Context] = $count;
+      $gSCROLLSTART[$zOLDAPPLE->Context] = $count;
     }
     $count++;
   } // while
 
-  $gSCROLLSTEP[$zAPPLE->Context] = 1;
+  $gSCROLLSTEP[$zOLDAPPLE->Context] = 1;
 
   // Set the post data to move back and forth.
-  $gPOSTDATA = Array ("SCROLLSTART"       => $gSCROLLSTART[$zAPPLE->Context],
+  $gPOSTDATA = Array ("SCROLLSTART"       => $gSCROLLSTART[$zOLDAPPLE->Context],
                       "SORT"              => $gSORT,
                       "PHOTOLISTING"      => $gPHOTOLISTING,
                       "COMMENTVIEW"       => $gCOMMENTVIEW);
@@ -150,12 +150,12 @@
   global $gTAGLINK;
   $gTAGLINK = 'http://' . $gSITEDOMAIN . '/profile/' . $zFOCUSUSER->Username . '/photos/tag/';
   
-  $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photo/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+  $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photo/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
   // Handle comments.
   $zCOMMENTS->Handle ();
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photo.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photo.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

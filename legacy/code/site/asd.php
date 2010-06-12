@@ -33,6 +33,8 @@
   // | DESCRIPTION:  ASD Network traffic hub.                            |
   // +-------------------------------------------------------------------+
   
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 

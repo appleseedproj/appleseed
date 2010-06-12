@@ -1,7 +1,7 @@
 <div id='journal'>
 
  <!-- tabs objects -->
- <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
   <?php $zSEARCH->Ask (); ?>

@@ -70,7 +70,7 @@
     } // Initialize
     
     function CountNewMessages () {
-      global $zLOCALUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zLOCALUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       $NotificationTable = $this->messageNotification->TableName;
       $InformationTable = $this->messageInformation->TableName;
@@ -112,7 +112,7 @@
         $gMESSAGECOUNT = $total;
         $zSTRINGS->Lookup ('LABEL.NEWMESSAGES');
         $username = $zLOCALUSER->Username;
-        $return = $zHTML->CreateLink ("profile/$username/messages/", $zAPPLE->ParseTags ($zSTRINGS->Output));
+        $return = $zHTML->CreateLink ("profile/$username/messages/", $zOLDAPPLE->ParseTags ($zSTRINGS->Output));
       } else {
         $return = OUTPUT_NBSP;
       } // if
@@ -399,7 +399,7 @@
     } // LoadMessages
 
     function BufferLabel () {
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION, $gLABELNAME, $gPROFILESUBACTION; 
 
@@ -470,29 +470,29 @@
       $this->Query ($query);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('users.messages', $this);
 
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Loop through the list.
       $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/messages/" . $gPROFILESUBACTION . "/";
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Sender_Username;
@@ -512,7 +512,7 @@
         
         if ( ($this->Location == FOLDER_INBOX) and 
              ($gFOLDERID != FOLDER_INBOX) ) {
-          $bINBOXMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.inbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bINBOXMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.inbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         global $bLABELSMARK; 
@@ -533,7 +533,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -542,7 +542,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -551,14 +551,14 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
 
     } // BufferLabel
 
     function BufferInbox () {
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION; 
 
@@ -582,28 +582,28 @@
       $this->Query ($query);
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('user.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('user.messages', $this);
       
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       // Loop through the list.
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Sender_Username;
@@ -637,7 +637,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -646,7 +646,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -655,14 +655,14 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/inbox/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
     } // BufferInbox
 
     function BufferSent () {
 
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION; 
 
@@ -698,28 +698,28 @@
       $this->Query ($query);
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('users.messages', $this);
 
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       // Loop through the list.
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Username, $this->Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Username, $this->Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Username;
@@ -753,7 +753,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -762,7 +762,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -771,14 +771,14 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
     } // BufferSent
 
     function BufferDrafts () {
 
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION; 
 
@@ -815,28 +815,28 @@
       $this->Query ($query);
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('users.messages', $this);
 
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       // Loop through the list.
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Username, $this->Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Username, $this->Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Username;
@@ -865,7 +865,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -874,7 +874,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -883,13 +883,13 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/drafts/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
     } // BufferDrafts
 
     function BufferTrash () {
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION; 
 
@@ -917,28 +917,28 @@
       $this->Query ($query);
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('users.messages', $this);
 
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       // Loop through the list.
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Sender_Username;
@@ -973,7 +973,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -982,7 +982,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -991,13 +991,13 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/trash/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
     } // BufferTrash
 
     function BufferAll () {
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION; 
 
@@ -1023,28 +1023,28 @@
       $this->Query ($query);
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
       
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('users.messages', $this);
 
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       // Loop through the list.
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Sender_Username;
@@ -1064,7 +1064,7 @@
 
         if ( ($this->Location == FOLDER_INBOX) and 
              ($gFOLDERID != FOLDER_INBOX) ) {
-          $bINBOXMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.inbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bINBOXMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.inbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         global $bLABELSMARK; 
@@ -1084,7 +1084,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -1093,7 +1093,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -1102,13 +1102,13 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/all/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
     } // BufferAll
 
     function BufferSpam () {
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION; 
 
@@ -1132,28 +1132,28 @@
       $this->Query ($query);
 
       $returnbuffer = NULL;
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.messages', $this);
+      $zOLDAPPLE->AdjustScroll ('users.messages', $this);
 
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
-        $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
+        $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $this->Message = __("No Results Found");
         $returnbuffer .= $this->CreateBroadcast();
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($returnbuffer);
       } // if
 
       // Loop through the list.
-      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+      for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
        if ($this->FetchArray()) {
 
-        list ($gSENDERNAME, $gSENDERONLINE) = $zAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
+        list ($gSENDERNAME, $gSENDERONLINE) = $zOLDAPPLE->GetUserInformation($this->Sender_Username, $this->Sender_Domain);
 
         // No Fullname information found.  Using username.
         if (!$gSENDERNAME) $gSENDERNAME = $this->Sender_Username;
@@ -1187,7 +1187,7 @@
           global $gLABELLISTING;
           $gLABELLISTING = join (", ", $labelarray);
 
-          $bLABELSMARK = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bLABELSMARK = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/mark.labels.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
 
         $gMESSAGESTANDING = "";
@@ -1196,7 +1196,7 @@
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
         $gPOSTDATA['IDENTIFIER'] = $this->Identifier;
-        $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         unset ($gPOSTDATA['ACTION']);
         unset ($gPOSTDATA['IDENTIFIER']);
 
@@ -1205,7 +1205,7 @@
        } // if
       } // for
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/spam/list.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
     } // BufferSpam
@@ -1299,7 +1299,7 @@
     } // SelectMessage
 
     function LoadDraft () {
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       if ($this->Location == FOLDER_DRAFTS) {
         global $gRECIPIENTNAME, $gRECIPIENTDOMAIN;
@@ -1318,7 +1318,7 @@
         $gBODY = html_entity_decode ($this->Body);
         $gSUBJECT = $this->Subject;
 
-        $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRECIPIENT = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
     } // LoadDraft
     
@@ -1520,7 +1520,7 @@
     } // CreateLabelLinks
 
     function Label ($pLABELVALUE) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
       
       global $gIDENTIFIER;
 
@@ -1537,7 +1537,7 @@
         $this->messageLabels->Select ("tID", $pLABELVALUE);
         $this->messageLabels->FetchArray ();
 
-        $zAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
+        $zOLDAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
          
         $zSTRINGS->Lookup ('MESSAGE.APPLY');
         $this->Message = $zSTRINGS->Output;
@@ -1564,7 +1564,7 @@
     } // Label
 
     function AddLabelToList ($pDATALIST) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
       
       global $gLABELVALUE, $gSELECTBUTTON;
 
@@ -1602,7 +1602,7 @@
       $this->messageLabels->Select ("tID", $gLABELVALUE);
       $this->messageLabels->FetchArray ();
 
-      $zAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
+      $zOLDAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
            
       if ($labelaction == 'a') {
         $zSTRINGS->Lookup ('MESSAGE.APPLYALL');
@@ -1797,7 +1797,7 @@
     } // CreateSpecificLabelMenu
 
     function RetrieveMessage () {
-      global $zAPPLE, $zFOCUSUSER;
+      global $zOLDAPPLE, $zFOCUSUSER;
       global $zSTRINGS;
       
       // Message is a remote notification.
@@ -1805,7 +1805,7 @@
       $this->messageNotification->FetchArray ();
 
       // Select which server to use.
-      $useServer = $zAPPLE->ChooseServerVersion ($this->messageNotification->Sender_Domain);
+      $useServer = $zOLDAPPLE->ChooseServerVersion ($this->messageNotification->Sender_Domain);
       if (!$useServer) {
       	$this->Error = -1;
         $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
@@ -1833,8 +1833,8 @@
         // Convert data into usable form.
         $this->tID = $this->messageNotification->tID;
         $this->userAuth_uID = $this->messageNotification->userAuth_uID;
-        $this->Subject = $zAPPLE->Purifier->Purify ($subject);
-        $this->Body = html_entity_decode ($zAPPLE->Purifier->Purify ($body));
+        $this->Subject = $zOLDAPPLE->Purifier->Purify ($subject);
+        $this->Body = html_entity_decode ($zOLDAPPLE->Purifier->Purify ($body));
         $this->Stamp = ucwords ($stamp);
         $this->Identifier = $this->messageNotification->Identifier;
         $this->Location = $this->messageNotification->Location;
@@ -2204,7 +2204,7 @@
 
     // Send an Appleseed message.
     function Send ($pADDRESSES, $pSUBJECT, $pBODY, $pSENDERUSERNAME = NULL) {
-      global $zAPPLE, $zFOCUSUSER, $zSTRINGS; 
+      global $zOLDAPPLE, $zFOCUSUSER, $zSTRINGS; 
       
       global $gSITEDOMAIN, $gtID;
       
@@ -2242,7 +2242,7 @@
         list ($username, $domain) = explode ('@', $address);  
         
         // Create a unique identifier.
-        $identifier = $zAPPLE->RandomString (128);
+        $identifier = $zOLDAPPLE->RandomString (128);
         
         // Send a message notification.
         if ($domain != $gSITEDOMAIN) {
@@ -2406,7 +2406,7 @@
     
     // Send a remote message notification.
     function RemoteMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {
-      global $zAPPLE;
+      global $zOLDAPPLE;
       global $zXML, $zREMOTE, $zSTRINGS;
       
       global $gAPPLESEEDVERSION;
@@ -2424,7 +2424,7 @@
       list ($username, $domain) = explode ('@', $pRECIEVERADDRESS);
 
       // Select which server to use.
-      $useServer = $zAPPLE->ChooseServerVersion ($domain);
+      $useServer = $zOLDAPPLE->ChooseServerVersion ($domain);
       if (!$useServer) {
       	$this->Error = -1;
         $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
@@ -2459,10 +2459,10 @@
     } // RemoteMessage
     
     function VerifyAddress ($pADDRESS) {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
       
       // Step 1: Check if address is valid.
-      if (!$zAPPLE->CheckEmail ($pADDRESS)) {
+      if (!$zOLDAPPLE->CheckEmail ($pADDRESS)) {
         global $gWRONGADDRESS;
         $gWRONGADDRESS = $pADDRESS;
         $zSTRINGS->Lookup ("ERROR.UNABLE");
@@ -2475,7 +2475,7 @@
 
       // Step 2: Check if user exists.
       list ($username, $domain) = explode ('@', $pADDRESS);
-      if (!$zAPPLE->GetUserInformation ($username, $domain)) {
+      if (!$zOLDAPPLE->GetUserInformation ($username, $domain)) {
         $this->Error = -1;
         global $gWRONGADDRESS;
         $gWRONGADDRESS = $pADDRESS;
@@ -2492,7 +2492,7 @@
     
     // Notify the user that a message has been sent.
     function NotifyMessage ($pEMAIL, $pRECIPIENTUSERNAME, $pRECIPIENTFULLNAME, $pSENDERNAME) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       global $gSENDERNAME;
       $gSENDERNAME = $pSENDERNAME;
@@ -2517,16 +2517,16 @@
       $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.MESSAGES');
       $fromname = $zSTRINGS->Output;
 
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
+      $zOLDAPPLE->Mailer->From = $from;
+      $zOLDAPPLE->Mailer->FromName = $fromname;
+      $zOLDAPPLE->Mailer->Body = $body;
+      $zOLDAPPLE->Mailer->Subject = $subject;
+      $zOLDAPPLE->Mailer->AddAddress ($to);
+      $zOLDAPPLE->Mailer->AddReplyTo ($from);
 
-      $zAPPLE->Mailer->Send();
+      $zOLDAPPLE->Mailer->Send();
 
-      $zAPPLE->Mailer->ClearAddresses();
+      $zOLDAPPLE->Mailer->ClearAddresses();
       
       unset ($to);
       unset ($subject);
@@ -2537,7 +2537,7 @@
     } // NotifyMessage
 
     function SaveDraft ($pADDRESSES, $pSUBJECT, $pBODY) {
-      global $zAPPLE, $zFOCUSUSER, $zSTRINGS;
+      global $zOLDAPPLE, $zFOCUSUSER, $zSTRINGS;
 
       global $gIDENTIFIER;
       global $gSITEDOMAIN;
@@ -2558,7 +2558,7 @@
       // Store the recipients.
       foreach ($addresslist as $id => $address) {
         $address = str_replace (' ', '', $address);
-        $identifier = $zAPPLE->RandomString (128);
+        $identifier = $zOLDAPPLE->RandomString (128);
 
         list ($username, $domain) = explode ('@', $address);
         $this->messageRecipient->messageStore_tID = $table_id;
@@ -2577,7 +2577,7 @@
     } // SaveDraft
 
     function BufferRecipientList () {
-      global $zHTML, $zAPPLE, $zSTRINGS;
+      global $zHTML, $zOLDAPPLE, $zSTRINGS;
       
       global $gFRAMELOCATION;
       
@@ -2591,12 +2591,12 @@
         $bRECIPIENT = $zHTML->CreateUserLink ($this->messageRecipient->Username, $this->messageRecipient->Domain);
         if ($this->messageRecipient->Standing == MESSAGE_READ) {
           $zSTRINGS->Lookup ('LABEL.READ');
-          $zAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
+          $zOLDAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
         } else {
           $zSTRINGS->Lookup ('LABEL.UNREAD');
-          $zAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
+          $zOLDAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
         } // if
-        $bufferarray[] =  $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/recipient.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bufferarray[] =  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/recipient.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
       $buffer = join (' ', $bufferarray);
       
@@ -2660,7 +2660,7 @@
       global $gFRAMELOCATION, $gPROFILESUBACTION, $gLABELSELECT;
       global $gLABELNAME;
 
-      global $zFOCUSUSER, $zSTRINGS, $zAPPLE;
+      global $zFOCUSUSER, $zSTRINGS, $zOLDAPPLE;
 
       $labelcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID);   
       $this->messageLabels->SelectByMultiple ($labelcriteria, "Label");
@@ -2699,7 +2699,7 @@
             $gLABELSELECT[$gLABELNAME] = 'normal';
           } // if
      
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/label.aobj", INCLUDE_SECURITY_NONE);
         } // while
   
         $output = ob_get_clean();
@@ -2712,7 +2712,7 @@
 
     // Count new messages for each label.
     function CountNewInLabels ($pLABELID) {
-      global $zFOCUSUSER, $zAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
 
       global $gFRAMELOCATION, $gLABELNAME, $gPROFILESUBACTION; 
 

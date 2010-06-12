@@ -49,12 +49,12 @@
     } // Constructor
 
     function BuildIconList () {
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $gICONLIST;
       
       // Select which server to use.
-      $useServer = $zAPPLE->ChooseServerVersion ($this->Domain);
+      $useServer = $zOLDAPPLE->ChooseServerVersion ($this->Domain);
       if (!$useServer) return (FALSE);
       
       require_once ('legacy/code/include/classes/asd/' . $useServer);
@@ -487,7 +487,7 @@
     
     function CreateToken ($pUSERNAME, $pDOMAIN) {
       
-      global $zAPPLE;
+      global $zOLDAPPLE;
       
       // Load and delete current token.
       $sql_query = "DELETE FROM $this->TableName " .
@@ -498,7 +498,7 @@
       $this->Query ($sql_query);
       
       // Create new token information.
-      $this->Token = $zAPPLE->RandomString (32);
+      $this->Token = $zOLDAPPLE->RandomString (32);
       $this->Username = $pUSERNAME;
       $this->Domain = $pDOMAIN;
       $this->Source = TOKEN_LOCAL;

@@ -291,7 +291,7 @@
 
       // This bible was placed here by a Gideon.
       // R.I.P. William Melvin Hicks, 1961 - 1994. 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $gSITEDOMAIN;
 
@@ -303,7 +303,7 @@
       $this->Delete();
   
       // Create a random session string.
-      $session_string = $zAPPLE->RandomString (32);
+      $session_string = $zOLDAPPLE->RandomString (32);
   
       // Set the cookie with that string.
       if ($pREMEMBER) {

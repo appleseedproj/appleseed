@@ -10,9 +10,9 @@
 
 class cSEARCH {
   function Ask () {
-    global $zAPPLE;
+    global $zOLDAPPLE;
     
     global $gFRAMELOCATION;
-    $zAPPLE->IncludeFile ($gFRAMELOCATION . "objects/common/search/ask.aobj", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->IncludeFile ($gFRAMELOCATION . "objects/common/search/ask.aobj", INCLUDE_SECURITY_NONE);
   } // Ask
 } // cSEARCH

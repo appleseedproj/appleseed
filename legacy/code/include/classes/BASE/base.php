@@ -1415,7 +1415,7 @@
     // Sanity check variables based on predetermined parameters.
     function Sanity ($pCHECKUNIQUE = CHECK_UNIQUE) {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       // Reset this object's message value.
       $this->Message = "";
@@ -1586,7 +1586,7 @@
           case "INTEGER":
 
             // Check if type is correct.
-            if (!is_int ($zAPPLE->ConvertType ($this->$fieldname))) {
+            if (!is_int ($zOLDAPPLE->ConvertType ($this->$fieldname))) {
               // If field is primary key, skip.
               if ($fieldname == $this->PrimaryKey) break;
 
@@ -1655,7 +1655,7 @@
 
           case "FLOAT":
             // Check if type is correct.
-            if (!is_float ($zAPPLE->ConvertType ($this->$fieldname))) {
+            if (!is_float ($zOLDAPPLE->ConvertType ($this->$fieldname))) {
               // If field is primary key, skip.
               if ($fieldname == $this->PrimaryKey) break;
 
@@ -1720,7 +1720,7 @@
 
           case "EMAIL":
             // Check for a valid email address.
-            if (!$zAPPLE->CheckEmail ($this->$fieldname)) {
+            if (!$zOLDAPPLE->CheckEmail ($this->$fieldname)) {
               // Pull error string and create global variables.
               global $gFIELDNAME;
               $gFIELDNAME= $fieldname;
@@ -1838,7 +1838,7 @@
     function CreateBroadcast ($pCLASS = "", $pFIELDERROR = "", $pUNIQUEID = "") {
 
       global $gFRAMELOCATION;
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $output = "";
 
@@ -1858,10 +1858,10 @@
       } // if
 
       // Begin the CSS class/id.
-        $output_begin = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/broadcast.$file.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $output_begin = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/broadcast.$file.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       // End the CSS class/id.
-        $output_end = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/broadcast.$file.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $output_end = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/broadcast.$file.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     
       // Echo the message.
       if ($pFIELDERROR) {
@@ -2469,11 +2469,11 @@
       global $gALTERNATE;
       global $gSTYLEID;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $this->SwitchAlternate ($pSTYLEPREFIX, $pSTYLESUFFIX, $pADDITIONALCLASS);
       // Load alternate.top object
-      $output = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/alternate.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $output = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/alternate.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       $return = $gSTYLEID;
       
@@ -2491,7 +2491,7 @@
       global $gFRAMELOCATION;
       global $gSTYLEID, $gCHECKNAME, $gCHECKVALUE, $gCHECKED;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       // Set the CSS id.
       $gSTYLEID = strtolower ($pINPUTNAME);
@@ -2523,7 +2523,7 @@
 
       $gCHECKED = $pCHECKED;
 
-      $this->Output = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/checkbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $this->Output = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/checkbox.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       echo ($this->Output);
 
@@ -2540,7 +2540,7 @@
 
       global $gCHECKVALUE, $gCHECKNAME, $gCHECKED;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       // Add a 'g' at the beginning to signify a global variable.
       if ($pINPUTNAME[0] != 'g') $pINPUTNAME = 'g' . $pINPUTNAME;
@@ -2602,7 +2602,7 @@
       $gCHECKNAME = $pINPUTNAME;
       if ($pINPUTLIST) $gCHECKNAME = $pINPUTNAME;
 
-      $this->Output = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/radio.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $this->Output = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/radio.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       echo ($this->Output);
 
@@ -2676,14 +2676,14 @@
 
       global $zSTRINGS, $zAUTHUSER;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $output = "";
 
-      $zAPPLE->SetTag ('LINKUSERNAME',$pUSERNAME);
+      $zOLDAPPLE->SetTag ('LINKUSERNAME',$pUSERNAME);
 
       if (!$pDOMAIN) $pDOMAIN = $gSITEDOMAIN;
-      $zAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
+      $zOLDAPPLE->SetTag ('LINKDOMAIN',$pDOMAIN);
 
       if ($pUSERNAME == ANONYMOUS) {
       	  $output = __("Anonymous");
@@ -2710,7 +2710,7 @@
           $gLINKFULLNAME = $pUSERNAME . '@' . $pDOMAIN;
           $output = "<a class='remoteuser' href='$gLINKUSERTARGET'>$gLINKFULLNAME</a></span>";
           
-          $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remoteuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          $output .= $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remoteuser$usericon.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
         } else {
           $gLINKUSERTARGET = '/profile/' . $pUSERNAME . '/';
           $gLINKFULLNAME = $pUSERNAME;
@@ -2733,7 +2733,7 @@
 
       global $zSTRINGS, $zAUTHUSER;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $output = "";
 
@@ -2749,14 +2749,14 @@
         } else {
           $gLINKGROUPTARGET = 'http://' . $pDOMAIN . '/group/' . $pGROUPNAME . '/';
         } // if
-        $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/remotegroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
-        $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remotegroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+        $output .= $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/remotegroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+        $output .= $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/remotegroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
         $output = str_replace("\n", "", $output);
         $output = str_replace("\r", "", $output);
       } else {
         $gLINKGROUPTARGET = '/group/' . $pGROUPNAME . '/';
-        $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/localgroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
-        $output .= $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/localgroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+        $output .= $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/localgroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+        $output .= $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/buttons/localgroup.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
         $output = str_replace("\n", "", $output);
         $output = str_replace("\r", "", $output);
       } // if
@@ -2917,7 +2917,7 @@
       global $gBUTTONACTION, $gBUTTONNAME;
       global $gACTIONNAME;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $style = strtolower ($pBUTTONNAME);
 
@@ -2941,7 +2941,7 @@
       global $gPOSTDATA;
       $gPOSTDATA[$gACTIONNAME] = $pBUTTONNAME;
 
-      $image = $zAPPLE->IncludeFile ($filelocation, INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+      $image = $zOLDAPPLE->IncludeFile ($filelocation, INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
       echo $this->CreateImageLink ($pTARGET, $gPOSTDATA, $image, NULL, NULL, $pCONFIRMATION);
 
       unset ($gCONFIRM);
@@ -2970,7 +2970,7 @@
       global $gBUTTONACTION, $gBUTTONNAME;
       global $gACTIONNAME;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $style = strtolower ($pBUTTONNAME);
       
@@ -3003,7 +3003,7 @@
       global $gCONFIRM;  $gCONFIRM = $pCONFIRMATION;
       global $gBUTTONACTION, $gBUTTONNAME, $gACTIONNAME; 
       
-      global $zAPPLE, $zHTML;
+      global $zOLDAPPLE, $zHTML;
 
       $style = strtolower ($pBUTTONNAME);
 
@@ -3029,7 +3029,7 @@
         $returnoutput .= " <input type='submit' name='$pBUTTONNAME' value='$pBUTTONNAME' />\n";
         $returnoutput .= "</span> <!-- .$style -->\n";
       } else {
-        $returnoutput = $zAPPLE->IncludeFile ($filelocation, INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+        $returnoutput = $zOLDAPPLE->IncludeFile ($filelocation, INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
       } // if
 
       unset ($gCONFIRM);
@@ -3218,7 +3218,7 @@
     // Output the header object.
     function Header () {
       global $gTHEMELOCATION;
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
       global $zAUTHUSER, $zLOCALUSER;
 
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/admin/");
@@ -3227,19 +3227,19 @@
         // Choose which logged in header to use.
         if ($zLOCALUSER->userAccess->r == TRUE) {
           // Push the admin header.
-          $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/admin.aobj");
+          $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/admin.aobj");
         } else {
           if ($zAUTHUSER->Remote) {
             // Push the local logged-in header.
-            $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/remote.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/remote.aobj", INCLUDE_SECURITY_NONE);
           } else {
             // Push the local logged-in header.
-            $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/focus.aobj");
+            $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/focus.aobj");
           } // if
         } 
       } else {
         // Push the anonymous header.
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/main.aobj");
+        $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/header/main.aobj");
       } // if
   
     } // Header
@@ -3247,21 +3247,21 @@
     // Output the footer object.
     function Footer () {
       global $gTHEMELOCATION;
-      global $zSTRINGS, $zLOCALUSER, $zAUTHUSER, $zAPPLE;
+      global $zSTRINGS, $zLOCALUSER, $zAUTHUSER, $zOLDAPPLE;
   
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/admin/");
   
       if ( !$zAUTHUSER->Anonymous) {
         if ($zLOCALUSER->userAccess->r == TRUE) {
           // Push the admin footer.
-          $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/admin.aobj");
+          $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/admin.aobj");
         } else {
         // Push the logged-in footer.
-          $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/focus.aobj");
+          $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/focus.aobj");
         } 
       } else {
         // Push the footer.
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/main.aobj");
+        $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/footer/main.aobj");
       } // if
   
     } // Footer
@@ -3280,7 +3280,7 @@
 
       global $gTHEMELOCATION, $gFRAMELOCATION, $gSITEURL, $gPAGETITLE, $gPAGESUBTITLE;
       global $zSTRINGS;
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $gSTYLELOCATION;
       global $gUSERDEFINEDSTYLE;
@@ -3292,21 +3292,21 @@
         foreach ($this->ScriptList as $scriptname) {
           global $gSCRIPTNAME;
           $gSCRIPTNAME = $scriptname;
-          $bSCRIPTLIST .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/script.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bSCRIPTLIST .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/script.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // foreach
       } else {
        $bSCRIPTLIST = ' ';
       } // if
 
       // Determine directory for CSS file.
-      $stylecontextarray = explode ('.', $zAPPLE->Context);
+      $stylecontextarray = explode ('.', $zOLDAPPLE->Context);
       $gSTYLELOCATION = $stylecontextarray[0];
 
       if ($pPAGETITLE) {
         $gPAGETITLE = $pPAGETITLE;
       } else {
         // Pull page title from database settings
-        $zSTRINGS->Lookup ('BROWSER.TITLE', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('BROWSER.TITLE', $zOLDAPPLE->Context);
         $gPAGETITLE = $zSTRINGS->Output;
       } // if
 
@@ -3318,7 +3318,7 @@
         $gUSERDEFINEDSTYLE = $pUSERDEFINEDSTYLE;
       } // if
   
-      $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/common/title.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/common/title.aobj", INCLUDE_SECURITY_NONE);
   
     } // Title  
 

@@ -1,6 +1,6 @@
 <section id='login'>
 
- <? $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
+ <? $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
 
   <form id='login' action='login/' method='post'>
    <input type='hidden' name='gACTION' value='LOGIN' />

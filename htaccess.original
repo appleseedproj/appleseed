@@ -2,112 +2,9 @@
 
 #------APPLESEED RULES--------------
 
-# Turn magic quotes off if possible
-php_flag magic_quotes_gpc off
-
-# Turn Rewrite Engine On
 RewriteEngine On
 
-# Redirect image links
-
-# Redirect main page.
-RewriteRule ^$ legacy/code/site/main.php [L]
-
-# Redirect the asd network location.
-RewriteRule .*^asd\/$ legacy/code/site/asd.php [L]
-
-# Redirect the ajax server location.
-RewriteRule .*^ajax\/$ legacy/code/site/ajax.php [L]
-
-# Redirect the join page
-RewriteRule .*^join$ legacy/code/site/join.php [L]
-RewriteRule .*^join\/$ legacy/code/site/join.php [L]
-RewriteRule .*^join\/(.*)\/$ legacy/code/site/join.php?gVALUE=$1&%1 [L]
-RewriteRule .*^join\/(.*)$ legacy/code/site/join.php?gVALUE=$1&%1 [L]
-
-# Redirect if user directory is accessed
-RewriteRule .*^profile\/$ \/ [R,L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^profile\/(.*)\/$ legacy/code/user/main.php?gPROFILEREQUEST=$1&%1 [L]
-RewriteRule .*^profile\/(.*)$ legacy/code/user/main.php?gPROFILEREQUEST=$1&%1 [L]
-
-# Redirect the login page
-RewriteRule .*login\/$ legacy/code/site/login.php [L]
-RewriteRule .*login$ legacy/code/site/login.php [L]
-RewriteRule .*^login\/bounce\/(.*)$ legacy/code/site/bounce.php [L]
-RewriteRule .*^login\/bounce$ legacy/code/site/bounce.php [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^login\/(.*)\/$ legacy/code/site/login.php?gLOGINREQUEST=$1&%1 [L]
-RewriteRule .*^login\/(.*)$ legacy/code/site/login.php?gLOGINREQUEST=$1&%1 [L]
-
-# Redirect the logout page
-RewriteRule .*logout\/$ legacy/code/site/logout.php [L]
-RewriteRule .*logout$ legacy/code/site/logout.php [L]
-
-# Redirect the admin pages
-RewriteRule .*^_admin\/$ legacy/code/admin/main.php [L]
-RewriteRule .*^_admin$ legacy/code/admin/main.php [L]
-RewriteRule .*^_admin\/config\/$ legacy/code/admin/config.php [L]
-RewriteRule .*^_admin\/config$ legacy/code/admin/config.php [L]
-RewriteRule .*^_admin\/users\/$ legacy/code/admin/users/main.php [L]
-RewriteRule .*^_admin\/users$ legacy/code/admin/users/main.php [L]
-RewriteRule .*^_admin\/content\/$ legacy/code/admin/content/main.php [L]
-RewriteRule .*^_admin\/content$ legacy/code/admin/content/main.php [L]
-RewriteRule .*^_admin\/control\/$ legacy/code/admin/control/main.php [L]
-RewriteRule .*^_admin\/control$ legacy/code/admin/control/main.php [L]
-RewriteRule .*^_admin\/groups\/$ legacy/code/admin/groups/main.php [L]
-RewriteRule .*^_admin\/groups$ legacy/code/admin/groups/main.php [L]
-RewriteRule .*^_admin\/system\/$ legacy/code/admin/system/main.php [L]
-RewriteRule .*^_admin\/system$ legacy/code/admin/system/main.php [L]
-
-# Redirect the admin subpages
-RewriteRule .*^_admin\/users\/access\/$ legacy/code/admin/users/access.php [L]
-RewriteRule .*^_admin\/users\/access$ legacy/code/admin/users/access.php [L]
-RewriteRule .*^_admin\/users\/accounts\/$ legacy/code/admin/users/accounts.php [L]
-RewriteRule .*^_admin\/users\/accounts$ legacy/code/admin/users/accounts.php [L]
-RewriteRule .*^_admin\/users\/questions\/$ legacy/code/admin/users/questions.php [L]
-RewriteRule .*^_admin\/users\/questions$ legacy/code/admin/users/questions.php [L]
-
-# Admin/System redirects
-RewriteRule .*^_admin\/system\/config\/$ legacy/code/admin/system/config.php [L]
-RewriteRule .*^_admin\/system\/config$ legacy/code/admin/system/config.php [L]
-RewriteRule .*^_admin\/system\/maintenance\/$ legacy/code/admin/system/maintenance.php [L]
-RewriteRule .*^_admin\/system\/maintenance$ legacy/code/admin/system/maintenance.php [L]
-RewriteRule .*^_admin\/system\/logs\/$ legacy/code/admin/system/logs.php [L]
-RewriteRule .*^_admin\/system\/logs$ legacy/code/admin/system/logs.php [L]
-RewriteRule .*^_admin\/system\/nodes\/$ legacy/code/admin/system/nodes.php [L]
-RewriteRule .*^_admin\/system\/nodes$ legacy/code/admin/system/nodes.php [L]
-RewriteRule .*^_admin\/system\/strings\/$ legacy/code/admin/system/strings.php [L]
-RewriteRule .*^_admin\/system\/strings$ legacy/code/admin/system/strings.php [L]
-RewriteRule .*^_admin\/system\/tooltips\/$ legacy/code/admin/system/tooltips.php [L]
-RewriteRule .*^_admin\/system\/tooltips$ legacy/code/admin/system/tooltips.php [L]
-RewriteRule .*^_admin\/system\/security\/$ legacy/code/admin/system/security.php [L]
-RewriteRule .*^_admin\/system\/security$ legacy/code/admin/system/security.php [L]
-RewriteRule .*^_admin\/system\/options\/$ legacy/code/admin/system/options.php [L]
-RewriteRule .*^_admin\/system\/options$ legacy/code/admin/system/options.php [L]
-RewriteRule .*^_admin\/system\/logs\/$ legacy/code/admin/system/logs.php [L]
-RewriteRule .*^_admin\/system\/logs$ legacy/code/admin/system/logs.php [L]
-
-# Admin/Content redirects
-RewriteRule .*^_admin\/content\/articles\/$ legacy/code/admin/content/articles.php [L]
-RewriteRule .*^_admin\/content\/articles$ legacy/code/admin/content/articles.php [L]
-RewriteRule .*^_admin\/content\/pages\/$ legacy/code/admin/content/pages.php [L]
-RewriteRule .*^_admin\/content\/pages$ legacy/code/admin/content/pages.php [L]
-
-# Admin/Control redirects
-RewriteRule .*^_admin\/control\/update\/$ legacy/code/admin/control/update.php [L]
-RewriteRule .*^_admin\/control\/update$ legacy/code/admin/control/update.php [L]
-
-# Security redirects.
-
-# Redirect appleseed data request attempts to 403 Forbidden message.
-RewriteRule .*adat$ legacy/code/error/403.php [L]
-
-# Redirect utilities 
-RewriteRule .*^maintenance\/$ legacy/code/site/maintenance.php [L]
-RewriteRule .*^maintenance$ legacy/code/site/maintenance.php [L]
-
-# Redirect image links
+Options +FollowSymlinks -Indexes
 
 # Go directly to these files, do not process through image.php
 RewriteRule .*^photos/.*/profile.jpg$ - [R=302,L]
@@ -118,39 +15,15 @@ RewriteRule .*^themes.*\.gif$ - [L]
 RewriteRule .*^themes.*\.jpg$ - [L]
 RewriteRule .*^themes.*\.png$ - [L]
 
-# Redirect the newswire.
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^news\/(.*)$ legacy/code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-RewriteRule .*^news\/(.*)\/$ legacy/code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-RewriteRule .*^articles\/(.*)\/$ legacy/code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-RewriteRule .*^articles\/(.*)$ legacy/code/content/articles.php?gARTICLEREQUEST=$1&%1 [L]
-
-# Redirect the discussion groups
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^group\/(.*)\/$ legacy/code/content/group.php?gGROUPREQUEST=$1&%1 [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^group\/(.*)$ legacy/code/content/group.php?gGROUPREQUEST=$1&%1 [L]
-
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^groups\/(.*)\/$ legacy/code/content/groups.php?gGROUPSECTION=$1&%1 [L]
-RewriteCond %{QUERY_STRING} ^([^/]+)
-RewriteRule .*^groups\/(.*)$ legacy/code/content/groups.php?gGROUPSECTION=$1&%1 [L]
-
-# Redirect to icon.php for default icon.
-RewriteRule .*^icon\/(.*)\/$ legacy/code/common/icon.php?gICONUSER=$1 [L]
-RewriteRule .*^icon\/(.*)$ legacy/code/common/icon.php?gICONUSER=$1 [L]
-
 # Redirect to image.php
 RewriteRule .*\.jpg$ legacy/code/common/images.php [L]
 RewriteRule .*\.gif$ legacy/code/common/images.php [L]
 RewriteRule .*\.png$ legacy/code/common/images.php [L]
 
-# Disallow direct access to index.php after install.
-RewriteRule .*index.php$ legacy/code/site/main.php [L]
+# Redirect appleseed data request attempts to 403 Forbidden message.
+RewriteRule .*adat$ legacy/code/error/403.php [L]
 
-# Redirect Error Documents.
-Options +FollowSymlinks -Indexes
-ErrorDocument 404 /legacy/code/site/redirect.php
-ErrorDocument 403 /legacy/code/site/error/403.php
-
-#------APPLESEED USER DEFINED REDIRECTS --------------
+RewriteRule index.php system/initialize.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*) system/appleseed.php

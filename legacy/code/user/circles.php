@@ -41,8 +41,8 @@
   if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
-      $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-      $zAPPLE->End();
+      $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->End();
     } // if
   } // if
 
@@ -68,10 +68,10 @@
   if ($gCIRCLEVIEWADMIN) $gCIRCLEVIEW = $gCIRCLEVIEWADMIN;
 
   // Create the data class.
-  $zCIRCLES = new cFRIENDCIRCLES ($zAPPLE->Context);
+  $zCIRCLES = new cFRIENDCIRCLES ($zOLDAPPLE->Context);
   
   // Set the scroll step.
-  $gSCROLLSTEP[$zAPPLE->Context] = 20;
+  $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
 
   // Display the select all button by default.
   $gSELECTBUTTON = 'Select All';
@@ -282,10 +282,10 @@
 
   switch ($gACTION) {
     case 'EDIT':
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/edit.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/edit.aobj", INCLUDE_SECURITY_NONE);
     break;
     case 'NEW':
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/new.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/new.aobj", INCLUDE_SECURITY_NONE);
     break;
 
     default:
@@ -294,16 +294,16 @@
            ($gACTION == 'MOVE_UP') or
            ($gACTION == 'DELETE_ALL') ) {
   
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.top.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.top.aobj", INCLUDE_SECURITY_NONE);
   
         // Calculate scroll values.
-        $gSCROLLMAX[$zAPPLE->Context] = $zCIRCLES->CountResult();
+        $gSCROLLMAX[$zOLDAPPLE->Context] = $zCIRCLES->CountResult();
     
         // Adjust for a recently deleted entry.
-        $zAPPLE->AdjustScroll ('user.friends.circles', $zCIRCLES);
+        $zOLDAPPLE->AdjustScroll ('user.friends.circles', $zCIRCLES);
   
         // Check if any results were found.
-        if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+        if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
           $zCIRCLES->Message = __("No Results Found");
           $zCIRCLES->Broadcast();
         } // if
@@ -319,7 +319,7 @@
         $gPOSTDATA[$gCIRCLEVIEWTYPE] = $gCIRCLEVIEW;
   
         // Loop through the list.
-        for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+        for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
          if ($zCIRCLES->FetchArray()) {
     
           global $gTARGET;
@@ -340,10 +340,10 @@
           $zCIRCLESLIST->Select ("friendCircles_tID", $zCIRCLES->tID);
           $gFRIENDSCOUNT = $zCIRCLESLIST->CountResult();
 
-          $zSTRINGS->Lookup ('LABEL.COUNT', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('LABEL.COUNT', $zOLDAPPLE->Context);
           $gCOUNTLABEL = $zSTRINGS->Output;
     
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.middle.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.middle.aobj", INCLUDE_SECURITY_NONE);
 
           unset ($gPOSTDATA['ACTION']);
           unset ($gPOSTDATA['tID']);
@@ -357,13 +357,13 @@
     
         $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/circles/";
   
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.bottom.aobj", INCLUDE_SECURITY_NONE);
   
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
         if ($gtID) {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/edit.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/edit.aobj", INCLUDE_SECURITY_NONE);
         } else {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/new.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/new.aobj", INCLUDE_SECURITY_NONE);
         } // if
       } // if
     break;
@@ -373,9 +373,9 @@
   $bMAINSECTION = ob_get_clean (); 
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/circles.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/circles.afrw", INCLUDE_SECURITY_NONE);
 
   // End application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

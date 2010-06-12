@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Main administration page.                           |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -55,13 +57,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.control.update", TRUE);
+  $zOLDAPPLE->Initialize("admin.control.update", TRUE);
 
   // Add javascript to top of page.
   $zHTML->AddScript ("admin/system/update.js");
@@ -85,8 +87,8 @@
 
   // Check to see if user has read access for this area.
   if ($zLOCALUSER->userAccess->r == FALSE) {
-    $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
   } // if
   
   // Set the page title.
@@ -102,7 +104,7 @@
   global $gVERSIONLISTING;
   $gVERSIONLISTING = $zUPDATE->GetVersionListing($gSERVER);
   
-  $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
+  $gOFFICIALLATEST = $zOLDAPPLE->GetNodeVersion ($gSERVER);
   
   // Temporary
   $gOFFICIALLATEST = '0.7.3';
@@ -116,9 +118,9 @@
   global $gRESULT;
   $gRESULT = NULL;
   
-  if ($zAPPLE->CheckVersion ($gAPPLESEEDVERSION, $gOFFICIALLATEST)) {
-  	$zAPPLE->SetTag ('NEWVERSION', $gOFFICIALLATEST);
-  	$zAPPLE->SetTag ('OLDVERSION', $gAPPLESEEDVERSION);
+  if ($zOLDAPPLE->CheckVersion ($gAPPLESEEDVERSION, $gOFFICIALLATEST)) {
+  	$zOLDAPPLE->SetTag ('NEWVERSION', $gOFFICIALLATEST);
+  	$zOLDAPPLE->SetTag ('OLDVERSION', $gAPPLESEEDVERSION);
     $zUPDATE->Message = __("An update is available");
   }
  
@@ -132,14 +134,14 @@
       // Reload list of servers.
       $gSERVERLISTING = $zUPDATE->GetServerListing();
       $gVERSIONLISTING = $zUPDATE->GetVersionListing($gSERVER);
-      $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
+      $gOFFICIALLATEST = $zOLDAPPLE->GetNodeVersion ($gSERVER);
       $gVERSION = $gOFFICIALLATEST;
   	break;
   	case 'ADD':
   	break;
   	case 'REMOVE':
   	  if ($gSERVER == 'update.appleseedproject.org') {
-        $zSTRINGS->Lookup ('ERROR.CANTDELETE', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.CANTDELETE', $zOLDAPPLE->Context);
         $zUPDATE->Message = $zSTRINGS->Output;
         $zUPDATE->Error = -1;
   	  } else {
@@ -149,17 +151,17 @@
       $gSERVERLISTING = $zUPDATE->GetServerListing();
       $gSERVER = 'update.appleseedproject.org';
       $gVERSIONLISTING = $zUPDATE->GetVersionListing($gSERVER);
-      $gOFFICIALLATEST = $zAPPLE->GetNodeVersion ($gSERVER);
+      $gOFFICIALLATEST = $zOLDAPPLE->GetNodeVersion ($gSERVER);
   	break;
   	case 'CANCEL':
   	  $gADDSERVER = NULL;
   	break;
   	case 'CONTINUE':
   	  // If the version we're selecting is greater than the latest available.
-      if ($zAPPLE->CheckVersion ($gOFFICIALLATEST, $gVERSION)) {
-      	$zAPPLE->SetTag ('VERSION', $gVERSION);
-      	$zAPPLE->SetTag ('SERVER', $gSERVER);
-        $zSTRINGS->Lookup ('ERROR.INVALIDVERSION', $zAPPLE->Context);
+      if ($zOLDAPPLE->CheckVersion ($gOFFICIALLATEST, $gVERSION)) {
+      	$zOLDAPPLE->SetTag ('VERSION', $gVERSION);
+      	$zOLDAPPLE->SetTag ('SERVER', $gSERVER);
+        $zSTRINGS->Lookup ('ERROR.INVALIDVERSION', $zOLDAPPLE->Context);
         $zUPDATE->Message = $zSTRINGS->Output;
         $zUPDATE->Error = -1;
         break;
@@ -167,31 +169,31 @@
       
       // Step 1: Check if directory tree, backup directory, and tmp directory are writeable.
       
-      $temporary = $zAPPLE->GetTemporaryDirectory();
+      $temporary = $zOLDAPPLE->GetTemporaryDirectory();
       $backup = $gBACKUPDIRECTORY;
       
       // Step 1a: Check if temporary directory is writeable;
       if (!is_writable($temporary)) {
-        $zSTRINGS->Lookup ('ERROR.TEMPORARY', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.TEMPORARY', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	break;
       } else {
-        $zSTRINGS->Lookup ('RESULT.TEMPORARY', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('RESULT.TEMPORARY', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
       
       // Step 1b: Check if backup directory is writeable;
       if (!is_writable($backup)) {
-        $zSTRINGS->Lookup ('ERROR.BACKUP', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.BACKUP', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	break;
       } else {
-        $zSTRINGS->Lookup ('RESULT.BACKUP', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('RESULT.BACKUP', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
       
       // Step 1c: Check if directory tree is writable.
@@ -199,59 +201,59 @@
       
       if (count($unwritable) > 0) {
       	foreach ($unwritable as $unwrite) {
-      	  $zAPPLE->SetTag ('UNWRITABLE', $unwrite);
-          $zSTRINGS->Lookup ('ERROR.UNWRITABLE', $zAPPLE->Context);
+      	  $zOLDAPPLE->SetTag ('UNWRITABLE', $unwrite);
+          $zSTRINGS->Lookup ('ERROR.UNWRITABLE', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // foreach
       	break;
       } // if
       
       // Step 2: Shut down website for maintenance.
-      $oldShutdownState = $zAPPLE->GetShutdown ();
-      $zAPPLE->SetShutdown (ADMIN_ONLY);
+      $oldShutdownState = $zOLDAPPLE->GetShutdown ();
+      $zOLDAPPLE->SetShutdown (ADMIN_ONLY);
       
-      $zSTRINGS->Lookup ('RESULT.STARTSHUTDOWN', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('RESULT.STARTSHUTDOWN', $zOLDAPPLE->Context);
       $gRESULT = $zSTRINGS->Output;
-      $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Step 3: Retrieve latest reference tree.
   	  $latestReference = $zUPDATE->NodeFileListing($gSERVER, $gVERSION);
   	  if (!$latestReference) {
-        $zSTRINGS->Lookup ('ERROR.LATESTTREE', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.LATESTTREE', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zAPPLE->SetShutdown ($oldShutdownState);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $zOLDAPPLE->SetShutdown ($oldShutdownState);
       	break;
   	  } else {
-        $zSTRINGS->Lookup ('RESULT.LATESTTREE', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('RESULT.LATESTTREE', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
       
       // Step 4: Retrieve current reference tree.
   	  $currentReference = $zUPDATE->NodeFileListing($gSERVER, $gAPPLESEEDVERSION);
   	  if (!$currentReference) {
-        $zSTRINGS->Lookup ('ERROR.CURRENTTREE', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.CURRENTTREE', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
-        $zAPPLE->SetShutdown ($oldShutdownState);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $zOLDAPPLE->SetShutdown ($oldShutdownState);
         break;
   	  } else {
-        $zSTRINGS->Lookup ('RESULT.CURRENTTREE', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('RESULT.CURRENTTREE', $zOLDAPPLE->Context);
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
   	  
       // Step 5a: Create file backup directories.
       if (!$zUPDATE->CreateBackupDirectories($currentReference)) {
-        $zAPPLE->SetShutdown ($oldShutdownState);
+        $zOLDAPPLE->SetShutdown ($oldShutdownState);
         break;
   	  } // if
   	  
       // Step 5b: Create new directories.
       if (!$zUPDATE->CreateNewDirectories($latestReference)) {
-        $zAPPLE->SetShutdown ($oldShutdownState);
+        $zOLDAPPLE->SetShutdown ($oldShutdownState);
         break;
   	  } // if
   	  
@@ -263,10 +265,10 @@
       // Step 8: Merge database.
       
       // Step 9: Restore appleseed node.
-      $zAPPLE->SetShutdown ($oldShutdownState);
-      $zSTRINGS->Lookup ('RESULT.ENDSHUTDOWN', $zAPPLE->Context);
+      $zOLDAPPLE->SetShutdown ($oldShutdownState);
+      $zSTRINGS->Lookup ('RESULT.ENDSHUTDOWN', $zOLDAPPLE->Context);
       $gRESULT = $zSTRINGS->Output;
-      $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $zUPDATE->Message = __("System updated successfully");
   	break;
@@ -275,12 +277,12 @@
   } // switch
   
   // If any operation results, display them.
-  if ($bRESULT) $bRESULTS = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.results.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+  if ($bRESULT) $bRESULTS = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.results.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/control/update.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/control/update.afrw", INCLUDE_SECURITY_NONE);
   
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?> 

@@ -1,6 +1,6 @@
 <div id='group'>
 
- <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
  
   <div id='container'>
 
@@ -25,7 +25,7 @@
     </p>
 
     <p id='description'>
-     <?php echo $zAPPLE->Format ($zGROUPS->Description, FORMAT_EXT); ?>
+     <?php echo $zOLDAPPLE->Format ($zGROUPS->Description, FORMAT_EXT); ?>
 
     </p>
    </div> <!-- #info -->

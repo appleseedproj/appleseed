@@ -34,11 +34,10 @@
   // | icon for a requested user.  Uses MySQL for user authentication.   |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
-
-   // Pull from _REQUEST since we haven't initalized yet.
-  $gICONUSER = $_REQUEST['gICONUSER'];
 
   if (!$gICONUSER) {
     chdir ("legacy/code/site/error/");
@@ -67,13 +66,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("common.images", TRUE);
+  $zOLDAPPLE->Initialize("common.images", TRUE);
 
   $USER = new cUSER();
   $USER->Select ("Username", $gICONUSER);

@@ -33,6 +33,8 @@
   // | DESCRIPTION: Strings administration page.                        |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -55,13 +57,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("admin.system", TRUE);
+  $zOLDAPPLE->Initialize("admin.system", TRUE);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
@@ -72,8 +74,8 @@
   // Check to see if user has read access for this area.
   if ($zLOCALUSER->userAccess->r == FALSE) {
 
-    $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
 
   } // if
 
@@ -93,9 +95,9 @@
   } // if
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/system/main.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/system/main.afrw", INCLUDE_SECURITY_NONE);
   
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

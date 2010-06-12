@@ -1,7 +1,7 @@
 <div id='photo'>
 
  <!-- tabs objects -->
- <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
   <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/<?php echo $gDIRECTORY; ?>/'>

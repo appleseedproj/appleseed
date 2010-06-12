@@ -39,11 +39,11 @@
 
   // Set which tab to highlight.
   $gUSERINFOTAB = '';
-  $zAPPLE->SetTag ('USERINFOTAB', '');
+  $zOLDAPPLE->SetTag ('USERINFOTAB', '');
 
   global $bDESCRIPTION;
   if ($zFOCUSUSER->userProfile->Description) 
-    $bDESCRIPTION = $zAPPLE->Format ($zFOCUSUSER->userProfile->Description, FORMAT_EXT);
+    $bDESCRIPTION = $zOLDAPPLE->Format ($zFOCUSUSER->userProfile->Description, FORMAT_EXT);
   else
     $bDESCRIPTION = "NO USER INFO.";
 
@@ -69,6 +69,6 @@
   $zCOMMENTS->Handle ();
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/info.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/info.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

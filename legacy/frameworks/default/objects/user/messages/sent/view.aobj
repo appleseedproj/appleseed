@@ -1,7 +1,7 @@
 <div id='messages'>
 
  <!-- tabs objects -->
- <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
   <div id='view'>
@@ -38,7 +38,7 @@
  
    <div id='body'>
  
-      <?php echo $zAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?>
+      <?php echo $zOLDAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?>
  
    </div> <!-- #body -->
  

@@ -9,7 +9,7 @@
    <div id="page_left" class="grid_3"> 
 
       <!-- ## switches obj -->
-      <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/switches/admin/main.aobj"); ?>
+      <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/switches/admin/main.aobj"); ?>
   
    </div>
 
@@ -17,7 +17,7 @@
 
       <div id='content'>
        <!-- ## tabs obj -->
-       <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/admin/content/main.aobj"); ?>
+       <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/admin/content/main.aobj"); ?>
         
        <!-- ## main -->
        <?php echo $bMAINSECTION; ?>

@@ -42,13 +42,13 @@
     // Purify all string data.
     function Purify () {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       foreach ($this->FieldNames as $fieldname) {
         switch ($this->FieldDefinitions[$fieldname]['datatype']) {
           case 'STRING':
             $this->ASDtoSafe ($fieldname);
-            $this->$fieldname = $zAPPLE->Purifier->purify ($this->$fieldname);
+            $this->$fieldname = $zOLDAPPLE->Purifier->purify ($this->$fieldname);
             $this->SafeToASD ($fieldname);
           break;
 

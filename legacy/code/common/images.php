@@ -34,6 +34,8 @@
   // | file if requested.  Uses MySQL for user authentication.           |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
   
@@ -182,6 +184,7 @@
                               mysql_real_escape_string ($pOWNER),
                               mysql_real_escape_string (USER_EVERYONE),
                               mysql_real_escape_string ($pDIRECTORY));
+                              echo $sql_statement; exit;
                              
     $sql_result = mysql_query ($sql_statement);
     $sql_data = mysql_fetch_assoc ($sql_result);

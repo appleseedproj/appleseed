@@ -18,7 +18,7 @@
      </span> <!-- #language -->
 
      <span class='full'>
-       <?php $zHTML->Link ($gTARGET, $zAPPLE->Format ($zARTICLES->Full, FORMAT_VIEW), $gEXTRAPOSTDATA); ?>
+       <?php $zHTML->Link ($gTARGET, $zOLDAPPLE->Format ($zARTICLES->Full, FORMAT_VIEW), $gEXTRAPOSTDATA); ?>
      </span> <!-- #full -->
     </div> <!-- .unverified -->
 

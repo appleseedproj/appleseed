@@ -125,7 +125,7 @@
  
     function GetExifData () {
       
-      global $zFOCUSUSER, $zAPPLE;
+      global $zFOCUSUSER, $zOLDAPPLE;
       global $zSTRINGS;
       
       global $gFRAMELOCATION;
@@ -137,14 +137,14 @@
       $exif = exif_read_data($exiflocation, 'ANY_TAG');
       
       if (!$exif) {
-        $zSTRINGS->Lookup ('MESSAGE.NOEXIF', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('MESSAGE.NOEXIF', $zOLDAPPLE->Context);
         global $gNOEXIF;
         $gNOEXIF = $zSTRINGS->Output;
-        $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/none.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/none.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($return);
       } // if
    
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $final['MAKE'] = $exif['Make'];
       $final['MODEL'] = $exif['Model'];
@@ -158,25 +158,25 @@
       
       foreach ($final as $key => $value) {
         global $gEXIFLABEL, $gEXIFDATA;
-        $zSTRINGS->Lookup ('LABEL.EXIF' . $key, $zAPPLE->Context);
+        $zSTRINGS->Lookup ('LABEL.EXIF' . $key, $zOLDAPPLE->Context);
         $gEXIFLABEL = $zSTRINGS->Output;
         $gEXIFDATA = $value;
         if (!$value) continue;
-        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // foreach
       
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       return ($return);
     } // GetExifData
     
     function BufferLatestPhotos () {
-      global $zAPPLE, $zAUTHUSER;
+      global $zOLDAPPLE, $zAUTHUSER;
       
       global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
       global $gIMG, $gIMGSRC, $gDIRECTORY, $gDIRECTORYSRC, $gOWNER, $gOWNERSRC, $gSTAMP, $gDESCRIPTION;
       
-      $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $buffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $USER = new cUSER();
       $userAuth = $gTABLEPREFIX . "userAuthorization";
@@ -222,10 +222,10 @@
         $gSTAMP = $this->photoInfo->FormatDate ('Stamp');
         $gSTAMP = $this->photoInfo->fStamp;
         $gDESCRIPTION = $this->photoInfo->Description;
-        $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $buffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
       
-      $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $buffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       return ($buffer);
     } // BufferLatestPhotos

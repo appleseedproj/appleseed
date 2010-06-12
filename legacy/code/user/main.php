@@ -34,6 +34,8 @@
   // | user profile if requested.                                        |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -57,24 +59,24 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
 
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
   
   // Initialize Appleseed.
-  $zAPPLE->Initialize("user", TRUE);
+  $zOLDAPPLE->Initialize("user", TRUE);
   
   // Add javascript to top of page.
   $zHTML->AddScript ("user/main.js");
 
   // Set the context based on which profile action was requested.
-  $zAPPLE->SetContext("user." . $gPROFILEACTION);
+  $zOLDAPPLE->SetContext("user." . $gPROFILEACTION);
 
   // Error out if username does not exist in database.
   if (!$zFOCUSUSER->uID) {
-   $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
-   $zAPPLE->End();
+   $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+   $zOLDAPPLE->End();
   } // if
 
   global $gFOCUSFULLNAME;
@@ -82,7 +84,8 @@
   // Load admin security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE, '/admin/users/');
   
-  global $gUSERTABS;
+  global $gUSERTABS, $gUSERTABSLOCATION;
+  global $gTHEMELOCATION;
 
   global $bCONTACTBOX;
   $bCONTACTBOX = NULL;
@@ -146,7 +149,7 @@
       if ($zFOCUSUSER->userInvites->Error) {
 
         // Return to form, present error.
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.aobj", INCLUDE_SECURITY_NONE);
 
       } else {
 
@@ -180,7 +183,7 @@
         $zSTRINGS->Lookup ("MESSAGE.SENT", "USER.INVITE");
         $zFOCUSUSER->userInvites->Message = $zSTRINGS->Output;
 
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.confirm.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.confirm.aobj", INCLUDE_SECURITY_NONE);
 
       } // if
 
@@ -189,7 +192,7 @@
 
     } else {
 
-      $bINVITEBOX = $zAPPLE->BufferInviteBox ($gINVITECOUNT);
+      $bINVITEBOX = $zOLDAPPLE->BufferInviteBox ($gINVITECOUNT);
 
     } // if
 
@@ -208,7 +211,7 @@
     // Check if a user is logged in.
     if (!$zAUTHUSER->Anonymous) {
       // Buffer the contact box.
-      $bCONTACTBOX = $zAPPLE->BufferContactBox ();
+      $bCONTACTBOX = $zOLDAPPLE->BufferContactBox ();
     } // if
   } // if
 
@@ -228,7 +231,7 @@
   // Load the profile questions, unless headed to options or messages page.
   if ( ($gPROFILEACTION != 'options') and
        ($gPROFILEACTION != 'messages') ) {
-    $zAPPLE->Profile ();
+    $zOLDAPPLE->Profile ();
   } // if
 
   // Set the page title.
@@ -238,58 +241,58 @@
   switch ($gPROFILEACTION) {
 
     case "journal":
-      $zAPPLE->IncludeFile ('legacy/code/user/journal.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/journal.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "photos":
-      $zAPPLE->IncludeFile ('legacy/code/user/photosets.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/photosets.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "circles":
-      $zAPPLE->Context = 'user.friends.circles';
-      $zAPPLE->IncludeFile ('legacy/code/user/circles.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->Context = 'user.friends.circles';
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/circles.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "friends":
-      $zAPPLE->IncludeFile ('legacy/code/user/friends.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/friends.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "info":
-      $zAPPLE->IncludeFile ('legacy/code/user/info.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/info.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "messages_two":
-      $zAPPLE->IncludeFile ('legacy/code/user/messages_two.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/messages_two.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "groups":
-      $zAPPLE->IncludeFile ('legacy/code/user/groups.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/groups.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "messages":
-      $zAPPLE->IncludeFile ('legacy/code/user/messages.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/messages.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "options":
-      $zAPPLE->IncludeFile ('legacy/code/user/options.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/options.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "summary":
-      $zAPPLE->IncludeFile ('legacy/code/user/summary.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/summary.php', INCLUDE_SECURITY_NONE);
     break;
 
     case "":
       // Grab user's default page from database.
-      $zAPPLE->SetContext ("user.summary");
-      $zAPPLE->IncludeFile ('legacy/code/user/summary.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->SetContext ("user.summary");
+      $zOLDAPPLE->IncludeFile ('legacy/code/user/summary.php', INCLUDE_SECURITY_NONE);
     break;
 
     default:
-      $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
     break;
   } // switch
   
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

@@ -1,7 +1,7 @@
 <div id='articles'>
 
  <!-- tabs objects -->
-<?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+<?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
 

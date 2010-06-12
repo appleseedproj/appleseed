@@ -1,7 +1,7 @@
 <div id='options'>
 
  <!-- tabs objects -->
- <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
 
@@ -14,7 +14,7 @@
    <?php $zSTRINGS->Display ("OBJECT.CONTENT", "USER.OPTIONS"); ?>
   </p>
 
- <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/sections/user/options.aobj", INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/sections/user/options.aobj", INCLUDE_SECURITY_BASIC); ?>
  
  <form id='options' enctype="multipart/form-data" name='options' method='post' action='/profile/<?php echo $gFOCUSUSERNAME ?>/options/'>
 

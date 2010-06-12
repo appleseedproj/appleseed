@@ -11,6 +11,8 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
+require_once ( ASD_PATH . DS . 'system' . DS . 'router.php' );
+
 /** Application Class
  * 
  * Appleseed Application class
@@ -23,9 +25,13 @@ class cApplication {
         /**
          * Constructor
          *
-         * @access  protected
+         * @access  public
          */
-        function __construct() {       
+        public function __construct ( ) {       
         }
-
+        
+        function Initialize ( ) {
+        	$this->Router = new cRouter ( );
+        } 
+        
 }

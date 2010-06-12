@@ -35,11 +35,11 @@
   // |               not specifically tied to Appleseed.                 |
   // +-------------------------------------------------------------------+
 
-  class cAPPLICATION {
+  class cOLDAPPLICATION {
 
     var $Database;
 
-    function cAPPLICATION ($pDATABASE = NULL) {
+    function cOLDAPPLICATION ($pDATABASE = NULL) {
 
       // Override which database to use.
       $this->Database = $pDATABASE;
@@ -136,7 +136,7 @@
       } // if
   
       // Load site title and url into global variable.
-      $zSTRINGS->Lookup ('BROWSER.TITLE', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('BROWSER.TITLE', $zOLDAPPLE->Context);
       $gSITETITLE = $zSTRINGS->Output;
 
       // Modify gACTION from BUTTONNAME
@@ -633,13 +633,13 @@
         echo "<!-- NOT FOUND: $pFILENAME -->";
 
            global $gADMINEMAIL;
-           global $zLOCALUSER, $zAPPLE;
+           global $zLOCALUSER, $zOLDAPPLE;
 
            $body = "\n" .
                    "A file was not found.  Please double check to make sure " .
                    "that it is available.\n\n" .
                    "User - " . $zLOCALUSER->Username . "\n" .
-                   "Context - " . $zAPPLE->Context . "\n" .
+                   "Context - " . $zOLDAPPLE->Context . "\n" .
                    "File - " . $pFILENAME . "\n\n" .
                    "- APPLESEED AUTOMATED EMAIL";
            $headers = 'From: "Appleseed Error" <error@appleseedproject.org>' . "\r\n" .
@@ -1145,6 +1145,6 @@
       } // if
     } // GetTemporaryDirectory
 
-  } // cAPPLICATION
+  } // cOLDAPPLICATION
 
 ?>

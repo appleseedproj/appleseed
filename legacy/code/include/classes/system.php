@@ -124,7 +124,7 @@
       global $gSITEDOMAIN, $gSETTINGS;
       global $gAPPLESEEDVERSION;
       
-      global $zAPPLE, $zSTRINGS, $zXML;
+      global $zOLDAPPLE, $zSTRINGS, $zXML;
       
       // Create node class.
       $zNODES = new cSYSTEMNODES ();
@@ -147,7 +147,7 @@
         $domain = $zNODES->Entry;
         
         // Get the ASD version of the node.
-        $version = $zAPPLE->GetNodeVersion ($domain);
+        $version = $zOLDAPPLE->GetNodeVersion ($domain);
 
         // Create the Remote class.
         $zREMOTE = new cREMOTE ($domain);
@@ -159,8 +159,8 @@
         } // if
         unset ($VERIFY);
         
-        global $zAPPLE;
-        $summary = $zAPPLE->ParseTags ($summary);
+        global $zOLDAPPLE;
+        $summary = $zOLDAPPLE->ParseTags ($summary);
         
         $datalist = array ("gACTION"   => "ASD_UPDATE_NODE_NETWORK",
                            "gTOKEN"    => $token,
@@ -183,7 +183,7 @@
     } // SendNodeNetworkUpdate
     
     function VerifyNodeNetwork () {
-      global $zAPPLE, $zXML;
+      global $zOLDAPPLE, $zXML;
       global $gAPPLESEEDVERSION;
       
       global $gSITEDOMAIN;
@@ -397,10 +397,10 @@
   	
   	// Get file listing from update server.
   	function NodeFileListing ($pSERVER, $pVERSION = false) {
-  	  global $zAPPLE;
+  	  global $zOLDAPPLE;
   		
   	  // If we don't have the version, get it.
-  	  if ($pVERSION) $version = $pVERSION; else $version = $zAPPLE->GetNodeVersion ($pSERVER);
+  	  if ($pVERSION) $version = $pVERSION; else $version = $zOLDAPPLE->GetNodeVersion ($pSERVER);
   		
       // Pull from node
       if (function_exists ("curl_exec")) {
@@ -470,7 +470,7 @@
   	} // NodeFileListing
   	
   	function GetVersionListing ($pSERVER) {
-  	  global $zAPPLE;
+  	  global $zOLDAPPLE;
   	  
   	  global $gAPPLESEEDVERSION;
   		
@@ -520,7 +520,7 @@
       	// Remove if blank
       	if (!$version) continue;
       	// Remove if less than current.
-        //if (!$zAPPLE->CheckVersion ($gAPPLESEEDVERSION, $version)) continue;
+        //if (!$zOLDAPPLE->CheckVersion ($gAPPLESEEDVERSION, $version)) continue;
         // Set up result.
         $result[$version] = $version;
       
@@ -533,22 +533,22 @@
   	} // GetVersionListing
   	
   	function AddServer ($pSERVER) {
-  	  global $zAPPLE, $zSTRINGS;
+  	  global $zOLDAPPLE, $zSTRINGS;
   	  
   	  $this->Select("Server", $pSERVER);
   	  
   	  // Already exists in database.
   	  if ($this->CountResult() > 0) {
-  	    $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
-        $zSTRINGS->Lookup ('ERROR.ALREADY', $zAPPLE->Context);
+  	    $zOLDAPPLE->SetTag ('SERVERNAME', $pSERVER);
+        $zSTRINGS->Lookup ('ERROR.ALREADY', $zOLDAPPLE->Context);
         $this->Message = $zSTRINGS->Output;
         $this->Error = -1;
         return (FALSE);
   	  } // if
   		
-      if ( (!$version = $zAPPLE->GetNodeVersion ($pSERVER)) or 
+      if ( (!$version = $zOLDAPPLE->GetNodeVersion ($pSERVER)) or 
   	       (!$files = $this->NodeFileListing ($pSERVER)) ) {
-        $zSTRINGS->Lookup ('ERROR.INVALIDSERVER', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.INVALIDSERVER', $zOLDAPPLE->Context);
         $this->Message = $zSTRINGS->Output;
         $this->Error = -1;
   	  	return (FALSE);
@@ -557,9 +557,9 @@
   	  $this->Server = $pSERVER;
   	  $this->Add();
   	  
-  	  $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
+  	  $zOLDAPPLE->SetTag ('SERVERNAME', $pSERVER);
   	  
-      $zSTRINGS->Lookup ('MESSAGE.ADDED', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('MESSAGE.ADDED', $zOLDAPPLE->Context);
       $this->Message = $zSTRINGS->Output;
       $this->Error = 0;
       
@@ -567,7 +567,7 @@
   	} // AddServer
   	
   	function RemoveServer ($pSERVER) {
-  	  global $zAPPLE, $zSTRINGS;
+  	  global $zOLDAPPLE, $zSTRINGS;
   		
       // Delete all current records for this server and version.
       $query = "
@@ -578,9 +578,9 @@
                         mysql_real_escape_string ($pSERVER));
       $this->Query($query);
   	  
-  	  $zAPPLE->SetTag ('SERVERNAME', $pSERVER);
+  	  $zOLDAPPLE->SetTag ('SERVERNAME', $pSERVER);
   	  
-      $zSTRINGS->Lookup ('MESSAGE.REMOVED', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('MESSAGE.REMOVED', $zOLDAPPLE->Context);
       $this->Message = $zSTRINGS->Output;
       $this->Error = 0;
       
@@ -640,7 +640,7 @@
     } // ListDirectory
     
     function CreateBackupDirectories ($pCURRENTREFERENCE) {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
       
       global $gAPPLESEEDVERSION, $gFRAMELOCATION;
       global $gRESULT;
@@ -652,12 +652,12 @@
       // Create the main backup directory.
       if (!mkdir ($backupDirectory)) {
       	if (file_exists($backupDirectory)) {
-          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORYEXISTS', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORYEXISTS', $zOLDAPPLE->Context);
       	} else {
-          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zOLDAPPLE->Context);
       	} // if
         $gRESULT = $zSTRINGS->Output;
-        $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return (FALSE);
       } // if
       
@@ -681,9 +681,9 @@
   	  
   	  foreach ($directories as $directory) {
         if (!mkdir ($backupDirectory . '/' . $directory)) {
-          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	  return (FALSE);
       	} // if
         if (!chmod ($backupDirectory . '/' . $directory, 0777)) {
@@ -692,21 +692,21 @@
   	  } // foreach
   	  
   	  if (!$permissions) {
-          $zSTRINGS->Lookup ('WARNING.BACKUPPERMISSIONS', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('WARNING.BACKUPPERMISSIONS', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
   	  
-      $zSTRINGS->Lookup ('RESULT.BACKUPDIRECTORY', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('RESULT.BACKUPDIRECTORY', $zOLDAPPLE->Context);
       $gRESULT = $zSTRINGS->Output;
-      $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
   	  return (TRUE);
     } // CreateBackupDirectories
     
     function CreateNewDirectories ($pLATESTREFERENCE) {
     	
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
       
       global $gAPPLESEEDVERSION, $gFRAMELOCATION;
       global $gRESULT;
@@ -729,9 +729,9 @@
   	  foreach ($directories as $directory) {
   	  	if (!file_exists ($directory)) {
           if (!mkdir ($directory)) {
-            $zSTRINGS->Lookup ('ERROR.NEWDIRECTORIES', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('ERROR.NEWDIRECTORIES', $zOLDAPPLE->Context);
             $gRESULT = $zSTRINGS->Output;
-            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+            $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	    return (FALSE);
       	  } // if
           if (!chmod ($directory, 0777)) {
@@ -741,21 +741,21 @@
   	  } // foreach
   	  
   	  if (!$permissions) {
-          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
   	  
-      $zSTRINGS->Lookup ('RESULT.NEWDIRECTORIES', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('RESULT.NEWDIRECTORIES', $zOLDAPPLE->Context);
       $gRESULT = $zSTRINGS->Output;
-      $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
   	  return (TRUE);
     } // CreateNewDirectories
     
     function Merge ($pCURRENT, $pLATEST, $pSERVER, $pVERSION) {
     	
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
       
       global $gAPPLESEEDVERSION, $gFRAMELOCATION;
       global $gRESULT;
@@ -813,9 +813,9 @@
       	if (!rename ($o, $backup . $o)) {
       		global $gBACKUPFILE;
       		$gBACKUPFILE = $o;
-            $zSTRINGS->Lookup ('WARNING.BACKUP', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('WARNING.BACKUP', $zOLDAPPLE->Context);
             $gRESULT = $zSTRINGS->Output;
-            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+            $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       } // foreach
       
@@ -832,9 +832,9 @@
       	if (!rename ($c, $backup . $c)) {
       		global $gBACKUPFILE;
       		$gBACKUPFILE = $o;
-            $zSTRINGS->Lookup ('WARNING.BACKUP', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('WARNING.BACKUP', $zOLDAPPLE->Context);
             $gRESULT = $zSTRINGS->Output;
-            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+            $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       	
       	// Retrieve new file.
@@ -850,9 +850,9 @@
           } // if
     	  global $gMAGICFILE;
           $gMAGICFILE = $o;
-          $zSTRINGS->Lookup ('WARNING.MAGIC', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('WARNING.MAGIC', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } else {
           $this->SaveFile ($content, $c);
         } // if
@@ -860,9 +860,9 @@
       	if (!$this->FixPermissions ($c)) {
       	  global $gBACKUPFILE;
           $gBACKUPFILE = $o;
-          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       } // foreach
       
@@ -878,9 +878,9 @@
       	  if (!chmod ($n, 0777)) {
       	    global $gBACKUPFILE;
             $gBACKUPFILE = $n;
-            $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
             $gRESULT = $zSTRINGS->Output;
-            $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+            $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	  } // if
       	  continue;
         } // if
@@ -898,9 +898,9 @@
           } // if
       	  global $gMAGICFILE;
           $gMAGICFILE = $n;
-          $zSTRINGS->Lookup ('WARNING.MAGIC', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('WARNING.MAGIC', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } else {
           $this->SaveFile ($content, $n);
         } // if
@@ -908,9 +908,9 @@
       	if (!$this->FixPermissions ($n)) {
       	  global $gBACKUPFILE;
           $gBACKUPFILE = $n;
-          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
           $gRESULT = $zSTRINGS->Output;
-          $bRESULT .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       } // foreach
       

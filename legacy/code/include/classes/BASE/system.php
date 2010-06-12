@@ -139,13 +139,13 @@
    function Lookup ($pTITLE, $pCONTEXT = NULL) {
      
      global $gSETTINGS;
-     global $zAPPLE;
+     global $zOLDAPPLE;
 
      $pTITLE = strtoupper ($pTITLE);
      $pCONTEXT = strtoupper ($pCONTEXT);
 
      // Use the page context if no context is specified.
-     if (!$pCONTEXT) $pCONTEXT = $zAPPLE->Context;
+     if (!$pCONTEXT) $pCONTEXT = $zOLDAPPLE->Context;
 
      // Set Output to NULL.
      unset ($this->Output);
@@ -154,7 +154,7 @@
      if (isset($this->Cache[$pTITLE][$pCONTEXT]['Value'])) {
        $this->Output = $this->Cache[$pTITLE][$pCONTEXT]['Value'];
        $this->Formatting = $this->Cache[$pTITLE][$pCONTEXT]['Formatting'];
-       $this->Output = $zAPPLE->Format ($this->Output, $this->Formatting);
+       $this->Output = $zOLDAPPLE->Format ($this->Output, $this->Formatting);
        return ($this->Error);
      } // if
 
@@ -201,14 +201,14 @@
        $this->Output = "(unknown string: $pTITLE -> $pCONTEXT)";
        // NOTE: Replace/remove this eventually.
        global $gADMINEMAIL;
-       global $zAUTHUSER, $zAPPLE;
+       global $zAUTHUSER, $zOLDAPPLE;
 
        $body = "\n" .
                "A string was not found.  Please double check to make sure " .
                "that it is available in the Strings database.\n\n" .
                "User - " . $zAUTHUSER->Username . "\n" .
                "Query - " . $cascade_query . "\n" .
-               "Context - " . $zAPPLE->Context . "\n" .
+               "Context - " . $zOLDAPPLE->Context . "\n" .
                "String - " . $this->Output . "\n\n" .
                "- APPLESEED AUTOMATED EMAIL";
        $headers = 'From: "Appleseed Error" <error@appleseedproject.org>' . "\r\n" .
@@ -222,7 +222,7 @@
        $this->Cache[$pTITLE][$pCONTEXT]['Formatting'] = $this->Formatting;
      } // if
 
-     $this->Output = $zAPPLE->Format ($this->Output, $this->Formatting);
+     $this->Output = $zOLDAPPLE->Format ($this->Output, $this->Formatting);
 
      return ($this->Error);
 
@@ -673,16 +673,16 @@
    function CreateDisplay ($pTITLE, $pCONTEXT = NULL) {
      global $gSETTINGS, $gTHEMELOCATION;
 
-     global $zAPPLE;
+     global $zOLDAPPLE;
 
      // Use the page context if no context is specified.
-     if (!$pCONTEXT) $pCONTEXT = $zAPPLE->Context;
+     if (!$pCONTEXT) $pCONTEXT = $zOLDAPPLE->Context;
 
      // If the entry is already cached, return cached entry.
      if (isset($this->Cache[$pTITLE][$pCONTEXT]['Value'])) {
        $this->Output = $this->Cache[$pTITLE][$pCONTEXT]['Value'];
        $this->Formatting = $this->Cache[$pTITLE][$pCONTEXT]['Formatting'];
-       $this->Output = $zAPPLE->Format ($this->Output, $this->Formatting);
+       $this->Output = $zOLDAPPLE->Format ($this->Output, $this->Formatting);
        return ($this->Error);
      } // if
 
@@ -726,10 +726,10 @@
 
      $this->FetchArray();
      
-     $zAPPLE->SetTag ('TOOLTIP', $this->Output);
+     $zOLDAPPLE->SetTag ('TOOLTIP', $this->Output);
 
      // Load the tooltip from the themes directory.
-     $output = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tooltips/default.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+     $output = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tooltips/default.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
 
      return ($output);
 

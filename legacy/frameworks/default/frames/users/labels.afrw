@@ -9,10 +9,10 @@
    <div id="page_left" class="grid_3"> 
 
     <!-- ## folders obj -->
-    <?php $zAPPLE->IncludeFile ("legacy/frameworks/$gFRAMEWORK/objects/user/messages/folders.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("legacy/frameworks/$gFRAMEWORK/objects/user/messages/folders.aobj", INCLUDE_SECURITY_NONE); ?>
 
     <!-- ## labels obj -->
-    <?php $zAPPLE->IncludeFile ("legacy/frameworks/$gFRAMEWORK/objects/user/messages/labels.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("legacy/frameworks/$gFRAMEWORK/objects/user/messages/labels.aobj", INCLUDE_SECURITY_NONE); ?>
 
    </div>
 

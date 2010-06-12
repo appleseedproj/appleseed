@@ -51,7 +51,7 @@
   if ($gCIRCLEVIEWADMIN) $gCIRCLEVIEW = $gCIRCLEVIEWADMIN;
 
   // Create the data class.
-  $zFRIENDS = new cFRIENDINFORMATION ($zAPPLE->Context);
+  $zFRIENDS = new cFRIENDINFORMATION ($zOLDAPPLE->Context);
 
   // Display the select all button by default.
   $gSELECTBUTTON = 'Select All';
@@ -226,38 +226,38 @@
   // Select the proper results.
   switch ($gCIRCLEVIEW) {
     case CIRCLE_EDITOR:
-      $gSCROLLSTEP[$zAPPLE->Context] = 20;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
       $friendcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                "Verification" => FRIEND_VERIFIED);
     break;
     case CIRCLE_PENDING:
-      $gSCROLLSTEP[$zAPPLE->Context] = 12;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 12;
       $friendcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                "Verification" => FRIEND_PENDING);
     break;
     case CIRCLE_DEFAULT:
     case CIRCLE_VIEWALL:
-      $gSCROLLSTEP[$zAPPLE->Context] = 12;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 12;
       $friendcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                "Verification" => FRIEND_VERIFIED);
     break;
     case CIRCLE_NEWEST:
-      $gSCROLLSTEP[$zAPPLE->Context] = 12;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 12;
       $friendcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                "Verification" => FRIEND_VERIFIED);
     break;
     case CIRCLE_REQUESTS:
-      $gSCROLLSTEP[$zAPPLE->Context] = 10;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
       $friendcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                  "Verification" => FRIEND_REQUESTS);
     break;
     case CIRCLE_VIEWCIRCLES:
-      $gSCROLLSTEP[$zAPPLE->Context] = 12;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 12;
       $friendcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                "Verification" => FRIEND_VERIFIED);
     break;
     default:
-      $gSCROLLSTEP[$zAPPLE->Context] = 12;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 12;
       if ($gCIRCLEVIEW) {
         $zFRIENDS->LoadFriendsCircle ($gCIRCLEVIEW);
         $SKIP = TRUE;
@@ -300,7 +300,7 @@
       if ($zFRIENDS->Domain != $gSITEDOMAIN) {
         $gFRIENDFULLNAME = $zFRIENDS->Username;
       } else {
-        $USER = new cUSER ($zAPPLE->Context);
+        $USER = new cUSER ($zOLDAPPLE->Context);
         $USER->Select ("Username", $zFRIENDS->Username);
         $USER->FetchArray (); 
     
@@ -323,7 +323,7 @@
       $gPOSTDATA['CIRCLEVIEWADMIN'] = CIRCLE_EDITOR;
       $gPOSTDATA['CIRCLEVIEW'] = CIRCLE_EDITOR;
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/edit.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/edit.aobj", INCLUDE_SECURITY_NONE);
     break;
 
     default:
@@ -341,16 +341,16 @@
            ($gACTION == 'MOVE_DOWN') or 
            ($gACTION == 'DELETE_ALL') ) {
   
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.top.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.top.aobj", INCLUDE_SECURITY_NONE);
   
         // Calculate scroll values.
-        $gSCROLLMAX[$zAPPLE->Context] = $zFRIENDS->CountResult();
+        $gSCROLLMAX[$zOLDAPPLE->Context] = $zFRIENDS->CountResult();
     
         // Adjust for a recently deleted entry.
-        $zAPPLE->AdjustScroll ('user.friends', $zFRIENDS);
+        $zOLDAPPLE->AdjustScroll ('user.friends', $zFRIENDS);
   
         // Check if any results were found.
-        if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+        if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
           $zFRIENDS->Message = __("No Results Found");
           $zFRIENDS->Broadcast();
         } // if
@@ -364,7 +364,7 @@
         global $gFRIENDSICON, $gFRIENDFULLNAME, $gFRIENDNAME;
     
         // Loop through the list.
-        for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+        for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
           
          if ($zFRIENDS->FetchArray()) {
     
@@ -381,7 +381,7 @@
             list ($gFRIENDFULLNAME, $online) = $zFRIENDS->GetUserInformation();
           } // if
           // Load the online icon.
-          if ($online) $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          if ($online) $bONLINENOW = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
 
           // Create the default icon URL.
           $gFRIENDSICON = "http://" . $zFRIENDS->Domain . "/icon/" . $zFRIENDS->Username . "/";
@@ -393,13 +393,13 @@
           } // if
     
           // Adjust for a hidden entry.
-          if ( $zAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;
+          if ( $zOLDAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zOLDAPPLE->Context) ) continue;
     
           global $gTARGET;
           $gTARGET = "http://" . $zFRIENDS->Domain . "/profile/" . $zFRIENDS->Username . "/";
 
           global $bFRIENDICON;
-          $bFRIENDICON = $zAPPLE->BufferUserIcon ($zFRIENDS->Username, $zFRIENDS->Domain, NULL);
+          $bFRIENDICON = $zOLDAPPLE->BufferUserIcon ($zFRIENDS->Username, $zFRIENDS->Domain, NULL);
     
           global $gEDITTARGET, $gEDITPOST;
           $gEDITTARGET = "http://" . $gSITEDOMAIN . "/profile/" . $zFOCUSUSER->Username . "/friends/";
@@ -427,9 +427,9 @@
           } // if
 
           if ($zFRIENDS->Domain != $gSITEDOMAIN) 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.remote.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.remote.aobj", INCLUDE_SECURITY_NONE);
           else 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.middle.aobj", INCLUDE_SECURITY_NONE);
     
          } else {
           break;
@@ -440,14 +440,14 @@
   
         $gCIRCLELIST = $zFRIENDS->CreateAllCirclesMenu ();
       
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/$friendview/list.bottom.aobj", INCLUDE_SECURITY_NONE);
   
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') or 
                  ($gACTION == 'CIRCLE') ) {
         if ($gtID) {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/edit.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/edit.aobj", INCLUDE_SECURITY_NONE);
         } else {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/new.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/new.aobj", INCLUDE_SECURITY_NONE);
         } // if
       } // if
     break;
@@ -457,6 +457,6 @@
   $bMAINSECTION = ob_get_clean (); 
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/friends.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/friends.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

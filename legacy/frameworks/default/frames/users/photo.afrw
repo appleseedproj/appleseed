@@ -9,7 +9,7 @@
    <div id="page_left" class="grid_3"> 
 
     <!-- ## profile/photo obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/photo.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/photo.aobj", INCLUDE_SECURITY_NONE); ?>
 
     <!-- ## invite obj -->
     <?php echo $bINVITEBOX; ?>
@@ -18,7 +18,7 @@
     <?php echo $bCONTACTBOX; ?>
 
     <!-- ## profile obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/main.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/main.aobj", INCLUDE_SECURITY_NONE); ?>
 
    </div>
 

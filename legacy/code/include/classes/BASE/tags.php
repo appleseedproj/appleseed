@@ -197,14 +197,14 @@
    } // Constructor
    
    function CreateDisplay ($pLINK, $pREFERENCEID, $pOWNERID = NULL) {
-      global $zAPPLE;
+      global $zOLDAPPLE;
       global $zAUTHUSER, $zLOCALUSER, $zFOCUSUSER;
       
       global $gACTION, $gTAGCHECKED;
       
       global $gFRAMELOCATION;
       
-      $context = $zAPPLE->Context;
+      $context = $zOLDAPPLE->Context;
       
       $view = 'read';
       if (!$zAUTHUSER->Anonymous) $view = 'write';
@@ -258,7 +258,7 @@
         if ($this->Amount > $max) $max = $this->Amount;
         $count++;
       } // while
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       global $gTAGPOSTDATA;
       
@@ -297,11 +297,11 @@
         $gTAGPOSTDATA['TAGENTRIES'] = $data['Name'];
       
         if ($gACTION == 'TAG_SELECT_ALL') $gTAGCHECKED = TRUE;
-        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/middle$owner$restricted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/middle$owner$restricted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
       
       $owner = NULL;
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/bottom$owner$restricted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/tags/$view/bottom$owner$restricted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       return ($return);
    } // CreateDisplay

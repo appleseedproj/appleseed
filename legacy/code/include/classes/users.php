@@ -135,7 +135,7 @@
     // Initialize a new user.
     function Initialize ($pCREATERELATIONSHIP = TRUE) {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
       global $gVALUE;
       global $gSITEDOMAIN;
 
@@ -148,11 +148,11 @@
 
       // Create the photosets directory.
       $photosetdir = "photos/" . $this->Username . "/sets/";
-      $zAPPLE->CreateDirectory ($photosetdir);
+      $zOLDAPPLE->CreateDirectory ($photosetdir);
 
       // Create the icons directory.
       $icondir = "photos/" . $this->Username . "/icons/";
-      $zAPPLE->CreateDirectory ($icondir);
+      $zOLDAPPLE->CreateDirectory ($icondir);
 
       if ($pCREATERELATIONSHIP) {
         // Create the default friend relationship.
@@ -319,7 +319,7 @@
 
     function SaveIcons () {
 
-      global $zICON, $zSTRINGS, $zAPPLE;
+      global $zICON, $zSTRINGS, $zOLDAPPLE;
 
       global $gKEYWORD, $gCOMMENTS;
       global $gUSERICONX, $gUSERICONY;
@@ -338,7 +338,7 @@
         $location = "photos/" . $this->Username . "/icons/";
 
         // If icon directory doesn't exist, create it.
-        if (!is_dir ($location)) $zAPPLE->CreateDirectory ($location);
+        if (!is_dir ($location)) $zOLDAPPLE->CreateDirectory ($location);
 
         $iconfile = $location . $_FILES['gUSERICON']['name'];
 
@@ -352,7 +352,7 @@
         if ($zICON->Error != -1) {
           // Set values.
           $this->userIcons->Filename = $_FILES['gUSERICON']['name'];
-          $this->userIcons->Keyword = $zAPPLE->RemoveExtension ($_FILES['gUSERICON']['name']);
+          $this->userIcons->Keyword = $zOLDAPPLE->RemoveExtension ($_FILES['gUSERICON']['name']);
           $this->userIcons->Comments = '';
               
           // Check if image with filename already exists.
@@ -456,13 +456,13 @@
 
       global $gUSERICONX, $gUSERICONY;
 
-      global $zPHOTO, $zICON, $zAPPLE, $zSTRINGS;
+      global $zPHOTO, $zICON, $zOLDAPPLE, $zSTRINGS;
 
       // User photos directory.
       $location = "photos/" . $this->Username . '/';
 
       // If photos directory doesn't exist, create it.
-      if (!is_dir ($location)) $zAPPLE->CreateDirectory ($location);
+      if (!is_dir ($location)) $zOLDAPPLE->CreateDirectory ($location);
 
       $uploadfile = $_FILES['gPROFILEPHOTO']['tmp_name'];
 
@@ -497,7 +497,7 @@
           $this->userIcons->Delete();
 
           $this->userIcons->Filename = $_FILES['gPROFILEPHOTO']['name'];
-          $this->userIcons->Keyword = $zAPPLE->RemoveExtension ($_FILES['gPROFILEPHOTO']['name']);
+          $this->userIcons->Keyword = $zOLDAPPLE->RemoveExtension ($_FILES['gPROFILEPHOTO']['name']);
           $this->userIcons->Comments = '';
 
           // Add the reference to the database.
@@ -507,7 +507,7 @@
           $location = "photos/" . $this->Username . "/icons/";
 
           // If icon directory doesn't exist, create it.
-          if (!is_dir ($location)) $zAPPLE->CreateDirectory ($location);
+          if (!is_dir ($location)) $zOLDAPPLE->CreateDirectory ($location);
 
           $iconfile = $location . $_FILES['gPROFILEPHOTO']['name'];
           $zICON->Convert ($_FILES['gPROFILEPHOTO']['tmp_name']);
@@ -754,12 +754,12 @@
 
     // Change a user's password and mail the result.
     function ChangePassword () {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       global $gPASSWORD, $gFULLNAME;
       global $gSITEDOMAIN;
 
-      $gPASSWORD = $zAPPLE->GeneratePassword ('##XX#XX!');
+      $gPASSWORD = $zOLDAPPLE->GeneratePassword ('##XX#XX!');
 
       $reset_query = "UPDATE userAuthorization SET " .
                      "Pass = PASSWORD('$gPASSWORD') WHERE " .
@@ -773,13 +773,13 @@
       $to = $this->Email;
       $gFULLNAME = $this->Fullname;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('MAIL.SUBJECT', $zOLDAPPLE->Context);
       $subject = $zSTRINGS->Output;
 
-      $zSTRINGS->Lookup ('MAIL.BODY', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('MAIL.BODY', $zOLDAPPLE->Context);
       $body = $zSTRINGS->Output;
 
-      $zSTRINGS->Lookup ('MAIL.FROM', $zAPPLE->Context);
+      $zSTRINGS->Lookup ('MAIL.FROM', $zOLDAPPLE->Context);
       $from = $zSTRINGS->Output;
 
       $headers = "From: $from" . "\r\n" .
@@ -1251,7 +1251,7 @@
 
     function ChangeInvites () {
       
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       // Count how many invites are available.
       $COUNTER = new cUSERINVITES;
@@ -1270,7 +1270,7 @@
 
         $this->Begin ();
         for ($count = 0; $count < $difference; $count++) {
-          $this->Value = $zAPPLE->RandomString (32);
+          $this->Value = $zOLDAPPLE->RandomString (32);
           $this->Stamp = NULL;
           $this->Active = ACTIVE;
           $this->Add();

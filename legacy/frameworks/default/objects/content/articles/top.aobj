@@ -1,6 +1,6 @@
 <section id='site_articles'>
 
-<?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+<?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
  
   <?php $zSEARCH->Ask (); ?>
 

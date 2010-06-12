@@ -9,17 +9,17 @@
    <div id="page_left" class="grid_3"> 
 
     <!-- ## loginbox obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/$gLOGINBOX.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/$gLOGINBOX.aobj", INCLUDE_SECURITY_NONE); ?>
 
     <!-- ## join obj -->
-    <?php $zAPPLE->IncludeFile ($gJOINLOCATION, INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ($gJOINLOCATION, INCLUDE_SECURITY_NONE); ?>
 
    </div>
 
    <div id="page_right" class="grid_9"> 
 
     <!-- ## joininfo obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/joininfo.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/joininfo.aobj", INCLUDE_SECURITY_NONE); ?>
 
    </div>
 

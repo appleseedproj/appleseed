@@ -17,7 +17,7 @@
      </span> <!-- .posted -->
 
      <span class='body'>
-       <?php $zHTML->Link ($gTARGET, $zAPPLE->Format ($zJOURNAL->Content, FORMAT_BASIC), $gEXTRAPOSTDATA); ?>
+       <?php $zHTML->Link ($gTARGET, $zOLDAPPLE->Format ($zJOURNAL->Content, FORMAT_BASIC), $gEXTRAPOSTDATA); ?>
      </span> <!-- .subject -->
 
    </li>

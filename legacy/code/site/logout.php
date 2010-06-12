@@ -34,6 +34,8 @@
   // | WRAPPED BY:   /logout/index.php                                   |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -56,13 +58,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.logout", TRUE);
+  $zOLDAPPLE->Initialize("site.logout", TRUE);
 
   // Log the user out of the system.
   $zLOCALUSER->userSession->Destroy();
@@ -72,6 +74,6 @@
   $bREFRESHLINE = $zHTML->Refresh ($gSITEURL);
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/logout.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/logout.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

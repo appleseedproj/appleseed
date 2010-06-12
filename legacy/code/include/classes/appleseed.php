@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: appleseed.php                           CREATED: 09-05-2005 + 
-  // | LOCATION: /legacy/code/include/classes/             MODIFIED: 01-04-2006 +
+  // | LOCATION: /legacy/code/include/classes/      MODIFIED: 01-04-2006 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -41,7 +41,7 @@
   
   require_once 'libraries/language.php';
   
-  class cAPPLESEED extends cAPPLICATION {
+  class cAPPLESEED extends cOLDAPPLICATION {
 
     var $Context;
     var $PurifierConfig;
@@ -293,6 +293,8 @@
       // Check whether site is in shutdown state.
       $this->Shutdown ($gSETTINGS['Shutdown']);
 
+      global $gPROFILEREQUEST, $gPROFILEACTION, $gPROFILESUBACTION;
+      
       // Pull the focus user information
       if ($gPROFILEREQUEST) {
         // Split the request into username and action

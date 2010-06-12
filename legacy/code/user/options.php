@@ -38,8 +38,8 @@
   if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
-      $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-      $zAPPLE->End();
+      $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->End();
     } // if
   } // if
 
@@ -91,7 +91,7 @@
 
   // Pre-Load the User Theme List.
   global $gTHEMELIST;
-  $gTHEMELIST = $zAPPLE->GetThemeList ();
+  $gTHEMELIST = $zOLDAPPLE->GetThemeList ();
 
   // Determine which action to take.
   switch ($gACTION) {
@@ -289,7 +289,7 @@
       } // if
 
       $gPOSTDATA['tID'] = $zFOCUSUSER->userIcons->tID; 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/options/icons.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/options/icons.aobj", INCLUDE_SECURITY_NONE);
     } // while
 
     unset ($gPOSTDATA['tID']); 
@@ -314,10 +314,10 @@
   unset ($zICONLIST);
 
   // Load the profile questions and answers into a buffer.
-  $zAPPLE->Profile ();
-  $bCONTACTBOX = $zAPPLE->BufferContactBox ();
+  $zOLDAPPLE->Profile ();
+  $bCONTACTBOX = $zOLDAPPLE->BufferContactBox ();
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/options.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/options.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

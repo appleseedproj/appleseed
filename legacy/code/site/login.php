@@ -32,7 +32,9 @@
   // | VERSION:      0.7.3                                               |
   // | DESCRIPTION:  Login code.                                         |
   // +-------------------------------------------------------------------+
-
+  
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -56,13 +58,13 @@
   require_once ('legacy/code/include/classes/asd/0.7.3.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.login", TRUE);
+  $zOLDAPPLE->Initialize("site.login", TRUE);
 
   global $gLOGINBOX;
   $gLOGINBOX = "login";
@@ -276,7 +278,7 @@
     break;
     case 'REMOTE_LOGIN':
       
-      if (!$zAPPLE->CheckEmail ($gLOCATION) ) {
+      if (!$zOLDAPPLE->CheckEmail ($gLOCATION) ) {
         $zLOCALUSER->Error = -1;
         $zLOCALUSER->Message = "An error occurred while logging in.";
         $zLOCALUSER->Errorlist['Location'] = "This is not a valid address.";
@@ -310,6 +312,7 @@
   // Set "Remember Me" as on by default.
   if ($zLOCALUSER->Error == 0) $gREMEMBER = 'on';
 
+  global $gJOINLOCATION;
   $gJOINLOCATION = "$gFRAMELOCATION/objects/site/join.aobj";
 
   // Set the page title.
@@ -330,16 +333,16 @@
     $bREFRESHLINE = $zHTML->Refresh ($refreshurl);
 
     // Include the outline frame.
-    $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/loggedin.afrw", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/loggedin.afrw", INCLUDE_SECURITY_NONE);
 
     // Exit fully from applicaton.
-    $zAPPLE->End();
+    $zOLDAPPLE->End();
   } // if
   
   // Set password to NULL.
   $gPASS = NULL;
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/login.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/login.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

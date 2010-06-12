@@ -1,7 +1,7 @@
 <div id='circles'>
 
  <!-- tabs objects -->
- <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
   <p id='heading'>
@@ -18,13 +18,13 @@
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
 
     <p id='name'>
-     <?php $zSTRINGS->Display ('LABEL.NAME', $zAPPLE->Context); ?>
+     <?php $zSTRINGS->Display ('LABEL.NAME', $zOLDAPPLE->Context); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("NAME", 70, $zCIRCLES->Name); ?>
     <?php $zCIRCLES->Broadcast ("field", "Name"); ?>
  
     <p id='description'>
-     <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', $zAPPLE->Context); ?>
+     <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', $zOLDAPPLE->Context); ?>
     </p> <!-- #description -->
     <?php $zHTML->TextArea ("DESCRIPTION", $zCIRCLES->Description); ?>
     <?php $zCIRCLES->Broadcast ("field", "Description"); ?>

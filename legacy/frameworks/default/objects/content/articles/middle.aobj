@@ -8,7 +8,7 @@
       <?php echo $zARTICLES->fStamp; ?>
     </time> 
     <p>
-      <?php echo $zAPPLE->Format ($zARTICLES->Summary, $zARTICLES->Formatting); ?>
+      <?php echo $zOLDAPPLE->Format ($zARTICLES->Summary, $zARTICLES->Formatting); ?>
     </p>
     <span><a href='articles/<?php echo $zARTICLES->tID; ?>/'>Read More</a></span>
     <span><a href='articles/<?php echo $zARTICLES->tID; ?>/#comments'><?php echo $bCOMMENTCOUNT; ?></a></span>

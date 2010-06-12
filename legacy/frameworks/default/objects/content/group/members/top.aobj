@@ -1,6 +1,6 @@
 <div id='group'>
 
- <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
  
   <div id='container'>
   <p id='heading'>

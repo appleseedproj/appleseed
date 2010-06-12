@@ -67,13 +67,13 @@
       
       // NOTE: Find a centralized way to do this.
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       foreach ($this->FieldNames as $fieldname) {
         switch ($this->FieldDefinitions[$fieldname]['datatype']) {
           case 'STRING':
             $this->ASDtoSafe ($fieldname);
-            $this->$fieldname = $zAPPLE->Purifier->purify ($this->$fieldname);
+            $this->$fieldname = $zOLDAPPLE->Purifier->purify ($this->$fieldname);
             $this->SafeToASD ($fieldname);
           break;
 
@@ -86,7 +86,7 @@
 
     // Buffer the articles listing.
     function BufferArticlesListing () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $gFRAMELOCATION;
       global $gCOMMENTCOUNT;
@@ -100,7 +100,7 @@
         $this->Message = __("No Results Found");
       } // if
       
-      $bARTICLES = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bARTICLES = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       // Loop through the results.
       while ($this->FetchArray ()) {
@@ -118,21 +118,21 @@
         $bCOMMENTCOUNT = $zSTRINGS->Output;
  
         global $bARTICLEICON;
-        $bARTICLEICON = $zAPPLE->BufferUserIcon ($this->Submitted_Username, $this->Submitted_Domain);
+        $bARTICLEICON = $zOLDAPPLE->BufferUserIcon ($this->Submitted_Username, $this->Submitted_Domain);
      
-        $bARTICLES .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bARTICLES .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
    
         unset ($gCOMMENTCOUNT);
    
       } // while
       
-      $bARTICLES .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bARTICLES .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
     } // BufferArticlesListing
     
     function Initialize () {
 
-      global $zLOCALUSER, $zAPPLE;
+      global $zLOCALUSER, $zOLDAPPLE;
 
       global $gSITEURL;
       global $gACTION, $gTARGET, $gARTICLEREQUEST;
@@ -144,7 +144,7 @@
       
       global $gSCROLLSTEP;
       
-      $gSCROLLSTEP[$zAPPLE->Context] = 10;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
 
       $gTARGET = $gSITEURL . "/articles/";
     
@@ -172,7 +172,7 @@
 
     function HandleQueue () {
 
-      global $zAPPLE, $zLOCALUSER, $zSTRINGS, $zHTML;
+      global $zOLDAPPLE, $zLOCALUSER, $zSTRINGS, $zHTML;
 
       global $gTARGET;
       $gTARGET = "/articles/queue/";
@@ -207,7 +207,7 @@
           $this->Formatting = SQL_SKIP;
     
           if ($this->tID == "") {
-            $zSTRINGS->Lookup ('ERROR.PAGE', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('ERROR.PAGE', $zOLDAPPLE->Context);
             $this->Message = $zSTRINGS->Output;
           } else {
             $this->Sanity();
@@ -225,7 +225,7 @@
           global $gPENDING;
           $gPENDING = $this->CountPendingArticles ();
           if ($gPENDING > 0) {
-            $zSTRINGS->Lookup ("MESSAGE.PENDING", $zAPPLE->Context);
+            $zSTRINGS->Lookup ("MESSAGE.PENDING", $zOLDAPPLE->Context);
             $this->Message = $zSTRINGS->Output;
           } // if
         break;
@@ -277,50 +277,50 @@
         // Choose an action
         switch ($gACTION) {
           case 'EDIT':
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/edit.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/edit.aobj", INCLUDE_SECURITY_NONE);
           break;
           case 'SAVE':
             // Skip to the default.
           default:
             if ($this->Error == 0) {
     
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.top.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.top.aobj", INCLUDE_SECURITY_NONE);
     
               // Calculate scroll values.
-              $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+              $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
     
               // Adjust for a recently deleted entry.
-              $zAPPLE->AdjustScroll ('content.articles', $this);
+              $zOLDAPPLE->AdjustScroll ('content.articles', $this);
     
               // Check if any results were found.
-              if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+              if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
                 $this->Message = __("No Results Found");
                 $this->Broadcast();
               } // if
 
               // Loop through the list.
-              for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+              for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
                if ($this->FetchArray()) {
-                $output = $zAPPLE->Format ($this->Full, FORMAT_VIEW);
+                $output = $zOLDAPPLE->Format ($this->Full, FORMAT_VIEW);
     
                 global $gEXTRAPOSTDATA;
                 $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
                 $gEXTRAPOSTDATA['tID']    = $this->tID;
 
                 if ($this->Submitted_Username == ANONYMOUS) {
-                  $zSTRINGS->Lookup ("LABEL.ANONYMOUS", $zAPPLE->Context);
+                  $zSTRINGS->Lookup ("LABEL.ANONYMOUS", $zOLDAPPLE->Context);
                   $this->Submitted_Username = $zSTRINGS->Output;
                 } // if
 
                 switch ($this->Verification) {
                   case ARTICLE_PENDING:
-                    $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.middle.unverified.aobj", INCLUDE_SECURITY_NONE);
+                    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.middle.unverified.aobj", INCLUDE_SECURITY_NONE);
                   break;
                   case ARTICLE_APPROVED:
-                    $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.middle.aobj", INCLUDE_SECURITY_NONE);
+                    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.middle.aobj", INCLUDE_SECURITY_NONE);
                   break;
                   case ARTICLE_REJECTED:
-                    $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.middle.rejected.aobj", INCLUDE_SECURITY_NONE);
+                    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.middle.rejected.aobj", INCLUDE_SECURITY_NONE);
                   break;
                 } // switch
 
@@ -331,21 +331,21 @@
                } // if
               } // for
 
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/list.bottom.aobj", INCLUDE_SECURITY_NONE);
 
             } elseif ($gACTION == 'SAVE') {
               if ($gtID) {
-                $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/edit.aobj", INCLUDE_SECURITY_NONE);
+                $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/edit.aobj", INCLUDE_SECURITY_NONE);
               } else {
-                $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/new.aobj", INCLUDE_SECURITY_NONE);
+                $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/queue/new.aobj", INCLUDE_SECURITY_NONE);
               } // if
             } // if
           break;
         } // switch
       } else {
         // Access Denied
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
 
       // Retrieve output buffer.
@@ -383,12 +383,12 @@
   class cCONTENTNODES extends cBASECONTENTNODES {
      
     function BufferLatestNodes () {
-      global $zAPPLE, $zAUTHUSER, $zSTRINGS;
+      global $zOLDAPPLE, $zAUTHUSER, $zSTRINGS;
       
       global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
       global $gNODESUMMARY;
       
-      $buffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $buffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $this->Select ('Verification', NODE_VERIFIED, 'Stamp LIMIT 10');
       
@@ -407,14 +407,14 @@
             $nodedomainlink = 'http://' . $this->Domain;
           } // if
           $gNODESUMMARY = $this->Summary;
-          $zAPPLE->SetTag ('NODEDOMAINLINK', $nodedomainlink);
-          $zAPPLE->SetTag ('NODEDOMAIN', $nodedomain);
-          $zAPPLE->SetTag ('NODEUSERS', $this->Users);
-          $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $zOLDAPPLE->SetTag ('NODEDOMAINLINK', $nodedomainlink);
+          $zOLDAPPLE->SetTag ('NODEDOMAIN', $nodedomain);
+          $zOLDAPPLE->SetTag ('NODEUSERS', $this->Users);
+          $buffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // while
       } // if
       
-      $buffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $buffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       return ($buffer);
     } // BufferLatestNodes

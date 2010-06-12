@@ -142,7 +142,7 @@
 
     // Notify the user that a friend request has been made.
     function NotifyApprove ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -174,7 +174,7 @@
 
     // Notify the user that a friend has been deleted.
     function NotifyRemove ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -206,7 +206,7 @@
 
     // Notify the user that a friend request has been denied.
     function NotifyDeny ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -238,7 +238,7 @@
 
     // Notify the user that a friend request has been made.
     function NotifyRequest ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -619,7 +619,7 @@
     } // LoadFriendsCircle
 
     function BufferCircleView () {
-      global $zAPPLE, $zSTRINGS, $zFOCUSUSER;
+      global $zOLDAPPLE, $zSTRINGS, $zFOCUSUSER;
       global $gSCROLLMAX, $gPOSTDATA;
       global $gCIRCLEVIEWTYPE, $gCIRCLEVIEW;
       global $gTHEMELOCATION;
@@ -628,7 +628,7 @@
       // NOTE: Create a function that handles complex joins and puts 
       // the information in the subclasses.
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.top.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.top.aobj", INCLUDE_SECURITY_NONE);
 
       global $gTABLEPREFIX;
       $friendCircles = $gTABLEPREFIX . "friendCircles";
@@ -649,10 +649,10 @@
       $this->Query ($query);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->CountResult();
   
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
         $this->Message = __("No Results Found");
         $this->Broadcast();
       } // if
@@ -670,13 +670,13 @@
       $gPOSTDATA[$gCIRCLEVIEWTYPE] = $gCIRCLEVIEW;
 
       // NOTE: Set to an ungodly number until we work out joins better.
-      $gSCROLLSTEP[$zAPPLE->Context] = 1000;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 1000;
 
       $OLDCIRCLE = -1; $CURRENTCIRCLE = -1;
       $BOTTOM = FALSE;
 
       // Loop through the list.
-      for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+      for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
         if ($this->FetchArray()) {
 
           $CURRENTCIRCLE = $this->FriendID;
@@ -685,19 +685,19 @@
           $this->friendCircles->Description = $this->FriendDesc;
   
           if ( ($CURRENTCIRCLE != $OLDCIRCLE) && ($OLDCIRCLE != -1) ) {
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.bottom.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.bottom.aobj", INCLUDE_SECURITY_NONE);
           } // if
   
           // Echo out the friend circle header object
           if ($CURRENTCIRCLE != $OLDCIRCLE) {
             $OLDCIRCLE = $CURRENTCIRCLE;
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.top.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.top.aobj", INCLUDE_SECURITY_NONE);
           } // if
   
           // Check if entry is hidden or blocked for this user.
           // $gPRIVACYSETTING = $this->friendCirclesPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "friendCircles_tID", $this->friendCircles->tID);
     
-          $USER = new cUSER ($zAPPLE->Context);
+          $USER = new cUSER ($zOLDAPPLE->Context);
     
           $USER->Select ("Username", $this->Username);
           $USER->FetchArray (); 
@@ -708,7 +708,7 @@
 
           // If user activity in the last 3 minutes, consider them online.
           if ($online) {
-            $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+            $bONLINENOW = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
           } // if
 
           $gFRIENDSICON = "http://" . $this->Domain . "/icon/" . $this->Username;
@@ -716,7 +716,7 @@
           unset ($USER);
     
           // Adjust for a hidden entry.
-          if ( $zAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;
+          if ( $zOLDAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zOLDAPPLE->Context) ) continue;
     
           global $gTARGET;
           $gTARGET = "http://" . $this->Domain . "/profile/" . $this->Username . "/";
@@ -731,14 +731,14 @@
           $gCHECKED = FALSE;
           // Select 
   
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.aobj", INCLUDE_SECURITY_NONE);
     
           unset ($gEXTRAPOSTDATA);
 
         } else {
           // Skip if no friends were found.
-          if ($gSCROLLMAX[$zAPPLE->Context] > 0) {
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.bottom.aobj", INCLUDE_SECURITY_NONE);
+          if ($gSCROLLMAX[$zOLDAPPLE->Context] > 0) {
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.middle.bottom.aobj", INCLUDE_SECURITY_NONE);
           } // if
           break;
         } // if
@@ -746,7 +746,7 @@
   
       $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/friends/";
   
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/friends/circles/list.bottom.aobj", INCLUDE_SECURITY_NONE);
 
       return (TRUE);
 
@@ -755,7 +755,7 @@
     function CountNewFriends () {
 
       global $zAUTHUSER;
-      global $zLOCALUSER, $zSTRINGS, $zHTML, $zAPPLE;
+      global $zLOCALUSER, $zSTRINGS, $zHTML, $zOLDAPPLE;
 
       $zLOCALUSER->userInformation->Select ("userAuth_uID", $zLOCALUSER->uID);
       $zLOCALUSER->userInformation->FetchArray ();
@@ -771,8 +771,8 @@
       if ($count) {
         global $gFRIENDCOUNT;
         $gFRIENDCOUNT = $count;
-        $zSTRINGS->Lookup ("LABEL.NEWFRIENDS", $zAPPLE->Context);
-        $return = $zHTML->CreateLink ("profile/$zAUTHUSER->Username/friends/requests/", $zAPPLE->ParseTags ($zSTRINGS->Output));
+        $zSTRINGS->Lookup ("LABEL.NEWFRIENDS", $zOLDAPPLE->Context);
+        $return = $zHTML->CreateLink ("profile/$zAUTHUSER->Username/friends/requests/", $zOLDAPPLE->ParseTags ($zSTRINGS->Output));
       } else {
         $return = OUTPUT_NBSP;
       } // if
@@ -782,7 +782,7 @@
     } // CountNewFriends
 
     function GetUserInformation () {
-      global $zLOCALUSER, $zREMOTE, $zAPPLE, $zXML;
+      global $zLOCALUSER, $zREMOTE, $zOLDAPPLE, $zXML;
       global $zSTRINGS;
 
       global $gSITEDOMAIN;
@@ -799,7 +799,7 @@
         } // if
         
         // Select which server to use.
-        $useServer = $zAPPLE->ChooseServerVersion ($this->Domain);
+        $useServer = $zOLDAPPLE->ChooseServerVersion ($this->Domain);
         if (!$useServer) {
           $this->Error = -1;
           $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
@@ -829,7 +829,7 @@
       } else {
 
         // Check online (local)
-        $USER = new cUSER ($zAPPLE->Context);
+        $USER = new cUSER ($zOLDAPPLE->Context);
    
         $USER->Select ("Username", $this->Username);
         $USER->FetchArray (); 
@@ -857,7 +857,7 @@
     // Process a friend request.
     function Request ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zAPPLE, $zSTRINGS, $zLOCALUSER;
+      global $zOLDAPPLE, $zSTRINGS, $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
@@ -1030,7 +1030,7 @@
 
     function LongDistanceApprove ($pREMOTEUSERNAME, $pREMOTEDOMAIN) {
 
-      global $zAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
+      global $zOLDAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1051,7 +1051,7 @@
           if ($success) {
             // Set success message.
             global $gNEWFRIEND;
-            list ($gNEWFRIEND) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
+            list ($gNEWFRIEND) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
 
             $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
             $this->Message = $zSTRINGS->Output;
@@ -1067,7 +1067,7 @@
 
           // Error message since we're awaiting approval on their part.
           global $gREQUESTNAME;
-          list ($gREQUESTNAME) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
+          list ($gREQUESTNAME) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
           $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
           $this->Error = -1;
           $this->Message = $zSTRINGS->Output;
@@ -1162,7 +1162,7 @@
 
     function LongDistanceRequest ($pREMOTEUSERNAME, $pREMOTEDOMAIN) {
 
-      global $zAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
+      global $zOLDAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1183,7 +1183,7 @@
           if ($success) {
             // Set success message.
             global $gREQUESTNAME;
-            list ($gREQUESTNAME) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
+            list ($gREQUESTNAME) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
 
             $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
             $this->Message = $zSTRINGS->Output;
@@ -1200,7 +1200,7 @@
           $FRIEND->Username = $pREMOTEUSERNAME;
           $FRIEND->Domain = $pREMOTEDOMAIN;
           global $gREQUESTNAME;
-          list ($gREQUESTNAME) = $zAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
+          list ($gREQUESTNAME) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
           $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
           $this->Error = -1;
           $this->Message = $zSTRINGS->Output;
@@ -1294,7 +1294,7 @@
     } // LongDistanceRequest
 
     function LongDistanceStatus ($pTOKEN, $pLOCALUSERNAME, $pLOCALDOMAIN, $pREMOTEUSERNAME, $pREMOTEDOMAIN) {
-      global $zREMOTE, $zAPPLE, $zXML;
+      global $zREMOTE, $zOLDAPPLE, $zXML;
 
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1318,7 +1318,7 @@
     } // LongDistanceStatus
 
     function Approve ($pUSERNAME, $pNOTIFY = TRUE) {
-      global $zAPPLE, $zSTRINGS, $zLOCALUSER;
+      global $zOLDAPPLE, $zSTRINGS, $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
@@ -1561,7 +1561,7 @@
 
       global $zAUTHUSER;
 
-      global $zSTRINGS, $zAPPLE;
+      global $zSTRINGS, $zOLDAPPLE;
 
       // Check if any items were selected.
       if (!$pMASSLIST) {

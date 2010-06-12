@@ -75,7 +75,7 @@
     $zFOCUSUSER->userGroups->Message = __("No Results Found");
     $bGROUPS = $zFOCUSUSER->userGroups->CreateBroadcast ();
   } else {
-    $bGROUPS .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+    $bGROUPS .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     while ($zFOCUSUSER->userGroups->FetchArray ()) {
 
       $zGROUPS->Members = NULL;
@@ -95,7 +95,7 @@
       // Check if the user is the owner of this group.
       if ( ($zFOCUSUSER->userGroups->Domain == $gSITEDOMAIN) and 
            ($zGROUPS->userAuth_uID == $zFOCUSUSER->uID) ) {
-         $bOWNERICON = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/owner_group.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+         $bOWNERICON = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/owner_group.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
          $bOWNERICON .= $zTOOLTIPS->CreateDisplay ("OWNER");
       } // if
 
@@ -115,12 +115,12 @@
 
       $zGROUPS->FormatDate ("Stamp");
       if ($zFOCUSUSER->userGroups->Domain != $gSITEDOMAIN) {
-        $bGROUPS .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/middle.remote.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bGROUPS .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/middle.remote.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } else {
-        $bGROUPS .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bGROUPS .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
     } // while
-    $bGROUPS .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+    $bGROUPS .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/groups/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   } // if
 
   global $gREFERENCEID;
@@ -129,6 +129,6 @@
   $gSORT = "Posted DESC";
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/groups.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/groups.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

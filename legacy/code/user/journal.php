@@ -42,7 +42,7 @@
   global $zJOURNAL;
 
   // Create the data class.
-  $zJOURNAL = new cJOURNALPOST ($zAPPLE->Context);
+  $zJOURNAL = new cJOURNALPOST ($zOLDAPPLE->Context);
 
   global $gJOURNALVIEW, $gJOURNALVIEWADMIN;
 
@@ -53,7 +53,7 @@
   if ($gJOURNALVIEWADMIN) $gJOURNALVIEW = $gJOURNALVIEWADMIN;
 
   // Set the post data to move back and forth.
-  $gPOSTDATA = Array ("SCROLLSTART[$zAPPLE->Context]"       => $gSCROLLSTART[$zAPPLE->Context],
+  $gPOSTDATA = Array ("SCROLLSTART[$zOLDAPPLE->Context]"       => $gSCROLLSTART[$zOLDAPPLE->Context],
                       "SORT"              => $gSORT,
                       "JOURNALVIEW"       => $gJOURNALVIEW,
                       "COMMENTVIEW"       => $gCOMMENTVIEW);
@@ -66,7 +66,7 @@
   
   $gSORT = "Posted DESC";
 
-  $gSCROLLSTEP[$zAPPLE->Context] = 10;
+  $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
 
   global $zLOCALUSER;
 
@@ -205,19 +205,19 @@
       // Check if entry is hidden or blocked for this user.
       $gPRIVACYSETTING = $zJOURNAL->journalPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "journalPost_tID", $zJOURNAL->tID);
 
-      if ($zAPPLE->CheckSecurity ($gPRIVACYSETTING) == TRUE) {
-         $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-         $zAPPLE->End();
+      if ($zOLDAPPLE->CheckSecurity ($gPRIVACYSETTING) == TRUE) {
+         $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+         $zOLDAPPLE->End();
       } // if
 
       global $bUSERICON;
       global $gTAGS;
 
-      $bUSERICON = $zAPPLE->BufferUserIcon ($zFOCUSUSER->Username, $gSITEDOMAIN, $zJOURNAL->userIcons_Filename);
+      $bUSERICON = $zOLDAPPLE->BufferUserIcon ($zFOCUSUSER->Username, $gSITEDOMAIN, $zJOURNAL->userIcons_Filename);
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/view/top.aobj", INCLUDE_SECURITY_NONE);
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/view/middle.aobj", INCLUDE_SECURITY_NONE);
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/view/bottom.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/view/top.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/view/middle.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/view/bottom.aobj", INCLUDE_SECURITY_NONE);
 
       // Need to scroll through individual entries.
       $zJOURNAL->JournalScroll ($gTARGET, $zJOURNAL->fPosted, $olderid, $newerid);
@@ -231,7 +231,7 @@
       global $gPOSTEDLIST;
       $gPOSTEDLIST = $zHTML->SplitDate ($zJOURNAL->Posted);
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
     break;
 
     case 'NEW':
@@ -242,7 +242,7 @@
       $currently = date ("Y-m-d h:i:s", $currentstamp);
       $gPOSTEDLIST = $zHTML->SplitDate ($currently);
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
     break;
 
     case 'SAVE':
@@ -258,16 +258,16 @@
           if ( ($zJOURNAL->Error == 0) or 
              ($gACTION == 'DELETE.ALL') ) {
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/editor/list.top.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/editor/list.top.aobj", INCLUDE_SECURITY_NONE);
 
             // Calculate scroll values.
-            $gSCROLLMAX[$zAPPLE->Context] = $zJOURNAL->CountResult();
+            $gSCROLLMAX[$zOLDAPPLE->Context] = $zJOURNAL->CountResult();
 
             // Adjust for a recently deleted entry.
-            $zAPPLE->AdjustScroll ('users.journal', $zJOURNAL);
+            $zOLDAPPLE->AdjustScroll ('users.journal', $zJOURNAL);
 
             // Check if any results were found.
-            if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+            if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
               $zJOURNAL->Message = __("No Results Found");
               $zJOURNAL->Broadcast();
             } // if
@@ -281,7 +281,7 @@
             global $gLISTCOUNT;
 
             // Loop through the list.
-            for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+            for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
              if ($zJOURNAL->FetchArray()) {
 
               $gCHECKED = FALSE;
@@ -294,7 +294,7 @@
               $COMMENTS = new cCOMMENTINFORMATION ();
     
               $commentcriteria = array ("rID"          => $zJOURNAL->tID,
-                                        "Context"      => $zAPPLE->Context);
+                                        "Context"      => $zOLDAPPLE->Context);
               $COMMENTS->SelectByMultiple ($commentcriteria);
               $gCOMMENTCOUNT = $COMMENTS->CountResult ();
 
@@ -307,7 +307,7 @@
               global $gEXTRAPOSTDATA;
               $gEXTRAPOSTDATA['ACTION'] = "EDIT";
               $gEXTRAPOSTDATA['tID'] = $zJOURNAL->tID;
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/editor/list.middle.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/editor/list.middle.aobj", INCLUDE_SECURITY_NONE);
               unset ($gEXTRAPOSTDATA);
 
              } else {
@@ -315,14 +315,14 @@
              } // if
             } // for
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/editor/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/editor/list.bottom.aobj", INCLUDE_SECURITY_NONE);
 
           } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
             $zFOCUSUSER->userIcons->BuildIconMenu ($zFOCUSUSER->uID);
             if ($gtID) {
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
             } else {
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
             } // if
           } // if
         break;
@@ -334,16 +334,16 @@
           if ( ($zJOURNAL->Error == 0) or 
              ($gACTION == 'DELETE.ALL') ) {
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.top.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.top.aobj", INCLUDE_SECURITY_NONE);
 
             // Calculate scroll values.
-            $gSCROLLMAX[$zAPPLE->Context] = $zJOURNAL->CountResult();
+            $gSCROLLMAX[$zOLDAPPLE->Context] = $zJOURNAL->CountResult();
 
             // Adjust for a recently deleted entry.
-            $zAPPLE->AdjustScroll ('users.journal', $zJOURNAL);
+            $zOLDAPPLE->AdjustScroll ('users.journal', $zJOURNAL);
 
             // Check if any results were found.
-            if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+            if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
               $zJOURNAL->Message = __("No Results Found");
               $zJOURNAL->Broadcast();
             } // if
@@ -353,14 +353,14 @@
             global $gLISTCOUNT;
 
             // Loop through the list.
-            for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+            for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
              if ($zJOURNAL->FetchArray()) {
 
               // Check if entry is hidden or blocked for this user.
               $gPRIVACYSETTING = $zJOURNAL->journalPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "journalPost_tID", $zJOURNAL->tID);
 
               // Adjust for a hidden entry.
-              if ( $zAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;
+              if ( $zOLDAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zOLDAPPLE->Context) ) continue;
 
               $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/journal/" . $zJOURNAL->tID . "/";
 
@@ -369,15 +369,15 @@
               // Show the appropriate icon if entry is not public.
               switch ($gPRIVACYSETTING) {
                 case PRIVACY_SCREEN:
-                  $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/screen.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+                  $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/screen.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
                 break;
 
                 case PRIVACY_RESTRICT:
-                  $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/restrict.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+                  $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/restrict.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
                 break;
 
                 case PRIVACY_BLOCK:
-                  $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/block.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+                  $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/block.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
                 break;
 
                 case PRIVACY_ALLOW:
@@ -393,7 +393,7 @@
 
               $COMMENTS = new cCOMMENTINFORMATION ();
     
-              $gCOMMENTCOUNT = $COMMENTS->CountComments ($zJOURNAL->tID, $zAPPLE->Context);
+              $gCOMMENTCOUNT = $COMMENTS->CountComments ($zJOURNAL->tID, $zOLDAPPLE->Context);
 
               $zSTRINGS->Lookup ("LABEL.COUNT", "USER.JOURNALS");
               $gCOUNT = OUTPUT_NBSP;
@@ -411,9 +411,9 @@
               if ( ($gPRIVACYSETTING == PRIVACY_BLOCK) and
                    ($zLOCALUSER->userAccess->r == FALSE) and
                    ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
-                $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.middle.block.aobj", INCLUDE_SECURITY_NONE);
+                $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.middle.block.aobj", INCLUDE_SECURITY_NONE);
               } else {
-                $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.middle.aobj", INCLUDE_SECURITY_NONE);
+                $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.middle.aobj", INCLUDE_SECURITY_NONE);
               } // if
 
               unset ($gEXTRAPOSTDATA);
@@ -425,14 +425,14 @@
 
             $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/journal/";
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/listing/list.bottom.aobj", INCLUDE_SECURITY_NONE);
             // $zHTML->Scroll ($gTARGET, 'journal', 'users.journal', SCROLL_PAGEOF);
 
           } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
             if ($gtID) {
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
             } else {
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
             } // if
           } // if
         break;
@@ -444,16 +444,16 @@
           if ( ($zJOURNAL->Error == 0) or 
              ($gACTION == 'DELETE.ALL') ) {
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/multiple/top.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/multiple/top.aobj", INCLUDE_SECURITY_NONE);
 
             // Calculate scroll values.
-            $gSCROLLMAX[$zAPPLE->Context] = $zJOURNAL->CountResult();
+            $gSCROLLMAX[$zOLDAPPLE->Context] = $zJOURNAL->CountResult();
 
             // Adjust for a recently deleted entry.
-            $zAPPLE->AdjustScroll ('users.journal', $zJOURNAL);
+            $zOLDAPPLE->AdjustScroll ('users.journal', $zJOURNAL);
 
             // Check if any results were found.
-            if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+            if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
               $zJOURNAL->Message = __("No Results Found");
               $zJOURNAL->Broadcast();
             } // if
@@ -467,35 +467,35 @@
             global $gPROTECTED;
 
             // Loop through the list.
-            for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+            for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
              if ($zJOURNAL->FetchArray()) {
 
               // Check if entry is hidden or blocked for this user.
               $gPRIVACYSETTING = $zJOURNAL->journalPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "journalPost_tID", $zJOURNAL->tID);
 
               // Adjust for a hidden entry.
-              if ( $zAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;
+              if ( $zOLDAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zOLDAPPLE->Context) ) continue;
 
               // Adjust for a blocked entry.
-              if ( $zAPPLE->AdjustBlockedScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;
+              if ( $zOLDAPPLE->AdjustBlockedScroll ($gPRIVACYSETTING, $zOLDAPPLE->Context) ) continue;
 
               $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/journal/";
               $gTARGETID = $zJOURNAL->tID;
 
-              $bUSERICON = $zAPPLE->BufferUserIcon ($zFOCUSUSER->Username, $gSITEDOMAIN, $zJOURNAL->userIcons_Filename);
+              $bUSERICON = $zOLDAPPLE->BufferUserIcon ($zFOCUSUSER->Username, $gSITEDOMAIN, $zJOURNAL->userIcons_Filename);
 
               // Show the appropriate icon if entry is not public.
               switch ($gPRIVACYSETTING) {
                 case PRIVACY_SCREEN:
-                  $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/screen.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+                  $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/screen.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
                 break;
 
                 case PRIVACY_RESTRICT:
-                  $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/restrict.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+                  $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/restrict.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
                 break;
 
                 case PRIVACY_BLOCK:
-                  $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/block.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+                  $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/block.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
                 break;
 
                 case PRIVACY_ALLOW:
@@ -513,7 +513,7 @@
 
               $commentcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID,
                                         "rID"          => $zJOURNAL->tID,
-                                        "Context"      => $zAPPLE->Context);
+                                        "Context"      => $zOLDAPPLE->Context);
               $COMMENTS->SelectByMultiple ($commentcriteria);
               $gCOMMENTCOUNT = $COMMENTS->CountResult ();
 
@@ -527,7 +527,7 @@
               $gEXTRAPOSTDATA['ACTION'] = "VIEW";
               $gEXTRAPOSTDATA['tID'] = $zJOURNAL->tID;
 
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/multiple/middle.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/multiple/middle.aobj", INCLUDE_SECURITY_NONE);
 
               unset ($gEXTRAPOSTDATA);
 
@@ -538,15 +538,15 @@
 
             $gTARGET = "/profile/" . $zFOCUSUSER->Username . "/journal/";
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/multiple/bottom.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/multiple/bottom.aobj", INCLUDE_SECURITY_NONE);
             // Note: use for limiting number of multiple entries.
             // $zHTML->Scroll ($gTARGET, 'journal', 'users.journal', SCROLL_PAGEOF);
 
           } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
             if ($gtID) {
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/edit.aobj", INCLUDE_SECURITY_NONE);
             } else {
-              $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
+              $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/new.aobj", INCLUDE_SECURITY_NONE);
             } // if
           } // if
         break;
@@ -567,9 +567,9 @@
             // Check if entry is hidden or blocked for this user.
             $gPRIVACYSETTING = $zJOURNAL->journalPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "journalPost_tID", $zJOURNAL->tID);
 
-            if ($zAPPLE->CheckSecurity ($gPRIVACYSETTING) == TRUE) {
-               $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-               $zAPPLE->End();
+            if ($zOLDAPPLE->CheckSecurity ($gPRIVACYSETTING) == TRUE) {
+               $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+               $zOLDAPPLE->End();
             } // if
 
           } else {
@@ -584,7 +584,7 @@
             $gPRIVACYSETTING = $zJOURNAL->journalPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "journalPost_tID", $zJOURNAL->tID);
 
             // Loop through until we find an open entry.
-            while ($zAPPLE->CheckSecurity ($gPRIVACYSETTING) == TRUE) {
+            while ($zOLDAPPLE->CheckSecurity ($gPRIVACYSETTING) == TRUE) {
 
               // Subtract the journal entry that is hidden.
               $countjournals--;
@@ -603,7 +603,7 @@
 
           } // if
 
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/single/top.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/single/top.aobj", INCLUDE_SECURITY_NONE);
 
           // Display a message if no journals have been posted.
           if ($countjournals == 0) {
@@ -615,14 +615,14 @@
             global $bUSERICON;
             global $gTAGS;
 
-            $bUSERICON = $zAPPLE->BufferUserIcon ($zFOCUSUSER->Username, $gSITEDOMAIN, $zJOURNAL->userIcons_Filename);
+            $bUSERICON = $zOLDAPPLE->BufferUserIcon ($zFOCUSUSER->Username, $gSITEDOMAIN, $zJOURNAL->userIcons_Filename);
 
             $gTAGS = $zJOURNAL->Tags;
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/single/middle.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/single/middle.aobj", INCLUDE_SECURITY_NONE);
           } // if
 
           $gPOSTDATA['JOURNALVIEW'] = $gJOURNALVIEW;
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/single/bottom.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/journal/single/bottom.aobj", INCLUDE_SECURITY_NONE);
           $zJOURNAL->JournalScroll ($gTARGET, $zJOURNAL->fPosted, $olderid, $newerid);
         break;
       } // switch
@@ -637,6 +637,6 @@
        ($gACTION == "VIEW") ) $zCOMMENTS->Handle ();
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/journal.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/journal.afrw", INCLUDE_SECURITY_NONE);
   
 ?>

@@ -2,6 +2,6 @@
 
  <a name='comments'></a>
 
- <?php $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
  
  <?php $zLOCALUSER->Broadcast (); ?>

@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Login code.                                         |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -55,13 +57,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.join", TRUE);
+  $zOLDAPPLE->Initialize("site.join", TRUE);
 
   // Initialize tabs
   global $gLOCALLOGINTAB, $gREMOTELOGINTAB;
@@ -80,10 +82,10 @@
     $bREFRESHLINE = $zHTML->Refresh ($gSITEURL);
 
     // Include the outline frame.
-    $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/loggedin.afrw", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/loggedin.afrw", INCLUDE_SECURITY_NONE);
 
     // Exit fully from applicaton.
-    $zAPPLE->End();
+    $zOLDAPPLE->End();
   } // if
 
   $gJOINLOCATION = "$gFRAMELOCATION/objects/site/join.aobj";
@@ -209,9 +211,9 @@
   } // if
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/join.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/join.afrw", INCLUDE_SECURITY_NONE);
 
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

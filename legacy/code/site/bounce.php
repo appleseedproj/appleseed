@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Login code.                                         |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -55,18 +57,18 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
 
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
   
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.login", TRUE);
+  $zOLDAPPLE->Initialize("site.login", TRUE);
 
   $target = $_REQUEST['target']; $location = $_REQUEST['location'];
   if (!$target) { 
-    $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
     exit;
   } // if
 

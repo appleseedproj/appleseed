@@ -17,7 +17,7 @@
       </h1>
       </hgroup>
 
-       <?php echo $zAPPLE->Format ($zCONTENTPAGE->Output, $zCONTENTPAGE->Formatting); ?>
+       <?php echo $zOLDAPPLE->Format ($zCONTENTPAGE->Output, $zCONTENTPAGE->Formatting); ?>
     </section> <!-- #<?php echo $zCONTENTPAGE->Location; ?> -->
 
    </div>

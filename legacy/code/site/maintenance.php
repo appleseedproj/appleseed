@@ -41,6 +41,8 @@
     exit;
   } // if
   
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -66,13 +68,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
   
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
 
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site", TRUE);
+  $zOLDAPPLE->Initialize("site", TRUE);
   
   switch ($gACTION) {
     case 'UPDATE_NODE_NETWORK':

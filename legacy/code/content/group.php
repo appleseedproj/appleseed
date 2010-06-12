@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Discussion Groupss.                                 |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -57,13 +59,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
   
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
 
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("content.group", TRUE);
+  $zOLDAPPLE->Initialize("content.group", TRUE);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE, '/content/group/');
@@ -85,8 +87,8 @@
 
   if ($zGROUPS->CountResult () == 0) {
     // No group with that name was found.  Error and exit.
-    $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
   } // if
 
   global $gOPTION;
@@ -140,8 +142,8 @@
   switch ($gACTION) {
     case 'SAVE':
       if (!$zGROUPS->CheckEditorAccess()) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
       switch ($gSECTION) {
         case 'GENERAL':
@@ -175,8 +177,8 @@
     break;
     case 'SAVE_ALL':
       if (!$zGROUPS->CheckEditorAccess()) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
       $zGROUPS->SaveGeneral ();
       $zGROUPS->SaveMemberEditor ();
@@ -192,8 +194,8 @@
     break;
     case 'DELETE_GROUP':
       if (!$zGROUPS->CheckEditorAccess()) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
       // First remove all user memberships.
       $zGROUPS->groupMembers->Select ("groupInformation_tID", $zGROUPS->tID);
@@ -241,19 +243,19 @@
     case 'info':
       $gTARGET = 'http://' . $zAUTHUSER->Domain . '/profile/' . $zAUTHUSER->Username . '/groups/';
       $gCONTENTGROUPSINFOTAB = "";
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/info.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/info.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
     case 'members':
       $gCONTENTGROUPSMEMBERSTAB = "";
       // Buffer the member listing.
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/members/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/members/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       $bMAINSECTION .= $zGROUPS->BufferMemberList ();
-      $bMAINSECTION .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/members/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/members/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
     case 'options':
       if (!$zGROUPS->CheckEditorAccess()) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
       global $bMEMBEREDITOR;
       $bMEMBEREDITOR = $zGROUPS->BufferMemberEditor ();
@@ -261,15 +263,15 @@
       $bINVITEEDITOR = $zGROUPS->BufferInviteEditor ();
       $gTARGET = 'http://' . $gSITEDOMAIN . '/group/' . $gGROUPREQUEST . '/options/';
       $gCONTENTGROUPSOPTIONSTAB = "";
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
     case 'deleted';
       if (!$zGROUPS->CheckEditorAccess()) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
       $zGROUPS->Message = __("Record Deleted", array ('id' => $ADMINDATA->tID));
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/deleted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/deleted.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
     default:
       $gCONTENTGROUPSTAB = "";
@@ -279,9 +281,9 @@
   } // switch
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/content/group.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/content/group.afrw", INCLUDE_SECURITY_NONE);
 
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

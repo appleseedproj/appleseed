@@ -37,17 +37,17 @@
   if ($gPROFILESUBACTION) {
     // Check if we're viewing based on a tag.
     if ($zTAGS->DetectTags()) {
-      $zAPPLE->IncludeFile ("legacy/code/user/tags/photos.php", INCLUDE_SECURITY_NONE);
-      $zAPPLE->End();
+      $zOLDAPPLE->IncludeFile ("legacy/code/user/tags/photos.php", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->End();
     } // if
     
     // Check if we're requesting a specific photo or a full photoset.
     if (strstr ($gPROFILESUBACTION, '/') ) {
-      $zAPPLE->IncludeFile ("legacy/code/user/photo.php", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("legacy/code/user/photo.php", INCLUDE_SECURITY_NONE);
     } else {
-      $zAPPLE->IncludeFile ("legacy/code/user/photos.php", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("legacy/code/user/photos.php", INCLUDE_SECURITY_NONE);
     } // if
-    $zAPPLE->End();
+    $zOLDAPPLE->End();
   } // if
   
   // Include necessary files
@@ -59,10 +59,10 @@
 
   global $gTAGSLABEL;
 
-  $gVIEWDATA = new cPHOTOSETS ($zAPPLE->Context);
+  $gVIEWDATA = new cPHOTOSETS ($zOLDAPPLE->Context);
 
   // Set the proper context.
-  $zAPPLE->Context = "user.photosets";
+  $zOLDAPPLE->Context = "user.photosets";
            
   // Check if user is admin or is viewing their own page.
   if ($gFOCUSUSERID != $zAUTHUSER->uID) {
@@ -81,12 +81,12 @@
   } // if
 
   // Set how much to step when scrolling.
-  $gSCROLLSTEP[$zAPPLE->Context] = 5;
+  $gSCROLLSTEP[$zOLDAPPLE->Context] = 5;
 
   $gSORT = "sID";
 
   // Set the post data to move back and forth.
-  $gPOSTDATA = Array ("SCROLLSTART"     => $gSCROLLSTART[$zAPPLE->Context],
+  $gPOSTDATA = Array ("SCROLLSTART"     => $gSCROLLSTART[$zOLDAPPLE->Context],
                       "SORT"            => $gSORT);
 
   // Set which tab to highlight.
@@ -181,8 +181,8 @@
         $gVIEWDATA->Delete();
 
         // Set error message if unable to delete photo set directory.
-        if (!$zAPPLE->RemoveDirectory ($photosetdir) ) {
-          $zSTRINGS->Lookup ('ERROR.DIR', $zAPPLE->Context);
+        if (!$zOLDAPPLE->RemoveDirectory ($photosetdir) ) {
+          $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
           $gVIEWDATA->Message = $zSTRINGS->Output;
           $gVIEWDATA->Error = -1;;
         } // if
@@ -253,8 +253,8 @@
         if (!$gVIEWDATA->Error) {
 
           // Attempt to create the photoset directory. 
-          if (!$zAPPLE->CreateDirectory ($photosetdir) ) {
-            $zSTRINGS->Lookup ('ERROR.DIR', $zAPPLE->Context);
+          if (!$zOLDAPPLE->CreateDirectory ($photosetdir) ) {
+            $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
             $gVIEWDATA->Message = $zSTRINGS->Output;
             $gVIEWDATA->Error = -1;;
             $gACTION = "NEW";
@@ -306,7 +306,7 @@
 
           // Rename the old directory.
           if (!rename ($olddir, $photosetdir) ) {
-            $zSTRINGS->Lookup ('ERROR.DIR', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
             $gVIEWDATA->Message = $zSTRINGS->Output;
             $gVIEWDATA->Error = -1;;
             $gACTION = "EDIT";
@@ -346,8 +346,8 @@
 
       $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
-      if (!$zAPPLE->RemoveDirectory ($photosetdir) ) {
-        $zSTRINGS->Lookup ('ERROR.DIR', $zAPPLE->Context);
+      if (!$zOLDAPPLE->RemoveDirectory ($photosetdir) ) {
+        $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
         $gVIEWDATA->Message = $zSTRINGS->Output;
         $gVIEWDATA->Error = -1;;
         $gVIEWDATA->Rollback ();
@@ -391,7 +391,7 @@
   } // switch
 
   // Change the select button if anything is eelected.
-  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
+  if ($zOLDAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
   // PART III: Pre-parse the html for the main window. 
   
@@ -401,10 +401,10 @@
   // Choose an action
   switch ($gACTION) {
     case 'EDIT':
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/edit.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/edit.aobj", INCLUDE_SECURITY_NONE);
     break;
     case 'NEW':
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/new.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/new.aobj", INCLUDE_SECURITY_NONE);
     break;
     case 'DELETE':
     case 'SAVE':
@@ -416,24 +416,24 @@
            ($gACTION == 'MOVE_UP') or
            ($gACTION == 'DELETE_ALL') ) {
 
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation . "list.top.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation . "list.top.aobj", INCLUDE_SECURITY_NONE);
 
         // Calculate scroll values.
-        $gSCROLLMAX[$zAPPLE->Context] = $gVIEWDATA->CountResult();
+        $gSCROLLMAX[$zOLDAPPLE->Context] = $gVIEWDATA->CountResult();
 
         // If we're uploading, jump to the last page.
         if ($gADDEDNEW) {
 
           // Calculate the scroll values.
-          $zHTML->CalcScroll ($zAPPLE->Context);
+          $zHTML->CalcScroll ($zOLDAPPLE->Context);
            
           // Jump to the last page.
-          if ($gMAXPAGES > $gCURRENTPAGE) $gSCROLLSTART[$zAPPLE->Context] = $gMAXPAGES * $gSCROLLSTEP[$zAPPLE->Context];
+          if ($gMAXPAGES > $gCURRENTPAGE) $gSCROLLSTART[$zOLDAPPLE->Context] = $gMAXPAGES * $gSCROLLSTEP[$zOLDAPPLE->Context];
 
         } // if
 
         // Adjust for a recently deleted entry.
-        $zAPPLE->AdjustScroll ($zAPPLE->Context, $gVIEWDATA);
+        $zOLDAPPLE->AdjustScroll ($zOLDAPPLE->Context, $gVIEWDATA);
 
         global $gTARGET, $gVIEWTARGET;
         global $gEXTRADATA, $gCHECKED;
@@ -441,14 +441,14 @@
         global $gLISTCOUNT;
 
         // Loop through the list.
-        for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+        for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
          if ($gVIEWDATA->FetchArray()) {
 
           // Retrieve the privacy settings for this photoset.
           $gPRIVACYSETTING = $gVIEWDATA->photoPrivacy->Determine ("zFOCUSUSER", "zAUTHUSER", "photoSets_tID", $gVIEWDATA->tID);
 
           // Adjust for a hidden entry.
-          if ( $zAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zAPPLE->Context) ) continue;
+          if ( $zOLDAPPLE->AdjustHiddenScroll ($gPRIVACYSETTING, $zOLDAPPLE->Context) ) continue;
 
           $gCHECKED = FALSE;
 
@@ -484,15 +484,15 @@
           // Show the appropriate icon if photoset is not public.
           switch ($gPRIVACYSETTING) {
             case PRIVACY_SCREEN:
-              $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/screen.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+              $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/screen.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
             break;
 
             case PRIVACY_RESTRICT:
-              $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/restrict.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+              $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/restrict.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
             break;
 
             case PRIVACY_BLOCK:
-              $gPROTECTED = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/block.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+              $gPROTECTED = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/block.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
             break;
 
             case PRIVACY_ALLOW:
@@ -509,14 +509,14 @@
                ($zLOCALUSER->userAccess->r == FALSE) and
                ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
 
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation . "list.middle.block.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation . "list.middle.block.aobj", INCLUDE_SECURITY_NONE);
           } else {
-            $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation . "list.middle.aobj", INCLUDE_SECURITY_NONE);
+            $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation . "list.middle.aobj", INCLUDE_SECURITY_NONE);
           } // if
 
           unset ($gEXTRAPOSTDATA['ACTION']); 
 
-          $gPOSTDATA['SCROLLSTART'][$zAPPLE->Context] = $gSCROLLSTART[$zAPPLE->Context];
+          $gPOSTDATA['SCROLLSTART'][$zOLDAPPLE->Context] = $gSCROLLSTART[$zOLDAPPLE->Context];
 
           unset ($gPROTECTED);
           
@@ -526,22 +526,22 @@
         } // for
 
         // Check if any results were found.
-        if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+        if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
           $gVIEWDATA->Message = __("None Selected");
           $gVIEWDATA->Broadcast();
         } // if
 
         unset ($gEXTRADATA);
 
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation. "list.bottom.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/" . $listlocation. "list.bottom.aobj", INCLUDE_SECURITY_NONE);
 
-        // $zHTML->Scroll ($gTARGET, 'member', $zAPPLE->Context, SCROLL_NOFIRST);
+        // $zHTML->Scroll ($gTARGET, 'member', $zOLDAPPLE->Context, SCROLL_NOFIRST);
 
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
         if ($gtID) {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/edit.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/edit.aobj", INCLUDE_SECURITY_NONE);
         } else {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/new.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photosets/new.aobj", INCLUDE_SECURITY_NONE);
         } // if
       } // if
     break;
@@ -555,6 +555,6 @@
   ob_end_clean (); 
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photosets.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photosets.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

@@ -38,15 +38,15 @@
   if ($zFOCUSUSER->uID != $zLOCALUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
-      $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-      $zAPPLE->End();
+      $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->End();
     } // if
   } // if
 
   if ( ($gACTION == 'EDIT_LABELS') or ($gACTION == 'NEW_LABEL') or
        ($gACTION == 'DELETE_LABEL') or ($gACTION == 'SAVE_LABEL') ) {
-    $zAPPLE->IncludeFile ("legacy/code/user/labels.php", INCLUDE_SECURITY_NONE);
-    $zAPPLE->End();
+    $zOLDAPPLE->IncludeFile ("legacy/code/user/labels.php", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End();
   } // if
 
   $zFOCUSUSER->userInformation->UpdateMessageStamp ();
@@ -75,10 +75,10 @@
   $this->SetTag ('USERMESSAGESTAB', $gUSERMESSAGESTAB);
 
   // NOTE: Temporary
-  $zAPPLE->Context = 'user.messages';
+  $zOLDAPPLE->Context = 'user.messages';
 
   // Set the step amount for scrolling;
-  $gSCROLLSTEP[$zAPPLE->Context] = 10;
+  $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
 
   // Create the data class.
   $zMESSAGE = new cMESSAGE ();
@@ -316,7 +316,7 @@
         break;
       } // switch
 
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/$messageview/view.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/$messageview/view.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
 
     case 'SEND_MESSAGE':
@@ -328,12 +328,12 @@
       global $bRECIPIENT;
 
       if ($gRECIPIENTNAME) {
-        $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.known.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRECIPIENT = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.known.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } else {
-        $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bRECIPIENT = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
 
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/compose.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/compose.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
  
       unset ($bRECIPIENT);
 
@@ -353,11 +353,11 @@
       $gRECIPIENTNAME = $zMESSAGE->Sender_Username;
       $gRECIPIENTDOMAIN = $zMESSAGE->Sender_Domain;
 
-      list ($senderfullname, $null) = $zAPPLE->GetUserInformation ($zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain);
+      list ($senderfullname, $null) = $zOLDAPPLE->GetUserInformation ($zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain);
 
       global $gBODY;
       $zMESSAGE->FormatVerboseDate ("Stamp");
-      $gBODY = $zAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain, $zMESSAGE->fStamp);
+      $gBODY = $zOLDAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain, $zMESSAGE->fStamp);
 
       global $gSUBJECT;
       $gSUBJECT = $zMESSAGE->Subject;
@@ -366,9 +366,9 @@
       if (substr ($gSUBJECT, 0, 4) != $regarding)
         $gSUBJECT = $regarding . $gSUBJECT;
 
-      $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.known.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRECIPIENT = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.known.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/reply.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/reply.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
  
       unset ($bRECIPIENT);
 
@@ -393,11 +393,11 @@
       
       unset ($addresses);
       
-      list ($senderfullname, $null) = $zAPPLE->GetUserInformation ($username, $domain);
+      list ($senderfullname, $null) = $zOLDAPPLE->GetUserInformation ($username, $domain);
 
       global $gBODY;
       $zMESSAGE->FormatVerboseDate ("Stamp");
-      $gBODY = $zAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $username, $domain, $zMESSAGE->fStamp);
+      $gBODY = $zOLDAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $username, $domain, $zMESSAGE->fStamp);
 
       global $gSUBJECT;
       $gSUBJECT = $zMESSAGE->Subject;
@@ -406,9 +406,9 @@
       if (substr ($gSUBJECT, 0, 4) != $regarding)
         $gSUBJECT = $regarding . $gSUBJECT;
 
-      $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRECIPIENT = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/forward.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/forward.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
  
       unset ($bRECIPIENT);
     break;
@@ -419,9 +419,9 @@
 
       global $bRECIPIENT;
 
-      $bRECIPIENT = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bRECIPIENT = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/recipient.unknown.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      $bMAINSECTION = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/compose.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bMAINSECTION = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/compose.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
  
       unset ($bRECIPIENT);
     break;
@@ -463,8 +463,8 @@
 
       $bMAINSECTION = $zMESSAGE->LoadMessages ();
       if ($bMAINSECTION == FALSE) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
 
       if ( ($zMESSAGE->Error == 0) or 
@@ -477,9 +477,9 @@
 
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
         if ($gtID) {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/edit.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/edit.aobj", INCLUDE_SECURITY_NONE);
         } else {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/new.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/new.aobj", INCLUDE_SECURITY_NONE);
         } // if
       } // if
     break;
@@ -487,9 +487,9 @@
 
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/messages.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/messages.afrw", INCLUDE_SECURITY_NONE);
   
   // End Application
-  $zAPPLE->End();
+  $zOLDAPPLE->End();
 
 ?>

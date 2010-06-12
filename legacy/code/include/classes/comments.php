@@ -193,12 +193,12 @@
       global $gCOMMENTVIEW;
       global $gSITEDOMAIN;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
       global $HTTP_SERVER_VARS;
 
       $this->Synchronize ();
 
-      $this->Context = $zAPPLE->Context;
+      $this->Context = $zOLDAPPLE->Context;
 
       if ($gPARENTID) {
         $this->parent_tID = $gPARENTID;
@@ -227,7 +227,7 @@
         
         $this->Add ();
 
-        switch (strtoupper($zAPPLE->Context)) {
+        switch (strtoupper($zOLDAPPLE->Context)) {
           case 'USER.INFO':
             // Send email.
             // Disabled: 04-27-2007
@@ -285,7 +285,7 @@
 
     function AddForm () {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
 
@@ -304,7 +304,7 @@
       global $zSTRINGS, $zHTML;
 
       $gCOMMENTTARGET = $_SERVER[REQUEST_URI];
-      $zAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
+      $zOLDAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
 
       $replyfile = "new";
 
@@ -358,9 +358,9 @@
         $zAUTHUSER->BuildIconMenu ();
       } // if
 
-      $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$replyfile.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $result = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$replyfile.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      $zAPPLE->UnsetTag ('COMMENTTARGET');
+      $zOLDAPPLE->UnsetTag ('COMMENTTARGET');
 
       return ($result);
 
@@ -377,17 +377,17 @@
 
       global $gCOMMENTTARGET;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       if (isset ($gSCROLLSTART[$this->CommentContext]))
         $gPOSTDATA["SCROLLSTART[" . $this->CommentContext . "]"] = $gSCROLLSTART[$this->CommentContext];
 
       $gCOMMENTTARGET = $_SERVER['REQUEST_URI'];
-      $zAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
+      $zOLDAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
 
-      $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $result = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      $zAPPLE->UnsetTag ('COMMENTTARGET');
+      $zOLDAPPLE->UnsetTag ('COMMENTTARGET');
 
       return ($result);
 
@@ -395,7 +395,7 @@
 
     function Listing ($pREFERENCEID, $pPARENTID, $pTHREADID = NULL) {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $zSTRINGS, $zHTML;
 
@@ -433,11 +433,11 @@
       if ($pTHREADID) {
         $commentcriteria = array ("tID"          => $pTHREADID,
                                   "rID"          => $pREFERENCEID,
-                                  "Context"      => $zAPPLE->Context);
+                                  "Context"      => $zOLDAPPLE->Context);
       } else {
         $commentcriteria = array ("parent_tID"   => $pPARENTID,
                                   "rID"          => $pREFERENCEID,
-                                  "Context"      => $zAPPLE->Context);
+                                  "Context"      => $zOLDAPPLE->Context);
       } // if
 
       // For the profile comments, show the latest first.
@@ -449,7 +449,7 @@
       // Count the maximum number of comments attached.
 
       $context = $this->CommentContext;
-      $gSCROLLMAX[$context] = $this->CountComments ($pREFERENCEID, $zAPPLE->Context);
+      $gSCROLLMAX[$context] = $this->CountComments ($pREFERENCEID, $zOLDAPPLE->Context);
 
       // Check if no comments have been found.
       if ( ($this->CountResult () == 0) and ($pPARENTID == 0) ) {
@@ -506,7 +506,7 @@
 
         // Generic
         $gCOMMENTSUBJECT = $this->Subject;
-        $gCOMMENTBODY = $zAPPLE->Format ($this->Body, FORMAT_BASIC);
+        $gCOMMENTBODY = $zOLDAPPLE->Format ($this->Body, FORMAT_BASIC);
         
         $gCOMMENTAUTHOR = $zHTML->CreateUserLink ($this->Owner_Username, $this->Owner_Domain, FALSE);
         $gCOMMENTADDRESS = $this->Owner_Address;
@@ -515,12 +515,12 @@
         $bONLINENOW = OUTPUT_NBSP;
 
         // If user activity in the last 3 minutes, consider them online.
-        list ($gCOMMENTAUTHORFULLNAME, $online) = $zAPPLE->GetUserInformation($this->Owner_Username, $this->Owner_Domain);
+        list ($gCOMMENTAUTHORFULLNAME, $online) = $zOLDAPPLE->GetUserInformation($this->Owner_Username, $this->Owner_Domain);
         if ($online) {
-          $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          $bONLINENOW = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
         } // if
 
-        $bCOMMENTICON = $zAPPLE->BufferUserIcon ($this->Owner_Username, $this->Owner_Domain, $this->Owner_Icon);
+        $bCOMMENTICON = $zOLDAPPLE->BufferUserIcon ($this->Owner_Username, $this->Owner_Domain, $this->Owner_Icon);
 
         $gREPLYDATA = $gPOSTDATA;
         $gREPLYDATA["COMMENTACTION"] = "ADD";
@@ -558,7 +558,7 @@
         $COMMENTINFO = new cCOMMENTINFORMATION ();
         $targetcriteria = array ("parent_tID"   => $this->tID,
                                  "rID"          => $pREFERENCEID,
-                                 "Context"      => $zAPPLE->Context);
+                                 "Context"      => $zOLDAPPLE->Context);
         $COMMENTINFO->SelectByMultiple ($targetcriteria);
         $countchildren = $COMMENTINFO->CountResult ();
         unset ($COMMENTINFO);
@@ -596,16 +596,16 @@
         $gCOMMENTID = $this->tID;
 
         if ($current > $start) {
-          $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$deletedflag$nestflag.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$deletedflag$nestflag.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-          $RECURSE = new cCOMMENTINFORMATION ($zAPPLE->Context);
+          $RECURSE = new cCOMMENTINFORMATION ($zOLDAPPLE->Context);
           $RECURSE->CommentContext = $this->CommentContext;
 
           $returnbuffer .= $RECURSE->Listing ($pREFERENCEID, $this->tID);
 
-          $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$deletedflag$nestflag.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/$deletedflag$nestflag.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } else {
-          $RECURSE = new cCOMMENTINFORMATION ($zAPPLE->Context);
+          $RECURSE = new cCOMMENTINFORMATION ($zOLDAPPLE->Context);
           $RECURSE->CommentContext = $this->CommentContext;
 
           $returnbuffer .= $RECURSE->Listing ($pREFERENCEID, $this->tID);
@@ -636,9 +636,9 @@
       global $gFRAMELOCATION;
       global $gCOMMENTVIEWFLAG;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
-      $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/main.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $result = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/comments/$gCOMMENTVIEWFLAG/main.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($result);
 
@@ -703,7 +703,7 @@
 
     // Handle the workflow for the comments box.
     function Handle () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $bCOMMENTS;
 
@@ -725,7 +725,7 @@
                            "REFERENCEID" => $gREFERENCEID);
 
       // Change the select button if anything is eelected.
-      if ($zAPPLE->ArrayIsSet ($gCOMMENTMASSLIST) ) $gCOMMENTSELECTBUTTON = 'Select None';
+      if ($zOLDAPPLE->ArrayIsSet ($gCOMMENTMASSLIST) ) $gCOMMENTSELECTBUTTON = 'Select None';
 
       // PART I: Take Action
       switch ($gCOMMENTACTION) {
@@ -807,8 +807,8 @@
 
       } // switch
     
-      $zAPPLE->SetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
-      $zAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
+      $zOLDAPPLE->SetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
+      $zOLDAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
 
       // PART II: Parse the HTML.
       switch ($gCOMMENTACTION) {
@@ -819,13 +819,13 @@
         case 'ADD':
           global $zAUTHUSER;
           $gCOMMENTADDTAB = "";
-          $zAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
+          $zOLDAPPLE->SetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
           $bCOMMENTS .= $this->AddForm ($gREFERENCEID);
         break;
     
         default:
           $gCOMMENTREADTAB = "";
-          $zAPPLE->SetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
+          $zOLDAPPLE->SetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
           $bCOMMENTS .= $this->Top ();
           $start = 0;
           if ($gSTARTINGID) $start = $gSTARTINGID;
@@ -834,8 +834,8 @@
         break;
       } // switch
 
-      $zAPPLE->UnsetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
-      $zAPPLE->UnsetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
+      $zOLDAPPLE->UnsetTag ('COMMENTREADTAB', $gCOMMENTREADTAB); 
+      $zOLDAPPLE->UnsetTag ('COMMENTADDTAB', $gCOMMENTADDTAB); 
 
       return (true);
 
@@ -844,7 +844,7 @@
     // Initialize the commenting subsystem.
     function Initialize () {
 
-      global $zAUTHUSER, $zLOCALUSER, $zAPPLE;
+      global $zAUTHUSER, $zLOCALUSER, $zOLDAPPLE;
 
       global $gCOMMENTVIEW, $gCOMMENTVIEWTYPE, $gCOMMENTVIEWADMIN; 
       global $gPOSTDATA;
@@ -856,7 +856,7 @@
 
       $gCONTINUEFLAG = FALSE;
 
-      $this->Context = $zAPPLE->Context;
+      $this->Context = $zOLDAPPLE->Context;
       $this->CommentContext = 'user.comments';
       
       $gSCROLLSTEP[$this->CommentContext] = 20;
@@ -907,7 +907,7 @@
 
     // Notify the user that a comment has been replied to.
     function NotifyReply ($pEMAIL, $pCOMMENTEDUSER, $pCOMMENTEDUSERNAME, $pCOMMENTINGUSER) {
-      global $zSTRINGS, $zAPPLE, $zFOCUSUSER;
+      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER;
 
       // Return if comment notification is turned off.
       if ($zFOCUSUSER->userSettings->Get ("ReplyNotification") == NOTIFICATION_OFF) {
@@ -951,16 +951,16 @@
       $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.COMMENTS');
       $fromname = $zSTRINGS->Output;
 
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
+      $zOLDAPPLE->Mailer->From = $from;
+      $zOLDAPPLE->Mailer->FromName = $fromname;
+      $zOLDAPPLE->Mailer->Body = $body;
+      $zOLDAPPLE->Mailer->Subject = $subject;
+      $zOLDAPPLE->Mailer->AddAddress ($to);
+      $zOLDAPPLE->Mailer->AddReplyTo ($from);
 
-      $zAPPLE->Mailer->Send();
+      $zOLDAPPLE->Mailer->Send();
 
-      $zAPPLE->Mailer->ClearAddresses();
+      $zOLDAPPLE->Mailer->ClearAddresses();
 
       unset ($to);
       unset ($subject);
@@ -972,7 +972,7 @@
 
     // Notify the user that a comment has been added.
     function NotifyArticle () {
-      global $zSTRINGS, $zAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
 
       $ARTICLE = new cCONTENTARTICLES();
       $ARTICLE->Select ("tID", $this->rID);
@@ -1027,16 +1027,16 @@
       $zSTRINGS->Lookup ('MAIL.FROMNAME', 'CONTENT.ARTICLES.COMMENTS');
       $fromname = $zSTRINGS->Output;
 
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
+      $zOLDAPPLE->Mailer->From = $from;
+      $zOLDAPPLE->Mailer->FromName = $fromname;
+      $zOLDAPPLE->Mailer->Body = $body;
+      $zOLDAPPLE->Mailer->Subject = $subject;
+      $zOLDAPPLE->Mailer->AddAddress ($to);
+      $zOLDAPPLE->Mailer->AddReplyTo ($from);
 
-      $zAPPLE->Mailer->Send();
+      $zOLDAPPLE->Mailer->Send();
 
-      $zAPPLE->Mailer->ClearAddresses();
+      $zOLDAPPLE->Mailer->ClearAddresses();
 
       unset ($to);
       unset ($subject);
@@ -1048,7 +1048,7 @@
 
     // Notify the user that a comment has been added.
     function NotifyJournal ($pEMAIL, $pCOMMENTEDUSER, $pCOMMENTEDUSERNAME, $pCOMMENTINGUSER) {
-      global $zSTRINGS, $zAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
 
       // Don't send a message if a user is commenting on their own journal.
       if ( ($zFOCUSUSER->Username == $zAUTHUSER->Username) and
@@ -1080,16 +1080,16 @@
       $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.JOURNAL.COMMENTS');
       $fromname = $zSTRINGS->Output;
 
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
+      $zOLDAPPLE->Mailer->From = $from;
+      $zOLDAPPLE->Mailer->FromName = $fromname;
+      $zOLDAPPLE->Mailer->Body = $body;
+      $zOLDAPPLE->Mailer->Subject = $subject;
+      $zOLDAPPLE->Mailer->AddAddress ($to);
+      $zOLDAPPLE->Mailer->AddReplyTo ($from);
 
-      $zAPPLE->Mailer->Send();
+      $zOLDAPPLE->Mailer->Send();
 
-      $zAPPLE->Mailer->ClearAddresses();
+      $zOLDAPPLE->Mailer->ClearAddresses();
 
       unset ($to);
       unset ($subject);
@@ -1101,7 +1101,7 @@
 
     // Notify the user that a comment has been added.
     function NotifyProfile ($pEMAIL, $pCOMMENTEDUSER, $pCOMMENTEDUSERNAME, $pCOMMENTINGUSER) {
-      global $zSTRINGS, $zAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
 
       // Return if comment notification is turned off.
       if ($zFOCUSUSER->userSettings->Get ("ProfileNotification") == NOTIFICATION_OFF) {
@@ -1133,16 +1133,16 @@
       $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.INFO.COMMENTS');
       $fromname = $zSTRINGS->Output;
 
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
+      $zOLDAPPLE->Mailer->From = $from;
+      $zOLDAPPLE->Mailer->FromName = $fromname;
+      $zOLDAPPLE->Mailer->Body = $body;
+      $zOLDAPPLE->Mailer->Subject = $subject;
+      $zOLDAPPLE->Mailer->AddAddress ($to);
+      $zOLDAPPLE->Mailer->AddReplyTo ($from);
 
-      $zAPPLE->Mailer->Send();
+      $zOLDAPPLE->Mailer->Send();
 
-      $zAPPLE->Mailer->ClearAddresses();
+      $zOLDAPPLE->Mailer->ClearAddresses();
 
       unset ($to);
       unset ($subject);
@@ -1154,12 +1154,12 @@
 
     // Goes through and removes all deleted comments with no children.
     function CleanUp () {
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $gREFERENCEID;
 
       $criteria = array ("rID"     => $gREFERENCEID,
-                         "Context" => $zAPPLE->Context,
+                         "Context" => $zOLDAPPLE->Context,
                          "Subject" => DELETED_COMMENT);
       $this->SelectByMultiple ($criteria);
 
@@ -1170,7 +1170,7 @@
         $COMMENTCHILDREN = new cCOMMENTINFORMATION ();
         $childcriteria = array ("parent_tID" => $this->tID,
                                 "rID"        => $gREFERENCEID,
-                                "Context"    => $zAPPLE->Context);
+                                "Context"    => $zOLDAPPLE->Context);
         $COMMENTCHILDREN->SelectByMultiple ($childcriteria);
 
         // If no children, delete.

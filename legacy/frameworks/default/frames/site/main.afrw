@@ -15,7 +15,7 @@
     <?php echo $bINVITEBOX; ?>
 
     <!-- ## latestusers obj -->
-    <?php $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/users.aobj", INCLUDE_SECURITY_NONE); ?>
+    <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/users.aobj", INCLUDE_SECURITY_NONE); ?>
     
     <!-- ## latestphotos obj -->
     <?php echo $bLATESTPHOTOS; ?>

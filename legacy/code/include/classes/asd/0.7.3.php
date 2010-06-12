@@ -528,7 +528,7 @@
         $gSUCCESS = FALSE;
         $gMESSAGE = "ERROR.NOTFOUND";
         $data = implode ("", file ("legacy/code/include/data/xml/group_join.xml"));
-        $return = $zAPPLE->ParseTags ($data);
+        $return = $zOLDAPPLE->ParseTags ($data);
         echo $return;
         exit;
       } // if
@@ -565,7 +565,7 @@
       unset ($zGROUPS);
  
       $data = implode ("", file ("legacy/code/include/data/xml/group_join.xml"));
-      $this->XML->Data = $zAPPLE->ParseTags ($data);
+      $this->XML->Data = $zOLDAPPLE->ParseTags ($data);
        
       return (TRUE);
      } // GroupJoin
@@ -585,7 +585,7 @@
   
         $remoteusername = $AUTH->Username;
         $remotedomain = $AUTH->Domain;
-        list ($remotefullname, $NULL) = $zAPPLE->GetUserInformation ($remoteusername, $remotedomain);
+        list ($remotefullname, $NULL) = $zOLDAPPLE->GetUserInformation ($remoteusername, $remotedomain);
   
         unset ($AUTH);
   
@@ -597,7 +597,7 @@
          $gSUCCESS = FALSE;
          $gMESSAGE = "ERROR.NOTFOUND";
          $data = implode ("", file ("legacy/code/include/data/xml/group_leave.xml"));
-         $return = $zAPPLE->ParseTags ($data);
+         $return = $zOLDAPPLE->ParseTags ($data);
          echo $return;
          exit;
        } // if
@@ -616,7 +616,7 @@
        unset ($zGROUPS);
   
        $data = implode ("", file ("legacy/code/include/data/xml/group_leave.xml"));
-       $return = $zAPPLE->ParseTags ($data);
+       $return = $zOLDAPPLE->ParseTags ($data);
        echo $return;
       
      } // GroupLeave
@@ -639,7 +639,7 @@
        } // if
   
        $data = implode ("", file ("legacy/code/include/data/xml/group_information.xml"));
-       $return = $zAPPLE->ParseTags ($data);
+       $return = $zOLDAPPLE->ParseTags ($data);
   
        echo $return;
     	

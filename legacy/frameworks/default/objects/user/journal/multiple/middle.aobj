@@ -17,7 +17,7 @@
  
    <div id='content'>
 
-    <?php echo $zAPPLE->Format ($zJOURNAL->Content, FORMAT_BASIC); ?>
+    <?php echo $zOLDAPPLE->Format ($zJOURNAL->Content, FORMAT_BASIC); ?>
 
     <div id='tags'>
      <?php $zSTRINGS->Display ('LABEL.TAGLIST', 'USER.JOURNAL'); ?>

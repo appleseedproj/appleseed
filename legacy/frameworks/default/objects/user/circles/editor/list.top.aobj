@@ -1,12 +1,12 @@
 <div id='circles'>
 
  <!-- tabs objects -->
- <?php $zAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+ <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
  <div id='container'>
 
   <p id='heading'>
-   <?php $zSTRINGS->Display ("LABEL.CIRCLES", $zAPPLE->Context); ?></h1>
+   <?php $zSTRINGS->Display ("LABEL.CIRCLES", $zOLDAPPLE->Context); ?></h1>
   </p> <!-- #heading -->
 
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>

@@ -77,12 +77,12 @@
     function DisplayStatementList () {
       global $gFRAMELOCATION;
       
-      global $zAPPLE;
+      global $zOLDAPPLE;
       
       global $gCOUNT, $gSTATEMENT, $gCLASS, $gBENCHMARK;
       $gCOUNT = NULL; $gSTATEMENT = NULL; $gCLASS = NULL;
       
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.top.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.top.aobj", INCLUDE_SECURITY_NONE);
       $oddeven = "even";
       foreach ($this->StatementList as $gCOUNT => $info) {
         // Switch the class for every other row.
@@ -90,9 +90,9 @@
         $gCLASS = $info['class'];
         $gBENCHMARK = $info['benchmark'];
         $oddeven = ($oddeven == "even") ? "odd" : "even";
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
       } // foreach
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.bottom.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/statement.bottom.aobj", INCLUDE_SECURITY_NONE);
       
       return (TRUE);
     } // DisplayStatementList
@@ -101,12 +101,12 @@
       
       global $gFRAMELOCATION;
       
-      global $zAPPLE;
+      global $zOLDAPPLE;
       
       global $gCOUNT, $gSTRING, $gTYPE, $gFILE, $gLINE;
       $gCOUNT = NULL; $gSTRING = NULL; $gTYPE = NULL; $gFILE = NULL; $gLINE = NULL;
       
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.top.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.top.aobj", INCLUDE_SECURITY_NONE);
       if (count($this->ErrorList) > 0) {
         $oddeven = "even";
         foreach ($this->ErrorList as $gCOUNT => $info) {
@@ -116,12 +116,12 @@
           $gFILE = $info['file'];
           $gLINE = $info['line'];
           $oddeven = ($oddeven == "even") ? "odd" : "even";
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.middle.$oddeven.aobj", INCLUDE_SECURITY_NONE);
         } // foreach
       } else {
         $this->Broadcast ('No Errors Or Warnings Found.');
       } // if
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.bottom.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/errors.bottom.aobj", INCLUDE_SECURITY_NONE);
       
       return (TRUE);
     } // DislayErrorList
@@ -140,7 +140,7 @@
       
       global $gFRAMELOCATION;
       
-      global $zLOCALUSER, $zAPPLE;
+      global $zLOCALUSER, $zOLDAPPLE;
       
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/developer/");
 
@@ -148,7 +148,7 @@
       if ($zLOCALUSER->userAccess->r == FALSE) return (FALSE);
 
       // Top of Debug element.
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/top.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/top.aobj", INCLUDE_SECURITY_NONE);
       
       // Display total page benchmark.
       $this->DisplayTotalBenchmark ();
@@ -160,14 +160,14 @@
       $this->DisplayStatementList ();
       
       // Bottom of Debug element.
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/bottom.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/bottom.aobj", INCLUDE_SECURITY_NONE);
       
       return (TRUE);
       
     } // DisplayDebugInformation
     
     function DisplayTotalBenchmark () {
-      global $zAPPLE;
+      global $zOLDAPPLE;
       global $gFRAMELOCATION;
       global $gTOTALTIME, $gSQLTIME, $gMEMORYUSE;
       
@@ -177,7 +177,7 @@
       $gSQLTIME = $this->BenchmarkTotal['STATEMENT'];
       $gMEMORYUSE = number_format (memory_get_usage() / 1048756, 6). ' mb';
       
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/benchmark.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/debug/benchmark.aobj", INCLUDE_SECURITY_NONE);
       
       return (TRUE);
     } // DisplayTotalBenchmark

@@ -8,13 +8,11 @@
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
  */
 
-define( 'APPLESEED', true );
+define ( 'APPLESEED', true );
+define ( 'DS', DIRECTORY_SEPARATOR );
+define ( 'ASD_PATH', $_SERVER['DOCUMENT_ROOT'] . DS);
 
-define ( 'ASD_PATH', getcwd() );
-
-define ( DS, DIRECTORY_SEPARATOR );
-
-require_once ( ASD_PATH . DS . 'system' . DS . 'application.php' );
+require_once ( ASD_PATH . 'system' . DS . 'application.php' );
 
 /** 
  * Entry Point
@@ -22,9 +20,8 @@ require_once ( ASD_PATH . DS . 'system' . DS . 'application.php' );
  */
 
 global $zApple;
-$zApple = new cApplication ();
+$zApple = new cApplication ( );
 
-$zApple->Initialize ();
+$zApple->Initialize ( );
 
-$zApple->Route ();
-
+$zApple->Router->Route ( );

@@ -49,7 +49,7 @@
 
   // Create the image manipulation class.
   global $zIMAGE;
-  $zIMAGE = new cIMAGE ($zAPPLE->Context);
+  $zIMAGE = new cIMAGE ($zOLDAPPLE->Context);
            
   // Create the comment manipulation class.
   global $zCOMMENTS;
@@ -85,37 +85,37 @@
     case VIEW_EDITOR:
       // Set the editor view.
       $viewlocation = "editor/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 20;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
     break;
 
     case VIEW_DEFAULT:
       $viewlocation = "compact/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 20;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
     break;
 
     case VIEW_ALL:
       $viewlocation = "all/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 10000;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 10000;
     break;
 
     case VIEW_STANDARD:
       $viewlocation = "standard/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 20;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
     break;
 
     case VIEW_COMPACT:
       $viewlocation = "compact/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 10;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
     break;
 
     case VIEW_STANDARD:
       $viewlocation = "standard/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 20;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
     break;
 
     case VIEW_FULL:
       $viewlocation = "full/";
-      $gSCROLLSTEP[$zAPPLE->Context] = 40;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 40;
     break;
   } // switch
 
@@ -129,14 +129,14 @@
 
   // Set how much to step when scrolling.
   if ( ($gPHOTOLISTING == VIEW_EDITOR) or 
-       ($gPHOTOLISTING == VIEW_DEFAULT) ) $gSCROLLSTEP[$zAPPLE->Context] = 20;
-  if ($gPHOTOLISTING == VIEW_COMPACT) $gSCROLLSTEP[$zAPPLE->Context] = 40;
-  if ($gPHOTOLISTING == VIEW_ALL) $gSCROLLSTEP[$zAPPLE->Context] = 10000;
-  if ($gPHOTOLISTING == VIEW_STANDARD) $gSCROLLSTEP[$zAPPLE->Context] = 20;
-  if ($gPHOTOLISTING == VIEW_FULL) $gSCROLLSTEP[$zAPPLE->Context] = 10;
+       ($gPHOTOLISTING == VIEW_DEFAULT) ) $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
+  if ($gPHOTOLISTING == VIEW_COMPACT) $gSCROLLSTEP[$zOLDAPPLE->Context] = 40;
+  if ($gPHOTOLISTING == VIEW_ALL) $gSCROLLSTEP[$zOLDAPPLE->Context] = 10000;
+  if ($gPHOTOLISTING == VIEW_STANDARD) $gSCROLLSTEP[$zOLDAPPLE->Context] = 20;
+  if ($gPHOTOLISTING == VIEW_FULL) $gSCROLLSTEP[$zOLDAPPLE->Context] = 10;
 
   // Set the post data to move back and forth.
-  $gPOSTDATA = Array ("SCROLLSTART"       => array ($zAPPLE->Context => $gSCROLLSTART[$zAPPLE->Context]),
+  $gPOSTDATA = Array ("SCROLLSTART"       => array ($zOLDAPPLE->Context => $gSCROLLSTART[$zOLDAPPLE->Context]),
                       "SORT"              => $gSORT,
                       "PHOTOLISTING"      => $gPHOTOLISTING,
                       "COMMENTVIEW"       => $gCOMMENTVIEW);
@@ -248,7 +248,7 @@
              (!unlink ($mdfile) ) or 
              (!unlink ($lgfile) ) ) {
           global $gPHOTOFILENAME; $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-          $zSTRINGS->Lookup ('ERROR.FILE', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.FILE', $zOLDAPPLE->Context);
           $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
           $gVIEWDATA->photoInfo->Error = -1;;
         } // if
@@ -303,7 +303,7 @@
       $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
 
       // If photo set directory doesn't exist, create it.
-      if (!is_dir ($photosetdir))  $zAPPLE->CreateDirectory ($photosetdir);
+      if (!is_dir ($photosetdir))  $zOLDAPPLE->CreateDirectory ($photosetdir);
 
       // Strip all spaces out of the filename.
       $filename = str_replace(" ", "", $_FILES['gNEWPHOTO']['name']);
@@ -373,7 +373,7 @@
           
           // Create a unique tag for this photo.
           // NOTE: Create a function to test for unique.
-          $gVIEWDATA->photoInfo->Hint = $zAPPLE->RandomString (6);
+          $gVIEWDATA->photoInfo->Hint = $zOLDAPPLE->RandomString (6);
 
           // Create a temporary class for pulling data from table.
           $matchagainst = new cDATACLASS ($gVIEWDATA->PageContext, $gVIEWDATA->photoInfo->TableName);
@@ -383,7 +383,7 @@
 
           // Keep looping until no values result.
           while ($matchagainst->CountResult () > 0) {
-            $gVIEWDATA->photoInfo->Hint = $zAPPLE->RandomString (6);
+            $gVIEWDATA->photoInfo->Hint = $zOLDAPPLE->RandomString (6);
             $matchagainst->Select ("Hint", $gVIEWDATA->photoInfo->Hint);  
           } // while
           
@@ -400,7 +400,7 @@
           unset ($PHOTOCHECK);
         } else {
           global $gPHOTOFILENAME;  $gPHOTOFILENAME = $filename;
-          $zSTRINGS->Lookup ('ERROR.EXISTS', $zAPPLE->Context);
+          $zSTRINGS->Lookup ('ERROR.EXISTS', $zOLDAPPLE->Context);
           $zIMAGE->Error = -1;
           $zIMAGE->Message = $zSTRINGS->Output;
           unset ($gPHOTOFILENAME);
@@ -410,7 +410,7 @@
         unlink ($_FILES['gNEWPHOTO']['tmp_name']);
 
       } else {
-        $zSTRINGS->Lookup ('ERROR.UPLOAD', $zAPPLE->Context);
+        $zSTRINGS->Lookup ('ERROR.UPLOAD', $zOLDAPPLE->Context);
         $zIMAGE->Message = $zSTRINGS->Output;
       } // if
 
@@ -489,7 +489,7 @@
                  ( !rename ($old_lgfile, $lgfile) ) ) {
               // Look up the error message.
               global $gPHOTOFILENAME;  $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-              $zSTRINGS->Lookup ('ERROR.FILE', $zAPPLE->Context);
+              $zSTRINGS->Lookup ('ERROR.FILE', $zOLDAPPLE->Context);
               $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
               unset ($gPHOTOFILENAME);
   
@@ -521,7 +521,7 @@
         unset ($NEWDATA);
 
         // Adjust for a recently moved entry.
-        $zAPPLE->AdjustScroll ($zAPPLE->Context, $gVIEWDATA);
+        $zOLDAPPLE->AdjustScroll ($zOLDAPPLE->Context, $gVIEWDATA);
 
       } // if
     break;
@@ -600,7 +600,7 @@
   // PART III: Pre-parse the html for the main window. 
   
   // Change the select button if anything is selected.
-  if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
+  if ($zOLDAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
   // Buffer the main listing.
   ob_start ();  
@@ -620,10 +620,10 @@
       unset ($SETS);
       $gIMAGEHINT = $gVIEWDATA->photoInfo->Hint;
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/edit.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/edit.aobj", INCLUDE_SECURITY_NONE);
     break;
     case 'NEW':
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/new.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/new.aobj", INCLUDE_SECURITY_NONE);
     break;
     case 'UPLOAD':
     case 'DELETE':
@@ -645,37 +645,37 @@
         // Set the scrollstart back to zero if we're changing view modes.
         global $gSWITCHPOSTDATA, $gBACKPOSTDATA;
         $gSWITCHPOSTDATA = $gPOSTDATA;
-        $gSWITCHPOSTDATA['SCROLLSTART'][$zAPPLE->Context] = 0;
+        $gSWITCHPOSTDATA['SCROLLSTART'][$zOLDAPPLE->Context] = 0;
 
         // Save the current scroll context.
-        $gBACKPOSTDATA['SCROLLSTART'][$zAPPLE->Context] = $gSCROLLSTART[$zAPPLE->Context];
+        $gBACKPOSTDATA['SCROLLSTART'][$zOLDAPPLE->Context] = $gSCROLLSTART[$zOLDAPPLE->Context];
 
         global $gTARGET;
 
         $gTARGET = $_SERVER[REQUEST_URI];
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.top.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.top.aobj", INCLUDE_SECURITY_NONE);
 
         unset ($gSWITCHPOSTDATA);
 
         // Calculate scroll values.
-        $gSCROLLMAX[$zAPPLE->Context] = $gVIEWDATA->photoInfo->CountResult();
+        $gSCROLLMAX[$zOLDAPPLE->Context] = $gVIEWDATA->photoInfo->CountResult();
 
         // If we're uploading, jump to the last page.
         if ($gACTION == 'UPLOAD') {
 
           // Calculate the scroll values.
-          $zHTML->CalcScroll ($zAPPLE->Context);
+          $zHTML->CalcScroll ($zOLDAPPLE->Context);
            
           // Jump to the last page.
-          if ($gMAXPAGES > $gCURRENTPAGE) $gSCROLLSTART[$zAPPLE->Context] = $gMAXPAGES * $gSCROLLSTEP[$zAPPLE->Context];
+          if ($gMAXPAGES > $gCURRENTPAGE) $gSCROLLSTART[$zOLDAPPLE->Context] = $gMAXPAGES * $gSCROLLSTEP[$zOLDAPPLE->Context];
 
         } // if
 
         // Adjust for a recently deleted entry.
-        $zAPPLE->AdjustScroll ($zAPPLE->Context, $gVIEWDATA->photoInfo);
+        $zOLDAPPLE->AdjustScroll ($zOLDAPPLE->Context, $gVIEWDATA->photoInfo);
 
         // Check if any results were found.
-        if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+        if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
           $gVIEWDATA->photoInfo->Message = __("No Results Found");
           $gVIEWDATA->photoInfo->Broadcast();
         } // if
@@ -689,7 +689,7 @@
         if ($viewlocation == 'full/') $prefix = "_lg.";
 
         // Loop through the list.
-        for ($listcount = 0; $listcount < $gSCROLLSTEP[$zAPPLE->Context]; $listcount++) {
+        for ($listcount = 0; $listcount < $gSCROLLSTEP[$zOLDAPPLE->Context]; $listcount++) {
          if ($gVIEWDATA->photoInfo->FetchArray()) {
           
           $gCHECKED = FALSE;
@@ -725,10 +725,10 @@
 
           global $gCOMMENTCOUNT, $gCOMMENTLABEL;
 
-          $gCOMMENTCOUNT = $zCOMMENTS->CountComments ($gVIEWDATA->photoInfo->tID, $zAPPLE->Context);
+          $gCOMMENTCOUNT = $zCOMMENTS->CountComments ($gVIEWDATA->photoInfo->tID, $zOLDAPPLE->Context);
 
           if ($gCOMMENTCOUNT > 0) {
-            $zSTRINGS->Lookup ('LABEL.COMMENTS', $zAPPLE->Context);
+            $zSTRINGS->Lookup ('LABEL.COMMENTS', $zOLDAPPLE->Context);
             $gCOMMENTLABEL = $zSTRINGS->Output;
           } else {
             $gCOMMENTLABEL = "";
@@ -751,7 +751,7 @@
 
           $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
           $gEXTRAPOSTDATA['tID']    = $gVIEWDATA->photoInfo->tID;
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation  . "list.middle.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation  . "list.middle.aobj", INCLUDE_SECURITY_NONE);
           unset ($gEXTRAPOSTDATA['ACTION']); 
 
          } else {
@@ -761,15 +761,15 @@
         
         unset ($gVARIABLES);
 
-        $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.bottom.aobj", INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation . "list.bottom.aobj", INCLUDE_SECURITY_NONE);
 
       } elseif ( ($gACTION == 'SAVE') or ($gACTION == 'DELETE') ) {
 
         if ($gtID) {
           $gIMAGEHINT = $gVIEWDATA->photoInfo->Hint;
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/edit.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/edit.aobj", INCLUDE_SECURITY_NONE);
         } else {
-          $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/new.aobj", INCLUDE_SECURITY_NONE);
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/new.aobj", INCLUDE_SECURITY_NONE);
         } // if
 
       } // if
@@ -789,6 +789,6 @@
   if ($gPHOTOLISTING != VIEW_EDITOR) $zCOMMENTS->Handle ();
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photos.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/photos.afrw", INCLUDE_SECURITY_NONE);
 
 ?>

@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Content Redirection Page.                           |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -56,13 +58,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
 
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site.redirect", TRUE);
+  $zOLDAPPLE->Initialize("site.redirect", TRUE);
 
   // Set "Remember Me" as on by default.
   $gREMEMBER = 'on';
@@ -72,16 +74,16 @@
   $request = rtrim ($request, '/');
 
   // Step 1: Check if a content page exists.
-  $zCONTENTPAGE = new cCONTENTPAGES ($zAPPLE->Context);
+  $zCONTENTPAGE = new cCONTENTPAGES ($zOLDAPPLE->Context);
 
   $zCONTENTPAGE->Select ("UPPER(Location)", strtoupper ($request));
   $zCONTENTPAGE->FetchArray ();
 
   if ($zCONTENTPAGE->CountResult () > 0) {
-    $zAPPLE->Context = $zCONTENTPAGE->Context;
+    $zOLDAPPLE->Context = $zCONTENTPAGE->Context;
     $template = "$gFRAMELOCATION/templates/content/" . $zCONTENTPAGE->Template;
-    $zAPPLE->IncludeFile ($template, INCLUDE_SECURITY_NONE);
-    $zAPPLE->End ();
+    $zOLDAPPLE->IncludeFile ($template, INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->End ();
   } // if
 
   // Step 2: Check if a user exists with that name.
@@ -97,12 +99,12 @@
   if ($gFOCUSUSERID) {
    // Since we're redirecting, we'll need to reinitialize with the new info.
    global $gINITIALIZED; $gINITIALIZED = FALSE;
-   $zAPPLE->IncludeFile ('legacy/code/user/main.php', INCLUDE_SECURITY_NONE);
-   $zAPPLE->End();
+   $zOLDAPPLE->IncludeFile ('legacy/code/user/main.php', INCLUDE_SECURITY_NONE);
+   $zOLDAPPLE->End();
   } // if
 
   // Exit to a 404 page by default.
-  $zAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
-  $zAPPLE->End();
+  $zOLDAPPLE->IncludeFile ('legacy/code/site/error/404.php', INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->End();
 
 ?>

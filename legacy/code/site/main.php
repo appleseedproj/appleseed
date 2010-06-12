@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Main index page.                                    |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -58,13 +60,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
   
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
 
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("site", TRUE);
+  $zOLDAPPLE->Initialize("site", TRUE);
 
   // Create the Articles class.
   $zARTICLES = new cEXTENDEDCONTENTARTICLES  ("content.articles");
@@ -86,7 +88,7 @@
     global $gLOCALLOGINTAB, $gREMOTELOGINTAB;
     $gLOCALLOGINTAB = ""; $gREMOTELOGINTAB = "_off";
     // Include the login box object
-    $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/loginbox.aobj", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/loginbox.aobj", INCLUDE_SECURITY_NONE);
   } // if
 
   // Retrieve output buffer.
@@ -109,7 +111,7 @@
   if ( ($zAUTHUSER->Username != '') AND ($gSETTINGS['UseInvites'] == ON) AND 
        ($gINVITEAMOUNT > 0) ) {
     // Include the login box object
-    $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/invitebox.aobj", INCLUDE_SECURITY_NONE);
+    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/invitebox.aobj", INCLUDE_SECURITY_NONE);
   } // if
 
   // Retrieve output buffer.
@@ -119,9 +121,9 @@
   ob_end_clean (); 
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/main.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/main.afrw", INCLUDE_SECURITY_NONE);
 
   // Exit application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

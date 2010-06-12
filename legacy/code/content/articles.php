@@ -33,6 +33,8 @@
   // | DESCRIPTION:  Article newswire.                                   |
   // +-------------------------------------------------------------------+
 
+  eval(_G); // Import all global variables  
+  
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
@@ -57,13 +59,13 @@
   require_once ('legacy/code/include/classes/search.php'); 
   
   // Create the Application class.
-  $zAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cAPPLESEED ();
 
   // Set Global Variables (Put this at the top of wrapper scripts)
-  $zAPPLE->SetGlobals ();
+  $zOLDAPPLE->SetGlobals ();
 
   // Initialize Appleseed.
-  $zAPPLE->Initialize("content.articles", TRUE);
+  $zOLDAPPLE->Initialize("content.articles", TRUE);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE, '/content/articles/');
@@ -117,7 +119,7 @@
   // Determine which view to take.
   switch (strtoupper($gARTICLEREQUEST)) {
     case 'SUBMIT':
-      $bARTICLES = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/submit.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $bARTICLES = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/submit.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
     break;
     case 'QUEUE':
       $bARTICLES = $zARTICLES->HandleQueue ();
@@ -137,8 +139,8 @@
         $zARTICLES->FetchArray();
         $zARTICLES->FormatVerboseDate ("Stamp");
         global $bARTICLEICON;
-        $bARTICLEICON = $zAPPLE->BufferUserIcon ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain);
-        $bARTICLES = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/single.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $bARTICLEICON = $zOLDAPPLE->BufferUserIcon ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain);
+        $bARTICLES = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/articles/single.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $zCOMMENTS->Handle();
       } else {
         $zARTICLES->BufferArticlesListing ();
@@ -147,9 +149,9 @@
   } // switch
 
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/content/articles.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/content/articles.afrw", INCLUDE_SECURITY_NONE);
 
   // End the application.
-  $zAPPLE->End ();
+  $zOLDAPPLE->End ();
 
 ?>

@@ -161,7 +161,7 @@
       global $gCONTENTGROUPSMEMBERSTAB;
       global $gCONTENTGROUPSOPTIONSTAB;
 
-      global $zAUTHUSER, $zLOCALUSER, $zAPPLE;
+      global $zAUTHUSER, $zLOCALUSER, $zOLDAPPLE;
 
       global $gGROUPVIEW, $gGROUPVIEWTYPE, $gGROUPVIEWADMIN; 
       global $gPOSTDATA;
@@ -178,7 +178,7 @@
 
       $gCONTINUEFLAG = FALSE;
 
-      $this->groupContent->Context = $zAPPLE->Context;
+      $this->groupContent->Context = $zOLDAPPLE->Context;
       
       $gSCROLLSTEP[$this->groupContent->Context] = 20;
       
@@ -216,7 +216,7 @@
       global $gGROUPVIEW;
       global $gSITEDOMAIN;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
       global $HTTP_SERVER_VARS;
 
       $this->groupContent->Synchronize ();
@@ -292,7 +292,7 @@
 
     function AddForm () {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
 
@@ -327,7 +327,7 @@
         $zPARENT = new cGROUPCONTENT ($this->groupContent->PageContext);
         $zPARENT->Select ("tID", $gPARENTID);
         $zPARENT->FetchArray ();
-        $gPARENTBODY = $zAPPLE->Format ($zPARENT->Body, FORMAT_BASIC);
+        $gPARENTBODY = $zOLDAPPLE->Format ($zPARENT->Body, FORMAT_BASIC);
         $gPARENTSUBJECT = $zPARENT->Subject;
         $zSTRINGS->Lookup ('LABEL.SUBJECTPREFIX');
 
@@ -359,7 +359,7 @@
         $zAUTHUSER->BuildIconMenu ();
       } // if
 
-      $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/$replyfile.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $result = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/$replyfile.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($result);
 
@@ -381,13 +381,13 @@
 
       global $gTARGET;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $gPOSTDATA["SCROLLSTART[" . $this->groupContent->Context . "]"] = $gSCROLLSTART[$this->groupContent->Context];
 
       $gTARGET = $_SERVER[REQUEST_URI];
 
-      $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $result = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($result);
 
@@ -395,7 +395,7 @@
 
     function Listing ($pPARENTID, $pTHREADID = NULL) {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       global $zSTRINGS, $zHTML;
 
@@ -507,7 +507,7 @@
 
         // Generic
         $gSUBJECT = $this->groupContent->Subject;
-        $gBODY = $zAPPLE->Format ($this->groupContent->Body, FORMAT_BASIC);
+        $gBODY = $zOLDAPPLE->Format ($this->groupContent->Body, FORMAT_BASIC);
         
         $gAUTHOR = $zHTML->CreateUserLink ($this->groupContent->Owner_Username, $this->groupContent->Owner_Domain, FALSE);
         $gADDRESS = $this->groupContent->Owner_Address;
@@ -516,12 +516,12 @@
         $bONLINENOW = OUTPUT_NBSP;
 
         // If user activity in the last 3 minutes, consider them online.
-        list ($gAUTHORFULLNAME, $online) = $zAPPLE->GetUserInformation($this->groupContent->Owner_Username, $this->groupContent->Owner_Domain);
+        list ($gAUTHORFULLNAME, $online) = $zOLDAPPLE->GetUserInformation($this->groupContent->Owner_Username, $this->groupContent->Owner_Domain);
         if ($online) {
-          $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+          $bONLINENOW = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
         } // if
 
-        $bICON = $zAPPLE->BufferUserIcon ($this->groupContent->Owner_Username, $this->groupContent->Owner_Domain, $this->groupContent->Owner_Icon);
+        $bICON = $zOLDAPPLE->BufferUserIcon ($this->groupContent->Owner_Username, $this->groupContent->Owner_Domain, $this->groupContent->Owner_Icon);
 
         $gREPLYDATA = $gPOSTDATA;
         $gREPLYDATA["ACTION"] = "ADD";
@@ -604,17 +604,17 @@
         $gID = $this->groupContent->tID;
 
         if ($current > $start) {
-          $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/$deletedflag$nestflag.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/$deletedflag$nestflag.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-          $RECURSE = new cGROUPINFORMATION ($zAPPLE->Context);
+          $RECURSE = new cGROUPINFORMATION ($zOLDAPPLE->Context);
           $RECURSE->tID = $this->tID;
           $RECURSE->groupContent->Context = $this->groupContent->Context;
 
           $returnbuffer .= $RECURSE->Listing ($this->groupContent->tID);
 
-          $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/$deletedflag$nestflag.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/$deletedflag$nestflag.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } else {
-          $RECURSE = new cGROUPINFORMATION ($zAPPLE->Context);
+          $RECURSE = new cGROUPINFORMATION ($zOLDAPPLE->Context);
           $RECURSE->tID = $this->tID;
           $RECURSE->groupContent->Context = $this->groupContent->Context;
 
@@ -628,7 +628,7 @@
     } // Listing
 
     function TopicsListing () {
-      global $zAPPLE, $zHTML;
+      global $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION, $gTARGET, $gSITEDOMAIN, $gGROUPREQUEST;
 
@@ -636,14 +636,14 @@
 
       $return = NULL;
 
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/main.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       $topiccriteria = array ("groupInformation_tID"  => $this->tID,
                               "parent_tID"            => 0);
 
       $this->groupContent->SelectByMultiple ($topiccriteria, "latest_tID DESC, tID DESC"); 
 
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       while ($this->groupContent->FetchArray ()) {
         $gTARGET = 'http://' . $gSITEDOMAIN . '/group/' . $gGROUPREQUEST . '/thread/' . $this->groupContent->tID;
         $gSUBJECT = $zHTML->CreateLink ($gTARGET, $this->groupContent->Subject);
@@ -654,12 +654,12 @@
         list ($latest_owner, $latest_domain) = $this->FindLatest ($this->groupContent->tID); 
         $gLATEST = $zHTML->CreateUserLink ($latest_owner, $latest_domain);
 
-        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       $gTARGET = 'http://' . $gSITEDOMAIN . '/group/' . $gGROUPREQUEST . '/';
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/main.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/topics/main.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($return);
     } // TopicsListing
@@ -683,9 +683,9 @@
       global $gFRAMELOCATION;
       global $gGROUPVIEWFLAG;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
-      $result = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/main.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $result = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/$gGROUPVIEWFLAG/main.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($result);
 
@@ -749,7 +749,7 @@
 
     // Handle the workflow for the posts box.
     function Handle () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $bMAINSECTION;
 
@@ -767,7 +767,7 @@
       $gREADDATA  = array ("ACTION" => "READ");
 
       // Change the select button if anything is eelected.
-      if ($zAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
+      if ($zOLDAPPLE->ArrayIsSet ($gMASSLIST) ) $gSELECTBUTTON = 'Select None';
 
       // PART I: Take Action
       switch ($gACTION) {
@@ -949,7 +949,7 @@
 
     // Notify the user that a post has been replied to.
     function NotifyReply ($pEMAIL, $pREPLIEDUSER, $pREPLIEDUSERNAME, $pREPLYINGUSER) {
-      global $zSTRINGS, $zAPPLE, $zFOCUSUSER;
+      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER;
 
       // Return if post notification is turned off.
       if ($zFOCUSUSER->userSettings->Get ("GroupReplyNotification") == NOTIFICATION_OFF) {
@@ -984,16 +984,16 @@
       $zSTRINGS->Lookup ('MAIL.FROMNAME');
       $fromname = $zSTRINGS->Output;
 
-      $zAPPLE->Mailer->From = $from;
-      $zAPPLE->Mailer->FromName = $fromname;
-      $zAPPLE->Mailer->Body = $body;
-      $zAPPLE->Mailer->Subject = $subject;
-      $zAPPLE->Mailer->AddAddress ($to);
-      $zAPPLE->Mailer->AddReplyTo ($from);
+      $zOLDAPPLE->Mailer->From = $from;
+      $zOLDAPPLE->Mailer->FromName = $fromname;
+      $zOLDAPPLE->Mailer->Body = $body;
+      $zOLDAPPLE->Mailer->Subject = $subject;
+      $zOLDAPPLE->Mailer->AddAddress ($to);
+      $zOLDAPPLE->Mailer->AddReplyTo ($from);
 
-      $zAPPLE->Mailer->Send();
+      $zOLDAPPLE->Mailer->Send();
 
-      $zAPPLE->Mailer->ClearAddresses();
+      $zOLDAPPLE->Mailer->ClearAddresses();
 
       unset ($to);
       unset ($subject);
@@ -1005,7 +1005,7 @@
 
     // Goes through and removes all deleted posts with no children.
     function CleanUp () {
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $criteria = array ("groupInformation_tID"     => $this->tID,
                          "Body" => DELETED_GROUP_ENTRY);
@@ -1018,7 +1018,7 @@
         $CHILDREN = new cGROUPCONTENT ();
         $childcriteria = array ("parent_tID" => $this->groupContent->tID,
                                 "groupInformation_tID"        => $this->tID,
-                                "Context"    => $zAPPLE->Context);
+                                "Context"    => $zOLDAPPLE->Context);
         $CHILDREN->SelectByMultiple ($childcriteria);
 
         // If no children, delete.
@@ -1032,7 +1032,7 @@
 
     // Check if user has editor access.
     function CheckEditorAccess () {
-      global $zAPPLE, $zLOCALUSER; 
+      global $zOLDAPPLE, $zLOCALUSER; 
 
       // Check if user has ownership access to this page.
       if ($this->userAuth_uID != $zLOCALUSER->uID) {
@@ -1217,7 +1217,7 @@
    } // GetInformation
 
    function BufferMemberList () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $gFRAMELOCATION;
       global $gTHEMELOCATION;
@@ -1231,33 +1231,33 @@
       $this->groupMembers->SelectByMultiple ($membercriteria);
 
       // Calculate scroll values.
-      $gSCROLLMAX[$zAPPLE->Context] = $this->groupMembers->CountResult();
+      $gSCROLLMAX[$zOLDAPPLE->Context] = $this->groupMembers->CountResult();
 
       // Set page view to 50.
-      $gSCROLLSTEP[$zAPPLE->Context] = 50;
+      $gSCROLLSTEP[$zOLDAPPLE->Context] = 50;
   
       // Check if any results were found.
-      if ($gSCROLLMAX[$zAPPLE->Context] == 0) {
+      if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
         $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast();
       } // if
 
       // Loop through the list.
-      for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zAPPLE->Context]; $gLISTCOUNT++) {
+      for ($gLISTCOUNT = 0; $gLISTCOUNT < $gSCROLLSTEP[$zOLDAPPLE->Context]; $gLISTCOUNT++) {
         if ($this->groupMembers->FetchArray()) {
 
         global $gMEMBERNAME, $bMEMBERICON, $bONLINENOW;
 
         // Retrieve user info.
-        list ($gMEMBERNAME, $online) = $zAPPLE->GetUserInformation($this->groupMembers->Username, $this->groupMembers->Domain);
+        list ($gMEMBERNAME, $online) = $zOLDAPPLE->GetUserInformation($this->groupMembers->Username, $this->groupMembers->Domain);
 
         // Load the user icon.
-        $bMEMBERICON = $zAPPLE->BufferUserIcon ($this->groupMembers->Username, $this->groupMembers->Domain, NULL);
+        $bMEMBERICON = $zOLDAPPLE->BufferUserIcon ($this->groupMembers->Username, $this->groupMembers->Domain, NULL);
 
         // Load the online icon.
-        if ($online) $bONLINENOW = $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
+        if ($online) $bONLINENOW = $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/icons/onlinenow.aobj", INCLUDE_SECURITY_BASIC, OUTPUT_BUFFER);
 
-        $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/members/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+        $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/members/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // if
       } // for
 
@@ -1437,7 +1437,7 @@
     } // Approve
 
     function BufferMemberEditor () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $gFRAMELOCATION;
       global $gSITEDOMAIN;
@@ -1447,22 +1447,22 @@
                                "Verification"         => GROUP_VERIFICATION_APPROVED);
       $this->groupMembers->SelectByMultiple ($membercriteria);
       $gMEMBERCOUNT = $this->groupMembers->CountResult ();
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       if ($this->groupMembers->CountResult() == 0) {
         $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast ();
       } else {
         while ($this->groupMembers->FetchArray ()) {
-          $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // while
       } // if
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/members/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($return);
     } // BufferMemberEditor
 
     function BufferPendingEditor () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $gFRAMELOCATION;
 
@@ -1472,22 +1472,22 @@
                                 "Verification"         => GROUP_VERIFICATION_PENDING);
       $this->groupMembers->SelectByMultiple ($pendingcriteria);
       $gPENDINGCOUNT = $this->groupMembers->CountResult ();
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       if ($this->groupMembers->CountResult() == 0) {
         $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast ();
       } else {
         while ($this->groupMembers->FetchArray ()) {
-          $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // while
       } // if
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/pending/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($return);
     } // BufferPendingditor
 
     function BufferInviteEditor () {
-      global $zAPPLE, $zSTRINGS;
+      global $zOLDAPPLE, $zSTRINGS;
 
       global $gFRAMELOCATION;
 
@@ -1497,18 +1497,18 @@
                                 "Verification"         => GROUP_VERIFICATION_INVITED);
       $this->groupMembers->SelectByMultiple ($pendingcriteria);
       $gINVITECOUNT = $this->groupMembers->CountResult ();
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       if ($this->groupMembers->CountResult() == 0) {
         $this->groupMembers->Message = __("No Results Found");
         $return .= $this->groupMembers->CreateBroadcast ();
       } else {
         while ($this->groupMembers->FetchArray ()) {
-          $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+          $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // while
       } // if
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
-      $return .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/content/group/options/invite/main.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($return);
     } // BufferInviteEditor

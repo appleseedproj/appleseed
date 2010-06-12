@@ -127,7 +127,7 @@
 
     function BufferOptions ($pREFERENCEFIELD, $pREFERENCEID, $pSTYLE) {
 
-      global $zSTRINGS, $zFOCUSUSER, $zHTML, $zAPPLE;
+      global $zSTRINGS, $zFOCUSUSER, $zHTML, $zOLDAPPLE;
       global $gFRAMELOCATION;
 
       global $gPRIVACYSTYLE;
@@ -137,7 +137,7 @@
       $returnbuffer = "";
 
       // Create the privacy options list.
-      $returnbuffer = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Everyone
       $zSTRINGS->Lookup ('LABEL.EVERYONE', 'USER.PRIVACY');
@@ -174,7 +174,7 @@
         $returnbuffer .= $this->PrivacyOptions ($CIRCLES->Name, $CIRCLES->sID, $this->Access, PRIVACY_ALLOW); 
       } // while
 
-      $returnbuffer .= $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $returnbuffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.bottom.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       return ($returnbuffer);
 
@@ -190,7 +190,7 @@
       $gPRIVACYRESTRICT = FALSE; $gPRIVACYBLOCK = FALSE;
       $gPRIVACYHIDE = FALSE;
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       switch ($pDEFAULT) {
         case PRIVACY_SCREEN:
@@ -220,7 +220,7 @@
       $gLABEL = $pLABEL;
       $gCIRCLESID = $pCIRCLESID;
 
-      $return = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+      $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       unset ($gCIRCLESID);
       unset ($gLABEL);

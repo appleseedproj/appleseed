@@ -205,7 +205,7 @@
     function GetId ($pDIRECTION) {
 
       global $zFOCUSUSER, $zAUTHUSER;
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $TEMPJOURNAL = new cJOURNALPOST ();
 
@@ -232,7 +232,7 @@
       while ($TEMPJOURNAL->CountResult () > 0) {
 
         // Found an available entry.  Break.
-        if ($zAPPLE->CheckSecurity ($gPRIVACYSETTING) == FALSE) break;
+        if ($zOLDAPPLE->CheckSecurity ($gPRIVACYSETTING) == FALSE) break;
 
         $where = "userAuth_uID = " . $zFOCUSUSER->uID . 
                  " and Posted " . $direction . " '" . $TEMPJOURNAL->Posted . "' order by Posted " . $sort;
@@ -276,7 +276,7 @@
 
     function JournalScroll ($pTARGET, $pFOOTNOTE) {
 
-      global $zAPPLE;
+      global $zOLDAPPLE;
 
       $olderid = $this->GetOlderId ();
       $newerid = $this->GetNewerId ();
@@ -297,22 +297,22 @@
 
       if ($newerid) {
         $gTARGET = $pTARGET . $newerid . "/";
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/newer.aobj");
+        $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/newer.aobj");
       } else {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/newer.off.aobj");
+        $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/newer.off.aobj");
       } // if
 
       global $gFOOTNOTE;
       $gFOOTNOTE = $pFOOTNOTE;
-      $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/footnote.special.aobj");
+      $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/footnote.special.aobj");
 
       $gPOSTDATA['tID'] = $olderid;
 
       if ($olderid) {
         $gTARGET = $pTARGET . $olderid . "/";
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/older.aobj");
+        $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/older.aobj");
       } else {
-        $zAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/older.off.aobj");
+        $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/common/older.off.aobj");
       } // if
 
       // Restore the global target variable.

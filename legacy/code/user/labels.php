@@ -41,8 +41,8 @@
   if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
     if ($zLOCALUSER->userAccess->a == FALSE) {
-      $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-      $zAPPLE->End();
+      $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->End();
     } // if
   } // if
 
@@ -78,7 +78,7 @@
 
   // Check if IMAP is available for general email functions.
   if ($gSETTINGS['IMAP.AVAILABLE'] == TRUE) {
-    $bCOMPOSEBUTTON = $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/compose.new.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
+    $bCOMPOSEBUTTON = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/compose.new.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   } else {
     $bCOMPOSEBUTTON = '';
   } // if
@@ -146,17 +146,17 @@
       $zMESSAGE->CountNewInFolders ();
 
       if ($zMESSAGE->messageLabels->LoadLabels () == FALSE) {
-        $zAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
-        $zAPPLE->End();
+        $zOLDAPPLE->IncludeFile ('legacy/code/site/error/403.php', INCLUDE_SECURITY_NONE);
+        $zOLDAPPLE->End();
       } // if
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.top.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.top.aobj", INCLUDE_SECURITY_NONE);
 
       // Calculate scroll values.
       $gSCROLLMAX['user.messages.labels'] = $zMESSAGE->messageLabels->CountResult();
 
       // Adjust for a recently deleted entry.
-      $zAPPLE->AdjustScroll ('users.labels', $zMESSAGE->messageLabels);
+      $zOLDAPPLE->AdjustScroll ('users.labels', $zMESSAGE->messageLabels);
 
       // Check if any results were found.
       if ($gSCROLLMAX['user.messages.labels'] == 0) {
@@ -202,7 +202,7 @@
            $gLABEL = $zMESSAGE->messageLabels->Label;
          } // if
  
-         $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.middle.aobj", INCLUDE_SECURITY_NONE);
+         $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.middle.aobj", INCLUDE_SECURITY_NONE);
          unset ($gEXTRAPOSTDATA);
 
        } else {
@@ -210,7 +210,7 @@
        } // if
       } // for
 
-      $zAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.bottom.aobj", INCLUDE_SECURITY_NONE);
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/labels/list.bottom.aobj", INCLUDE_SECURITY_NONE);
       $zHTML->Scroll ($gTARGET, 'editlabels', 'users.labels');
 
     break;
@@ -220,6 +220,6 @@
   $bMAINSECTION = ob_get_clean (); 
   
   // Include the outline frame.
-  $zAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/labels.afrw", INCLUDE_SECURITY_NONE);
+  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/labels.afrw", INCLUDE_SECURITY_NONE);
 
 ?>
