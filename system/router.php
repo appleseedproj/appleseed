@@ -138,7 +138,7 @@ class cRouter {
         		case 'index.php':
         		case '':
         		default:
-        			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'redirect.php' );
+        			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'main.php' );
         			exit;
         		break;
         	}
