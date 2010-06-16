@@ -39,6 +39,13 @@ ARTICLE_HAS_BEEN_SUBMITTED="Your article has been submitted.  An editor will hav
 FIELD_IS_TOO_LONG="%fieldname$s is too long. (> %maxsize$ characters)";
 FILE_UPLOADED=File has been successfully uploaded.
 
+[user.options]
+CONFIGURE_YOUR_SETTINGS="Here you can change all of your settings for this site. Click on a label below to open up that section of options. You can use basic HTML for your profile questions and description. More information is available in the FAQ."
+
+[user.profile]
+USER_PROFILE="%fullname$s's Profile";
+CONTACT_USER="Contact %fullname$s";
+
 
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.

@@ -1,27 +1,21 @@
- <div id='contact'>
-   <div id='caption'>
-    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE.CONTACT'); ?>
-   </div> <!-- #caption -->
- 
-   <div id='container'>
+ <section id='contact'>
+   <h1> <?php echo __("Contact User", array ('fullname' => $gFOCUSFULLNAME)); ?> </h1>
 
-     <form id='friend' name='friend' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/friends/'>
-      <input type='hidden' name='gFRIENDUSERNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
-      <input type='hidden' name='gFRIENDDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
-      <?php $zHTML->Button ("friend_request"); ?>
-     </form> <!-- #friend -->
+   <form id='friend' name='friend' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/friends/'>
+    <input type='hidden' name='gFRIENDUSERNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
+    <input type='hidden' name='gFRIENDDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
+    <?php $zHTML->Button ("Friend Request"); ?>
+   </form> <!-- #friend -->
 
-     <form id='message' name='message' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/messages/'>
-      <input type='hidden' name='gRECIPIENTNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
-      <input type='hidden' name='gRECIPIENTDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
-      <?php $zHTML->Button ('send_message'); ?>
-     </form> <!-- #message -->
+   <form id='message' name='message' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/messages/'>
+    <input type='hidden' name='gRECIPIENTNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
+    <input type='hidden' name='gRECIPIENTDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
+    <?php $zHTML->Button ('Send Message'); ?>
+   </form> <!-- #message -->
 
-     <form id='block' name='block' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/messages/'>
-      <input type='hidden' name='gUSERNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
-      <input type='hidden' name='gDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
-      <?php $zHTML->Button ("block"); ?>
-     </form> <!-- #block -->
-
-   </div> <!-- #container -->
- </div> <!-- #contact -->
+   <form id='block' name='block' method='POST' action='http://<?php echo $zAUTHUSER->Domain; ?>/profile/<?php echo $zAUTHUSER->Username; ?>/messages/'>
+    <input type='hidden' name='gUSERNAME' value='<?php echo $zFOCUSUSER->Username; ?>' />
+    <input type='hidden' name='gDOMAIN' value='<?php echo $gSITEDOMAIN; ?>' />
+    <?php $zHTML->Button ("Block"); ?>
+   </form> <!-- #block -->
+ </section>

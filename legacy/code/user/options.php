@@ -189,13 +189,17 @@
   $QUESTIONSLIST->SelectByMultiple ($criterialist);
 
   global $gFOCUSQUESTION;
+  
+  echo "<table>";
+  echo "<tbody>";
 
   $QuestionCount = 0;
   while ($QUESTIONSLIST->FetchArray ()) {
     $gFOCUSQUESTION = $QUESTIONSLIST->FullQuestion;
-    echo "<label id='question" . $QUESTIONSLIST->tID . "'>\n";
+    echo "<tr>";
+    echo "<th><label id='question" . $QUESTIONSLIST->tID . "'>\n";
     echo "$gFOCUSQUESTION";
-    echo "</label>\n";
+    echo "</label></th>\n";
 
     // Select the user answer.
     $questionid = $QUESTIONSLIST->tID;
@@ -211,6 +215,8 @@
       $selected = $zFOCUSUSER->userAnswers->Answer;
     } // if
 
+    echo "<td>";
+    
     // Determine which kind of input is needed.
     switch ($QUESTIONSLIST->TypeOf) {
 
@@ -237,9 +243,15 @@
        $zHTML->TextArea ("gANSWERS[]", $selected);
       break;
     } // switch
+    
+    echo "</td>";
+    echo "</tr>";
 
     $QuestionCount++;
   } // while
+  
+  echo "</tbody>";
+  echo "</table>";
 
   unset ($QUESTIONSLIST);
 
@@ -315,7 +327,12 @@
 
   // Load the profile questions and answers into a buffer.
   $zOLDAPPLE->Profile ();
-  $bCONTACTBOX = $zOLDAPPLE->BufferContactBox ();
+  
+  // Check if a user is logged in.
+  if ((!$zAUTHUSER->Anonymous) && ($zLOCALUSER->Username != $zFOCUSUSER->Username)) {
+    // Buffer the contact box.
+    $bCONTACTBOX = $zOLDAPPLE->BufferContactBox ();
+  } // if
 
   // Include the outline frame.
   $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/users/options.afrw", INCLUDE_SECURITY_NONE);

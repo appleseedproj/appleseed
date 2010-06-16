@@ -1,7 +1,6 @@
-  <section id="user_profile"> 
-  	<h1>
-      <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE'); ?>
-    </h1>
+<section id="user_profile"> 
+
+  <h1> <?php echo __("User Profile", array ('fullname' => $gFOCUSFULLNAME)); ?> </h1>
 
   <?php echo $bPROFILEQUESTIONS; ?>
 

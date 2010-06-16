@@ -1,166 +1,176 @@
-<div id='options'>
-
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
-
- <div id='container'>
+   <!-- tabs objects -->
+   <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
   <?php $zLOCALUSER->Broadcast(); ?>
   <?php $zFOCUSUSER->Broadcast(); ?>
   <?php $zPHOTO->Broadcast(); ?>
   <?php $zICON->Broadcast(); ?>
 
-  <p class='content'>
-   <?php $zSTRINGS->Display ("OBJECT.CONTENT", "USER.OPTIONS"); ?>
-  </p>
-
- <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/sections/user/options.aobj", INCLUDE_SECURITY_BASIC); ?>
+ <section id="user_page">
  
+  <p class='content'> <?php echo __("Configure your settings"); ?></p>
+  
+  <a name='top' />
+  
+  <nav id="sections">
+    <ul>
+      <li> <a href="/profile/<?php echo $gFOCUSUSERNAME ?>/options/#general"><?php echo __("General Profile"); ?></a> </li>
+      <li> <a href="/profile/<?php echo $gFOCUSUSERNAME ?>/options/#qanda"><?php echo __("Profile Questions & Answers"); ?></a> </li>
+      <li> <a href="/profile/<?php echo $gFOCUSUSERNAME ?>/options/#email"><?php echo __("E-Mail Notification"); ?></a> </li>
+      <li> <a href="/profile/<?php echo $gFOCUSUSERNAME ?>/options/#custom"><?php echo __("Custom Settings"); ?></a> </li>
+      <li> <a href="/profile/<?php echo $gFOCUSUSERNAME ?>/options/#profile"><?php echo __("Profile Photo"); ?></a> </li>
+      <li> <a href="/profile/<?php echo $gFOCUSUSERNAME ?>/options/#usericons"><?php echo __("User Icons"); ?></a> </li>
+    </ul>
+  </nav>
+
  <form id='options' enctype="multipart/form-data" name='options' method='post' action='/profile/<?php echo $gFOCUSUSERNAME ?>/options/'>
 
-  <div id='general' class='<?php echo $gOPTIONGENERAL; ?>' name='general'>
+ <fieldset>
+  <legend><?php echo __("Options"); ?></legend>
+  
+  <fieldset>
+    <legend><a name="profile" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("General Profile"); ?></a></legend>
 
-    <p id='fullname'>
-     <?php $zSTRINGS->Display ("LABEL.FULLNAME", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #fullname -->
-    <?php $zHTML->TextBox ("FULLNAME", 64, $zFOCUSUSER->userProfile->Fullname); ?>
-    <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Fullname"); ?>
+    <table>
+      <tbody>
+        <tr>
+          <th> <label for="fullname"><?php echo __("Full Name"); ?></label> </th>
+          <td> <?php $zHTML->TextBox ("FULLNAME", 64, $zFOCUSUSER->userProfile->Fullname); ?> </td>
+        </tr>
+        <tr><th></th><td><?php $zFOCUSUSER->userProfile->Broadcast ("field", "Fullname"); ?><td></tr>
 
-    <p id='alias'>
-     <?php $zSTRINGS->Display ("LABEL.ALIAS", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #fullname -->
-    <?php $zHTML->TextBox ("ALIAS", 64, $zFOCUSUSER->userProfile->Alias); ?>
-    <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Alias"); ?>
+        <tr>
+          <th> <label for="alias"><?php echo __("Alias"); ?></label> </th>
+          <td> <?php $zHTML->TextBox ("ALIAS", 64, $zFOCUSUSER->userProfile->Alias); ?> </td>
+        </tr>
+        <tr><th></th><td><?php $zFOCUSUSER->userProfile->Broadcast ("field", "Alias"); ?></td></tr>
 
-    <p id='email'>
-     <?php $zSTRINGS->Display ("LABEL.EMAIL", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #email -->
-    <?php $zHTML->TextBox ("EMAIL", 128, $zFOCUSUSER->userProfile->Email); ?>
-    <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Email"); ?>
+        <tr>
+          <th> <label for="email"><?php echo __("Email"); ?></label> </th>
+          <td> <?php $zHTML->TextBox ("EMAIL", 128, $zFOCUSUSER->userProfile->Email); ?> </td>
+        </tr>
+        <tr><th></th><td><?php $zFOCUSUSER->userProfile->Broadcast ("field", "Email"); ?></td></tr>
 
-    <p id='gender'>
-     <?php $zSTRINGS->Display ("LABEL.GENDER", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #gender -->
-    <?php $zOPTIONS->Menu ("GENDER", $zFOCUSUSER->userProfile->Gender); ?>
+        <tr>
+          <th> <label for="gender"><?php echo __("Gender"); ?></label> </th>
+          <td> <?php $zOPTIONS->Menu ("GENDER", $zFOCUSUSER->userProfile->Gender); ?> </td>
+        </tr>
 
-    <p id='birthday'>
-     <?php $zSTRINGS->Display ("LABEL.BIRTHDAY", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #birthday -->
-    <?php $zHTML->BirthDateMenu ("BIRTHDAY", $gBIRTHDAYLIST['MONTH'], $gBIRTHDAYLIST['DAY'], $gBIRTHDAYLIST['YEAR']); ?>
+        <tr>
+          <th> <label for="birthday"><?php echo __("Birthday"); ?></label> </th>
+          <td> <?php $zHTML->BirthDateMenu ("BIRTHDAY", $gBIRTHDAYLIST['MONTH'], $gBIRTHDAYLIST['DAY'], $gBIRTHDAYLIST['YEAR']); ?> </td>
+        </tr>
 
-    <p id='zipcode'>
-     <?php $zSTRINGS->Display ("LABEL.ZIPCODE", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #zipcode -->
-    <?php $zHTML->TextBox ("ZIPCODE", 64, $zFOCUSUSER->userProfile->Zipcode); ?>
-    <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Zipcode"); ?>
+        <tr>
+          <th> <label for="zipcode"><?php echo __("Zipcode"); ?></label> </th>
+          <td> <?php $zHTML->TextBox ("ZIPCODE", 64, $zFOCUSUSER->userProfile->Zipcode); ?> </td>
+        </tr>
+        <tr><th></th><td> <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Zipcode"); ?> </td></tr>
 
-    <p id='description'>
-     <?php $zSTRINGS->Display ("LABEL.DESCRIPTION", "USER.OPTIONS.GENERAL"); ?>
-    </p> <!-- #description -->
-    <?php $zHTML->TextArea ("DESCRIPTION", $zFOCUSUSER->userProfile->Description); ?>
-    <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Description"); ?>
+        <tr>
+          <th> <label for="description"><?php echo __("Custom Description"); ?></label> </th>
+          <td> <?php $zHTML->TextArea ("DESCRIPTION", $zFOCUSUSER->userProfile->Description); ?> </td>
+        </tr>
+        <tr><th></th><td> <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Description"); ?> <td></tr>
+    
+      </tbody>
+    </table>
 
-  </div> <!-- #general -->
+  </fieldset>
 
-  <div id='questions' class='<?php echo $gOPTIONQUESTIONS; ?>' name='questions'>
+  <fieldset>
+    <legend><a name="qanda" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("Profile Questions & Answers"); ?></a></legend>
 
     <?php echo $bFULLQUESTIONS ?>
 
-  </div> <!-- #general -->
+  </fieldset>
 
-  <div id='security' class='<?php echo $gOPTIONSECURITY; ?>' name='security'>
-     (no text yet)
-  </div> <!-- #security -->
+  <fieldset>
+  	<legend><a name="email" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("E-Mail Notification"); ?></a></legend>
 
-  <div id='emails' class='<?php echo $gOPTIONEMAILS; ?>' name='emails'>
+    <table>
+      <tbody>
+        <tr>
+          <th> <label for="profilenotification"><?php echo __("Profile Comments Notifications"); ?></label>  </th>
+          <td> <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['ProfileNotification'], "PROFILE"); ?></td>
+        </tr>
 
-     <p class='profile'>
-      <?php $zSTRINGS->Display ("LABEL.PROFILE", "USER.OPTIONS.EMAILS"); ?>
-     </p>
-     <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['ProfileNotification'], "PROFILE"); ?>
+        <tr>
+          <th> <label for="journalnotification"><?php echo __("Journal Comments Notifications"); ?></label> </th>
+          <td> <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['JournalNotification'], "JOURNAL"); ?> </td>
+        </tr>
 
-     <p class='journal'>
-      <?php $zSTRINGS->Display ("LABEL.JOURNAL", "USER.OPTIONS.EMAILS"); ?>
-     </p>
-     <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['JournalNotification'], "JOURNAL"); ?>
+        <tr>
+          <th> <label for="replynotification"><?php echo __("Comment Replies Notifications"); ?></label> </th>
+          <td> <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['ReplyNotification'], "REPLY"); ?> </td>
+        </tr>
+      </tbody>
+    </table>
 
-     <p class='journalreply'>
-      <?php $zSTRINGS->Display ("LABEL.REPLY", "USER.OPTIONS.EMAILS"); ?>
-     </p>
-     <?php $zOPTIONS->Menu ("NOTIFICATION", $zFOCUSUSER->userSettings->SettingsCache['ReplyNotification'], "REPLY"); ?>
+  </fieldset>
 
-  </div> <!-- #emails -->
+  <fieldset>
+  	<legend><a name="custom" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("Custom Settings"); ?></a></legend>
 
-  <div id='config' class='<?php echo $gOPTIONCONFIG; ?>' name='config'>
+      <table>
+        <tbody>
+          <tr>
+            <th> <label for="defaulttheme"><?php echo __("Default Theme"); ?></label> </th>
+            <td> <?php $zHTML->Menu ("DEFAULTTHEME", $gTHEMELIST, NULL, $zFOCUSUSER->userSettings->SettingsCache['DefaultTheme']); ?> </td>
+          </tr>
+        </tbody>
+      </table>
 
-     <p class='notification'>
-      <?php $zSTRINGS->Display ("LABEL.THEME", "USER.OPTIONS.CONFIG"); ?>
-     </p>
+  </fieldset>
 
-     <?php $zHTML->Menu ("DEFAULTTHEME", $gTHEMELIST, NULL, $zFOCUSUSER->userSettings->SettingsCache['DefaultTheme']); ?>
+  <fieldset>
+    <legend><a name="profile" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("Profile Photo"); ?></a></legend>
 
-  </div> <!-- #config -->
-
-  <div id='photo' class='<?php echo $gOPTIONPHOTO; ?>' name='photo'>
-
-    <p id='profilephoto'>
-     <?php $zSTRINGS->Display ("LABEL.PHOTO", "USER.OPTIONS.PHOTO"); ?>
-    </p> <!-- #label -->
-    <?php $zHTML->FileBox ("PROFILEPHOTO", 25, 64, $gPROFILEPHOTOSIZE); ?>
-    <?php $zPHOTO->Broadcast ("field", "image"); ?>
+      <table>
+        <tbody>
+          <tr>
+            <th> <label for="profilephoto"><?php echo __("Profile Photo"); ?></label> </th>
+            <td> <?php $zHTML->FileBox ("PROFILEPHOTO", 25, 64, $gPROFILEPHOTOSIZE); ?></td>
+          </tr>
+          <tr><th></th><td><?php $zPHOTO->Broadcast ("field", "image"); ?></td></tr>
+        </tbody>
+      </table>
     
-  </div> <!-- #photo -->
+  </fieldset>
 
+  <fieldset>
+    <legend><a name="usericons" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("User Icons"); ?></a></legend>
 
-  <div id='icons' class='<?php echo $gOPTIONICONS; ?>' name='icons'>
+      <table>
+        <tbody>
+          <tr>
+            <th> <label for="current"><?php echo __("Current Icons"); ?></label> </th>
+            <td>
+              <ul>
+                <?php echo $bICONLIST ?> 
+              </ul>
+            </td>
+          </tr>
+          
+          <tr> 
+            <th> <label for="usericon"><?php __("Add New"); ?></label> </th>
+            <td> <?php $zHTML->FileBox ("USERICON", 25, 64, $gUSERICONSIZE, $gNEWUPLOAD); ?> </td>
+          </tr>
+          <tr><th></th><td><?php $zICON->Broadcast ("field", "image"); ?></td></tr>
+        </tbody>
+      </table>
 
-    <p id='currenticon'>
-     <?php $zSTRINGS->Display ("LABEL.CURRENT", "USER.OPTIONS.ICONS"); ?>
-    </p> <!-- #currenticon -->
+  </fieldset>
 
-    <?php echo $bICONLIST ?>
-
-    <p id='newicon'>
-     <?php __("Add New"); ?>
-    </p> <!-- #newicon -->
-    <?php $zHTML->FileBox ("USERICON", 25, 64, $gUSERICONSIZE, $gNEWUPLOAD); ?>
-    <?php $zICON->Broadcast ("field", "image"); ?>
-
-  </div> <!-- #icons -->
-
-  <div id='journal' class='<?php echo $gOPTIONJOURNAL; ?>' name='journal'>
-     (no text yet)
-  </div> <!-- #journal -->
-
-  <div id='photos' class='<?php echo $gOPTIONPHOTOS; ?>' name='photos'>
-     (no text yet)
-  </div> <!-- #photos -->
-
-  <div id='messages' class='<?php echo $gOPTIONMESSAGES; ?>' name='messages'>
-     (no text yet)
-  </div> <!-- #messages -->
-
-  <div id='friends' class='<?php echo $gOPTIONFRIENDS; ?>' name='friends'>
-     (no text yet)
-  </div> <!-- #friends -->
-
-  <div id='groups' class='<?php echo $gOPTIONGROUPS; ?>' name='groups'>
-     (no text yet)
-  </div> <!-- #groups -->
-
-  <div id='actions'>
+  <p>
     <input type='hidden' id='gSECTION' name='gSECTION' value='<?php echo $gSECTIONDEFAULT ?>' />
 
-    <?php $zHTML->Button ('save'); ?>
+    <?php $zHTML->Button ('Save'); ?>
+    <?php $zHTML->Button ('Save All'); ?>
+    <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
+  </p>
+ </form>
+ 
+ </fieldset>
 
-    <?php $zHTML->Button ('save_all'); ?>
- </form> <!-- #options -->
-
-    <form id='cancel' name='cancel' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/'>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
-    </form>
-
-  </div> <!-- #actions -->
-
- </div> <!-- #container -->
-</div> <!-- #options -->
+</section>

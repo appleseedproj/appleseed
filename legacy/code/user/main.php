@@ -209,7 +209,7 @@
     } // if
 
     // Check if a user is logged in.
-    if (!$zAUTHUSER->Anonymous) {
+    if ((!$zAUTHUSER->Anonymous) && ($zLOCALUSER->Username != $zFOCUSUSER->Username)) {
       // Buffer the contact box.
       $bCONTACTBOX = $zOLDAPPLE->BufferContactBox ();
     } // if
