@@ -141,31 +141,31 @@
   <fieldset>
     <legend><a name="usericons" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("User Icons"); ?></a></legend>
 
+    <fieldset>
+      <legend><?php echo __("Current Icons"); ?></legend>
+      
+      <?php echo $bICONLIST ?> 
+    </fieldset>
+          
+    <fieldset>
+      <legend><?php echo __("Add New"); ?></legend>
+      
       <table>
         <tbody>
           <tr>
-            <th> <label for="current"><?php echo __("Current Icons"); ?></label> </th>
-            <td>
-              <ul>
-                <?php echo $bICONLIST ?> 
-              </ul>
-            </td>
-          </tr>
-          
-          <tr> 
             <th> <label for="usericon"><?php __("Add New"); ?></label> </th>
             <td> <?php $zHTML->FileBox ("USERICON", 25, 64, $gUSERICONSIZE, $gNEWUPLOAD); ?> </td>
           </tr>
           <tr><th></th><td><?php $zICON->Broadcast ("field", "image"); ?></td></tr>
         </tbody>
       </table>
+    </fieldset>
 
   </fieldset>
 
   <p>
     <input type='hidden' id='gSECTION' name='gSECTION' value='<?php echo $gSECTIONDEFAULT ?>' />
 
-    <?php $zHTML->Button ('Save'); ?>
     <?php $zHTML->Button ('Save All'); ?>
     <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
   </p>

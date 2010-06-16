@@ -960,11 +960,13 @@
       $gQUESTIONANSWER = $zSTRINGS->Output;
       $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
  
-      $this->SetTag ('FOCUSAGE', $this->CalculateAge ($zFOCUSUSER->userProfile->Birthday)); 
-      $gQUESTIONSTYLE = 'age'; 
-      $zSTRINGS->Lookup ("LABEL.AGE", "USER.PROFILE");
-      $gQUESTIONANSWER = $zSTRINGS->Output;
-      $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
+      if ($zFOCUSUSER->userProfile->Birthday != '1969-12-31 00:00:00') {
+        $this->SetTag ('FOCUSAGE', $this->CalculateAge ($zFOCUSUSER->userProfile->Birthday)); 
+        $gQUESTIONSTYLE = 'age'; 
+        $zSTRINGS->Lookup ("LABEL.AGE", "USER.PROFILE");
+        $gQUESTIONANSWER = $zSTRINGS->Output;
+        $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
+      }
  
       // Load the configurable questions
       $QUESTIONSLIST = new cUSERQUESTIONS ();

@@ -1,26 +1,26 @@
-<li>
- <span class='image'>
-  <img src='<?php echo $gICONLOCATION ?>' border='0' />
- </span> <!-- .image -->
+<table>
+<tbody>
+<tr>
+  <th><label for="image"><?php echo __("Icon"); ?></label></th>
+  <td><img src='<?php echo $gICONLOCATION ?>' border='0' /></td>
+</tr>
+<tr>
 
- <p class='keyword'>
-  <?php $zSTRINGS->Display ("LABEL.KEYWORD", "USER.OPTIONS.ICONS"); ?>
- </p> <!-- .keyword -->
- <span class='keyword'>
-  <?php $zHTML->TextBox ("KEYWORD[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Keyword); ?>
- </span> <!-- .keyword -->
- <?php $zFOCUSUSER->userIcons->Broadcast ("field", "Keyword", $gBROADCASTUNIQUE); ?>
+  <th><label for="keyword"><?php echo __("Keyword"); ?></label></th>
+  <td> <?php $zHTML->TextBox ("KEYWORD[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Keyword); ?> </td>
+</tr>
+<tr><th></th><td><?php $zFOCUSUSER->userIcons->Broadcast ("field", "Keyword", $gBROADCASTUNIQUE); ?></td></tr>
 
- <p class='comments'>
-  <?php $zSTRINGS->Display ("LABEL.COMMENTS", "USER.OPTIONS.ICONS"); ?>          
- </p> <!-- .comments -->
- <span class='comments'>
-  <?php $zHTML->TextBox ("COMMENTS[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Comments); ?>
- </span> <!-- .comments -->
- <?php $zFOCUSUSER->userIcons->Broadcast ("field", "Comments", $gBROADCASTUNIQUE); ?>
+<tr>
+  <th><label for="commnts"><?php echo __("Comments"); ?></label></th>
+  <td><?php $zHTML->TextBox ("COMMENTS[" . $zFOCUSUSER->userIcons->tID . "]", 64, $zFOCUSUSER->userIcons->Comments); ?></td>
+</tr>
+<tr><th></th><td><?php $zFOCUSUSER->userIcons->Broadcast ("field", "Comments", $gBROADCASTUNIQUE); ?></td></tr>
 
- <span class='delete'>
-  <?php $zHTML->ButtonLink ('delete_icon', "/profile/$gFOCUSUSERNAME/options/", __("Confirm Delete")) ?>
- </span>
+</tr>
 
-</li>
+</tbody>
+</table>
+
+<?php // Temporarily Removed: $zHTML->Button ("Delete Icon", __("Confirm Delete")); ?>
+

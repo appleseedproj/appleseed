@@ -609,7 +609,7 @@
 
         global $gICONFILENAME;
         $gICONFILENAME = $this->userIcons->Filename;
-
+        
         // Delete the image file.
         $filename = "photos/" . $this->Username . 
                     "/icons/"  . $this->userIcons->Filename;

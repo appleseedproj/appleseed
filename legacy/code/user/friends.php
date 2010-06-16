@@ -33,7 +33,7 @@
   // | DESCRIPTION:  Displays friends section of user profile page.      |
   // | WRAPPED BY:   /code/user/main.php                                 |
   // +-------------------------------------------------------------------+
-
+  
   // Classes.
   global $zFRIENDS, $zHTML;
   
