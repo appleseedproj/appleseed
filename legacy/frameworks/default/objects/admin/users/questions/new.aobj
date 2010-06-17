@@ -1,56 +1,59 @@
-<section id="admin_page" class="questions">
-   <h1> <?php echo __("Add New"); ?> </h1>
+ <section id="admin_form" class="questions">
 
    <?php $ADMINDATA->Broadcast(); ?>
  
-   <form id='edit' method='POST' action='_admin/users/questions/'>
+   <form id='new' method='POST' action='_admin/users/questions/'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+     
+     <fieldset>
+       <legend> <?php echo __("Add New"); ?> </legend>
  
-    <?php $zHTML->Post ($gPOSTDATA); ?>
-
-    <label for='shortquestion'> 
-     <?php echo __("Short Question"); ?> 
-    </label>
-    <?php $zHTML->TextBox ("SHORTQUESTION", 64, $ADMINDATA->ShortQuestion); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "ShortQuestion"); ?>
+       <table>
+         <tbody>
+         
+           <tr>
+             <th><label for='shortquestion'>  <?php echo __("Short Question"); ?></label></th>
+             <td><?php $zHTML->TextBox ("SHORTQUESTION", 64, $ADMINDATA->ShortQuestion); ?><br />
+           </tr>
+           <tr><th></th><td><?php $ADMINDATA->Broadcast ("field", "ShortQuestion"); ?></td></tr>
  
-    <label for='fullquestion'>
-     <?php echo __("Full Question"); ?> 
-    </label>
-    <?php $zHTML->TextBox ("FULLQUESTION", 255, $ADMINDATA->FullQuestion); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "FullQuestion"); ?>
+           <tr>
+             <th><label for='fullquestion'> <?php echo __("Full Question"); ?></label></th>
+             <td><?php $zHTML->TextBox ("FULLQUESTION", 255, $ADMINDATA->FullQuestion); ?><br />
+           </tr>
+           <tr><th></th><td><?php $ADMINDATA->Broadcast ("field", "FullQuestion"); ?></td></tr>
 
-    <label for='typeof'>
-     <?php echo __("Question Type"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("QUESTIONTYPE", $ADMINDATA->TypeOf, "TYPEOF"); ?><br />
+           <tr>
+             <th><label for='typeof'> <?php echo __("Question Type"); ?></label></th>
+             <td><?php $zOPTIONS->Menu ("QUESTIONTYPE", $ADMINDATA->TypeOf, "TYPEOF"); ?><br />
+           </tr>
 
-    <label for='concern'>
-     <?php echo __("Concern"); ?> 
-    </label>
-    <?php $zHTML->TextBox ("CONCERN", 70, $ADMINDATA->Concern); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "Concern"); ?>
+           <tr>
+             <th><label for='concern'> <?php echo __("Concern"); ?></label></th>
+             <td><?php $zHTML->TextBox ("CONCERN", 70, $ADMINDATA->Concern); ?><br />
+           </tr>
+           <tr><th></th><td><?php $ADMINDATA->Broadcast ("field", "Concern"); ?></td></tr>
 
-    <label for='language'>
-     <?php echo __("Language"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language, "LANGUAGE"); ?><br />
+           <tr>
+             <th><label for='language'> <?php echo __("Language"); ?></label></th>
+             <td><?php $zOPTIONS->Menu ("LANGUAGE", $ADMINDATA->Language, "LANGUAGE"); ?><br />
+           </tr>
       
-    <label for='visibility'>
-     <?php echo __("Visibility"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("QUESTIONVISIBILITY", $ADMINDATA->Visible, "VISIBLE"); ?><br />
+           <tr>
+             <th><label for='visibility'> <?php echo __("Visibility"); ?></label></th>
+             <td><?php $zOPTIONS->Menu ("QUESTIONVISIBILITY", $ADMINDATA->Visible, "VISIBLE"); ?><br />
+           </tr>
+           
+         </tbody>
+       </table>
     
-     <input type='hidden' id='gACTION' name='gACTION' value='DELETE'>
-      <input type='hidden' id='gtID' name='gtID'  value='<?php echo $ADMINDATA->tID ?>'>
-      
-      <nav>
-        <ul>
-          <li><?php $zHTML->Button ('Save'); ?></li>
-          <li><?php $zHTML->Button ('Delete', __("Confirm Delete")) ?></li>
-          <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
-        </ul>
-      </nav>
+       <nav>
+         <ul>
+           <li><?php $zHTML->Button ('Save'); ?></li>
+           <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+         </ul>
+       </nav>
  
-     </form>
-  
-</section>
+     </fieldset>
+   </form>
+ </section>

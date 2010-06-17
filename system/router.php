@@ -54,6 +54,7 @@ class cRouter {
         	
         	$target = $pRoutes[0];
         	
+        	
         	switch ( $target ) {
         		case '_admin':
         			array_shift ( $pRoutes );
@@ -137,8 +138,11 @@ class cRouter {
         		break;
         		case 'index.php':
         		case '':
-        		default:
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'main.php' );
+        			exit;
+        		break;
+        		default:
+        			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'redirect.php' );
         			exit;
         		break;
         	}
@@ -158,12 +162,12 @@ class cRouter {
 
 			_G("ADMINDATA");
 			_G("zOLDAPPLE"); _G("zHTML"); _G("zAUTHUSER"); _G("zFOCUSUSER"); _G("zLOCALUSER"); _G("zREMOTEUSER"); _G("zIMAGE");
-			_G("zARTICLES"); _G("zCONTENTPAGE");
+			_G("zARTICLES"); _G("zCONTENTPAGE"); _G("zJANITOR");
 			_G("gFOCUSUSERID"); _G("gLOGINREQUEST"); _G("gACTION"); _G("gCOMMENTACTION"); _G("gJOINLOCATION"); _G("gFRAMELOCATION"); 
 			_G("gTHEMELOCATION"); _G("gPROFILEACTION"); _G("gPROFILESUBACTION"); _G("gICONUSER"); _G("gACTION"); _G("gPOSTDATA");
 			_G("gEXTRAPOSTDATA"); _G("gSITEURL"); _G("gREMEMBER");
 			_G("bREFRESHLINE"); _G("bMAINSECTION"); _G("bLOGINBOX"); _G("bJOINBOX");
-			_G("target"); _G("mainlocation");
+			_G("target"); _G("mainlocation"); _G("username");
 			
 			return ( true );
 

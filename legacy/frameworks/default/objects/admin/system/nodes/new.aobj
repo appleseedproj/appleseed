@@ -1,54 +1,61 @@
-<section id="admin_page" class="nodes">
-   <h1> <?php echo __("Add New"); ?> </h1>
+<section id="admin_form" class="nodes">
 
-   <?php $ADMINDATA->Broadcast(); ?>
+  <?php $ADMINDATA->Broadcast(); ?>
  
-   <form id='edit' method='POST' action='_admin/system/nodes/'>
- 
-    <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
+  <form id='new' method='POST' action='_admin/system/nodes/'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-
-    <label for='entry'> 
-     <?php echo __("Entry"); ?>
-    </label>
-    <?php $zHTML->TextBox ("ENTRY", 64, $ADMINDATA->Entry); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "Entry"); ?>
- 
-    <label for='trust'>
-     <?php echo __("Trust"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("TRUST", $ADMINDATA->Trust); ?><br />
-
-    <label for='endstamp'>
-     <?php echo __("End Stamp"); ?>
-    </label>
-    <?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?>
     
-    <label for='never'>
-     <?php echo __("Never"); ?>
-    </label>
-    <?php $zHTML->CheckBox ('NEVER', TRUE, TRUE, $gNEVERCHECKED); ?><br />
+    <fieldset>
+      <legend> <?php echo __("Add New"); ?> </legend>
 
-    <label for='share'>
-     <?php echo __("Share"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("SHARE", $ADMINDATA->Share); ?><br />
+      <table>
+        <tbody>
+        
+          <tr>
+            <th><label for='entry'><?php echo __("Entry"); ?></label></th>
+            <td><?php $zHTML->TextBox ("ENTRY", 64, $ADMINDATA->Entry); ?></td>
+          </tr>
+          <tr><th></th><td><?php $ADMINDATA->Broadcast ("field", "Entry"); ?></td></tr>
 
-    <label for='inherit'>
-     <?php echo __("Inherit"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?><br />
+          <tr>
+            <th><label for='trust'><?php echo __("Trust"); ?></label></th>
+            <td><?php $zOPTIONS->Menu ("TRUST", $ADMINDATA->Trust); ?></td>
+          </tr>
 
-    <label for='callback'>
-     <?php echo __("Callback"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("CALLBACK", $ADMINDATA->Callback); ?><br />
+          <tr>
+            <th><label for='endstamp'><?php echo __("End Stamp"); ?></label></th>
+            <td><?php $zHTML->DateMenu ("ENDSTAMP", $gENDSTAMPLIST['MONTH'], $gENDSTAMPLIST['DAY'], $gENDSTAMPLIST['YEAR']); ?>
+          </tr>
+   
+          <tr>
+            <th><label for='never'><?php echo __("Never"); ?></label></th>
+            <td><?php $zHTML->CheckBox ('NEVER', TRUE, TRUE, $gNEVERCHECKED); ?></td>
+           </tr>
 
-       <nav>
-         <ul>
-           <li><?php $zHTML->Button ('Save'); ?></li>
-           <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
-         </ul>
-       </nav>
- 
+          <tr>
+            <th><label for='share'><?php echo __("Share"); ?></label></th>
+            <td><?php $zOPTIONS->Menu ("SHARE", $ADMINDATA->Share); ?></td>
+          </tr>
+
+          <tr>
+            <th><label for='inherit'><?php echo __("Inherit"); ?></label></th>
+            <td><?php $zOPTIONS->Menu ("INHERIT", $ADMINDATA->Inherit); ?></td>
+          </tr>
+
+          <tr>
+            <th><label for='callback'><?php echo __("Callback"); ?></label></th>
+            <td><?php $zOPTIONS->Menu ("CALLBACK", $ADMINDATA->Callback); ?></td>
+          </tr>
+        </tbody>
+      </table>
+   
+      <nav>
+        <ul>
+          <li><?php $zHTML->Button ('Save'); ?></li>
+          <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+        </ul>
+      </nav>
+      
+    </fieldset>
+  </form>
 </section>

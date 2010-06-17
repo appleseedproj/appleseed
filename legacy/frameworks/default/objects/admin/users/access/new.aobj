@@ -1,57 +1,62 @@
-<section id="admin_page" class='access'>
-   <h1> <?php echo __("Add New"); ?> </h1>
+<section id="admin_form" id="access">
 
    <?php $ADMINDATA->Broadcast(); ?>
  
-   <form id='edit' method='POST' action='_admin/users/access/'>
+   <form id='new' method='POST' action='_admin/users/access/'>
+     <?php $zHTML->Post ($gPOSTDATA); ?>
+
+     <fieldset>
+       <legend> <?php echo __("Add New"); ?> </legend>
+       
+       <table>
+         <tbody>
  
-    <?php $zHTML->Post ($gPOSTDATA); ?>
-
-    <label for='userauth_uid'> 
-     <?php echo __("User"); ?>
-    </label>
-    <?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?><br />
+           <tr>
+             <th><label for='userauth_uid'><?php echo __("User"); ?></label></th>
+             <td><?php $zHTML->Menu ('USERAUTH_UID', $zLOCALUSER->Listing ('uID', 'Username'), 1, $ADMINDATA->userAuth_uID); ?></td>
+           </tr>
  
-    <label for='fullquestion'>
-     <?php echo __("Location"); ?> 
-    </label>
-    <?php $zHTML->TextBox ("LOCATION", 70, $ADMINDATA->Location); ?><br />
-    <?php $ADMINDATA->Broadcast ("field", "Location"); ?>
+           <tr>
+             <th><label for='fullquestion'><?php echo __("Location"); ?></label></th>
+             <td><?php $zHTML->TextBox ("LOCATION", 70, $ADMINDATA->Location); ?></td>
+           </tr>
+           <tr><th></th><td><?php $ADMINDATA->Broadcast ("field", "Location"); ?></td></tr>
 
-    <label for='r'>
-     <?php echo __("Read"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->r, "R"); ?><br />
+           <tr>
+             <th><label for='r'><?php echo __("Read"); ?></label></th>
+             <td><?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->r, "R"); ?></td>
+           </tr>
 
-    <label for='w'>
-     <?php echo __("Write"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->w, "W"); ?><br />
+           <tr>
+             <th><label for='w'><?php echo __("Write"); ?></label></th>
+             <td><?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->w, "W"); ?></td>
+           </tr>
 
-    <label for='e'>
-     <?php echo __("Editor"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->e, "E"); ?><br />
+           <tr>
+             <th><label for='e'> <?php echo __("Editor"); ?></label></th>
+             <td><?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->e, "E"); ?></td>
+           </tr>
 
-    <label for='a'>
-     <?php echo __("Admin"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->a, "A"); ?><br />
+           <tr>
+             <th><label for='a'> <?php echo __("Admin"); ?>  </label></th>
+             <td><?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->a, "A"); ?></td>
+           </tr>
 
-    <label for='inheritance'>
-     <?php echo __("Inheritance"); ?> 
-    </label>
-    <?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?><br />
+           <tr>
+             <th><label for='inheritance'> <?php echo __("Inheritance"); ?>  </label></th>
+             <td><?php $zOPTIONS->Menu ("BOOLEAN", $ADMINDATA->Inheritance, "INHERITANCE"); ?></td>
+           </tr>
+    
+        </tbody>
+      </table>
 
-      <?php $zHTML->Hidden ("tID", $ADMINDATA->tID); ?>
+       <nav>
+         <ul>
+           <li><?php $zHTML->Button ('Save'); ?></li>
+           <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
+         </ul>
+       </nav>
  
-      <nav>
-        <ul>
-          <li><?php $zHTML->Button ('Save'); ?></li>
-          <li><?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
-        </ul>
-      </nav>
- 
-     </form>
-  
-</section>
+     </fieldset>
+   </form>
+ </section>
