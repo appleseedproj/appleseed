@@ -38,7 +38,6 @@
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);
 
-echo "HI"; exit;
   // Include BASE API classes.
   require_once ('legacy/code/include/classes/BASE/application.php'); 
   require_once ('legacy/code/include/classes/BASE/debug.php'); 
@@ -67,16 +66,15 @@ echo "HI"; exit;
   $zOLDAPPLE->Initialize("site.error.403", TRUE);
 
   // Lookup the page title.
-  $zSTRINGS->Lookup ('BROWSER.SUBTITLE', 'SITE.ERROR.403');
-  $gPAGESUBTITLE = $zSTRINGS->Output;
+  $gPAGESUBTITLE = __("403 Forbidden Browser Title");
 
   // Lookup the title.
-  $zSTRINGS->Lookup ('OBJECT.TITLE', 'SITE.ERROR.403');
-  $gERRORTITLE = $zSTRINGS->Output;
+  $gERRORTITLE = __("403 Forbidden Title");
+  
+  global $gADMINEMAIL;
 
   // Lookup the content.
-  $zSTRINGS->Lookup ('OBJECT.CONTENT', 'SITE.ERROR.403');
-  $gERRORMSG = $zSTRINGS->Output;
+  $gERRORMSG = __("403 Forbidden Content", array ("adminemail" => $gADMINEMAIL));
   
   // Set up where to redirect to once we've logged in.
   global $gREDIRECT;

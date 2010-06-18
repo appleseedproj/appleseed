@@ -1,7 +1,7 @@
  <div id='folders'>
 
    <div id='caption'>
-    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.MESSAGES.FOLDERS'); ?>
+    <?php echo __("User Messages Folders Title"); ?>
    </div> <!-- #caption -->
 
  <div id='container'>

@@ -61,7 +61,14 @@ class cRouter {
         			
         			if (!$pRoutes[1]) { $pRoutes[1] = 'main'; }
         			
-        			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $pRoutes[0] . DS . $pRoutes[1] . '.php' );
+        			$path = ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $pRoutes[0] . DS . $pRoutes[1] . '.php' ;
+        			
+        			if (file_exists ($path) ) {
+        			  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $pRoutes[0] . DS . $pRoutes[1] . '.php' );
+        			} else {
+        			  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'error' . DS . '404.php' );
+        			}
+        			
         			exit;
         		break;
         		case 'profile':
@@ -161,12 +168,14 @@ class cRouter {
 			define ("_G", 'global $_G; foreach ($_G as $g => $glob) { global $$glob; }');
 
 			_G("ADMINDATA");
-			_G("zOLDAPPLE"); _G("zHTML"); _G("zAUTHUSER"); _G("zFOCUSUSER"); _G("zLOCALUSER"); _G("zREMOTEUSER"); _G("zIMAGE");
+			_G("zOLDAPPLE"); _G("zSTRINGS"); _G("zHTML"); _G("zAUTHUSER"); _G("zFOCUSUSER"); _G("zLOCALUSER"); _G("zREMOTEUSER"); _G("zIMAGE");
 			_G("zARTICLES"); _G("zCONTENTPAGE"); _G("zJANITOR");
 			_G("gFOCUSUSERID"); _G("gLOGINREQUEST"); _G("gACTION"); _G("gCOMMENTACTION"); _G("gJOINLOCATION"); _G("gFRAMELOCATION"); 
-			_G("gTHEMELOCATION"); _G("gPROFILEACTION"); _G("gPROFILESUBACTION"); _G("gICONUSER"); _G("gACTION"); _G("gPOSTDATA");
-			_G("gEXTRAPOSTDATA"); _G("gSITEURL"); _G("gREMEMBER");
-			_G("bREFRESHLINE"); _G("bMAINSECTION"); _G("bLOGINBOX"); _G("bJOINBOX");
+			_G("gTHEMELOCATION"); _G("gPROFILEACTION"); _G("gPROFILESUBACTION"); _G("gICONUSER"); _G("gACTION"); 
+			_G("gPOSTDATA"); _G("gEXTRAPOSTDATA");
+			_G("gERRORMSG"); _G("gERRORTITLE"); _G("gSETTINGS");
+			_G("gEXTRAPOSTDATA"); _G("gSITEURL"); _G("gREMEMBER"); _G("gRECIPIENT");
+			_G("bREFRESHLINE"); _G("bMAINSECTION"); _G("bLOGINBOX"); _G("bJOINBOX"); _G("bINVITEBOX");
 			_G("target"); _G("mainlocation"); _G("username");
 			
 			return ( true );

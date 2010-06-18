@@ -1,7 +1,7 @@
 <section id='joininfo'>
   <h1>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.JOIN.INFO'); ?>
+   <?php echo __("Site Join Info Title"); ?>
   </h1>
 
-  <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'SITE.JOIN.INFO'); ?>
+   <?php echo __("Site Join Info Content"); ?>
 </section> <!-- #joininfo -->

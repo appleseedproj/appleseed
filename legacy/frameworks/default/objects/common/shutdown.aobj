@@ -5,11 +5,11 @@
 
    <div id='error'>
     <div id='caption'>
-     <?php $zSTRINGS->Display ('OBJECT.TITLE', 'COMMON.SHUTDOWN'); ?>
+     <?php echo __("System Shutdown Title"); ?>
     </div> <!-- #caption -->
  
     <div id='container'>
-     <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'COMMON.SHUTDOWN'); ?>
+     <?php echo __("System Shutdown Content"); ?>
     </div> <!-- #container -->
  
     </div> <!-- #error -->

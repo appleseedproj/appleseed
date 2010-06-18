@@ -136,12 +136,11 @@
       global $gTABLEPREFIX;
   
       // Initialize classes
-      global $zSTRINGS, $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML, $zSEARCH, $zTAGS;
+      global $zTOOLTIPS, $zOPTIONS, $zLOGS, $zHTML, $zXML, $zSEARCH, $zTAGS;
       
       global $zAUTHUSER, $zREMOTEUSER, $zLOCALUSER, $zFOCUSUSER;
       global $zIMAGE;
       
-      $zSTRINGS = new cSYSTEMSTRINGS ();
       $zTOOLTIPS = new cSYSTEMTOOLTIPS ();
       $zOPTIONS = new cSYSTEMOPTIONS ();
       $zLOGS    = new cSYSTEMLOGS ();
@@ -184,9 +183,7 @@
     
       } // if
   
-      // Load site title and url into global variable.
-      $zSTRINGS->Lookup ('BROWSER.TITLE', $this->Context);
-      $gSITETITLE = $zSTRINGS->Output;
+      $gSITETITLE = __("Browser Title");
   
       // Check for gLOGINSESSION cookie.
       $gLOGINSESSION = isset($_COOKIE["gLOGINSESSION"]) ? 
@@ -208,10 +205,8 @@
           $zLOCALUSER->Select ("uID", $zLOCALUSER->uID);
           if ($zLOCALUSER->CountResult() == 0) {
             // User is anonymous.
-            $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
-            $zAUTHUSER->Username = $zSTRINGS->Output;
-            $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
-            $zAUTHUSER->Fullname = $zSTRINGS->Output;
+            $zAUTHUSER->Username = __("Anonymous");
+            $zAUTHUSER->Fullname = __("Anonymous User");
             $zAUTHUSER->Domain = $gSITEDOMAIN;
             $zAUTHUSER->Remote = FALSE;
             $zAUTHUSER->Anonymous = TRUE;
@@ -242,10 +237,8 @@
   
           if ($zREMOTEUSER->CountResult() == 0) {
             // User is anonymous.
-            $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
-            $zAUTHUSER->Username = $zSTRINGS->Output;
-            $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
-            $zAUTHUSER->Fullname = $zSTRINGS->Output;
+            $zAUTHUSER->Username = __("Anonymous");
+            $zAUTHUSER->Fullname = __("Anonymous User");
             $zAUTHUSER->Domain = $gSITEDOMAIN;
             $zAUTHUSER->Remote = FALSE;
             $zAUTHUSER->Anonymous = TRUE;
@@ -260,10 +253,8 @@
           } // if
         } else {
           // User is anonymous.
-          $zSTRINGS->Lookup ('LABEL.ANONYMOUS');
-          $zAUTHUSER->Username = $zSTRINGS->Output;
-          $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME');
-          $zAUTHUSER->Fullname = $zSTRINGS->Output;
+          $zAUTHUSER->Username = __("Anonymous");
+          $zAUTHUSER->Fullname = __("Anonymous User");
           $zAUTHUSER->Domain = $gSITEDOMAIN;
           $zAUTHUSER->Remote = FALSE;
           $zAUTHUSER->Anonymous = TRUE;
@@ -936,7 +927,7 @@
     function Profile () {
    
       // Set global variable scope.
-      global $zHTML, $zFOCUSUSER, $zSTRINGS, $zOPTIONS;
+      global $zHTML, $zFOCUSUSER, $zOPTIONS;
 
       global $gFRAMELOCATION;
       global $gQUESTIONSTYLE, $gQUESTIONANSWER;
@@ -948,23 +939,18 @@
       global $gFOCUSFULLNAME;
 
       $gQUESTIONSTYLE = 'fullname';
-      $zSTRINGS->Lookup ("LABEL.FULLNAME", "USER.PROFILE");
-      $gQUESTIONANSWER = $zSTRINGS->Output;
+      $gQUESTIONANSWER = "<strong>" . __("Fullname") . "</strong> " . $gFOCUSFULLNAME;
       $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
 
-      global $gFOCUSGENDER;
-      $gFOCUSGENDER = $zOPTIONS->Label ("GENDER", $zFOCUSUSER->userProfile->Gender);
-      $this->SetTag ('FOCUSGENDER', $gFOCUSGENDER);
+      $gender = $zOPTIONS->Label ("GENDER", $zFOCUSUSER->userProfile->Gender);
       $gQUESTIONSTYLE = 'gender';
-      $zSTRINGS->Lookup ("LABEL.GENDER", "USER.PROFILE");
-      $gQUESTIONANSWER = $zSTRINGS->Output;
+      $gQUESTIONANSWER = "<strong>" . __("Gender") . "</strong> " . $gender;
       $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
  
       if ($zFOCUSUSER->userProfile->Birthday != '1969-12-31 00:00:00') {
-        $this->SetTag ('FOCUSAGE', $this->CalculateAge ($zFOCUSUSER->userProfile->Birthday)); 
+        $age =$this->CalculateAge ($zFOCUSUSER->userProfile->Birthday);
         $gQUESTIONSTYLE = 'age'; 
-        $zSTRINGS->Lookup ("LABEL.AGE", "USER.PROFILE");
-        $gQUESTIONANSWER = $zSTRINGS->Output;
+        $gQUESTIONANSWER = "<strong>" . __("Gender") . "</strong> " . $gender;
         $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
       }
  
@@ -1025,8 +1011,7 @@
         } // switch
 
         $gQUESTIONSTYLE = 'question' . $QUESTIONSLIST->tID;
-        $zSTRINGS->Lookup ("LABEL.QUESTION", "USER.PROFILE");
-        $gQUESTIONANSWER = $zSTRINGS->Output;
+        $gQUESTIONANSWER = "<strong>" . $gFOCUSQUESTION . "<strong> " . $gFOCUSANSWER;
         $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
       } // while
 
@@ -1513,20 +1498,8 @@
     
     // Get a list of installed language packs.
     function GetLanguageList () {
-      
-      global $zSTRINGS;
-      
-      $query = "
-        SELECT DISTINCT(Language) AS Language
-        FROM   $zSTRINGS->TableName
-      ";
-      
-      $zSTRINGS->Query ($query);
-      
-      $return = array ();
-      while ($zSTRINGS->FetchArray()) {
-        $return[$zSTRINGS->Language] = $zSTRINGS->Language;
-      } // while
+    	
+      $return['en'] = 'en';
       
       return ($return);
     } // GetLanguageList

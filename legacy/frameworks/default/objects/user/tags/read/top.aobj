@@ -2,7 +2,7 @@
   <a name='tags'></a>
 
   <div id='caption'>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PHOTO.TAGS'); ?>
+   <?php echo __("User Photo Tags Title"); ?>
   </div> <!-- #caption -->
 
  <div id='container'>

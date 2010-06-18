@@ -459,8 +459,7 @@
          $current += $total; 
          if ($current > $limit) {
            $this->Error = -1;
-           $zSTRINGS->Lookup ('ERROR.TOOMANY', $this->Context);
-           $this->Message = $zSTRINGS->Output;
+           $this->Message = __("Limit Reached");
            return (FALSE);
          } // if
          
@@ -475,8 +474,7 @@
            // Check if the tag is too long
            if (strlen ($taglist[$count]) > USER_TAG_MAXLENGTH) {
              $this->Error = -1;
-             $zSTRINGS->Lookup ('ERROR.TOOLONG', $this->Context);
-             $this->Message = $zSTRINGS->Output;
+             $this->Message = __("Field Is Too Long", array ("fieldname" => "TagName", "maxsize" => USER_TAG_MAXLENGTH));
              return (FALSE);
            } // if
          } // if 

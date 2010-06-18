@@ -1,6 +1,6 @@
 <section id="latest_nodes"> 
   <h1>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.NODES'); ?>
+   <?php echo __("Extended Network Title"); ?>
   </h1>
 
  <ul>

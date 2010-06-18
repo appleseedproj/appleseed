@@ -23,6 +23,7 @@ YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as 
 YOU_ARE_LOGGED_IN_AS="Currently logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 LOGGED_IN_AS_ADMINISTRATOR="Administrator logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 ANONYMOUS="(anonymous)"
+ANONYMOUS_USER="An Anonymous User"
 COPYRIGHT_NOTICE="Copyright &copy; 2004-2010 by the Appleseed Project under the GNU General Public License.  All Rights Reserved."
 WRITE_ACCESS_DENIED="Insufficient Access To Make Modifications."
 NONE_SELECTED="Error: Nothing was selected."
@@ -36,8 +37,17 @@ CONFIRM_DELETE_SELECTED="Are you sure you want to delete the selected items?"
 ACCESS_DENIED="ACCESS DENIED\n\nYou do not have sufficient permission to access this section.  If you feel this is in error, please contact <a href='mailto:%adminemail$s'>%adminemail$s</a> with any questions.\n\nThank you,\nThe Staff @ %SITEDOMAIN%"
 ALL_OPTIONS_SAVED="All Of Your Options Have Been Saved."
 ARTICLE_HAS_BEEN_SUBMITTED="Your article has been submitted.  An editor will have to approve it for viewing"
-FIELD_IS_TOO_LONG="%fieldname$s is too long. (> %maxsize$ characters)";
-FILE_UPLOADED=File has been successfully uploaded.
+FIELD_IS_TOO_LONG="%fieldname$s is too long. (> %maxsize$s characters)";
+FILE_UPLOADED="File has been successfully uploaded."
+FILE_TOO_BIG_ERROR="The file you uploaded was greater than %maxsize$s.  Try another file."
+PARTIAL_FILE_UPLOAD_ERROR=Only a partial file was uploaded.  Try again.
+NO_FILE_UPLOADED_ERROR="No file was uploaded.  Please try again."
+NO_TEMPORARY_DIRECTORY_ERROR="No temporary directory is available.  Please contact the administrator."
+NO_UPLOAD_ERROR="No file was uploaded.  Try again."
+INVALID_IMAGE_ERROR="The file you uploaded is not a valid image file.  Try again."
+WRONG_IMAGE_TYPE_ERROR="The image you uploaded is not a GIF, JPEG, or PNG file.  Try again."
+WRONG_IMAGE_SIZE_ERROR="The image you uploaded is bigger than %maxwidth$sx%maxheight$s.  Try again."
+CANNOT_SAVE_ERROR="Could not save this image.  If problem persists, contact the administrator."
 
 [user.options]
 CONFIGURE_YOUR_SETTINGS="Here you can change all of your settings for this site. Click on a label below to open up that section of options. You can use basic HTML for your profile questions and description. More information is available in the FAQ."
@@ -46,7 +56,27 @@ CONFIGURE_YOUR_SETTINGS="Here you can change all of your settings for this site.
 USER_PROFILE="%fullname$s's Profile";
 CONTACT_USER="Contact %fullname$s";
 
+[user.messages]
+QUOTE_REPLY="\n\n> From: \"%authorfullname$s\" (%authorusername$s@%authordomain$s)\n> Date: %messagedate$s\n>\n"
 
+[user.invites]
+USER_INVITES_TITLE="Invite A Friend!"
+USER_INVITES_TITLE_CONFIRM="Friend Invited!"
+USER_INVITES_CONTENT="You have <b>%invitecount$s</b> invite(s) available!  Enter an email address below and click the 'invite' button to tell a friend about this site!"
+USER_INVITES_CONFIRM_CONTENT="Congratulations!  You have invited <u>%recipient$s</u> to this site.  <br /><br />They will recieve an email with instructions on how to sign up for an account, and you will recieve an email when their new account is created.  <br /><br />You have <b>%invitecount$s</b> invite(s) remaining."
+
+[site.invites]
+SITE_INVITES_TITLE="Invite A Friend!"
+SITE_INVITES_CONTENT="You have <b>%invitecount$s</b> invite(s) available!  Enter an email address below and click the 'invite' button to tell a friend about this site!"
+
+[site.join]
+SITE_JOIN_TITLE="Join This Site"
+SITE_JOIN_CONTENT="Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons."
+
+[error]
+403_FORBIDDEN_CONTENT="ERROR: Forbidden (403)<br /><br />You do not have access to the requested area.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='%adminemail$s'>%adminemail$s</a><br /><br />Thank You,<br />The Staff @ Appleseed"
+404_NOT_FOUND_CONTENT="ERROR: File Not Found (404)<br /><br />The file you are looking for could not be found.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%adminemail$s'>%adminemail$s</a><br /><br />Thank You,<br />The Staff @ Appleseed"
+ERROR_DUPLICATE_INVITE="This user has already been invited."
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?
@@ -194,7 +224,6 @@ CONTACT_USER="Contact %fullname$s";
 ;ERROR.DUPLICATE:CONTENT.GROUPS=A group with this name already exists.  Choose another.
 ;OBJECT.RETURN:SITE.ERROR=<a href='%SITEURL%'>CLICK HERE TO RETURN</a>
 ;BROWSER.SUBTITLE:SITE.ERROR.403=- 403 Forbidden
-;OBJECT.CONTENT:SITE.ERROR.403=ERROR: Forbidden (403)\n\nYou do not have access to the requested area.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a>\n\nThank You,\nThe Staff @ Appleseed
 ;OBJECT.TITLE:SITE.ERROR.403=403 ERROR
 ;OBJECT.TITLE:SITE.ERROR.404=404 ERROR
 ;OBJECT.CONTENT:SITE.ERROR.404=ERROR: File Not Found (404)\n\nThe file you are looking for could not be found.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%ADMINEMAIL%'>%ADMINEMAIL%</a>\n\nThank You,\nThe Staff @ Appleseed
@@ -394,7 +423,6 @@ CONTACT_USER="Contact %fullname$s";
 ;MAIL.FROM:USER.MESSAGES="New Message" <messages@%SITEDOMAIN%>
 ;MAIL.SUBJECT:USER.MESSAGES=New message from %SENDERNAME% on <asd id='global' name='SITEDOMAIN' case='proper' />
 ;MAIL.BODY:USER.MESSAGES=%RECIPIENTFULLNAME%,\n\nYou have a new message from %SENDERNAME% on AppleseedProject.org!\n\nClick here to read your Appleseed messages:\n%MESSAGESURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
-;LABEL.QUOTE:USER.MESSAGES=\n\n> From: "%AUTHORFULLNAME%" (%AUTHORUSERNAME%@%AUTHORDOMAIN%)\n> Date: %MESSAGEDATE%\n>\n
 ;LABEL.APPLY:USER.MESSAGES=Apply Label:
 ;LABEL.REMOVE:USER.MESSAGES=Remove Label:
 ;MESSAGE.APPLY:USER.MESSAGES=This message has been labeled '%LABELNAME%'
@@ -502,7 +530,6 @@ CONTACT_USER="Contact %fullname$s";
 ;ERROR.WRONGSIZE:USER.OPTIONS.ICONS=The image you uploaded is bigger than %MAXWIDTH%x%MAXHEIGHT%.  Try again.
 ;ERROR.NOUPLOAD:USER.OPTIONS.ICONS=No file was uploaded.  Try again.
 ;ERROR.NOTEMP:USER.OPTIONS.ICONS=No temporary directory is available.  Please contact the administrator.
-;ERROR.NOFILE:USER.OPTIONS.ICONS=No file was uploaded.  Please try again.
 ;ERROR.PARTIAL:USER.OPTIONS.ICONS=Only a partial file was uploaded.  Try again.
 ;MESSAGE.UPLOADED:USER.OPTIONS.ICONS=Image has been successfully uploaded.
 ;LABEL.CURRENT:USER.OPTIONS.ICONS=CURRENT ICONS

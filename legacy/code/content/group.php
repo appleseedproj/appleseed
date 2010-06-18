@@ -216,8 +216,7 @@
     if (!$zGROUPS->CheckUserAccess()) {
       // Check if user is pending
       if (!$zGROUPS->CheckApproval()) {
-        $zSTRINGS->Lookup ("CONFIRM.LEAVE");
-        $bJOINBUTTON = $zHTML->CreateButton ("leave_group", $zSTRINGS->Output);
+        $bJOINBUTTON = $zHTML->CreateButton ("leave_group", __("Confirm Leaving Group"));
         $zGROUPS->Message = __("Pending approval");
       } else {
         if (!$zGROUPS->CheckJoinAccess()) {
@@ -228,8 +227,7 @@
       } // if
     } else {
       // If so, and user is approved, show leave button.
-      $zSTRINGS->Lookup ("CONFIRM.LEAVE");
-      $bJOINBUTTON = $zHTML->CreateButton ("leave_group", $zSTRINGS->Output);
+      $bJOINBUTTON = $zHTML->CreateButton ("leave_group", __("Confirm Leaving Group"));
       $zGROUPS->groupMembers->FetchArray ();
       if ($zGROUPS->groupMembers->Verification == GROUP_VERIFICATION_APPROVED)
         $bJOINBUTTON = $zHTML->CreateButton ("leave_group");

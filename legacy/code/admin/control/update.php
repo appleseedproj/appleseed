@@ -141,8 +141,7 @@
   	break;
   	case 'REMOVE':
   	  if ($gSERVER == 'update.appleseedproject.org') {
-        $zSTRINGS->Lookup ('ERROR.CANTDELETE', $zOLDAPPLE->Context);
-        $zUPDATE->Message = $zSTRINGS->Output;
+        $zUPDATE->Message = __("Cannot Delete");
         $zUPDATE->Error = -1;
   	  } else {
   	    $zUPDATE->RemoveServer ($gSERVER);
@@ -161,8 +160,7 @@
       if ($zOLDAPPLE->CheckVersion ($gOFFICIALLATEST, $gVERSION)) {
       	$zOLDAPPLE->SetTag ('VERSION', $gVERSION);
       	$zOLDAPPLE->SetTag ('SERVER', $gSERVER);
-        $zSTRINGS->Lookup ('ERROR.INVALIDVERSION', $zOLDAPPLE->Context);
-        $zUPDATE->Message = $zSTRINGS->Output;
+        $zUPDATE->Message = __("Invalid Version");
         $zUPDATE->Error = -1;
         break;
       } // if
@@ -174,25 +172,21 @@
       
       // Step 1a: Check if temporary directory is writeable;
       if (!is_writable($temporary)) {
-        $zSTRINGS->Lookup ('ERROR.TEMPORARY', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Temporary Directory Unwritable");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	break;
       } else {
-        $zSTRINGS->Lookup ('RESULT.TEMPORARY', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Temporary Directory Created");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
       
       // Step 1b: Check if backup directory is writeable;
       if (!is_writable($backup)) {
-        $zSTRINGS->Lookup ('ERROR.BACKUP', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Backup Directory Unwritable");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	break;
       } else {
-        $zSTRINGS->Lookup ('RESULT.BACKUP', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Backup Directory Created");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // if
       
@@ -201,9 +195,7 @@
       
       if (count($unwritable) > 0) {
       	foreach ($unwritable as $unwrite) {
-      	  $zOLDAPPLE->SetTag ('UNWRITABLE', $unwrite);
-          $zSTRINGS->Lookup ('ERROR.UNWRITABLE', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+      	  $gRESULT = __("Directory Unwritable", array ('unwrite' => $unwrite));
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // foreach
       	break;
@@ -213,35 +205,30 @@
       $oldShutdownState = $zOLDAPPLE->GetShutdown ();
       $zOLDAPPLE->SetShutdown (ADMIN_ONLY);
       
-      $zSTRINGS->Lookup ('RESULT.STARTSHUTDOWN', $zOLDAPPLE->Context);
-      $gRESULT = $zSTRINGS->Output;
+      $gRESULT = __("Shutdown Started");
       $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Step 3: Retrieve latest reference tree.
   	  $latestReference = $zUPDATE->NodeFileListing($gSERVER, $gVERSION);
   	  if (!$latestReference) {
-        $zSTRINGS->Lookup ('ERROR.LATESTTREE', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Latest Tree Undetermined");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $zOLDAPPLE->SetShutdown ($oldShutdownState);
       	break;
   	  } else {
-        $zSTRINGS->Lookup ('RESULT.LATESTTREE', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Latest Tree Determined");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
       
       // Step 4: Retrieve current reference tree.
   	  $currentReference = $zUPDATE->NodeFileListing($gSERVER, $gAPPLESEEDVERSION);
   	  if (!$currentReference) {
-        $zSTRINGS->Lookup ('ERROR.CURRENTTREE', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Current Tree Undetermined");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         $zOLDAPPLE->SetShutdown ($oldShutdownState);
         break;
   	  } else {
-        $zSTRINGS->Lookup ('RESULT.CURRENTTREE', $zOLDAPPLE->Context);
-        $gRESULT = $zSTRINGS->Output;
+        $gRESULT = __("Current Tree Determined");
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
   	  
@@ -266,8 +253,8 @@
       
       // Step 9: Restore appleseed node.
       $zOLDAPPLE->SetShutdown ($oldShutdownState);
-      $zSTRINGS->Lookup ('RESULT.ENDSHUTDOWN', $zOLDAPPLE->Context);
-      $gRESULT = $zSTRINGS->Output;
+      
+      $gRESULT = __("Shutdown Ended");
       $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $zUPDATE->Message = __("System updated successfully");

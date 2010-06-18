@@ -88,8 +88,7 @@
         if ($pFROMIDVALUE < 2) {
           // Pull page title from database settings
           global $zSTRINGS;
-          $zSTRINGS->Lookup ('ERROR.FROMONE', $this->PageContext);
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Cannot move up");
           $this->Error = -1;
           $this->Rollback();
           return (0);
@@ -160,9 +159,7 @@
         // Can't move up anywhere from 1.
         if ($pFROMIDVALUE < 2) {
           // Pull page title from database settings
-          global $zSTRINGS;
-          $zSTRINGS->Lookup ('ERROR.FROMONE', $this->PageContext);
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Cannot Move Up");
           $this->Error = -1;
           $this->Rollback();
           return (0);
@@ -3218,7 +3215,7 @@
     // Output the header object.
     function Header () {
       global $gTHEMELOCATION;
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
       global $zAUTHUSER, $zLOCALUSER;
 
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/admin/");
@@ -3247,7 +3244,7 @@
     // Output the footer object.
     function Footer () {
       global $gTHEMELOCATION;
-      global $zSTRINGS, $zLOCALUSER, $zAUTHUSER, $zOLDAPPLE;
+      global $zLOCALUSER, $zAUTHUSER, $zOLDAPPLE;
   
       $zLOCALUSER->Access (FALSE, FALSE, FALSE, "/admin/");
   
@@ -3279,7 +3276,6 @@
     function Title ($pPAGETITLE = NULL, $pUSERDEFINEDSTYLE = NULL) {
 
       global $gTHEMELOCATION, $gFRAMELOCATION, $gSITEURL, $gPAGETITLE, $gPAGESUBTITLE;
-      global $zSTRINGS;
       global $zOLDAPPLE;
 
       global $gSTYLELOCATION;
@@ -3304,10 +3300,6 @@
 
       if ($pPAGETITLE) {
         $gPAGETITLE = $pPAGETITLE;
-      } else {
-        // Pull page title from database settings
-        $zSTRINGS->Lookup ('BROWSER.TITLE', $zOLDAPPLE->Context);
-        $gPAGETITLE = $zSTRINGS->Output;
       } // if
 
       if ($gPAGESUBTITLE) {
@@ -3538,7 +3530,6 @@
 
      // Refresh the page to specified location.
      function Refresh ($pLOCATION) {
-       global $zSTRINGS;
        global $gREFRESHWAIT;
    
        $returnvalue = "  <meta http-equiv='Refresh' content='$gREFRESHWAIT;url=$pLOCATION'>";
@@ -3567,7 +3558,6 @@
 
     // Validate the image.
     function Validate ($pFILENAME, $pERROR, $pMAXWIDTH = "", $pMAXHEIGHT = "") {
-      global $zSTRINGS;
       global $gMAXSIZE, $MAX_FILE_SIZE;
 
       // Check for an error in the upload.
@@ -3575,30 +3565,26 @@
         case UPLOAD_ERR_INI_SIZE:
         case UPLOAD_ERR_FORM_SIZE:
           $gMAXSIZE = $MAX_FILE_SIZE / 1000 . "k";
-          $zSTRINGS->Lookup ('ERROR.TOOBIG', 'USER.OPTIONS.ICONS');
-          $this->Errorlist['image'] = $zSTRINGS->Output;
+          $this->Errorlist['image'] = __("File Too Big Error", array ("maxsize" => $gMAXSIZE));
           $this->Error = -1;
           unset ($gMAXSIZE);
           return (-1);
         break;
 
         case UPLOAD_ERR_PARTIAL:
-          $zSTRINGS->Lookup ('ERROR.PARTIAL', 'USER.OPTIONS.ICONS');
-          $this->Errorlist['image'] = $zSTRINGS->Output;
+          $this->Errorlist['image'] = __("Partial File Upload Error");
           $this->Error = -1;
           return (-1);
         break;
 
         case UPLOAD_ERR_NO_FILE:
-          $zSTRINGS->Lookup ('ERROR.NOFILE', 'USER.OPTIONS.ICONS');
-          $this->Errorlist['image'] = $zSTRINGS->Output;
+          $this->Errorlist['image'] = __("No File Uploaded Error");
           $this->Error = -1;
           return (-1);
         break;
 
         case UPLOAD_ERR_NO_TMP_DIR:
-          $zSTRINGS->Lookup ('ERROR.NOTEMP', 'USER.OPTIONS.ICONS');
-          $this->Errorlist['image'] = $zSTRINGS->Output;
+          $this->Errorlist['image'] = __("No Temporary Directory Error");
           $this->Error = -1;
           return (-1);
         break;
@@ -3612,16 +3598,14 @@
       // Check if file is an uploaded file.
       if (!is_uploaded_file ($pFILENAME) ) {
         $this->Error = -1;
-        $zSTRINGS->Lookup ('ERROR.NOUPLOAD', $this->PageContext);
-        $this->Errorlist['image'] = $zSTRINGS->Output;
+        $this->Errorlist['image'] = __("No Upload Error");
         return (-1);
       } // if
 
       // Check if the file is a valid image file.
       if (!getimagesize($pFILENAME)) {
         $this->Error = -1;
-        $zSTRINGS->Lookup ('ERROR.NOTIMAGE', $this->PageContext);
-        $this->Errorlist['image'] = $zSTRINGS->Output;
+        $this->Errorlist['image'] = __("Invalid Image Error");
         return (-1);
       } // if
 
@@ -3631,8 +3615,7 @@
       // Check if the file is not the proper type.
       if ( ($type != IMAGETYPE_PNG) and ($type != IMAGETYPE_GIF) and
            ($type != IMAGETYPE_JPEG) and ($type != IMAGETYPE_WBMP) ) {
-        $zSTRINGS->Lookup ('ERROR.WRONGTYPE', $this->PageContext);
-        $this->Errorlist['image'] = $zSTRINGS->Output;
+        $this->Errorlist['image'] = __("Wrong Image Type Error");
         $this->Error = -1;
         return (-1);
       } // if
@@ -3641,13 +3624,8 @@
       if ( ($pMAXWIDTH) and ($pMAXHEIGHT) ) {
         // Check if the file is too wide/high.
         if ( ($width > $pMAXWIDTH) or ($height > $pMAXHEIGHT) ) {
-          global $gMAXWIDTH, $gMAXHEIGHT;
-          $gMAXWIDTH = $pMAXWIDTH;
-          $gMAXHEIGHT = $pMAXHEIGHT;
-          $zSTRINGS->Lookup ('ERROR.WRONGSIZE', $this->PageContext);
-          $this->Errorlist['image'] = $zSTRINGS->Output;
+          $this->Errorlist['image'] = __("Wrong Image Size Error", array ("maxwidth" => $pMAXWIDTH, "maxheight" => $pMAXHEIGHT));
           $this->Error = -1;
-          unset ($gMAXWIDTH); unset ($gMAXHEIGHT);
           return (-1);
         } // if
       } // if
@@ -3833,7 +3811,6 @@
 
     // Save the image resource to a file.
     function Save ($pFILENAME, $pTYPE = IMAGETYPE_JPEG) {
-      global $zSTRINGS;
 
       // Delete the old file if it exists.
       if (file_exists ($pFILENAME) ) {
@@ -3867,8 +3844,7 @@
       if (!$result) {
 
         $this->Error = -1;
-        $zSTRINGS->Lookup ('ERROR.CANTSAVE', $this->PageContext);
-        $this->Errorlist['image'] = $zSTRINGS->Output;
+        $this->Errorlist['image'] = __("Can't Save Error");
         return (-1);
       } // if
      

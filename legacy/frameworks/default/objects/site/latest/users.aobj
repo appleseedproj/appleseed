@@ -1,7 +1,7 @@
 <section id="latest_users"> 
 
   <h1>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.USERS'); ?>
+   <?php echo __("Latest Users Title"); ?>
   </h1>
 
   (no text yet)

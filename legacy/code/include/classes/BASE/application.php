@@ -136,8 +136,9 @@
       } // if
   
       // Load site title and url into global variable.
-      $zSTRINGS->Lookup ('BROWSER.TITLE', $zOLDAPPLE->Context);
-      $gSITETITLE = $zSTRINGS->Output;
+      global $gSITEDOMAIN;
+  
+      $gSITETITLE = $gSITEDOMAIN;
 
       // Modify gACTION from BUTTONNAME
       $gACTION = strtoupper ($gACTION);
@@ -200,8 +201,6 @@
       } // if
   
       global $gERRORMSG, $gERRORTITLE;
-  
-      global $gSITEDOMAIN;
   
       global $gUSERJOURNALTAB, $gUSERPHOTOSTAB;
       global $gUSERENEMIESTAB, $gUSERFRIENDSTAB;
@@ -976,17 +975,7 @@
     function QuoteReply ($pSTRING, $pAUTHORFULLNAME, $pAUTHORUSERNAME, $pAUTHORDOMAIN, $pMESSAGEDATE) {
    
       // Wasn't aware there already was a function to do this.  Rock.
-      global $zSTRINGS;
-
-      global $gAUTHORFULLNAME, $gAUTHORUSERNAME, $gAUTHORDOMAIN, $gMESSAGEDATE;
-
-      $gAUTHORFULLNAME = $pAUTHORFULLNAME;
-      $gAUTHORDOMAIN = $pAUTHORDOMAIN;
-      $gAUTHORUSERNAME = $pAUTHORUSERNAME;
-      $gMESSAGEDATE = $pMESSAGEDATE;
-
-      $zSTRINGS->Lookup ("LABEL.QUOTE", "USER.MESSAGES");
-      $title = $zSTRINGS->Output;
+      $title = __("Quote Reply", array ("authorfullname" => $pAUTHORFULLNAME, "authordomain" => $pAUTHORDOMAIN, "authorusername" => $pAUTHORUSERNAME, "messagedate" => $pMESSAGEDATE));
       
       $text = strip_tags($pSTRING);
       $text = wordwrap ($text, 65, "\n");

@@ -1,5 +1,5 @@
-   <!-- ## header obj -->
-   <?php $zHTML->Header (); ?>
+ <!-- ## header obj -->
+ <?php $zHTML->Header (); ?>
    
  <div id='page' class='container_12'>
 
@@ -12,7 +12,7 @@
        <h1> <?php echo $gERRORTITLE; ?> </h1>
  
        <?php echo $gERRORMSG; ?>
-       <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
+       <p><a href="<?php echo $gSITEURL; ?>"><?php echo __("Click Here To Return"); ?></a></p>
    
        <form id='userinfo' name='userinfo' action='login/' method='post'>
          <input type='hidden' name='gACTION' value='LOGIN' />

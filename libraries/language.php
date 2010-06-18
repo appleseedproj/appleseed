@@ -41,6 +41,7 @@ class cLanguage {
  			return (false);
  		} // if
  		
+ 		
  		// Put data into the global cache.
  		foreach ($data as $key => $value) {
  	        $gCache['Language'][$key] = $value;	

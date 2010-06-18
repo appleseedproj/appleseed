@@ -1,7 +1,3 @@
   </ul>
   
-  <div id='view'>
-   <?php $zSTRINGS->Display ('OBJECT.VIEW', 'SITE.MAIN.PHOTOS'); ?>
-  </div> <!-- #view -->
-  
 </section>

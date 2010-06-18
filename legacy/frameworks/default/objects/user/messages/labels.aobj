@@ -1,7 +1,7 @@
  <div id='labels'>
 
   <div id='caption'>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.MESSAGES.LABELS'); ?>
+   <?php echo __("User Messages Labels Title"); ?>
   </div> <!-- #caption -->
 
  <div id='container'>

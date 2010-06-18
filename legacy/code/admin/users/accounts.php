@@ -184,8 +184,7 @@
 
         if (!$zOLDAPPLE->RemoveDirectory ($phototarget, TRUE)) {
           // Output error message if unsuccessful.
-          $zSTRINGS->Lookup ('ERROR.STORED', $zOLDAPPLE->Context);
-          $ADMINDATA->Message = $zSTRINGS->Output;
+          $ADMINDATA->Message = __("Error Removing Directory");
           $ADMINDATA->Error = -1;
         } // if
         
@@ -377,8 +376,7 @@
 
         if (!$zOLDAPPLE->RemoveDirectory ($phototarget, TRUE)) {
           // Output error message if unsuccessful.
-          $zSTRINGS->Lookup ('ERROR.STORED', $zOLDAPPLE->Context);
-          $ADMINDATA->Message = $zSTRINGS->Output;
+          $ADMINDATA->Message = __("Error While Storing");
           $ADMINDATA->Error = -1;
         } // if 
 
@@ -465,6 +463,7 @@
            if ($ADMINDATA->FetchArray()) {
             if ($gACTION == 'SELECT_ALL') $checked = TRUE;
 
+            global $gEXTRAPOSTDATA;
             $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
             $gEXTRAPOSTDATA['uID']    = $ADMINDATA->uID;
             $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/accounts/list.middle.aobj", INCLUDE_SECURITY_NONE);

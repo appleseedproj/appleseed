@@ -1,12 +1,8 @@
-<div id='join'>
-  <div id='caption'>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.JOIN'); ?>
- </div> <!-- #caption -->
+<section>
+  <h1> <?php echo __("Site Join Confirm Title"); ?> </h1>
 
-<div id='container'>
- <?php $zFOCUSUSER->Broadcast ('join'); ?>
+  <?php $zFOCUSUSER->Broadcast ('join'); ?>
 
- <?php $zSTRINGS->Display ("OBJECT.CONTENT", "SITE.JOIN"); ?>
+  <p> <?php echo __("Site Join Confirm Content"); ?> </p>
 
- </div> <!-- #container -->
-</div> <!-- #join -->
+</section>

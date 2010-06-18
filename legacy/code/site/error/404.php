@@ -66,16 +66,13 @@
   $zOLDAPPLE->Initialize("site.error.404", TRUE);
 
   // Set the page title.
-  $zSTRINGS->Lookup ('BROWSER.SUBTITLE', 'SITE.ERROR.404');
-  $gPAGESUBTITLE = $zSTRINGS->Output;
+  $gPAGESUBTITLE = __("404 Not Found Browser Title");
 
   // Lookup the title.
-  $zSTRINGS->Lookup ('OBJECT.TITLE', 'SITE.ERROR.404');
-  $gERRORTITLE = $zSTRINGS->Output;
+  $gERRORTITLE = __("404 Not Found Title");
 
   // Lookup the content.
-  $zSTRINGS->Lookup ('OBJECT.CONTENT', 'SITE.ERROR.404');
-  $gERRORMSG = $zSTRINGS->Output;
+  $gERRORMSG = __("404 Not Found Content", array ("adminemail" => $gADMINEMAIL));
 
   // Check if we're looking for a non-existent icon.
   $request = $_SERVER['REQUEST_URI']; 

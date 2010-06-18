@@ -102,14 +102,16 @@
   $zNODES = new cCONTENTNODES();
   $bLATESTNODES = $zNODES->BufferLatestNodes();
 
+  global $gINVITECOUNT;
+
   $zLOCALUSER->userInvites->CountInvites();
-  $gINVITEAMOUNT = $zLOCALUSER->userInvites->Amount;
+  $gINVITECOUNT = $zLOCALUSER->userInvites->Amount;
 
   // Buffer the invite box
   ob_start (); 
- 
+  
   if ( ($zAUTHUSER->Username != '') AND ($gSETTINGS['UseInvites'] == ON) AND 
-       ($gINVITEAMOUNT > 0) ) {
+       ($gINVITECOUNT > 0) ) {
     // Include the login box object
     $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/invitebox.aobj", INCLUDE_SECURITY_NONE);
   } // if

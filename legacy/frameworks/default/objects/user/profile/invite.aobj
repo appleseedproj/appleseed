@@ -1,21 +1,19 @@
  <section id='user_invite'>
-  <h1>
-    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.INVITE'); ?>
-  </h1>
+  <h1> <?php echo __("User Invites Title"); ?> </h1>
 
    <?php $zFOCUSUSER->userInvites->Broadcast(); ?>
 
-    <p id='content'>
-     <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'USER.INVITE'); ?>
-    </p> <!-- #content -->
+    <p>
+     <?php echo __("User Invites Content", array ("invitecount" => $gINVITECOUNT)); ?>
+    </p>
  
     <form id='invite' name='invite' method='POST' action='profile/<?php echo $gPROFILEREQUEST; ?>/'>
  
      <?php $zHTML->TextBox ("RECIPIENT", 128, $gRECIPIENT); ?>
      <?php $zFOCUSUSER->userInvites->Broadcast ("field", "Recipient"); ?>
  
-     <?php $zHTML->Button ("invite"); ?>
+     <?php $zHTML->Button ("Invite"); ?>
  
-   </form> <!-- #invite -->
+   </form>
 
- </section> <!-- #invite -->
+ </section>

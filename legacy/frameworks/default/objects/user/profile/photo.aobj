@@ -1,6 +1,6 @@
  <section id='user_id'>
   <h1>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.PROFILE.PHOTO'); ?>
+    <?php echo __("User Profile Photo Title"); ?>
   </h1>
 
   <a href='/profile/<?php echo $zFOCUSUSER->Username; ?>/'><img alt='Profile Image' border='0' src='<?php echo $gPROFILEPICTURE; ?>'></a>

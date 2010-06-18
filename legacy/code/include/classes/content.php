@@ -114,8 +114,7 @@
         global $gCOMMENTCOUNT;
         $gCOMMENTCOUNT = $COMMENTS->CountComments ($this->tID, $this->PageContext);
  
-        $zSTRINGS->Lookup ("LABEL.COUNT", $this->PageContext);
-        $bCOMMENTCOUNT = $zSTRINGS->Output;
+        $bCOMMENTCOUNT = __("Comment Count", array ("commentcount" => $gCOMMENTCOUNT));
  
         global $bARTICLEICON;
         $bARTICLEICON = $zOLDAPPLE->BufferUserIcon ($this->Submitted_Username, $this->Submitted_Domain);
@@ -172,7 +171,7 @@
 
     function HandleQueue () {
 
-      global $zOLDAPPLE, $zLOCALUSER, $zSTRINGS, $zHTML;
+      global $zOLDAPPLE, $zLOCALUSER, $zHTML;
 
       global $gTARGET;
       $gTARGET = "/articles/queue/";
@@ -207,8 +206,7 @@
           $this->Formatting = SQL_SKIP;
     
           if ($this->tID == "") {
-            $zSTRINGS->Lookup ('ERROR.PAGE', $zOLDAPPLE->Context);
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error On Page");
           } else {
             $this->Sanity();
             if (!$this->Error) {
@@ -225,8 +223,7 @@
           global $gPENDING;
           $gPENDING = $this->CountPendingArticles ();
           if ($gPENDING > 0) {
-            $zSTRINGS->Lookup ("MESSAGE.PENDING", $zOLDAPPLE->Context);
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Articles Pending Approval", array ("pending" => $gPENDING));
           } // if
         break;
       } // switch

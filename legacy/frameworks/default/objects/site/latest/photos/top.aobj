@@ -1,6 +1,6 @@
 <section id="latest_users"> 
   <h1>
-   <?php $zSTRINGS->Display ('OBJECT.TITLE', 'SITE.MAIN.PHOTOS'); ?>
+   <?php echo __("Latest Photos Title"); ?>
   </h1>
 
  <ul>

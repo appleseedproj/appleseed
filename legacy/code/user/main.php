@@ -141,8 +141,7 @@
       // If so, create an error message.
       if ( ($CHECKINVITED->Recipient == $zFOCUSUSER->userInvites->Recipient) or
            ($CHECKEXISTS->Email == $zFOCUSUSER->userInvites->Recipient) ) {
-        $zSTRINGS->Lookup ("ERROR.DUPLICATE", "USER.INVITE");
-        $zFOCUSUSER->userInvites->Message = $zSTRINGS->Output;
+        $zFOCUSUSER->userInvites->Message = __("Error Duplicate Invite");
         $zFOCUSUSER->userInvites->Error = -1;
       } // if
 

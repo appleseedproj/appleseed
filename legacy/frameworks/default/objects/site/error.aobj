@@ -1,5 +1,5 @@
-   <!-- ## header obj -->
-   <?php $zHTML->Header (); ?>
+ <!-- ## header obj -->
+ <?php $zHTML->Header (); ?>
 
 <div id='page' class='container_12'>
 
@@ -8,11 +8,13 @@
    </div>
 
    <div id="page_right" class="grid_9"> 
-     <h1><?php echo $gERRORTITLE; ?></h1>
+     <section id='local'>
+       <h1><?php echo $gERRORTITLE; ?></h1>
  
-     <?php echo $gERRORMSG; ?>
+       <?php echo $gERRORMSG; ?>
      
-      <?php $zSTRINGS->Display ('OBJECT.RETURN', 'SITE.ERROR'); ?>
+       <p><a href="<?php echo $gSITEURL; ?>"><?php echo __("Click Here To Return"); ?></a></p>
+     </section>
    </div>
 
    <div class="clear"></div> 

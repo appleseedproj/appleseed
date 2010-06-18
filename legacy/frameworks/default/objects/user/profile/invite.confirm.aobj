@@ -1,15 +1,19 @@
- <div id='invite'>
-  <div id='caption'>
-    <?php $zSTRINGS->Display ('OBJECT.TITLE', 'USER.INVITE'); ?>
-  </div> <!-- #caption -->
-
-  <div id='container'>
+ <section id='invite'>
+  <h1> <?php echo __("User Invites Confirm Title"); ?> </h1>
 
    <?php $zFOCUSUSER->userInvites->Broadcast(); ?>
 
-    <p id='content'>
-     <?php $zSTRINGS->Display ('OBJECT.CONTENT', 'USER.INVITE.CONFIRM'); ?>
-    </p> <!-- #content -->
+    <p>
+     <?php echo __("User Invites Confirm Content", array ("recipient" => $gRECIPIENT, "invitecount" => $gINVITECOUNT)); ?>
+    </p>
  
-  </div> <!-- #container -->
- </div> <!-- #invite -->
+    <form id='invite' name='invite' method='POST' action='profile/<?php echo $gPROFILEREQUEST; ?>/'>
+ 
+     <?php $zHTML->TextBox ("RECIPIENT", 128, $gRECIPIENT); ?>
+     <?php $zFOCUSUSER->userInvites->Broadcast ("field", "Recipient"); ?>
+ 
+     <?php $zHTML->Button ("Invite"); ?>
+ 
+   </form>
+
+ </section>
