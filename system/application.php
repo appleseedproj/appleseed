@@ -13,6 +13,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
 require_once ( ASD_PATH . DS . 'system' . DS . 'router.php' );
 
+SETGLOBAL("zApp");
+
 /** Application Class
  * 
  * Appleseed Application class
@@ -21,17 +23,84 @@ require_once ( ASD_PATH . DS . 'system' . DS . 'router.php' );
  * @subpackage  System
  */
 class cApplication {
+	
+	var $Path;
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+	}
         
-        function Initialize ( ) {
-        	$this->Router = new cRouter ( );
-        } 
-        
+	/**
+	 * Initialize the application
+	 *
+	 * @access  public
+	 */
+	public function Initialize ( ) {
+		require_once ( ASD_PATH . DS . 'system' . DS . 'base.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
+		
+		$this->_LoadLibraries ();
+            
+		$this->Conf = new cConf ();
+		$this->Language = new cLanguage ();
+		$this->Router = new cRouter ( );
+		
+		// Load site path.
+		$this->Path ();
+		
+		// Load site configuration.
+		$this->Config = $this->Conf->Load ("configurations");
+		
+		return ( true );
+	} 
+	
+	/**
+	 * Load the system libraries.
+	 *
+	 * @access  public
+	 */
+	private function _LoadLibraries ( ) {
+		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
+	}
+	
+	public function Path () {
+		
+		if (!isset ($this->Path)) {
+			$this->Path = $_SERVER['DOCUMENT_ROOT'];
+		}
+		
+		return ($this->Path);
+	}
+	
+}
+
+/**
+ * Global variable declaration function
+ * 
+ * Allows PHP global variables to be declared global only once.
+ * 
+ */
+function SETGLOBAL($pVar) { global $_G; $_G[]="$pVar"; }
+define ("GLOBALS", 'global $_G; foreach ($_G as $g => $glob) { global $$glob; }');
+
+/**
+ * Scan directory for other directories
+ * 
+ */
+function scandirs ($pPath) {
+	$results = scandir($pPath);
+
+	foreach ($results as $result) {
+		if ($result === '.' or $result === '..') continue;
+
+		if (is_dir($pPath . '/' . $result)) {
+			$dirs[] = $result;
+		}
+	}
+	
+	return ($dirs);
 }

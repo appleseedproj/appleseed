@@ -52,6 +52,9 @@ class cRouter {
         	// Set proper global variables
         	cRouter::LegacyPrepGlobals ( );
         	
+        	// Declare them to be global within included scope
+        	eval (GLOBALS);
+        	
         	$target = $pRoutes[0];
         	
         	
@@ -164,19 +167,16 @@ class cRouter {
          */
         public function LegacyPrepGlobals ( ) {
  
-			function _G($pVar) { global $_G; $_G[]="$pVar"; }
-			define ("_G", 'global $_G; foreach ($_G as $g => $glob) { global $$glob; }');
-
-			_G("ADMINDATA");
-			_G("zOLDAPPLE"); _G("zSTRINGS"); _G("zHTML"); _G("zAUTHUSER"); _G("zFOCUSUSER"); _G("zLOCALUSER"); _G("zREMOTEUSER"); _G("zIMAGE");
-			_G("zARTICLES"); _G("zCONTENTPAGE"); _G("zJANITOR");
-			_G("gFOCUSUSERID"); _G("gLOGINREQUEST"); _G("gACTION"); _G("gCOMMENTACTION"); _G("gJOINLOCATION"); _G("gFRAMELOCATION"); 
-			_G("gTHEMELOCATION"); _G("gPROFILEACTION"); _G("gPROFILESUBACTION"); _G("gICONUSER"); _G("gACTION"); 
-			_G("gPOSTDATA"); _G("gEXTRAPOSTDATA");
-			_G("gERRORMSG"); _G("gERRORTITLE"); _G("gSETTINGS");
-			_G("gEXTRAPOSTDATA"); _G("gSITEURL"); _G("gREMEMBER"); _G("gRECIPIENT");
-			_G("bREFRESHLINE"); _G("bMAINSECTION"); _G("bLOGINBOX"); _G("bJOINBOX"); _G("bINVITEBOX");
-			_G("target"); _G("mainlocation"); _G("username");
+			SETGLOBAL("ADMINDATA");
+			SETGLOBAL("zOLDAPPLE"); SETGLOBAL("zSTRINGS"); SETGLOBAL("zHTML"); SETGLOBAL("zAUTHUSER"); SETGLOBAL("zFOCUSUSER"); SETGLOBAL("zLOCALUSER"); SETGLOBAL("zREMOTEUSER"); SETGLOBAL("zIMAGE");
+			SETGLOBAL("zARTICLES"); SETGLOBAL("zCONTENTPAGE"); SETGLOBAL("zJANITOR");
+			SETGLOBAL("gFOCUSUSERID"); SETGLOBAL("gLOGINREQUEST"); SETGLOBAL("gACTION"); SETGLOBAL("gCOMMENTACTION"); SETGLOBAL("gJOINLOCATION"); SETGLOBAL("gFRAMELOCATION"); 
+			SETGLOBAL("gTHEMELOCATION"); SETGLOBAL("gPROFILEACTION"); SETGLOBAL("gPROFILESUBACTION"); SETGLOBAL("gICONUSER"); SETGLOBAL("gACTION"); 
+			SETGLOBAL("gPOSTDATA"); SETGLOBAL("gEXTRAPOSTDATA");
+			SETGLOBAL("gERRORMSG"); SETGLOBAL("gERRORTITLE"); SETGLOBAL("gSETTINGS");
+			SETGLOBAL("gEXTRAPOSTDATA"); SETGLOBAL("gSITEURL"); SETGLOBAL("gREMEMBER"); SETGLOBAL("gRECIPIENT");
+			SETGLOBAL("bREFRESHLINE"); SETGLOBAL("bMAINSECTION"); SETGLOBAL("bLOGINBOX"); SETGLOBAL("bJOINBOX"); SETGLOBAL("bINVITEBOX");
+			SETGLOBAL("target"); SETGLOBAL("mainlocation"); SETGLOBAL("username");
 			
 			return ( true );
 

@@ -19,9 +19,9 @@ require_once ( ASD_PATH . 'system' . DS . 'application.php' );
  * 
  */
 
-global $zApple;
-$zApple = new cApplication ( );
+global $zApp;
+$zApp = new cApplication ( );
 
-$zApple->Initialize ( );
+$zApp->Initialize ( );
 
-$zApple->Router->Route ( );
+$zApp->Router->Route ( );
