@@ -40,13 +40,10 @@ class cConfiguration extends cBase {
 		eval (GLOBALS);
 
 		$location = $zApp->GetPath () . DS . $pDirectory;
-		$default = $location . DS . 'default' . DS . 'default.conf';
-		
-		file_exists ($default) or die ("Couldn't Find Configuration: $default");
-		$configs[] = parse_ini_file ($default) or die ("Couldn't Load Configuration: $default");
 		
 		// Check for other configuration directories.
 		$dirs = scandirs ($location);
+		echo "<pre>";
 		
 		// Load all enabled configurations
 		foreach ( $dirs as $d => $dir ) {
@@ -69,6 +66,11 @@ class cConfiguration extends cBase {
 		
 		// Set inheritance
 		$dirs = $configurations;
+		
+		// If no configurations were found, error out.
+		if ( count ( $dirs ) == 0 ) {
+			die ( "No configurations were found or enabled: $pDirectory");
+		}
 		
 		// Count inheritance levels.
 		$inheritancecount = 0;

@@ -43,11 +43,13 @@ class cApplication extends cBase {
 	 */
 	public function Initialize ( ) {
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
 		
 		$this->_LoadLibraries ();
             
 		$this->Config = new cConf ();
 		$this->Language = new cLanguage ();
+		$this->Theme = new cTheme ();
 		$this->Router = new cRouter ( );
 		
 		// Load site configuration.
@@ -72,6 +74,21 @@ class cApplication extends cBase {
 		}
 		
 		return ($this->_path);
+	}
+	
+	public function GetBaseURL () {
+		
+		if (!isset ($this->_baseurl)) {
+			$url = $this->Config->GetConfiguration ( "url" );
+			
+			if ( !isset ( $url ) ) {
+				$url = 'http://' . $_SERVER['SERVER_NAME'];
+			}
+			
+			return ( $url );
+		}
+		
+		return ($this->_baseurl);
 	}
 	
 	public function SetCache ( $pContext, $pKey, $pValue ) {
@@ -112,6 +129,24 @@ function scandirs ($pPath) {
 		if (is_dir($pPath . '/' . $result)) {
 			$dirs[] = $result;
 		}
+	}
+	
+	return ($dirs);
+}
+
+/**
+ * Scan directory for files, optionally by extension
+ * 
+ */
+function scanfiles ( $pPath, $pExtension = null ) {
+	$results = scandir( $pPath );
+
+	foreach ( $results as $result ) {
+		if ( $result === '.' or $result === '..' ) continue;
+
+		if ( is_dir ( $pPath . '/' . $result ) ) continue;
+		
+		$dirs[] = $result;
 	}
 	
 	return ($dirs);

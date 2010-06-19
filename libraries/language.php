@@ -19,6 +19,21 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  Library
  */
 class cLanguage {
+	
+	var $Config;
+	
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+		
+ 		// Load language configuration.
+ 		$this->Config = new cConf ();
+		$this->Config->Config = $this->Config->Load ("languages");
+		
+	}
  	
  	/*
  	 * @access public
@@ -29,10 +44,6 @@ class cLanguage {
  	function Load ($pLanguage, $pContextFile) {
  		eval(GLOBALS);
  		
- 		// Load language configuration.
- 		$this->Config = new cConf ();
-		$this->Config->Config = $this->Config->Load ("languages");
-		
 		$paths = $this->Config->GetPath ();
 		
 		$found = false;
