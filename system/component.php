@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cComponent {
+class cComponent extends cBase {
 
         /**
          * Constructor

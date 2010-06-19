@@ -22,7 +22,7 @@ SETGLOBAL("zApp");
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cApplication {
+class cApplication extends cBase {
 	
 	var $Path;
 
@@ -40,7 +40,6 @@ class cApplication {
 	 * @access  public
 	 */
 	public function Initialize ( ) {
-		require_once ( ASD_PATH . DS . 'system' . DS . 'base.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		
 		$this->_LoadLibraries ();
