@@ -43,7 +43,6 @@ class cConfiguration extends cBase {
 		
 		// Check for other configuration directories.
 		$dirs = scandirs ($location);
-		echo "<pre>";
 		
 		// Load all enabled configurations
 		foreach ( $dirs as $d => $dir ) {

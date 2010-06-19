@@ -80,14 +80,17 @@ class cLanguage {
  	 * @return string
  	 */
  	function _ ($pString, $pParams = array()) {
+ 		
  		eval(GLOBALS);
+ 		
 
         $key = str_replace (' ', '_', $pString);
         $key = strtoupper ($key);
         
+ 		
         $value = $zApp->GetCache ( 'Language', $key );
         
-        if ( isset( $value ) ) {
+        if ( $value ) {
         	$return = $value;
         } else {
  		    $return = $pString;
