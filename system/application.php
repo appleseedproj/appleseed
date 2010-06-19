@@ -24,7 +24,9 @@ SETGLOBAL("zApp");
  */
 class cApplication extends cBase {
 	
-	var $Path;
+	var $_cache;
+	
+	var $_path;
 
 	/**
 	 * Constructor
@@ -44,15 +46,12 @@ class cApplication extends cBase {
 		
 		$this->_LoadLibraries ();
             
-		$this->Conf = new cConf ();
+		$this->Config = new cConf ();
 		$this->Language = new cLanguage ();
 		$this->Router = new cRouter ( );
 		
-		// Load site path.
-		$this->Path ();
-		
 		// Load site configuration.
-		$this->Config = $this->Conf->Load ("configurations");
+		$this->Config->Config = $this->Config->Load ("configurations");
 		
 		return ( true );
 	} 
@@ -66,13 +65,27 @@ class cApplication extends cBase {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
 	}
 	
-	public function Path () {
+	public function GetPath () {
 		
-		if (!isset ($this->Path)) {
-			$this->Path = $_SERVER['DOCUMENT_ROOT'];
+		if (!isset ($this->_path)) {
+			$this->_path = $_SERVER['DOCUMENT_ROOT'];
 		}
 		
-		return ($this->Path);
+		return ($this->_path);
+	}
+	
+	public function SetCache ( $pContext, $pKey, $pValue ) {
+		
+		$this->_cache[$pContext][$pKey] = $pValue;
+		
+		return ( true );
+	}
+	
+	public function GetCache ( $pContext, $pKey ) {
+		
+		if ( isset ( $this->_cache[$pContext][$pKey] ) ) return ( $this->_cache[$pContext][$pKey] );
+		
+		return ( false );
 	}
 	
 }

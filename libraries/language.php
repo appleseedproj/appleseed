@@ -27,25 +27,37 @@ class cLanguage {
  	 * @return bool True on success, false on error.
  	 */
  	function Load ($pLanguage, $pContextFile) {
- 		global $gCache;
+ 		eval(GLOBALS);
  		
- 		$location = 'languages/' . $pLanguage . '/' . $pContextFile;
+ 		// Load language configuration.
+ 		$this->Config = new cConf ();
+		$this->Config->Config = $this->Config->Load ("languages");
+		
+		$paths = $this->Config->GetPath ();
+		
+		$found = false;
+		
+ 		foreach ( $paths as $p => $path ) {
+ 			
+ 			$location = $zApp->GetPath() . DS . 'languages' . DS . $path . DS . $pLanguage . DS . $pContextFile;
+ 			// File does not exist, return false. 
+ 			// _set _system _error
+ 			if (!file_exists ($location)) continue;
+ 			
+ 			$found = true;
  		
- 		// File does not exist, return false. 
- 		// _set _system _error
- 		if (!file_exists ($location)) return (false);
+ 			// File can not be parsed, return false.
+ 			// _set _system _error
+ 			if (!$data = parse_ini_file ($location)) {
+ 				return (false);
+ 			} // if
  		
- 		// File can not be parsed, return false.
- 		// _set _system _error
- 		if (!$data = parse_ini_file ($location)) {
- 			return (false);
- 		} // if
+ 			// Put data into the global cache.
+ 			foreach ($data as $key => $value) {
+ 	        	$zApp->setCache ( 'Language', $key, $value );	
+ 			} // foreach
  		
- 		
- 		// Put data into the global cache.
- 		foreach ($data as $key => $value) {
- 	        $gCache['Language'][$key] = $value;	
- 		} // foreach
+ 		} 
  		
  		return (true);
  	} // Load
@@ -57,13 +69,15 @@ class cLanguage {
  	 * @return string
  	 */
  	function _ ($pString, $pParams = array()) {
- 		global $gCache;
+ 		eval(GLOBALS);
 
         $key = str_replace (' ', '_', $pString);
         $key = strtoupper ($key);
         
-        if (isset( $gCache['Language'][$key] ) ) {
-        	$return = $gCache['Language'][$key];
+        $value = $zApp->GetCache ( 'Language', $key );
+        
+        if ( isset( $value ) ) {
+        	$return = $value;
         } else {
  		    $return = $pString;
         } // if

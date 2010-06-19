@@ -39,7 +39,7 @@ class cConfiguration extends cBase {
 		// Global variables
 		eval (GLOBALS);
 
-		$location = $zApp->Path . DS . $pDirectory;
+		$location = $zApp->GetPath () . DS . $pDirectory;
 		$default = $location . DS . 'default' . DS . 'default.conf';
 		
 		file_exists ($default) or die ("Couldn't Find Configuration: $default");
@@ -52,7 +52,7 @@ class cConfiguration extends cBase {
 		foreach ( $dirs as $d => $dir ) {
 			$configurations[$dir] = new stdClass ();
 			$configurations[$dir]->Directory = $dir;
-			$file = $zApp->Path . DS . $pDirectory . DS . $dir . DS . $dir . '.conf';
+			$file = $zApp->GetPath () . DS . $pDirectory . DS . $dir . DS . $dir . '.conf';
 			
 			if ( !$configurations[$dir]->Config = parse_ini_file ($file) ) {
 				// Load failed.  Set a warning and unset value.
@@ -132,11 +132,7 @@ class cConfiguration extends cBase {
 		unset ( $final->Directory );
 		unset ( $config['enabled'] );
 		
-		$configuration = new cConf ();
-		
-		$configuration->Config = $config;
-		
-		return ( $configuration );
+		return ( $config );
 	}
 	
 	function GetConfiguration ( $pVariable ) {
@@ -144,6 +140,10 @@ class cConfiguration extends cBase {
 		if ( !isset ( $this->Config[$pVariable] ) ) return ( false );
 		
 		return ( $this->Config[$pVariable] );
+	}
+	
+	function GetPath ( ) {
+		return ( $this->Config['_path'] );
 	}
 	
 	/**

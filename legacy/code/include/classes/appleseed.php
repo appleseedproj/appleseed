@@ -68,6 +68,9 @@
 
     // Overwrite inhereted ::Initialize function.
     function Initialize ($pCONTEXT = "", $pREGISTERGLOBALS = FALSE) {
+      eval (GLOBALS);
+      
+      
       global $zDEBUG;
   
       $zDEBUG = new cDEBUG;
@@ -84,8 +87,8 @@
       $this->SetContext ($pCONTEXT);
       
       // Load global strings into cache.
-      cLanguage::Load ('en-US', 'system.global.lang');
-
+      $zApp->Language->Load ('en-US', 'system.global.lang');
+      
       // Make sure we're not initializing twice.
       global $gINITIALIZED;
       if ($gINITIALIZED) {
