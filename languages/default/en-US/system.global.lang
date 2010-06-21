@@ -81,6 +81,7 @@ COMPONENT_NOT_FOUND="Component '%name$s' could not be loaded."
 VIEW_NOT_FOUND="View '%name$s' could not be loaded."
 CONTROLLER_NOT_FOUND="Controller '%name$s' could not be loaded."
 BAD_COMPONENT_NAME="The name '%name$s' is reserved by the system and cannot be used as a component name."
+FOUNDATION_NOT_FOUND="The routed foundation file '%route$s' could not be loaded."
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?

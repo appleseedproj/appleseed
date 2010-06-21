@@ -46,7 +46,7 @@ class cRouter extends cBase {
 				
 				if ( preg_match ( $pattern, $request ) ) {
 					$zApp->Foundation->Load ( $route );
-					exit;
+					return ( true );
 				}
 				
 			}

@@ -49,7 +49,10 @@ class cFoundation extends cBase {
 			$route = ltrim ( rtrim ( $pRoute, '/' ), '/' );
 			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
 			if ( file_exists ( $filename ) ) {
-				require_once ( $filename );
+				$this->Buffer->LoadFoundation ( $filename );
+				return ( true );
+			} else {
+				echo __("Foundation Not Found", array ( 'route' => $route ) );
 				exit;
 			}
 		}

@@ -19,13 +19,34 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cBuffer extends cBase {
+	
+	var $_buffer;
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+	}
+	
+	public function LoadFoundation ( $pFoundation ) {
+		eval ( GLOBALS );
+		
+		ob_start ();
+		
+		require_once ( $pFoundation );
+		
+		$buffer = ob_get_contents ();
+		ob_end_clean ();
+		
+		$this->_buffer = $buffer;
+		
+		return ( true );
+	}
+	
+	public function GetBuffer ( ) {
+		return ( $this->_buffer );
+	}
 
 }

@@ -42,6 +42,8 @@ class cApplication extends cBase {
 	 * @access  public
 	 */
 	public function Initialize ( ) {
+		eval ( GLOBALS );
+		
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
@@ -49,6 +51,7 @@ class cApplication extends cBase {
 		require_once ( ASD_PATH . DS . 'system' . DS . 'components.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'model.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'buffer.php' );
 		
 		$this->_LoadLibraries ();
             
@@ -61,6 +64,10 @@ class cApplication extends cBase {
 		$this->Theme = new cTheme ();
 		$this->Components = new cComponents ( );
 		$this->Foundation = new cFoundation ( );
+		
+		$this->Buffer = new cBuffer ( );
+		
+		$this->Foundation->Buffer = &$this->Buffer;
 		
         // Load global strings into cache.
         $this->Language->Load ('en-US', 'system.global.lang');

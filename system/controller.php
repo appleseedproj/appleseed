@@ -52,6 +52,11 @@ class cController extends cBase {
 			if ( file_exists ( $filename ) ) $return = $filename;
 		}
 		
+		if ( !$filename ) {
+			echo __("View Not Found", array ( 'name' => $pView ) );
+			return ( false );
+		}
+		
 		return ($filename);
 	}
 }

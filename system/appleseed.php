@@ -26,3 +26,5 @@ $zApp = new cApplication ( );
 $zApp->Initialize ( );
 
 $zApp->Router->Route ( );
+
+echo $zApp->Buffer->GetBuffer ();
