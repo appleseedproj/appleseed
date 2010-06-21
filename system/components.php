@@ -37,6 +37,34 @@ class cComponents extends cBase {
 	}
 	
 	public function _Load ( ) {
+		eval ( GLOBALS );
+		
+		
+		foreach ( $this->Config->_components as $c => $component ) {
+			
+			$filename = $zApp->GetPath () . DS . 'components' . DS . $component . DS . $component . '.php';
+			
+			if ( !file_exists ( $filename ) ) {
+				unset ( $this->Config->_components[$c] );
+				continue;
+			}
+			
+			require_once ( $filename );
+			
+			$componentname = ucwords ( $component );
+			
+			$class = 'c' . $componentname;
+			
+			if ( !class_exists ( $class ) ) {
+				unset ( $this->Config->_components[$c] );
+				continue;
+			}
+			
+			$this->$componentname = new $class;
+			
+		}
+		
+		return ( true );
 	}
 	
 	public function Go ( $pComponent, $pController, $pView, $pData = array ( ) ) {
@@ -50,121 +78,18 @@ class cComponents extends cBase {
 			return ( false );
 		}
 		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $component . DS . $component . '.php';
-		
-		if ( !file_exists ( $filename ) ) {
-			echo __("Component Not Found", array ( 'name' => $component ) );
-			return ( false );
-		};
-		
-		require_once ( $filename );
-		
 		$componentname = ucwords ( $component );
 		
 		$class = 'c' . $componentname;
 		
-		$zApp->$componentname = new $class;
-		
-		$zApp->$componentname->_component = $component;
-		
-		$zApp->$componentname->Load ( $pController, $pView, $pData );
-		
-		return ( true );
-	}
-
-}
-
-/** Component Class
- * 
- * Base class for Component
- * 
- * @package     Appleseed.Framework
- * @subpackage  System
- */
-class cComponent extends cBase {
-
-	/**
-	 * Constructor
-	 *
-	 * @access  public
-	 */
-	public function __construct ( ) {       
-		
-		// Load the controller
-	}
-	
-	public function Load ( $pController = null, $pView = null, $pData = array ( ) ) {
-		eval ( GLOBALS );
-		
-		if ( !$this->_LoadController( $pController ) ) return ( false );
-		
-		if ( !$this->_LoadView( $pView ) ) return ( false );
-		
-		$controllername = ltrim ( rtrim ( ucwords ( $this->_component ) ) );
-		
-		echo "<pre>";
-		print_r ($this); exit;
-		
-		$this->Controllers->$controllername->Display ();
-		
-		return ( true );
-	}
-	
-	private function _LoadController ( $pController = null ) {
-		eval ( GLOBALS );
-		
-		if ( !$pController ) $pController = $this->_component;
-		
-		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
-		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_component . DS . 'controllers' . DS . $controller . '.php';
-		
-		$controllername = ucwords ( $controller );
-		
-		$class = 'c' . $controllername . 'Controller';
-		
-		if ( !file_exists ( $filename ) ) {
-			echo __("Controller Not Found", array ( 'name' => $controller ) );
-			return ( false );
-		}
-		
-		require_once ( $filename );
-		
 		if ( !class_exists ( $class ) ) {
-			echo __("Controller Not Found", array ( 'name' => $class ) );
+			echo __("Component Not Found", array ( 'name' => $class ) );
 			return ( false );
-		}
+		};
 		
-		$this->Controllers->$controllername = new $class;
+		$this->$componentname->_component = $component;
 		
-		return ( true );
-	}
-	private function _LoadView ( $pView = null ) {
-		eval ( GLOBALS );
-		
-		if ( !$pView ) $pView = $this->_component;
-		
-		$view = ltrim ( rtrim ( strtolower ( $pView ) ) );
-		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_component . DS . 'views' . DS . $view . '.php';
-		
-		$viewname = ucwords ( $view );
-		
-		$class = 'c' . $viewname . 'View';
-		
-		if ( !file_exists ( $filename ) ) {
-			echo __("View Not Found", array ( 'name' => $view ) );
-			return ( false );
-		}
-		
-		require_once ( $filename );
-		
-		if ( !class_exists ( $class ) ) {
-			echo __("View Not Found", array ( 'name' => $class ) );
-			return ( false );
-		}
-		
-		$this->Views->$viewname = new $class;
+		$this->$componentname->Load ( $pController, $pView, $pData );
 		
 		return ( true );
 	}

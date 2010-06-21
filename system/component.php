@@ -19,6 +19,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cComponent extends cBase {
+	
+	var $Controllers;
 
 	/**
 	 * Constructor
@@ -26,23 +28,30 @@ class cComponent extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
-		
 		// Load the controller
 	}
 	
-	public function Load ( $pController = null, $pView = null, $pData = array ( ) ) {
+	public function Load ( $pController = null, $pView = null, $pTask = null, $pData = array ( ) ) {
 		eval ( GLOBALS );
 		
-		if ( !$this->_LoadController( $pController ) ) return ( false );
+		if ( !$pController ) $pController = $this->_component;
+		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
 		
-		if ( !$this->_LoadView( $pView ) ) return ( false );
+		if ( !$pView ) $pView = $this->_component;
+		$view = ltrim ( rtrim ( strtolower ( $pView ) ) );
 		
-		$controllername = ltrim ( rtrim ( ucwords ( $this->_component ) ) );
+		if ( !$this->_LoadController( $controller ) ) return ( false );
 		
-		echo "<pre>";
-		print_r ($this); exit;
+		if ( !$pTask ) $pTask = 'display';
 		
-		$this->Controllers->$controllername->Display ();
+		$taskname = ltrim ( rtrim ( ucwords ( $pTask ) ) );
+		
+		$controllername = ltrim ( rtrim ( ucwords ( $controller ) ) );
+		
+		$this->Controllers->$controllername->_controller = $controller;
+		$this->Controllers->$controllername->_component = &$this->_component;
+		
+		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		return ( true );
 	}
@@ -50,18 +59,14 @@ class cComponent extends cBase {
 	private function _LoadController ( $pController = null ) {
 		eval ( GLOBALS );
 		
-		if ( !$pController ) $pController = $this->_component;
+		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_component . DS . 'controllers' . DS . $pController . '.php';
 		
-		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
-		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_component . DS . 'controllers' . DS . $controller . '.php';
-		
-		$controllername = ucwords ( $controller );
+		$controllername = ucwords ( $pController );
 		
 		$class = 'c' . $controllername . 'Controller';
 		
 		if ( !file_exists ( $filename ) ) {
-			echo __("Controller Not Found", array ( 'name' => $controller ) );
+			echo __("Controller Not Found", array ( 'name' => $pController ) );
 			return ( false );
 		}
 		
@@ -73,35 +78,6 @@ class cComponent extends cBase {
 		}
 		
 		$this->Controllers->$controllername = new $class;
-		
-		return ( true );
-	}
-	private function _LoadView ( $pView = null ) {
-		eval ( GLOBALS );
-		
-		if ( !$pView ) $pView = $this->_component;
-		
-		$view = ltrim ( rtrim ( strtolower ( $pView ) ) );
-		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_component . DS . 'views' . DS . $view . '.php';
-		
-		$viewname = ucwords ( $view );
-		
-		$class = 'c' . $viewname . 'View';
-		
-		if ( !file_exists ( $filename ) ) {
-			echo __("View Not Found", array ( 'name' => $view ) );
-			return ( false );
-		}
-		
-		require_once ( $filename );
-		
-		if ( !class_exists ( $class ) ) {
-			echo __("View Not Found", array ( 'name' => $class ) );
-			return ( false );
-		}
-		
-		$this->Views->$viewname = new $class;
 		
 		return ( true );
 	}

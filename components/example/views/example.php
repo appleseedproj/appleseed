@@ -11,21 +11,6 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Example Component
- * 
- * Example Component Entry Class
- * 
- * @package     Appleseed.Components
- * @subpackage  Example
- */
-class cExampleView extends cView {
-	
-	/**
-	 * Constructor
-	 *
-	 * @access  public
-	 */
-	public function __construct ( ) {       
-	}
-	
-}
+?>
+
+Example Default View

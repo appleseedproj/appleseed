@@ -263,8 +263,6 @@ class cConfiguration extends cBase {
 			
 		}
 		
-		print_r ($this->_components);
-		
 		return ($config);
 		
 	}
