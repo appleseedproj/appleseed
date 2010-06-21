@@ -45,7 +45,7 @@ class cApplication extends cBase {
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'component.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'components.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'model.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'view.php' );
