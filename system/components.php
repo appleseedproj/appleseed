@@ -19,6 +19,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cComponents extends cBase {
+	
+	var $_ComponentCount = 0;
 
 	/**
 	 * Constructor
@@ -67,8 +69,18 @@ class cComponents extends cBase {
 		return ( true );
 	}
 	
-	public function Go ( $pComponent, $pController, $pView, $pData = array ( ) ) {
+	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );
+		
+		$parameters = array ( 'component' => $pComponent);
+		if ( $pController ) $parameters['controller'] = $pController;
+		if ( $pView ) $parameters['view'] = $pView;
+		if ( $pTask ) $parameters['task'] = $pTask;
+		if ( $pData ) $parameters['data'] = $pData;
+		
+		$this->Buffer->AddToCount ( 'component' );
+		
+		$this->Buffer->Placeholder ( 'component', $parameters );
 		
 		$component = ltrim ( rtrim ( strtolower ( $pComponent ) ) );
 		
@@ -89,7 +101,12 @@ class cComponents extends cBase {
 		
 		$this->$componentname->_component = $component;
 		
-		$this->$componentname->Load ( $pController, $pView, $pData );
+		ob_start ();
+		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
+		
+		$buffer = ob_get_clean ();
+		
+		$this->Buffer->Queue ( 'component', $parameters, $buffer );
 		
 		return ( true );
 	}

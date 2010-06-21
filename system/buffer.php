@@ -20,7 +20,9 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cBuffer extends cBase {
 	
-	var $_buffer;
+	var $_Buffer;
+	var $_Queue;
+	var $_Count;
 
 	/**
 	 * Constructor
@@ -28,6 +30,9 @@ class cBuffer extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		
+		$this->_Count = array ();
+		
 	}
 	
 	public function LoadFoundation ( $pFoundation ) {
@@ -40,13 +45,50 @@ class cBuffer extends cBase {
 		$buffer = ob_get_contents ();
 		ob_end_clean ();
 		
-		$this->_buffer = $buffer;
+		$this->_Buffer = $buffer;
 		
 		return ( true );
 	}
 	
 	public function GetBuffer ( ) {
-		return ( $this->_buffer );
+		return ( $this->_Buffer );
+	}
+	
+	public function Process ( ) {
+		
+		// print_r ($this->_Queue); 
+		//exit;
+		
+		return ( $this->_Buffer );
+	}
+	
+	public function AddToCount ( $pContext ) {
+		$this->_Count[$pContext]++;
+		
+		return ( true );
+	}
+	
+	public function Queue ( $pContext, $pData, $pBuffer ) {
+		$count = $this->_Count[$pContext];
+		$this->_Queue[$pContext][$count]->Parameters = $pData;
+		$this->_Queue[$pContext][$count]->Buffer = $pBuffer;
+		
+	}
+	
+	public function PlaceHolder ( $pContext, $pData ) {
+		
+		foreach ($pData as $d => $data ) {
+			if ( is_array ( $data ) ) { 
+				$pData[$d] = join ( ',', $data );
+			}
+		}
+		
+		$info = '[' . join ('/', $pData ) . ']';
+		
+		$count = $this->_Count[$pContext];
+		echo "#@ component$count $info @#\n"; 
+		
+		return ( true );
 	}
 
 }

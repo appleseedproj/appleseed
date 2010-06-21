@@ -68,6 +68,7 @@ class cApplication extends cBase {
 		$this->Buffer = new cBuffer ( );
 		
 		$this->Foundation->Buffer = &$this->Buffer;
+		$this->Components->Buffer = &$this->Buffer;
 		
         // Load global strings into cache.
         $this->Language->Load ('en-US', 'system.global.lang');

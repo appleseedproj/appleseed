@@ -27,4 +27,4 @@ $zApp->Initialize ( );
 
 $zApp->Router->Route ( );
 
-echo $zApp->Buffer->GetBuffer ();
+echo $zApp->Buffer->Process ();
