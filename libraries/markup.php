@@ -37,7 +37,7 @@ class cMarkup {
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cHTML extends cMarkup () {
+class cHTML extends cMarkup {
 
         /**
          * Constructor
@@ -56,7 +56,7 @@ class cHTML extends cMarkup () {
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cXML extends cMarkup () {
+class cXML extends cMarkup {
 
         /**
          * Constructor
@@ -75,7 +75,7 @@ class cXML extends cMarkup () {
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cRSS extends cXML () {
+class cRSS extends cXML {
 
         /**
          * Constructor

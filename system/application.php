@@ -44,16 +44,28 @@ class cApplication extends cBase {
 	public function Initialize ( ) {
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'component.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'model.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'view.php' );
 		
 		$this->_LoadLibraries ();
             
 		$this->Config = new cConf ();
-		$this->Language = new cLanguage ();
-		$this->Theme = new cTheme ();
-		$this->Router = new cRouter ( );
 		
 		// Load site configuration.
 		$this->Config->Config = $this->Config->Load ("configurations");
+		
+		$this->Language = new cLanguage ();
+		$this->Theme = new cTheme ();
+		$this->Components = new cComponents ( );
+		$this->Foundation = new cFoundation ( );
+		
+        // Load global strings into cache.
+        $this->Language->Load ('en-US', 'system.global.lang');
+        
+		$this->Router = new cRouter ( );
 		
 		return ( true );
 	} 
@@ -67,6 +79,11 @@ class cApplication extends cBase {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
 	}
 	
+	/**
+	 * Get The Appleseed Installation Path 
+	 *
+	 * @access  public
+	 */
 	public function GetPath () {
 		
 		if (!isset ($this->_path)) {
@@ -76,6 +93,11 @@ class cApplication extends cBase {
 		return ($this->_path);
 	}
 	
+	/**
+	 * Get The Base Url 
+	 *
+	 * @access  public
+	 */
 	public function GetBaseURL () {
 		
 		if (!isset ($this->_baseurl)) {
@@ -91,6 +113,14 @@ class cApplication extends cBase {
 		return ($this->_baseurl);
 	}
 	
+	/**
+	 * Set a Cache value
+	 *
+	 * @access  public
+	 * @var string pContext  Which cache to use
+	 * @var string pKey
+	 * @var string pValue
+	 */
 	public function SetCache ( $pContext, $pKey, $pValue ) {
 		
 		$this->_cache[$pContext][$pKey] = $pValue;
@@ -98,11 +128,36 @@ class cApplication extends cBase {
 		return ( true );
 	}
 	
+	/**
+	 * Get a Cache value
+	 *
+	 * @access  public
+	 * @var string pContext  Which cache to use
+	 * @var string pKey
+	 */
 	public function GetCache ( $pContext, $pKey ) {
 		
 		if ( isset ( $this->_cache[$pContext][$pKey] ) ) return ( $this->_cache[$pContext][$pKey] );
 		
 		return ( false );
+	}
+	
+	/**
+	 * Return a list of reserved system names
+	 *
+	 * @access  public
+	 */
+	public function Reserved ( ) {
+		$reserved = array ( 
+			'router', 
+			'foundation', 
+			'config', 
+			'language', 
+			'theme', 
+			'buffer', 
+		);
+		
+		return ( $reserved );
 	}
 	
 }
@@ -120,34 +175,17 @@ define ("GLOBALS", 'global $_G; foreach ($_G as $g => $glob) { global $$glob; }'
  * Scan directory for other directories
  * 
  */
-function scandirs ($pPath) {
-	$results = scandir($pPath);
+function scandirs ( $pPath ) {
+	$results = scandir ( $pPath );
 
 	foreach ($results as $result) {
-		if ($result === '.' or $result === '..') continue;
+		// Skip all hidden files
+		if ( $result[0] === '.' ) continue;
 
-		if (is_dir($pPath . '/' . $result)) {
+		if ( is_dir ( $pPath . '/' . $result ) ) {
 			$dirs[] = $result;
 		}
 	}
 	
-	return ($dirs);
-}
-
-/**
- * Scan directory for files, optionally by extension
- * 
- */
-function scanfiles ( $pPath, $pExtension = null ) {
-	$results = scandir( $pPath );
-
-	foreach ( $results as $result ) {
-		if ( $result === '.' or $result === '..' ) continue;
-
-		if ( is_dir ( $pPath . '/' . $result ) ) continue;
-		
-		$dirs[] = $result;
-	}
-	
-	return ($dirs);
+	return ( $dirs );
 }

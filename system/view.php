@@ -20,12 +20,12 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cView extends cBase {
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+	}
 
 }

@@ -86,9 +86,6 @@
       // Set the context.
       $this->SetContext ($pCONTEXT);
       
-      // Load global strings into cache.
-      $zApp->Language->Load ('en-US', 'system.global.lang');
-      
       // Make sure we're not initializing twice.
       global $gINITIALIZED;
       if ($gINITIALIZED) {

@@ -81,6 +81,7 @@ class cConfiguration extends cBase {
 				$inheritanceflag = false;
 				
 				if ( isset ( $inherit ) ) {
+		
 					// If inheriting from self, continue
 					if ($configurations[$dir]->Directory == $inherit) {
 						$configurations[$dir]->Warnings[] = " Cannot Inherit $inherit From Itself. ";
@@ -166,7 +167,11 @@ class cConfiguration extends cBase {
 			
 			// Move all parent values to child.
 			foreach ( $child->Config as $key => $value ) {
-				$parent->Config[$key] = $value;
+				if ( is_array ( $parent->Config[$key] ) ) {
+					$parent->Config[$key] = array_merge ( $parent->Config[$key], $value );
+				} else {
+					$parent->Config[$key] = $value;
+				} 
 			} 
 			
 			$this->_path[] = $parent->Directory;
@@ -204,6 +209,64 @@ class cConfiguration extends cBase {
 		} 
 		
 		return ( $pParent );
+	}
+	
+	public function LoadComponents ( ) {
+		eval ( GLOBALS );
+		
+		$configpaths = $zApp->Config->GetPath();
+		
+		$componentdir = $zApp->GetPath() . DS . 'components';
+		
+		$components = scandirs ( $componentdir );
+		
+		$config = array ();
+		foreach ( $components as $comp => $component ) {
+			$filename = $componentdir . DS . $component . DS . $component . '.conf';
+			
+			if ( file_exists ( $filename ) ) {
+				$path[$component][] = $filename;
+			}
+			
+			foreach ( $configpaths as $cpath => $configpath ) {
+				$filename = $zApp->GetPath() . DS . 'configurations' . DS . $configpath . DS . 'components' . DS . $component . '.conf';
+				if ( file_exists ( $filename ) ) {
+					$path[$component][] = $filename;
+				}
+			}
+			
+			// No configuration files found, continue loop
+			if ( !isset ( $path[$component] ) ) continue;
+			
+			
+			$config[$component] = array();
+			
+			foreach ( $path[$component] as $p => $filename ) {
+				$currentvalues = $config[$component];
+				$configvalues = parse_ini_file ( $filename );
+				
+				if ( $configvalues['clearall'] == 'true' ) {
+					$currentvalues = array ();
+					unset ( $configvalues['clearall'] );
+				}
+				
+				$config[$component] = array_merge ( $currentvalues, $configvalues );
+			}
+			
+			// If the component isn't enabled, then unset the values and continue.
+			if ($config[$component]['enabled'] != 'true' ) {
+				unset ($config[$component]);
+				continue;
+			} else {
+				$this->_components[] = $component;
+			}
+			
+		}
+		
+		print_r ($this->_components);
+		
+		return ($config);
+		
 	}
 	
 }

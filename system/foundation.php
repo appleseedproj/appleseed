@@ -20,12 +20,42 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cFoundation extends cBase {
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+		
+ 		// Load foundation configuration.
+ 		$this->Config = new cConf ( );
+		$this->Config->Config = $this->Config->Load ( "foundations" );
+		
+		return ( true );
+	}
+	
+	/**
+	 * Loads the proper foundation using inheritance order
+	 *
+	 * @access  public
+	 * @var string $pRoute Which foundation to route to.
+	 */
+	public function Load ( $pRoute ) {
+		eval ( GLOBALS );
+		
+		$paths = array_reverse ( $this->Config->GetPath() );
+		
+		foreach ( $paths as $p => $path ) {
+			$route = ltrim ( rtrim ( $pRoute, '/' ), '/' );
+			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
+			if ( file_exists ( $filename ) ) {
+				require_once ( $filename );
+				exit;
+			}
+		}
+		// 404 error
+		
+		return ( false );
+	}
 
 }

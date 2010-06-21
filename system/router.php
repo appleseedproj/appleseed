@@ -34,9 +34,24 @@ class cRouter extends cBase {
          * @access  public
          */
         public function Route ( ) {
-			$routes = split ( '/', $_SERVER['REQUEST_URI'] );
-			array_shift ( $routes );	
-        	cRouter::Legacy ( $routes );
+        	eval ( GLOBALS );
+        	
+			$routes = $zApp->Foundation->Config->GetConfiguration ( "routes" );
+			$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
+			
+			foreach ( $routes as $r => $route ) {
+				$r = ltrim ( rtrim ( $r, '/' ), '/' );
+				
+				$pattern = '/^' . addcslashes ($r, '/') . '$/';
+				
+				if ( preg_match ( $pattern, $request ) ) {
+					$zApp->Foundation->Load ( $route );
+					exit;
+				}
+				
+			}
+			
+        	$this->Legacy ( );
         	
         	return ( true );
         }
@@ -47,27 +62,29 @@ class cRouter extends cBase {
          * @access  public
          * @todo    Move all legacy functionality to the new MVC framework.
          */
-        public function Legacy ( $pRoutes = array() ) {
+        public function Legacy ( ) {
         	
+			$routes = split ( '/', $_SERVER['REQUEST_URI'] );
+			
         	// Set proper global variables
         	cRouter::LegacyPrepGlobals ( );
         	
         	// Declare them to be global within included scope
         	eval (GLOBALS);
         	
-        	$target = $pRoutes[0];
+        	$target = $routes[0];
         	
         	
         	switch ( $target ) {
         		case '_admin':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
-        			if (!$pRoutes[1]) { $pRoutes[1] = 'main'; }
+        			if (!$routes[1]) { $routes[1] = 'main'; }
         			
-        			$path = ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $pRoutes[0] . DS . $pRoutes[1] . '.php' ;
+        			$path = ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' ;
         			
         			if (file_exists ($path) ) {
-        			  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $pRoutes[0] . DS . $pRoutes[1] . '.php' );
+        			  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' );
         			} else {
         			  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'error' . DS . '404.php' );
         			}
@@ -75,57 +92,57 @@ class cRouter extends cBase {
         			exit;
         		break;
         		case 'profile':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
         			global $gPROFILEREQUEST;
-        			$gPROFILEREQUEST = join ('/', $pRoutes);
+        			$gPROFILEREQUEST = join ('/', $routes);
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'user' . DS . 'main.php' );
         			exit;
         		case 'icon':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
         			global $gICONUSER;
-        			$gICONUSER = $pRoutes[0];
+        			$gICONUSER = $routes[0];
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'common' . DS . 'icon.php' );
         		break;	
         		case 'news':
         		case 'articles':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
         			global $gARTICLEREQUEST;
-        			$gARTICLEREQUEST = $pRoutes[0];
+        			$gARTICLEREQUEST = $routes[0];
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'articles.php' );
         		break;	
         		case 'group':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
         			global $gGROUPREQUEST;
-        			$gGROUPREQUEST = $pRoutes[0];
+        			$gGROUPREQUEST = $routes[0];
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'group.php' );
         		break;	
         		case 'groups':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
         			global $gGROUPSECTION;
-        			$gGROUPSECTION = $pRoutes[0];
+        			$gGROUPSECTION = $routes[0];
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'groups.php' );
         		break;	
         		case 'join':
-        			array_shift ( $pRoutes );
+        			array_shift ( $routes );
         			
         			global $gVALUE;
-        			$gVALUE = $pRoutes[0];
+        			$gVALUE = $routes[0];
         			require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'join.php' );
         		break;	
         		case 'login':
-        		    if ( $pRoutes[1] == 'bounce' ) {
+        		    if ( $routes[1] == 'bounce' ) {
         				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'bounce.php' );
         				exit;
         		    } else {
-        				array_shift ( $pRoutes );
+        				array_shift ( $routes );
         				
         				global $gLOGINREQUEST;
-        				$gLOGINREQUEST = join ('/', $pRoutes);
+        				$gLOGINREQUEST = join ('/', $routes);
         				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'login.php' );
         				exit;
         		    }

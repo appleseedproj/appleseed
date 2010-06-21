@@ -77,6 +77,10 @@ SITE_JOIN_CONTENT="Create a new account by filling out the information below.  O
 403_FORBIDDEN_CONTENT="ERROR: Forbidden (403)<br /><br />You do not have access to the requested area.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='%adminemail$s'>%adminemail$s</a><br /><br />Thank You,<br />The Staff @ Appleseed"
 404_NOT_FOUND_CONTENT="ERROR: File Not Found (404)<br /><br />The file you are looking for could not be found.  If you feel that this is incorrect, and the problem persists, please contact the administrator at <a href='mailto:%adminemail$s'>%adminemail$s</a><br /><br />Thank You,<br />The Staff @ Appleseed"
 ERROR_DUPLICATE_INVITE="This user has already been invited."
+COMPONENT_NOT_FOUND="Component '%name$s' could not be loaded."
+VIEW_NOT_FOUND="View '%name$s' could not be loaded."
+CONTROLLER_NOT_FOUND="Controller '%name$s' could not be loaded."
+BAD_COMPONENT_NAME="The name '%name$s' is reserved by the system and cannot be used as a component name."
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?
