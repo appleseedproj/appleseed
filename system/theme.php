@@ -81,6 +81,11 @@ class cTheme extends cBase {
 		
 	}
 	
+	/**
+	 * Output the html style declarations
+	 *
+	 * @access  public
+	 */
 	public function UseStyles () {
 		eval(GLOBALS);
 		

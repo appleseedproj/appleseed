@@ -13,4 +13,4 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
 ?>
 
-Example Default View
+Example Component View

@@ -81,7 +81,7 @@ class cApplication extends cBase {
 	/**
 	 * Load the system libraries.
 	 *
-	 * @access  public
+	 * @access  private
 	 */
 	private function _LoadLibraries ( ) {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );

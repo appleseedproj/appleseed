@@ -96,10 +96,6 @@ class cComponents extends cBase {
 		if ( $pTask ) $parameters['task'] = $pTask;
 		if ( $pData ) $parameters['data'] = $pData;
 		
-		$this->Buffer->AddToCount ( 'component' );
-		
-		$this->Buffer->Placeholder ( 'component', $parameters );
-		
 		$component = ltrim ( rtrim ( strtolower ( $pComponent ) ) );
 		
 		// Skip components which use reserved names
@@ -125,6 +121,10 @@ class cComponents extends cBase {
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
 		
 		$buffer = ob_get_clean ();
+		
+		$this->Buffer->AddToCount ( 'component' );
+		
+		$this->Buffer->Placeholder ( 'component', $parameters );
 		
 		$this->Buffer->Queue ( 'component', $parameters, $buffer );
 		

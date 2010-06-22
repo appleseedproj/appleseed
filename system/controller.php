@@ -36,8 +36,9 @@ class cController extends cBase {
 	 * @var array $pData Extended data array
 	 */
 	public function Display ( $pView = null, $pData = null) {
-		$this->LoadView ( $pView );
-		return ( true );
+		eval ( GLOBALS );
+		
+		return ( $this->LoadView ( $pView ) );
 	}
 	
 	
@@ -48,13 +49,22 @@ class cController extends cBase {
 	 * @var string $pView Which view file to load
 	 */
 	public function LoadView ( $pView ) {
-		require ( $this->_GetViewPath ( $pView ) );
+		eval ( GLOBALS );
+		
+		$viewpath = $this->_GetViewPath ( $pView ) ;
+		
+		if ( $viewpath ) {
+			include ( $viewpath );
+			return ( true );
+		}
+		
+		return ( false );
 	}
 	
 	/**
 	 * Determines the view path, using inheritence
 	 *
-	 * @access  public
+	 * @access  private
 	 * @var string $pView Which view file to load
 	 */
 	private function _GetViewPath ( $pView = null ) {
@@ -72,12 +82,12 @@ class cController extends cBase {
 			if ( file_exists ( $filename ) ) $return = $filename;
 		}
 		
-		if ( !$filename ) {
+		if ( !$return ) {
 			echo __("View Not Found", array ( 'name' => $pView ) );
 			return ( false );
 		}
 		
-		return ($filename);
+		return ($return);
 	}
 	
 	/**

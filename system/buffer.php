@@ -72,16 +72,16 @@ class cBuffer extends cBase {
 	 */
 	public function Process ( ) {
 		
-		// print_r ($this->_Queue); 
-		//exit;
-		
 		$processed = $this->_Buffer;
+		$whilepattern = "/\#\@ component(.*) \@\#/";
 		
-		foreach ( $this->_Queue['component'] as $q => $queue ) {
-			$pattern = "/\#\@ component$q \[(.*)\] \@\#/";
+		do {
+			foreach ( $this->_Queue['component'] as $q => $queue ) {
+				$pattern = "/\#\@ component$q \[(.*)\] \@\#/";
 			
-			$processed = preg_replace ( $pattern, $queue->Buffer, $processed );
-		}
+				$processed = preg_replace ( $pattern, $queue->Buffer, $processed );
+			}
+		} while ( preg_match ( $whilepattern, $processed ) );
 		
 		return ( $processed );
 	}

@@ -62,6 +62,9 @@ class cComponent extends cBase {
 		$this->Controllers->$controllername->_Controller = $controller;
 		$this->Controllers->$controllername->_Component = &$this->_Component;
 		
+		$this->Controllers->$controllername->Components = &$this->Components;
+		$this->Controllers->$controllername->Component = &$this->Component;
+		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		return ( true );
@@ -70,7 +73,7 @@ class cComponent extends cBase {
 	/**
 	 * Loads the specified controller
 	 *
-	 * @access  public
+	 * @access  private
 	 * @var string $pController Which controller to use
 	 */
 	private function _LoadController ( $pController = null ) {
