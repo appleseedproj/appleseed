@@ -31,13 +31,22 @@ class cComponent extends cBase {
 		// Load the controller
 	}
 	
+	/**
+	 * Load a component
+	 *
+	 * @access  public
+	 * @var string $pController Which controller to use
+	 * @var string $pView Which view to load
+	 * @var string $pView Which controller task to execute
+	 * @var array $pData Extended controller data.
+	 */
 	public function Load ( $pController = null, $pView = null, $pTask = null, $pData = array ( ) ) {
 		eval ( GLOBALS );
 		
-		if ( !$pController ) $pController = $this->_component;
+		if ( !$pController ) $pController = $this->_Component;
 		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
 		
-		if ( !$pView ) $pView = $this->_component;
+		if ( !$pView ) $pView = $this->_Component;
 		$view = ltrim ( rtrim ( strtolower ( $pView ) ) );
 		
 		if ( !$this->_LoadController( $controller ) ) return ( false );
@@ -48,18 +57,26 @@ class cComponent extends cBase {
 		
 		$controllername = ltrim ( rtrim ( ucwords ( $controller ) ) );
 		
-		$this->Controllers->$controllername->_controller = $controller;
-		$this->Controllers->$controllername->_component = &$this->_component;
+		$this->Controllers->$controllername->_BufferCounter = & $this->_BufferCounter;
+		
+		$this->Controllers->$controllername->_Controller = $controller;
+		$this->Controllers->$controllername->_Component = &$this->_Component;
 		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		return ( true );
 	}
 	
+	/**
+	 * Loads the specified controller
+	 *
+	 * @access  public
+	 * @var string $pController Which controller to use
+	 */
 	private function _LoadController ( $pController = null ) {
 		eval ( GLOBALS );
 		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_component . DS . 'controllers' . DS . $pController . '.php';
+		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'controllers' . DS . $pController . '.php';
 		
 		$controllername = ucwords ( $pController );
 		
@@ -81,5 +98,5 @@ class cComponent extends cBase {
 		
 		return ( true );
 	}
-
+	
 }

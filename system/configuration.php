@@ -137,6 +137,12 @@ class cConfiguration extends cBase {
 		return ( $config );
 	}
 	
+	/**
+	 * Loads a configuration value.
+	 *
+	 * @access  public
+	 * @var array pVariable
+	 */
 	function GetConfiguration ( $pVariable ) {
 		
 		if ( !isset ( $this->Config[$pVariable] ) ) return ( false );
@@ -144,6 +150,11 @@ class cConfiguration extends cBase {
 		return ( $this->Config[$pVariable] );
 	}
 	
+	/**
+	 * Loads the ordered path to the child configuration
+	 *
+	 * @access  public
+	 */
 	function GetPath ( ) {
 		return ( $this->Config['_path'] );
 	}
@@ -211,6 +222,11 @@ class cConfiguration extends cBase {
 		return ( $pParent );
 	}
 	
+	/**
+	 * Loads all of the component configuration files
+	 *
+	 * @access  public
+	 */
 	public function LoadComponents ( ) {
 		eval ( GLOBALS );
 		
@@ -258,7 +274,7 @@ class cConfiguration extends cBase {
 				unset ($config[$component]);
 				continue;
 			} else {
-				$this->_components[] = $component;
+				$this->_Components[] = $component;
 			}
 			
 		}

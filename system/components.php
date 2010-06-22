@@ -38,16 +38,21 @@ class cComponents extends cBase {
 		
 	}
 	
+	/**
+	 * Loads all component base classes.
+	 *
+	 * @access  public
+	 */
 	public function _Load ( ) {
 		eval ( GLOBALS );
 		
 		
-		foreach ( $this->Config->_components as $c => $component ) {
+		foreach ( $this->Config->_Components as $c => $component ) {
 			
 			$filename = $zApp->GetPath () . DS . 'components' . DS . $component . DS . $component . '.php';
 			
 			if ( !file_exists ( $filename ) ) {
-				unset ( $this->Config->_components[$c] );
+				unset ( $this->Config->_Components[$c] );
 				continue;
 			}
 			
@@ -58,7 +63,7 @@ class cComponents extends cBase {
 			$class = 'c' . $componentname;
 			
 			if ( !class_exists ( $class ) ) {
-				unset ( $this->Config->_components[$c] );
+				unset ( $this->Config->_Components[$c] );
 				continue;
 			}
 			
@@ -69,6 +74,15 @@ class cComponents extends cBase {
 		return ( true );
 	}
 	
+	/**
+	 * Load a component
+	 *
+	 * @access  public
+	 * @var string $pController Which controller to use
+	 * @var string $pView Which view to load
+	 * @var string $pView Which controller task to execute
+	 * @var array $pData Extended controller data.
+	 */
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );
 		
@@ -103,7 +117,9 @@ class cComponents extends cBase {
 			return ( false );
 		};
 		
-		$this->$componentname->_component = $component;
+		$this->$componentname->_Component = $component;
+		
+		$this->$componentname->_BufferCounter = & $this->Buffer->_Count['component'];
 		
 		ob_start ();
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );

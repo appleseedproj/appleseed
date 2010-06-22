@@ -28,6 +28,11 @@ class cBase {
 	public function __construct ( ) {       
 	}
 	
+	/**
+	 * Return a private variable
+	 *
+	 * @access  public
+	 */
 	public function Get ( $pVariable ) {
 		
 		if ( !isset ( $this->$pVariable ) ) return ( false );
@@ -35,6 +40,11 @@ class cBase {
 		return ( $this->$pVariable );
 	}
         
+	/**
+	 * Set a private variable
+	 *
+	 * @access  public
+	 */
 	public function Set ( $pVariable, $pValue ) {
 		
 		$this->$pVariable = $pValue;

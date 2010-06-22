@@ -35,6 +35,12 @@ class cBuffer extends cBase {
 		
 	}
 	
+	/**
+	 * Buffer and load a foundation
+	 *
+	 * @access  public
+	 * @var string $pFoundation Full path to foundation file
+	 */
 	public function LoadFoundation ( $pFoundation ) {
 		eval ( GLOBALS );
 		
@@ -50,10 +56,20 @@ class cBuffer extends cBase {
 		return ( true );
 	}
 	
+	/**
+	 * Get the private buffer value
+	 *
+	 * @access  public
+	 */
 	public function GetBuffer ( ) {
 		return ( $this->_Buffer );
 	}
 	
+	/**
+	 * Process the buffer, merging the queue.
+	 *
+	 * @access  public
+	 */
 	public function Process ( ) {
 		
 		// print_r ($this->_Queue); 
@@ -70,12 +86,26 @@ class cBuffer extends cBase {
 		return ( $processed );
 	}
 	
+	/**
+	 * Add to the buffer counter
+	 *
+	 * @access  public
+	 * @var string $pContext Which context to add to (ie, "component")
+	 */
 	public function AddToCount ( $pContext ) {
 		$this->_Count[$pContext]++;
 		
 		return ( true );
 	}
 	
+	/**
+	 * Add a buffer segment to the queue
+	 *
+	 * @access  public
+	 * @var string $pContext Which context to add to (ie, "component")
+	 * @var string $pData Data for how this component was called
+	 * @var array $pData Buffer segment value
+	 */
 	public function Queue ( $pContext, $pData, $pBuffer ) {
 		$count = $this->_Count[$pContext];
 		$this->_Queue[$pContext][$count]->Parameters = $pData;
@@ -83,6 +113,13 @@ class cBuffer extends cBase {
 		
 	}
 	
+	/**
+	 * Create a placeholder in the outermost buffer.
+	 *
+	 * @access  public
+	 * @var string $pContext Which context to add to (ie, "component")
+	 * @var array $pData Data for how this component was called
+	 */
 	public function PlaceHolder ( $pContext, $pData ) {
 		
 		foreach ($pData as $d => $data ) {

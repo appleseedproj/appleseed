@@ -36,6 +36,11 @@ class cTheme extends cBase {
 		return ( true );
 	}
 	
+	/**
+	 * Get an ordered list of the available styles, using inheritance
+	 *
+	 * @access  public
+	 */
 	public function GetStyles () {
 		eval (GLOBALS);
 		
