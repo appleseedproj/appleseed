@@ -59,7 +59,15 @@ class cBuffer extends cBase {
 		// print_r ($this->_Queue); 
 		//exit;
 		
-		return ( $this->_Buffer );
+		$processed = $this->_Buffer;
+		
+		foreach ( $this->_Queue['component'] as $q => $queue ) {
+			$pattern = "/\#\@ component$q \[(.*)\] \@\#/";
+			
+			$processed = preg_replace ( $pattern, $queue->Buffer, $processed );
+		}
+		
+		return ( $processed );
 	}
 	
 	public function AddToCount ( $pContext ) {

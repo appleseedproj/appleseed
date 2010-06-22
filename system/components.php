@@ -72,6 +72,10 @@ class cComponents extends cBase {
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );
 		
+		if (!$pController) $pController = $pComponent;
+		if (!$pView) $pView = $pComponent;
+		if (!$pTask) $pTask = "Display";
+		
 		$parameters = array ( 'component' => $pComponent);
 		if ( $pController ) $parameters['controller'] = $pController;
 		if ( $pView ) $parameters['view'] = $pView;

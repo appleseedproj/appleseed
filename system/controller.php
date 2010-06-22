@@ -34,7 +34,7 @@ class cController extends cBase {
 	}
 	
 	public function LoadView ( $pView ) {
-		require_once ( $this->_GetViewPath ( $pView ) );
+		require ( $this->_GetViewPath ( $pView ) );
 	}
 	
 	private function _GetViewPath ( $pView = null ) {
