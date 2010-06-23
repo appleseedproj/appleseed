@@ -43,7 +43,12 @@ class cComponent extends cBase {
 	public function Load ( $pController = null, $pView = null, $pTask = null, $pData = array ( ) ) {
 		eval ( GLOBALS );
 		
-		if ( !$pController ) $pController = $this->_Component;
+		// If no controller is specified, use the default.
+		if ( !$pController ) $pController = $this->Component;
+		
+		// Switch to aliased controller if using the default
+		if ( strtolower ( $pController ) == strtolower ( $this->_Alias ) ) $pController = strtolower ( $this->_Component );
+		
 		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
 		
 		if ( !$pView ) $pView = $this->_Component;
@@ -59,6 +64,7 @@ class cComponent extends cBase {
 		
 		$this->Set ( "Controller", $controller );
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
+		$this->Controllers->$controllername->Set ( "Alias", $this->Get ( "Alias" ) ) ;
 		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
@@ -74,7 +80,11 @@ class cComponent extends cBase {
 	private function _LoadController ( $pController = null ) {
 		eval ( GLOBALS );
 		
+		// If no controller is specified, use the default.
 		if ( !$pController ) $pController = $this->Component;
+		
+		// Switch to aliased controller if using the default
+		if ( strtolower ( $pController ) == strtolower ( $this->_Alias ) ) $pController = strtolower ( $this->_Component );
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'controllers' . DS . $pController . '.php';
 		

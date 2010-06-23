@@ -48,6 +48,7 @@ class cComponents extends cBase {
 		
 		$configdata = $this->_Config->Get ( "Data" );
 		
+		// Create the real components
 		foreach ( $this->_Config->_Components as $c => $component ) {
 			
 			$filename = $zApp->GetPath () . DS . 'components' . DS . $component . DS . $component . '.php';
@@ -75,19 +76,37 @@ class cComponents extends cBase {
 			
 			$this->$componentname->Set ( 'Component', $component);
 			
+		}
+		
+		// Create the component aliases
+		foreach ( $this->_Config->_Components as $c => $component ) {
+			$componentname = ucwords ( strtolower ( $component ) );
+			
 			// Set an alias or set of aliases to this component.
 			if ( isset ( $configdata[$component]['alias'] ) ) {
 				$aliases = $configdata[$component]['alias'];
 				if ( is_array ( $aliases ) ) {
 					foreach ( $aliases as $a => $alias ) {
 						$alias = ucwords ( strtolower ( ltrim ( rtrim ( $alias ) ) ) );
-						$this->$alias = clone $this->$componentname;
-						$this->$alias->Set ( "Component", $component );
+						if ( !isset ( $this->$alias ) ) {
+							$this->$alias = clone $this->$componentname;
+							$this->$alias->Set ( "Component", $component );
+							$this->$alias->Set ( "Alias", $alias );
+						} else {
+							$warning = __("Alias Name Exists", array ( 'name' => $alias ) );
+							$zApp->Logs->Add ( $warning, "Warnings" );
+						}
 					} 
 				} else {
-					$aliases = ucwords ( strtolower ( ltrim ( rtrim ( $aliases ) ) ) );
-					$this->$aliases = clone $this->$componentname;
-					$this->$aliases->Set ( "Component", $component );
+					if ( !isset ( $this->$aliases ) ) {
+						$aliases = ucwords ( strtolower ( ltrim ( rtrim ( $aliases ) ) ) );
+						$this->$aliases = clone $this->$componentname;
+						$this->$aliases->Set ( "Component", $component );
+						$this->$aliases->Set ( "Alias", $aliases );
+					} else {
+						$warning = __("Alias Name Exists", array ( 'name' => $aliases ) );
+						$zApp->Logs->Add ( $warning, "Warnings" );
+					}
 				}
 			} 
 		}
@@ -128,10 +147,8 @@ class cComponents extends cBase {
 		
 		$componentname = ucwords ( strtolower ( $component ) );
 		
-		$class = 'c' . ucwords ( strtolower ( $this->$componentname->Get ( "Component" ) ) );
-		
-		if ( !class_exists ( $class ) ) {
-			echo __("Component Not Found", array ( 'name' => $class ) );
+		if ( !isset ( $this->$componentname ) ) {
+			echo __("Component Not Found", array ( 'name' => $componentname ) );
 			return ( false );
 		};
 		

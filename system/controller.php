@@ -73,7 +73,11 @@ class cController extends cBase {
 	private function _GetViewPath ( $pView = null ) {
 		eval ( GLOBALS );
 		
+		// If no view is specified, use the default.
 		if ( !$pView ) $pView = $this->_Component;
+		
+		// Switch to aliased controller if using the default
+		if ( strtolower ( $pView ) == strtolower ( $this->_Alias ) ) $pView = strtolower ( $this->_Component );
 		
 		$Theme = $this->GetSys ( "Theme" );
 		$ThemeConfig = $Theme->Get ( "Config" );
