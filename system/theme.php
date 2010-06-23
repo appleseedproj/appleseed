@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cTheme extends cBase {
 	
-	var $Config;
+	protected $_Config;
 	
 	/**
 	 * Constructor
@@ -30,8 +30,8 @@ class cTheme extends cBase {
 	public function __construct ( ) {       
 		
  		// Load language configuration.
- 		$this->Config = new cConf ();
-		$this->Config->Config = $this->Config->Load ("themes");
+ 		$this->_Config = new cConf ();
+		$this->_Config->Set ( "Data",  $this->_Config->Load ( "themes" ) );
 		
 		return ( true );
 	}
@@ -47,7 +47,7 @@ class cTheme extends cBase {
 		// Check if we've already loaded the styles.
 		if ( isset ( $this->_styles ) ) return ( $this->_styles );
 		
-		$paths = $this->Config->GetPath ();
+		$paths = $this->_Config->GetPath ();
 		
 		$found = false;
 		
@@ -91,12 +91,12 @@ class cTheme extends cBase {
 		
 		$styles = $this->GetStyles ();
 		
-		$order = $this->Config->GetConfiguration ( 'order' );
-		$skip = $this->Config->GetConfiguration ( 'skip' );
+		$order = $this->_Config->GetConfiguration ( 'order' );
+		$skip = $this->_Config->GetConfiguration ( 'skip' );
 		
 		// Reorder the styles according to the configuration
 		if ( isset ( $order ) ) {
-			if ( isset ( $skip ) ) $skip = split ( ' ', $this->Config->GetConfiguration ( 'skip' ) );
+			if ( isset ( $skip ) ) $skip = split ( ' ', $this->_Config->GetConfiguration ( 'skip' ) );
 			foreach ( $order as $o => $ostyle ) {
 				foreach ( $styles as $s => $style ) {
 					if ( strstr ( $style, $ostyle ) ) {

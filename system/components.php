@@ -20,18 +20,18 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cComponents extends cBase {
 	
-	var $_ComponentCount = 0;
+	private $_ComponentCount = 0;
 
 	/**
 	 * Constructor
 	 *
 	 * @access  public
 	 */
-	public function __construct ( ) {       
+	public function __construct ( ) {
 		
  		// Load component configurations.
- 		$this->Config = new cConf ();
-		$this->Config->Config = $this->Config->LoadComponents ();
+ 		$this->_Config = new cConf ();
+		$this->_Config->Set ( "Data",  $this->_Config->LoadComponents() );
 		
 		// Load all component base classes.
 		$this->_Load ();
@@ -47,12 +47,12 @@ class cComponents extends cBase {
 		eval ( GLOBALS );
 		
 		
-		foreach ( $this->Config->_Components as $c => $component ) {
+		foreach ( $this->_Config->_Components as $c => $component ) {
 			
 			$filename = $zApp->GetPath () . DS . 'components' . DS . $component . DS . $component . '.php';
 			
 			if ( !file_exists ( $filename ) ) {
-				unset ( $this->Config->_Components[$c] );
+				unset ( $this->_Config->_Components[$c] );
 				continue;
 			}
 			
@@ -63,11 +63,13 @@ class cComponents extends cBase {
 			$class = 'c' . $componentname;
 			
 			if ( !class_exists ( $class ) ) {
-				unset ( $this->Config->_Components[$c] );
+				unset ( $this->_Config->_Components[$c] );
 				continue;
 			}
 			
-			$this->$componentname = new $class;
+			$this->$componentname = new $class();
+			
+			$this->$componentname->Set ( 'Component', $component);
 			
 		}
 		
@@ -100,7 +102,8 @@ class cComponents extends cBase {
 		
 		// Skip components which use reserved names
 		if ( in_array ( $component, $zApp->Reserved () ) ) {
-			echo __("Bad Component Name", array ( 'name' => $component ) );
+			$warning = __("Bad Component Name", array ( 'name' => $component ) );
+			$zApp->Logs->Add ( $warning, "Warnings" );
 			return ( false );
 		}
 		
@@ -113,22 +116,34 @@ class cComponents extends cBase {
 			return ( false );
 		};
 		
-		$this->$componentname->_Component = $component;
-		
-		$this->$componentname->_BufferCounter = & $this->Buffer->_Count['component'];
+		$this->$componentname->Set ( "Component", $component );
 		
 		ob_start ();
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
 		
-		$buffer = ob_get_clean ();
+		$bdata = ob_get_clean ();
 		
-		$this->Buffer->AddToCount ( 'component' );
+		$Buffer = $this->GetSys ( "Buffer" );
 		
-		$this->Buffer->Placeholder ( 'component', $parameters );
+		$Buffer->AddToCount ( 'component' );
 		
-		$this->Buffer->Queue ( 'component', $parameters, $buffer );
+		$Buffer->Placeholder ( 'component', $parameters );
+		
+		$Buffer->Queue ( 'component', $parameters, $bdata );
 		
 		return ( true );
+	}
+	
+	public function Talk ( $pComponent, $pRequest, $pData = null ) {
+		
+		$component = ucwords ( ltrim ( rtrim ( $pComponent ) ) );
+		$function = ltrim ( rtrim ( $pRequest ) );
+		
+		if ( in_array ( $function, get_class_methods ( $this->$component ) ) ) {
+			return ( $this->$component->$function ( $pData ) );
+		}
+		
+		return ( false );
 	}
 
 }

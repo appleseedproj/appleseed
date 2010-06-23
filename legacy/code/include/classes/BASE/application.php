@@ -624,7 +624,9 @@
 
     // Include based on a specified security setting.
     function IncludeFile ($pFILENAME, $pSECURITY = INCLUDE_SECURITY_NONE, $pOUTPUT = OUTPUT_SCREEN) {
-  
+    	
+      eval( GLOBALS ); // Import all global variables  
+      
       $return = 0;
 
       // Check if the file exists.

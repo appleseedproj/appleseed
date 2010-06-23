@@ -33,7 +33,7 @@
   // | DESCRIPTION: User questions editor.                               |
   // +-------------------------------------------------------------------+
 
-  eval(_G); // Import all global variables  
+  eval( GLOBALS ); // Import all global variables  
   
   // Change to document root directory
   chdir ($_SERVER['DOCUMENT_ROOT']);

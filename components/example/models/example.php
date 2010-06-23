@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Example Component
+/** Example Component Model
  * 
- * Example Component Entry Class
+ * Example Component Model Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Example
  */
-class cExample extends cComponent {
+class cExampleModel extends cModel {
 	
 	/**
 	 * Constructor
@@ -27,10 +27,6 @@ class cExample extends cComponent {
 	 */
 	public function __construct ( ) {       
 		parent::__construct();
-	}
-	
-	public function GetResponse ( $pData = null ) {
-		return ( "Success!!" );
 	}
 	
 }

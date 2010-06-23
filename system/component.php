@@ -27,8 +27,8 @@ class cComponent extends cBase {
 	 *
 	 * @access  public
 	 */
-	public function __construct ( ) {       
-		// Load the controller
+	public function __construct ( ) {
+		parent::__construct();
 	}
 	
 	/**
@@ -57,13 +57,8 @@ class cComponent extends cBase {
 		
 		$controllername = ltrim ( rtrim ( ucwords ( $controller ) ) );
 		
-		$this->Controllers->$controllername->_BufferCounter = & $this->_BufferCounter;
-		
-		$this->Controllers->$controllername->_Controller = $controller;
-		$this->Controllers->$controllername->_Component = &$this->_Component;
-		
-		$this->Controllers->$controllername->Components = &$this->Components;
-		$this->Controllers->$controllername->Component = &$this->Component;
+		$this->Set ( "Controller", $controller );
+		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
 		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
@@ -97,7 +92,7 @@ class cComponent extends cBase {
 			return ( false );
 		}
 		
-		$this->Controllers->$controllername = new $class;
+		$this->Controllers->$controllername = new $class();
 		
 		return ( true );
 	}

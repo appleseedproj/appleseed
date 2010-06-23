@@ -34,7 +34,7 @@
   // | icon for a requested user.  Uses MySQL for user authentication.   |
   // +-------------------------------------------------------------------+
 
-  eval(_G); // Import all global variables  
+  eval( GLOBALS ); // Import all global variables  
   
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);

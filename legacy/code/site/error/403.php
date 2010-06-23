@@ -33,7 +33,7 @@
   // | DESCRIPTION:  Provides handling for a custom 403 error page.      |
   // +-------------------------------------------------------------------+
 
-  eval(_G); // Import all global variables  
+  eval( GLOBALS ); // Import all global variables  
   
   // Change to document root directory.
   chdir ($_SERVER['DOCUMENT_ROOT']);

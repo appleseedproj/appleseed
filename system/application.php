@@ -24,9 +24,9 @@ SETGLOBAL("zApp");
  */
 class cApplication extends cBase {
 	
-	var $_cache;
+	private $_cache;
 	
-	var $_path;
+	private $_path;
 
 	/**
 	 * Constructor
@@ -50,30 +50,36 @@ class cApplication extends cBase {
 		require_once ( ASD_PATH . DS . 'system' . DS . 'component.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'components.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'event.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'hook.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'hooks.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'model.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'buffer.php' );
+		require_once ( ASD_PATH . DS . 'system' . DS . 'logs.php' );
 		
 		$this->_LoadLibraries ();
             
 		$this->Config = new cConf ();
 		
 		// Load site configuration.
-		$this->Config->Config = $this->Config->Load ("configurations");
+		$this->Config->Set ( "Data",  $this->Config->Load ( "configurations" ) );
 		
-		$this->Language = new cLanguage ();
+		$this->Language = new cLanguage();
 		$this->Theme = new cTheme ();
-		$this->Components = new cComponents ( );
-		$this->Foundation = new cFoundation ( );
+		$this->Logs = new cLogs();
+		$this->Buffer = new cBuffer();
 		
-		$this->Buffer = new cBuffer ( );
+		$this->Components = new cComponents();
+		$this->Foundation = new cFoundation();
+		$this->Event = new cEvent();
+		$this->Hooks = new cHooks();
 		
-		$this->Foundation->Buffer = &$this->Buffer;
-		$this->Components->Buffer = &$this->Buffer;
+		$this->Event->Hooks = $this->Hooks;
 		
         // Load global strings into cache.
         $this->Language->Load ('en-US', 'system.global.lang');
         
-		$this->Router = new cRouter ( );
+		$this->Router = new cRouter();
 		
 		return ( true );
 	} 
@@ -92,7 +98,7 @@ class cApplication extends cBase {
 	 *
 	 * @access  public
 	 */
-	public function GetPath () {
+	public function GetPath ( ) {
 		
 		if (!isset ($this->_path)) {
 			$this->_path = $_SERVER['DOCUMENT_ROOT'];
@@ -106,7 +112,7 @@ class cApplication extends cBase {
 	 *
 	 * @access  public
 	 */
-	public function GetBaseURL () {
+	public function GetBaseURL ( ) {
 		
 		if (!isset ($this->_baseurl)) {
 			$url = $this->Config->GetConfiguration ( "url" );

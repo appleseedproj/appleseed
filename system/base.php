@@ -35,9 +35,11 @@ class cBase {
 	 */
 	public function Get ( $pVariable ) {
 		
-		if ( !isset ( $this->$pVariable ) ) return ( false );
+		$variable = '_' . $pVariable;
 		
-		return ( $this->$pVariable );
+		if ( !isset ( $this->$variable ) ) return ( false );
+		
+		return ( $this->$variable );
 	}
         
 	/**
@@ -47,9 +49,19 @@ class cBase {
 	 */
 	public function Set ( $pVariable, $pValue ) {
 		
-		$this->$pVariable = $pValue;
+		$variable = '_' . $pVariable;
+		
+		$this->$variable = $pValue;
 		
 		return ( true );
 	}
-        
+	
+	public function GetSys ( $pVariable ) {
+		eval ( GLOBALS );
+		
+		if ( !isset ( $zApp->$pVariable ) ) return ( false );
+		
+		return ( $zApp->$pVariable );
+	}
+	
 }

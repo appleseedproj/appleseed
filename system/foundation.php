@@ -19,17 +19,19 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cFoundation extends cBase {
+	
+	protected $_Config;
 
 	/**
 	 * Constructor
 	 *
 	 * @access  public
 	 */
-	public function __construct ( ) {       
+	public function __construct ( ) {
 		
  		// Load foundation configuration.
- 		$this->Config = new cConf ( );
-		$this->Config->Config = $this->Config->Load ( "foundations" );
+ 		$this->_Config = new cConf ( );
+		$this->_Config->Set ( "Data",  $this->_Config->Load ( "foundations" ) );
 		
 		return ( true );
 	}
@@ -43,13 +45,16 @@ class cFoundation extends cBase {
 	public function Load ( $pRoute ) {
 		eval ( GLOBALS );
 		
-		$paths = array_reverse ( $this->Config->GetPath() );
+		$Config = $this->GetSys ( "Config" );
+		$paths = array_reverse ( $Config->GetPath() );
+		
+		$Buffer = $this->GetSys ( "Buffer" );
 		
 		foreach ( $paths as $p => $path ) {
 			$route = ltrim ( rtrim ( $pRoute, '/' ), '/' );
 			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
 			if ( file_exists ( $filename ) ) {
-				$this->Buffer->LoadFoundation ( $filename );
+				$Buffer->LoadFoundation ( $filename );
 				return ( true );
 			} else {
 				echo __("Foundation Not Found", array ( 'route' => $route ) );

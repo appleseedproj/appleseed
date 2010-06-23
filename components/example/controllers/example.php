@@ -25,8 +25,24 @@ class cExampleController extends cController {
 	 *
 	 * @access  public
 	 */
-	public function __construct ( ) {       
-		parent::__construct();
+	public function __construct ( $pObject ) {       
+		parent::__construct( $pObject );
+	}
+	
+	public function Display ( $pView = null, $pData = null ) {
+		
+		echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		
+		$Event = $this->GetSys ( "Event" );
+		
+		$Event->Trigger ( "Begin", "Example", "Display");
+		
+		$this->Model = &$this->GetModel( "Example" );
+		
+		parent::Display( $pView, $pData );
+
+		$Event->Trigger ( "End", "Example", "Display" );
+		return ( true );
 	}
 	
 }

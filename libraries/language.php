@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cLanguage {
 	
-	var $Config;
+	protected $_Config;
 	
 	/**
 	 * Constructor
@@ -30,9 +30,10 @@ class cLanguage {
 	public function __construct ( ) {       
 		
  		// Load language configuration.
- 		$this->Config = new cConf ();
-		$this->Config->Config = $this->Config->Load ("languages");
+ 		$this->_Config = new cConf ();
+		$this->_Config->Set ( "Data",  $this->_Config->Load ( "languages" ) );
 		
+		return ( true );
 	}
  	
  	/*
@@ -44,7 +45,7 @@ class cLanguage {
  	function Load ($pLanguage, $pContextFile) {
  		eval(GLOBALS);
  		
-		$paths = $this->Config->GetPath ();
+		$paths = $this->_Config->GetPath ();
 		
 		$found = false;
 		

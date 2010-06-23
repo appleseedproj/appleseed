@@ -19,6 +19,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cConfiguration extends cBase {
+	
+	protected $_Data;
 
 	/**
 	 * Constructor
@@ -50,13 +52,13 @@ class cConfiguration extends cBase {
 			$configurations[$dir]->Directory = $dir;
 			$file = $zApp->GetPath () . DS . $pDirectory . DS . $dir . DS . $dir . '.conf';
 			
-			if ( !$configurations[$dir]->Config = parse_ini_file ($file) ) {
+			if ( !$configurations[$dir]->_Data = parse_ini_file ($file) ) {
 				// Load failed.  Set a warning and unset value.
 				unset ($configurations[$dir]);
 				continue;
 			}
 			
-			if ( ( strtolower ( $configurations[$dir]->Config['enabled'] ) != 'true' ) ) {
+			if ( ( strtolower ( $configurations[$dir]->_Data['enabled'] ) != 'true' ) ) {
 				unset ($configurations[$dir]);
 				continue;
 			}
@@ -76,7 +78,7 @@ class cConfiguration extends cBase {
 		
 		do {
 			foreach ( $dirs as $dir => $values ) {
-				$inherit = $configurations[$dir]->Config['inherit'];
+				$inherit = $configurations[$dir]->_Data['inherit'];
 				
 				$inheritanceflag = false;
 				
@@ -123,7 +125,7 @@ class cConfiguration extends cBase {
 		// Traverse and inherit values
 		$final = $this->_Inherit ( $configurations[$parent] );
 		
-		$config = $final->Config;
+		$config = $final->_Data;
 		
 		// Internal list of the path to the final configuration
 		$config['_path'] = array_reverse ( $this->_path );
@@ -145,9 +147,9 @@ class cConfiguration extends cBase {
 	 */
 	function GetConfiguration ( $pVariable ) {
 		
-		if ( !isset ( $this->Config[$pVariable] ) ) return ( false );
+		if ( !isset ( $this->_Data[$pVariable] ) ) return ( false );
 		
-		return ( $this->Config[$pVariable] );
+		return ( $this->_Data[$pVariable] );
 	}
 	
 	/**
@@ -156,7 +158,7 @@ class cConfiguration extends cBase {
 	 * @access  public
 	 */
 	function GetPath ( ) {
-		return ( $this->Config['_path'] );
+		return ( $this->_Data['_path'] );
 	}
 	
 	/**
@@ -169,7 +171,7 @@ class cConfiguration extends cBase {
 		$parent = $pConfiguration;
 		$child = $parent->Child;
 		
-		if ( $clear = $child->Config['clear'] ) {
+		if ( $clear = $child->_Data['clear'] ) {
 			$parent = $this->_Clear ( $parent, $child );
 		}
 			
@@ -177,16 +179,16 @@ class cConfiguration extends cBase {
 			$child = $this->_Inherit ($child);
 			
 			// Move all parent values to child.
-			foreach ( $child->Config as $key => $value ) {
-				if ( is_array ( $parent->Config[$key] ) ) {
-					$parent->Config[$key] = array_merge ( $parent->Config[$key], $value );
+			foreach ( $child->_Data as $key => $value ) {
+				if ( is_array ( $parent->_Data[$key] ) ) {
+					$parent->_Data[$key] = array_merge ( $parent->_Data[$key], $value );
 				} else {
-					$parent->Config[$key] = $value;
+					$parent->_Data[$key] = $value;
 				} 
 			} 
 			
 			$this->_path[] = $parent->Directory;
-			unset ( $parent->Config['inherit'] );
+			unset ( $parent->_Data['inherit'] );
 			unset ( $parent->Child );
 			
 			return ( $parent );
@@ -205,7 +207,7 @@ class cConfiguration extends cBase {
 	 */
 	private function _Clear ( $pParent, $pChild ) {
 		
-		$clearlist = array_filter ( split ( ' ', $pChild->Config['clear'] ) );
+		$clearlist = array_filter ( split ( ' ', $pChild->_Data['clear'] ) );
 		
 		if ( count ( $clearlist ) < 1 ) {
 			return ( false );
@@ -216,7 +218,7 @@ class cConfiguration extends cBase {
 			if ( in_array ( $clear, array ( "inherit", "clear" ) ) ) continue;
 			
 			$this->_cleared[] = $clear . ' [by ' . $pChild->Directory . '] ';
-			unset ( $pParent->Config[$clear] );
+			unset ( $pParent->_Data[$clear] );
 		} 
 		
 		return ( $pParent );
@@ -230,7 +232,9 @@ class cConfiguration extends cBase {
 	public function LoadComponents ( ) {
 		eval ( GLOBALS );
 		
-		$configpaths = $zApp->Config->GetPath();
+		$Config = $this->GetSys ( "Config" );
+		
+		$configpaths = $Config->GetPath();
 		
 		$componentdir = $zApp->GetPath() . DS . 'components';
 		
@@ -275,6 +279,80 @@ class cConfiguration extends cBase {
 				continue;
 			} else {
 				$this->_Components[] = $component;
+			}
+			
+		}
+		
+		return ($config);
+		
+	}
+	/**
+	 * Loads all of the hook configuration files
+	 *
+	 * @access  public
+	 */
+	public function LoadHooks ( ) {
+		eval ( GLOBALS );
+		
+		$Config = $this->GetSys ( "Config" );
+		
+		$configpaths = $Config->GetPath();
+		
+		$componentdir = $zApp->GetPath() . DS . 'hooks';
+		
+		$components = scandirs ( $componentdir );
+		
+		$config = array ();
+		foreach ( $components as $comp => $component ) {
+			$hookdir = $zApp->GetPath() . DS . 'hooks' . DS . $component;
+		
+			$hooks = scandirs ( $hookdir );
+			
+			foreach ( $hooks as $h => $hook ) {
+				
+				$filename = $hookdir . DS . $hook . DS . $hook . '.conf';
+			
+				if ( file_exists ( $filename ) ) {
+					$path[$hook][] = $filename;
+				}
+			
+				foreach ( $configpaths as $cpath => $configpath ) {
+					$filename = $zApp->GetPath() . DS . 'configurations' . DS . $configpath . DS . 'hooks' . DS . $component . DS . $hook . '.conf';
+					if ( file_exists ( $filename ) ) {
+						$path[$hook][] = $filename;
+					}
+				}
+				
+				// No configuration files found, continue loop
+				if ( !isset ( $path[$hook] ) ) continue;
+				
+				
+				$config[$component][$hook] = array();
+				
+				foreach ( $path[$hook] as $p => $filename ) {
+					$currentvalues = $config[$component][$hook];
+					$configvalues = parse_ini_file ( $filename );
+					
+					if ( $configvalues['clearall'] == 'true' ) {
+						$currentvalues = array ();
+						unset ( $configvalues['clearall'] );
+					}
+					
+					$config[$component][$hook] = array_merge ( $currentvalues, $configvalues );
+				}
+				
+				// If the hook isn't enabled, then unset the values and continue.
+				if ($config[$component][$hook]['enabled'] != 'true' ) {
+					unset ($config[$component][$hook]);
+					continue;
+				} else {
+					$this->_Hooks[$component][] = $hook;
+				}
+				
+			}
+			
+			if ( count ( $config[$component] ) < 1 ) {
+				unset ( $config [$component] );
 			}
 			
 		}

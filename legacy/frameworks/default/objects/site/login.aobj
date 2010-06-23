@@ -8,19 +8,19 @@
    <input type='hidden' name='gACTION' value='LOGIN' />
 
    <p id='username'>
-    <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.LOGIN'); ?> <br />
+    <?php echo __("Username"); ?> <br />
    </p> <!-- #username -->
    <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
    <?php $zLOCALUSER->Broadcast ('field', 'Username'); ?>
 
    <p id='password'>
-    <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.LOGIN'); ?> <br />
+    <?php echo __("Password"); ?> <br />
    </p> <!-- #password -->
    <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
    <?php $zLOCALUSER->Broadcast ('field', 'Pass'); ?>
 
    <p id='rememberme'>
-    <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.LOGIN'); ?>
+    <?php echo __("Remember Me"); ?> <br />
    </p> <!-- #rememberme -->
    <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
 

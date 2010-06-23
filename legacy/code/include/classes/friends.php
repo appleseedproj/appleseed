@@ -823,8 +823,7 @@
         unset ($zREMOTE);
       } elseif ($this->Username == ANONYMOUS) {
         global $zSTRINGS;
-        $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME', $this->Context);
-        $fullname = $zSTRINGS->Output;
+        $fullname = __("ANONYMOUS USER");
         $email = "";
       } else {
 

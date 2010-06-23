@@ -19,13 +19,16 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cController extends cBase {
+	
+	private $_Models;
 
 	/**
 	 * Constructor
 	 *
 	 * @access  public
 	 */
-	public function __construct ( ) {       
+	public function __construct ( ) {
+		parent::__construct();
 	}
 
 	/**
@@ -72,7 +75,9 @@ class cController extends cBase {
 		
 		if ( !$pView ) $pView = $this->_Component;
 		
-		$themepath = $zApp->Theme->Config->GetPath();
+		$Theme = $this->GetSys ( "Theme" );
+		$ThemeConfig = $Theme->Get ( "Config" );
+		$themepath = $ThemeConfig->GetPath();
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'views' . DS . $pView . '.php';
 		if ( file_exists ( $filename ) ) $return = $filename;
@@ -98,7 +103,49 @@ class cController extends cBase {
 	public function GetBufferCounter ( ) {
 		
 		return ( $this->_BufferCounter );
+	}
+	
+	/**
+	 * Creates and returns the specified model
+	 *
+	 * @access  public
+	 * @var string $pSuffix Suffix to specify an additional model
+	 */
+	public function GetModel ( $pSuffix = null ) {
+		eval ( GLOBALS );
+		
+		// We cannot use a suffix which is the same as the default model name (ie, component name).
+		if ( strtolower ( $pSuffix ) == $this->_Component ) {
+			$warning = __('Model suffix and default model name ("%name$s") cannot be the same', array ( 'name' => $pSuffix ) );
+			$zApp->Logs->Add ( $warning, "Warnings" );
+			$pSuffix = null;
+		}
+		
+		$model = ucwords ( $this->_Component ) . ucwords ( $pSuffix );
+		
+		// If model has already been created, return it.
+		if ( isset ( $this->_Models->$model ) ) return ( $this->_Models->$model );
+		
+		if ( $pSuffix ) {
+			$file = strtolower ( $pSuffix ). '.php';
+		} else {
+			$file = $this->_Component . '.php';
+		}
+		
+		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'models' . DS . $file;
+		$class = 'c' . ucwords ( $this->_Component ) . ucwords ( $pSuffix ) . 'Model';
+		
+		if ( !file_exists ( $filename ) ) {
+			echo __("Model Not Found", array ( 'name' => $model ) );
+		}
+		
+		require_once ( $filename );
+		
+		$this->_Models->$model = new $class;
+		
+		return ( $this->_Models->$model );
 		
 	}
+	
 
 }

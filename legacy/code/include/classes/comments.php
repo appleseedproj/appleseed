@@ -419,14 +419,11 @@
       global $gSCROLLSTEP, $gSCROLLSTART, $gSCROLLMAX;
       global $gSCROLLCOUNT;
 
-      $zSTRINGS->Lookup ('LINK.REPLY', 'USER.COMMENTS');
-      $gREPLYLABEL = $zSTRINGS->Output;
+      $gREPLYLABEL = __("Reply");
 
-      $zSTRINGS->Lookup ('LINK.PARENT', 'USER.COMMENTS');
-      $gPARENTLABEL = $zSTRINGS->Output;
+      $gPARENTLABEL = __("Parent");
 
-      $zSTRINGS->Lookup ('LINK.THREAD', 'USER.COMMENTS');
-      $gTHREADLABEL = $zSTRINGS->Output;
+      $gTHREADLABEL = __("Thread");
 
       $returnbuffer = "";
 
@@ -540,17 +537,14 @@
         $stamp = strtotime ($this->Stamp);
         $gCOMMENTDATE = date ("M j, Y", $stamp);
         $gCOMMENTTIME = date ("g:i a", $stamp);
-        $zSTRINGS->Lookup ('LABEL.STAMP', 'USER.COMMENTS');
-        $gCOMMENTSTAMP = $zSTRINGS->Output;
+        $gCOMMENTSTAMP = __("Time Stamp", array ( 'date' => $gCOMMENTDATE, 'time' => $gCOMMENTTIME ) );
 
         // Threaded -specific
         $gCOMMENTLINK = $zHTML->CreateLink ($gTARGET . "#comments", $this->Subject, $gTHREADDATA);
-        $zSTRINGS->Lookup ('LABEL.THREAD', 'USER.COMMENTS');
-        $gCOMMENTTHREAD = $zSTRINGS->Output;
+        $gCOMMENTTHREAD = __("Thread Label", array ( 'link' => $gCOMMENTLINK, 'author' => $gCOMMENTAUTHOR, 'date' => $gCOMMENTDATE, 'time' => $gCOMMENTTIME ) );
 
         // Compact -specific
-        $zSTRINGS->Lookup ('LABEL.BYLINE', 'USER.COMMENTS');
-        $gCOMMENTBYLINE = $zSTRINGS->Output;
+        $gCOMMENTBYLINE = __("Byline", array ( 'author' => $gCOMMENTAUTHOR ) );
 
         /* */
 

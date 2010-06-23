@@ -19,13 +19,32 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cEvent extends cBase {
+	
+	private $_Events;
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {
+		parent::__construct();
+	}
 
+	public function Trigger ( $pEvent, $pComponent, $pTask, $pData = null ) {
+		
+		$event = ucwords ( ltrim ( rtrim ( $pEvent ) ) ); 
+		$component = ucwords ( ltrim ( rtrim ( $pComponent ) ) ); 
+		$task = ucwords ( ltrim ( rtrim ( $pTask ) ) ); 
+		
+		$function = $event . $component . $task;
+		
+		$hooks = $this->Hooks->GetHooks ();
+		
+		foreach ( $hooks as $h => $hook ) {
+			if ( in_array ( $function, get_class_methods ( $hook ) ) ) {
+				$this->Hooks->$component->$function ( $pData );
+			} // if
+		}
+	}
 }

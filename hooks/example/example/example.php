@@ -1,8 +1,9 @@
+
 <?php
 /**
  * @version      $Id$
- * @package      Appleseed.Components
- * @subpackage   Example
+ * @package      Appleseed.Framework
+ * @subpackage   System
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,26 +12,33 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Example Component
+/** Example Hook Class
  * 
- * Example Component Entry Class
+ * Example Hook Class
  * 
- * @package     Appleseed.Components
- * @subpackage  Example
+ * @package     Appleseed.Framework
+ * @subpackage  System
  */
-class cExample extends cComponent {
-	
+class cExampleHook extends cHook {
+
 	/**
 	 * Constructor
 	 *
 	 * @access  public
 	 */
 	public function __construct ( ) {       
-		parent::__construct();
 	}
 	
-	public function GetResponse ( $pData = null ) {
-		return ( "Success!!" );
+	public function BeginExampleDisplay ( $pData = null ) {
+		echo "<h2>Hook!</h2>";
+		
+		return ( true );
 	}
 	
+	public function EndExampleDisplay ( $pData = null ) {
+		echo "<h3>Jab!</h3>";
+		
+		return ( true );
+	}
+
 }

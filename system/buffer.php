@@ -20,9 +20,11 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cBuffer extends cBase {
 	
-	var $_Buffer;
-	var $_Queue;
-	var $_Count;
+	private $_Buffer;
+	
+	private $_Queue;
+	
+	private $_Count;
 
 	/**
 	 * Constructor
