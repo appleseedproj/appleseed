@@ -84,7 +84,7 @@ class cRouter extends cBase {
 				
 				$path = ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' ;
 				
-				if (file_exists ($path) ) {
+				if (is_file ($path) ) {
 				  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' );
 				} else {
 				  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'error' . DS . '404.php' );

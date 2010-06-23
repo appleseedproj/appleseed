@@ -244,13 +244,13 @@ class cConfiguration extends cBase {
 		foreach ( $components as $comp => $component ) {
 			$filename = $componentdir . DS . $component . DS . $component . '.conf';
 			
-			if ( file_exists ( $filename ) ) {
+			if ( is_file ( $filename ) ) {
 				$path[$component][] = $filename;
 			}
 			
 			foreach ( $configpaths as $cpath => $configpath ) {
 				$filename = $zApp->GetPath() . DS . 'configurations' . DS . $configpath . DS . 'components' . DS . $component . '.conf';
-				if ( file_exists ( $filename ) ) {
+				if ( is_file ( $filename ) ) {
 					$path[$component][] = $filename;
 				}
 			}
@@ -312,13 +312,13 @@ class cConfiguration extends cBase {
 				
 				$filename = $hookdir . DS . $hook . DS . $hook . '.conf';
 			
-				if ( file_exists ( $filename ) ) {
+				if ( is_file ( $filename ) ) {
 					$path[$hook][] = $filename;
 				}
 			
 				foreach ( $configpaths as $cpath => $configpath ) {
 					$filename = $zApp->GetPath() . DS . 'configurations' . DS . $configpath . DS . 'hooks' . DS . $component . DS . $hook . '.conf';
-					if ( file_exists ( $filename ) ) {
+					if ( is_file ( $filename ) ) {
 						$path[$hook][] = $filename;
 					}
 				}

@@ -53,9 +53,9 @@ class cComponent extends cBase {
 		
 		if ( !$pTask ) $pTask = 'display';
 		
-		$taskname = ltrim ( rtrim ( ucwords ( $pTask ) ) );
+		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
 		
-		$controllername = ltrim ( rtrim ( ucwords ( $controller ) ) );
+		$controllername = ucwords ( strtolower ( ltrim ( rtrim ( $controller ) ) ) );
 		
 		$this->Set ( "Controller", $controller );
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
@@ -74,13 +74,15 @@ class cComponent extends cBase {
 	private function _LoadController ( $pController = null ) {
 		eval ( GLOBALS );
 		
+		if ( !$pController ) $pController = $this->Component;
+		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'controllers' . DS . $pController . '.php';
 		
 		$controllername = ucwords ( $pController );
 		
 		$class = 'c' . $controllername . 'Controller';
 		
-		if ( !file_exists ( $filename ) ) {
+		if ( !is_file ( $filename ) ) {
 			echo __("Controller Not Found", array ( 'name' => $pController ) );
 			return ( false );
 		}

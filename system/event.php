@@ -33,9 +33,9 @@ class cEvent extends cBase {
 
 	public function Trigger ( $pEvent, $pComponent, $pTask, $pData = null ) {
 		
-		$event = ucwords ( ltrim ( rtrim ( $pEvent ) ) ); 
-		$component = ucwords ( ltrim ( rtrim ( $pComponent ) ) ); 
-		$task = ucwords ( ltrim ( rtrim ( $pTask ) ) ); 
+		$event = ucwords ( strtolower ( ltrim ( rtrim ( $pEvent ) ) ) ); 
+		$component = ucwords ( strtolower ( ltrim ( rtrim ( $pComponent ) ) ) ); 
+		$task = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) ); 
 		
 		$function = $event . $component . $task;
 		

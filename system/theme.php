@@ -60,7 +60,7 @@ class cTheme extends cBase {
  			$location = $zApp->GetPath() . DS . 'themes' . DS . $path . DS . 'style';
  			
  			// Directory does not exist, continue;
- 			if (!file_exists ($location)) continue;
+ 			if (!is_file ($location)) continue;
  			
  			// Get a list of all css files.
  			$files = glob($location . DS . '*.css');

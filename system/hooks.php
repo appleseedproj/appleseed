@@ -52,7 +52,7 @@ class cHooks extends cBase {
 			
 				$class = 'c' . $hookname . "Hook";
 				
-				if ( !file_exists ( $filename ) ) {
+				if ( !is_file ( $filename ) ) {
 					unset ( $this->_Config->_Hooks[$c] );
 					continue;
 				}

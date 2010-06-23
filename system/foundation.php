@@ -53,7 +53,7 @@ class cFoundation extends cBase {
 		foreach ( $paths as $p => $path ) {
 			$route = ltrim ( rtrim ( $pRoute, '/' ), '/' );
 			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
-			if ( file_exists ( $filename ) ) {
+			if ( is_file ( $filename ) ) {
 				$Buffer->LoadFoundation ( $filename );
 				return ( true );
 			} else {

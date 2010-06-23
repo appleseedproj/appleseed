@@ -80,11 +80,11 @@ class cController extends cBase {
 		$themepath = $ThemeConfig->GetPath();
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'views' . DS . $pView . '.php';
-		if ( file_exists ( $filename ) ) $return = $filename;
+		if ( is_file ( $filename ) ) $return = $filename;
 		
 		foreach ( $themepath as $t => $theme ) {
 			$filename = $zApp->GetPath() . DS . 'themes' . DS . $theme . DS . 'views' . DS . $this->_Component . DS . $pView . '.php';
-			if ( file_exists ( $filename ) ) $return = $filename;
+			if ( is_file ( $filename ) ) $return = $filename;
 		}
 		
 		if ( !$return ) {
@@ -121,7 +121,7 @@ class cController extends cBase {
 			$pSuffix = null;
 		}
 		
-		$model = ucwords ( $this->_Component ) . ucwords ( $pSuffix );
+		$model = ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $pSuffix ) );
 		
 		// If model has already been created, return it.
 		if ( isset ( $this->_Models->$model ) ) return ( $this->_Models->$model );
@@ -133,9 +133,9 @@ class cController extends cBase {
 		}
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'models' . DS . $file;
-		$class = 'c' . ucwords ( $this->_Component ) . ucwords ( $pSuffix ) . 'Model';
+		$class = 'c' . ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $pSuffix ) ) . 'Model';
 		
-		if ( !file_exists ( $filename ) ) {
+		if ( !is_file ( $filename ) ) {
 			echo __("Model Not Found", array ( 'name' => $model ) );
 		}
 		

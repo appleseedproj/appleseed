@@ -46,19 +46,20 @@ class cComponents extends cBase {
 	public function _Load ( ) {
 		eval ( GLOBALS );
 		
+		$configdata = $this->_Config->Get ( "Data" );
 		
 		foreach ( $this->_Config->_Components as $c => $component ) {
 			
 			$filename = $zApp->GetPath () . DS . 'components' . DS . $component . DS . $component . '.php';
 			
-			if ( !file_exists ( $filename ) ) {
+			if ( !is_file ( $filename ) ) {
 				unset ( $this->_Config->_Components[$c] );
 				continue;
 			}
 			
 			require_once ( $filename );
 			
-			$componentname = ucwords ( $component );
+			$componentname = ucwords ( strtolower ( $component ) );
 			
 			$class = 'c' . $componentname;
 			
@@ -67,10 +68,28 @@ class cComponents extends cBase {
 				continue;
 			}
 			
+			
 			$this->$componentname = new $class();
+			
+			$this->$componentname->Set ("Config", $configdata[$component] );
 			
 			$this->$componentname->Set ( 'Component', $component);
 			
+			// Set an alias or set of aliases to this component.
+			if ( isset ( $configdata[$component]['alias'] ) ) {
+				$aliases = $configdata[$component]['alias'];
+				if ( is_array ( $aliases ) ) {
+					foreach ( $aliases as $a => $alias ) {
+						$alias = ucwords ( strtolower ( ltrim ( rtrim ( $alias ) ) ) );
+						$this->$alias = clone $this->$componentname;
+						$this->$alias->Set ( "Component", $component );
+					} 
+				} else {
+					$aliases = ucwords ( strtolower ( ltrim ( rtrim ( $aliases ) ) ) );
+					$this->$aliases = clone $this->$componentname;
+					$this->$aliases->Set ( "Component", $component );
+				}
+			} 
 		}
 		
 		return ( true );
@@ -107,16 +126,14 @@ class cComponents extends cBase {
 			return ( false );
 		}
 		
-		$componentname = ucwords ( $component );
+		$componentname = ucwords ( strtolower ( $component ) );
 		
-		$class = 'c' . $componentname;
+		$class = 'c' . ucwords ( strtolower ( $this->$componentname->Get ( "Component" ) ) );
 		
 		if ( !class_exists ( $class ) ) {
 			echo __("Component Not Found", array ( 'name' => $class ) );
 			return ( false );
 		};
-		
-		$this->$componentname->Set ( "Component", $component );
 		
 		ob_start ();
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
@@ -136,7 +153,7 @@ class cComponents extends cBase {
 	
 	public function Talk ( $pComponent, $pRequest, $pData = null ) {
 		
-		$component = ucwords ( ltrim ( rtrim ( $pComponent ) ) );
+		$component = ucwords ( strtolower ( ltrim ( rtrim ( $pComponent ) ) ) );
 		$function = ltrim ( rtrim ( $pRequest ) );
 		
 		if ( in_array ( $function, get_class_methods ( $this->$component ) ) ) {

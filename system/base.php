@@ -34,8 +34,7 @@ class cBase {
 	 * @access  public
 	 */
 	public function Get ( $pVariable ) {
-		
-		$variable = '_' . $pVariable;
+		$variable = '_' . ltrim ( rtrim ( $pVariable ) );
 		
 		if ( !isset ( $this->$variable ) ) return ( false );
 		
@@ -49,7 +48,7 @@ class cBase {
 	 */
 	public function Set ( $pVariable, $pValue ) {
 		
-		$variable = '_' . $pVariable;
+		$variable = '_' . ltrim ( rtrim ( $pVariable ) );
 		
 		$this->$variable = $pValue;
 		
@@ -59,9 +58,11 @@ class cBase {
 	public function GetSys ( $pVariable ) {
 		eval ( GLOBALS );
 		
-		if ( !isset ( $zApp->$pVariable ) ) return ( false );
+		$variable = ltrim ( rtrim ( $pVariable ) );
 		
-		return ( $zApp->$pVariable );
+		if ( !isset ( $zApp->$variable ) ) return ( false );
+		
+		return ( $zApp->$variable );
 	}
 	
 }
