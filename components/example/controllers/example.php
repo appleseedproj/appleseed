@@ -30,9 +30,9 @@ class cExampleController extends cController {
 	}
 	
 	public function Display ( $pView = null, $pData = null ) {
-		$this->GetSys ( "Event" )->Trigger ( "Begin", "Example", "Display" );
+		$this->Trigger ( "Begin" );
 		
-		//echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		// echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
 		
 		$this->Model = &$this->GetModel( "Example" );
 		$this->MapModel = &$this->GetModel( "Map" );
@@ -40,7 +40,8 @@ class cExampleController extends cController {
 		
 		parent::Display( $pView, $pData );
 
-		$this->GetSys ( "Event" )->Trigger ( "End", "Example", "Display" );
+		// $this->GetSys ( "Event" )->Trigger ( "End", "Example", "Display" );
+		$this->Trigger ( "End" );  // Shorthand
 		
 		return ( true );
 	}

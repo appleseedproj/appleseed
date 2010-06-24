@@ -88,6 +88,7 @@ class cComponent extends cBase {
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'controllers' . DS . $pController . '.php';
 		
+		// @todo Controller name has to include component name.  ie, cExampleTestController, not cTestController.
 		$controllername = ucwords ( $pController );
 		
 		$class = 'c' . $controllername . 'Controller';

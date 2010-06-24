@@ -152,11 +152,34 @@ class cController extends cBase {
 		
 		require_once ( $filename );
 		
-		$this->_Models->$model = new $class ( $pTables );
+		$this->_Models->$model = new $class ( $pTable );
 		
 		return ( $this->_Models->$model );
 		
 	}
 	
+	/**
+	 * Shorthand for event trigger function.  Determines the event and component origins automatically.
+	 *
+	 * @access  public
+	 * @param string $pEvent Which event to trigger
+	 * @param array $pEvent Extra data to pass to event hook
+	 */
+	function Trigger ( string $pEvent, array $pData = null) {
+		
+		$backtrace = debug_backtrace();
+		
+		$function = $backtrace[1]['function'];
+		$class = $backtrace[1]['class'];
+		
+		$component = preg_replace ( "/^c/", "", $class );
+		$component = preg_replace ( "/Controller$/", "", $component );
+		
+		$event = ltrim ( rtrim ( $pEvent ) ); 
+		
+		$return = $this->GetSys ( "Event" )->Trigger ( $pEvent, $component, $function, $pData);
+		
+		return ( $return );
+	}
 
 }
