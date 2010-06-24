@@ -47,11 +47,13 @@ class cDatabase extends cBase {
 		$mode = $Config->GetConfiguration ('mode');
 		
 		try {  
-			$DBH = new PDO("mysql:host=$host;dbname=$db", $un, $pw);  
+			$this->_DB = new AppleseedPDO("mysql:host=$host;dbname=$db", $un, $pw);  
 		}  
 		catch(PDOException $e) {  
     		die ( $e->getMessage() );
 		}
+		
+		return ( $this->_DB );
 	}
 	
 	public function Query ( $pQuery ) {
@@ -64,9 +66,57 @@ class cDatabase extends cBase {
 		
 		$table = $prefix . $pTablename;
 		
-		$fieldinfo = $this->_DB->get ( "DESC $table" );
+		$fieldinfo = $this->_DB->query ( "DESC $table" )->fetchAll ( PDO::FETCH_ASSOC );
 		
 		return ( $fieldinfo );
 	}
 	
+}
+
+/** Extended PDO Class
+ * 
+ * Extends the PDO object for Appleseed.
+ * 
+ * @package     Appleseed.Framework
+ * @subpackage  System
+ */
+class AppleseedPDO extends PDO {
+	protected $_table_prefix;
+	protected $_table_suffix;
+
+	public function __construct($dsn, $user = null, $password = null, $driver_options = array(), $prefix = null, $suffix = null)
+	{
+		$this->_table_prefix = $prefix;
+		$this_table_suffix   = $suffix;
+		parent::__construct($dsn, $user, $password, $driver_options);
+	}
+
+	public function exec($statement)
+	{
+		$statement = $this->_tablePrefixSuffix($statement);
+		return parent::exec($statement);
+	}
+
+	public function prepare($statement, $driver_options = array())
+	{
+		$statement = $this->_tablePrefixSuffix($statement);
+		return parent::prepare($statement, $driver_options);
+	}
+
+	public function query($statement)
+	{
+		$statement = $this->_tablePrefixSuffix($statement);
+		$args  = func_get_args();
+
+		if (count($args) > 1) {
+			return call_user_func_array(array($this, 'parent::query'), $args);
+		} else {
+			return parent::query($statement);
+		}
+	}
+
+	protected function _tablePrefixSuffix($statement)
+	{
+		return sprintf($statement, $this->_table_prefix, $this->_table_suffix);
+	}
 }
