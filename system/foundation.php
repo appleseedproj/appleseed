@@ -40,7 +40,7 @@ class cFoundation extends cBase {
 	 * Loads the proper foundation using inheritance order
 	 *
 	 * @access  public
-	 * @var string $pRoute Which foundation to route to.
+	 * @param string $pRoute Which foundation to route to.
 	 */
 	public function Load ( $pRoute ) {
 		eval ( GLOBALS );

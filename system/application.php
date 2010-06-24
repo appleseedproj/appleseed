@@ -94,9 +94,6 @@ class cApplication extends cBase {
 	 */
 	private function _LoadLibraries ( ) {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
-		
-		// Load external libraries.
-		require_once ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'RedBean-1.0' . DS . 'redbean.inc.php' );
 	}
 	
 	/**
@@ -137,9 +134,9 @@ class cApplication extends cBase {
 	 * Set a Cache value
 	 *
 	 * @access  public
-	 * @var string pContext  Which cache to use
-	 * @var string pKey
-	 * @var string pValue
+	 * @param string pContext  Which cache to use
+	 * @param string pKey
+	 * @param string pValue
 	 */
 	public function SetCache ( $pContext, $pKey, $pValue ) {
 		
@@ -152,8 +149,8 @@ class cApplication extends cBase {
 	 * Get a Cache value
 	 *
 	 * @access  public
-	 * @var string pContext  Which cache to use
-	 * @var string pKey
+	 * @param string pContext  Which cache to use
+	 * @param string pKey
 	 */
 	public function GetCache ( $pContext, $pKey ) {
 		

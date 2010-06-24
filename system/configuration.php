@@ -34,8 +34,8 @@ class cConfiguration extends cBase {
 	 * Load a configuration file, using inheritance if necessary
 	 *
 	 * @access  public
-	 * @var string pFilename
-	 * @var array pDirectories
+	 * @param string pFilename
+	 * @param array pDirectories
 	 */
 	public function Load ( $pDirectory, $pInheritance = true ) {
 		// Global variables
@@ -143,7 +143,7 @@ class cConfiguration extends cBase {
 	 * Loads a configuration value.
 	 *
 	 * @access  public
-	 * @var array pVariable
+	 * @param array pVariable
 	 */
 	function GetConfiguration ( $pVariable ) {
 		
@@ -165,7 +165,7 @@ class cConfiguration extends cBase {
 	 * Recursively inherit values
 	 *
 	 * @access  private
-	 * @var object pConfiguration
+	 * @param object pConfiguration
 	 */
 	private function _Inherit ( $pConfiguration ) {
 		$parent = $pConfiguration;
@@ -202,8 +202,8 @@ class cConfiguration extends cBase {
 	 * Clear parent values as specified by child
 	 *
 	 * @access  private
-	 * @var object pParent
-	 * @var object pChild
+	 * @param object pParent
+	 * @param object pChild
 	 */
 	private function _Clear ( $pParent, $pChild ) {
 		

@@ -118,10 +118,10 @@ class cComponents extends cBase {
 	 * Load a component
 	 *
 	 * @access  public
-	 * @var string $pController Which controller to use
-	 * @var string $pView Which view to load
-	 * @var string $pView Which controller task to execute
-	 * @var array $pData Extended controller data.
+	 * @param string $pController Which controller to use
+	 * @param string $pView Which view to load
+	 * @param string $pView Which controller task to execute
+	 * @param array $pData Extended controller data.
 	 */
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );

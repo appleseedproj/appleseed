@@ -35,10 +35,10 @@ class cComponent extends cBase {
 	 * Load a component
 	 *
 	 * @access  public
-	 * @var string $pController Which controller to use
-	 * @var string $pView Which view to load
-	 * @var string $pView Which controller task to execute
-	 * @var array $pData Extended controller data.
+	 * @param string $pController Which controller to use
+	 * @param string $pView Which view to load
+	 * @param string $pView Which controller task to execute
+	 * @param array $pData Extended controller data.
 	 */
 	public function Load ( $pController = null, $pView = null, $pTask = null, $pData = array ( ) ) {
 		eval ( GLOBALS );
@@ -75,7 +75,7 @@ class cComponent extends cBase {
 	 * Loads the specified controller
 	 *
 	 * @access  private
-	 * @var string $pController Which controller to use
+	 * @param string $pController Which controller to use
 	 */
 	private function _LoadController ( $pController = null ) {
 		eval ( GLOBALS );

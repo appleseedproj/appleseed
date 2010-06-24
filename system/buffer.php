@@ -41,7 +41,7 @@ class cBuffer extends cBase {
 	 * Buffer and load a foundation
 	 *
 	 * @access  public
-	 * @var string $pFoundation Full path to foundation file
+	 * @param string $pFoundation Full path to foundation file
 	 */
 	public function LoadFoundation ( $pFoundation ) {
 		eval ( GLOBALS );
@@ -92,7 +92,7 @@ class cBuffer extends cBase {
 	 * Add to the buffer counter
 	 *
 	 * @access  public
-	 * @var string $pContext Which context to add to (ie, "component")
+	 * @param string $pContext Which context to add to (ie, "component")
 	 */
 	public function AddToCount ( $pContext ) {
 		$this->_Count[$pContext]++;
@@ -104,9 +104,9 @@ class cBuffer extends cBase {
 	 * Add a buffer segment to the queue
 	 *
 	 * @access  public
-	 * @var string $pContext Which context to add to (ie, "component")
-	 * @var string $pData Data for how this component was called
-	 * @var array $pData Buffer segment value
+	 * @param string $pContext Which context to add to (ie, "component")
+	 * @param string $pData Data for how this component was called
+	 * @param array $pData Buffer segment value
 	 */
 	public function Queue ( $pContext, $pData, $pBuffer ) {
 		$count = $this->_Count[$pContext];
@@ -119,8 +119,8 @@ class cBuffer extends cBase {
 	 * Create a placeholder in the outermost buffer.
 	 *
 	 * @access  public
-	 * @var string $pContext Which context to add to (ie, "component")
-	 * @var array $pData Data for how this component was called
+	 * @param string $pContext Which context to add to (ie, "component")
+	 * @param array $pData Data for how this component was called
 	 */
 	public function PlaceHolder ( $pContext, $pData ) {
 		

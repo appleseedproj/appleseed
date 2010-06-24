@@ -20,12 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cDatabase extends cBase {
 	
-	protected $_Toolbox;
-	protected $_RedBean;
 	protected $_DB;
-	protected $_Writer;
-	protected $_Tree;
-	protected $_Assoc;
 	
 	/**
 	 * Constructor
@@ -34,6 +29,13 @@ class cDatabase extends cBase {
 	 */
 	public function __construct ( ) {
 		
+		// Check: extension_loaded ( "pdo_mysql");
+		
+		$this->_DB = $this->_Connect();
+		
+	}
+	
+	private function _Connect ( ) {
 		$Config = $this->GetSys ( "Config" );
 		
 		$un = $Config->GetConfiguration ('un');
@@ -44,23 +46,12 @@ class cDatabase extends cBase {
 		
 		$mode = $Config->GetConfiguration ('mode');
 		
-		//Assemble a database connection string (DSN)
-		$connect = "$type:host=$host;dbname=$db";
-		
-		// Check: extension_loaded ( "pdo_mysql");
-		
-		// If mode is development, database will be modified by functions.
-		if ( $mode == "development" ) {
-			$this->_Toolbox = RedBean_Setup::kickstartDev($connect, $un, $pw);
-		} else {
-			$this->_Toolbox = RedBean_Setup::kickstartFrozen($connect, $un, $pw);
+		try {  
+			$DBH = new PDO("mysql:host=$host;dbname=$db", $un, $pw);  
+		}  
+		catch(PDOException $e) {  
+    		die ( $e->getMessage() );
 		}
-		
-		$this->_DB = $this->_Toolbox->getDatabaseAdapter();
-		$this->_Writer = $this->_Toolbox->getWriter();
-		$this->_Assoc = new RedBean_AssociationManager( $this->_Toolbox );
-		$this->_Tree = new RedBean_TreeManager( $this->_Toolbox );
-		
 	}
 	
 	public function Query ( $pQuery ) {

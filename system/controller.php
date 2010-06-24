@@ -35,8 +35,8 @@ class cController extends cBase {
 	 * Displays a view
 	 *
 	 * @access  public
-	 * @var string $pView Which view file to load
-	 * @var array $pData Extended data array
+	 * @param string $pView Which view file to load
+	 * @param array $pData Extended data array
 	 */
 	public function Display ( $pView = null, $pData = null) {
 		eval ( GLOBALS );
@@ -49,7 +49,7 @@ class cController extends cBase {
 	 * Loads a view
 	 *
 	 * @access  public
-	 * @var string $pView Which view file to load
+	 * @param string $pView Which view file to load
 	 */
 	public function LoadView ( $pView ) {
 		eval ( GLOBALS );
@@ -68,7 +68,7 @@ class cController extends cBase {
 	 * Determines the view path, using inheritence
 	 *
 	 * @access  private
-	 * @var string $pView Which view file to load
+	 * @param string $pView Which view file to load
 	 */
 	private function _GetViewPath ( $pView = null ) {
 		eval ( GLOBALS );
@@ -113,7 +113,7 @@ class cController extends cBase {
 	 * Creates and returns the specified model
 	 *
 	 * @access  public
-	 * @var string $pSuffix Suffix to specify an additional model
+	 * @param string $pSuffix Suffix to specify an additional model
 	 */
 	public function GetModel ( $pSuffix = null, $pTable = null ) {
 		eval ( GLOBALS );
