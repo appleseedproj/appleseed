@@ -19,13 +19,41 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cModel extends cBase {
-
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
-
+	
+	protected $_Prefix;
+	protected $_Tablename;
+	protected $_Fields;
+	
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( $pTable = null ) {
+		
+		$Config = $this->GetSys ( "Config" );
+		$Database = $this->GetSys ( "Database" );
+		
+		$this->_Prefix = $Config->GetConfiguration ( "pre" );
+		
+		// Check if the tablename was specified.
+		if ( $pTable ) {
+			$tablename = ucwords ( strtolower ( ltrim ( rtrim ( $pTable ) ) ) );
+		} else {
+			$tablename = preg_replace ( '/^c/', "", get_class ( $this ) );
+			$tablename = preg_replace ( '/Model$/', "", $tablename );
+		}
+		
+		$this->_Tablename = $tablename;
+		
+		$fieldinfo = $Database->GetFieldInformation ( $this->_Tablename );
+		
+		foreach ( $fieldinfo as $f => $field ) {
+			$fieldname = $field['Field'];
+			$this->_Fields[$fieldname] = $field;
+		}
+		
+		parent::__construct();
+	}
+        
 }

@@ -25,23 +25,23 @@ class cExampleController extends cController {
 	 *
 	 * @access  public
 	 */
-	public function __construct ( $pObject ) {       
-		parent::__construct( $pObject );
+	public function __construct ( ) {       
+		parent::__construct( );
 	}
 	
 	public function Display ( $pView = null, $pData = null ) {
+		$this->GetSys ( "Event" )->Trigger ( "Begin", "Example", "Display" );
 		
-		echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
-		
-		$Event = $this->GetSys ( "Event" );
-		
-		$Event->Trigger ( "Begin", "Example", "Display");
+		//echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
 		
 		$this->Model = &$this->GetModel( "Example" );
+		$this->MapModel = &$this->GetModel( "Map" );
+		$this->TagsModel = &$this->GetModel( "Tags" );
 		
 		parent::Display( $pView, $pData );
 
-		$Event->Trigger ( "End", "Example", "Display" );
+		$this->GetSys ( "Event" )->Trigger ( "End", "Example", "Display" );
+		
 		return ( true );
 	}
 	

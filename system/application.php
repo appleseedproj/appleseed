@@ -44,6 +44,7 @@ class cApplication extends cBase {
 	public function Initialize ( ) {
 		eval ( GLOBALS );
 		
+		require_once ( ASD_PATH . DS . 'system' . DS . 'database.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
@@ -63,6 +64,8 @@ class cApplication extends cBase {
 		
 		// Load site configuration.
 		$this->Config->Set ( "Data",  $this->Config->Load ( "configurations" ) );
+		
+		$this->Database = new cDatabase();
 		
 		$this->Language = new cLanguage();
 		$this->Theme = new cTheme ();
@@ -91,6 +94,9 @@ class cApplication extends cBase {
 	 */
 	private function _LoadLibraries ( ) {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
+		
+		// Load external libraries.
+		require_once ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'RedBean-1.0' . DS . 'redbean.inc.php' );
 	}
 	
 	/**

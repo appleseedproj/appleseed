@@ -30,7 +30,7 @@ class cExample extends cComponent {
 	}
 	
 	public function GetResponse ( $pData = null ) {
-		return ( "Success!!" );
+		return ( "Success!" );
 	}
 	
 }

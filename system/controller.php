@@ -115,7 +115,7 @@ class cController extends cBase {
 	 * @access  public
 	 * @var string $pSuffix Suffix to specify an additional model
 	 */
-	public function GetModel ( $pSuffix = null ) {
+	public function GetModel ( $pSuffix = null, $pTable = null ) {
 		eval ( GLOBALS );
 		
 		// We cannot use a suffix which is the same as the default model name (ie, component name).
@@ -130,6 +130,14 @@ class cController extends cBase {
 		// If model has already been created, return it.
 		if ( isset ( $this->_Models->$model ) ) return ( $this->_Models->$model );
 		
+		$class = 'c' . ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $pSuffix ) ) . 'Model';
+		
+		// If class is already available, just create it and return it.
+		if ( class_exists ( $class ) ) {
+			$this->_Models->$model = new $class ( $pTable );
+			return ( $this->_Models->$model );
+		}
+		
 		if ( $pSuffix ) {
 			$file = strtolower ( $pSuffix ). '.php';
 		} else {
@@ -137,7 +145,6 @@ class cController extends cBase {
 		}
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'models' . DS . $file;
-		$class = 'c' . ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $pSuffix ) ) . 'Model';
 		
 		if ( !is_file ( $filename ) ) {
 			echo __("Model Not Found", array ( 'name' => $model ) );
@@ -145,7 +152,7 @@ class cController extends cBase {
 		
 		require_once ( $filename );
 		
-		$this->_Models->$model = new $class;
+		$this->_Models->$model = new $class ( $pTables );
 		
 		return ( $this->_Models->$model );
 		
