@@ -176,8 +176,7 @@
   switch ($gACTION) {
     case 'FORGOT':
       if (!$gUSERNAME) {
-        $zSTRINGS->Lookup ('ERROR.USERNAME', 'SITE.LOGIN');
-        $zLOCALUSER->Message = $zSTRINGS->Output;
+        $zLOCALUSER->Message = __( "You must enter a username" );
         $zLOCALUSER->Error = -1;
         break;
       } // if
@@ -187,18 +186,15 @@
 
       // Check if any users were found.
       if ($zLOCALUSER->CountResult() === 0) {
-        $zSTRINGS->Lookup ('ERROR.UNKNOWN', 'SITE.LOGIN');
-        $zLOCALUSER->Message = $zSTRINGS->Output;
+        $zLOCALUSER->Message = __( "No Such User" );
         $zLOCALUSER->Error = -1;
       } else {
         $zLOCALUSER->FetchArray();
         if (!$zLOCALUSER->userProfile->ChangePassword ()) {
-          $zSTRINGS->Lookup ('ERROR.UPDATE', 'SITE.LOGIN');
-          $zLOCALUSER->Message = $zSTRINGS->Output;
+          $zLOCALUSER->Message = __( "Error Updating Account" );
           $zLOCALUSER->Error = -1;
         } else {
-          $zSTRINGS->Lookup ('MESSAGE.SENT', 'SITE.LOGIN');
-          $zLOCALUSER->Message = $zSTRINGS->Output;
+          $zLOCALUSER->Message = __( "New Password Sent" );
         } // if
       } // if
 
@@ -232,15 +228,13 @@
           // Determine the status of the account logging in.
           switch ($zLOCALUSER->Standing) {
             case '1':
-              $zSTRINGS->Lookup ('ERROR.INACTIVE', 'SITE.LOGIN');
-              $zLOCALUSER->Message = $zSTRINGS->Output;
+              $zLOCALUSER->Message = __( "Account Is Inactive" );
               $zLOCALUSER->Error = -1;
               $gACTION = "";
             break;
     
             case '2':
-              $zSTRINGS->Lookup ('ERROR.DISABLED', 'SITE.LOGIN');
-              $zLOCALUSER->Message = $zSTRINGS->Output;
+              $zLOCALUSER->Message = __( "Account Is Disabled" );
               $zLOCALUSER->Error = -1;
               $gACTION = "";
             break;
@@ -251,8 +245,7 @@
     
               // Display an error if cookies can't be set.
               if ($session_id == "") {
-                $zSTRINGS->Lookup ('ERROR.COOKIE', 'SITE.LOGIN');
-                $zLOCALUSER->Message = $zSTRINGS->Output;
+                $zLOCALUSER->Message = __( "Cannot Set Cookie" );
                 $zLOCALUSER->Error = -1;
                 $gACTION = "";
               } else {
@@ -292,8 +285,7 @@
       $zNODE = new cSYSTEMNODES();
       if ($errorcode = $zNODE->Blocked ($username, $domain) ) {
         $zLOCALUSER->Error = -1;
-        $zSTRINGS->Lookup ($errorcode);
-        $zLOCALUSER->Message = $zSTRINGS->Output;
+        $zLOCALUSER->Message = __($errorcode);
         break;
       } // if
       

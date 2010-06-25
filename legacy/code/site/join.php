@@ -117,16 +117,14 @@
     // Step 0: Check if invite is still valid.
     if ($zFOCUSUSER->userInvites->Active == INACTIVE) {
       $zFOCUSUSER->userInvites->Error = -1;
-      $zSTRINGS->Lookup ("ERROR.BADINVITE", "SITE.JOIN");
-      $zFOCUSUSER->userInvites->Errorlist['Value'] = $zSTRINGS->Output;
+      $zFOCUSUSER->userInvites->Errorlist['Value'] = __("Expired Invitation");
     } // if
     
     // Step 1: Check if invite and email match.
     if ($zFOCUSUSER->userInvites->CountResult () == 0) {
       // Set the error.
       $zFOCUSUSER->userInvites->Error = -1;
-      $zSTRINGS->Lookup ("ERROR.BADINVITE", "SITE.JOIN");
-      $zFOCUSUSER->userInvites->Errorlist['Value'] = $zSTRINGS->Output;
+      $zFOCUSUSER->userInvites->Errorlist['Value'] = __("Invalid Invitation");
       // Set the recipient email back to the inputted value.
       $zFOCUSUSER->userInvites->Recipient = $gEMAIL;
     } // if
@@ -135,8 +133,7 @@
     if ($zFOCUSUSER->Pass != $gCONFIRM) {
       // Set the error.
       $zFOCUSUSER->Error = -1;
-      $zSTRINGS->Lookup ("ERROR.NOMATCH", "SITE.JOIN");
-      $zFOCUSUSER->Errorlist['Pass'] = $zSTRINGS->Output;
+      $zFOCUSUSER->Errorlist['Pass'] = __( "Passwords Do Not Match" );
     } // if
 
     // Make sure the user doesn't pick the special Anonymous name.
@@ -149,8 +146,7 @@
          ($zFOCUSUSER->Pass == $zFOCUSUSER->userProfile->Email) ) {
       // Set the error.
       $zFOCUSUSER->Error = -1;
-      $zSTRINGS->Lookup ("ERROR.BADPASS", "SITE.JOIN");
-      $zFOCUSUSER->Errorlist['Pass'] = $zSTRINGS->Output;
+      $zFOCUSUSER->Errorlist['Pass'] = __( "Invalid Password" );
     } // if
 
     // Step 4: Check if password is not a dictionary word or easily guessable.
@@ -166,8 +162,7 @@
     if ( ($zFOCUSUSER->Error) or ($zFOCUSUSER->userProfile->Error) or
          ($zFOCUSUSER->userInvites->Error) ) {
 
-      $zSTRINGS->Lookup ('ERROR.PAGE', 'SITE.JOIN');
-      $zFOCUSUSER->Message = $zSTRINGS->Output;
+      $zFOCUSUSER->Message = __( "Error Creating Account" );
       $zFOCUSUSER->Error = -1;
 
       // Go back to the original form.

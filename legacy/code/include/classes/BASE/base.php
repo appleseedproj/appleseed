@@ -87,7 +87,6 @@
         // Can't move up anywhere from 1.
         if ($pFROMIDVALUE < 2) {
           // Pull page title from database settings
-          global $zSTRINGS;
           $this->Message = __("Cannot move up");
           $this->Error = -1;
           $this->Rollback();
@@ -2671,7 +2670,7 @@
       global $gLINKDOMAIN;
       global $gSITEDOMAIN;
 
-      global $zSTRINGS, $zAUTHUSER;
+      global $zAUTHUSER;
 
       global $zOLDAPPLE;
 
@@ -2728,7 +2727,7 @@
       global $gLINKICON;
       global $gSITEDOMAIN;
 
-      global $zSTRINGS, $zAUTHUSER;
+      global $zAUTHUSER;
 
       global $zOLDAPPLE;
 

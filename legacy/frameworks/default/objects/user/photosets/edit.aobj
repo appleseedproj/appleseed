@@ -18,32 +18,32 @@
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
 
     <p id='name'>
-     <?php $zSTRINGS->Display ('LABEL.NAME', 'USER.PHOTOSETS'); ?>
+     <?php __("User Photoset Name"); ?>
     </p> <!-- #name -->
     <?php $zHTML->TextBox ("NAME", 70, $gVIEWDATA->Name); ?>
     <?php $gVIEWDATA->Broadcast ("field", "Name"); ?>
 
     <p id='description'>
-     <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', 'USER.PHOTOSETS'); ?>
+     <?php __("User Photoset Description"); ?>
     </p> <!-- #description -->
     <?php $zHTML->TextArea ("DESCRIPTION", $gVIEWDATA->Description); ?>
     <?php $gVIEWDATA->Broadcast ("field", "Description"); ?>
 
     <p id='directory'>
-     <?php $zSTRINGS->Display ('LABEL.DIRECTORY', 'USER.PHOTOSETS'); ?>
+     <?php __("User Photoset Directory"); ?>
     </p> <!-- #directory -->
     <?php $zHTML->TextBox ("DIRECTORY", 70, $gVIEWDATA->Directory); ?>
     <p id='directory_info'>
-     <?php $zSTRINGS->Display ('INFO.DIRECTORY', 'USER.PHOTOSETS'); ?>
+     <?php __("User Photoset Directory Info"); ?>
     </p> <!-- #directory_info -->
     <?php $gVIEWDATA->Broadcast ("field", "Directory"); ?>
 
     <p id='tags'>
-     <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.PHOTOSETS'); ?>
+     <?php __"(User Photoset Tags"); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->Tags); ?>
     <p id='tags_info'>
-     <?php $zSTRINGS->Display ('INFO.TAGS', 'USER.PHOTOSETS'); ?>
+     <?php __("User Photoset Tags Info"); ?>
     </p> <!-- tags_info -->
     <?php $gVIEWDATA->Broadcast ("field", "Tags"); ?>
  

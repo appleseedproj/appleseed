@@ -314,7 +314,6 @@
      global $gTAGSELECTBUTTON, $gTAGMASSLIST;
      
      global $zLOCALUSER, $zFOCUSUSER, $zAUTHUSER;
-     global $zSTRINGS;
      
      $gTAGFORMLINK = $pLINK;
      

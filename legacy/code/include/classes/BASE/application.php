@@ -72,11 +72,10 @@
       global $gACTION;
   
       // Initialize classes
-      global $zSTRINGS, $zOPTIONS, $zLOGS, $zHTML, $zXML;
+      global $zOPTIONS, $zLOGS, $zHTML, $zXML;
       global $zFOCUSUSER, $zLOCALUSER, $zIMAGE;
       global $zDEBUG;
   
-      $zSTRINGS = new cSYSTEMSTRINGS;
       $zOPTIONS = new cSYSTEMOPTIONS;
       $zLOGS    = new cSYSTEMLOGS;
   

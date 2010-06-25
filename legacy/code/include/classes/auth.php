@@ -82,7 +82,7 @@
 
         global $gUSERICON;
         global $bUSERICONLISTING;
-        global $zSTRINGS, $zHTML;
+        global $zHTML;
 
         // NOTE: Move to object.
         echo "<p id='icon'>";

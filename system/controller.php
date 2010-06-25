@@ -165,7 +165,7 @@ class cController extends cBase {
 	 * @param string $pEvent Which event to trigger
 	 * @param array $pEvent Extra data to pass to event hook
 	 */
-	function Trigger ( string $pEvent, array $pData = null) {
+	function EventTrigger ( string $pEvent, array $pData = null) {
 		
 		$backtrace = debug_backtrace();
 		
@@ -177,7 +177,7 @@ class cController extends cBase {
 		
 		$event = ltrim ( rtrim ( $pEvent ) ); 
 		
-		$return = $this->GetSys ( "Event" )->Trigger ( $pEvent, $component, $function, $pData);
+		$return = $this->GetSys ( "Event" )->Trigger ( $pEvent, $component, $function, $pData );
 		
 		return ( $return );
 	}

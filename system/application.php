@@ -44,6 +44,8 @@ class cApplication extends cBase {
 	public function Initialize ( ) {
 		eval ( GLOBALS );
 		
+		$this->_CheckDependencies ( );
+		
 		require_once ( ASD_PATH . DS . 'system' . DS . 'database.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
@@ -175,6 +177,29 @@ class cApplication extends cBase {
 		);
 		
 		return ( $reserved );
+	}
+	
+	/**
+	 * Check system dependencies and error on failure.
+	 *
+	 * @access  private
+	 */
+	private function _CheckDependencies ( ) {
+		
+		// @todo sha256
+		// @todo magic_quotes_on
+		// @todo PDO
+		// @todo Installed in site root directory? (see documentation)
+		// @todo Is magic_quotes turned off?
+		// @todo Is register_globals turned off?
+		// @todo Is the photos/ directory writable?
+		// @todo Is the attachments/ directory writable?
+		// @todo Is data/site.adat writable?
+		// @todo Is .htaccess writable?
+		// @todo PHP version 5.0 or higher? (Running 5.3.0RC2)
+		// @todo Mysql version 5.0 or higher? (Client is 5.1.32)
+		
+		return ( true );
 	}
 	
 }

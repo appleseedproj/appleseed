@@ -86,7 +86,7 @@
 
     // Buffer the articles listing.
     function BufferArticlesListing () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
       global $gCOMMENTCOUNT;
@@ -305,8 +305,7 @@
                 $gEXTRAPOSTDATA['tID']    = $this->tID;
 
                 if ($this->Submitted_Username == ANONYMOUS) {
-                  $zSTRINGS->Lookup ("LABEL.ANONYMOUS", $zOLDAPPLE->Context);
-                  $this->Submitted_Username = $zSTRINGS->Output;
+                  $this->Submitted_Username = __( "Anonymous" );
                 } // if
 
                 switch ($this->Verification) {

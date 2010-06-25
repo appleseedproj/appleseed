@@ -184,7 +184,6 @@
     } // Constructor
  
     function DeleteList ($pLIST) {
-      global $zSTRINGS;
 
       foreach ($pLIST as $count => $refid) {
         $this->tID = $refid;
@@ -192,8 +191,7 @@
       } // if
 
       if ($this->Error == -1) {
-        $zSTRINGS->Lookup ('ERROR.DELETEALL');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Error Deleting Records");
         return (FALSE);
       } else {
         $this->Message = __("Records Deleted");
