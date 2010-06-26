@@ -159,11 +159,9 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.APPROVE');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Friend Request Accepted Subject", array ( "source" => $gSOURCEUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.APPROVE');
-      $body = $zSTRINGS->Output;
+      $body = __("Friend Request Accepted Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);
@@ -191,11 +189,9 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.REMOVE');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Friend Removed Subject", array ( "source" => $gSOURCEUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.REMOVE');
-      $body = $zSTRINGS->Output;
+      $body = __("Friend Removed Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);
@@ -223,11 +219,9 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.DENY');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Friend Request Denied Subject", array ( "source" => $gSOURCEUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.DENY');
-      $body = $zSTRINGS->Output;
+      $body = __("Friend Request Denied Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);
@@ -255,11 +249,9 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.FRIENDS.REQUEST');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Friend Requested Subject", array ( "source" => $gSOURCEUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.FRIENDS.REQUEST');
-      $body = $zSTRINGS->Output;
+      $body = __("Friend Requested Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);
@@ -291,10 +283,8 @@
 
         $gAPPLYCIRCLENAME = $this->friendCircles->Name;
          
-        $zSTRINGS->Lookup ("MESSAGE.APPLY", $this->PageContext);
+        $this->friendCircles->Message = __("Friend Added To Circle", array ( "circle" => $gAPPLYCIRCLENAME ) );
 
-        $this->friendCircles->Message = $zSTRINGS->Output;
- 
         unset ($gAPPLYCIRCLENAME);
   
       } else {
@@ -309,9 +299,7 @@
 
         $gREMOVECIRCLENAME = $this->friendCircles->Name;
        
-        $zSTRINGS->Lookup ("MESSAGE.REMOVE", $this->PageContext);
-
-        $this->friendCircles->Message = $zSTRINGS->Output;
+        $this->friendCircles->Message = __("Friend Removed From Circle", array ( "circle" => $gREMOVECIRCLENAME ) );
 
         unset ($gREMOVECIRCLENAME);
   
@@ -351,9 +339,7 @@
 
       $gAPPLYCIRCLENAME = $this->friendCircles->Name;
            
-      $zSTRINGS->Lookup ("MESSAGE.APPLY", $this->PageContext);
-
-      $this->friendCircles->Message = $zSTRINGS->Output;
+      $this->friendCircles->Message = __("Seleted Friends Added To Circle", array ( "circle" => $gAPPLYCIRCLENAME ) );
 
       unset ($gCIRCLEVALUE);
       unset ($gAPPLYCIRCLENAME);
@@ -497,10 +483,8 @@
 
         $foundnewcircles = TRUE;
 
-        $zSTRINGS->Lookup ("LABEL.APPLY", $this->PageContext);
-
         // Start the menu list at '1'.
-        $returnarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+        $returnarray = array ("X" => MENU_DISABLED . __("Add To Circle") );
 
         $gCIRCLEVALUE = 'X';
 
@@ -515,13 +499,11 @@
       if (count ($excludelist) == 0) {
       } else {
         
-        $zSTRINGS->Lookup ("LABEL.REMOVE", $this->PageContext);
-
         if ($foundnewcircles) {
           $returnarray["Y"] = MENU_DISABLED . "&nbsp;";
         } // if
 
-        $returnarray["Z"] = MENU_DISABLED . $zSTRINGS->Output;
+        $returnarray["Z"] = MENU_DISABLED . __("Remove From Circle");
 
         $removestring = join (" OR tID =", $excludelist);
         $removestring = "tID =" . $removestring;
@@ -558,10 +540,8 @@
 
         $foundnewcircles = TRUE;
 
-        $zSTRINGS->Lookup ("LABEL.APPLY", $this->PageContext);
-
         // Start the menu list at '1'.
-        $returnarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+        $returnarray = array ("X" => MENU_DISABLED . __("Add To Circle") );
 
         $gCIRCLEVALUE = 'X';
 
@@ -769,8 +749,7 @@
       if ($count) {
         global $gFRIENDCOUNT;
         $gFRIENDCOUNT = $count;
-        $zSTRINGS->Lookup ("LABEL.NEWFRIENDS", $zOLDAPPLE->Context);
-        $return = $zHTML->CreateLink ("profile/$zAUTHUSER->Username/friends/requests/", $zOLDAPPLE->ParseTags ($zSTRINGS->Output));
+        $return = $zHTML->CreateLink ("profile/$zAUTHUSER->Username/friends/requests/", __("Count New Friend Request", array ( "count" => $gFRIENDCOUNT ) ) );
       } else {
         $return = OUTPUT_NBSP;
       } // if
@@ -799,8 +778,7 @@
         $useServer = $zOLDAPPLE->ChooseServerVersion ($this->Domain);
         if (!$useServer) {
           $this->Error = -1;
-          $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Error Invalid Node");
       	  return (FALSE);
         } // if
       
@@ -879,9 +857,8 @@
           if ($source_verification == FRIEND_VERIFIED) {
             global $gREQUESTNAME;
             $gREQUESTNAME = $fullname;
-            $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
             $this->Error = -1;
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("User Already A Friend", array ( "name" => $gREQUESTNAME ) );
             
             return (TRUE);
           } // if
@@ -889,17 +866,15 @@
           // Already verified on one side.  Verify on the other.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             return (FALSE);
           } // if
           
           global $gREQUESTNAME;
           $gREQUESTNAME = $fullname;
-          $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
           $this->Error = -1;
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("User Already A Friend", array ( "name" => $gREQUESTNAME ) );
           
           $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
           $gCIRCLEVIEW = CIRCLE_NEWEST;
@@ -910,9 +885,8 @@
           if ($source_verification == FRIEND_PENDING) {
             global $gREQUESTNAME;
             $gREQUESTNAME = $fullname;
-            $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
             $this->Error = -1;
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("User Request Already Pending", array ( "name" => $gREQUESTNAME ) );
             
             $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
             $gCIRCLEVIEW = CIRCLE_PENDING;
@@ -923,17 +897,15 @@
           // Already verified on one side.  Verify on the other.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_PENDING);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             return (FALSE);
           } // if
           
           global $gREQUESTNAME;
           $gREQUESTNAME = $fullname;
-          $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
+          $this->Message = __("User Request Already Pending", array ( "name" => $gREQUESTNAME ) );
           $this->Error = -1;
-          $this->Message = $zSTRINGS->Output;
           
           $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
           $gCIRCLEVIEW = CIRCLE_PENDING;
@@ -946,8 +918,7 @@
           // Requested on one side.  Verify on both sides.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -957,8 +928,7 @@
           $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_VERIFIED);
           
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -970,8 +940,7 @@
           
           global $gNEWFRIEND;
           $gNEWFRIEND = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Friend Request Approved", array ( "name" => $gNEWFRIEND ) );
           
           $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
           $gCIRCLEVIEW = CIRCLE_NEWEST;
@@ -984,8 +953,7 @@
           // Add pending record to source.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_PENDING);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -995,8 +963,7 @@
           $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_REQUESTS);
           
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -1008,8 +975,7 @@
           
           global $gREQUESTEDUSER;
           $gREQUESTEDUSER = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Friend Request Sent", array ( "name" => $gREQUESTEDUSER ) );
           
           if ($pNOTIFY) $this->NotifyRequest ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
       
@@ -1048,8 +1014,7 @@
             global $gNEWFRIEND;
             list ($gNEWFRIEND) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
 
-            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Friend Request Approved", array ( "name" => $gNEWFRIEND ) );
           } // if
           
           $gCIRCLEVIEWADMIN = CIRCLE_NEWEST;
@@ -1063,9 +1028,8 @@
           // Error message since we're awaiting approval on their part.
           global $gREQUESTNAME;
           list ($gREQUESTNAME) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
-          $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
+          $this->Message = __("User Request Already Pending", array ( "name" => $gREQUESTNAME ) );
           $this->Error = -1;
-          $this->Message = $zSTRINGS->Output;
 
           $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
           $gCIRCLEVIEW = CIRCLE_PENDING;
@@ -1096,13 +1060,11 @@
             // Set message.
             global $gNEWFRIEND;
             $gNEWFRIEND = $fullname;
-            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Friend Request Approved", array ( "name" => $gNEWFRIEND ) );
             unset ($gNEWFRIEND);
           } else {
             // Error message due to unsuccessful request attempt.
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
           } // if
 
@@ -1135,14 +1097,12 @@
             // Set message.
             global $gREQUESTEDUSER;
             $gREQUESTEDUSER = $fullname;
-            $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
+            $this->Message = __("Friend Request Sent", array ( "name" => $gREQUESTEDUSER ) );
             
-            $this->Message = $zSTRINGS->Output;
             unset ($gREQUESTEDUSER);
           } else {
             // Error message due to unsuccessful request attempt.
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
           } // if
 
@@ -1180,8 +1140,7 @@
             global $gREQUESTNAME;
             list ($gREQUESTNAME) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
 
-            $zSTRINGS->Lookup ('ERROR.ALREADY', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("User Already A Friend", array ( "name" => $gREQUESTNAME ) );
             $this->Error = -1;
           } // if
         break;
@@ -1196,9 +1155,8 @@
           $FRIEND->Domain = $pREMOTEDOMAIN;
           global $gREQUESTNAME;
           list ($gREQUESTNAME) = $zOLDAPPLE->GetUserInformation ($pREMOTEUSERNAME, $pREMOTEDOMAIN);
-          $zSTRINGS->Lookup ('ERROR.ALREADY.PENDING', 'USER.FRIENDS');
+          $this->Message = __("User Request Already Pending", array ( "name" => $gREQUESTNAME ) );
           $this->Error = -1;
-          $this->Message = $zSTRINGS->Output;
           unset ($FRIEND);
 
           $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
@@ -1230,13 +1188,11 @@
             // Set message.
             global $gNEWFRIEND;
             $gNEWFRIEND = $fullname;
-            $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Friend Request Approved", array ( "name" => $gNEWFRIEND ) );
             unset ($gNEWFRIEND);
           } else {
             // Error message due to unsuccessful request attempt.
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
           } // if
 
@@ -1269,13 +1225,11 @@
             // Set message.
             global $gREQUESTEDUSER;
             $gREQUESTEDUSER = $fullname;
-            $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Friend Request Sent", array ( "name" => $gREQUESTEDUSER ) );
             unset ($gREQUESTEDUSER);
           } else {
             // Error message due to unsuccessful request attempt.
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
           } // if
 
@@ -1333,16 +1287,14 @@
           // Already verified on one side.  Verify on the other.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             return (FALSE);
           } // if
           
           global $gNEWFRIEND;
           $gNEWFRIEND = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Friend Request Approved", array ( "name" => $gNEWFRIEND ) );
           
           if ($pNOTIFY) $this->NotifyApprove ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
       
@@ -1359,8 +1311,7 @@
           // Requested on one side.  Verify on both sides.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_VERIFIED);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -1370,8 +1321,7 @@
           $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_VERIFIED);
           
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -1383,8 +1333,7 @@
           
           global $gNEWFRIEND;
           $gNEWFRIEND = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.APPROVED', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Friend Request Approved", array ( "name" => $gNEWFRIEND ) );
           
           if ($pNOTIFY) $this->NotifyApprove ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
       
@@ -1400,8 +1349,7 @@
           // Add pending record to source.
           $success = $this->CreateLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN, FRIEND_PENDING);
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -1415,8 +1363,7 @@
           $success = $this->CreateLocal ($uid, $zLOCALUSER->Username, $gSITEDOMAIN, FRIEND_REQUESTS);
           
           if (!$success) {
-            $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-            $this->Message = $zSTRINGS->Output;
+            $this->Message = __("Error Friend Request Failed");
             $this->Error = -1;
             // Rollback Transaction
             $this->Rollback ();
@@ -1428,8 +1375,7 @@
           
           global $gREQUESTEDUSER;
           $gREQUESTEDUSER = $fullname;
-          $zSTRINGS->Lookup ('MESSAGE.REQUEST', 'USER.FRIENDS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Friend Request Sent", array ( "name" => $gREQUESTEDUSER ) );
           
           if ($pNOTIFY) $this->NotifyRequest ($USER->userProfile->GetAlias (), $zLOCALUSER->userProfile->GetAlias (), $USER->Username);
       
@@ -1469,8 +1415,7 @@
       global $gDENIEDNAME;
       $gDENIEDNAME = $fullname;
 
-      $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Friend Request Denied", array ( "name" => $gDENIEDNAME ) );
       
       unset ($USER);
 
@@ -1500,8 +1445,7 @@
       global $gDENIEDNAME;
       $gDENIEDNAME = $fullname;
 
-      $zSTRINGS->Lookup ('MESSAGE.CANCELLED', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Friend Request Cancelled", array ( "name" => $gDENIEDNAME ) );
       
       unset ($USER);
 
@@ -1609,8 +1553,7 @@
       unset ($zREMOTE);
       
       if (!$success) {
-        $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Error Friend Request Failed");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -1620,8 +1563,7 @@
           
       global $gDENIEDNAME;
       $gDENIEDNAME = $fullname;
-      $zSTRINGS->Lookup ('MESSAGE.CANCELLED', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Friend Request Cancelled", array ( "name" => $gDENIEDNAME ) );
 
       $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
       $gCIRCLEVIEW = CIRCLE_PENDING;
@@ -1657,8 +1599,7 @@
       unset ($zREMOTE);
       
       if (!$success) {
-        $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Error Friend Request Failed");
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -1668,8 +1609,7 @@
           
       global $gDENIEDNAME;
       $gDENIEDNAME = $fullname;
-      $zSTRINGS->Lookup ('MESSAGE.DENIED', 'USER.FRIENDS');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Friend Request Denied", array ( "name" => $gDENIEDNAME ) );
 
       $gCIRCLEVIEWADMIN = CIRCLE_PENDING;
       $gCIRCLEVIEW = CIRCLE_PENDING;
@@ -1705,8 +1645,7 @@
       unset ($zREMOTE);
       
       if (!$success) {
-        $zSTRINGS->Lookup ('ERROR.FAILED', 'USER.FRIENDS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Error Friend Request Failed");
         $this->Error = -1;
         return (FALSE);
       } // if
