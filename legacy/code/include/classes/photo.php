@@ -126,7 +126,6 @@
     function GetExifData () {
       
       global $zFOCUSUSER, $zOLDAPPLE;
-      global $zSTRINGS;
       
       global $gFRAMELOCATION;
       
@@ -137,9 +136,8 @@
       $exif = exif_read_data($exiflocation, 'ANY_TAG');
       
       if (!$exif) {
-        $zSTRINGS->Lookup ('MESSAGE.NOEXIF', $zOLDAPPLE->Context);
         global $gNOEXIF;
-        $gNOEXIF = $zSTRINGS->Output;
+        $gNOEXIF = __("No EXIF Data");
         $return = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/none.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return ($return);
       } // if
@@ -158,8 +156,7 @@
       
       foreach ($final as $key => $value) {
         global $gEXIFLABEL, $gEXIFDATA;
-        $zSTRINGS->Lookup ('LABEL.EXIF' . $key, $zOLDAPPLE->Context);
-        $gEXIFLABEL = $zSTRINGS->Output;
+        $gEXIFLABEL = __("EXIF " . ucwords ( $key ) );
         $gEXIFDATA = $value;
         if (!$value) continue;
         $return .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/exif/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);

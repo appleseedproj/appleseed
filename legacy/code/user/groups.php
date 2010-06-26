@@ -55,11 +55,11 @@
       //if (!$zGROUPS->CheckJoinAccess()) break;
       $zGROUPS->Join ($gGROUPNAME, $gGROUPDOMAIN);
       //if ($zGROUPS->Access == GROUP_ACCESS_OPEN) {
-      //  $zSTRINGS->Lookup ("MESSAGE.JOINED");
+      		$message = __( "Group Joined" );
       //} elseif ($zGROUPS->Access == GROUP_ACCESS_APPROVAL) {
-        //$zSTRINGS->Lookup ("MESSAGE.PENDING");
+      		$message = __( "Group Membership Pending" );
       //} // if
-      //$zGROUPS->Message = $zSTRINGS->Output;
+      $zGROUPS->Message = $message;
     break;
     case 'LEAVE_GROUP':
       $zGROUPS->Leave ($gGROUPNAME, $gGROUPDOMAIN);
@@ -110,8 +110,7 @@
         $gMEMBERCOUNT = $zGROUPS->Members;
       } // if
 
-      $zSTRINGS->Lookup ("LABEL.MEMBERS");
-      $bMEMBERS = $zSTRINGS->Output;
+      $bMEMBERS = __( "Member Count", array ( "count" => $gMEMBERCOUNT ) );
 
       $zGROUPS->FormatDate ("Stamp");
       if ($zFOCUSUSER->userGroups->Domain != $gSITEDOMAIN) {

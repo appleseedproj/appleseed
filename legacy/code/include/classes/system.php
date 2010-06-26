@@ -124,7 +124,7 @@
       global $gSITEDOMAIN, $gSETTINGS;
       global $gAPPLESEEDVERSION;
       
-      global $zOLDAPPLE, $zSTRINGS, $zXML;
+      global $zOLDAPPLE, $zXML;
       
       // Create node class.
       $zNODES = new cSYSTEMNODES ();
@@ -346,8 +346,6 @@
     
     function SaveConfiguration ($pCONFIGURATION) {
       
-      global $zSTRINGS;
-      
       foreach ($pCONFIGURATION as $Concern => $Value) {
         $this->Select ("Concern", $Concern);
         $this->FetchArray();
@@ -533,23 +531,20 @@
   	} // GetVersionListing
   	
   	function AddServer ($pSERVER) {
-  	  global $zOLDAPPLE, $zSTRINGS;
+  	  global $zOLDAPPLE;
   	  
   	  $this->Select("Server", $pSERVER);
   	  
   	  // Already exists in database.
   	  if ($this->CountResult() > 0) {
-  	    $zOLDAPPLE->SetTag ('SERVERNAME', $pSERVER);
-        $zSTRINGS->Lookup ('ERROR.ALREADY', $zOLDAPPLE->Context);
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __( "Server Exists", array ( "server" => $pSERVER ) );
         $this->Error = -1;
         return (FALSE);
   	  } // if
   		
       if ( (!$version = $zOLDAPPLE->GetNodeVersion ($pSERVER)) or 
   	       (!$files = $this->NodeFileListing ($pSERVER)) ) {
-        $zSTRINGS->Lookup ('ERROR.INVALIDSERVER', $zOLDAPPLE->Context);
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __( "Invalid Server", array ( "server" => $pSERVER ) );
         $this->Error = -1;
   	  	return (FALSE);
   	  } // if
@@ -557,17 +552,14 @@
   	  $this->Server = $pSERVER;
   	  $this->Add();
   	  
-  	  $zOLDAPPLE->SetTag ('SERVERNAME', $pSERVER);
-  	  
-      $zSTRINGS->Lookup ('MESSAGE.ADDED', $zOLDAPPLE->Context);
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __( "Server Added", array ( "server" => $pSERVER ) );
       $this->Error = 0;
       
   	  return (TRUE);
   	} // AddServer
   	
   	function RemoveServer ($pSERVER) {
-  	  global $zOLDAPPLE, $zSTRINGS;
+  	  global $zOLDAPPLE;
   		
       // Delete all current records for this server and version.
       $query = "
@@ -580,8 +572,7 @@
   	  
   	  $zOLDAPPLE->SetTag ('SERVERNAME', $pSERVER);
   	  
-      $zSTRINGS->Lookup ('MESSAGE.REMOVED', $zOLDAPPLE->Context);
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __( "Server Removed", array ( "server" => $pSERVER ) );
       $this->Error = 0;
       
   	  return (TRUE);
@@ -640,7 +631,7 @@
     } // ListDirectory
     
     function CreateBackupDirectories ($pCURRENTREFERENCE) {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
       
       global $gAPPLESEEDVERSION, $gFRAMELOCATION;
       global $gRESULT;
@@ -652,11 +643,10 @@
       // Create the main backup directory.
       if (!mkdir ($backupDirectory)) {
       	if (file_exists($backupDirectory)) {
-          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORYEXISTS', $zOLDAPPLE->Context);
+      	  $gRESULT = __( "Backup Directory Already Exists");
       	} else {
-          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zOLDAPPLE->Context);
+      	  $gRESULT = __( "Could Not Create Backup Directory");
       	} // if
-        $gRESULT = $zSTRINGS->Output;
         $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         return (FALSE);
       } // if
@@ -681,8 +671,7 @@
   	  
   	  foreach ($directories as $directory) {
         if (!mkdir ($backupDirectory . '/' . $directory)) {
-          $zSTRINGS->Lookup ('ERROR.BACKUPDIRECTORY', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+      	  $gRESULT = __( "Could Not Create Backup Directory");
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	  return (FALSE);
       	} // if
@@ -692,13 +681,11 @@
   	  } // foreach
   	  
   	  if (!$permissions) {
-          $zSTRINGS->Lookup ('WARNING.BACKUPPERMISSIONS', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+      	  $gRESULT = __( "Could Not Set Permission" );
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
   	  
-      $zSTRINGS->Lookup ('RESULT.BACKUPDIRECTORY', $zOLDAPPLE->Context);
-      $gRESULT = $zSTRINGS->Output;
+ 	  $gRESULT = __( "Backup Directory Created" );
       $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
   	  return (TRUE);
@@ -706,7 +693,7 @@
     
     function CreateNewDirectories ($pLATESTREFERENCE) {
     	
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
       
       global $gAPPLESEEDVERSION, $gFRAMELOCATION;
       global $gRESULT;
@@ -729,8 +716,7 @@
   	  foreach ($directories as $directory) {
   	  	if (!file_exists ($directory)) {
           if (!mkdir ($directory)) {
-            $zSTRINGS->Lookup ('ERROR.NEWDIRECTORIES', $zOLDAPPLE->Context);
-            $gRESULT = $zSTRINGS->Output;
+            $gRESULT = __( "Error Creating New Directories" );
             $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.error.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	    return (FALSE);
       	  } // if
@@ -741,13 +727,11 @@
   	  } // foreach
   	  
   	  if (!$permissions) {
-          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+          $gRESULT = __( "Could Not Set Permissions" );
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
   	  } // if
   	  
-      $zSTRINGS->Lookup ('RESULT.NEWDIRECTORIES', $zOLDAPPLE->Context);
-      $gRESULT = $zSTRINGS->Output;
+      $gRESULT = __( "New Directories Created" );
       $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.message.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
   	  return (TRUE);
@@ -755,7 +739,7 @@
     
     function Merge ($pCURRENT, $pLATEST, $pSERVER, $pVERSION) {
     	
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
       
       global $gAPPLESEEDVERSION, $gFRAMELOCATION;
       global $gRESULT;
@@ -813,8 +797,7 @@
       	if (!rename ($o, $backup . $o)) {
       		global $gBACKUPFILE;
       		$gBACKUPFILE = $o;
-            $zSTRINGS->Lookup ('WARNING.BACKUP', $zOLDAPPLE->Context);
-            $gRESULT = $zSTRINGS->Output;
+            $gRESULT = __( "Could Not Rename New Directories", array ( "filename" => $gBACKUPFILE ) );
             $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       } // foreach
@@ -832,8 +815,7 @@
       	if (!rename ($c, $backup . $c)) {
       		global $gBACKUPFILE;
       		$gBACKUPFILE = $o;
-            $zSTRINGS->Lookup ('WARNING.BACKUP', $zOLDAPPLE->Context);
-            $gRESULT = $zSTRINGS->Output;
+            $gRESULT = __( "Could Not Rename Common Files", array ( "filename" => $gBACKUPFILE ) );
             $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       	
@@ -850,8 +832,7 @@
           } // if
     	  global $gMAGICFILE;
           $gMAGICFILE = $o;
-          $zSTRINGS->Lookup ('WARNING.MAGIC', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+          $gRESULT = __( "Processing Magic File", array ( "filename" => $gMAGICFILE ) );
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } else {
           $this->SaveFile ($content, $c);
@@ -860,8 +841,7 @@
       	if (!$this->FixPermissions ($c)) {
       	  global $gBACKUPFILE;
           $gBACKUPFILE = $o;
-          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+          $gRESULT = __( "Could Not Set New Permissions", array ( "filename" => $gBACKUPFILE ) );
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       } // foreach
@@ -878,8 +858,7 @@
       	  if (!chmod ($n, 0777)) {
       	    global $gBACKUPFILE;
             $gBACKUPFILE = $n;
-            $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
-            $gRESULT = $zSTRINGS->Output;
+            $gRESULT = __( "Could Not Set New Permissions", array ( "filename" => $gBACKUPFILE ) );
             $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	  } // if
       	  continue;
@@ -898,8 +877,7 @@
           } // if
       	  global $gMAGICFILE;
           $gMAGICFILE = $n;
-          $zSTRINGS->Lookup ('WARNING.MAGIC', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+          $gRESULT = __( "Processing Magic File", array ( "filename" => $gMAGICFILE ) );
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } else {
           $this->SaveFile ($content, $n);
@@ -908,8 +886,7 @@
       	if (!$this->FixPermissions ($n)) {
       	  global $gBACKUPFILE;
           $gBACKUPFILE = $n;
-          $zSTRINGS->Lookup ('WARNING.NEWPERMISSIONS', $zOLDAPPLE->Context);
-          $gRESULT = $zSTRINGS->Output;
+          $gRESULT = __( "Could Not Set New Permissions", array ( "filename" => $gBACKUPFILE ) );
           $bRESULT .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/control/update.result.warning.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       	} // if
       } // foreach

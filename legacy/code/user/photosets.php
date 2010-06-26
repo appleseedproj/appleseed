@@ -182,8 +182,7 @@
 
         // Set error message if unable to delete photo set directory.
         if (!$zOLDAPPLE->RemoveDirectory ($photosetdir) ) {
-          $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
-          $gVIEWDATA->Message = $zSTRINGS->Output;
+          $gVIEWDATA->Message = __("Error Modifying Photoset Directory");
           $gVIEWDATA->Error = -1;;
         } // if
 
@@ -254,15 +253,14 @@
 
           // Attempt to create the photoset directory. 
           if (!$zOLDAPPLE->CreateDirectory ($photosetdir) ) {
-            $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
-            $gVIEWDATA->Message = $zSTRINGS->Output;
+            $gVIEWDATA->Message = __("Error Modifying Photoset Directory");
             $gVIEWDATA->Error = -1;;
             $gACTION = "NEW";
             $gVIEWDATA->Rollback ();
           } else {
             // Add the record to the database.
             $gVIEWDATA->Add();
-            $zSTRINGS->Message = __("Record Added", array ('setname' => $gVIEWDATA->Name));
+            $gVIEWDATA->Message = __("Record Added", array ('setname' => $gVIEWDATA->Name));
 
             // Retrieve the last inserted ID.
             $gVIEWDATA->tID = $gVIEWDATA->AutoIncremented ();
@@ -306,8 +304,7 @@
 
           // Rename the old directory.
           if (!rename ($olddir, $photosetdir) ) {
-            $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
-            $gVIEWDATA->Message = $zSTRINGS->Output;
+            $gVIEWDATA->Message = __("Error Modifying Photoset Directory");
             $gVIEWDATA->Error = -1;;
             $gACTION = "EDIT";
             $gVIEWDATA->Rollback ();
@@ -347,8 +344,7 @@
       $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
       if (!$zOLDAPPLE->RemoveDirectory ($photosetdir) ) {
-        $zSTRINGS->Lookup ('ERROR.DIR', $zOLDAPPLE->Context);
-        $gVIEWDATA->Message = $zSTRINGS->Output;
+        $gVIEWDATA->Message = __("Error Modifying Photoset Directory");
         $gVIEWDATA->Error = -1;;
         $gVIEWDATA->Rollback ();
       } // if

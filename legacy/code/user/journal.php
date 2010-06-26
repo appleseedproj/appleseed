@@ -298,9 +298,8 @@
               $COMMENTS->SelectByMultiple ($commentcriteria);
               $gCOMMENTCOUNT = $COMMENTS->CountResult ();
 
-              $zSTRINGS->Lookup ("LABEL.COUNT", "USER.JOURNALS");
               $gCOUNT = "";
-              if ($gCOMMENTCOUNT > 0) $gCOUNT = $zSTRINGS->Output;
+              if ($gCOMMENTCOUNT > 0) $gCOUNT = __( "Comment Count", array ( "count" => $gCOMMENTCOUNT ) );
 
               unset ($gCOMMENTCOUNT);
 
@@ -395,9 +394,8 @@
     
               $gCOMMENTCOUNT = $COMMENTS->CountComments ($zJOURNAL->tID, $zOLDAPPLE->Context);
 
-              $zSTRINGS->Lookup ("LABEL.COUNT", "USER.JOURNALS");
               $gCOUNT = OUTPUT_NBSP;
-              if ($gCOMMENTCOUNT > 0) $gCOUNT = $zSTRINGS->Output;
+              if ($gCOMMENTCOUNT > 0) $gCOUNT = $__( "Comment Count", array ( "count" => $gCOMMENTCOUNT ) );
 
               unset ($gCOMMENTCOUNT);
 
@@ -517,9 +515,8 @@
               $COMMENTS->SelectByMultiple ($commentcriteria);
               $gCOMMENTCOUNT = $COMMENTS->CountResult ();
 
-              $zSTRINGS->Lookup ("LABEL.COUNT", "USER.JOURNALS");
               $gCOUNT = OUTPUT_NBSP;
-              if ($gCOMMENTCOUNT > 0) $gCOUNT = $zSTRINGS->Output;
+              if ($gCOMMENTCOUNT > 0) $gCOUNT = $__( "Comment Count", array ( "count" => $gCOMMENTCOUNT ) );
 
               unset ($gCOMMENTCOUNT);
 

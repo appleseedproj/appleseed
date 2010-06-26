@@ -306,7 +306,7 @@
       global $gPARENTID;
       global $gSUBJECT;
 
-      global $zSTRINGS, $zHTML;
+      global $zHTML;
 
       $gTARGET = $_SERVER[REQUEST_URI];
 
@@ -318,7 +318,6 @@
         
         global $gPARENTAUTHOR, $gPARENTBODY, $gPARENTSUBJECT;
         global $zHTML;
-        global $zSTRINGS;
         global $zPARENT;
 
         $gREPLYDATA = array ("ACTION" => "ADD",
@@ -329,17 +328,16 @@
         $zPARENT->FetchArray ();
         $gPARENTBODY = $zOLDAPPLE->Format ($zPARENT->Body, FORMAT_BASIC);
         $gPARENTSUBJECT = $zPARENT->Subject;
-        $zSTRINGS->Lookup ('LABEL.SUBJECTPREFIX');
 
         // Check if the subject field has been modified by user.
         if (!$gSUBJECT) {
          // Check to see if we haven't already added the prefix.
-         if (strpos ($gPARENTSUBJECT, $zSTRINGS->Output, 0) === 0) {
+         if (strpos ($gPARENTSUBJECT, __("Re"), 0) === 0) {
            // Just inherit the parent post subject.
            $gSUBJECT = $gPARENTSUBJECT;
          } else {
            // Add the prefix to the subject.
-           $gSUBJECT = $zSTRINGS->Output . $gPARENTSUBJECT;
+           $gSUBJECT = __("Re") . $gPARENTSUBJECT;
          } // if
         } // if
 
@@ -397,7 +395,7 @@
 
       global $zOLDAPPLE;
 
-      global $zSTRINGS, $zHTML;
+      global $zHTML;
 
       global $zAUTHUSER;
       global $zLOCALUSER, $zFOCUSUSER;
@@ -419,17 +417,13 @@
       global $gSCROLLSTEP, $gSCROLLSTART, $gSCROLLMAX;
       global $gSCROLLCOUNT;
 
-      $zSTRINGS->Lookup ('LINK.REPLY');
-      $gREPLYLABEL = $zSTRINGS->Output;
+      $gREPLYLABEL = __("Reply");
 
-      $zSTRINGS->Lookup ('LINK.PARENT');
-      $gPARENTLABEL = $zSTRINGS->Output;
+      $gPARENTLABEL = __("Parent");
 
-      $zSTRINGS->Lookup ('LINK.THREAD');
-      $gTHREADLABEL = $zSTRINGS->Output;
+      $gTHREADLABEL = __("Thread");
 
-      $zSTRINGS->Lookup ('LINK.DELETE');
-      $gDELETELABEL = $zSTRINGS->Output;
+      $gDELETELABEL = __("Delete");
 
       $returnbuffer = "";
 
@@ -538,19 +532,16 @@
         $stamp = strtotime ($this->groupContent->Stamp);
         $gDATE = date ("M j, Y", $stamp);
         $gTIME = date ("g:i a", $stamp);
-        $zSTRINGS->Lookup ('LABEL.STAMP');
-        $gSTAMP = $zSTRINGS->Output;
+        $gSTAMP = __("Group Stamp", array ( "date" => $gDATE, "time" => $gTIME ) );
 
         // Threaded -specific
         global $gGROUPREQUEST;
         $threadtarget = "/group/" . $gGROUPREQUEST . "/thread/" . $this->groupContent->tID;
         $gLINK = $zHTML->CreateLink ($threadtarget, $this->groupContent->Subject, $gTHREADDATA);
-        $zSTRINGS->Lookup ('LABEL.THREAD');
-        $gTHREAD = $zSTRINGS->Output;
+        $gTHREAD = __("Group Thread", array ( "link" => $gLINK, "author" => $gAUTHOR, "date" => $gDATE, "time" => $gTIME ) );
 
         // Compact -specific
-        $zSTRINGS->Lookup ('LABEL.BYLINE');
-        $gBYLINE = $zSTRINGS->Output;
+        $gBYLINE = __("By", array ( "author" => $gAUTHOR ) );
 
         /* */
 
@@ -749,7 +740,7 @@
 
     // Handle the workflow for the posts box.
     function Handle () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $bMAINSECTION;
 
@@ -949,7 +940,7 @@
 
     // Notify the user that a post has been replied to.
     function NotifyReply ($pEMAIL, $pREPLIEDUSER, $pREPLIEDUSERNAME, $pREPLYINGUSER) {
-      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER;
+      global $zOLDAPPLE, $zFOCUSUSER;
 
       // Return if post notification is turned off.
       if ($zFOCUSUSER->userSettings->Get ("GroupReplyNotification") == NOTIFICATION_OFF) {
@@ -957,8 +948,7 @@
       } // 
 
       if (!$pREPLYINGUSER) {
-        $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME', $this->groupContent->Context);
-        $pREPLYINGUSER = $zSTRINGS->Output;
+        $pREPLYINGUSER = __( "Anonymous User" );
       } // if
 
       global $gREPLYINGUSER, $gREPLIEDUSER;
@@ -967,22 +957,19 @@
 
       global $gINFOURL, $gSITEURL;
       global $gGROUPREQUEST;
+      global $gSITEDOMAIN;
 
       $gINFOURL = $gSITEURL . 'group/' . $gGROUPREQUEST . '/thread/' . $this->groupContent->tID; 
 
       $to = $pEMAIL;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Group Subject", array ( "fromusername" => $gREPLYINGUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY');
-      $body = $zSTRINGS->Output;
+      $body = __("Group Body", array ( "touser" => $gREPLIEDUSER, "fromuser" => $gREPLYINGUSER, "link" => $gINFOURL ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM');
-      $from = $zSTRINGS->Output;
+      $from = __("groups@site", array ( "domain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROMNAME');
-      $fromname = $zSTRINGS->Output;
+      $fromname = __( "Group From" );
 
       $zOLDAPPLE->Mailer->From = $from;
       $zOLDAPPLE->Mailer->FromName = $fromname;
@@ -1217,7 +1204,7 @@
    } // GetInformation
 
    function BufferMemberList () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
       global $gTHEMELOCATION;
@@ -1269,7 +1256,7 @@
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
       
-      global $zSTRINGS, $zLOCALUSER, $zXML;
+      global $zLOCALUSER, $zXML;
 
       $success = FALSE;
 
@@ -1293,8 +1280,7 @@
         // Join Locally.
         $this->Select ("Name", $pGROUPNAME);
         if ($this->CountResult() == 0) {
-          $zSTRINGS->Lookup ("ERROR.NOTFOUND");
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Group Not Found");
           $this->Error = -1;
           return (FALSE);
         } // if
@@ -1345,12 +1331,11 @@
           $zLOCALUSER->userGroups->Add ();
         } // if
       } else {
-        if (!$message) $message = "ERROR.UNKNOWN";
+        if (!$message) $message = "Unknown Error";
         $this->Error = -1;
       } // if
 
-      $zSTRINGS->Lookup ($message);
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __($message);
 
       if ($this->groupMembers->Error != -1) return (TRUE);
       return (FALSE);
@@ -1360,7 +1345,7 @@
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
 
-      global $zSTRINGS, $zLOCALUSER, $zXML;
+      global $zLOCALUSER, $zXML;
 
       $success = FALSE;
 
@@ -1381,8 +1366,7 @@
         // Leave Locally.
         $this->Select ("Name", $pGROUPNAME);
         if ($this->CountResult() == 0) {
-          $zSTRINGS->Lookup ("ERROR.NOTFOUND");
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Group Not Found");
           $this->Error = -1;
           return (FALSE);
         } // if
@@ -1406,12 +1390,11 @@
         $zLOCALUSER->userGroups->FetchArray ();
         $zLOCALUSER->userGroups->Delete ();
       } else {
-        if (!$message) $message = "ERROR.UNKNOWN";
+        if (!$message) $message = "Unknown Error";
         $this->Error = -1;
       } // if
 
-      $zSTRINGS->Lookup ($message);
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __($message);
 
       if ($this->groupMembers->Error != -1) return (TRUE);
       return (FALSE);
@@ -1437,7 +1420,7 @@
     } // Approve
 
     function BufferMemberEditor () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
       global $gSITEDOMAIN;
@@ -1462,7 +1445,7 @@
     } // BufferMemberEditor
 
     function BufferPendingEditor () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
 
@@ -1487,7 +1470,7 @@
     } // BufferPendingditor
 
     function BufferInviteEditor () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $gFRAMELOCATION;
 
@@ -1515,7 +1498,6 @@
 
     // Save General Options.
     function SaveGeneral () {
-      global $zSTRINGS;
 
       // Save the table id.
       $tid = $this->tID;
@@ -1544,7 +1526,7 @@
 
     // Process the invite list.
     function ProcessInvites () {
-      global $zLOCALUSER, $zSTRINGS;
+      global $zLOCALUSER;
 
       global $gINVITES, $gSITEDOMAIN;
       global $gINVITINGUSER, $gGROUPFULLNAME, $gGROUPURL;
@@ -1600,18 +1582,15 @@
         $gRECIPIENTADDRESS = $gRECIPIENTNAME . '@' . $gRECIPIENTDOMAIN;
         
         global $gSUBJECT, $gBODY;
-        $zSTRINGS->Lookup ("INVITE.BODY");
-        $gBODY = $zSTRINGS->Output;
+        $gBODY = __("Group Invite Body", array ( "name" => $gRECIPIENTNAME, "domain" => $gRECIPIENTDOMAIN, "address" => $gRECIPIENTADDRESS ) );
         $gBODY = str_replace ("!##", "<", $gBODY);
         $gBODY = str_replace ("##!", ">", $gBODY);
-        $zSTRINGS->Lookup ("INVITE.SUBJECT");
-        $gSUBJECT = $zSTRINGS->Output;
+        $gSUBJET = __("Group Invite Subject", array ( "name" => $gRECIPIENTNAME) );
         $MESSAGE->Send ($zLOCALUSER->Username);
         unset ($MESSAGE);
       } // foreach
 
-      $zSTRINGS->Lookup ("MESSAGE.INVITED");
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("User Invited To Group");
       $this->Error = 0;
 
       return (TRUE);
@@ -1620,8 +1599,6 @@
 
     // Save Member Editor Values.
     function SaveMemberEditor () {
-
-      global $zSTRINGS;
 
       global $gSITEDOMAIN;
 
@@ -1647,15 +1624,12 @@
         } // switch
       } // foreach
 
-      $zSTRINGS->Lookup ("MESSAGE.MEMBER.EDITOR");
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Member List Saved");
       return (TRUE);
     } // SaveMemberEditor
 
     // Save Pending Editor Values.
     function SavePendingEditor () {
-
-      global $zSTRINGS;
 
       global $gSITEDOMAIN;
 
@@ -1679,8 +1653,7 @@
            unset ($USER);
           break;
         } // switch
-        $zSTRINGS->Lookup ("MESSAGE.PENDING.EDITOR");
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Member Pending List Saved");
       } // foreach
 
       return (TRUE);

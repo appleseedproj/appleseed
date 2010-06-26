@@ -301,7 +301,7 @@
       global $gPARENTID;
       global $gSUBJECT;
 
-      global $zSTRINGS, $zHTML;
+      global $zHTML;
 
       $gCOMMENTTARGET = $_SERVER[REQUEST_URI];
       $zOLDAPPLE->SetTag ('COMMENTTARGET', $gCOMMENTTARGET);
@@ -314,7 +314,6 @@
         
         global $gPARENTAUTHOR, $gPARENTBODY, $gPARENTSUBJECT;
         global $zHTML;
-        global $zSTRINGS;
         global $zPARENT;
 
         $gREPLYDATA = array ("COMMENTACTION" => "ADD",
@@ -326,17 +325,16 @@
         $zPARENT->FetchArray ();
         $gPARENTBODY = $zPARENT->Body;
         $gPARENTSUBJECT = $zPARENT->Subject;
-        $zSTRINGS->Lookup ('LABEL.SUBJECTPREFIX', 'USER.COMMENTS');
 
         // Check if the subject field has been modified by user.
         if (!$gSUBJECT) {
          // Check to see if we haven't already added the prefix.
-         if (strpos ($gPARENTSUBJECT, $zSTRINGS->Output, 0) === 0) {
+         if (strpos ($gPARENTSUBJECT, __("Re"), 0) === 0) {
            // Just inherit the parent post subject.
            $gSUBJECT = $gPARENTSUBJECT;
          } else {
            // Add the prefix to the subject.
-           $gSUBJECT = $zSTRINGS->Output . $gPARENTSUBJECT;
+           $gSUBJECT = __("Re") . $gPARENTSUBJECT;
          } // if
         } // if
 
@@ -397,7 +395,7 @@
 
       global $zOLDAPPLE;
 
-      global $zSTRINGS, $zHTML;
+      global $zHTML;
 
       global $zAUTHUSER;
       global $zLOCALUSER, $zFOCUSUSER;
@@ -697,7 +695,7 @@
 
     // Handle the workflow for the comments box.
     function Handle () {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
 
       global $bCOMMENTS;
 
@@ -901,7 +899,8 @@
 
     // Notify the user that a comment has been replied to.
     function NotifyReply ($pEMAIL, $pCOMMENTEDUSER, $pCOMMENTEDUSERNAME, $pCOMMENTINGUSER) {
-      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER;
+      global $zOLDAPPLE, $zFOCUSUSER;
+      global $gSITEDOMAIN;
 
       // Return if comment notification is turned off.
       if ($zFOCUSUSER->userSettings->Get ("ReplyNotification") == NOTIFICATION_OFF) {
@@ -909,8 +908,7 @@
       } // 
 
       if (!$pCOMMENTINGUSER) {
-        $zSTRINGS->Lookup ('LABEL.ANONYMOUS.FULLNAME', $this->Context);
-        $pCOMMENTINGUSER = $zSTRINGS->Output;
+        $pCOMMENTINGUSER = __("Anonymous User");
       } // if
 
       global $gCOMMENTINGUSER, $gCOMMENTEDUSER;
@@ -933,17 +931,13 @@
 
       $to = $pEMAIL;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.COMMENTS');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Comment Subject", array ( "fromusername" => $gCOMMENTINGUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.COMMENTS');
-      $body = $zSTRINGS->Output;
+      $body = __("Comment Body", array ( "touser" => $gCOMMENTEDUSER, "fromuser" => $gCOMMENTINGUSER, "link" => $gINFOURL ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.COMMENTS');
-      $from = $zSTRINGS->Output;
+      $from = __("comments@site", array ( "domain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.COMMENTS');
-      $fromname = $zSTRINGS->Output;
+      $fromname = __( "Comment From" );
 
       $zOLDAPPLE->Mailer->From = $from;
       $zOLDAPPLE->Mailer->FromName = $fromname;
@@ -966,7 +960,7 @@
 
     // Notify the user that a comment has been added.
     function NotifyArticle () {
-      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
 
       $ARTICLE = new cCONTENTARTICLES();
       $ARTICLE->Select ("tID", $this->rID);
@@ -1008,18 +1002,16 @@
 
       global $gINFOURL, $gSITEURL;
       $gINFOURL = $gSITEURL . "/articles/" . $this->rID . "/#comments";
+      
+      global $gSITEDOMAIN;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'CONTENT.ARTICLES.COMMENTS');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Comment Subject", array ( "fromusername" => $gCOMMENTINGUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'CONTENT.ARTICLES.COMMENTS');
-      $body = $zSTRINGS->Output;
+      $body = __("Comment Body", array ( "touser" => $gCOMMENTEDUSER, "fromuser" => $gCOMMENTINGUSER, "link" => $gINFOURL ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM', 'CONTENT.ARTICLES.COMMENTS');
-      $from = $zSTRINGS->Output;
+      $from = __("comments@site", array ( "domain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'CONTENT.ARTICLES.COMMENTS');
-      $fromname = $zSTRINGS->Output;
+      $fromname = __( "Comment From" );
 
       $zOLDAPPLE->Mailer->From = $from;
       $zOLDAPPLE->Mailer->FromName = $fromname;
@@ -1042,7 +1034,8 @@
 
     // Notify the user that a comment has been added.
     function NotifyJournal ($pEMAIL, $pCOMMENTEDUSER, $pCOMMENTEDUSERNAME, $pCOMMENTINGUSER) {
-      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $gSITEDOMAIN;
 
       // Don't send a message if a user is commenting on their own journal.
       if ( ($zFOCUSUSER->Username == $zAUTHUSER->Username) and
@@ -1061,18 +1054,16 @@
       $gINFOURL = $gSITEURL . "/profile/" . $pCOMMENTEDUSERNAME . "/journal/";
 
       $to = $pEMAIL;
+      
+      global $gSITEDOMAIN;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.JOURNAL.COMMENTS');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Comment Subject", array ( "fromusername" => $gCOMMENTINGUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.JOURNAL.COMMENTS');
-      $body = $zSTRINGS->Output;
+      $body = __("Comment Body", array ( "touser" => $gCOMMENTEDUSER, "fromuser" => $gCOMMENTINGUSER, "link" => $gINFOURL ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.JOURNAL.COMMENTS');
-      $from = $zSTRINGS->Output;
+      $from = __("comments@site", array ( "domain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.JOURNAL.COMMENTS');
-      $fromname = $zSTRINGS->Output;
+      $fromname = __( "Comment From" );
 
       $zOLDAPPLE->Mailer->From = $from;
       $zOLDAPPLE->Mailer->FromName = $fromname;
@@ -1095,7 +1086,8 @@
 
     // Notify the user that a comment has been added.
     function NotifyProfile ($pEMAIL, $pCOMMENTEDUSER, $pCOMMENTEDUSERNAME, $pCOMMENTINGUSER) {
-      global $zSTRINGS, $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $zOLDAPPLE, $zFOCUSUSER, $zAUTHUSER;
+      global $gSITEDOMAIN;
 
       // Return if comment notification is turned off.
       if ($zFOCUSUSER->userSettings->Get ("ProfileNotification") == NOTIFICATION_OFF) {
@@ -1114,18 +1106,16 @@
       $gINFOURL = $gSITEURL . "/profile/" . $pCOMMENTEDUSERNAME . "/info/#comments";
 
       $to = $pEMAIL;
+      
+      global $gSITEDOMAIN;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.INFO.COMMENTS');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Comment Subject", array ( "fromusername" => $gCOMMENTINGUSER ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.INFO.COMMENTS');
-      $body = $zSTRINGS->Output;
+      $body = __("Comment Body", array ( "touser" => $gCOMMENTEDUSER, "fromuser" => $gCOMMENTINGUSER, "link" => $gINFOURL ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.INFO.COMMENTS');
-      $from = $zSTRINGS->Output;
+      $from = __("comments@site", array ( "domain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.INFO.COMMENTS');
-      $fromname = $zSTRINGS->Output;
+      $fromname = __( "Comment From" );
 
       $zOLDAPPLE->Mailer->From = $from;
       $zOLDAPPLE->Mailer->FromName = $fromname;

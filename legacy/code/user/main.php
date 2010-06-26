@@ -158,14 +158,11 @@
         $gINVITEDBY = ucwords ($zLOCALUSER->userProfile->GetAlias ());
         $gINVITEURL = $gSITEURL . "/join/" . $zFOCUSUSER->userInvites->Value;
 
-        $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.INVITE');
-        $subject = $zSTRINGS->Output;
+        $subject = __( "User Invite Subject" );
 
-        $zSTRINGS->Lookup ('MAIL.BODY', 'USER.INVITE');
-        $body = $zSTRINGS->Output;
+        $body = __( "User Invite Body" );
 
-        $zSTRINGS->Lookup ('MAIL.FROM', 'USER.INVITE');
-        $from = $zSTRINGS->Output;
+        $from = __( "User Invite Sender" );
 
         $headers = "From: $from" . "\r\n" .
                    "Reply-To: $from" . "\r\n" .
@@ -179,8 +176,7 @@
         $zFOCUSUSER->userInvites->Update ();
 
         // Success message.
-        $zSTRINGS->Lookup ("MESSAGE.SENT", "USER.INVITE");
-        $zFOCUSUSER->userInvites->Message = $zSTRINGS->Output;
+        $zFOCUSUSER->userInvites->Message = __ ( "Invitation Sent" );
 
         $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.confirm.aobj", INCLUDE_SECURITY_NONE);
 

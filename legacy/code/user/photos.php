@@ -268,8 +268,7 @@
              (!unlink ($mdfile) ) or 
              (!unlink ($lgfile) ) ) {
           global $gPHOTOFILENAME; $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-          $zSTRINGS->Lookup ('ERROR.FILE', $zOLDAPPLE->Context);
-          $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+          $gVIEWDATA->photoInfo->Message = __("Unable To Rename File", array ( 'filename' => $gPHOTOFILENAME ) );
           $gVIEWDATA->photoInfo->Error = -1;;
         } // if
 
@@ -423,9 +422,8 @@
           unset ($PHOTOCHECK);
         } else {
           global $gPHOTOFILENAME;  $gPHOTOFILENAME = $filename;
-          $zSTRINGS->Lookup ('ERROR.EXISTS', $zOLDAPPLE->Context);
           $zIMAGE->Error = -1;
-          $zIMAGE->Message = $zSTRINGS->Output;
+          $zIMAGE->Message = __( "File Exists", array ( "filename" => $gPHOTOFILENAME ) );
           unset ($gPHOTOFILENAME);
         } // if
 
@@ -433,8 +431,7 @@
         unlink ($_FILES['gNEWPHOTO']['tmp_name']);
 
       } else {
-        $zSTRINGS->Lookup ('ERROR.UPLOAD', $zOLDAPPLE->Context);
-        $zIMAGE->Message = $zSTRINGS->Output;
+        $zIMAGE->Message = __( "Upload Error" );
       } // if
 
     break;
@@ -514,8 +511,8 @@
                  ( !rename ($old_lgfile, $lgfile) ) ) {
               // Look up the error message.
               global $gPHOTOFILENAME;  $gPHOTOFILENAME = $gVIEWDATA->photoInfo->Filename;
-              $zSTRINGS->Lookup ('ERROR.FILE', $zOLDAPPLE->Context);
-              $gVIEWDATA->photoInfo->Message = $zSTRINGS->Output;
+              $gVIEWDATA->photoInfo->Message = __("Unable To Rename File", array ( 'filename' => $gPHOTOFILENAME ) );
+              
               unset ($gPHOTOFILENAME);
   
               // Rollback changes.
@@ -754,8 +751,7 @@
           $gCOMMENTCOUNT = $zCOMMENTS->CountComments ($gVIEWDATA->photoInfo->tID, $zOLDAPPLE->Context);
 
           if ($gCOMMENTCOUNT > 0) {
-            $zSTRINGS->Lookup ('LABEL.COMMENTS', $zOLDAPPLE->Context);
-            $gCOMMENTLABEL = $zSTRINGS->Output;
+            $gCOMMENTLABEL = __( "Comment Count", array ( 'count' => $gCOMMENTCOUNT ) );
           } else {
             $gCOMMENTLABEL = "";
           } // if

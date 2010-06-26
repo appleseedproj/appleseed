@@ -70,7 +70,7 @@
     } // Initialize
     
     function CountNewMessages () {
-      global $zLOCALUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zLOCALUSER, $zOLDAPPLE, $zHTML;
 
       $NotificationTable = $this->messageNotification->TableName;
       $InformationTable = $this->messageInformation->TableName;
@@ -110,9 +110,8 @@
       if ($total) {
         global $gMESSAGECOUNT;
         $gMESSAGECOUNT = $total;
-        $zSTRINGS->Lookup ('LABEL.NEWMESSAGES');
         $username = $zLOCALUSER->Username;
-        $return = $zHTML->CreateLink ("profile/$username/messages/", $zOLDAPPLE->ParseTags ($zSTRINGS->Output));
+        $return = $zHTML->CreateLink ("profile/$username/messages/", __("New Message Count", array ( 'count' => $gMESSAGECOUNT ) ) );
       } else {
         $return = OUTPUT_NBSP;
       } // if
@@ -399,7 +398,7 @@
     } // LoadMessages
 
     function BufferLabel () {
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION, $gLABELNAME, $gPROFILESUBACTION; 
 
@@ -558,7 +557,7 @@
     } // BufferLabel
 
     function BufferInbox () {
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION; 
 
@@ -662,7 +661,7 @@
 
     function BufferSent () {
 
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION; 
 
@@ -778,7 +777,7 @@
 
     function BufferDrafts () {
 
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION; 
 
@@ -889,7 +888,7 @@
     } // BufferDrafts
 
     function BufferTrash () {
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION; 
 
@@ -997,7 +996,7 @@
     } // BufferTrash
 
     function BufferAll () {
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION; 
 
@@ -1108,7 +1107,7 @@
     } // BufferAll
 
     function BufferSpam () {
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION; 
 
@@ -1341,7 +1340,6 @@
 
     // Mark The Current Message As Read.
     function MarkAsRead () {
-      global $zSTRINGS;
 
       // Do not change the status of a Draft message.
       if ($this->Location == FOLDER_DRAFTS) return (TRUE);
@@ -1352,8 +1350,7 @@
       if ($this->$classlocation->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -1368,7 +1365,6 @@
     
     // Mark The Current Message As Unread.
     function MarkAsUnread () {
-      global $zSTRINGS;
 
       // Do not change the status of a Draft message.
       if ($this->Location == FOLDER_DRAFTS) return (FALSE);
@@ -1377,8 +1373,7 @@
       if ($this->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -1391,8 +1386,7 @@
         $this->$classlocation->Update ();
       } // if
 
-      $zSTRINGS->Lookup ('MESSAGE.UNREAD');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __( "Message Marked Unread" );
 
       return (TRUE);
 
@@ -1400,7 +1394,6 @@
 
 
     function MarkListAsRead ($pDATALIST) {
-      global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
@@ -1420,8 +1413,7 @@
         if ($this->$classlocation->CheckReadAccess () == FALSE) {
           global $gMESSAGEID;
           $gMESSAGEID = $id;
-          $zSTRINGS->Lookup ('ERROR.ACCESS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
           $this->Error = -1;
           continue;
         } // if 
@@ -1451,8 +1443,6 @@
 
     function MarkListAsUnread ($pDATALIST) {
 
-      global $zSTRINGS;
-    
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
         $this->Error = -1;
@@ -1470,8 +1460,7 @@
         if ($this->$classlocation->CheckReadAccess () == FALSE) {
           global $gMESSAGEID;
           $gMESSAGEID = $id;
-          $zSTRINGS->Lookup ('ERROR.ACCESS');
-          $this->$classlocation->Message = $zSTRINGS->Output;
+          $this->$classlocation->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
           $this->$classlocation->Error = -1;
           continue;
         } // if 
@@ -1520,7 +1509,7 @@
     } // CreateLabelLinks
 
     function Label ($pLABELVALUE) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
       
       global $gIDENTIFIER;
 
@@ -1537,10 +1526,7 @@
         $this->messageLabels->Select ("tID", $pLABELVALUE);
         $this->messageLabels->FetchArray ();
 
-        $zOLDAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
-         
-        $zSTRINGS->Lookup ('MESSAGE.APPLY');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Labeled", array ( "label" => $this->messageLabels->Label ) );
  
       } else {
         $this->messageLabelList->Select ("Identifier", $gIDENTIFIER);
@@ -1550,21 +1536,15 @@
         $this->messageLabels->Select ("tID", $pLABELVALUE);
         $this->messageLabels->FetchArray ();
 
-        global $gREMOVELABELNAME; 
-
-        $gREMOVELABELNAME = $this->messageLabels->Label;
-       
-        $zSTRINGS->Lookup ('MESSAGE.REMOVE');
+        $this->Message = __("Message Label Removed", array ( "label" => $this->messageLabels->Label ) );
         $this->Message = $zSTRINGS->Output;
-
-        unset ($gREMOVELABELNAME);
       } // if
 
       return (TRUE);
     } // Label
 
     function AddLabelToList ($pDATALIST) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
       
       global $gLABELVALUE, $gSELECTBUTTON;
 
@@ -1605,12 +1585,10 @@
       $zOLDAPPLE->SetTag ('LABELNAME', $this->messageLabels->Label);
            
       if ($labelaction == 'a') {
-        $zSTRINGS->Lookup ('MESSAGE.APPLYALL');
+        $this->Message = __("Message Label Applied All", array ( "label" => $this->messageLabels->Label ) );
       } else {
-        $zSTRINGS->Lookup ('MESSAGE.REMOVEALL');
+        $this->Message = __("Message Label Removed All", array ( "label" => $this->messageLabels->Label ) );
       } // if
-
-      $this->Message = $zSTRINGS->Output;
 
       unset ($gLABELVALUE);
       
@@ -1618,7 +1596,7 @@
 
     function CreateFullLabelMenu () {
 
-      global $zFOCUSUSER, $zSTRINGS;
+      global $zFOCUSUSER;
       global $gLABELVALUE;
 
       $this->messageLabels->Select ("userAuth_uID", $zFOCUSUSER->uID, "Label ASC");
@@ -1633,13 +1611,10 @@
 
         $foundnewlabels = TRUE;
 
-        $zSTRINGS->Lookup ("LABEL.APPLY", "USER.MESSAGES.LABELS");
-
         // Start the menu list at '1'.
-        $applyarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+        $applyarray = array ("X" => MENU_DISABLED . __("Apply Label"));
 
-        $zSTRINGS->Lookup ("LABEL.REMOVE", "USER.MESSAGES.LABELS");
-        $removearray = array ("Z" => MENU_DISABLED . $zSTRINGS->Output);
+        $removearray = array ("Z" => MENU_DISABLED . __("Remove Label"));
 
         $gLABELVALUE = 'X';
 
@@ -1659,7 +1634,7 @@
     
     function CreateCircleMenu () {
       
-      global $zFOCUSUSER, $zSTRINGS;
+      global $zFOCUSUSER;
       
       $CIRCLES = new cFRIENDCIRCLES ();
       
@@ -1667,10 +1642,8 @@
       
       if ($CIRCLES->CountResult() == 0) return (NULL);
       
-      $zSTRINGS->Lookup ("LABEL.MAILCIRCLE", "USER.MESSAGES");
-
       // Start the menu list at '1'.
-      $return = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+      $return = array ("X" => MENU_DISABLED . __("Send To"));
 
       while ($CIRCLES->FetchArray ()) {
         $return[$CIRCLES->Name] = $CIRCLES->Name;
@@ -1682,7 +1655,7 @@
     // Buffer the label menu for a specific message.
     function CreateSpecificLabelMenu () {
 
-      global $zFOCUSUSER, $zSTRINGS;
+      global $zFOCUSUSER;
       global $gLABELVALUE;
 
       $this->messageLabels->Select ("userAuth_uID", $zFOCUSUSER->uID, "Label ASC");
@@ -1697,13 +1670,10 @@
 
         $foundnewlabels = TRUE;
 
-        $zSTRINGS->Lookup ("LABEL.APPLY", "USER.MESSAGES.LABELS");
-
         // Start the menu list at '1'.
-        $applyarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+        $applyarray = array ("X" => MENU_DISABLED . __("Apply Label"));
 
-        $zSTRINGS->Lookup ("LABEL.REMOVE", "USER.MESSAGES.LABELS");
-        $removearray = array ("Z" => MENU_DISABLED . $zSTRINGS->Output);
+        $removearray = array ("Z" => MENU_DISABLED . __("Remove Label"));
 
         $gLABELVALUE = 'X';
 
@@ -1749,10 +1719,8 @@
 
         $foundnewlabels = TRUE;
 
-        $zSTRINGS->Lookup ('LABEL.APPLY', 'USER.MESSAGES.LABELS');
-
         // Start the menu list at '1'.
-        $returnarray = array ("X" => MENU_DISABLED . $zSTRINGS->Output);
+        $returnarray = array ("X" => MENU_DISABLED . __("Apply Label"));
 
         $gLABELVALUE = 'X';
 
@@ -1767,13 +1735,11 @@
       if (count ($excludelist) == 0) {
       } else {
         
-        $zSTRINGS->Lookup ('LABEL.REMOVE');
-
         if ($foundnewlabels) {
           $returnarray["Y"] = MENU_DISABLED . "&nbsp;";
         } // if
 
-        $returnarray["Z"] = MENU_DISABLED . $zSTRINGS->Output;
+        $returnarray["Z"] = MENU_DISABLED . __("Remove Label");
 
         $removestring = join (" OR tID =", $excludelist);
         $removestring = "tID =" . $removestring;
@@ -1798,7 +1764,6 @@
 
     function RetrieveMessage () {
       global $zOLDAPPLE, $zFOCUSUSER;
-      global $zSTRINGS;
       
       // Message is a remote notification.
       $this->messageNotification->Select ("Identifier", $this->Identifier);
@@ -1808,8 +1773,7 @@
       $useServer = $zOLDAPPLE->ChooseServerVersion ($this->messageNotification->Sender_Domain);
       if (!$useServer) {
       	$this->Error = -1;
-        $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Invalid Node Error");
       	return (FALSE);
       } // if
       
@@ -1848,7 +1812,7 @@
     } // RetrieveMessage
 
     function MoveToInbox () {
-      global $zSTRINGS, $zFOCUSUSER;
+      global $zFOCUSUSER;
 
       // Check if user owns this message.
       if ($this->CheckReadAccess () == FALSE) {
@@ -1885,7 +1849,7 @@
     } // MoveToInbox
 
     function MoveToArchive () {
-      global $zSTRINGS, $zFOCUSUSER;
+      global $zFOCUSUSER;
 
       // Check if user owns this message.
       if ($this->CheckReadAccess () == FALSE) {
@@ -1919,7 +1883,7 @@
     } // MoveToArchive
 
     function ReportSpam () {
-      global $zSTRINGS, $zFOCUSUSER;
+      global $zFOCUSUSER;
 
       // Check if user owns this message.
       if ($this->CheckReadAccess () == FALSE) {
@@ -1957,7 +1921,7 @@
     } // ReportSpam
 
     function NotSpam () {
-      global $zSTRINGS, $zFOCUSUSER;
+      global $zFOCUSUSER;
 
       // Check if user owns this message.
       if ($this->CheckReadAccess () == FALSE) {
@@ -1995,7 +1959,7 @@
     } // NotSpam
 
     function SaveMessage ($pLOCATION) {
-      global $zSTRINGS, $zFOCUSUSER;
+      global $zFOCUSUSER;
 
       // Download Remote message
 
@@ -2049,7 +2013,7 @@
     } // SaveMessage
 
     function MoveToTrash () {
-      global $zSTRINGS, $zFOCUSUSER;
+      global $zFOCUSUSER;
 
       $classlocation = $this->LocateMessage ($this->Identifier);
       $this->$classlocation->Select ("Identifier", $this->Identifier);
@@ -2075,8 +2039,6 @@
 
     function MoveListToTrash ($pDATALIST) {
 
-      global $zSTRINGS;
-
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
         $this->Error = -1;
@@ -2098,8 +2060,6 @@
     } // MoveListToTrash
 
     function MoveListToArchive ($pDATALIST) {
-
-      global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
@@ -2134,8 +2094,6 @@
 
     function MoveListToInbox ($pDATALIST) {
       
-      global $zSTRINGS;
-
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
         $this->Error = -1;
@@ -2168,8 +2126,6 @@
     } // MoveListToInbox
 
     function ReportListAsSpam ($pDATALIST) {
-
-      global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
@@ -2204,7 +2160,7 @@
 
     // Send an Appleseed message.
     function Send ($pADDRESSES, $pSUBJECT, $pBODY, $pSENDERUSERNAME = NULL) {
-      global $zOLDAPPLE, $zFOCUSUSER, $zSTRINGS; 
+      global $zOLDAPPLE, $zFOCUSUSER; 
       
       global $gSITEDOMAIN, $gtID;
       
@@ -2301,7 +2257,7 @@
     
     // Load a list of addresses from a friend's circle.
     function LoadFromCircle ($pCIRCLE) {
-      global $zFOCUSUSER, $zSTRINGS;
+      global $zFOCUSUSER;
       
       $FRIENDS = new cFRIENDINFORMATION ();
       
@@ -2407,7 +2363,7 @@
     // Send a remote message notification.
     function RemoteMessage ($pMESSAGEID, $pSENDERID, $pRECIEVERADDRESS, $pIDENTIFIER, $pSUBJECT, $pBODY, $pSENTSTAMP = SQL_NOW, $pRECIEVEDSTAMP = SQL_NOW, $pSTANDING = MESSAGE_UNREAD, $pLOCATION = FOLDER_INBOX) {
       global $zOLDAPPLE;
-      global $zXML, $zREMOTE, $zSTRINGS;
+      global $zXML, $zREMOTE;
       
       global $gAPPLESEEDVERSION;
       
@@ -2427,8 +2383,7 @@
       $useServer = $zOLDAPPLE->ChooseServerVersion ($domain);
       if (!$useServer) {
       	$this->Error = -1;
-        $zSTRINGS->Lookup ("ERROR.INVALIDNODE");
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Invalid Node Error");
       	return (FALSE);
       } // if
       
@@ -2441,8 +2396,7 @@
       
       if ($remotedata->Error) {
       	$this->Error = -1;
-        $zSTRINGS->Lookup ($remotedata->ErrorTitle);
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __($remotedata->ErrorTitle);
         return (FALSE);
       } else {
         // Add the recipient.
@@ -2459,16 +2413,14 @@
     } // RemoteMessage
     
     function VerifyAddress ($pADDRESS) {
-      global $zOLDAPPLE, $zSTRINGS;
+      global $zOLDAPPLE;
       
       // Step 1: Check if address is valid.
       if (!$zOLDAPPLE->CheckEmail ($pADDRESS)) {
         global $gWRONGADDRESS;
         $gWRONGADDRESS = $pADDRESS;
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
-        $this->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.INVALID");
-        $this->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $this->Message = __("Unable To Send Message");
+        $this->Errorlist['recipientaddress'] = __("Address Is Invalid", array ( "address" => $gWRONGADDRESS ) );
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2479,10 +2431,8 @@
         $this->Error = -1;
         global $gWRONGADDRESS;
         $gWRONGADDRESS = $pADDRESS;
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
-        $this->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.UNKNOWN");
-        $this->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $this->Message = __("Unable To Send Message");
+        $this->Errorlist['recipientaddress'] = __("User Does Not Exist", array ( "address" => $gWRONGADDRESS ) );
         $this->Error = -1;
         return (FALSE);
       } // if
@@ -2492,7 +2442,7 @@
     
     // Notify the user that a message has been sent.
     function NotifyMessage ($pEMAIL, $pRECIPIENTUSERNAME, $pRECIPIENTFULLNAME, $pSENDERNAME) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       global $gSENDERNAME;
       $gSENDERNAME = $pSENDERNAME;
@@ -2537,7 +2487,7 @@
     } // NotifyMessage
 
     function SaveDraft ($pADDRESSES, $pSUBJECT, $pBODY) {
-      global $zOLDAPPLE, $zFOCUSUSER, $zSTRINGS;
+      global $zOLDAPPLE, $zFOCUSUSER;
 
       global $gIDENTIFIER;
       global $gSITEDOMAIN;
@@ -2577,7 +2527,7 @@
     } // SaveDraft
 
     function BufferRecipientList () {
-      global $zHTML, $zOLDAPPLE, $zSTRINGS;
+      global $zHTML, $zOLDAPPLE;
       
       global $gFRAMELOCATION;
       
@@ -2605,8 +2555,6 @@
     
     function DeleteForever () {
 
-      global $zSTRINGS;
-
       $classlocation = $this->LocateMessage ($this->Identifier);
       $this->$classlocation->Select ("Identifier", $this->Identifier);
       $this->$classlocation->FetchArray ();
@@ -2630,8 +2578,6 @@
     } // DeleteForever
 
     function DeleteListForever ($pDATALIST) {
-
-      global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
@@ -2660,7 +2606,7 @@
       global $gFRAMELOCATION, $gPROFILESUBACTION, $gLABELSELECT;
       global $gLABELNAME;
 
-      global $zFOCUSUSER, $zSTRINGS, $zOLDAPPLE;
+      global $zFOCUSUSER, $zOLDAPPLE;
 
       $labelcriteria = array ("userAuth_uID" => $zFOCUSUSER->uID);   
       $this->messageLabels->SelectByMultiple ($labelcriteria, "Label");
@@ -2712,7 +2658,7 @@
 
     // Count new messages for each label.
     function CountNewInLabels ($pLABELID) {
-      global $zFOCUSUSER, $zOLDAPPLE, $zHTML, $zSTRINGS;
+      global $zFOCUSUSER, $zOLDAPPLE, $zHTML;
 
       global $gFRAMELOCATION, $gLABELNAME, $gPROFILESUBACTION; 
 

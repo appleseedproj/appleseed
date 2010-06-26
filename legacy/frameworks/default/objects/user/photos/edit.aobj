@@ -19,38 +19,38 @@
      <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
 
      <p id='filename'>
-      <?php $zSTRINGS->Display ('LABEL.FILENAME', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Filename" ); ?>
      </p> <!-- #filename -->
      <?php $zHTML->TextBox ("FILENAME", 64, $gVIEWDATA->photoInfo->Filename); ?>
      <p id='filename_info'>
-     <?php $zSTRINGS->Display ('INFO.FILENAME', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photosets Filename Info" ); ?>
      </p> <!-- #filename_info -->
      <?php $gVIEWDATA->photoInfo->Broadcast ("field", "Filename"); ?>
 
      <p id='hint'>
-      <?php $zSTRINGS->Display ('LABEL.HINT', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Hint" ); ?>
      </p> <!-- #hint -->
      <p id='hint_info'>
-     <?php $zSTRINGS->Display ('INFO.HINT', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Hint Info" ); ?>
      </p> <!-- #hint_info-->
 
      <p id='tags'>
-      <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Tags" ); ?>
      </p> <!-- #tags_info -->
      <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->photoInfo->Tags); ?>
      <p id='tags_info'>
-      <?php $zSTRINGS->Display ('INFO.TAGS', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Tags Info" ); ?>
      </p> <!-- .tags_info -->
      <?php $gVIEWDATA->photoInfo->Broadcast ("field", "Tags"); ?>
 
      <p id='description'>
-      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Description" ); ?>
      </p> <!-- #description -->
      <?php $zHTML->TextArea ("DESCRIPTION", $gVIEWDATA->photoInfo->Description); ?>
      <?php $gVIEWDATA->photoInfo->Broadcast ("field", "Description"); ?>
 
      <p id='photoset'>
-      <?php $zSTRINGS->Display ('LABEL.PHOTOSET', 'USER.PHOTOS'); ?>
+      <?php echo __( "User Photos Album" ); ?>
      </p> <!-- #photoset -->
      <?php $zHTML->Menu ("PHOTOSET", $gSETLIST, "", $gPHOTOSET); ?>
 

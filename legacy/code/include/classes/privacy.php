@@ -127,7 +127,7 @@
 
     function BufferOptions ($pREFERENCEFIELD, $pREFERENCEID, $pSTYLE) {
 
-      global $zSTRINGS, $zFOCUSUSER, $zHTML, $zOLDAPPLE;
+      global $zFOCUSUSER, $zHTML, $zOLDAPPLE;
       global $gFRAMELOCATION;
 
       global $gPRIVACYSTYLE;
@@ -140,24 +140,22 @@
       $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Everyone
-      $zSTRINGS->Lookup ('LABEL.EVERYONE', 'USER.PRIVACY');
       $privacycriteria = array ("userAuth_uID"    => $zFOCUSUSER->uID,
                                 "friendCircles_sID" => 1000,
                                 $pREFERENCEFIELD  => $pREFERENCEID);
 
       $this->SelectByMultiple ($privacycriteria);
       $this->FetchArray ();
-      $returnbuffer .= $this->PrivacyOptions ($zSTRINGS->Output, 1000, $this->Access, PRIVACY_RESTRICT); 
+      $returnbuffer .= $this->PrivacyOptions ( __("Everyone"), 1000, $this->Access, PRIVACY_RESTRICT); 
 
       // Logged in users.
-      $zSTRINGS->Lookup ('LABEL.LOGGEDIN', 'USER.PRIVACY');
       $privacycriteria = array ("userAuth_uID"    => $zFOCUSUSER->uID,
                                 "friendCircles_sID" => 2000,
                                 $pREFERENCEFIELD  => $pREFERENCEID);
                                 
       $this->SelectByMultiple ($privacycriteria);
       $this->FetchArray ();
-      $returnbuffer .= $this->PrivacyOptions ($zSTRINGS->Output, 2000, $this->Access, PRIVACY_SCREEN); 
+      $returnbuffer .= $this->PrivacyOptions ( __("Logged In Users"), 2000, $this->Access, PRIVACY_SCREEN); 
 
       $CIRCLES = new cFRIENDCIRCLES;
 

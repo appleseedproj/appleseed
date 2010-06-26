@@ -244,18 +244,14 @@
       if (!$gRECIPIENTADDRESS) {
         // No recipient was provided.  Show error.
         $gACTION = 'SEND_MESSAGE';
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
-        $zMESSAGE->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.NORECIPIENT");
-        $zMESSAGE->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $zMESSAGE->Message = __( "Unable To Send Message" );
+        $zMESSAGE->Errorlist['recipientaddress'] = __ ( "No Recipients Provided" );
         $zMESSAGE->Error = -1;
       } elseif (!$gBODY) {
         // No body text was provided.  Show error.
         $gACTION = 'SEND_MESSAGE';
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
-        $zMESSAGE->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.NOBODY");
-        $zMESSAGE->Errorlist['body'] = $zSTRINGS->Output;
+        $zMESSAGE->Message = __( "Unable To Send Message" );
+        $zMESSAGE->Errorlist['body'] = __( "Message Body Is Empty" );
         $zMESSAGE->Error = -1;
       } else {
         if (!$zMESSAGE->Send ($gRECIPIENTADDRESS, $gSUBJECT, $gBODY)) {
@@ -361,8 +357,7 @@
 
       global $gSUBJECT;
       $gSUBJECT = $zMESSAGE->Subject;
-      $zSTRINGS->Lookup ("LABEL.RE", "USER.MESSAGES");
-      $regarding = $zSTRINGS->Output;
+      $regarding = __( "Re" );
       if (substr ($gSUBJECT, 0, 4) != $regarding)
         $gSUBJECT = $regarding . $gSUBJECT;
 
@@ -401,8 +396,7 @@
 
       global $gSUBJECT;
       $gSUBJECT = $zMESSAGE->Subject;
-      $zSTRINGS->Lookup ("LABEL.FWD", "USER.MESSAGES");
-      $regarding = $zSTRINGS->Output;
+      $regarding = __( "Fwd" );
       if (substr ($gSUBJECT, 0, 4) != $regarding)
         $gSUBJECT = $regarding . $gSUBJECT;
 

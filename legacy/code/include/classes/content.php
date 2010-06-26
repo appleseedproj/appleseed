@@ -379,7 +379,7 @@
   class cCONTENTNODES extends cBASECONTENTNODES {
      
     function BufferLatestNodes () {
-      global $zOLDAPPLE, $zAUTHUSER, $zSTRINGS;
+      global $zOLDAPPLE, $zAUTHUSER;
       
       global $gSITEDOMAIN, $gFRAMELOCATION, $gTABLEPREFIX;
       global $gNODESUMMARY;

@@ -338,10 +338,8 @@
           $zCIRCLESLIST = new cFRIENDCIRCLESLIST ();
 
           $zCIRCLESLIST->Select ("friendCircles_tID", $zCIRCLES->tID);
-          $gFRIENDSCOUNT = $zCIRCLESLIST->CountResult();
 
-          $zSTRINGS->Lookup ('LABEL.COUNT', $zOLDAPPLE->Context);
-          $gCOUNTLABEL = $zSTRINGS->Output;
+          $gCOUNTLABEL = __("Friends Count", array ( 'count' => $zCIRCLESLIST->CountResult() ) );
     
           $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/circles/editor/list.middle.aobj", INCLUDE_SECURITY_NONE);
 

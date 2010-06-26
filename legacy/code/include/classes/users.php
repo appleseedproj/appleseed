@@ -179,8 +179,6 @@
     // Save user's Profile Questions & Answers.
     function SaveQuestions () {
 
-      global $zSTRINGS;
-
       global $gANSWERS;
 
       // Load the configurable questions
@@ -252,7 +250,7 @@
 
     function SaveGeneral () {
 
-      global $zSTRINGS, $zHTML;
+      global $zHTML;
 
       global $gUSERNAME, $gDESCRIPTION, $gGENDER, $gEMAIL;
       global $gZIPCODE, $gFULLNAME, $gALIAS;
@@ -319,7 +317,7 @@
 
     function SaveIcons () {
 
-      global $zICON, $zSTRINGS, $zOLDAPPLE;
+      global $zICON, $zOLDAPPLE;
 
       global $gKEYWORD, $gCOMMENTS;
       global $gUSERICONX, $gUSERICONY;
@@ -345,9 +343,6 @@
         // Retrieve the image attributes.
         $zICON->Attributes ($_FILES['gUSERICON']['tmp_name']);
 
-        // NOTE: Not a clean way to throw an exception.
-        if ($zSTRINGS->Title == 'ERROR.WRONGSIZE') $zICON->Error = 0;
-
         // Convert and save the file.
         if ($zICON->Error != -1) {
           // Set values.
@@ -368,13 +363,9 @@
           if ($ICONCHECK->CountResult () == 0) {
             $zICON->Convert ($_FILES['gUSERICON']['tmp_name']);
 
-            // NOTE: Not a clean way to throw an exception.
-            // NOTE: Make this an admin option.
-            if ($zSTRINGS->Title == 'ERROR.WRONGSIZE') {
-              global $gUSERICONX, $gUSERICONY;
-              $zICON->Resize ($gUSERICONX, $gUSERICONY);
-              $zICON->Error = 0;
-            } // if
+            global $gUSERICONX, $gUSERICONY;
+            $zICON->Resize ($gUSERICONX, $gUSERICONY);
+            $zICON->Error = 0;
 
             $zICON->Save ($iconfile, $zICON->Type);
             if ($zICON->Error != -1) {
@@ -402,9 +393,8 @@
             unset ($ICONCHECK);
           } else {
             global $gICONFILENAME;  $gICONFILENAME = $_FILES['gUSERICON']['name'];
-            $zSTRINGS->Lookup ('ERROR.EXISTS', 'USER.OPTIONS.ICONS');
             $zICON->Error = -1;
-            $zICON->Message = $zSTRINGS->Output;
+            $zICON->Message = __("File Exists", array ( "filename" => $gICONFILENAME ) );
             unset ($gICONFILENAME);
           } // if
 
@@ -412,8 +402,7 @@
           unlink ($_FILES['gUSERICON']['tmp_name']);
             
         } else {
-          $zSTRINGS->Lookup ('ERROR.UPLOAD', 'USER.OPTIONS.ICONS');
-          $zICON->Message = $zSTRINGS->Output;
+          $zICON->Message = __("Upload Error");
         } // if
       } // if
 
@@ -435,8 +424,7 @@
           $gBROADCASTUNIQUE = $this->userIcons->tID;
 
           // Load the page error.
-          $zSTRINGS->Lookup ('ERROR.PAGE', 'USER.OPTIONS.ICONS');
-          $this->userIcons->Message = $zSTRINGS->Output;
+          $this->userIcons->Message = __("Unable To Save Icon Preferences");
 
           // Push userIcons message to front.
           if ( ($this->userIcons->Error) AND (!$this->Error) ) {
@@ -456,7 +444,7 @@
 
       global $gUSERICONX, $gUSERICONY;
 
-      global $zPHOTO, $zICON, $zOLDAPPLE, $zSTRINGS;
+      global $zPHOTO, $zICON, $zOLDAPPLE;
 
       // User photos directory.
       $location = "photos/" . $this->Username . '/';
@@ -523,16 +511,13 @@
         unlink ($_FILES['gPROFILEPHOTO']['tmp_name']);
 
       } else {
-        $zSTRINGS->Lookup ('ERROR.UPLOAD', 'USER.OPTIONS.ICONS');
-        $zPHOTO->Message = $zSTRINGS->Output;
+        $zPHOTO->Message = __("Upload Error");
       } // if
       
       return (TRUE);
     } // SavePhoto
 
     function SaveConfig () {
-
-      global $zSTRINGS;
 
       global $gUSERTHEME, $gDEFAULTTHEME;
       global $gTHEMELOCATION;
@@ -549,17 +534,14 @@
         $this->Message = __("Record Updated");
         $this->Error = 0;
       } else {
-        $zSTRINGS->Lookup ('ERROR.PAGE', 'USER.OPTIONS.JOURNAL');
         $this->Error = -1;
-        $this->Message = $zSTRINGS->Output;;
+        $this->Message = __("Unable To Save Journal Preferences");
       } // if
 
       return (TRUE);
     } // SaveConfig
 
     function SaveEmails () {
-
-      global $zSTRINGS;
 
       global $gJOURNAL, $gPROFILE, $gREPLY;
 
@@ -568,9 +550,8 @@
       $this->userSettings->Save ("ReplyNotification", $gREPLY);
 
       if ($this->userSettings->Error == -1) {
-        $zSTRINGS->Lookup ('ERROR.PAGE', 'USER.OPTIONS.EMAILS');
         $this->Error = -1;
-        $this->Message = $zSTRINGS->Output;;
+        $this->Message = __("Unable To Save Email Preferences");
       } else {
         $this->Error = 0;
         $this->Message = __("Record Updated");
@@ -582,7 +563,7 @@
     function DeleteIcon () {
       global $gSECTION, $gOPTIONGENERAL, $gSECTIONDEFAULT;
 
-      global $zICON, $zSTRINGS;
+      global $zICON;
 
       // Set the section to 'icons'.
       $gSECTION = "ICONS";
@@ -598,8 +579,7 @@
       $this->userIcons->Select ("userAuth_uID", $this->uID);
 
       if ($this->userIcons->CountResult () == 1) {
-        $zSTRINGS->Lookup ('ERROR.ONELEFT', 'USER.OPTIONS.ICONS');
-        $zICON->Message = $zSTRINGS->Output;
+        $zICON->Message = __("At Least One Icon Required");
         $zICON->Error = -1;;
       } else {
         // Remove icon from database.
@@ -619,8 +599,7 @@
         } // if
 
         if (!unlink ($filename)) {
-          $zSTRINGS->Lookup ('ERROR.FILE', 'USER.OPTIONS.ICONS');
-          $zICON->Message = $zSTRINGS->Output;
+          $zICON->Message = __("Could Not Delete Icon", array ( "filename" => $gICONFILENAME ) );
           $zICON->Error = -1;;
         } else {
           $zICON->Message = __("Record Deleted");
@@ -754,7 +733,7 @@
 
     // Change a user's password and mail the result.
     function ChangePassword () {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       global $gPASSWORD, $gFULLNAME;
       global $gSITEDOMAIN;
@@ -773,14 +752,11 @@
       $to = $this->Email;
       $gFULLNAME = $this->Fullname;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', $zOLDAPPLE->Context);
-      $subject = $zSTRINGS->Output;
+      $subject = __( "Password Reset Subject", array ( "site" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', $zOLDAPPLE->Context);
-      $body = $zSTRINGS->Output;
+      $body = __("Password Reset Body", array ( "fullname" => $gFULLNAME, "password" => $gPASSWORD ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM', $zOLDAPPLE->Context);
-      $from = $zSTRINGS->Output;
+      $from = __("password@site", array ( "domain" => $gSITEDOMAIN ) );
 
       $headers = "From: $from" . "\r\n" .
                  "Reply-To: $from" . "\r\n" .
@@ -1415,7 +1391,7 @@
 
         global $gUSERICON;
         global $bUSERICONLISTING;
-        global $zSTRINGS, $zHTML;
+        global $zHTML;
 
         // NOTE: Move to object.
         echo "<p id='icon'>";

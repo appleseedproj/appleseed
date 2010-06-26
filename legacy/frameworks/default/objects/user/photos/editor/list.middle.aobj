@@ -4,7 +4,7 @@
   </span> <!-- .filename -->
 
   <span class='hint'>
-    <?php $zSTRINGS->Display ('LABEL.HINT', 'USER.PHOTOS'); ?>
+    <?php echo __( "Hint", array ( "hint" => $gIMAGEHINT ) ); ?>
   </span> <!-- .hint -->
 
   <span class='check'>

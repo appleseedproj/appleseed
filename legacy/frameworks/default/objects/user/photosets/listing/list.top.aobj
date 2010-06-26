@@ -8,7 +8,7 @@
   <?php $zSEARCH->Ask (); ?>
    
   <p id='heading'>
-   <?php $zSTRINGS->Display ("LABEL.PHOTOSETS", "USER.PHOTOSETS"); ?></h1>
+   <?php echo __("Photo Albums"); ?></h1>
   </p> <!-- #heading -->
 
   <?php $gVIEWDATA->Broadcast(); ?>

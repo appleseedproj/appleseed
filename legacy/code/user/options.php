@@ -275,8 +275,7 @@
     ob_start ();
 
     // Look up the error message.
-    $zSTRINGS->Lookup ('ERROR.NOICONS', 'USER.OPTIONS.ICONS');
-    $zICONLIST->Message = $zSTRINGS->Output;
+    $zICONLIST->Message = __( "No Icons Founds" );
     $zICONLIST->Error = 0;
     $zICONLIST->Broadcast ("member");
     $zICONLIST->Message = "";
@@ -310,8 +309,7 @@
     // Check to see if too many icons are already loaded.
     if ($gICONCOUNT >= $gMAXICONS) {
       // Look up the error message.
-      $zSTRINGS->Lookup ('ERROR.ICONLIMIT', 'USER.OPTIONS.ICONS');
-      $zICONLIST->Message = $zSTRINGS->Output;
+      $zICONLIST->Message = __( "Icon Limit Reached", array ( "max" => $gMAXICONS ) );
       $zICONLIST->Error = -1;
       $zICONLIST->Broadcast ("member");
       $zICONLIST->Message = "";

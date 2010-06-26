@@ -21,7 +21,7 @@
   </span> <!-- .description -->
 
   <span class='photocount'>
-    <?php $zSTRINGS->Display ('INFO.PHOTOCOUNT', 'USER.PHOTOSETS'); ?>
+    <?php <?php echo __("Photo Count", array ( "count" => $gPHOTOCOUNT ) ); ?>
   </span> <!-- .photocount -->
 
   <span class='edit'>

@@ -142,7 +142,7 @@
 
     // Notify the user that a friend request has been made.
     function NotifyApprove ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -174,7 +174,7 @@
 
     // Notify the user that a friend has been deleted.
     function NotifyRemove ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -206,7 +206,7 @@
 
     // Notify the user that a friend request has been denied.
     function NotifyDeny ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -238,7 +238,7 @@
 
     // Notify the user that a friend request has been made.
     function NotifyRequest ($pTARGETUSER, $pSOURCEUSER, $pTARGETUSERNAME, $pTARGETDOMAIN = NULL) {
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       global $gSITEDOMAIN;
       
@@ -270,7 +270,6 @@
 
     function Circle () {
       global $gCIRCLEVALUE, $gtID;
-      global $zSTRINGS;
 
       $this->Select ("tID", $gtID);
       $this->FetchArray ();
@@ -324,7 +323,6 @@
 
     function AddCircleToList ($pDATALIST) {
       global $gCIRCLEVALUE, $gSELECTBUTTON;
-      global $zSTRINGS;
 
       if (count ($pDATALIST) == 0) {
         $this->Message = __("None Selected");
@@ -464,7 +462,7 @@
 
     function CreateFullCirclesMenu () {
 
-      global $zFOCUSUSER, $zSTRINGS;
+      global $zFOCUSUSER;
       global $gCIRCLEVALUE;
 
       $excludelist = array ();
@@ -547,7 +545,7 @@
 
     function CreateAllCirclesMenu () {
 
-      global $zFOCUSUSER, $zSTRINGS;
+      global $zFOCUSUSER;
       global $gCIRCLEVALUE;
 
       $returnarray = array ();
@@ -619,7 +617,7 @@
     } // LoadFriendsCircle
 
     function BufferCircleView () {
-      global $zOLDAPPLE, $zSTRINGS, $zFOCUSUSER;
+      global $zOLDAPPLE, $zFOCUSUSER;
       global $gSCROLLMAX, $gPOSTDATA;
       global $gCIRCLEVIEWTYPE, $gCIRCLEVIEW;
       global $gTHEMELOCATION;
@@ -755,7 +753,7 @@
     function CountNewFriends () {
 
       global $zAUTHUSER;
-      global $zLOCALUSER, $zSTRINGS, $zHTML, $zOLDAPPLE;
+      global $zLOCALUSER, $zHTML, $zOLDAPPLE;
 
       $zLOCALUSER->userInformation->Select ("userAuth_uID", $zLOCALUSER->uID);
       $zLOCALUSER->userInformation->FetchArray ();
@@ -783,7 +781,6 @@
 
     function GetUserInformation () {
       global $zLOCALUSER, $zREMOTE, $zOLDAPPLE, $zXML;
-      global $zSTRINGS;
 
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -822,7 +819,6 @@
 
         unset ($zREMOTE);
       } elseif ($this->Username == ANONYMOUS) {
-        global $zSTRINGS;
         $fullname = __("ANONYMOUS USER");
         $email = "";
       } else {
@@ -856,7 +852,7 @@
     // Process a friend request.
     function Request ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zOLDAPPLE, $zSTRINGS, $zLOCALUSER;
+      global $zOLDAPPLE, $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
@@ -1029,7 +1025,7 @@
 
     function LongDistanceApprove ($pREMOTEUSERNAME, $pREMOTEDOMAIN) {
 
-      global $zOLDAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
+      global $zOLDAPPLE, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1161,7 +1157,7 @@
 
     function LongDistanceRequest ($pREMOTEUSERNAME, $pREMOTEDOMAIN) {
 
-      global $zOLDAPPLE, $zSTRINGS, $zXML, $zLOCALUSER;
+      global $zOLDAPPLE, $zXML, $zLOCALUSER;
 
       global $gSITEDOMAIN, $gDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1317,7 +1313,7 @@
     } // LongDistanceStatus
 
     function Approve ($pUSERNAME, $pNOTIFY = TRUE) {
-      global $zOLDAPPLE, $zSTRINGS, $zLOCALUSER;
+      global $zOLDAPPLE, $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
@@ -1449,7 +1445,7 @@
     
     function Deny ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zSTRINGS, $zLOCALUSER;
+      global $zLOCALUSER;
 
       global $gSITEDOMAIN;
       
@@ -1484,7 +1480,7 @@
 
     function Cancel ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zSTRINGS, $zLOCALUSER;
+      global $zLOCALUSER;
 
       global $gSITEDOMAIN;
       
@@ -1514,7 +1510,7 @@
 
     function Remove ($pUSERNAME, $pNOTIFY = TRUE) {
 
-      global $zSTRINGS, $zLOCALUSER;
+      global $zLOCALUSER;
 
       global $gSITEDOMAIN;
 
@@ -1560,7 +1556,7 @@
 
       global $zAUTHUSER;
 
-      global $zSTRINGS, $zOLDAPPLE;
+      global $zOLDAPPLE;
 
       // Check if any items were selected.
       if (!$pMASSLIST) {
@@ -1587,7 +1583,7 @@
 
     function LongDistanceCancel ($pUSERNAME, $pDOMAIN) {
       
-      global $zLOCALUSER, $zSTRINGS, $zXML;
+      global $zLOCALUSER, $zXML;
 
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1635,7 +1631,7 @@
 
     function LongDistanceDeny ($pUSERNAME, $pDOMAIN) {
       
-      global $zLOCALUSER, $zSTRINGS, $zXML;
+      global $zLOCALUSER, $zXML;
 
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
@@ -1683,7 +1679,7 @@
 
     function LongDistanceRemove ($pUSERNAME, $pDOMAIN) {
       
-      global $zLOCALUSER, $zSTRINGS, $zXML;
+      global $zLOCALUSER, $zXML;
 
       global $gSITEDOMAIN;
       global $gAPPLESEEDVERSION;
