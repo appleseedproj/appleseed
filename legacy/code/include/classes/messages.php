@@ -1537,7 +1537,6 @@
         $this->messageLabels->FetchArray ();
 
         $this->Message = __("Message Label Removed", array ( "label" => $this->messageLabels->Label ) );
-        $this->Message = $zSTRINGS->Output;
       } // if
 
       return (TRUE);
@@ -1790,8 +1789,8 @@
       
       if ($remotedata->Error) {
       	$this->Error = -1;
-        $zSTRINGS->Lookup ($remotedata->ErrorTitle);
-        $this->Message = $zSTRINGS->Output;
+        
+        $this->Message = __($remotedata->ErrorTitle);
         return (FALSE);
       } else {
         // Convert data into usable form.
@@ -1818,8 +1817,7 @@
       if ($this->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -1843,8 +1841,7 @@
         break;
       } // switch
 
-      $zSTRINGS->Lookup ('MESSAGE.INBOX');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Message Moved To Inbox");
 
     } // MoveToInbox
 
@@ -1855,8 +1852,7 @@
       if ($this->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -1877,8 +1873,7 @@
         break;
       } // switch
 
-      $zSTRINGS->Lookup ('MESSAGE.ARCHIVE');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Message Has Been Archived");
 
     } // MoveToArchive
 
@@ -1889,8 +1884,7 @@
       if ($this->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -1915,8 +1909,7 @@
         break;
       } // switch
 
-      $zSTRINGS->Lookup ('MESSAGE.SPAM');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Message Has Been Marked Spam");
 
     } // ReportSpam
 
@@ -1927,8 +1920,7 @@
       if ($this->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -1953,8 +1945,7 @@
         break;
       } // switch
 
-      $zSTRINGS->Lookup ('MESSAGE.NOTSPAM');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Message No Longer Marked Spam");
 
     } // NotSpam
 
@@ -1976,8 +1967,7 @@
         $this->messageInformation->Sender_Domain = $this->messageNotification->Sender_Domain;
         $this->messageInformation->Identifier = $this->messageNotification->Identifier;
         $this->messageInformation->Subject = $this->messageNotification->Subject;
-        $zSTRINGS->Lookup ('ERROR.RETRIEVE');
-        $this->messageInformation->Body = $zSTRINGS->Output;
+        $this->messageInformation->Body = __("Message Could Not Be Retrieved");
         $this->messageInformation->Sent_Stamp = $this->messageNotification->Stamp;
         $this->messageInformation->Received_Stamp = SQL_NOW;
         $this->messageInformation->Standing = $this->messageNotification->Standing;
@@ -2023,8 +2013,7 @@
       if ($this->$classlocation->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
@@ -2032,8 +2021,7 @@
       $this->$classlocation->Location = FOLDER_TRASH;
       $this->$classlocation->Update ();
       
-      $zSTRINGS->Lookup ('MESSAGE.TRASH');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Message Moved To Trash");
 
     } // MoveToTrash
 
@@ -2052,8 +2040,7 @@
         $this->MoveToTrash ();
       } // if
 
-      $zSTRINGS->Lookup ('MESSAGE.TRASHALL');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Selected Messages Moved To Trash");
 
       return (TRUE);
 
@@ -2076,8 +2063,7 @@
         if ($this->CheckReadAccess () == FALSE) {
           global $gMESSAGEID;
           $gMESSAGEID = $id;
-          $zSTRINGS->Lookup ('ERROR.ACCESS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
           $this->Error = -1;
           continue;
         } // if 
@@ -2085,8 +2071,7 @@
         $this->MoveToArchive ();
       } // if
 
-      $zSTRINGS->Lookup ('MESSAGE.ARCHIVEALL');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Selected Messages Have Been Archived");
 
       return (TRUE);
 
@@ -2109,8 +2094,7 @@
         if ($this->CheckReadAccess () == FALSE) {
           global $gMESSAGEID;
           $gMESSAGEID = $id;
-          $zSTRINGS->Lookup ('ERROR.ACCESS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
           $this->Error = -1;
           continue;
         } // if 
@@ -2118,8 +2102,7 @@
         $this->MoveToInbox ();
       } // if
       
-      $zSTRINGS->Lookup ('MESSAGE.INBOXALL');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Selected Messages Moved To Inbox");
 
       return (TRUE);
 
@@ -2142,8 +2125,7 @@
         if ($this->CheckReadAccess () == FALSE) {
           global $gMESSAGEID;
           $gMESSAGEID = $id;
-          $zSTRINGS->Lookup ('ERROR.ACCESS');
-          $this->Message = $zSTRINGS->Output;
+          $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
           $this->Error = -1;
           continue;
         } // if 
@@ -2151,8 +2133,7 @@
         $this->ReportSpam ();
       } // if
 
-      $zSTRINGS->Lookup ('MESSAGE.SPAMALL');
-      $this->Message = $zSTRINGS->Output;
+      $this->Message = __("Selected Messages Marked Spam");
 
       return (TRUE);
 
@@ -2166,18 +2147,15 @@
       
       // Append found circles onto addresslist.
       if (!$addresslist = $this->CreateAddressList ($pADDRESSES)) {
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
-        $this->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.NORECIPIENT");
-        $this->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $this->Message = __("Error Unable To Send Message");
+        $this->Errorlist['recipientaddress'] = __("Error No Recipients");
         $this->Error = -1;
         return (FALSE);
       } 
       
       // If no subject, use standard "no subject" text.
       if ($pSUBJECT == NULL) {
-        $zSTRINGS->Lookup ('LABEL.NOSUBJECT');
-        $pSUBJECT = $zSTRINGS->Output;
+        $pSUBJECT = __("Error No Subject");
       } // if
 
       // Verify addresses in list.
@@ -2213,8 +2191,7 @@
       if ($this->Error) {
       	return (FALSE);
       } else {
-        $zSTRINGS->Lookup ('MESSAGE.SENT');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Sent");
         return (TRUE);
       }
 
@@ -2272,10 +2249,8 @@
         $this->Error = -1;
         global $gBADCIRCLE;
         $gBADCIRCLE = $pCIRCLE;
-        $zSTRINGS->Lookup ("ERROR.UNABLE");
-        $this->Message = $zSTRINGS->Output;
-        $zSTRINGS->Lookup ("ERROR.NOCIRCLE");
-        $this->Errorlist['recipientaddress'] = $zSTRINGS->Output;
+        $this->Message = __("Unable To Send Message");
+        $this->Errorlist['recipientaddress'] = __("Friends Circle Does Not Exist", array ( "circle" => $gBADCIRCLE ) );
         $this->Error = -1;
       } // if
       
@@ -2443,6 +2418,7 @@
     // Notify the user that a message has been sent.
     function NotifyMessage ($pEMAIL, $pRECIPIENTUSERNAME, $pRECIPIENTFULLNAME, $pSENDERNAME) {
       global $zOLDAPPLE;
+      global $gSITEDOMAIN;
 
       global $gSENDERNAME;
       $gSENDERNAME = $pSENDERNAME;
@@ -2455,17 +2431,13 @@
 
       $to = $pEMAIL;
 
-      $zSTRINGS->Lookup ('MAIL.SUBJECT', 'USER.MESSAGES');
-      $subject = $zSTRINGS->Output;
+      $subject = __("Comment Subject", array ( "sender" => $gSENDERNAME, "sitedomain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.BODY', 'USER.MESSAGES');
-      $body = $zSTRINGS->Output;
+      $body = __("Comment Body", array ( "to" => $gRECIPIENTFULLNAME, "from" => $gSENDERNAME, "link" => $gMESSAGESURL ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROM', 'USER.MESSAGES');
-      $from = $zSTRINGS->Output;
+      $from = __("messages@site", array ( "domain" => $gSITEDOMAIN ) );
 
-      $zSTRINGS->Lookup ('MAIL.FROMNAME', 'USER.MESSAGES');
-      $fromname = $zSTRINGS->Output;
+      $fromname = __( "Message From" );
 
       $zOLDAPPLE->Mailer->From = $from;
       $zOLDAPPLE->Mailer->FromName = $fromname;
@@ -2496,8 +2468,7 @@
       $this->RemoveDraft ($gtID);
 
       if ($pSUBJECT == NULL) {
-        $zSTRINGS->Lookup ('LABEL.NOSUBJECT');
-        $pSUBJECT = $zSTRINGS->Output;
+        $pSUBJECT = __("No Subject");
       } // if
 
       // Store the message.
@@ -2540,11 +2511,9 @@
       while ($this->messageRecipient->FetchArray()) {
         $bRECIPIENT = $zHTML->CreateUserLink ($this->messageRecipient->Username, $this->messageRecipient->Domain);
         if ($this->messageRecipient->Standing == MESSAGE_READ) {
-          $zSTRINGS->Lookup ('LABEL.READ');
-          $zOLDAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
+          $zOLDAPPLE->SetTag ('READSTATUS', __("Read"));
         } else {
-          $zSTRINGS->Lookup ('LABEL.UNREAD');
-          $zOLDAPPLE->SetTag ('READSTATUS', $zSTRINGS->Output);
+          $zOLDAPPLE->SetTag ('READSTATUS', __("Unread"));
         } // if
         $bufferarray[] =  $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/messages/sent/recipient.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       } // while
@@ -2563,8 +2532,7 @@
       if ($this->$classlocation->CheckReadAccess () == FALSE) {
         global $gMESSAGEID;
         $gMESSAGEID = $this->tID;
-        $zSTRINGS->Lookup ('ERROR.ACCESS');
-        $this->Message = $zSTRINGS->Output;
+        $this->Message = __("Message Access Denied", array ( "id" => $gMESSAGEID ) );
         $this->Error = -1;
         return (FALSE);
       } // if 
