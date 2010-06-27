@@ -1,27 +1,27 @@
 <div id='privacy'>
  <div id='titles'>
   <span class='label'>
-   <?php $zSTRINGS->Display ('LABEL.SETTINGS', 'USER.PRIVACY'); ?>
+   <?php echo __("Privacy Settings"); ?>
   </span> <!-- .label -->
  
   <span class='allow'>
-   <?php $zSTRINGS->Display ('LABEL.ALLOW', 'USER.PRIVACY'); ?>
+   <?php echo __("Allow"); ?>
   </span> <!-- .allow -->
   
   <span class='screen'>
-   <?php $zSTRINGS->Display ('LABEL.SCREEN', 'USER.PRIVACY'); ?>
+   <?php echo __("Screen"); ?>
   </span> <!-- .screen -->
   
   <span class='restrict'>
-   <?php $zSTRINGS->Display ('LABEL.RESTRICT', 'USER.PRIVACY'); ?>
+   <?php echo __("Restrict"); ?>
   </span> <!-- .restrict -->
   
   <span class='block'>
-   <?php $zSTRINGS->Display ('LABEL.BLOCK', 'USER.PRIVACY'); ?>
+   <?php echo __("Block"); ?>
   </span> <!-- .block -->
   
   <span class='hide'>
-   <?php $zSTRINGS->Display ('LABEL.HIDE', 'USER.PRIVACY'); ?>
+   <?php echo __("Hide"); ?>
   </span> <!-- .hide -->
  </div> <!-- #titles -->
  

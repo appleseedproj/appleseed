@@ -1,5 +1,5 @@
     <p id='results'>
-		<?php $zSTRINGS->Display ('LABEL.RESULTS'); ?>
+        <?php echo __("Results"); ?>
     	<?php echo $bRESULT; ?>
     </p>
 

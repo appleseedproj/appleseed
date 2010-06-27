@@ -6,7 +6,7 @@
  <div id='container'>
 
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.SUBMIT', 'CONTENT.ARTICLES'); ?>
+    <?php echo __("Submit An Article"); ?>
    </p> <!-- .top -->
 
  <div id='submit'>
@@ -18,21 +18,21 @@
      <input type='hidden' id='gACTION' name='guID' value='<?php echo $guID; ?>'>
 
      <p id='title'>
-      <?php $zSTRINGS->Display ('LABEL.TITLE', 'CONTENT.ARTICLES'); ?>
+      <?php echo __("Title"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TITLE", 64, $gTITLE); ?>
      <?php $zARTICLES->Broadcast ("field", "Title"); ?>
 
      <p id='summary'>
-      <?php $zSTRINGS->Display ('LABEL.SUMMARY', 'CONTENT.ARTICLES'); ?>
+      <?php echo __("Summary"); ?>
      </p><!-- #summary -->
 
      <?php $zHTML->TextArea ("SUMMARY", $gSUMMARY); ?>
      <?php $zARTICLES->Broadcast ("field", "Summary"); ?>
 
      <p id='full'>
-      <?php $zSTRINGS->Display ('LABEL.FULL', 'CONTENT.ARTICLES'); ?>
+      <?php echo __("Full Article"); ?>
      </p><!-- #full -->
 
      <?php $zHTML->TextArea ("FULL", $gFULL); ?>
