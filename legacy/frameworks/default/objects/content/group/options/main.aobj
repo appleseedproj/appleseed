@@ -18,34 +18,34 @@
      <?php $zHTML->Post ($gPOSTDATA); ?>
 
      <p id='name'>
-      <?php $zSTRINGS->Display ('LABEL.NAME'); ?>
+       <? echo __("Group URL Name"); ?>
      </p><!-- #title -->
 
      <?php $zGROUPS->Broadcast ("field", "Name"); ?>
 
      <p id='fullname'>
-      <?php $zSTRINGS->Display ('LABEL.FULLNAME'); ?>
+       <? echo __("Full Group Name"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("FULLNAME", 32, $zGROUPS->Fullname); ?>
      <?php $zGROUPS->Broadcast ("field", "Fullname"); ?>
 
      <p id='description'>
-      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION'); ?>
+       <? echo __("Description"); ?>
      </p><!-- #content -->
 
      <?php $zHTML->TextArea ("DESCRIPTION", $zGROUPS->Description); ?>
      <?php $zGROUPS->Broadcast ("field", "Description"); ?>
 
      <p id='access'>
-      <?php $zSTRINGS->Display ('LABEL.ACCESS'); ?>
+       <? echo __("Access"); ?>
      </p><!-- #content -->
 
      <?php $zOPTIONS->Menu ("GROUPACCESS", $zGROUPS->Access, "ACCESS"); ?>
      <?php $zGROUPS->Broadcast ("field", "Access"); ?>
 
      <p id='tags'>
-      <?php $zSTRINGS->Display ('LABEL.TAGS'); ?>
+       <? echo __("Tags"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TAGS", 128, $zGROUPS->Tags); ?>

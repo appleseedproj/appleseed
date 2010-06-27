@@ -1,9 +1,9 @@
 <div id='titles'>
  <span class='user'>
-  <?php $zSTRINGS->Display ("LABEL.USER"); ?>
+  <?php echo __("User"); ?>
  </span>
  <span class='action'>
-  <?php $zSTRINGS->Display ("LABEL.ACTION"); ?>
+  <?php echo __("Action"); ?>
  </span>
 </div> <!-- #titles -->
 <ul>

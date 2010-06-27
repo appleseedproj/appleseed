@@ -1,4 +1,4 @@
  <ul class='first'>
    <li class='deleted'>
-    <?php $zSTRINGS->Display ('LABEL.DELETED'); ?>
+    <?php echo __("Deleted Entry"); ?>
    </li> 

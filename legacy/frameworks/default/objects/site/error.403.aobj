@@ -19,21 +19,21 @@
          <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
 
          <p id='username'>
-           <?php $zSTRINGS->Display ('LABEL.USERNAME', 'SITE.LOGIN'); ?> <br />
+           <?php echo __("Username"); ?>
          </p> <!-- #username -->
          
          <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
          <?php $zLOCALUSER->Broadcast ('field', 'Username'); ?>
 
          <p id='password'>
-           <?php $zSTRINGS->Display ('LABEL.PASSWORD', 'SITE.LOGIN'); ?> <br />
+           <?php echo __("Password"); ?>
          </p> <!-- #password -->
          
          <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
          <?php $zLOCALUSER->Broadcast ('field', 'Pass'); ?>
 
          <p id='rememberme'>
-           <?php $zSTRINGS->Display ('LABEL.REMEMBER', 'SITE.LOGIN'); ?>
+           <?php echo __("Remember Me"); ?>
          </p> <!-- #rememberme -->
          <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
 
@@ -46,7 +46,7 @@
          <input type='hidden' name='gREDIRECT' value='<?php echo $gREDIRECT; ?>' />
 
          <p id='location'>
-           <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
+           <?php echo __("Location"); ?>
          </p> <!-- #username -->
          <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
          <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>

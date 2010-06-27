@@ -7,7 +7,7 @@
   <form id='userinfo' name='userinfo' action='login/remote/' method='post'>
 
    <h1>
-    <?php $zSTRINGS->Display ('LABEL.LOCATION', 'SITE.LOGIN'); ?> <br />
+    <?php echo __("Remote Address"); ?> <br />
    </h1>
    <?php $zHTML->TextBox ("LOCATION", 128, $gLOCATION); ?>
    <?php $zLOCALUSER->Broadcast ('field', 'Location'); ?>

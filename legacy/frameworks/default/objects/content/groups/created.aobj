@@ -5,12 +5,12 @@
   <div id='container'>
 
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.CREATED'); ?>
+     <?php echo __("Group Has Been Created"); ?>
    </p> <!-- .top -->
 
  <div id='created'>
    <p id='info'>
-    <?php $zSTRINGS->Display ('INFO.CREATED'); ?>
+     <?php echo __("Group Has Been Created Info"); ?>
    </p>
 
    <p id='created_link'>

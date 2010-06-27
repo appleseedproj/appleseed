@@ -5,7 +5,7 @@
   <div id='container'>
 
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.CREATE'); ?>
+     <?php echo __("Create A New Group"); ?>
    </p> <!-- .top -->
 
  <div id='create'>
@@ -15,35 +15,35 @@
      <?php $zHTML->Post ($gPOSTDATA); ?>
 
      <p id='name'>
-      <?php $zSTRINGS->Display ('LABEL.NAME'); ?>
+      <?php echo __("Name"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("NAME", 32, $gNAME); ?>
      <?php $zGROUPS->Broadcast ("field", "Name"); ?>
 
      <p id='fullname'>
-      <?php $zSTRINGS->Display ('LABEL.FULLNAME'); ?>
+      <?php echo __("Full Name"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("FULLNAME", 32, $gFULLNAME); ?>
      <?php $zGROUPS->Broadcast ("field", "Fullname"); ?>
 
      <p id='description'>
-      <?php $zSTRINGS->Display ('LABEL.DESCRIPTION'); ?>
+      <?php echo __("Description"); ?>
      </p><!-- #content -->
 
      <?php $zHTML->TextArea ("DESCRIPTION", $gDESCRIPTION); ?>
      <?php $zGROUPS->Broadcast ("field", "Description"); ?>
 
      <p id='access'>
-      <?php $zSTRINGS->Display ('LABEL.ACCESS'); ?>
+      <?php echo __("Access"); ?>
      </p><!-- #content -->
 
      <?php $zOPTIONS->Menu ("GROUPACCESS", $gACCESS, "ACCESS"); ?>
      <?php $zGROUPS->Broadcast ("field", "Access"); ?>
 
      <p id='tags'>
-      <?php $zSTRINGS->Display ('LABEL.TAGS'); ?>
+      <?php echo __("Tags"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TAGS", 128, $gTAGS); ?>

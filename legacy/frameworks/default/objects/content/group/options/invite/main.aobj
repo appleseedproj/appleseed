@@ -1,9 +1,9 @@
  <p id='info'>
-  <?php $zSTRINGS->Display ('INFO.INVITES'); ?>
+   <?php echo __("User Groups Invites Info"); ?>
  </p><!-- #info -->
 
  <p id='invites'>
-  <?php $zSTRINGS->Display ('LABEL.INVITES'); ?>
+   <?php echo __("User Groups Invites Label"); ?>
  </p><!-- #content -->
 
  <?php $zHTML->TextArea ("INVITES", $gINVITES); ?>

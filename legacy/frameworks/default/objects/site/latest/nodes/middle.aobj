@@ -1,6 +1,7 @@
 <?php $zHTML->Alternate(); ?>
 
-  <?php $zSTRINGS->Display ('LABEL.LINK', 'SITE.MAIN.NODES'); ?>
+  <a href='<?php echo $gNODEDOMAINLINK; ?>'><?php echo $gNODEDOMAIN; ?></a>
+  <?php echo __("Node User Count", array ( "count" => $gNODEUSERS ) ); ?>
  
   <?php echo $gNODESUMMARY; ?>
  

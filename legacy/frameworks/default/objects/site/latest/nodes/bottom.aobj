@@ -1,4 +1,4 @@
   </ul>
   
-   <?php $zSTRINGS->Display ('OBJECT.VIEW', 'SITE.MAIN.NODES'); ?>
+  <?php echo __("View Full Network"); ?>
 </section>

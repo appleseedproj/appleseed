@@ -4,7 +4,7 @@
  
  <div id='container'>
     <p id='heading'>
-     <?php $zSTRINGS->Display ('LABEL.REPLY'); ?>
+      <?php echo __("Reply To Parent", array ( "parent" => $gPARENTAUTHOR ) ); ?>
     </p>
 
     <span class='parent'>
@@ -20,13 +20,13 @@
      <input type='hidden' id='gREFERENCEID' name='gREFERENCEID' value='<?php echo $gREFERENCEID; ?>'>
 
        <p id='subject'>
-        <?php $zSTRINGS->Display ('LABEL.SUBJECT'); ?>
+         <?phph echo __("Subject"); ?>
        </p> <!-- #subject -->
        <?php $zHTML->TextBox ("SUBJECT", 70, $gSUBJECT); ?><br />
        <?php $zGROUPS->groupContent->Broadcast ("field", "Subject"); ?>
 
        <p id='body'>
-        <?php $zSTRINGS->Display ('LABEL.BODY'); ?>
+         <?phph echo __("Body"); ?>
        </p> <!-- .body -->
        <?php $zHTML->TextArea ("BODY", $gBODY); ?><br />
        <?php $zGROUPS->groupContent->Broadcast ("field", "Body"); ?>
