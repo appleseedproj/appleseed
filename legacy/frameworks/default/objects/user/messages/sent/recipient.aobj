@@ -1,6 +1,6 @@
 <div class='recipient'>
  <?php echo $bRECIPIENT; ?> 
  <span class='status'>
-  <?php $zSTRINGS->Display ('LABEL.STATUS', 'USER.MESSAGES'); ?>
+   <?php echo $gREADSTATUS; ?>
  </span> <!-- .status -->
 </div>

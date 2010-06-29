@@ -7,7 +7,7 @@
   <div id='compose'>
 
    <p id='top'>
-    <?php $zSTRINGS->Display ('LABEL.COMPOSE', 'USER.MESSAGES'); ?>
+     <?php echo __("Compose New Message"); ?>
    </p>
  
    <?php $zMESSAGE->Broadcast(); ?>
@@ -21,13 +21,13 @@
     <?php echo $bRECIPIENT; ?>
  
     <p id='subject'>
-     <?php $zSTRINGS->Display ('LABEL.SUBJECT', 'USER.MESSAGES'); ?>
+     <?php echo __("Subject"); ?>
     </p>
  
     <?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?>
  
     <p id='body'>
-     <?php $zSTRINGS->Display ('LABEL.BODY', 'USER.MESSAGES'); ?>
+     <?php echo __("Body"); ?>
     </p>
  
     <?php $zHTML->TextArea ("BODY", $gBODY); ?>

@@ -7,7 +7,7 @@
      </span> 
 
      <span class='count'>
-       <?php $zSTRINGS->Display ("LABEL.COUNT", "USER.MESSAGES.LABELS"); ?>
+       <?php echo __("Message Count", array ( "count" => $gMESSAGECOUNT ) ); ?>
      </span> <!-- .count -->
 
       <?php $zHTML->Button ("save_label"); ?>

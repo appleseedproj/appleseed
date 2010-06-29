@@ -18,34 +18,34 @@
      <input type='hidden' id='gACTION' name='guID' value='<?php echo $guID; ?>'>
 
      <p id='title'>
-      <?php $zSTRINGS->Display ('LABEL.TITLE', 'USER.JOURNAL'); ?>
+      <?php echo __("Title"); ?>
      </p><!-- #title -->
 
      <?php $zHTML->TextBox ("TITLE", 64, $gTITLE); ?>
      <?php $zJOURNAL->Broadcast ("field", "Title"); ?>
 
      <p id='content'>
-      <?php $zSTRINGS->Display ('LABEL.CONTENT', 'USER.JOURNAL'); ?>
+      <?php echo __("Content"); ?>
      </p><!-- #content -->
 
      <?php $zHTML->TextArea ("CONTENT", $gCONTENT); ?>
      <?php $zJOURNAL->Broadcast ("field", "Content"); ?>
 
      <p id='tags'>
-      <?php $zSTRINGS->Display ('LABEL.TAGS', 'USER.JOURNAL'); ?>
+      <?php echo __("Tags"); ?>
      </p><!-- #tags -->
 
      <?php $zHTML->TextBox ("TAGS", 64, $gTAGS); ?>
      <?php $zJOURNAL->Broadcast ("field", "Tags"); ?>
 
      <p id='icon'>
-      <?php $zSTRINGS->Display ('LABEL.ICON', 'USER.JOURNAL'); ?>
+      <?php echo __("Icon"); ?>
      </p><!-- #icon -->
 
      <?php $zHTML->Menu ("USERICON", $gICONLIST, "", $gUSERICON); ?>
 
      <p id='posted'>
-      <?php $zSTRINGS->Display ('LABEL.POSTED', 'USER.JOURNAL'); ?>
+      <?php echo __("Posted"); ?>
      </p><!-- #posted -->
 
      <?php $zHTML->DateMenu ("POSTED", $gPOSTEDLIST['MONTH'], $gPOSTEDLIST['DAY'], $gPOSTEDLIST['YEAR']); ?>

@@ -16,32 +16,32 @@
 
   <div id='list'>
     <div id='<?php echo $gFOLDERSELECT['INBOX']; ?>'>
-      <div id='title'><?php $zSTRINGS->Display ('LABEL.INBOX', 'USER.MESSAGES.FOLDERS'); ?></div>
+      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/inbox/'><?php echo __("Inbox"); ?></a></div>
        <div id='new'><?php echo $gFOLDERCOUNT['INBOX']; ?></div>
     </div>
 
     <div id='<?php echo $gFOLDERSELECT['SENT']; ?>'>
-      <div id='title'><?php $zSTRINGS->Display ('LABEL.SENT', 'USER.MESSAGES.FOLDERS'); ?></div>
+      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/sent/'><?php echo __("Sent"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['SENT']; ?></div>
     </div>
 
     <div id='<?php echo $gFOLDERSELECT['DRAFTS']; ?>'>
-      <div id='title'><?php $zSTRINGS->Display ('LABEL.DRAFTS', 'USER.MESSAGES.FOLDERS'); ?></div>
+      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/drafts/'><?php echo __("Drafts"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['DRAFTS']; ?></div>
     </div>
 
     <div id='<?php echo $gFOLDERSELECT['ALL']; ?>'>
-      <div id='title'><?php $zSTRINGS->Display ('LABEL.ALL', 'USER.MESSAGES.FOLDERS'); ?></div>
+      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/all/'><?php echo __("All"); ?></a></div>
       <div id='new'></div>
     </div>
 
     <div id='<?php echo $gFOLDERSELECT['SPAM']; ?>'>
-      <div id='title'><?php $zSTRINGS->Display ('LABEL.SPAM', 'USER.MESSAGES.FOLDERS'); ?></div>
+      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/spam/'><?php echo __("Spam"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['SPAM']; ?></div>
     </div>
 
     <div id='<?php echo $gFOLDERSELECT['TRASH']; ?>'>
-      <div id='title'><?php $zSTRINGS->Display ('LABEL.TRASH', 'USER.MESSAGES.FOLDERS'); ?></div>
+      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/trash/'><?php echo __("Trash"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['TRASH']; ?></div>
     </div>
 

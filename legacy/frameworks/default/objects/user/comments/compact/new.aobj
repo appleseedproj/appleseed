@@ -16,13 +16,13 @@
      <input type='hidden' id='gREFERENCEID' name='gREFERENCEID' value='<?php echo $gREFERENCEID; ?>'>
 
        <p id='subject'>
-        <?php $zSTRINGS->Display ('LABEL.SUBJECT', 'USER.COMMENTS'); ?>
+        <?php echo __("Subject");
        </p> <!-- #subject -->
         <?php $zHTML->TextBox ("SUBJECT", 70, $gSUBJECT); ?>
         <?php $zCOMMENTS->Broadcast ("field", "Subject"); ?>
 
        <p id='body'>
-        <?php $zSTRINGS->Display ('LABEL.BODY', 'USER.COMMENTS'); ?>
+        <?php echo __("Body");
        </p> <!-- .body -->
        <?php $zHTML->TextArea ("BODY", $gBODY); ?>
        <?php $zCOMMENTS->Broadcast ("field", "Body"); ?>

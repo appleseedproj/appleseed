@@ -11,7 +11,7 @@
    <div id='buttons'>
  
     <span id='back'>
-     <?php $zSTRINGS->Display ("LABEL.BACK", "USER.MESSAGES"); ?>
+     <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a>
     </span> <!-- #back -->
  
     <span class='spam'>

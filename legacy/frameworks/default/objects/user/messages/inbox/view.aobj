@@ -11,7 +11,7 @@
    <div id='buttons'>
  
     <span id='back'>
-     <?php $zSTRINGS->Display ("LABEL.BACK", "USER.MESSAGES"); ?>
+     <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a>
     </span> <!-- #back -->
  
     <form id='not_spam' name='not_spam' method='POST' action='<?php echo $gTARGET; ?>'>
@@ -21,7 +21,6 @@
  
     <form id='delete' name='delete' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zSTRINGS->Lookup ('CONFIRM.TRASH'); ?>
      <?php $zHTML->Button ('trash', __("Confirm Trash")); ?>
     </form> <!-- #delete -->
  

@@ -6,7 +6,6 @@
    
    <?php $zHTML->Button ("spam_all"); ?>
 
-   <?php $zSTRINGS->Lookup ('CONFIRM.TRASHALL'); ?>
    <?php $zHTML->Button ('trash_all', __("Confirm Trash Selected")); ?>
 
    <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>

@@ -6,7 +6,7 @@
  <div id='container'>
 
   <p id='heading'>
-   <?php $zSTRINGS->Display ("LABEL.CIRCLES", $zOLDAPPLE->Context); ?></h1>
+    <?php echo __("Friends Circles"); ?>
   </p> <!-- #heading -->
 
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>

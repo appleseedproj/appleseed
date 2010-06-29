@@ -6,11 +6,11 @@
  
  <div id='container'>
     <p id='heading'>
-     <?php $zSTRINGS->Display ('LABEL.REPLY', 'USER.COMMENTS'); ?>
+      <?php echo __("Reply To Parent", array ( "parent" => $gPARENTAUTHOR ) ); ?>
     </p>
 
     <span class='info'>
-     <?php $zSTRINGS->Display ('INFO.REPLY', 'USER.COMMENTS'); ?>
+      <?php echo $gPARENTBODY; ?>
     </span>
 
     <?php $zCOMMENTS->Broadcast(); ?>
@@ -22,13 +22,13 @@
      <input type='hidden' id='gREFERENCEID' name='gREFERENCEID' value='<?php echo $gREFERENCEID; ?>'>
 
        <p id='subject'>
-        <?php $zSTRINGS->Display ('LABEL.SUBJECT', 'USER.COMMENTS'); ?>
+        <?php echo __("Subject"); ?>
        </p> <!-- #subject -->
        <?php $zHTML->TextBox ("SUBJECT", 70, $gSUBJECT); ?><br />
        <?php $zCOMMENTS->Broadcast ("field", "Subject"); ?>
 
        <p id='body'>
-        <?php $zSTRINGS->Display ('LABEL.BODY', 'USER.COMMENTS'); ?>
+        <?php echo __("Body"); ?>
        </p> <!-- .body -->
        <?php $zHTML->TextArea ("BODY", $gBODY); ?><br />
        <?php $zCOMMENTS->Broadcast ("field", "Body"); ?>

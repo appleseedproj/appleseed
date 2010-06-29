@@ -18,7 +18,6 @@
    <?php $zHTML->Post ($gPOSTDATA); ?>
    <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
    <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
-   <?php $zSTRINGS->Lookup ('CONFIRM.DENY', 'USER.FRIENDS'); ?>
    <?php $zHTML->Button ('friend_deny', __("Confirm Friend Deny")); ?>
   </form>
 

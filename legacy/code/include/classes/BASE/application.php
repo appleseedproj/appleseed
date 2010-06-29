@@ -362,56 +362,25 @@
   
     // Load basic configuraton data from file.
     function LoadSiteData () {
+      eval ( GLOBALS );
+      
       global $gFRAMELOCATION;
       global $gERRORTITLE, $gERRORMSG;
 
-      $settings_file = 'data/site.adat';
-      
-      // Display error message if database settings file doesn't exist.
-      if ( !file_exists($settings_file)){
-        $gERRORTITLE = "SITE ERROR";
-        $gERRORMSG = "Could Not Load Settings File.";
-        $this->IncludeFile ("$gFRAMELOCATION/objects/site/error.site.aobj", 
-                  INCLUDE_SECURITY_NONE);
-        die;
-      } // if
-  
-      // Load the database connection information.
-      $settings = file ($settings_file); 
-  
       // Initialize Variables.
-      $setting_un = null;
-      $setting_pw = null;
-      $setting_db = null;
-      $setting_pre = null;
-      $setting_host = null;
-      $setting_ver = null;
-      
-      // Loop through each line.
-      foreach ($settings as $setting) {
-  
-        // Split the line into two parts, type and method.
-        list ($settingtype, $settingmethod) = explode (':', $setting,2);
-  
-        // Create a php variable using the resulting data.
-        $settingidentifier = 'setting_' . $settingtype;
-        $$settingidentifier = rtrim (ltrim ($settingmethod));
-  
-      } // foreach
-
       global $gCONNECT, $gTABLEPREFIX;
-      $gCONNECT['username'] = $setting_un;
-      $gCONNECT['password'] = $setting_pw;
-      $gCONNECT['database'] = $setting_db;
-      $gCONNECT['host'] = $setting_host;
-      $gTABLEPREFIX = $setting_pre;
+      $gCONNECT['username'] = $zApp->Config->GetConfiguration ( "un" );
+      $gCONNECT['password'] = $zApp->Config->GetConfiguration ( "pw" );
+      $gCONNECT['database'] = $zApp->Config->GetConfiguration ( "db" );
+      $gCONNECT['host'] = $zApp->Config->GetConfiguration ( "host" );
+      $gTABLEPREFIX = $zApp->Config->GetConfiguration ( "pre" );
       
       // Current Appleseed version.  Must be updated for each release.
       global $gAPPLESEEDVERSION;
-      $gAPPLESEEDVERSION = '0.7.3';
+      $gAPPLESEEDVERSION = '0.7.4';
       
       global $gSITEURL;
-      $gSITEURL = $setting_url;
+      $gSITEURL =  $zApp->Config->GetConfiguration ( "url" );
       
       // If we're just looking for the version, spit it out and exit as soon as we know it.
       if (isset($_REQUEST['version'])) { 
@@ -433,11 +402,12 @@
     } // LoadSiteData
 
     function DBConnect () {
+      
       global $gDBLINK, $gFRAMELOCATION;
       global $gERRORTITLE, $gERRORMSG;
 
       global $gCONNECT;
-  
+      
       // Load data from site.adat
       $this->LoadSiteData ();
       

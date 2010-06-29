@@ -1,4 +1,4 @@
   
     <h1>
-     <?php $zSTRINGS->Display ("LABEL.STATS", "USER.INFO"); ?>
-    </h1
+     <?php echo __("Statistics For", array ( "name" => $gFOCUSFULLNAME ) ); ?>
+    </h1>

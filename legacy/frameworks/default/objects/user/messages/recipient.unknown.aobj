@@ -1,5 +1,5 @@
 <p id='recipient'>
- <?php $zSTRINGS->Display ('LABEL.RECIPIENT'); ?>
+  <?php echo __("To"); ?>
 </p>
 
 <?php $zHTML->TextArea ("RECIPIENTADDRESS", $gRECIPIENTADDRESS); ?>

@@ -35,18 +35,18 @@
     </p> <!-- #icon -->
 
     <p id='circles'>
-     <?php $zSTRINGS->Display ('LABEL.CIRCLES', 'USER.FRIENDS'); ?>
+     <?php echo __("Member Of'); ?>
     </p> <!-- #circles -->
     <span class='circles'>
      <?php echo $gCIRCLESLISTING; ?>
     </span> <!-- .circles -->
  
     <p id='alias'>
-     <?php $zSTRINGS->Display ('LABEL.ALIAS', 'USER.FRIENDS'); ?>
+     <?php echo __("Alias'); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("ALIAS", 70, $zFRIENDS->Alias); ?>
     <p id='info_alias'>
-     <?php $zSTRINGS->Display ('INFO.ALIAS', 'USER.FRIENDS'); ?>
+     <?php echo __("Alias Only Shows To You'); ?>
     </p> <!-- info_alias -->
     <?php $zFRIENDS->Broadcast ("field", "Alias"); ?>
  

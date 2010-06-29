@@ -13,7 +13,7 @@
   </form> <!-- #viewtype -->
 
   <p id='heading'>
-   <?php $zSTRINGS->Display ("LABEL.FRIENDS", "USER.FRIENDS"); ?></h1>
+   <?php echo __("Friends Of", array ( "name" => $gFOCUSFULLNAME ) ); ?>
   </p> <!-- #heading -->
 
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>

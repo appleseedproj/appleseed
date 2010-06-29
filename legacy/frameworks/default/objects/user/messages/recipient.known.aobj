@@ -1,5 +1,5 @@
 <p id='recipient'>
- <?php $zSTRINGS->Display ('LABEL.RECIPIENT', 'USER.MESSAGES'); ?>
+  <?php echo __("To"); ?>
 </p>
 
 <?php $zHTML->Hidden ("gRECIPIENTADDRESS", $gRECIPIENTNAME . '@' . $gRECIPIENTDOMAIN); ?>
