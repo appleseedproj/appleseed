@@ -700,7 +700,7 @@
                                    'illegal'    => '/ * \ < > ( ) [ ] & ^ $ # @ ! ? ; \' " { } | ~ + =',
                                    'required'   => '',
                                    'relation'   => '',
-                                   'null'       => NO,
+                                   'null'       => YES,
                                    'sanitize'   => YES,
                                    'datatype'   => 'STRING'),
  

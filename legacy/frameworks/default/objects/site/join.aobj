@@ -41,12 +41,6 @@
    <?php $zHTML->TextBox ("CONFIRM", 16, "", TRUE); ?>
    <?php $zFOCUSUSER->Broadcast ('field', 'Pass'); ?>
 
-   <p id='zipcode'>
-    <?php echo __("Zipcode"); ?>
-   </p> <!-- .zipcode -->
-   <?php $zHTML->TextBox ("ZIPCODE", 8, $gZIPCODE); ?>
-   <?php $zFOCUSUSER->userProfile->Broadcast ('field', 'Zipcode'); ?>
-
    <p id='invite'>
     <?php echo __("Invite Code"); ?>
    </p> <!-- .invite -->

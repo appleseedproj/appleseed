@@ -914,7 +914,7 @@ class cINSTALL {
       return (FALSE);
     } // if
     
-    if (!file_exists ("install.sql")) {
+    if (!file_exists ("_release/install.sql")) {
       $ErrorString = "Could not find install.sql for importing.";
       return (FALSE);
     } // if
