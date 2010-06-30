@@ -79,6 +79,9 @@ SITE_INVITES_CONTENT="You have <b>%invitecount$s</b> invite(s) available!  Enter
 SITE_JOIN_TITLE="Join This Site"
 SITE_JOIN_CONTENT="Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons."
 
+[site.login]
+FORGOT=Forgot Password
+
 [comments]
 TIME_STAMP="%date$s at %time$s"
 THREAD_LABEL="%link$s by %author$s  on %date$s at %time$s"

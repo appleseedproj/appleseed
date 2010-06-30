@@ -737,16 +737,22 @@
 
       global $gPASSWORD, $gFULLNAME;
       global $gSITEDOMAIN;
+      global $gTABLEPREFIX;
 
       $gPASSWORD = $zOLDAPPLE->GeneratePassword ('##XX#XX!');
+      
+      $userAuth = $gTABLEPREFIX . 'userAuthorization';
       
       $salt = substr(md5(uniqid(rand(), true)), 0, 16);
       $sha512 = hash ("sha512", $salt . $gPASSWORD);
       $newpass = $salt . $sha512;
 
-      $reset_query = "UPDATE userAuthorization SET " .
-                     "Pass = PASSWORD('$gPASSWORD') WHERE " .
-                     "uID = " . $this->userAuth_uID;
+      $reset_query = "UPDATE %s SET " .
+                     "Pass = '%s' WHERE " .
+                     "uID = '%s'";
+                     
+      $reset_query = sprintf ($reset_query, $userAuth, $newpass, $this->userAuth_uID);
+      
       $this->Query ($reset_query);
 
       if ($this->Error) {

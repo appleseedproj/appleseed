@@ -175,14 +175,16 @@
   // Determine which action to take 
   switch ($gACTION) {
     case 'FORGOT':
-      if (!$gUSERNAME) {
+      $zLOCALUSER->Synchronize ();
+      
+      if (!$zLOCALUSER->Username) {
         $zLOCALUSER->Message = __( "You must enter a username" );
         $zLOCALUSER->Error = -1;
         break;
       } // if
 
       // Load the user information for that user.
-      $zLOCALUSER->Select ("Username", $gUSERNAME);
+      $zLOCALUSER->Select ("Username", $zLOCALUSER->Username);
 
       // Check if any users were found.
       if ($zLOCALUSER->CountResult() === 0) {
