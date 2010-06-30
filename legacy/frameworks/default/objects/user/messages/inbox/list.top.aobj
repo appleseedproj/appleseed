@@ -18,7 +18,7 @@
 
    <?php $zHTML->Button ($gSELECTBUTTON); ?>
 
-   <?php $zHTML->Button ('archive_all'); ?>
+   <?php $zHTML->Button ('Archive All'); ?>
 
    <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
    <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE, "LABEL_ALL"); ?>

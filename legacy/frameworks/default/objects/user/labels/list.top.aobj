@@ -1,9 +1,8 @@
- <div id='editlabels'>
+<section id='editlabels'>
 
  <!-- tabs objects -->
  <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
-  <div id='container'>
    <?php $zMESSAGE->messageLabels->Broadcast (); ?>
  
    <p id='top'>

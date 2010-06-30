@@ -33,7 +33,7 @@
   // | DESCRIPTION:  Displays options section of user profile page.      |
   // | WRAPPED BY:   /code/user/main.php                                 |
   // +-------------------------------------------------------------------+
- 
+  
   // Check if user is admin.
   if ($gFOCUSUSERID != $zAUTHUSER->uID) {
     // Error out if user does not have access privileges.
@@ -92,7 +92,7 @@
   // Pre-Load the User Theme List.
   global $gTHEMELIST;
   $gTHEMELIST = $zOLDAPPLE->GetThemeList ();
-
+  
   // Determine which action to take.
   switch ($gACTION) {
     case 'SUBMIT':
@@ -168,7 +168,6 @@
       // NOTE: Not working for SAVE_ALL.
       $zFOCUSUSER->SaveConfig ();
       $zFOCUSUSER->SaveEmails();
-
       $zICON->Message = NULL;
       $zPHOTO->Message = NULL;
       $zFOCUSUSER->Message = __("All options saved");

@@ -35,16 +35,16 @@
    <?php $zHTML->TextArea ("BODY", $gBODY); ?>
 
   <div id='buttons'>
-   <?php $zHTML->Button ('save_draft'); ?>
+   <?php $zHTML->Button ('Save Draft'); ?>
 
-   <?php $zHTML->Button ('send'); ?>
+   <?php $zHTML->Button ('Send'); ?>
  </form> <!-- #compose -->
 
    <form id='cancel' name='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
     <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
     <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel_draft', __("Confirm Cancel")); ?>
+      <?php $zHTML->Button ('Cancel Draft', __("Confirm Cancel")); ?>
    </form> <!-- #cancel -->
   </div> <!-- #buttons -->
 

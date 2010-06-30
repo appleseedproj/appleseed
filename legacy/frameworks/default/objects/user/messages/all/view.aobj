@@ -16,12 +16,12 @@
  
     <form id='spam' name='spam' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('spam'); ?>
+     <?php $zHTML->Button ('Spam'); ?>
     </form> <!-- #spam -->
  
     <form id='delete' name='delete' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('trash', __("Confirm Trash")); ?>
+     <?php $zHTML->Button ('Trash', __("Confirm Trash")); ?>
     </form> <!-- #delete -->
  
    </div> <!-- #buttons -->
@@ -49,27 +49,27 @@
     <span class='reply'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('reply'); ?>
+       <?php $zHTML->Button ('Reply'); ?>
       </form> <!-- #reply -->
     </span> <!-- #reply -->
  
     <span class='forward'>
      <form id='forward' name='forward' method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-      <?php $zHTML->Button ('forward'); ?>
+      <?php $zHTML->Button ('Forward'); ?>
      </form> <!-- #forward -->
     </span> <!-- #forward -->
  
     <span class='unread'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('unread'); ?>
+       <?php $zHTML->Button ('Unread'); ?>
       </form> <!-- #unread -->
     </span> <!-- #unread -->
  
     <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('move_inbox'); ?>
+     <?php $zHTML->Button ('Move Inbox'); ?>
     </form> <!-- ## message.move.inbox -->
  
     <span class='label'>

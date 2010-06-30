@@ -118,10 +118,10 @@
       if (!file_exists ("themes/$gUSERTHEME")) $gUSERTHEME = 'default';
       
       global $gFRAMELOCATION, $gTHEMELOCATION;
-  
+      
       $gFRAMELOCATION = "legacy/frameworks/$gFRAMEWORK/";
       $gTHEMELOCATION = "themes/$gUSERTHEME/";
-  
+      
       // Global Variables
       global $gUSERTHEME;
       global $gLOGINSESSION, $gREMOTELOGINSESSION;

@@ -12,6 +12,12 @@ DELETE_ALL="Delete +"
 MOVE_UP="Move &uarr;"
 MOVE_DOWN="Move &darr;"
 RESET_SEARCH="Reset"
+SPAM_ALL="Spam +"
+TRASH_ALL="Trash +"
+ARCHIVE_ALL="Archive +"
+DELETE_FOREVER_ALL="Delete Forever +"
+MOVE_INBOX_ALL="Move To Inbox +"
+
 [global]
 PREVIOUS="&lt; Prev"
 FIRST="&lt;&lt; First"

@@ -1,16 +1,15 @@
   </ul>
 
   <div id='buttons'>
-   <?php $zHTML->Button ('move_inbox_all'); ?>
+   <?php $zHTML->Button ('Move Inbox All'); ?>
 
-   <?php $zHTML->Button ("spam_all"); ?>
+   <?php $zHTML->Button ("Spam All"); ?>
 
-   <?php $zHTML->Button ('trash_all', __("Confirm Trash Selected")); ?>
+   <?php $zHTML->Button ('Trash All', __("Confirm Trash Selected")); ?>
 
    <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
 
   </div> <!-- #buttons -->
  </form> <!-- #masslist -->
 
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section> <!-- #messages -->

@@ -1,14 +1,10 @@
- <div id='labels'>
+ <section id='labels'>
 
-  <div id='caption'>
-   <?php echo __("User Messages Labels Title"); ?>
-  </div> <!-- #caption -->
-
- <div id='container'>
+  <h1><?php echo __("User Messages Labels Title"); ?></h1>
 
   <div id='edit'>
    <form name='message' id='labels' method='POST' action='<?php echo $gLABELSTARGET; ?>'>
-    <?php $zHTML->Button ('edit_labels'); ?>
+    <?php $zHTML->Button ('Edit Labels'); ?>
    </form>
   </div> <!-- #edit -->
 
@@ -18,5 +14,4 @@
    <?php echo $bLABELLISTING; ?>
   </ul>
 
- </div> <!-- #container -->
- </div> <!-- #labels -->
+ </section>

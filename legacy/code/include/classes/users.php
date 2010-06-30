@@ -739,6 +739,10 @@
       global $gSITEDOMAIN;
 
       $gPASSWORD = $zOLDAPPLE->GeneratePassword ('##XX#XX!');
+      
+      $salt = substr(md5(uniqid(rand(), true)), 0, 16);
+      $sha512 = hash ("sha512", $salt . $gPASSWORD);
+      $newpass = $salt . $sha512;
 
       $reset_query = "UPDATE userAuthorization SET " .
                      "Pass = PASSWORD('$gPASSWORD') WHERE " .

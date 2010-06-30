@@ -54,7 +54,7 @@
   // Load list of available server versions.
   $handle = opendir('legacy/code/include/classes/asd/');
   while (false !== ($file = readdir($handle))) {
-  		$file_exts = explode ('\.', $file);
+  		$file_exts = explode ('.', $file);
   		if ($file_exts[count($file_exts)-1] != 'php') continue;
   		$serverVersions[] = $file;
   } // if

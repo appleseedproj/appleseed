@@ -1,50 +1,45 @@
- <div id='folders'>
+ <section id='folders'>
 
-   <div id='caption'>
-    <?php echo __("User Messages Folders Title"); ?>
-   </div> <!-- #caption -->
-
- <div id='container'>
+   <h1><?php echo __("User Messages Folders Title"); ?></h1>
 
    <?php $zFOCUSUSER->userInvites->Broadcast ("folders"); ?>
 
   <div id='compose'>
    <form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
-    <?php $zHTML->Button ('compose'); ?>
+    <?php $zHTML->Button ('Compose'); ?>
    </form> <!-- #compose -->
   </div>
 
-  <div id='list'>
-    <div id='<?php echo $gFOLDERSELECT['INBOX']; ?>'>
+  <ul>
+    <li id='<?php echo $gFOLDERSELECT['INBOX']; ?>'>
       <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/inbox/'><?php echo __("Inbox"); ?></a></div>
        <div id='new'><?php echo $gFOLDERCOUNT['INBOX']; ?></div>
-    </div>
+    </li>
 
-    <div id='<?php echo $gFOLDERSELECT['SENT']; ?>'>
+    <li id='<?php echo $gFOLDERSELECT['SENT']; ?>'>
       <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/sent/'><?php echo __("Sent"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['SENT']; ?></div>
-    </div>
+    </li>
 
-    <div id='<?php echo $gFOLDERSELECT['DRAFTS']; ?>'>
+    <li id='<?php echo $gFOLDERSELECT['DRAFTS']; ?>'>
       <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/drafts/'><?php echo __("Drafts"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['DRAFTS']; ?></div>
-    </div>
+    </li>
 
-    <div id='<?php echo $gFOLDERSELECT['ALL']; ?>'>
+    <li id='<?php echo $gFOLDERSELECT['ALL']; ?>'>
       <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/all/'><?php echo __("All"); ?></a></div>
       <div id='new'></div>
-    </div>
+    </li>
 
-    <div id='<?php echo $gFOLDERSELECT['SPAM']; ?>'>
+    <li id='<?php echo $gFOLDERSELECT['SPAM']; ?>'>
       <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/spam/'><?php echo __("Spam"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['SPAM']; ?></div>
-    </div>
+    </li>
 
-    <div id='<?php echo $gFOLDERSELECT['TRASH']; ?>'>
+    <li id='<?php echo $gFOLDERSELECT['TRASH']; ?>'>
       <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/trash/'><?php echo __("Trash"); ?></a></div>
       <div id='new'><?php echo $gFOLDERCOUNT['TRASH']; ?></div>
-    </div>
+    </li>
 
-  </div>
- </div> <!-- #container -->
-</div> <!-- #folders -->
+  </ul>
+</section>

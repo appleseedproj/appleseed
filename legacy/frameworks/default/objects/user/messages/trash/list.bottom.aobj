@@ -1,11 +1,11 @@
   </ul>
 
   <div id='buttons'>
-   <?php $zHTML->Button ('move_inbox_all'); ?>
+   <?php $zHTML->Button ('Move Inbox All'); ?>
    
-   <?php $zHTML->Button ("spam_all"); ?>
+   <?php $zHTML->Button ("Spam All"); ?>
 
-   <?php $zHTML->Button ('delete_forever_all', __("Confirm Delete Selected")) ?>
+   <?php $zHTML->Button ('Delete Forever All', __("Confirm Delete Selected")) ?>
 
    <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
 

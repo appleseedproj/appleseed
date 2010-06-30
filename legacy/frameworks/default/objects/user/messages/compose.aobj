@@ -34,15 +34,15 @@
     <?php $zMESSAGE->Broadcast('field', 'body'); ?>
  
    <div id='buttons'>
-    <?php $zHTML->Button ('save_draft'); ?>
+    <?php $zHTML->Button ('Save Draft'); ?>
  
-    <?php $zHTML->Button ('send'); ?>
+    <?php $zHTML->Button ('Send'); ?>
   </form> <!-- #compose -->
  
      <form method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
+      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
    </div> <!-- #buttons -->
  

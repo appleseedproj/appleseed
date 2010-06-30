@@ -127,25 +127,84 @@
     // Authenticate user based on Username and Password
     function Authenticate () {
 
-      $un = strtolower ($this->Username);
+      $un = mysql_real_escape_string (strtolower ($this->Username));
       $pw = $this->Pass;
-
-      $clause = "Username = '$un' AND Pass=PASSWORD('$pw')";
-
+      
+      $salt = $this->GetSalt ();
+      
+      $sha512 = hash ("sha512", $salt . $pw);
+      
+      $newpass = $salt . $sha512;
+      
+      $clause = "Username = '$un' AND ( Pass=PASSWORD('$pw') OR Pass='$newpass' )";
+      
       $this->SelectWhere ($clause);
       $this->FetchArray();
-
+      
       if ( $this->CountResult () == 0) {
         $ERRORSTR = new cSYSTEMSTRINGS;
         $ERRORSTR->Lookup ('ERROR.FAILED', 'SITE.LOGIN');
         $this->Message = $ERRORSTR->Output;
         $this->Error = -1;
         unset ($ERRORSTR);
+        return (-1);
       } // if
+      
+      // Update to new password system.
+      if ( strlen ( $this->Pass ) < 144 ) {
+      	$this->Pass = $pw;
+      	$this->UpdatePassword();
+      }
 
       return (0);
-
     } // Authenticate
+    
+    function UpdatePassword () {
+    	global $gTABLEPREFIX;
+    	
+        $un = mysql_real_escape_string (strtolower ($this->Username));
+        $pw = $this->Pass;
+        $userAuth = $gTABLEPREFIX . 'userAuthorization';
+        
+        $salt = substr(md5(uniqid(rand(), true)), 0, 16);
+        
+        $sha512 = hash ("sha512", $salt . $pw);
+        
+        $newpass = $salt . $sha512;
+        
+    	$query = "
+			UPDATE %s SET Pass = '%s' WHERE Username = '%s'
+		";
+		
+		$query = sprintf ($query, $userAuth, $newpass, $un );
+		
+		$result = $this->Query ( $query );
+		
+		if (mysql_error()) return ( false );
+		
+		return ( true );
+    }
+    
+    function GetSalt() {
+    	global $gTABLEPREFIX;
+    	
+        $un = mysql_real_escape_string (strtolower ($this->Username));
+        $userAuth = $gTABLEPREFIX . 'userAuthorization';
+    	
+    	$query = "
+			SELECT SUBSTR(Pass FROM 1 FOR 16) AS Salt FROM %s WHERE Username = '%s';
+		";
+		
+		$query = sprintf ($query, $userAuth, $un );
+		
+		$result = $this->Query ( $query );
+		
+      	$resultarray = mysql_fetch_array($result, MYSQL_ASSOC);
+      	
+      	$salt = $resultarray['Salt'];
+      	
+		return ( $salt );
+    }
 
     // Initialize a new user.
     function Initialize () {

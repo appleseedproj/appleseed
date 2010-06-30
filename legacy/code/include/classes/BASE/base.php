@@ -611,7 +611,10 @@
 
         // Check if field is a password field
         if (strtoupper($this->FieldDefinitions[$fieldname]['relation']) == 'PASSWORD') {
-          $queryfield = "PASSWORD ('" . mysql_real_escape_string ($this->$fieldname) . "')"; 
+          $salt = substr(md5(uniqid(rand(), true)), 0, 16);
+          $sha512 = hash ("sha512", $salt . $this->$fieldname);
+          $newpass = $salt . $sha512;
+          $queryfield = "'" . mysql_real_escape_string ($newpass) . "'"; 
         } else {
           $queryfield = "'" . mysql_real_escape_string ($this->$fieldname) . "'";
         } // if
@@ -723,7 +726,10 @@
 
           // Check if field is a password field
           if (strtoupper($this->FieldDefinitions[$fieldname]['relation']) == 'PASSWORD') {
-            $queryfield = "PASSWORD ('" . mysql_real_escape_string ($this->$fieldname) . "')"; 
+            $salt = substr(md5(uniqid(rand(), true)), 0, 16);
+            $sha512 = hash ("sha512", $salt . $this->$fieldname);
+            $newpass = $salt . $sha512;
+            $queryfield = "'" . mysql_real_escape_string ($newpass) . "'"; 
           } else {
             $queryfield = "'" . mysql_real_escape_string ($this->$fieldname) . "'";
           } // if

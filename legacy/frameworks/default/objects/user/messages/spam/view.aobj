@@ -16,11 +16,11 @@
  
     <form id='spam' name='spam' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('not_spam'); ?>
+     <?php $zHTML->Button ('Not Spam'); ?>
  
     <form id='delete' name='delete' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('delete_forever', __("Confirm Delete")); ?>
+     <?php $zHTML->Button ('Delete Forever', __("Confirm Delete")); ?>
     </form> <!-- #delete -->
  
    </div> <!-- #buttons -->
@@ -48,20 +48,20 @@
     <span class='reply'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('reply'); ?>
+       <?php $zHTML->Button ('Reply'); ?>
       </form> <!-- #reply -->
     </span> <!-- #reply -->
  
     <span class='forward'>
      <form id='forward' name='forward' method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-      <?php $zHTML->Button ('forward'); ?>
+      <?php $zHTML->Button ('Forward'); ?>
      </form> <!-- #forward -->
     </span> <!-- #forward -->
  
     <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('unread'); ?>
+     <?php $zHTML->Button ('Unread'); ?>
     </form> <!-- #unread -->
  
     <span class='archive'>

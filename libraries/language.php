@@ -45,7 +45,7 @@ class cLanguage {
  	function Load ($pLanguage, $pContextFile) {
  		eval(GLOBALS);
  		
-		$paths = $this->_Config->GetPath ();
+		$paths = $zApp->Language->_Config->GetPath ();
 		
 		$found = false;
 		

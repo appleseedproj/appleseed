@@ -142,34 +142,15 @@
     } // NoVersion
     
     function LoadSiteInfo () {
-      $settings = file ("data/site.adat"); 
+      eval ( GLOBALS );
       
-      // Initialize Variables.
-      $setting_un = null;
-      $setting_pw = null;
-      $setting_db = null;
-      $setting_pre = null;
-      $setting_host = null;
-      $setting_ver = null;
-      
-      foreach ($settings as $setting) {
-        
-        // Split the line into two parts, type and ethod.
-        list ($settingtype, $settingmethod) = explode (':', $setting,2);
-  
-        // Create a php variable using the resulting data.
-        $settingidentifier = 'setting_' . $settingtype;
-        $$settingidentifier = rtrim (ltrim ($settingmethod));
-  
-      } // foreach 
-      
-      $this->Database = $setting_db;
-      $this->DatabaseUsername = $setting_un;
-      $this->DatabasePassword = $setting_pw;
-      $this->DatabaseHost = $setting_host;
-      $this->TablePrefix = $setting_pre;
-      $this->SiteURL = $setting_url;
-      $this->SiteDomain = str_replace ("http://", "", $setting_url);
+      $this->Database = $zApp->Config->GetConfiguration ('db');
+      $this->DatabaseUsername = $zApp->Config->GetConfiguration ('un');
+      $this->DatabasePassword = $zApp->Config->GetConfiguration ('pw');
+      $this->DatabaseHost =  $zApp->Config->GetConfiguration ('host');
+      $this->TablePrefix =  $zApp->Config->GetConfiguration ('pre');
+      $this->SiteURL =  $zApp->Config->GetConfiguration ('url');
+      $this->SiteDomain = str_replace ("http://", "", $zApp->Config->GetConfiguration ('url'));
       $this->SiteDomain = str_replace ("/", "", $this->SiteDomain);
       
       return (TRUE);
@@ -1347,7 +1328,6 @@
         WHERE  $userAuth.Username = '%s'
         AND    $userProfile.userAuth_uID = $userAuth.uID
       ";
-      
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($gRECIPIENT));
                                 
@@ -1767,11 +1747,11 @@
                          "gVERSION"         => $gAPPLESEEDVERSION,
                          "gSUBJECT"         => $pSUBJECT);
       $zREMOTE->Post ($datalist);
-
+      
       $zXML->Parse ($zREMOTE->Return);
 
-      $version = ucwords ($zXML->GetValue ("version", 0));
-      $success = ucwords ($zXML->GetValue ("success", 0));
+      $version = $zXML->GetValue ("version", 0);
+      $success = $zXML->GetValue ("success", 0);
       
       $remotedata = new stdClass();
 
