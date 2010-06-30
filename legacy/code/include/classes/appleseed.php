@@ -271,7 +271,8 @@
       // Set default theme.
       if ($zLOCALUSER->userSettings->GetTheme()) {
         global $gTHEMELOCATION;
-        $gUSERTHEME = $zLOCALUSER->userSettings->GetTheme();
+        //$gUSERTHEME = $zLOCALUSER->userSettings->GetTheme();
+        $gUSERTHEME = 'default';
         $this->SetTag ('USERTHEME', $gUSERTHEME);
 
         if (!file_exists ("themes/$gUSERTHEME")) $gUSERTHEME = 'default';
@@ -355,12 +356,6 @@
                       "This is a potential security hazard.  Please delete index.php.", E_USER_WARNING);
       } // if
       
-      if ((ini_get ('magic_quotes_gpc')) or (ini_get('magic_quotes_runtime'))) {
-        // Magic Quotes is on.  Exit with error.
-        echo "ERROR: magic_quotes is on. Please disable.<br />";
-        $this->Abort ();
-      } // if
-
       if (ini_get('register_globals')) {
         // Register globals is on.  Exit with error.
         echo "ERROR: register_globals is on. Please disable.<br />";

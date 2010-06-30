@@ -1428,9 +1428,6 @@
         if ($this->FieldDefinitions[$fieldname]['sanitize'] == NO) continue;
         if ($this->$fieldname == SQL_SKIP) continue;
 
-        // Create the error string class.
-        $ERRORSTR = new cSYSTEMSTRINGS;
-        
         // Pull size definitions from FieldDefinitions array.
         $defmaxsize = $this->FieldDefinitions[$fieldname]['max'];
         $defminsize = $this->FieldDefinitions[$fieldname]['min'];
@@ -1444,10 +1441,8 @@
           global $gFIELDNAME;
           $gFIELDNAME= $fieldname;
 
-          $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-          $this->Message = $ERRORSTR->Output;
-          $ERRORSTR->Lookup ('ERROR.NOTNULL', $this->PageContext);
-          $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+          $this->Message = __("Error On Page");
+          $this->Errorlist[$fieldname] = __("Do Not Leave Field Blank", array ( 'name' => $gFIELDNAME ) );
           $this->Error = -1;
           unset ($gFIELDNAME);
 
@@ -1478,10 +1473,8 @@
               $gFIELDNAME= $fieldname;
     
               // Produce an error message and exit.
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.DUPLICATE', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Duplicate Field", array ( 'name' => $gFIELDNAME ) );
               $this->Error = -1;
 
               unset ($gFIELDNAME);
@@ -1518,10 +1511,8 @@
               $gFIELDNAME= $fieldname;
     
               // Produce an error message and exit.
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.DUPLICATE', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Duplicate Field", array ( 'name' => $gFIELDNAME ) );
               $this->Error = -1;
 
               unset ($gFIELDNAME);
@@ -1547,10 +1538,8 @@
               global $gILLEGALCHAR, $gFIELDNAME;
               $gILLEGALCHAR = $illegalchar; $gFIELDNAME= $fieldname;
 
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.ILLEGALCHAR', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Illegal Character", array ( 'name' => $gFIELDNAME, 'char' => $gILLEGALCHAR ) );
               $this->Error = -1;
 
               unset ($gFIELDNAME); unset ($gILLEGALCHAR);
@@ -1572,10 +1561,8 @@
               global $gREQUIREDCHAR, $gFIELDNAME;
               $gREQUIREDCHAR = $requiredchar; $gFIELDNAME= $fieldname;
 
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.REQUIREDCHAR', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Required Character", array ( 'name' => $gFIELDNAME, 'char' => $gREQUIREDCHAR ) );
               $this->Error = -1;
 
               unset ($gFIELDNAME); unset ($gREQUIREDCHAR);
@@ -1596,12 +1583,10 @@
               $gFIELDNAME = $fieldname;
   
               // Lookup main error message.
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
 
               // Lookup field error message.
-              $ERRORSTR->Lookup ('ERROR.INTEGER', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Errorlist[$fieldname] = __("Error Integer");
 
               // Confirm error was found.
               $this->Error = -1;
@@ -1619,10 +1604,8 @@
               global $gMAXSIZE, $gFIELDNAME;
               $gMAXSIZE = $defmaxsize; $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.TOOLARGE', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Too Large", array ( 'name' => $gFIELDNAME, 'max' => $gMAXSIZE) );
               $this->Error = -1;
   
               unset ($gFIELDNAME); unset ($gMAXSIZE);
@@ -1639,10 +1622,8 @@
                 global $gMINSIZE, $gFIELDNAME;
                 $gMINSIZE = $defminsize; $gFIELDNAME= $fieldname;
     
-                $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-                $this->Message = $ERRORSTR->Output;
-                $ERRORSTR->Lookup ('ERROR.TOOSHORT', $this->PageContext);
-                $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+                $this->Message = __("Error On Page");
+                $this->Errorlist[$fieldname] = __("Error Too Small", array ( 'name' => $gFIELDNAME, 'min' => $gMINSIZE) );
                 $this->Error = -1;
     
                 unset ($gFIELDNAME); unset ($gMINSIZE);
@@ -1665,12 +1646,10 @@
               $gFIELDNAME = $fieldname;
   
               // Lookup main error message.
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
 
               // Lookup field error message.
-              $ERRORSTR->Lookup ('ERROR.INTEGER', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Errorlist[$fieldname] = __("Error Integer");
 
               // Confirm error was found.
               $this->Error = -1;
@@ -1688,10 +1667,8 @@
               global $gMAXSIZE, $gFIELDNAME;
               $gMAXSIZE = $defmaxsize; $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.TOOLARGE', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Too Large", array ( 'name' => $gFIELDNAME, 'max' => $gMAXSIZE) );
               $this->Error = -1;
   
               unset ($gFIELDNAME); unset ($gMAXSIZE);
@@ -1708,10 +1685,8 @@
                 global $gMINSIZE, $gFIELDNAME;
                 $gMINSIZE = $defminsize; $gFIELDNAME= $fieldname;
     
-                $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-                $this->Message = $ERRORSTR->Output;
-                $ERRORSTR->Lookup ('ERROR.TOOSMALL', $this->PageContext);
-                $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+                $this->Message = __("Error On Page");
+                $this->Errorlist[$fieldname] = __("Error Too Small", array ( 'name' => $gFIELDNAME, 'min' => $gMINSIZE) );
                 $this->Error = -1;
     
                 unset ($gFIELDNAME); unset ($gMINSIZE);
@@ -1727,10 +1702,8 @@
               global $gFIELDNAME;
               $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.BADEMAIL', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Invalid Email", array ( 'name' => $gFIELDNAME ) );
               $this->Error = -1;
 
               unset ($gFIELDNAME);
@@ -1748,10 +1721,8 @@
               global $gMAXSIZE, $gFIELDNAME;
               $gMAXSIZE = $defmaxsize; $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.TOOLONG', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Too Long", array ( 'name' => $gFIELDNAME, 'max' => $gMAXSIZE) );
               $this->Error = -1;
 
               unset ($gFIELDNAME); unset ($gMAXSIZE);
@@ -1764,10 +1735,8 @@
               global $gMINSIZE, $gFIELDNAME;
               $gMINSIZE = $defminsize; $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.TOOSHORT', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Too Short", array ( 'name' => $gFIELDNAME, 'min' => $gMINSIZE) );
               $this->Error = -1;
   
               unset ($gFIELDNAME); unset ($gMINSIZE);
@@ -1790,10 +1759,8 @@
               global $gMAXSIZE, $gFIELDNAME;
               $gMAXSIZE = $defmaxsize; $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.TOOLONG', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Too Long", array ( 'name' => $gFIELDNAME, 'max' => $gMAXSIZE) );
               $this->Error = -1;
 
               unset ($gFIELDNAME); unset ($gMAXSIZE);
@@ -1806,10 +1773,8 @@
               global $gMINSIZE, $gFIELDNAME;
               $gMINSIZE = $defminsize; $gFIELDNAME= $fieldname;
   
-              $ERRORSTR->Lookup ('ERROR.PAGE', $this->PageContext);
-              $this->Message = $ERRORSTR->Output;
-              $ERRORSTR->Lookup ('ERROR.TOOSMALL', $this->PageContext);
-              $this->Errorlist[$fieldname] = $ERRORSTR->Output;
+              $this->Message = __("Error On Page");
+              $this->Errorlist[$fieldname] = __("Error Too Small", array ( 'name' => $gFIELDNAME, 'min' => $gMINSIZE) );
               $this->Error = -1;
   
               unset ($gFIELDNAME); unset ($gMINSIZE);

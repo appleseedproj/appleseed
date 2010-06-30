@@ -96,100 +96,104 @@
     $gUSERTABS = "/objects/tabs/users/focus.aobj";
     $gUSERTABSLOCATION = $gTHEMELOCATION . $gUSERTABS;
 
-    // Buffer the Invite box.
-    global $bINVITEBOX;
-
-    // Calculate the amount of invites available.
-    global $gINVITECOUNT;
-    $zFOCUSUSER->userInvites->CountInvites ();
-    $gINVITECOUNT = $zFOCUSUSER->userInvites->Amount;
-
-    // Process invite action.
-    if ($gACTION == "INVITE") {
-
-      // Start buffering.
-      ob_start ();
-
-      // Synchronize with global POST variables.
-      $invitedefs = array ("userAuth_uID" => $zFOCUSUSER->uID,
-                           "Active"       => ACTIVE);
-      $zFOCUSUSER->userInvites->SelectByMultiple ($invitedefs);
-      $zFOCUSUSER->userInvites->FetchArray ();
-
-      // Overwrite with new recipient.
-      $zFOCUSUSER->userInvites->Recipient = $gRECIPIENT;
-
-      // Set the page context for error reporting.
-      $zFOCUSUSER->userInvites->PageContext = 'USER.INVITE';
-
-      // Sanity check for valid email address.
-      $zFOCUSUSER->userInvites->Sanity ();
-
-      // Check if this user has already been invited.
-      $CHECKINVITED = new cUSERINVITES ();
-      $checkdefs = array ("Recipient"  => $zFOCUSUSER->userInvites->Recipient,
-                          "Active"     => PENDING);
-      $CHECKINVITED->SelectByMultiple ($checkdefs);
-      $CHECKINVITED->FetchArray ();
-
-      // Check if this user is already a member.
-      $CHECKEXISTS = new cUSERPROFILE ();
-      $checkdefs = array ("Email"  => $zFOCUSUSER->userInvites->Recipient);
-      $CHECKEXISTS->SelectByMultiple ($checkdefs);
-      $CHECKEXISTS->FetchArray ();
-
-      // If so, create an error message.
-      if ( ($CHECKINVITED->Recipient == $zFOCUSUSER->userInvites->Recipient) or
-           ($CHECKEXISTS->Email == $zFOCUSUSER->userInvites->Recipient) ) {
-        $zFOCUSUSER->userInvites->Message = __("Error Duplicate Invite");
-        $zFOCUSUSER->userInvites->Error = -1;
-      } // if
-
-      if ($zFOCUSUSER->userInvites->Error) {
-
-        // Return to form, present error.
+    if ( $gSETTINGS['UseInvites'] == YES ) {
+    	
+      // Buffer the Invite box.
+      global $bINVITEBOX;
+  
+      // Calculate the amount of invites available.
+      global $gINVITECOUNT;
+      $zFOCUSUSER->userInvites->CountInvites ();
+      $gINVITECOUNT = $zFOCUSUSER->userInvites->Amount;
+  
+      // Process invite action.
+      if ($gACTION == "INVITE") {
+  
+        // Start buffering.
+        ob_start ();
+  
+        // Synchronize with global POST variables.
+        $invitedefs = array ("userAuth_uID" => $zFOCUSUSER->uID,
+                             "Active"       => ACTIVE);
+        $zFOCUSUSER->userInvites->SelectByMultiple ($invitedefs);
+        $zFOCUSUSER->userInvites->FetchArray ();
+  
+        // Overwrite with new recipient.
+        $zFOCUSUSER->userInvites->Recipient = $gRECIPIENT;
+  
+        // Set the page context for error reporting.
+        $zFOCUSUSER->userInvites->PageContext = 'USER.INVITE';
+  
+        // Sanity check for valid email address.
+        $zFOCUSUSER->userInvites->Sanity ();
+  
+        // Check if this user has already been invited.
+        $CHECKINVITED = new cUSERINVITES ();
+        $checkdefs = array ("Recipient"  => $zFOCUSUSER->userInvites->Recipient,
+                            "Active"     => PENDING);
+        $CHECKINVITED->SelectByMultiple ($checkdefs);
+        $CHECKINVITED->FetchArray ();
+  
+        // Check if this user is already a member.
+        $CHECKEXISTS = new cUSERPROFILE ();
+        $checkdefs = array ("Email"  => $zFOCUSUSER->userInvites->Recipient);
+        $CHECKEXISTS->SelectByMultiple ($checkdefs);
+        $CHECKEXISTS->FetchArray ();
+  
+        // If so, create an error message.
+        if ( ($CHECKINVITED->Recipient == $zFOCUSUSER->userInvites->Recipient) or
+             ($CHECKEXISTS->Email == $zFOCUSUSER->userInvites->Recipient) ) {
+          $zFOCUSUSER->userInvites->Message = __("Error Duplicate Invite");
+          $zFOCUSUSER->userInvites->Error = -1;
+        } // if
+  
+        if ($zFOCUSUSER->userInvites->Error) {
+  
+          // Return to form, present error.
         $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.aobj", INCLUDE_SECURITY_NONE);
+  
+        } else {
 
+          global $gSITEURL;
+          global $gINVITEDBY, $gINVITEURL;
+  
+          $gINVITEDBY = ucwords ($zLOCALUSER->userProfile->GetAlias ());
+          $gINVITEURL = $gSITEURL . "/join/" . $zFOCUSUSER->userInvites->Value;
+  
+          $subject = __( "User Invite Subject" );
+  
+          $body = __( "User Invite Body" );
+      
+          $from = __( "User Invite Sender" );
+  
+          $headers = "From: $from" . "\r\n" .
+                     "Reply-To: $from" . "\r\n" .
+                     "X-Mailer: PHP/" . phpversion();
+  
+          mail ($zFOCUSUSER->userInvites->Recipient, $subject, $body, $headers);
+  
+          // Update invite information.
+          $zFOCUSUSER->userInvites->Stamp = SQL_NOW;
+          $zFOCUSUSER->userInvites->Active = PENDING;
+          $zFOCUSUSER->userInvites->Update ();
+  
+          // Success message.
+          $zFOCUSUSER->userInvites->Message = __ ( "Invitation Sent" );
+  
+          $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.confirm.aobj", INCLUDE_SECURITY_NONE);
+  
+        } // if
+  
+        // Retrieve Buffer.
+        $bINVITEBOX = ob_get_clean ();
+        
       } else {
-
-        global $gSITEURL;
-        global $gINVITEDBY, $gINVITEURL;
-
-        $gINVITEDBY = ucwords ($zLOCALUSER->userProfile->GetAlias ());
-        $gINVITEURL = $gSITEURL . "/join/" . $zFOCUSUSER->userInvites->Value;
-
-        $subject = __( "User Invite Subject" );
-
-        $body = __( "User Invite Body" );
-
-        $from = __( "User Invite Sender" );
-
-        $headers = "From: $from" . "\r\n" .
-                   "Reply-To: $from" . "\r\n" .
-                   "X-Mailer: PHP/" . phpversion();
-
-        mail ($zFOCUSUSER->userInvites->Recipient, $subject, $body, $headers);
-
-        // Update invite information.
-        $zFOCUSUSER->userInvites->Stamp = SQL_NOW;
-        $zFOCUSUSER->userInvites->Active = PENDING;
-        $zFOCUSUSER->userInvites->Update ();
-
-        // Success message.
-        $zFOCUSUSER->userInvites->Message = __ ( "Invitation Sent" );
-
-        $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/profile/invite.confirm.aobj", INCLUDE_SECURITY_NONE);
+  
+        $bINVITEBOX = $zOLDAPPLE->BufferInviteBox ($gINVITECOUNT);
 
       } // if
-
-      // Retrieve Buffer.
-      $bINVITEBOX = ob_get_clean ();
-
-    } else {
-
-      $bINVITEBOX = $zOLDAPPLE->BufferInviteBox ($gINVITECOUNT);
-
     } // if
+
 
   } else {
 

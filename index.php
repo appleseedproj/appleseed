@@ -69,7 +69,6 @@
   $INSTALL->CheckForSubDirectory ();
   $INSTALL->CheckPHPVersion ();
   $INSTALL->CheckMysqlClientVersion ();
-  $INSTALL->CheckMagicQuotes ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckPhotoDirectory ();
   $INSTALL->CheckAttachmentDirectory ();
@@ -466,21 +465,6 @@ class cINSTALL {
   	
     return ($return);
   } // GetMysqlServerVersion
-  
-  function CheckMagicQuotes () {
-    global $Error, $ErrorMark;
-    
-    // Check if register_globals is turned off.
-    if ((ini_get ('magic_quotes_gpc')) or (ini_get('magic_quotes_runtime'))) {
-      $Error['magic_quotes'] = TRUE;
-      $ErrorMark['magic_quotes'] = "<span class='no'>N</span>";
-    } else {
-      $Error['magic_quotes'] = FALSE;
-      $ErrorMark['magic_quotes'] = "<span class='yes'>Y</span>";
-    } // if
-  
-    return (TRUE);
-  } // CheckMagicQuotes
   
   function CheckRegisterGlobals () {
     global $Error, $ErrorMark;
@@ -986,9 +970,6 @@ class cINSTALL {
         <span class='label'>Installed in site root directory? (see documentation)</span>
         <?php echo $ErrorMark['sub_dir']; ?>
         
-        <span class='label'>Is magic_quotes turned off?</span>
-        <?php echo $ErrorMark['magic_quotes']; ?>
-        
         <span class='label'>Is register_globals turned off?</span>
         <?php echo $ErrorMark['register_globals']; ?>
         
@@ -1073,7 +1054,7 @@ class cINSTALL {
       </div> <!-- .container -->
      </div> <!-- .install -->
      <div id='copyright'>
-      Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reversed.
+      Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
      </div>
     </body>
     </html> <?php
@@ -1102,9 +1083,6 @@ class cINSTALL {
         
         <span class='label'>Installed in root directory? (see documentation)</span>
         <?php echo $ErrorMark['sub_dir']; ?>
-        
-        <span class='label'>Is magic_quotes turned off?</span>
-        <?php echo $ErrorMark['magic_quotes']; ?>
         
         <span class='label'>Is register_globals turned off?</span>
         <?php echo $ErrorMark['register_globals']; ?>

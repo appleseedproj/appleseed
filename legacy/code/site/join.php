@@ -114,21 +114,25 @@
     $zFOCUSUSER->userInvites->SelectByMultiple ($invitedef);
     $zFOCUSUSER->userInvites->FetchArray ();
 
-    // Step 0: Check if invite is still valid.
-    if ($zFOCUSUSER->userInvites->Active == INACTIVE) {
-      $zFOCUSUSER->userInvites->Error = -1;
-      $zFOCUSUSER->userInvites->Errorlist['Value'] = __("Expired Invitation");
-    } // if
+	if ( $gSETTINGS['UseInvites'] == YES ) {
+		
+      // Step 0: Check if invite is still valid.
+      if ($zFOCUSUSER->userInvites->Active == INACTIVE) {
+        $zFOCUSUSER->userInvites->Error = -1;
+        $zFOCUSUSER->userInvites->Errorlist['Value'] = __("Expired Invitation");
+      } // if
+      
+      // Step 1: Check if invite and email match.
+      if ($zFOCUSUSER->userInvites->CountResult () == 0) {
+        // Set the error.
+        $zFOCUSUSER->userInvites->Error = -1;
+        $zFOCUSUSER->userInvites->Errorlist['Value'] = __("Invalid Invitation");
+        // Set the recipient email back to the inputted value.
+        $zFOCUSUSER->userInvites->Recipient = $gEMAIL;
+      } // if
+      
+	} // if
     
-    // Step 1: Check if invite and email match.
-    if ($zFOCUSUSER->userInvites->CountResult () == 0) {
-      // Set the error.
-      $zFOCUSUSER->userInvites->Error = -1;
-      $zFOCUSUSER->userInvites->Errorlist['Value'] = __("Invalid Invitation");
-      // Set the recipient email back to the inputted value.
-      $zFOCUSUSER->userInvites->Recipient = $gEMAIL;
-    } // if
-
     // Step 2: Check if passwords match.
     if ($zFOCUSUSER->Pass != $gCONFIRM) {
       // Set the error.
@@ -156,7 +160,7 @@
     // Sanity check input variables.
     $zFOCUSUSER->Sanity ();
     $zFOCUSUSER->userProfile->Sanity ();
-    $zFOCUSUSER->userInvites->Sanity ();
+    if (  $gSETTINGS['UseInvites'] == YES ) $zFOCUSUSER->userInvites->Sanity ();
 
     // Determine if an error was found.
     if ( ($zFOCUSUSER->Error) or ($zFOCUSUSER->userProfile->Error) or
@@ -188,9 +192,11 @@
       // Initialize the new user.
       $zFOCUSUSER->Initialize ();
       
-      // Set the old invite to inactive.
-      $zFOCUSUSER->userInvites->Active = INACTIVE;
-      $zFOCUSUSER->userInvites->Update ();
+      if (  $gSETTINGS['UseInvites'] == YES ) {
+        // Set the old invite to inactive.
+        $zFOCUSUSER->userInvites->Active = INACTIVE;
+        $zFOCUSUSER->userInvites->Update ();
+      }
 
       // Set a success message.
 
@@ -204,6 +210,16 @@
     } // if
 
   } // if
+  
+  global $bINVITECODE;
+  
+  if (  $gSETTINGS['UseInvites'] == YES ) {
+    ob_start ();
+    
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/join.invite.aobj", INCLUDE_SECURITY_NONE);
+      
+    $bINVITECODE = ob_get_clean();
+  }
 
   // Include the outline frame.
   $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/join.afrw", INCLUDE_SECURITY_NONE);

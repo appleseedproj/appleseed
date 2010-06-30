@@ -41,12 +41,9 @@
    <?php $zHTML->TextBox ("CONFIRM", 16, "", TRUE); ?>
    <?php $zFOCUSUSER->Broadcast ('field', 'Pass'); ?>
 
-   <p id='invite'>
-    <?php echo __("Invite Code"); ?>
-   </p> <!-- .invite -->
-   <?php $zHTML->TextBox ("VALUE", 32, $gVALUE); ?>
-   <?php $zFOCUSUSER->userInvites->Broadcast ('field', 'Value'); ?>
 
+   <?php echo $bINVITECODE; ?>
+   
    <?php $zHTML->Button ("Submit"); ?>
 
  </form> <!-- #join -->

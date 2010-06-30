@@ -333,6 +333,16 @@
     $zOLDAPPLE->End();
   } // if
   
+  global $bINVITECODE;
+  
+  if (  $gSETTINGS['UseInvites'] == YES ) {
+    ob_start ();
+    
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/join.invite.aobj", INCLUDE_SECURITY_NONE);
+      
+    $bINVITECODE = ob_get_clean();
+  }
+
   // Set password to NULL.
   $gPASS = NULL;
 

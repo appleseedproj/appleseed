@@ -142,11 +142,8 @@
       $this->FetchArray();
       
       if ( $this->CountResult () == 0) {
-        $ERRORSTR = new cSYSTEMSTRINGS;
-        $ERRORSTR->Lookup ('ERROR.FAILED', 'SITE.LOGIN');
-        $this->Message = $ERRORSTR->Output;
+        $this->Message = __("Login Failed");
         $this->Error = -1;
-        unset ($ERRORSTR);
         return (-1);
       } // if
       

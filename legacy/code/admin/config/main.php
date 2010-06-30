@@ -93,7 +93,8 @@
 
   // Load configuration options.
   
-  global $gSETTINGS, $gTHEMELISTING, $gLANGUAGELISTING, $gSHUTDOWNLISTING;
+  global $gSETTINGS, $gTHEMELISTING, $gLANGUAGELISTING, $gSHUTDOWNLISTING, $gINVITESLISTING;
+  global $gTHEME, $gSUMMARY, $gLANGUAGE, $gSTORAGE, $gINVITES, $gUSEINVITES, $gSHUTDOWN;
   
   // Take action.
   switch ($gACTION) {
@@ -108,8 +109,10 @@
       $update['Language'] = $gLANGUAGE;  
       $update['Theme'] = $gTHEME;  
       $update['StorageLimit'] = $gSTORAGE;  
+      $update['UseInvites'] = $gUSEINVITES;  
       $update['InviteAmount'] = $gINVITES;  
       $update['Shutdown'] = $gSHUTDOWN;  
+      
       $zCONFIG->SaveConfiguration ($update);
     break;
   } // switch
@@ -118,6 +121,7 @@
   $gLANGUAGELISTING = $zOLDAPPLE->GetLanguageList();
   
   $gSHUTDOWNLISTING = array (NO => 'No', YES => 'Yes', ADMIN_ONLY => 'Administrators Only');
+  $gINVITESLISTING = array (YES => 'Yes', NO => 'No');
   
   // Include the outline frame.
   $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/admin/config.afrw", INCLUDE_SECURITY_NONE);

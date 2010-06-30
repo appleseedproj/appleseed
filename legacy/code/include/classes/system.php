@@ -361,7 +361,7 @@
         } // if
       } // foreach
       
-      $this->Message = __("Record Updated");
+      $this->Message = __("Configuration Saved");
       
       $this->Error = 0;
       

@@ -797,7 +797,7 @@
 
         unset ($zREMOTE);
       } elseif ($this->Username == ANONYMOUS) {
-        $fullname = __("ANONYMOUS USER");
+        $fullname = __("Anonymous User");
         $email = "";
       } else {
 

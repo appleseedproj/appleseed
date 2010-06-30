@@ -102,25 +102,29 @@
   $zNODES = new cCONTENTNODES();
   $bLATESTNODES = $zNODES->BufferLatestNodes();
 
-  global $gINVITECOUNT;
 
-  $zLOCALUSER->userInvites->CountInvites();
-  $gINVITECOUNT = $zLOCALUSER->userInvites->Amount;
+  if ( $gSETTINGS['UseInvites'] == YES ) {
 
-  // Buffer the invite box
-  ob_start (); 
+    global $gINVITECOUNT;
+
+    $zLOCALUSER->userInvites->CountInvites();
+    $gINVITECOUNT = $zLOCALUSER->userInvites->Amount;
   
-  if ( ($zAUTHUSER->Username != '') AND ($gSETTINGS['UseInvites'] == ON) AND 
-       ($gINVITECOUNT > 0) ) {
-    // Include the login box object
-    $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/invitebox.aobj", INCLUDE_SECURITY_NONE);
-  } // if
-
-  // Retrieve output buffer.
-  $bINVITEBOX = ob_get_clean ();
-
-  // End buffering.
-  ob_end_clean (); 
+    // Buffer the invite box
+    ob_start (); 
+    
+    if ( ($zAUTHUSER->Username != '') AND ($gSETTINGS['UseInvites'] == ON) AND 
+         ($gINVITECOUNT > 0) ) {
+      // Include the login box object
+      $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/invitebox.aobj", INCLUDE_SECURITY_NONE);
+    } // if
+  
+    // Retrieve output buffer.
+    $bINVITEBOX = ob_get_clean ();
+  
+    // End buffering.
+    ob_end_clean (); 
+  }
 
   // Include the outline frame.
   $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/frames/site/main.afrw", INCLUDE_SECURITY_NONE);
