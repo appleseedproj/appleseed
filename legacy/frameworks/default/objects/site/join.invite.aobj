@@ -1,0 +1,6 @@
+   <p id='invite'>
+    <?php echo __("Invite Code"); ?>
+   </p> <!-- .invite -->
+   <?php $zHTML->TextBox ("VALUE", 32, $gVALUE); ?>
+   <?php $zFOCUSUSER->userInvites->Broadcast ('field', 'Value'); ?>
+
