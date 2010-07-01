@@ -10,13 +10,14 @@ Base features, API, framework, themability, internationalisation.
 
 0.7.4  - MVC framework, Internationalisation, Configuration inheritance, New theme, SHA512 for password storage
 0.7.5  - Refactor legacy code, Html form functions, Refactor CRUD functions, Integrate JQuery, Administrator framework and front end refactoring.
-0.7.6  - Add micro-blogging and "wall" components, round out features and bug fix friends, messaging, and login components.
-0.7.7  - Add user options and system logging components, round out features and bug fix photos, journals, and comments components.
-0.7.8  - Add newsfeed component, round out features and bug fix control and config components.
-0.7.9  - Add folksonomy component, round out features and bug fix groups, pages, and articles components.
-0.7.9  - Add search and events components, build out JQuery integration and framework
-0.7.10 - Add chat, video, and music components
-0.7.11 - Refactor and round out new components.  Semi-Freeze protocol and API with this release.
+0.7.6  - Round out features and bug fix node control, automatic update, and friends component.
+0.7.7  - Add micro-blogging and "wall" components, round out features and bug fix privacy, messaging, and login components.
+0.7.8  - Add user options and system logging components, round out features and bug fix photos, journals, and comments components.
+0.7.9  - Add newsfeed component, round out features and bug fix control and config components.
+0.7.10 - Add folksonomy component, round out features and bug fix groups, pages, and articles components.
+0.7.11 - Add search and events components, build out JQuery integration and framework
+0.7.12 - Add chat, video, and music components
+0.7.13 - Refactor and round out new components.  Semi-Freeze protocol and API with this release.
 
 0.8 SERIES
 ----------
