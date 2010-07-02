@@ -60,7 +60,10 @@ class cBase {
 		
 		$variable = ltrim ( rtrim ( $pVariable ) );
 		
-		if ( !isset ( $zApp->$variable ) ) return ( false );
+		if ( !isset ( $zApp->$variable ) ) {
+			echo __("System Object Not Found", array ( 'name' => $variable ) );
+			exit;
+		}
 		
 		return ( $zApp->$variable );
 	}

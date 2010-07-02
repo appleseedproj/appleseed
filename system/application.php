@@ -27,7 +27,7 @@ class cApplication extends cBase {
 	private $_cache;
 	
 	private $_path;
-
+	
 	/**
 	 * Constructor
 	 *
@@ -81,6 +81,8 @@ class cApplication extends cBase {
 		$this->Event = new cEvent();
 		$this->Hooks = new cHooks();
 		
+		$this->Request = new cRequest();
+		
 		$this->Event->Hooks = $this->Hooks;
 		
         // Load global strings into cache.
@@ -98,6 +100,7 @@ class cApplication extends cBase {
 	 */
 	private function _LoadLibraries ( ) {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
+		require_once ( ASD_PATH . DS . 'libraries' . DS . 'request.php' );
 	}
 	
 	/**

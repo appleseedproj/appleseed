@@ -27,5 +27,21 @@ class cRequest {
          */
         public function __construct ( ) {       
         }
+        
+        public function Get ( $pVariable, $pDefault = null ) {
+        	
+        	// Makes all request variable names case insensitive.
+        	$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
+        	
+        	foreach ( $_REQUEST as $key => $value ) {
+        		$lowerkey = strtolower ( $key );
+        		$request[$lowerkey] = $_REQUEST[$key];
+        	}
+        	
+        	if ( !$request[$variable] ) return ( $pDefault );
+        	
+        	return ( $request[$variable] );
+        	
+        }
 
 }

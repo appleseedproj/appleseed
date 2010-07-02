@@ -54,6 +54,9 @@ class cController extends cBase {
 	public function LoadView ( $pView ) {
 		eval ( GLOBALS );
 		
+		// In case it was accidentally specificied, remove the php extension from view name.
+		$pView = str_replace ( '.php', '', $pView );
+		
 		$viewpath = $this->_GetViewPath ( $pView ) ;
 		
 		if ( $viewpath ) {
@@ -62,6 +65,24 @@ class cController extends cBase {
 		}
 		
 		return ( false );
+	}
+	
+	/**
+	 * Loads a form, post-processing if required.
+	 *
+	 * @access  public
+	 * @param string $pView Which view file to load
+	 */
+	public function LoadForm ( $pView ) {
+		eval ( GLOBALS );
+		
+		// Process the form.
+		// Get the form name.
+		// Look up modifications by form name.
+		// Apply modifications.
+		
+		return ( $this->LoadView ( $pView ) );
+		
 	}
 	
 	/**

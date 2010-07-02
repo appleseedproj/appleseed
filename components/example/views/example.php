@@ -13,4 +13,4 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
 ?>
 
-Example Component View
+<?php $this->LoadForm ( "example_form.php" ); ?>

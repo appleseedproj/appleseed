@@ -28,6 +28,7 @@ class cComponent extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {
+		
 		parent::__construct();
 	}
 	

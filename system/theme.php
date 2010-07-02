@@ -115,6 +115,8 @@ class cTheme extends cBase {
 			$location = $url . $style;
     		echo '<link rel="stylesheet" href="' . $location . '" />' . "\n";
 		}
+		
+		return ( true );
 	}
 
 }

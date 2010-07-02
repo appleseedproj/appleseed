@@ -56,14 +56,11 @@ class cFoundation extends cBase {
 			if ( is_file ( $filename ) ) {
 				$Buffer->LoadFoundation ( $filename );
 				return ( true );
-			} else {
-				echo __("Foundation Not Found", array ( 'route' => $route ) );
-				exit;
 			}
 		}
-		// 404 error
 		
-		return ( false );
+		echo __("Foundation Not Found", array ( 'route' => $route ) );
+		exit;
 	}
 
 }

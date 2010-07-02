@@ -34,9 +34,9 @@ class cExampleController extends cController {
 		
 		// echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
 		
-		$this->Model = &$this->GetModel( "Example" );
-		$this->MapModel = &$this->GetModel( "Map" );
-		$this->TagsModel = &$this->GetModel( "Tags" );
+		// $this->Model = &$this->GetModel( "Example" );
+		// $this->MapModel = &$this->GetModel( "Map" );
+		// $this->TagsModel = &$this->GetModel( "Tags" );
 		
 		parent::Display( $pView, $pData );
 
