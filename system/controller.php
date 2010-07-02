@@ -41,7 +41,11 @@ class cController extends cBase {
 	public function Display ( $pView = null, $pData = null) {
 		eval ( GLOBALS );
 		
-		return ( $this->LoadView ( $pView ) );
+		if ( !$this->LoadView ( $pView ) ) return ( false );
+		
+		echo $this->LoadView ( $pView );
+		
+		return ( true );
 	}
 	
 	
@@ -60,29 +64,12 @@ class cController extends cBase {
 		$viewpath = $this->_GetViewPath ( $pView ) ;
 		
 		if ( $viewpath ) {
+			ob_start ();
 			include ( $viewpath );
-			return ( true );
+			return ( ob_get_clean () );
 		}
 		
 		return ( false );
-	}
-	
-	/**
-	 * Loads a form, post-processing if required.
-	 *
-	 * @access  public
-	 * @param string $pView Which view file to load
-	 */
-	public function LoadForm ( $pView ) {
-		eval ( GLOBALS );
-		
-		// Process the form.
-		// Get the form name.
-		// Look up modifications by form name.
-		// Apply modifications.
-		
-		return ( $this->LoadView ( $pView ) );
-		
 	}
 	
 	/**

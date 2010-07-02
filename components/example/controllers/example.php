@@ -32,15 +32,33 @@ class cExampleController extends cController {
 	public function Display ( $pView = null, $pData = null ) {
 		$this->EventTrigger ( "Begin" );
 		
-		// echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		$this->Form = $this->GetSys ( "HTML" );
 		
-		// $this->Model = &$this->GetModel( "Example" );
-		// $this->MapModel = &$this->GetModel( "Map" );
-		// $this->TagsModel = &$this->GetModel( "Tags" );
+		$this->Form->Load ( $this->LoadView ( "example_form" ), "example_form" );
+		
+		/*
+		 * Reference
+		 * 
+		echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		
+		$this->GetSys ( "Event" )->Trigger ( "End", "Example", "Display" );
+		
+		$this->Model = &$this->GetModel( "Example" );
+		$this->MapModel = &$this->GetModel( "Map" );
+		$this->TagsModel = &$this->GetModel( "Tags" );
+		
+		$this->Form->Modify ( $pView, "label[for=passwd]", array ( "innertext" => "Blah Blah" ) )
+		$this->Form->AddOption ( $pView, "select[name=country]", array ( "innertext" => "Blah Blah" ) )
+		$this->Form->RemoveElement ( $pView, "select[name=country]" )
+		$this->Form->DisableElement ( $pView, "select[name=country]" )
+		$this->Form->Display ( $pView )
+		*/
+		
+		$this->Form->Modify ( "label[for=passwd]", array ( "innertext" => "Blah Blah!" ) );
+		$this->Form->Modify ( "input[name=text]", array ( "value" => "Default Value!" ) );
 		
 		parent::Display( $pView, $pData );
 
-		// $this->GetSys ( "Event" )->Trigger ( "End", "Example", "Display" );
 		$this->EventTrigger ( "End" );  // Shorthand
 		
 		return ( true );

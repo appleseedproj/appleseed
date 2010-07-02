@@ -82,6 +82,7 @@ class cApplication extends cBase {
 		$this->Hooks = new cHooks();
 		
 		$this->Request = new cRequest();
+		$this->HTML = new cHTML();
 		
 		$this->Event->Hooks = $this->Hooks;
 		
@@ -101,6 +102,7 @@ class cApplication extends cBase {
 	private function _LoadLibraries ( ) {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'request.php' );
+		require_once ( ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
 	}
 	
 	/**
