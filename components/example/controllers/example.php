@@ -134,9 +134,9 @@ class cExampleController extends cController {
 		 * @tutorial Here's a trick:
 		 * @tutorial If you know that your element is wrapped inside other elements (ie, a table), you can delete parent nodes
 		 *
-		 * @philosophy You should know what your view structure looks like.
-		 * @philosophy We're not operating under an assumption of a protected or abstracted view.
-		 * @philosophy If you try and write your controller code that way, you'll just give yourself a headache.
+		 * @philosophy You may not know what your view structure looks like.
+		 * @philosophy Since themes are able to overwrite views, you need to be careful with tricks like this.
+		 * @philosophy A better way would be to target rows directly using classes or id's.
 		 *  
 		 */
 		$this->Form->Find("input[name=removed_row]", 0)->Parent(0)->Parent(0)->outertext = "";

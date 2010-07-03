@@ -189,7 +189,7 @@ class cHTML extends cMarkup {
         
 }
 
-/** HTML Class
+/** XML Class
  * 
  * Handles basic xml markup 
  * 
