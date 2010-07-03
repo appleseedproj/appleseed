@@ -4,9 +4,9 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: index.php                               CREATED: 04-12-2007 + 
-  // | LOCATION: /                                  MODIFIED: 04-19-2008 +
+  // | LOCATION: /                                  MODIFIED: 07-03-2010 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2008 Appleseed Project                         |
+  // | Copyright (c) 2004-2010 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.3                                               |
+  // | VERSION:      0.7.4                                               |
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
   
@@ -47,7 +47,9 @@
   $INSTALL = new cINSTALL;
   
   $INSTALL->PreLoadSiteData ();
-  
+
+	list ( $gCUSTOM ) = explode ('.', $_SERVER['HTTP_HOST']);
+
   $gDATABASE = ($_POST['gDATABASE']) ? $_POST['gDATABASE'] : $gDATABASE;
   $gUSERNAME = ($_POST['gUSERNAME']) ? $_POST['gUSERNAME'] : $gUSERNAME;
   $gPASSWORD = ($_POST['gPASSWORD']) ? $_POST['gPASSWORD'] : $gPASSWORD;
@@ -93,47 +95,97 @@
 ?>
 
 <html>
-<title>Appleseed Install Script</title>
+<head>
+	<meta charset="utf-8" />
+  <title>Appleseed 0.7.4 Install Script</title>
+</head>
 
 <style type="text/css" media="screen">
- body { text-align:center; width:800px; font:10px arial; margin:10px auto; } 
- div#copyright { float:left; text-align:center; width:800px; margin:20px 0; }
- div.caption { float:left; width:796px; margin-left:10px; text-align:left; }
- div { text-align:left; }
- div.container { float:left; clear:both; width:800px; background-color:#fafafa; border:1px solid #cccccc; border-right:2px solid #999999; border-bottom:2px solid #999999; }
- div#check, div#completed, div#site, div#database {  float:left; clear:both; width:590px; margin:10px 100px; padding:5px; border:1px solid #cccccc; }
- p { float:left; clear:both; width:100%; border-bottom:1px solid #aaaaaa; }
- p.information { border:none; }
- p.done { border:none; border-top:1px solid #aaaaaa; margin-top:10px; padding-top:10px; }
- p.final { border:none; width:400px; margin:0 150px; }
- p.final a { text-decoration:none; float:left; clear:both; font-size:14px; color:#00ff00; background:#ccffcc; padding:2px 4px; }
- span.label, label { float:left; width:270px; margin:5px 0 5px 100px; }
- input, textarea { width:150px; margin:5px 50px 5px 0; font:10px Arial; color:#4c5055; background:#ecf0f5; vertical-align:top; border:1px solid #ccd0d5; padding:1px 3px; }
- select { float:left; width:150px; }
- input:hover, textarea:hover { background:#fafafa; color:#2a2a2a; border-color:#acb0b5 } 
- input.submit, input.refresh { float:right; width:auto; padding:2px 10px; margin:20px 98px; font-weight:bold; }
- div#confirmDatabaseConnection { float:left; clear:both; width:100%; padding:5px; text-align:center;}
- input#adminPassConfirm { margin-right:0; }
- div#checkPasswords { float:right; width:230px; text-align:right; padding:2px 0px; margin:0px 70px; font-weight:bold; }
- div#upgradeWarning { float:right; width:100%; color:#ff0000; display:none; text-align:right; padding:2px 0px; margin:0px 70px; font-weight:bold; }
- input.checkConnection { width:100px; color:#ff0000; margin:0; padding:0;}
- span.done, span.yes, span.no { float:left; width:8px; font-weight:bold; text-align:center; margin:5px 0px 5px 130px; padding:1px 3px; }
- span.done { width:auto; color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
- span.yes { color:#00ff00; background:#ccffcc; border:1px solid #ccffcc; }
- span.no { color:#ff0000; background:#ffcccc; border:1px solid #ffcccc; }
- p.error {
-  float:left;
-  width:100%;
-  color:#ffffff;
-  cursor:crosshair;
-  border:1px solid #a31a31;
-  border-left:none;
-  border-right:none;
-  padding:1px 0;
-  text-align:center;
-  font-style:italic;
-  background:#cc151a;
- }
+body{font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}select,input,button,textarea,button{font:99% arial,helvetica,clean,sans-serif;}table{font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+html { background-color: #fff; color: #000; }
+
+p, nav, li, img { padding: 10px 0 0 0; }
+
+header hgroup h1 { font-size: 200%; }
+header hgroup h2 { font-size: 120%; }
+header nav, #page nav { width: 100%; min-height: 20px; }
+header nav ul li, #page nav ul li, #user_comments nav ol li, #admin_page nav ol li { float: left; padding: 0px 10px 0px 0px; }
+
+#info ul { margin:0 0 0 30px; padding:0; }
+#info ul li { margin:0; padding:0; }
+
+table { width: 100%; margin: 10px 0px; }
+table th, table td { padding: 5px; text-align: center; }
+table th[scope="col"] { border-bottom: 1px solid #000; }
+
+header, section, footer { padding: 10px 0; }
+
+#page { padding: 10px; }
+#page section h1 { font-size: 140%; }
+#page section li h1 { font-size: 110%; }
+#page section hgroup h1 { font-size: 200%; margin: 0px 0px 10px 0px; }
+#page section hgroup h2 { font-size: 140%; }
+
+#page fieldset { border: 1px solid #000; padding: 0px 10px 10px 10px; margin: 10px 0px; }
+#page fieldset legend { font-weight: bold; padding: 0 4px; }
+#page form table th,
+#page form table td { vertical-align: top; }
+#page form table th { text-align: right; font-weight: bold; }
+#page form table td { text-align: left; }
+#page fieldset legend em,
+#page fieldset label em {
+    color: #ff0000;
+}
+
+#page_left nav ul li, #page_left nav ol li { float: none; }
+
+time { font-size: 85%; }
+
+.yes { padding:1px 2px; color:#ffffff; border:1px solid #007700; background-color:#009900; }
+.no { padding:1px 2px; color:#ffffff; border:1px solid #770000; background-color:#990000; }
+
+footer ul li { list-style: none; }
+.container_12,.container_16{margin-left:auto;margin-right:auto;width:960px}.grid_1,.grid_2,.grid_3,.grid_4,.grid_5,.grid_6,.grid_7,.grid_8,.grid_9,.grid_10,.grid_11,.grid_12,.grid_13,.grid_14,.grid_15,.grid_16{display:inline;float:left;margin-left:10px;margin-right:10px}.push_1,.pull_1,.push_2,.pull_2,.push_3,.pull_3,.push_4,.pull_4,.push_5,.pull_5,.push_6,.pull_6,.push_7,.pull_7,.push_8,.pull_8,.push_9,.pull_9,.push_10,.pull_10,.push_11,.pull_11,.push_12,.pull_12,.push_13,.pull_13,.push_14,.pull_14,.push_15,.pull_15{position:relative}.container_12 .grid_3,.container_16 .grid_4{width:220px}.container_12 .grid_6,.container_16 .grid_8{width:460px}.container_12 .grid_9,.container_16 .grid_12{width:700px}.container_12 .grid_12,.container_16 .grid_16{width:940px}.alpha{margin-left:0}.omega{margin-right:0}.container_12 .grid_1{width:60px}.container_12 .grid_2{width:140px}.container_12 .grid_4{width:300px}.container_12 .grid_5{width:380px}.container_12 .grid_7{width:540px}.container_12 .grid_8{width:620px}.container_12 .grid_10{width:780px}.container_12 .grid_11{width:860px}.container_16 .grid_1{width:40px}.container_16 .grid_2{width:100px}.container_16 .grid_3{width:160px}.container_16 .grid_5{width:280px}.container_16 .grid_6{width:340px}.container_16 .grid_7{width:400px}.container_16 .grid_9{width:520px}.container_16 .grid_10{width:580px}.container_16 .grid_11{width:640px}.container_16 .grid_13{width:760px}.container_16 .grid_14{width:820px}.container_16 .grid_15{width:880px}.container_12 .prefix_3,.container_16 .prefix_4{padding-left:240px}.container_12 .prefix_6,.container_16 .prefix_8{padding-left:480px}.container_12 .prefix_9,.container_16 .prefix_12{padding-left:720px}.container_12 .prefix_1{padding-left:80px}.container_12 .prefix_2{padding-left:160px}.container_12 .prefix_4{padding-left:320px}.container_12 .prefix_5{padding-left:400px}.container_12 .prefix_7{padding-left:560px}.container_12 .prefix_8{padding-left:640px}.container_12 .prefix_10{padding-left:800px}.container_12 .prefix_11{padding-left:880px}.container_16 .prefix_1{padding-left:60px}.container_16 .prefix_2{padding-left:120px}.container_16 .prefix_3{padding-left:180px}.container_16 .prefix_5{padding-left:300px}.container_16 .prefix_6{padding-left:360px}.container_16 .prefix_7{padding-left:420px}.container_16 .prefix_9{padding-left:540px}.container_16 .prefix_10{padding-left:600px}.container_16 .prefix_11{padding-left:660px}.container_16 .prefix_13{padding-left:780px}.container_16 .prefix_14{padding-left:840px}.container_16 .prefix_15{padding-left:900px}.container_12 .suffix_3,.container_16 .suffix_4{padding-right:240px}.container_12 .suffix_6,.container_16 .suffix_8{padding-right:480px}.container_12 .suffix_9,.container_16 .suffix_12{padding-right:720px}.container_12 .suffix_1{padding-right:80px}.container_12 .suffix_2{padding-right:160px}.container_12 .suffix_4{padding-right:320px}.container_12 .suffix_5{padding-right:400px}.container_12 .suffix_7{padding-right:560px}.container_12 .suffix_8{padding-right:640px}.container_12 .suffix_10{padding-right:800px}.container_12 .suffix_11{padding-right:880px}.container_16 .suffix_1{padding-right:60px}.container_16 .suffix_2{padding-right:120px}.container_16 .suffix_3{padding-right:180px}.container_16 .suffix_5{padding-right:300px}.container_16 .suffix_6{padding-right:360px}.container_16 .suffix_7{padding-right:420px}.container_16 .suffix_9{padding-right:540px}.container_16 .suffix_10{padding-right:600px}.container_16 .suffix_11{padding-right:660px}.container_16 .suffix_13{padding-right:780px}.container_16 .suffix_14{padding-right:840px}.container_16 .suffix_15{padding-right:900px}.container_12 .push_3,.container_16 .push_4{left:240px}.container_12 .push_6,.container_16 .push_8{left:480px}.container_12 .push_9,.container_16 .push_12{left:720px}.container_12 .push_1{left:80px}.container_12 .push_2{left:160px}.container_12 .push_4{left:320px}.container_12 .push_5{left:400px}.container_12 .push_7{left:560px}.container_12 .push_8{left:640px}.container_12 .push_10{left:800px}.container_12 .push_11{left:880px}.container_16 .push_1{left:60px}.container_16 .push_2{left:120px}.container_16 .push_3{left:180px}.container_16 .push_5{left:300px}.container_16 .push_6{left:360px}.container_16 .push_7{left:420px}.container_16 .push_9{left:540px}.container_16 .push_10{left:600px}.container_16 .push_11{left:660px}.container_16 .push_13{left:780px}.container_16 .push_14{left:840px}.container_16 .push_15{left:900px}.container_12 .pull_3,.container_16 .pull_4{left:-240px}.container_12 .pull_6,.container_16 .pull_8{left:-480px}.container_12 .pull_9,.container_16 .pull_12{left:-720px}.container_12 .pull_1{left:-80px}.container_12 .pull_2{left:-160px}.container_12 .pull_4{left:-320px}.container_12 .pull_5{left:-400px}.container_12 .pull_7{left:-560px}.container_12 .pull_8{left:-640px}.container_12 .pull_10{left:-800px}.container_12 .pull_11{left:-880px}.container_16 .pull_1{left:-60px}.container_16 .pull_2{left:-120px}.container_16 .pull_3{left:-180px}.container_16 .pull_5{left:-300px}.container_16 .pull_6{left:-360px}.container_16 .pull_7{left:-420px}.container_16 .pull_9{left:-540px}.container_16 .pull_10{left:-600px}.container_16 .pull_11{left:-660px}.container_16 .pull_13{left:-780px}.container_16 .pull_14{left:-840px}.container_16 .pull_15{left:-900px}.clear{clear:both;display:block;overflow:hidden;visibility:hidden;width:0;height:0}.clearfix:after{clear:both;content:' ';display:block;font-size:0;line-height:0;visibility:hidden;width:0;height:0}* html .clearfix,*:first-child+html .clearfix{zoom:1}
+html { background: #c0d895; }
+h1, h2 { color: #bf4630; }
+a { color: #406300; text-decoration: none; }
+a:hover { color: #639a00; text-decoration: underline; }
+nav { font-weight: bold; }
+header hgroup h1 { color: #406300; }
+header hgroup h2 { color: #639a00; }
+header hgroup h1 a { background: url('../images/asp_logo_150x66.png') no-repeat; color: #c0d895; font-size: 1px; height: 32px; display: block; }
+header hgroup h1 a:hover { background: url('../images/asp_logo_150x66.png') 0px -33px no-repeat; text-decoration: none; color: #c0d895; }
+time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4px 0px 0px 22px; min-height: 16px; display: block; }
+#user_comments article time { margin-left: 70px; }
+li.selected a { text-decoration: underline; color: #bf4630; }
+#sys_message { background: #82b22c; color: #d9fa9e; padding: 0px 10px 5px 10px; margin-bottom: 5px; }
+#sys_message {
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    -moz-border-radius-bottomright: 20px;
+    -moz-border-radius-bottomleft: 20px;
+    -webkit-border-bottom-right-radius: 20px;
+    -webkit-border-bottom-left-radius: 20px;
+}
+#sys_message p { text-align: center; padding: 5px 10px 0px 10px; }
+#sys_message a { color: #fff; }
+#page { background: #f1ffd6; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; padding: 0px 10px; min-height: 200px; }
+#page form fieldset { background: #d9fa9e; border: 1px solid #82b22c; border-radius: 10px; -moz-border-radius: 10px; -webkit-border-radius: 10px; }
+#page form fieldset legend { color: #bf4630; }
+#page section h1 { font-size: 130%; border-bottom: 1px solid #c0d895; }
+#page section h2 { font-size: 120%; }
+#page section h3 { font-size: 110%; }
+
+footer { padding-bottom: 40px; }
+footer h1 { font-size: 110%; border-bottom: 1px solid #639a00; }
+footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
+#systemstatus { width:100%; background: #f1ffd6; text-align:center; padding:5px 0px; margin:0 0 10px 0; border-radius: 0 0 20px 20px; -moz-border-radius: 0 0 20px 20px; -webkit-border-radius: 0 0 20px 20px; }
+label { margin-top:10px; clear:both; }
+select, input, textarea { clear:both; }
+
+textarea { min-width:500px; min-height:160px; }
+
+#user_page ul li { list-style: none; }
 </style>
 
 <script>
@@ -393,7 +445,7 @@ class cINSTALL {
     global $Error, $ErrorMark;
     
     // Check for PHP version 5.0.0 or higher.
-    $required = '5.0.0';
+    $required = '5.2.0';
     if(!function_exists(version_compare)) {
       $Error['php_version'] = TRUE;
       $ErrorMark['php_version'] = "<span class='no'>N</span>";
@@ -485,12 +537,12 @@ class cINSTALL {
     global $Error, $ErrorMark;
     
     // Check if photo directory is writable.
-    if (!is_writable (getcwd() . '/attachments/')) {
-      $Error['attachment_directory'] = TRUE;
-      $ErrorMark['attachment_directory'] = "<span class='no'>N</span>";
+    if (!is_writable (getcwd() . '/_storage/')) {
+      $Error['storage_directory'] = TRUE;
+      $ErrorMark['storage_directory'] = "<span class='no'>N</span>";
     } else {
-      $Error['attachment_directory'] = FALSE;
-      $ErrorMark['attachment_directory'] = "<span class='yes'>Y</span>";
+      $Error['storage_directory'] = FALSE;
+      $ErrorMark['storage_directory'] = "<span class='yes'>Y</span>";
     } // if
     
     return (TRUE);
@@ -512,15 +564,32 @@ class cINSTALL {
   } // CheckPhotoDirectory
   
   function CheckSiteData () {
+	  global $gCUSTOM;
+
     global $Error, $ErrorMark;
+
+		if (!file_exists (getcwd() . "/configurations/$gCUSTOM/$gCUSTOM.conf")) {
+			if (!file_exists (getcwd() . "/configurations/$gCUSTOM")) {
+				if (!mkdir (getcwd() . "/configurations/$gCUSTOM")) {
+      		$Error['configurations_directory'] = FALSE;
+      		$ErrorMark['configurations_directory'] = "<span class='yes'>Y</span>";
+				}
+			}
+			if (!file_exists (getcwd() . "/configurations/$gCUSTOM/$gCUSTOM.conf")) {
+				if (!touch (getcwd() . "/configurations/$gCUSTOM/$gCUSTOM.conf")) {
+      		$Error['configurations_directory'] = FALSE;
+      		$ErrorMark['configurations_directory'] = "<span class='yes'>Y</span>";
+				}
+			}
+		}
     
     // Check if site.adat file is writable.
-    if (!is_writable (getcwd() . '/data/site.adat')) {
-      $Error['site_data'] = TRUE;
-      $ErrorMark['site_data'] = "<span class='no'>N</span>";
+    if (!is_writable (getcwd() . "/configurations/$gCUSTOM/$gCUSTOM.conf")) {
+      $Error['configurations_directory'] = TRUE;
+      $ErrorMark['configurations_directory'] = "<span class='no'>N</span>";
     } else {
-      $Error['site_data'] = FALSE;
-      $ErrorMark['site_data'] = "<span class='yes'>Y</span>";
+      $Error['configurations_directory'] = FALSE;
+      $ErrorMark['configurations_directory'] = "<span class='yes'>Y</span>";
     } // if
     
     return (TRUE);
@@ -541,8 +610,10 @@ class cINSTALL {
     return (TRUE);
   } // CheckHtaccessFinal
   
-  function WriteSiteData ($pDATABASE, $pUSERNAME, $pPASSWORD, $pPREFIX, $pVERSION, $pHOST, $pDOMAIN) {
-    $site_data = "data/site.adat";
+  function WriteConfiguration ($pDATABASE, $pUSERNAME, $pPASSWORD, $pPREFIX, $pVERSION, $pHOST, $pDOMAIN) {
+		global $gCUSTOM;
+
+    $configurations_directory = "configurations/$gCUSTOM/site.adat";
     
     $filedata = "db:$pDATABASE\n" .
                 "un:$pUSERNAME\n" .
@@ -553,10 +624,10 @@ class cINSTALL {
                 "url:$pDOMAIN";
                 
     // Open file for writing.
-    if (!$file = fopen($site_data, 'w')) {
+    if (!$file = fopen($configurations_directory, 'w')) {
       global $Error, $ErrorMark;
-      $Error['site_data'] = TRUE;
-      $ErrorMark['site_data'] = "<span class='no'>N</span>";
+      $Error['configurations_directory'] = TRUE;
+      $ErrorMark['configurations_directory'] = "<span class='no'>N</span>";
       return (FALSE);
     } // if
     
@@ -564,15 +635,16 @@ class cINSTALL {
     fclose($file);
     
     return (TRUE);
-  } // WriteSiteData
+  } // WriteConfiguration
   
   function PreLoadSiteData () {
+		global $gCUSTOM;
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     
-    $site_data = "data/site.adat";
+    $configurations_directory = "configurations/$gCUSTOM/$gCUSTOM.conf";
     
     // Open file for reading.
-    if (!$file = fopen($site_data, 'r')) {
+    if (!$file = fopen($configurations_directory, 'r')) {
       return (FALSE);
     } // if
     
@@ -693,9 +765,10 @@ class cINSTALL {
     } // foreach
     
     // Upgrade tables.
-    if (($pUPGRADE == 1) or ($pUPGRADE == 2)) {
-    	$this->UpgradeTables($tableList);
-    } // if
+		// NOTE: Disabled for now.
+    //if (($pUPGRADE == 1) or ($pUPGRADE == 2)) {
+    	//$this->UpgradeTables($tableList);
+    //} // if
     
     // Delete backup tables if necessary.
     if ($pUPGRADE == 2) {
@@ -905,7 +978,7 @@ class cINSTALL {
     
     $this->CheckMysqlServerVersion ();
     if ($Error['mysql_server_version']) {
-      $ErrorString = "Selected MySQL server version is too low. (Version is " . $this->GetMysqlServerVersion() . ", Appleseed requires > 5.0)";
+      $ErrorString = "Selected MySQL server version is too low. (Version is " . $this->GetMysqlServerVersion() . ", Appleseed requires > 5.2)";
       return (FALSE);
     } // if
     
@@ -929,7 +1002,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS, $gUPGRADE;
     
-    if (!$this->WriteSiteData ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.3', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.4', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
@@ -958,106 +1031,188 @@ class cINSTALL {
     ?>
         
     <body onload='initialize();'>
-     <div id='install'>
-      <div class='caption'>APPLESEED INSTALL v0.7.3</div>
-      <div class='container'>
+
+      <div id="page" class="container_12">
+        <div id="page_left" class="grid_3"> 
+					<section id="info">
+						<h1>Welcome to Appleseed!</h1> 
+						<h2>Open Source + Distributed Social Networking</h2>
+
+						<p> Appleseed is the first open source, fully decentralized social networking software. </p>
+							<ul>
+							  <li>Protect your privacy</li>
+							  <li>Move around without losing friends</li>
+							  <li>Support open standards</li>
+							</ul>
+
+						<h3>Appleseed Features</h3>
+							<ul>
+								<li>Connect with Friends!</li>
+								<li>Blogging</li>
+								<li>Journals</li>
+								<li>Photos</li>
+								<li>Spam-Resistant E-Mail</li>
+								<li>Decentralized</li>
+							</ul>
+						<h3>New in this release</h3>
+							<ul>
+								<li>Themes (and a new look!)</li>
+								<li>MVC+Plugins Framework</li>
+								<li>Internationalization</li>
+								<li>Stronger Password Encryption</li>
+								<li>Lots of bug fixes</li>
+							</ul>
+
+					</section>
+				</div>
+        <div id="page_right" class="grid_9">
+										         
+  	      <section id="install">
+            <h1>Appleseed Install v0.7.4</h1>
       
-       <?php echo $ErrorString; ?>
-       <div id='check'>
-        <p class='title'>System Check</p>
-        <p class='information'>This system cannot be installed until the following conditions are met.</p>
-        
-        <span class='label'>Installed in site root directory? (see documentation)</span>
-        <?php echo $ErrorMark['sub_dir']; ?>
-        
-        <span class='label'>Is register_globals turned off?</span>
-        <?php echo $ErrorMark['register_globals']; ?>
-        
-        <span class='label'>Is the photos/ directory writable?</span>
-        <?php echo $ErrorMark['photo_directory']; ?>
-        
-        <span class='label'>Is the attachments/ directory writable?</span>
-        <?php echo $ErrorMark['attachment_directory']; ?>
-        
-        <span class='label'>Is data/site.adat writable?</span>
-        <?php echo $ErrorMark['site_data']; ?>
-        
-        <span class='label'>Is .htaccess writable?</span>
-        <?php echo $ErrorMark['htaccess_final']; ?>
-        
-        <span class='label'>PHP version 5.0 or higher? (Running <?php echo phpversion(); ?>)</span>
-        <?php echo $ErrorMark['php_version']; ?>
-        
-        <span class='label'>Mysql version 5.0 or higher? (Client is <?php echo $this->GetMysqlClientVersion (); ?>)</span>
-        <?php echo $ErrorMark['mysql_client_version']; ?>
-        
-       </div>
-       <form id='main' name='main' method='POST' action='/'>
-        <input type='submit' name='refresh' class='refresh' value="Refresh" />
+            <?php echo $ErrorString; ?>
+            <form id='main' name='main' method='POST' action='/'>
+              <fieldset id='check'>
+                <legend>System Check</legend>
+                <p class='information'>This system cannot be installed until the following conditions are met.</p>
        
-       <div id='database'>
-        <p class='title'>Database Settings</p>
-        <p class='information'>Enter your database information in the following fields.</p>
-         <label for='gHOST'>DB Host Name:</label>
-         <input type='text' class='gHOST' name='gHOST' value='<?php echo $gHOST; ?>' />
-         
-         <label for='gDATABASE'>DB Name:</label>
-         <input type='text' class='gDATABASE' name='gDATABASE' value='<?php echo $gDATABASE; ?>' />
-         
-         <label for='gUSERNAME'>DB Username:</label>
-         <input type='text' class='gUSERNAME' name='gUSERNAME' value='<?php echo $gUSERNAME; ?>' />
-         
-         <label for='gPASSWORD'>DB Password:</label>
-         <input type='text' class='gPASSWORD' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' />
-         
-         <label for='gPREFIX'>DB Table Prefix:</label>
-         <input type='text' name='gPREFIX' value='<?php echo $gPREFIX; ?>' />
+								<table>
+									<tbody>
+										<tr>
+                			<th><span class='label'>Installed in site root directory? (see documentation)</span></th>
+                			<td><?php echo $ErrorMark['sub_dir']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Is register_globals turned off?</span></th>
+                			<td><?php echo $ErrorMark['register_globals']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Is the _storage/ directory writable?</span></th>
+                			<td><?php echo $ErrorMark['storage_directory']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Is the configurations/ directory writable?</span></th>
+                			<td><?php echo $ErrorMark['configurations_directory']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Is .htaccess writable?</span></th>
+                			<td><?php echo $ErrorMark['htaccess_final']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>PHP version 5.2 or higher? (Running <?php echo phpversion(); ?>)</span></th>
+                			<td><?php echo $ErrorMark['php_version']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Mysql version 5.0 or higher? (Client is <?php echo $this->GetMysqlClientVersion (); ?>)</span></th>
+                			<td><?php echo $ErrorMark['mysql_client_version']; ?></td>
+										</tr>
+									</tbody>
+								</table>
+      
+              </fieldset>
+
+							<fieldset>
+								<legend>Database Settings</legend>
+                <p class='information'>Enter your database information in the following fields.</p>
+
+								<table>
+								  <tbody>
+									  <tr>
+										  <th></th>
+											<td><input type='submit' name='refresh' class='refresh' value="Refresh" /></td>
+										</tr>
      
-     	 <div id='confirmDatabaseConnection'>
-       	  <input type='submit' id='checkConnection' name='checkConnection' class='checkConnection' value="Check Connection" disabled=disabled />
-       	 </div>
-     
-         <label for='gUPGRADE'>Upgrade if tables exist?</label>
-         <select id='gUPGRADE' name='gUPGRADE'>
-         	<option <?php if ($gUPGRADE == '0') echo "selected"; ?> value='0'>No (Delete Existing)</option>
-         	<option <?php if ($gUPGRADE == '1') echo "selected"; ?> value='1'>Yes (Backup Tables)</option>
-         	<option <?php if ($gUPGRADE == '2') echo "selected"; ?> value='2'>Yes (No Backup)</option>
-         </select>
+										<tr>
+                			<th><label for='gHOST'>DB Host Name:</label></th>
+                			<td><input type='text' class='gHOST' name='gHOST' value='<?php echo $gHOST; ?>' /></td>
+										</tr>
+           
+										<tr>
+                			<th><label for='gDATABASE'>DB Name:</label></th>
+                			<td><input type='text' class='gDATABASE' name='gDATABASE' value='<?php echo $gDATABASE; ?>' /></td>
+										</tr>
          
-     	 <div id='upgradeWarning'>
-     	 	Upgrading tables is still experimental.  Please use at your own risk.
-       	 </div>
+										<tr>
+                			<th><label for='gUSERNAME'>DB Username:</label></th>
+                			<td><input type='text' class='gUSERNAME' name='gUSERNAME' value='<?php echo $gUSERNAME; ?>' /></td>
+										</tr>
          
-       </div> <!-- #database -->
-       
-       <div id='site'>
-        <p class='title'>Site Settings</p>
-        <p class='information'>Enter your site setup information.</p>
-         <label for='gDOMAIN'>Site Domain:</label>
-         <input type='text' name='gDOMAIN' value='<?php echo $gDOMAIN; ?>' />
-         
-         <label for='gADMINUSER'>Default Admin Username:</label>
-         <input type='text' name='gADMINUSER' value='<?php echo $gADMINUSER; ?>' />
+										<tr>
+                			<th><label for='gPASSWORD'>DB Password:</label></th>
+                			<td><input type='text' class='gPASSWORD' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' /></td>
+										</tr>
      
-         <label for='gADMINPASS'>Default Admin Password:</label>
-         <input type='text' maxlength=20 id='adminPass' class='gADMINPASS' name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' />
-     
-         <label for='gADMINPASSCONFIRM'>Default Admin Password (Confirm):</label>
-         <input type='text' maxlength=20 id='adminPassConfirm' class='gADMINPASSCONFIRM' name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' />
-         
-         <div id='checkPasswords'>&nbsp;</div>
-     
-       </div> <!-- #site -->
-         <input type='submit' id='submit' name='submit' class='submit' <?php echo $submit_disabled; ?> value="<?php echo $submit_label; ?>" />
-       </form> <!-- #main -->
+										<tr>
+                			<th><label for='gPREFIX'>DB Table Prefix:</label></th>
+                			<td><input type='text' name='gPREFIX' value='<?php echo $gPREFIX; ?>' /></td>
+									  </tr>
+									</tbody>
+								</table>
+    
+                <div id='confirmDatabaseConnection'>
+   	              <input type='submit' id='checkConnection' name='checkConnection' class='checkConnection' value="Check Connection" disabled=disabled />
+   	            </div>
    
-      </div> <!-- .container -->
-     </div> <!-- .install -->
-     <div id='copyright'>
-      Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
-     </div>
-    </body>
-    </html> <?php
+                <!-- Disabled for now 
+                <label for='gUPGRADE'>Upgrade if tables exist?</label>
+                <select id='gUPGRADE' name='gUPGRADE'>
+       	          <option <?php if ($gUPGRADE == '0') echo "selected"; ?> value='0'>No (Delete Existing)</option>
+     	            <option <?php if ($gUPGRADE == '1') echo "selected"; ?> value='1'>Yes (Backup Tables)</option>
+   	              <option <?php if ($gUPGRADE == '2') echo "selected"; ?> value='2'>Yes (No Backup)</option>
+                 </select>
+	  				-->
+						  </fieldset>
+     
+              <fieldset>
+                <legend>Site Settings</legend>
+                <p class='information'>Enter your site setup information.</p>
+
+								<table>
+								  <tbody>
+									  <tr>
+                			<th><label for='gDOMAIN'>Site Domain:</label></th>
+                			<td><input type='text' name='gDOMAIN' value='<?php echo $gDOMAIN; ?>' /></td>
+										</tr>
+     
+									  <tr>
+                			<th><label for='gADMINUSER'>Default Admin Username:</label></th>
+                			<td><input type='text' name='gADMINUSER' value='<?php echo $gADMINUSER; ?>' /></td>
+										</tr>
+   
+									  <tr>
+                			<th><label for='gADMINPASS'>Default Admin Password:</label></th>
+                			<td><input type='text' maxlength=20 id='adminPass' class='gADMINPASS' name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' /></td>
+										</tr>
+   
+									  <tr>
+                			<th><label for='gADMINPASSCONFIRM'>Default Admin Password (Confirm):</label></th>
+                			<td><input type='text' maxlength=20 id='adminPassConfirm' class='gADMINPASSCONFIRM' name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' /></td>
+										</tr>
+									</tbody>
+								</table>
+     
+                <div id='checkPasswords'>&nbsp;</div>
+   
+              </fieldset>
+
+              <input type='submit' id='submit' name='submit' class='submit' <?php echo $submit_disabled; ?> value="<?php echo $submit_label; ?>" />
+
+            </form>
+	       </section>
+         </div>
+       <footer class='container_12'>
+			  	<p align="center">
+        		Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
+					</p>
+       </footer>
+     </body>
+   </html> <?php
     
   } // ViewStepOne
   
@@ -1073,7 +1228,7 @@ class cINSTALL {
         
     <body>
      <div id='install'>
-      <div class='caption'>APPLESEED INSTALL v0.7.0</div>
+      <div class='caption'>Appleseed Install v0.7.4</div>
       <div class='container'>
       
        <?php echo $ErrorString; ?>
@@ -1090,16 +1245,16 @@ class cINSTALL {
         <span class='label'>Is the photos/ directory writable?</span>
         <?php echo $ErrorMark['photo_directory']; ?>
         
-        <span class='label'>Is the attachments/ directory writable?</span>
+        <span class='label'>Is the _storage/ directory writable?</span>
         <?php echo $ErrorMark['attachment_directory']; ?>
         
-        <span class='label'>Is data/site.adat writable?</span>
-        <?php echo $ErrorMark['site_data']; ?>
+        <span class='label'>Is the configurations/ directory writable?</span>
+        <?php echo $ErrorMark['configurations_directory']; ?>
         
         <span class='label'>Is .htaccess writable?</span>
         <?php echo $ErrorMark['htaccess_final']; ?>
         
-        <span class='label'>PHP version 5.0 or higher? (Running <?php echo phpversion(); ?>)</span>
+        <span class='label'>PHP version 5.2 or higher? (Running <?php echo phpversion(); ?>)</span>
         <?php echo $ErrorMark['php_version']; ?>
         
         <span class='label'>Mysql version 5.0 or higher? (Running <?php echo $this->GetMysqlClientVersion (); ?>)</span>
