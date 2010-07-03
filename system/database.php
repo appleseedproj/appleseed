@@ -66,7 +66,14 @@ class cDatabase extends cBase {
 		
 		$table = $prefix . $pTablename;
 		
-		$fieldinfo = $this->_DB->query ( "DESC $table" )->fetchAll ( PDO::FETCH_ASSOC );
+		if ( !$result = $this->_DB->query ( "DESC $table" ) ) {
+			
+			echo __( "Table Does Not Exist", array ( "name" => $table ) );
+			exit;
+			
+		}
+		
+		$fieldinfo = $result->fetchAll ( PDO::FETCH_ASSOC );
 		
 		return ( $fieldinfo );
 	}

@@ -58,7 +58,7 @@ class cController extends cBase {
 	public function LoadView ( $pView ) {
 		eval ( GLOBALS );
 		
-		// In case it was accidentally specificied, remove the php extension from view name.
+		// In case it was accidentally specified, remove the php extension from view name.
 		$pView = str_replace ( '.php', '', $pView );
 		
 		$viewpath = $this->_GetViewPath ( $pView ) ;
@@ -70,6 +70,16 @@ class cController extends cBase {
 		}
 		
 		return ( false );
+	}
+	
+	public function GetView ( $pView ) {
+		eval ( GLOBALS );
+		
+		$form = clone $this->GetSys ( "HTML" );
+		
+		$form->Load ( $this->LoadView ( $pView ), $pView );
+		
+		return ( $form );
 	}
 	
 	/**

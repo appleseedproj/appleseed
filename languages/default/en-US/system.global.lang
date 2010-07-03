@@ -98,6 +98,7 @@ SYSTEM_OBJECT_NOT_FOUND="System object '%name$s' could not be loaded. Exiting."
 CONTROLLER_NOT_FOUND="Controller '%name$s' could not be loaded."
 BAD_COMPONENT_NAME="The name '%name$s' is reserved by the system and cannot be used as a component name."
 FOUNDATION_NOT_FOUND="The routed foundation file '%route$s' could not be loaded."
+TABLE_DOES_NOT_EXIST="The requested database table '%name$s' does not exist."
 
 ;MESSAGE.NONE:=NO RESULTS FOUND.
 ;CONFIRM.CANCEL:=All changes will be lost!  Are you sure?

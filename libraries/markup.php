@@ -23,10 +23,6 @@ require_once ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'SimpleHTMLD
  */
 class cMarkup extends simple_html_dom {
 	
-	private $_Segment;
-	
-	private $_CurrentSegment;
-
 	/**
 	 * Constructor
 	 *
@@ -35,55 +31,45 @@ class cMarkup extends simple_html_dom {
 	public function __construct ( ) {       
 	}
 
-	public function Load ( $pData, $pSegment = null ) {
+	public function Load ( $pData ) {
 		
 		parent::load ( $pData );
-		
-		$pSegment = str_replace ( '.php', '', $pSegment );
-		
-		if ( !$pSegment ) $pSegment = $this->_CurrentSegment;
-		
-		$this->_Segment[$pSegment] = $this->save();
-		
-		$this->_CurrentSegment = $pSegment;
 		
 		return ( true );
 	}
 	
-	public function Modify ( $pSelector, array $pValues, $pSegment = null ) {
+	public function Modify ( $pSelector, array $pValues ) {
 
-		$pSegment = str_replace ( '.php', '', $pSegment );
-		
-		if ( !$pSegment ) $pSegment = $this->_CurrentSegment;
-		
-		$element = $this->find($pSelector, 0);
+		$element = $this->Find($pSelector, 0);
 		
 		foreach ( $pValues as $v => $value ) {
 			$element->$v = $value;
 		}
 		
-		$this->_Segment[$pSegment] = $this->save();
-		
-		$this->_CurrentSegment = $pSegment;
-		
 		return ( true );
 	}
 	
-	public function RemoveElement ( $pSegment, $pSelector ) {
+	public function RemoveElement ( $pSelector ) {
+		
+		$element = $this->Find($pSelector, 0);
+		
+		$element->outertext = "";
+		
+		return ( true );
+		
 	}
 	
-	public function Display ( $pSegment = null ) {
+	public function Display () {
 		
-		$pSegment = str_replace ( '.php', '', $pSegment );
+		echo $this->Save();
 		
-		if ( !$pSegment ) $pSegment = $this->_CurrentSegment;
+		return ( true );
 		
-		// In case it was accidentally specificied, remove the php extension from view name.
-		$pSegment = str_replace ( '.php', '', $pSegment );
+	}
+	
+	function Reload ( ) {
 		
-		echo $this->_Segment[$pSegment];
-		
-		$this->_CurrentSegment = $pSegment;
+		$this->Load ( $this->Save () );
 		
 		return ( true );
 	}
@@ -108,19 +94,98 @@ class cHTML extends cMarkup {
 		parent::__construct();
 	}
 	
-	public function AddOption ( $pSegment, $pSelector, array $pValues ) {
+	public function AddOptions ( $pSelector, array $pValues ) {
+		
+		foreach ( $pValues as $value => $label ) {
+			$option = '<option value="%s">%s</option>';
+			$this->Find($pSelector, 0)->innertext .= sprintf ( $option, $value, $label );
+			
+		}
+		
+		$this->Reload();
+		
+		return ( true );
 	}
 	
 	/**
-	 * Constructor
+	 * Synchronize the values with the Request data.
 	 *
 	 * @access  public
 	 */
-	public function SetValue ( $pSegment, $pName, $pValue, $pUseRequest = true ) {
+	public function Synchronize ( $pDefaults = array() ) {
+		
+		$inputs = $this->Find("[name=]");
+		
+		// Set all request variable names to lower case
+		foreach ( $_REQUEST as $r => $request ) {
+			$r = strtolower ( ltrim ( rtrim ( $r ) ) );
+			$requests[$r] = $request; 
+		}
+		
+		// Set all default variable names to lower case
+		foreach ( $pDefaults as $d => $default ) {
+			$d = strtolower ( ltrim ( rtrim ( $d ) ) );
+			$defaults[$d] = $default; 
+		}
+		
+		
+		// Loop through the named input tags
+		foreach ( $inputs as $i => $input ) {
+			$assign = null;
+			$name = strtolower ( ltrim ( rtrim ( $input->name ) ) );
+			$tag = strtolower ( ltrim ( rtrim ( $input->tag ) ) );
+			$type = strtolower ( ltrim ( rtrim ( $input->type ) ) );
+			
+			if ( isset ( $requests[$name] ) ) {
+				$assign = $requests[$name];
+			} elseif ( isset ( $defaults[$name] ) ) {
+				$assign = $defaults[$name];
+			}
+			
+			if ( $assign ) {
+				// Assign values from $_REQUEST 
+				switch ( $tag ) {
+					case 'textarea':
+						$input->innertext = $assign;
+					break;
+					case 'select':
+						$options = $input->Find("option");
+						
+						foreach ( $options as $o => $option ) {
+							if ( $option->value == $assign ) {
+								$option->selected = "selected";
+							} elseif ( $option->innertext == $assign ) {
+								$option->selected = "selected";
+							}
+						}
+					break;
+					default:
+						switch ( $type ) {
+							case 'checkbox':
+								$input->checked = $assign;
+							break;
+							default:
+								$input->value = $assign;
+							break;
+						}
+					break;
+				} 
+			}
+		}
+			
+		return ( true );
 	}
 	
-	public function DisableElement ( $pSegment, $pSelector ) {
+	public function DisableElement ( $pSelector ) {
+		
+		$element = $this->Find($pSelector, 0);
+		
+		$element->disabled = "disabled";
+		
+		return ( true );
+		
 	}
+	
         
 }
 

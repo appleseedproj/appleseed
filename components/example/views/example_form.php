@@ -1,3 +1,14 @@
+<!--
+	/* @philosophy We weren't kidding when we said views were dumb.  
+	 * @philosophy Note the distinct lack of php calls.
+	 * @philosophy Since building out the form is DOM based, properly id/class'ing your elements is important.
+	 *
+	 * @tutorial All data and logic are handled through DOM processing.
+	 * @tutorial The view itself is flat html, with no PHP or javascript.
+	 * @tutorial The view as a skeleton for the controller to manipulate based on the model.
+	 * @tutorial You can either modify the view before displaying to the browser or after (using JQuery).
+	 */
+-->
 <section id="general_form">
 	<form method="post">
 		<fieldset>
@@ -12,6 +23,14 @@
 						<tr>
 							<th><label for="text">Text Input <em>*</em></label></th>
 							<td><input type="text" name="text" /></td>
+						</tr>
+						<tr>
+							<th><label for="text">Removed Input </label></th>
+							<td><input type="text" name="removed_text" /></td>
+						</tr>
+						<tr>
+							<th><label for="text">Removed Row (This row should not display) </label></th>
+							<td><input type="text" name="removed_row" /></td>
 						</tr>
 						<tr>
 							<th><label for="passwd">Password Input</label></th>
