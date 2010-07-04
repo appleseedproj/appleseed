@@ -434,7 +434,7 @@ textarea { min-width:500px; min-height:160px; }
 	} // resetCheck
 </script>
 
-<?php if ($CurrentStep == 1) $INSTALL->ViewStepTwo (); ?>
+<?php if ($CurrentStep == 1) $INSTALL->ViewStepOne (); ?>
 <?php if ($CurrentStep == 2) $INSTALL->ViewStepTwo (); ?>
 
 <?php
