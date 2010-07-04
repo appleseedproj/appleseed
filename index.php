@@ -70,6 +70,7 @@
   
   $INSTALL->CheckForSubDirectory ();
   $INSTALL->CheckPHPVersion ();
+  $INSTALL->CheckSHA ();
   $INSTALL->CheckMysqlClientVersion ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckStorageDirectory ();
@@ -458,6 +459,28 @@ class cINSTALL {
     
     return (TRUE);
   } // CheckPHPVersion
+  
+  function CheckSHA () {
+    global $Error, $ErrorMark;
+
+		$algos = hash_algos ();
+
+    // Check for SHA512
+    if(!in_array ("sha512", $algos)) {
+      $Error['sha512_available'] = TRUE;
+      $ErrorMark['sha512_available'] = "<span class='no'>N</span>";
+    } else {
+      if (version_compare ($required, phpversion()) < 0) {
+        $Error['sha512_available'] = FALSE;
+        $ErrorMark['sha512_available'] = "<span class='yes'>Y</span>";
+      } else {
+        $Error['sha512_available'] = TRUE;
+        $ErrorMark['sha512_available'] = "<span class='no'>N</span>";
+      } // if
+    } // if
+    
+    return (TRUE);
+  } // CheckSHA
   
   function CheckMysqlClientVersion () {
     global $Error, $ErrorMark;
@@ -1137,6 +1160,11 @@ class cINSTALL {
 										</tr>
       
 										<tr>
+                			<th><span class='label'>SHA512 password hashing available</span></th>
+                			<td><?php echo $ErrorMark['sha512_available']; ?></td>
+										</tr>
+      
+										<tr>
                 			<th><span class='label'>Mysql version 5.0 or higher? (Client is <?php echo $this->GetMysqlClientVersion (); ?>)</span></th>
                 			<td><?php echo $ErrorMark['mysql_client_version']; ?></td>
 										</tr>
@@ -1339,6 +1367,11 @@ class cINSTALL {
 										<tr>
                 			<th><span class='label'>PHP version 5.2 or higher? (Running <?php echo phpversion(); ?>)</span></th>
                 			<td><?php echo $ErrorMark['php_version']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>SHA512 password hashing available</span></th>
+                			<td><?php echo $ErrorMark['sha512_available']; ?></td>
 										</tr>
       
 										<tr>
