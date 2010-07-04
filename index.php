@@ -50,9 +50,11 @@
 
 	list ( $gCUSTOM ) = explode ('.', $_SERVER['HTTP_HOST']);
 
+	$gPREFIX = "asd_";
+
   $gDATABASE = ($_POST['gDATABASE']) ? $_POST['gDATABASE'] : $gDATABASE;
   $gUSERNAME = ($_POST['gUSERNAME']) ? $_POST['gUSERNAME'] : $gUSERNAME;
-  $gPASSWORD = ($_POST['gPASSWORD']) ? $_POST['gPASSWORD'] : $gPASSWORD;
+  $gPASSWORD = null;
   $gPREFIX = ($_POST['gPREFIX']) ? $_POST['gPREFIX'] : $gPREFIX;
   $gHOST = ($_POST['gHOST']) ? $_POST['gHOST'] : $gHOST;
   $gHOST = ($gHOST) ? $gHOST : 'localhost';
@@ -60,8 +62,8 @@
   $gDOMAIN = ($gDOMAIN) ? $gDOMAIN : 'http://' . $_SERVER['HTTP_HOST'];
   $gUPGRADE = $_POST['gUPGRADE'];
   $gADMINUSER = ($_POST['gADMINUSER']) ? $_POST['gADMINUSER'] : 'Admin';
-  $gADMINPASS = $_POST['gADMINPASS'];
-  $gADMINPASSCONFIRM = $_POST['gADMINPASSCONFIRM'];
+  $gADMINPASS = null;
+  $gADMINPASSCONFIRM = null;
   
   $gSTAMP = '_' . date ('mdy_His', strtotime ('now'));
   
@@ -72,8 +74,7 @@
   $INSTALL->CheckPHPVersion ();
   $INSTALL->CheckMysqlClientVersion ();
   $INSTALL->CheckRegisterGlobals ();
-  $INSTALL->CheckPhotoDirectory ();
-  $INSTALL->CheckAttachmentDirectory ();
+  $INSTALL->CheckStorageDirectory ();
   $INSTALL->CheckSiteData ();
   $INSTALL->CheckHtaccessFinal ();
   
@@ -336,7 +337,6 @@ textarea { min-width:500px; min-height:160px; }
 		
 		// Step 0: Create visual indicator something is happening.
 		checkButton.style.color = '#4c5055';
-		checkButton.style.background = '#ecf0f5';
 		checkButton.value = 'Checking...';
 		
 		// Step 1: Create the query string.
@@ -372,7 +372,6 @@ textarea { min-width:500px; min-height:160px; }
 	            if (ajax.responseText == true) {
 					checkButton.value = 'Connection OK';
 					checkButton.style.color = '#00ff00';
-					checkButton.style.background = '#ccffcc';
 					
 					confirmHost = host;
 					confirmDatabase = database;
@@ -415,7 +414,6 @@ textarea { min-width:500px; min-height:160px; }
 	    	 (password == confirmPassword) ) {
 			checkButton.value = 'Connection OK';
 			checkButton.style.color = '#00ff00';
-			checkButton.style.background = '#ccffcc';
 			okDatabase = true;
 			if ((okPassword) && (okDatabase) && (okPermanent)) {
    				submitButton.disabled = false;
@@ -424,7 +422,6 @@ textarea { min-width:500px; min-height:160px; }
 	     } else {
 			checkButton.value = 'Check Connection';
 			checkButton.style.color = '#ff0000';
-			checkButton.style.background = '#ecf0f5';
 			okDatabase = false;
  			submitButton.disabled = true;
 			submitButton.value = 'Cannot Continue';
@@ -535,7 +532,7 @@ class cINSTALL {
     return (TRUE);
   } // CheckRegisterGlobals
   
-  function CheckAttachmentDirectory () {
+  function CheckStorageDirectory () {
     global $Error, $ErrorMark;
     
     // Check if photo directory is writable.
@@ -548,22 +545,7 @@ class cINSTALL {
     } // if
     
     return (TRUE);
-  } // CheckAttachmentDirectory
-  
-  function CheckPhotoDirectory () {
-    global $Error, $ErrorMark;
-    
-    // Check if photo directory is writable.
-    if (!is_writable (getcwd() . '/photos/')) {
-      $Error['photo_directory'] = TRUE;
-      $ErrorMark['photo_directory'] = "<span class='no'>N</span>";
-    } else {
-      $Error['photo_directory'] = FALSE;
-      $ErrorMark['photo_directory'] = "<span class='yes'>Y</span>";
-    } // if
-    
-    return (TRUE);
-  } // CheckPhotoDirectory
+  } // CheckStorageDirectory
   
   function CheckSiteData () {
 	  global $gCUSTOM;
@@ -1076,10 +1058,7 @@ class cINSTALL {
   	      <section id="install">
             <h1>Appleseed Install v0.7.4</h1>
       
-       			<?php if ($ErrorString) { 
-							echo "<p class='error'>$ErrorString</p>";
-							}
-					  ?>
+					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
               <fieldset id='check'>
                 <legend>System Check</legend>
@@ -1155,7 +1134,7 @@ class cINSTALL {
          
 										<tr>
                 			<th><label for='gPASSWORD'>DB Password:</label></th>
-                			<td><input type='text' class='gPASSWORD' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' /></td>
+                			<td><input type='password' class='gPASSWORD' name='gPASSWORD' value='<?php echo $gPASSWORD; ?>' /></td>
 										</tr>
      
 										<tr>
@@ -1197,12 +1176,12 @@ class cINSTALL {
    
 									  <tr>
                 			<th><label for='gADMINPASS'>Default Admin Password:</label></th>
-                			<td><input type='text' maxlength=20 id='adminPass' class='gADMINPASS' name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' /></td>
+                			<td><input type='password' maxlength=20 id='adminPass' class='gADMINPASS' name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' /></td>
 										</tr>
    
 									  <tr>
                 			<th><label for='gADMINPASSCONFIRM'>Default Admin Password (Confirm):</label></th>
-                			<td><input type='text' maxlength=20 id='adminPassConfirm' class='gADMINPASSCONFIRM' name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' /></td>
+                			<td><input type='password' maxlength=20 id='adminPassConfirm' class='gADMINPASSCONFIRM' name='gADMINPASSCONFIRM' value='<?php echo $gADMINPASSCONFIRM; ?>' /></td>
 										</tr>
 									</tbody>
 								</table>
@@ -1282,10 +1261,7 @@ class cINSTALL {
   	      <section id="install">
             <h1>Appleseed Install v0.7.4</h1>
       
-       			<?php if ($ErrorString) { 
-								echo "<p class='error'>$ErrorString</p>";
-							}
-					  ?>
+					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
               <fieldset id='check'>
                 <legend>System Check</legend>
