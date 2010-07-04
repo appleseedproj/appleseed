@@ -43,7 +43,7 @@ class cConfiguration extends cBase {
 
 		$location = $zApp->GetPath () . DS . $pDirectory;
 		
-		// Check for other configuration directories.
+		// Check for other configuration directories
 		$dirs = scandirs ($location);
 		
 		// Load all enabled configurations
@@ -53,7 +53,7 @@ class cConfiguration extends cBase {
 			$file = $zApp->GetPath () . DS . $pDirectory . DS . $dir . DS . $dir . '.conf';
 			
 			if ( !$configurations[$dir]->_Data = $this->Parse ($file) ) {
-				// Load failed.  Set a warning and unset value.
+				// Load failed.  Set a warning and unset value
 				unset ($configurations[$dir]);
 				continue;
 			}
@@ -68,12 +68,12 @@ class cConfiguration extends cBase {
 		// Set inheritance
 		$dirs = $configurations;
 		
-		// If no configurations were found, error out.
+		// If no configurations were found, error out
 		if ( count ( $dirs ) == 0 ) {
 			die ( "No configurations were found or enabled: $pDirectory");
 		}
 		
-		// Count inheritance levels.
+		// Count inheritance levels
 		$inheritancecount = 0;
 		
 		do {
@@ -92,7 +92,7 @@ class cConfiguration extends cBase {
 					
 					// Check if the inherited parent exists
 					if ( !isset ( $configurations[$inherit] ) ) {
-						// Set a warning and continue.
+						// Set a warning and continue
 						$configurations[$dir]->Warnings[] = " Cannot Inherit Values From '$inherit'.  Does Not Exist Or Is Disabled.";
 						continue;
 					} 
@@ -115,7 +115,7 @@ class cConfiguration extends cBase {
 			
 		} while ( $inheritanceflag );
 		
-		// Check to see if there's more than one parent left.
+		// Check to see if there's more than one parent left
 		if ( count ( $configurations ) > 1 ) {
 			die ( "More Than One Parent Configuration Is Enabled.  Please Resolve." );
 		} 
@@ -140,7 +140,7 @@ class cConfiguration extends cBase {
 	}
 	
 	/**
-	 * Loads a configuration value.
+	 * Loads a configuration value
 	 *
 	 * @access  public
 	 * @param array pVariable
@@ -178,7 +178,7 @@ class cConfiguration extends cBase {
 		if ( isset ($child ) ) {
 			$child = $this->_Inherit ($child);
 			
-			// Move all parent values to child.
+			// Move all parent values to child
 			foreach ( $child->_Data as $key => $value ) {
 				if ( is_array ( $parent->_Data[$key] ) ) {
 					$parent->_Data[$key] = array_merge ( $parent->_Data[$key], $value );
@@ -273,7 +273,7 @@ class cConfiguration extends cBase {
 				$config[$component] = array_merge ( $currentvalues, $configvalues );
 			}
 			
-			// If the component isn't enabled, then unset the values and continue.
+			// If the component isn't enabled, then unset the values and continue
 			if ($config[$component]['enabled'] != 'true' ) {
 				unset ($config[$component]);
 				continue;
@@ -286,6 +286,7 @@ class cConfiguration extends cBase {
 		return ($config);
 		
 	}
+	
 	/**
 	 * Loads all of the hook configuration files
 	 *
@@ -343,7 +344,7 @@ class cConfiguration extends cBase {
 					$config[$component][$hook] = array_merge ( $currentvalues, $configvalues );
 				}
 				
-				// If the hook isn't enabled, then unset the values and continue.
+				// If the hook isn't enabled, then unset the values and continue
 				if ($config[$component][$hook]['enabled'] != 'true' ) {
 					unset ($config[$component][$hook]);
 					continue;
@@ -363,16 +364,21 @@ class cConfiguration extends cBase {
 		
 	}
 
+	/**
+	 * Parses an ini file depending on which PHP version is being used
+	 *
+	 * @access  public
+	 * @var string $pFilename Full path of file to parse
+	 */
 	function Parse ( $pFilename ) {
 
 		$version = phpversion();
 
 		list ( $major, $minor, $micro ) = explode ( '.', $version );
 
-		// PHP 5.2 doesn't support associative arrays in ini files, so this is necessary.
+		// PHP 5.2 doesn't support associative arrays in ini files, so a hack is necessary
 		if ( ( $major >= 5 ) && ( $minor >= 3 ) ) {
 			$return = parse_ini_file ( $pFilename );
-
 		} else {
 			$data = file_get_contents ( $pFilename ); 
 
@@ -382,7 +388,7 @@ class cConfiguration extends cBase {
 
 				$counter = 0;
 				foreach ( $datalines as $l => $line ) {
-					// Skip over comments.
+					// Skip over comments
 					if ( preg_match ( '/^;/', $line ) ) continue;
 
 					// Retrieve the regular expression key
@@ -401,17 +407,19 @@ class cConfiguration extends cBase {
 
 				$modified_data = join ("\n", $modified);
 
-				// Create the temporary ini file for parsing.
+				// Create the temporary ini file for parsing
 				$tmpfname = tempnam(sys_get_temp_dir(), 'temporary_ini_file');
 				$handle = fopen ( $tmpfname, "w" );
 				fwrite ( $handle, $modified_data );
 				fclose ( $handle );
 
-				$result = parse_ini_file ( $tmpfname );
+				$original = parse_ini_file ( $tmpfname );
 
+				// Delete the temporary ini file
 				unlink ( $tmpfname );
 
-				foreach ( $result as $variable => $value ) {
+				// Merge the original data with the associative array data
+				foreach ( $original as $variable => $value ) {
 					if ( is_array ($value ) ) {
 						foreach ( $value as $k => $v ) {
 							$key = $expressions[$variable][$k];
@@ -424,13 +432,12 @@ class cConfiguration extends cBase {
 				}
 			  $return = $final;
 			} else {
+				// No associative arrays are used, so parse normally
 				$return = parse_ini_file ( $pFilename );
 			}
-
 		}
 
 		return ( $return );
-
 	}
 	
 }
