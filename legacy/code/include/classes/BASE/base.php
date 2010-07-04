@@ -2119,13 +2119,13 @@
   } // cBASEDATACACHE
 
   // HTML Class.
-  class cHTML {
+  class cOLDHTML {
 
     var $Output;
     var $ScriptList;
 
     // Constructor.
-    function cHTML () {
+    function cOLDHTML () {
 
       $Output = "";
       $ScriptList = array ();
@@ -3508,7 +3508,7 @@
    
      } // Refresh
 
-  } // cHTML
+  } // cOLDHTML
   
   class cIMAGE {
 

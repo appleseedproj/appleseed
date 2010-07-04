@@ -20,10 +20,14 @@ RewriteRule .*\.jpg$ legacy/code/common/images.php [L]
 RewriteRule .*\.gif$ legacy/code/common/images.php [L]
 RewriteRule .*\.png$ legacy/code/common/images.php [L]
 
-# Redirect appleseed data request attempts to 403 Forbidden message.
-RewriteRule .*adat$ legacy/code/error/403.php [L]
+# Redirect appleseed configuration request attempts to 403 Forbidden message.
+RewriteRule .*conf$ legacy/code/error/403.php [L]
 
-RewriteRule index.php system/initialize.php
+# Redirect attempts to access the install script.
+RewriteRule ^index.php.*$ / [R]
+RewriteRule ^$ system/appleseed.php
+
+# Redirect everything else to Appleseed initialization.
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule (.*) system/appleseed.php

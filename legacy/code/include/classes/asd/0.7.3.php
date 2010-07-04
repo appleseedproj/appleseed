@@ -64,7 +64,7 @@
       $this->REMOTE = new cREMOTE ($pHOST);
       
       // Create XML object.
-      $this->XML = new cXML ();
+      $this->XML = new cOLDXML ();
       
       // Initialize Variables.
       $this->SiteURL = null;
@@ -1816,7 +1816,7 @@
     function cAJAX () {
       
       // Create XML object.
-      $this->XML = new cXML ();
+      $this->XML = new cOLDXML ();
       
       // Initialize Variables.
       $this->SiteURL = null;

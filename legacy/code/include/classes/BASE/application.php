@@ -80,8 +80,8 @@
       $zLOGS    = new cSYSTEMLOGS;
   
       $zIMAGE   = new cIMAGE;
-      $zHTML    = new cHTML;
-      $zXML     = new cXML;
+      $zHTML    = new cOLDHTML;
+      $zXML     = new cOLDXML;
   
       $zLOCALUSER = new cUSERAUTHORIZATION;
       

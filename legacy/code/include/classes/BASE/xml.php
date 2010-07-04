@@ -33,7 +33,7 @@
   // | DESCRIPTION.  BASE XML parsing class.                             |
   // +-------------------------------------------------------------------+
 
-  class cXML {
+  class cOLDXML {
 
     var $Parser;
     var $Reference;
@@ -45,8 +45,8 @@
     var $ErrorMessage;
     var $ErrorLine;
 
-    // cXML Constructor.
-    function cXML () {
+    // cOLDXML Constructor.
+    function cOLDXML () {
 
       $CurrentItem = 0;
       $CurrentTag = '';
@@ -215,4 +215,4 @@
       
     } // Load
 
-  } // cXML
+  } // cOLDXML

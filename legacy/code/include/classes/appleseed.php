@@ -144,8 +144,8 @@
       $zLOGS    = new cSYSTEMLOGS ();
   
       $zIMAGE   = new cIMAGE ();
-      $zHTML    = new cHTML ();
-      $zXML     = new cXML ();
+      $zHTML    = new cOLDHTML ();
+      $zXML     = new cOLDXML ();
       $zSEARCH  = new cSEARCH ();
       $zTAGS  = new cTAGLIST ();
   
@@ -1298,7 +1298,7 @@
          case "post":
            // Parse out the post data.
            global $gPOSTDATA;
-           $HTML = new cHTML;
+           $HTML = new cOLDHTML;
   
            // Check if gPOSTDATA is empty and supress error.
            if (!isset($gPOSTDATA)) $gPOSTDATA = Array ();

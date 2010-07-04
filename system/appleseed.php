@@ -19,7 +19,7 @@ require_once ( ASD_PATH . 'system' . DS . 'application.php' );
  * Entry Point
  * 
  */
-
+ 
 global $zApp;
 $zApp = new cApplication ( );
 
