@@ -654,9 +654,7 @@ class cINSTALL {
                 "pw=\"$pPASSWORD\"\n" .  
                 "pre=\"$pPREFIX\"\n" .  
                 "host=\"$pHOST\"\n" .
-                "url=\"$pDOMAIN\"\n\n" .
-								"; general config\n" .
-                "ver=\"$pVERSION\"\n";
+                "url=\"$pDOMAIN\"\n\n";
 
     // Open file for writing.
     if (!$file = fopen($configurations_directory, 'w')) {
