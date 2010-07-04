@@ -63,7 +63,7 @@ USER_PROFILE="%fullname$s's Profile";
 CONTACT_USER="Contact %fullname$s";
 
 [user.messages]
-QUOTE_REPLY="\n\n> From: \"%authorfullname$s\" (%authorusername$s@%authordomain$s)\n> Date: %messagedate$s\n>\n"
+QUOTE_REPLY="\n\n> From: ""%authorfullname$s"" (%authorusername$s@%authordomain$s)\n> Date: %messagedate$s\n>\n"
 
 [user.invites]
 USER_INVITES_TITLE="Invite A Friend!"

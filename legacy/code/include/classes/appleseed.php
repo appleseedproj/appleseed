@@ -362,15 +362,9 @@
         $this->Abort ();
       } // if
       
-      if (!is_writable('photos/')) {
+      if (!is_writable('_storage/legacy/photos/')) {
         // Photos directory isn't writable.
-        echo "ERROR: photos/ directory is not writable.";
-        $this->Abort ();
-      } // if
-
-      if (!is_writable('attachments/')) {
-        // Photos directory isn't writable.
-        echo "ERROR: attachments/ directory is not writable.";
+        echo "ERROR: _storage/legacy/photos/ directory is not writable.";
         $this->Abort ();
       } // if
 

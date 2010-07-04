@@ -52,7 +52,7 @@ class cConfiguration extends cBase {
 			$configurations[$dir]->Directory = $dir;
 			$file = $zApp->GetPath () . DS . $pDirectory . DS . $dir . DS . $dir . '.conf';
 			
-			if ( !$configurations[$dir]->_Data = parse_ini_file ($file) ) {
+			if ( !$configurations[$dir]->_Data = $this->Parse ($file) ) {
 				// Load failed.  Set a warning and unset value.
 				unset ($configurations[$dir]);
 				continue;
@@ -263,7 +263,7 @@ class cConfiguration extends cBase {
 			
 			foreach ( $path[$component] as $p => $filename ) {
 				$currentvalues = $config[$component];
-				$configvalues = parse_ini_file ( $filename );
+				$configvalues = $this->Parse ( $filename );
 				
 				if ( $configvalues['clearall'] == 'true' ) {
 					$currentvalues = array ();
@@ -307,7 +307,9 @@ class cConfiguration extends cBase {
 			$hookdir = $zApp->GetPath() . DS . 'hooks' . DS . $component;
 		
 			$hooks = scandirs ( $hookdir );
-			
+
+			if ( count ( $hooks ) < 1 ) continue;
+
 			foreach ( $hooks as $h => $hook ) {
 				
 				$filename = $hookdir . DS . $hook . DS . $hook . '.conf';
@@ -331,7 +333,7 @@ class cConfiguration extends cBase {
 				
 				foreach ( $path[$hook] as $p => $filename ) {
 					$currentvalues = $config[$component][$hook];
-					$configvalues = parse_ini_file ( $filename );
+					$configvalues = $this->Parse ( $filename );
 					
 					if ( $configvalues['clearall'] == 'true' ) {
 						$currentvalues = array ();
@@ -359,6 +361,76 @@ class cConfiguration extends cBase {
 		
 		return ($config);
 		
+	}
+
+	function Parse ( $pFilename ) {
+
+		$version = phpversion();
+
+		list ( $major, $minor, $micro ) = explode ( '.', $version );
+
+		// PHP 5.2 doesn't support associative arrays in ini files, so this is necessary.
+		if ( ( $major >= 5 ) && ( $minor >= 3 ) ) {
+			$return = parse_ini_file ( $pFilename );
+
+		} else {
+			$data = file_get_contents ( $pFilename ); 
+
+			// Check if we're using associative arrays
+			if ($match = preg_match ( '/\[\S+\]=/', $data ) ) {
+			  $datalines = split ( "\n", $data );
+
+				$counter = 0;
+				foreach ( $datalines as $l => $line ) {
+					// Skip over comments.
+					if ( preg_match ( '/^;/', $line ) ) continue;
+
+					// Retrieve the regular expression key
+					if ( preg_match ( '/\[(\S+)\]=/', $line, $retrieved ) ) {
+
+						// Retrieve the variable name
+						if ( preg_match ( '/^(\S+)\[/', $line, $name ) ) {
+							$name = $name[1];
+							$regexp = $retrieved[1];
+							$expressions[$name][$counter] = $regexp;
+							$counter++;
+						}
+					}
+					$modified[] = preg_replace ( '/\[\S+\]=/', "[]=", $line);
+				}
+
+				$modified_data = join ("\n", $modified);
+
+				// Create the temporary ini file for parsing.
+				$tmpfname = tempnam(sys_get_temp_dir(), 'temporary_ini_file');
+				$handle = fopen ( $tmpfname, "w" );
+				fwrite ( $handle, $modified_data );
+				fclose ( $handle );
+
+				$result = parse_ini_file ( $tmpfname );
+
+				unlink ( $tmpfname );
+
+				foreach ( $result as $variable => $value ) {
+					if ( is_array ($value ) ) {
+						foreach ( $value as $k => $v ) {
+							$key = $expressions[$variable][$k];
+							$final[$variable][$key] = $v;
+						}
+					} else {
+						$final[$variable] = $value;
+					}
+
+				}
+			  $return = $final;
+			} else {
+				$return = parse_ini_file ( $pFilename );
+			}
+
+		}
+
+		return ( $return );
+
 	}
 	
 }
