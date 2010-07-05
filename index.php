@@ -71,6 +71,7 @@
   $INSTALL->CheckForSubDirectory ();
   $INSTALL->CheckPHPVersion ();
   $INSTALL->CheckSHA ();
+  $INSTALL->CheckPDO ();
   $INSTALL->CheckMysqlClientVersion ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckStorageDirectory ();
@@ -481,6 +482,35 @@ class cINSTALL {
     
     return (TRUE);
   } // CheckSHA
+  
+  function CheckPDO () {
+    global $Error, $ErrorMark;
+
+		if (!class_exists("PDO")) {
+      $Error['pdo_available'] = TRUE;
+      $ErrorMark['pdo_available'] = "<span class='no'>N</span>";
+			return (false);
+		}
+
+		if (!method_exists ("PDO", "getAvailableDrivers")) {
+      $Error['pdo_available'] = TRUE;
+      $ErrorMark['pdo_available'] = "<span class='no'>N</span>";
+			return (false);
+		}
+
+		$drivers = PDO::getAvailableDrivers();
+
+    // Check for SHA512
+    if(!in_array ("mysql", $drivers)) {
+      $Error['pdo_available'] = TRUE;
+      $ErrorMark['pdo_available'] = "<span class='no'>N</span>";
+    } else {
+      $Error[''] = FALSE;
+      $ErrorMark['pdo_available'] = "<span class='yes'>Y</span>";
+    } // if
+    
+    return (TRUE);
+  } // CheckPDO
   
   function CheckMysqlClientVersion () {
     global $Error, $ErrorMark;
@@ -1163,6 +1193,11 @@ class cINSTALL {
 										</tr>
       
 										<tr>
+                			<th><span class='label'>PDO MySQL driver available</span></th>
+                			<td><?php echo $ErrorMark['pdo_available']; ?></td>
+										</tr>
+      
+										<tr>
                 			<th><span class='label'>Mysql version 5.0 or higher? (Client is <?php echo $this->GetMysqlClientVersion (); ?>)</span></th>
                 			<td><?php echo $ErrorMark['mysql_client_version']; ?></td>
 										</tr>
@@ -1370,6 +1405,11 @@ class cINSTALL {
 										<tr>
                 			<th><span class='label'>SHA512 password hashing available</span></th>
                 			<td><?php echo $ErrorMark['sha512_available']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>PDO MySQL driver available</span></th>
+                			<td><?php echo $ErrorMark['pdo_available']; ?></td>
 										</tr>
       
 										<tr>

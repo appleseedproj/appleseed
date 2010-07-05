@@ -68,7 +68,7 @@ class cApplication extends cBase {
 		
 		// Load site configuration.
 		$this->Config->Set ( "Data",  $this->Config->Load ( "configurations" ) );
-		
+
 		$this->Database = new cDatabase();
 		
 		$this->Language = new cLanguage();
@@ -86,8 +86,8 @@ class cApplication extends cBase {
 		
 		$this->Event->Hooks = $this->Hooks;
 		
-        // Load global strings into cache.
-        $this->Language->Load ('en-US', 'system.global.lang');
+		// Load global strings into cache.
+		$this->Language->Load ('en-US', 'system.global.lang');
         
 		$this->Router = new cRouter();
 		
