@@ -3747,29 +3747,33 @@
 
       // Load image attributes.
       $this->Attributes ($pFILENAME);
-
+      
       // Determine which type of file to convert from.
       switch ($this->Type) {
         case IMAGETYPE_PNG:
           $src_img = imagecreatefrompng ($pFILENAME);
+          ob_end_clean();
           header('Content-type: ' . image_type_to_mime_type(IMAGETYPE_PNG));
           imagepng ($src_img);
         break;
 
         case IMAGETYPE_WBMP:
           $src_img = imagecreatefromwbmp ($pFILENAME); 
+          ob_end_clean();
           header('Content-type: ' . image_type_to_mime_type(IMAGETYPE_WBMP));
           imagewbmp ($src_img);
         break;
 
         case IMAGETYPE_JPEG:
           $src_img = imagecreatefromjpeg ($pFILENAME); 
+          ob_end_clean();
           header('Content-type: ' . image_type_to_mime_type(IMAGETYPE_JPEG));
           imagejpeg ($src_img);
         break;
 
         case IMAGETYPE_GIF:
           $src_img = imagecreatefromgif ($pFILENAME); 
+          ob_end_clean();
           header('Content-type: ' . image_type_to_mime_type(IMAGETYPE_GIF));
           imagegif ($src_img);
         break;

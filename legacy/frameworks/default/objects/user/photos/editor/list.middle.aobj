@@ -1,30 +1,30 @@
- <?php $zHTML->Alternate(); ?>
-  <span class='filename'>
-    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->photoInfo->Filename); ?>
-  </span> <!-- .filename -->
-
-  <span class='hint'>
-    <?php echo __( "Hint", array ( "hint" => $gIMAGEHINT ) ); ?>
-  </span> <!-- .hint -->
-
-  <span class='check'>
+<tr class="<?php echo $zHTML->Alternate(); ?>">
+  <td class='check'>
     <?php $zHTML->CheckBox ('MASSLIST', $gVIEWDATA->photoInfo->tID, TRUE, $gCHECKED); ?>
-  </span> <!-- .check -->
+  </td> <!-- .check -->
 
-  <span class='thumb'>
+  <td class='filename'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->photoInfo->Filename); ?>
+  </td> <!-- .filename -->
+
+  <td class='hint'>
+    <?php echo __( "Hint", array ( "hint" => $gIMAGEHINT ) ); ?>
+  </td> <!-- .hint -->
+
+  <td class='thumb'>
     <?php $zHTML->ImageLink ($gVIEWTARGET, NULL, $gPHOTOLOCATION, $gTHUMBX, $gTHUMBY); ?>
-  </span> <!-- .thumb -->
+  </td> <!-- .thumb -->
 
-  <span class='description'>
+  <td class='description'>
     <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->photoInfo->Description); ?>
-  </span> <!-- .description -->
+  </td> <!-- .description -->
 
-  <span class='comments'>
+  <td class='comments'>
     <?php $zHTML->Link ($gVIEWTARGET . '#comments', $gCOMMENTLABEL); ?>
-  </span> <!-- #comments -->
+  </td> <!-- #comments -->
 
-  <span class='edit'>
-    <?php $zHTML->ImageLink ($gTARGET, $gEXTRAPOSTDATA, "$gTHEMELOCATION/images/buttons/edit.gif"); ?>
-  </span> <!-- .edit -->
+  <td class='edit'>
+    <?php $zHTML->Link ($gTARGET, "Edit", $gEXTRAPOSTDATA); ?>
+  </td> <!-- .edit -->
 
-</li> <!-- #[alternate] -->
+</tr>

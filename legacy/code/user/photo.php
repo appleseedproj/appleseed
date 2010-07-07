@@ -46,10 +46,10 @@
   $zOLDAPPLE->SetContext("user.photo");
 
   global $gPHOTOLOCATION;
-  $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/" . $gFILENAME;
+  $gPHOTOLOCATION = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/" . $gFILENAME;
   
   // Set link to original photo.
-  $zOLDAPPLE->SetTag ('ORIGINALLINK', "photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/_og." . $gFILENAME);
+  $zOLDAPPLE->SetTag ('ORIGINALLINK', "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gDIRECTORY . "/_og." . $gFILENAME);
   
   global $gVIEWDATA;
   $gVIEWDATA = new cPHOTOSETS ($zOLDAPPLE->Context);

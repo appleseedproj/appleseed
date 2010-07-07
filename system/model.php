@@ -45,6 +45,8 @@ class cModel extends cBase {
 		// Check if the tablename was specified.
 		if ( $pTable ) {
 			$tablename = ucwords ( strtolower ( ltrim ( rtrim ( $pTable ) ) ) );
+		} elseif ( $this->_Tablename ) {
+			$tablename = $this->_Tablename;
 		} else {
 			$tablename = preg_replace ( '/^c/', "", get_class ( $this ) );
 			$tablename = preg_replace ( '/Model$/', "", $tablename );
@@ -58,6 +60,8 @@ class cModel extends cBase {
 		foreach ( $fieldinfo as $f => $field ) {
 			$fieldname = $field['Field'];
 			$this->_Fields[$fieldname] = $field;
+			
+			if ( $field['Key'] == "PRI" ) $this->_PrimaryKey = $field['Field'];
 		}
 		
 		parent::__construct();
@@ -155,6 +159,38 @@ class cModel extends cBase {
 	 * @var string $pOrdering Ordering instructions
 	 */
 	protected function _Retrieve ( $pCriteria = null, $pOrdering = null ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = "
+			SELECT * FROM %s
+				WHERE %s = '%s'
+		";
+		
+		$sql = sprintf ( $sql, $table, $pk, $pCriteria );
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$Result = $DBO->Prepare ( $sql );
+		$Result->Execute ();
+		
+		$data = $Result->Fetch ( PDO::FETCH_OBJ );
+		
+		$this->_Data = (array) $data;
+		
+		foreach ( $this->_Data as $field => $value ) {
+			$internal = "_" . $field;
+			$this->$internal = $value;
+		}
+		
+		$this->_Query = $sql;
+		
+		// @todo Add query to global list.
+		
 	}
 	
 	/**

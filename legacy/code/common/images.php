@@ -79,10 +79,10 @@
   } // if (file_exists)
   
   // Split the URL information into a list.
-  list ($null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = explode ('/', $requested_pic);
+  list ($null, $null, $null, $ROOTDIR, $gOWNER, $NULL, $gDIRECTORY, $gFILENAME) = explode ('/', $requested_pic);
   
   // If we're not looking within the photos directory, then exit.
-  if ($ROOTDIR != 'photos') exit;
+  //if ($ROOTDIR != 'photos') exit;
   
   // Get the session string from cookie.
   $Identifier = $_COOKIE['gLOGINSESSION'];
@@ -131,6 +131,7 @@
     
   } // if
   
+  
   // Take action according to access.
   switch ($access) {
     case PRIVACY_ALLOW:
@@ -144,8 +145,10 @@
     case PRIVACY_HIDE:
     default:
       // NOTE: Add back when user themes are implemented.
-      $theme = LoadThemeInformation ($Identifier);
-      $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/themes/$theme/images/error/block.png";
+      //$theme = LoadThemeInformation ($Identifier);
+      $theme = "default";
+      $gCONNECT['username'] = $zApp->Config->GetConfiguration ( "un" );
+      $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/themes/$theme/images/icons/block.png";
       
       // Show the blocked image.
       $zIMAGE->Show ($blockedfilename);
@@ -184,7 +187,6 @@
                               mysql_real_escape_string ($pOWNER),
                               mysql_real_escape_string (USER_EVERYONE),
                               mysql_real_escape_string ($pDIRECTORY));
-                              echo $sql_statement; exit;
                              
     $sql_result = mysql_query ($sql_statement);
     $sql_data = mysql_fetch_assoc ($sql_result);

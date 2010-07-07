@@ -5,7 +5,7 @@
     <form id='tag' method='POST' action='<?php echo $gTAGFORMLINK; ?>'>
      <?php $zHTML->PostData(); ?>
      <?php $zHTML->TextBox ("TAGENTRIES"); ?>
-     <?php $zHTML->Button ("tag"); ?>
+     <?php $zHTML->Button ("Tag"); ?>
     </form>
    </div>  <!-- #action -->
    

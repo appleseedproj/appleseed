@@ -61,6 +61,12 @@ class cMarkup extends simple_html_dom {
 	
 	public function Display () {
 		
+		$labels = $this->Find ("label");
+		
+		foreach ( $labels as $l => $label ) {
+			$labels[$l]->innertext = __( ltrim ( rtrim ( $label->innertext ) ) );
+		}
+		
 		echo $this->Save();
 		
 		return ( true );
@@ -117,7 +123,7 @@ class cHTML extends cMarkup {
 		$inputs = $this->Find("[name=]");
 		
 		// Set all request variable names to lower case
-		foreach ( $_REQUEST as $r => $request ) {
+		foreach ( cRequest::Get() as $r => $request ) {
 			$r = strtolower ( ltrim ( rtrim ( $r ) ) );
 			$requests[$r] = $request; 
 		}
@@ -143,7 +149,7 @@ class cHTML extends cMarkup {
 			}
 			
 			if ( $assign ) {
-				// Assign values from $_REQUEST 
+				// Assign values from URL Request
 				switch ( $tag ) {
 					case 'textarea':
 						$input->innertext = $assign;

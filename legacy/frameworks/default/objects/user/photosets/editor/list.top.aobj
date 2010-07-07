@@ -1,9 +1,8 @@
-<div id='photosets'>
+<section id='photosets'>
 
  <!-- tabs objects -->
  <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
   <?php $zSEARCH->Ask (); ?>
    
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
@@ -25,5 +24,5 @@
 
   <?php $gVIEWDATA->Broadcast(); ?>
 
-  <div id='editor'>
-   <ul>
+  <table>
+   <tbody>

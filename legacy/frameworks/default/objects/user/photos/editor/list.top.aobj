@@ -1,16 +1,15 @@
-<div id='photos'>
+<section id='photos'>
 
  <!-- tabs objects -->
  <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
    <a name='photos'></a>
   
    <?php $zSEARCH->Ask (); ?>
    
    <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/'>
     <?php $zHTML->Post ($gBACKPOSTDATA); ?>
-    <?php $zHTML->Button ('back'); ?>
+    <?php $zHTML->Button ("Back"); ?>
    </form> <!-- #returnback -->
 
    <form enctype="multipart/form-data" id='viewtype' name='viewtype' method='post' action='<?php echo $gTARGET; ?>'>
@@ -18,35 +17,34 @@
     <?php $zOPTIONS->Menu ($gPHOTOLISTTYPE, $gPHOTOLISTING, "", TRUE); ?>
    </form> <!-- #viewtype -->
 
-  <p id='heading'>
-   <?php echo $gVIEWDATA->Name; ?>
-  </p> <!-- #heading -->
+  <h1><?php echo $gVIEWDATA->Name; ?></h1>
 
-  <p id='upload'>
-   <?php echo __ ( "Choose A File To Upload", array ( "maxwidth" => $gMAXPHOTOX, "maxheight" => $gMAXPHOTOY ) ) ?>
-  </p> <!-- #upload -->
+  <p><?php echo __ ( "Choose A File To Upload", array ( "maxwidth" => $gMAXPHOTOX, "maxheight" => $gMAXPHOTOY ) ) ?></p>
 
   <form enctype="multipart/form-data" id='newphoto' name='newphoto' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/<?php echo $gALBUMREQUEST; ?>/'>
    <?php $zHTML->FileBox ("NEWPHOTO", 25, 64, PHOTO_MAX_SIZE, $gNEWUPLOAD); ?>
    <?php $zHTML->Post ($gPOSTDATA); ?>
-   <?php $zHTML->Button ('submit', "", $gNEWUPLOAD, "UPLOAD"); ?>
+   <?php $zHTML->Button ('Submit', "", $gNEWUPLOAD, "UPLOAD"); ?>
    <?php $zIMAGE->Broadcast ("field", "image"); ?>
   </form> <!-- #newphoto -->
 
   <form id='masslist' name='masslist' method='post' action='<?php echo $gTARGET; ?>'>
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-   <div id='buttons_top'>
-    <?php $zHTML->Button ('Move Down'); ?>
-    <?php $zHTML->Button ('Move Up'); ?>
+   <nav id='buttons_top'>
+    <ul>
+      <li><?php $zHTML->Button ('Move Down'); ?></li>
+      <li><?php $zHTML->Button ('Move Up'); ?></li>
  
-    <?php $zHTML->Button ($gSELECTBUTTON); ?>
+      <li><?php $zHTML->Button ($gSELECTBUTTON); ?></li>
  
-    <?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?>
-    <?php $gVIEWDATA->photoInfo->Broadcast(); ?>
-   </div> <!-- #buttons_top -->
+      <li><?php $zHTML->Button ('Delete All', __("Confirm Delete Selected")) ?></li>
+    </ul>
+   </nav>
  
    <?php $zIMAGE->Broadcast(); ?>
+   <?php $gVIEWDATA->photoInfo->Broadcast(); ?>
 
-   <div id='editor'>
-    <ul>
+   <table>
+ 
+     <tbody>

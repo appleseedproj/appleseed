@@ -13,10 +13,10 @@
    
    <?php $zHTML->Button ($gTAGSELECTBUTTON); ?>
    
-   <?php $zHTML->Button ('tag_emphasize_all'); ?>
+   <?php $zHTML->Button ('Tag Emphasize All'); ?>
    
-   <?php $zHTML->Button ('tag_deemphasize_all'); ?>
+   <?php $zHTML->Button ('Tag Deemphasize All'); ?>
    
-   <?php $zHTML->Button ('tag_delete_all', __("Confirm Delete Selected")) ?>
+   <?php $zHTML->Button ('Tag Delete All', __("Confirm Delete Selected")) ?>
    
    <ul>

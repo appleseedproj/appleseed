@@ -28,7 +28,7 @@ class cRequest {
         public function __construct ( ) {       
         }
         
-        public function Get ( $pVariable, $pDefault = null ) {
+        public function Get ( $pVariable = null , $pDefault = null ) {
         	
         	// Makes all request variable names case insensitive.
         	$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
@@ -37,6 +37,8 @@ class cRequest {
         		$lowerkey = strtolower ( $key );
         		$request[$lowerkey] = $_REQUEST[$key];
         	}
+        	
+        	if ( !$pVariable ) return ( $request );
         	
         	if ( !$request[$variable] ) return ( $pDefault );
         	

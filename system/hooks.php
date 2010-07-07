@@ -87,5 +87,4 @@ class cHooks extends cBase {
 		return ( $this->_Config->_Hooks );
 	}
 	
-
 }

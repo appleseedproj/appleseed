@@ -126,9 +126,26 @@ class cComponents extends cBase {
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );
 		
-		if (!$pController) $pController = $pComponent;
-		if (!$pView) $pView = $pComponent;
-		if (!$pTask) $pTask = "Display";
+		// Overwrite the Controller from Request data.
+		if ( cRequest::Get ('Controller') ) {
+			$pController = cRequest::Get ( 'Controller' );
+		} else {
+			if ( !$pController ) $pController = $pComponent;
+		}
+		
+		// Overwrite the View from Request data.
+		if ( cRequest::Get ('View') ) {
+			$pView = cRequest::Get ( 'View' );
+		} else {
+			if ( !$pView ) $pView = $pComponent;
+		}
+		
+		// Overwrite the Task from Request data.
+		if ( cRequest::Get ('Task') ) {
+			$pTask = cRequest::Get ( 'Task' );
+		} else {
+			if ( !$pTask ) $pTask = 'display';
+		}
 		
 		$parameters = array ( 'component' => $pComponent);
 		if ( $pController ) $parameters['controller'] = $pController;

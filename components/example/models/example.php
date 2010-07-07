@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cExampleModel extends cModel {
 	
-	protected $_Tablename = "Example";
+	protected $_Tablename = "ExampleCustomers";
 	
 	/**
 	 * Constructor
@@ -40,9 +40,9 @@ class cExampleModel extends cModel {
  * @package     Appleseed.Components
  * @subpackage  Example
  */
-class cExampleMapModel extends cModel {
+class cExampleEmployeesModel extends cModel {
 	
-	protected $_Tablename = "ExampleMap";
+	protected $_Tablename = "ExampleEmployees";
 	
 }
 
@@ -53,8 +53,8 @@ class cExampleMapModel extends cModel {
  * @package     Appleseed.Components
  * @subpackage  Example
  */
-class cExampleTagsModel extends cModel {
+class cExampleOfficesModel extends cModel {
 	
-	protected $_Tablename = "ExampleTags";
+	protected $_Tablename = "ExampleOffices";
 	
 }

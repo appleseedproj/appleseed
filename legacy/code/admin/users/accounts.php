@@ -178,7 +178,7 @@
         $ADMINDATA->FetchArray ();
 
         // Delete photo directory
-        $phototarget = "photos/" . $ADMINDATA->Username . "/";
+        $phototarget = "_storage/legacy/photos/" . $ADMINDATA->Username . "/";
 
         $ADMINDATA->Delete();
 
@@ -217,8 +217,8 @@
       $ADMINDATA->Select ("uID", $guID);
       $ADMINDATA->FetchArray();
 
-      $oldphotodir = "photos/" . $ADMINDATA->Username;
-      $newphotodir = "photos/" . $gUSERNAME;
+      $oldphotodir = "_storage/legacy/photos/" . $ADMINDATA->Username;
+      $newphotodir = "_storage/legacy/photos/" . $gUSERNAME;
 
       // Synchronize Data
       $ADMINDATA->Synchronize();
@@ -372,7 +372,7 @@
         $ADMINDATA->Message = __("Record Deleted", array ('id' => $ADMINDATA->uID));
 
         // Delete photo directory
-        $phototarget = "photos/" . $ADMINDATA->Username . "/";
+        $phototarget = "_storage/legacy/photos/" . $ADMINDATA->Username . "/";
 
         if (!$zOLDAPPLE->RemoveDirectory ($phototarget, TRUE)) {
           // Output error message if unsuccessful.

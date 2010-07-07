@@ -3,7 +3,7 @@
      <a class='link' href='<?php echo $gTAGLINK; ?>'><?php echo $gTAGNAME; ?></a>
      <form id='tag_emphasize' method='POST' action='<?php echo $gTAGFORMLINK; ?>'>
       <?php $zHTML->Post ($gTAGPOSTDATA); ?>
-      <?php $zHTML->Button ('tag_emphasize'); ?>
+      <?php $zHTML->Button ('Tag Emphasize'); ?>
      </form>
     </span>
  </li> <!-- #[alternate] -->

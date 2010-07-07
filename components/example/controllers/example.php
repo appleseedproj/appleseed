@@ -71,8 +71,56 @@ class cExampleController extends cController {
 		 * @tutorial Second parameter is an alternate table name, default is the same as your component (ie, "Example");
 		 * 
 		 */
-		$this->Model = $this->GetModel( "Example" );
+		$this->Customers = $this->GetModel();
 		
+		$this->Employees = $this->GetModel("Employees");
+		
+		$this->_PrepareEditForm();
+		
+		/*
+		 * @tutorial The order in which views are loaded and edited is important.  
+		 * @tutorial If you call one view within another view, make sure to edit them separately, and in the proper order (outer view last).
+		 * @tutorial In this instance, the "example" view wraps "example_form", so load and edit "example" after "example_form"
+		 * 
+		 */
+		$this->View = $this->GetView ( "example" );
+		$this->View->Display();
+
+		$this->EventTrigger ( "End" );  // Shorthand
+		
+		/*
+		 * @tutorial Clear the memory and unset the variables
+		 * 
+		 * @philosophy This is just good practice, although it may also help with memory leaks in SimpleHTMLDom
+		 * 
+		 */
+		$this->View->Clear(); $this->Form->Clear();
+		unset ( $this->View ); unset ( $this->Form );
+		
+		return ( true );
+	}
+	
+	function Edit ( ) {
+	}
+	
+	function Save ( ) {
+		
+	}
+	
+	/**
+	 * Prepare the Edit form
+	 * 
+	 * @tutorial The default task is to display the default view.  
+	 * @tutorial Tasks passed through browser requests are mapped to a class method.
+	 * @tutorial For instance, if a form passes Task=Edit, then $this->Edit() will be executed.
+	 * 
+	 * @philosophy Views are dumb.  There is no view class, just a basic HTML file.
+	 * @philosophy Logic is kept in the controller, and out of the view.
+	 * @philosophy While you can use PHP within your view, it's not recommended.
+	 *
+	 * @access  public
+	 */
+	public function _PrepareEditForm() {
 		/*
 		 * @tutorial In order to modify views based on your model, you load the view into an DOM parser.
 		 * @tutorial The DOM parser is based extends SimpleHTMLDom
@@ -148,33 +196,29 @@ class cExampleController extends cController {
 		$this->Form->DisableElement ( "input[name=file]" );
 		
 		/*
+		 * @tutorial Retrieve the primary key of what record we're editing.
+		 * 
+		 * @philosophy The rules for tables are: Primary Keys = _PK, Foreign Keys = _FK, Tables = Plural, naming is ProperCase.
+		 * @philosophy Otherwise, prioritize readability above all else.
+		 * 
+		 */
+		$Customer_PK = cRequest::Get ( "Customer_PK", 103);
+		
+		/*
+		 * @tutorial Load from the database based on this primary key.
+		 * 
+		 */
+		$this->Customers->Retrieve ( $Customer_PK );
+		
+		/*
 		 * @tutorial Finally, you can automatically synchronize between $_REQUEST data and an optional set of defaults.
+		 * @tutorial Be sure to inject any data from the database from the database into the defaults array.
 		 * 
 		 */
-		$defaults = array ( "text_area" => "This is the default", "StaticCheck[0]" => "checked", "StaticSelect" => "Thing 2.1", "DynamicSelect" => "6" );
+		$defaults = array ( "CustomerName" => "Michael Chisari", "text_area" => "This is the default", "StaticCheck[0]" => "checked", "StaticSelect" => "Thing 2.1", "DynamicSelect" => "6" );
+		$data = (array) $this->Customers->Get ( "Data" );
+		$defaults = array_merge ( (array)$defaults, (array)$data );
 		$this->Form->Synchronize ( $defaults );
-		
-		
-		/*
-		 * @tutorial The order in which views are loaded and edited is important.  
-		 * @tutorial If you call one view within another view, make sure to edit them separately, and in the proper order (outer view last).
-		 * @tutorial In this instance, the "example" view wraps "example_form", so load and edit "example" after "example_form"
-		 * 
-		 */
-		$this->View = $this->GetView ( "example" );
-		
-		$this->View->Display();
-
-		$this->EventTrigger ( "End" );  // Shorthand
-		
-		/*
-		 * @tutorial Clear the memory and unset the variables
-		 * 
-		 * @philosophy This is just good practice, although it may also help with memory leaks in SimpleHTMLDom
-		 * 
-		 */
-		$this->View->Clear(); $this->Form->Clear();
-		unset ( $this->View ); unset ( $this->Form );
 		
 		return ( true );
 	}

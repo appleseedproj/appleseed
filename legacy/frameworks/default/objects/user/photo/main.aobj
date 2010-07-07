@@ -6,7 +6,7 @@
  <div id='container'>
   <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/<?php echo $gDIRECTORY; ?>/'>
    <?php $zHTML->Post ($gBACKPOSTDATA); ?>
-   <?php $zHTML->Button ('back'); ?>
+   <?php $zHTML->Button ("Back"); ?>
   </form> <!-- #returnback -->
 
    <?php $zLOCALUSER->Broadcast(); ?>
@@ -20,7 +20,7 @@
    </p> <!-- #description -->
    
    <p id='original'>
-    <?php $zHTML->Button ('original'); ?>
+    <?php $zHTML->Button ('Original'); ?>
    </p>
 
    <p id='image'>

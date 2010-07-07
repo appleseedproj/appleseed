@@ -68,14 +68,28 @@ class cRouter extends cBase {
 	public function Legacy ( ) {
 		eval (GLOBALS);
 	
-		$routes = split ( '/', $_SERVER['REQUEST_URI'] );
+		$routes = explode ( '/', $_SERVER['REQUEST_URI'] );
 			
 		// Set proper global variables
 		cRouter::LegacyPrepGlobals ( );
 	
 		array_shift ( $routes );
 		$target = $routes[0];
-	
+		$extension_arr = explode ('.', $routes[count($routes)-1]); 
+		$extension = $extension_arr[count($extension_arr)-1];
+		
+		switch ( $extension ) {
+			case 'jpg':
+			case 'png':
+			case 'gif':
+				$location = ASD_PATH . implode ( DS, $routes );
+				if ( file_exists ( $location ) ) {
+					require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'common' . DS . 'images.php' );
+					exit;
+				}
+			break;
+		}
+		
 		switch ( $target ) {
 			case '_admin':
 				array_shift ( $routes );
@@ -187,11 +201,11 @@ class cRouter extends cBase {
 
 		SETGLOBAL("ADMINDATA");
 		SETGLOBAL("zOLDAPPLE"); SETGLOBAL("zHTML"); SETGLOBAL("zAUTHUSER"); SETGLOBAL("zFOCUSUSER"); SETGLOBAL("zLOCALUSER"); SETGLOBAL("zREMOTEUSER"); SETGLOBAL("zIMAGE");
-		SETGLOBAL("zARTICLES"); SETGLOBAL("zCONTENTPAGE"); SETGLOBAL("zJANITOR");
+		SETGLOBAL("zARTICLES"); SETGLOBAL("zCONTENTPAGE"); SETGLOBAL("zJANITOR"); SETGLOBAL("zSERVER");
 		SETGLOBAL("gFOCUSUSERID"); SETGLOBAL("gLOGINREQUEST"); SETGLOBAL("gACTION"); SETGLOBAL("gCOMMENTACTION"); SETGLOBAL("gJOINLOCATION"); SETGLOBAL("gFRAMELOCATION"); 
 		SETGLOBAL("gTHEMELOCATION"); SETGLOBAL("gPROFILEACTION"); SETGLOBAL("gPROFILESUBACTION"); SETGLOBAL("gICONUSER"); SETGLOBAL("gACTION"); 
-		SETGLOBAL("gPOSTDATA"); SETGLOBAL("gEXTRAPOSTDATA"); SETGLOBAL ("guID");
-		SETGLOBAL("gERRORMSG"); SETGLOBAL("gERRORTITLE"); SETGLOBAL("gSETTINGS"); SETGLOBAL("gCONFIRM");
+		SETGLOBAL("gPOSTDATA"); SETGLOBAL("gEXTRAPOSTDATA"); SETGLOBAL ("guID"); SETGLOBAL("gSCROLLMAX"); SETGLOBAL("gVIEWDATA");
+		SETGLOBAL("gERRORMSG"); SETGLOBAL("gERRORTITLE"); SETGLOBAL("gSETTINGS"); SETGLOBAL("gCONFIRM"); SETGLOBAL("gFOOTNOTE");
 		SETGLOBAL("gEXTRAPOSTDATA"); SETGLOBAL("gSITEURL"); SETGLOBAL("gREMEMBER"); SETGLOBAL("gRECIPIENT");
 		SETGLOBAL("bREFRESHLINE"); SETGLOBAL("bMAINSECTION"); SETGLOBAL("bLOGINBOX"); SETGLOBAL("bJOINBOX"); SETGLOBAL("bINVITEBOX");
 		SETGLOBAL("target"); SETGLOBAL("mainlocation"); SETGLOBAL("username");

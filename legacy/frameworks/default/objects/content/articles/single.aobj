@@ -35,7 +35,7 @@
     <span class='back'>
      <form method='POST' id='back' name='back' action='/articles/'>
       <?php $zHTML->Post(); ?>
-      <?php $zHTML->Button ("back"); ?>
+      <?php $zHTML->Button ("Back"); ?>
      </form>
     </span> <!-- .read -->
    </div> <!-- .footer -->

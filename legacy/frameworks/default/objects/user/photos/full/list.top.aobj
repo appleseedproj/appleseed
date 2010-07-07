@@ -10,7 +10,7 @@
 
   <form enctype="multipart/form-data" id='returnback' name='returnback' method='post' action='/profile/<?php echo $gFOCUSUSERNAME; ?>/photos/'>
    <?php $zHTML->Post ($gBACKPOSTDATA); ?>
-   <?php $zHTML->Button ('back'); ?>
+    <?php $zHTML->Button ("Back"); ?>
   </form> <!-- #returnback -->
 
   <form enctype="multipart/form-data" id='viewtype' name='viewtype' method='post' action='<?php echo $gTARGET; ?>'>

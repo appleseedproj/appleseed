@@ -1,18 +1,19 @@
     </form> <!-- ## stringadmin.masslist -->
-   </ul>
+   </tbody>
+  </table>
  
-  </div> <!-- #editor -->
-
-  <div id='buttons_bottom'>
-
-   <form id='new' name='new' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
+  <form id='new' name='new' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
     <input type='hidden' id='gtID' name='gtID' value='' />
     <input type='hidden' id='gACTION' name='gACTION' value='NEW' />
     <?php $zHTML->Post ($gPOSTDATA); ?>
-    <?php $zHTML->Button ('New'); ?>
-   </form> <!-- #new -->
-
-  </div> <!-- #buttons_bottom -->
     
- </div> <!-- #container -->
-</div> <!-- #photosets -->
+    <nav>
+
+      <ul>
+        <li><?php $zHTML->Button ('New'); ?></li>
+      </ul>
+
+    </nav>
+  </form>
+    
+</section>

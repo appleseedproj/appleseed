@@ -86,7 +86,7 @@
   } elseif ($USER->userIcons->Filename == NO_ICON) {
     $returnicon = $gTHEMELOCATION . "/images/icons/noicon.gif";
   } else {
-    $returnicon = "photos/" . $USER->Username . "/icons/" . $USER->userIcons->Filename;
+    $returnicon = "_storage/legacy/photos/" . $USER->Username . "/icons/" . $USER->userIcons->Filename;
   } // if
   $zIMAGE->Show ($returnicon);
 

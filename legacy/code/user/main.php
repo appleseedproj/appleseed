@@ -219,12 +219,12 @@
   $username = $zFOCUSUSER->Username;
 
   global $gPROFILEPICTURE;
-  $gPROFILEPICTURE = "photos/$username/profile.jpg";
+  $gPROFILEPICTURE = "_storage/legacy/photos/$username/profile.jpg";
 
   if (!file_exists ($gPROFILEPICTURE)) {
     $gPROFILEPICTURE = "$gTHEMELOCATION/images/profile/noprofile.gif";
   } else {
-    $gPROFILEPICTURE = "photos/$username/profile.jpg";
+    $gPROFILEPICTURE = "legacy/photos/$username/profile.jpg";
   } // if
 
   // Load the profile questions, unless headed to options or messages page.

@@ -129,7 +129,7 @@
       
       global $gFRAMELOCATION;
       
-      $exiflocation = "photos/" . $zFOCUSUSER->Username . "/sets/" . $this->Directory . "/_og." . $this->photoInfo->Filename;
+      $exiflocation = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $this->Directory . "/_og." . $this->photoInfo->Filename;
           
       if (!function_exists('exif_read_data')) return (FALSE);
       

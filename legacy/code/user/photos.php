@@ -54,7 +54,7 @@
                              "Directory"    => $gALBUMREQUEST);
   $gVIEWDATA->SelectByMultiple ($photosetcriteria);
   $gVIEWDATA->FetchArray ();
-
+  
   // Check if photoset is hidden or blocked for this user.
   $gPRIVACYSETTING = $gVIEWDATA->photoPrivacy->Determine ("zFOCUSUSER", "zAUTHUSER", "photoSets_tID", $gVIEWDATA->tID);
 
@@ -247,7 +247,7 @@
         $gVIEWDATA->photoInfo->FetchArray ();
 
         // Remove the image files.
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
         $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
         $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
@@ -319,7 +319,7 @@
       // Validate the uploaded file.
       $zIMAGE->Validate ($uploadfile, $uploaderror, $gMAXPHOTOX, $gMAXPHOTOY);
 
-      $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
+      $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
 
       // If photo set directory doesn't exist, create it.
       if (!is_dir ($photosetdir))  $zOLDAPPLE->CreateDirectory ($photosetdir);
@@ -468,7 +468,7 @@
         $oldsetid = $OLDDATA->photoSets_tID;
         $newsetid = $NEWDATA->tID;
 
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
       
         $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
         $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
@@ -569,7 +569,7 @@
 
       $photosetid = $gVIEWDATA->photoInfo->photoSets_tID;
 
-      $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+      $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
       $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
       $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
@@ -699,7 +699,7 @@
 
         // Check if any results were found.
         if ($gSCROLLMAX[$zOLDAPPLE->Context] == 0) {
-          $gVIEWDATA->photoInfo->Message = __("None Selected");
+          $gVIEWDATA->photoInfo->Message = __("No Results Found");
           $gVIEWDATA->photoInfo->Broadcast();
         } // if
 
@@ -707,6 +707,7 @@
         global $gVARIABLES, $gCHECKED;
         
         if ($viewlocation == 'all/') $prefix = "_sm.";
+        if ($viewlocation == 'editor/') $prefix = "_sm.";
         if ($viewlocation == 'compact/') $prefix = "_sm.";
         if ($viewlocation == 'standard/') $prefix = "_md.";
         if ($viewlocation == 'full/') $prefix = "_lg.";
@@ -728,8 +729,8 @@
           if ($gACTION == 'SELECT_ALL') $gCHECKED = TRUE;
           global $gPHOTOLOCATION;
           // Look up first photo filename in list.
-          $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . '/' . $prefix . $gVIEWDATA->photoInfo->Filename;
-          if (!file_exists ($gPHOTOLOCATION) ) $gPHOTOLOCATION = "/$gTHEMELOCATION/images/error/noimage.png";
+          $gPHOTOLOCATION = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . '/' . $prefix . $gVIEWDATA->photoInfo->Filename;
+          if (!file_exists ($gPHOTOLOCATION) ) $gPHOTOLOCATION = "/$gTHEMELOCATION/images/icons/noimage.png";
 
           global $gPOPWIDTH, $gPOPHEIGHT;
           $gPOPWIDTH = $gVIEWDATA->photoInfo->Width + 80;
@@ -773,6 +774,7 @@
 
           $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
           $gEXTRAPOSTDATA['tID']    = $gVIEWDATA->photoInfo->tID;
+          
           $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/user/photos/" . $viewlocation  . "list.middle.aobj", INCLUDE_SECURITY_NONE);
           unset ($gEXTRAPOSTDATA['ACTION']); 
 

@@ -227,7 +227,7 @@
         $gVIEWDATA->photoInfo->FetchArray ();
 
         // Remove the image files.
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
         $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
         $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
@@ -299,7 +299,7 @@
       // Validate the uploaded file.
       $zIMAGE->Validate ($uploadfile, $uploaderror, $gMAXPHOTOX, $gMAXPHOTOY);
 
-      $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
+      $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
 
       // If photo set directory doesn't exist, create it.
       if (!is_dir ($photosetdir))  $zOLDAPPLE->CreateDirectory ($photosetdir);
@@ -445,7 +445,7 @@
         $oldsetid = $OLDDATA->photoSets_tID;
         $newsetid = $NEWDATA->tID;
 
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
       
         $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
         $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
@@ -543,7 +543,7 @@
 
       $photosetid = $gVIEWDATA->photoInfo->photoSets_tID;
 
-      $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+      $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
       $ogfile = $photosetdir . "/_og." . $gVIEWDATA->photoInfo->Filename;
       $fnfile = $photosetdir . "/" . $gVIEWDATA->photoInfo->Filename;
@@ -701,8 +701,8 @@
           if ($gACTION == 'SELECT_ALL') $gCHECKED = TRUE;
           global $gPHOTOLOCATION;
           // Look up first photo filename in list.
-          $gPHOTOLOCATION = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . '/' . $prefix . $gVIEWDATA->photoInfo->Filename;
-          if (!file_exists ($gPHOTOLOCATION) ) $gPHOTOLOCATION = "/$gTHEMELOCATION/images/error/noimage.png";
+          $gPHOTOLOCATION = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . '/' . $prefix . $gVIEWDATA->photoInfo->Filename;
+          if (!file_exists ($gPHOTOLOCATION) ) $gPHOTOLOCATION = "/$gTHEMELOCATION/images/icons/noimage.png";
 
           global $gPOPWIDTH, $gPOPHEIGHT;
           $gPOPWIDTH = $gVIEWDATA->photoInfo->Width + 80;

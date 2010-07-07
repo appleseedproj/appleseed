@@ -6,7 +6,7 @@ Version:  0.7.4
 
 0.7 SERIES
 ----------
-Base features, API, framework, themability, internationalisation.
+Base features, API, Framework, Themability, Internationalisation, UI Overhaul.
 
 0.7.4  - MVC framework, Internationalisation, Refactor CRUD functions, Html form functions, Configuration inheritance, New theme, SHA512 for password storage
 0.7.5  - Refactor legacy code, Integrate JQuery, Form validation, Administrator framework and front end refactoring.

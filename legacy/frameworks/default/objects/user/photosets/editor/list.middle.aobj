@@ -1,31 +1,31 @@
- <?php $zHTML->Alternate(); ?>
+<tr class="<?php echo $zHTML->Alternate(); ?>">
 
-  <span class='name'>
-    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Name); ?>
-  </span> <!-- .name -->
-
-  <span class='directory'>
-    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Directory . "/"); ?>
-  </span> <!-- .directory -->
-
-  <span class='check'>
+  <td class='check'>
     <?php $zHTML->CheckBox ('MASSLIST', $gVIEWDATA->tID, TRUE, $gCHECKED); ?>
-  </span> <!-- .check -->
+  </td> <!-- .check -->
 
-  <span class='thumb'>
+  <td class='name'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Name); ?>
+  </td> <!-- .name -->
+
+  <td class='directory'>
+    <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Directory . "/"); ?>
+  </td> <!-- .directory -->
+
+  <td class='thumb'>
     <?php $zHTML->ImageLink ($gVIEWTARGET, NULL, $gPHOTOLOCATION); ?>
-  </span> <!-- ## photosets.thumb -->
+  </td> <!-- ## photosets.thumb -->
 
-  <span class='description'>
+  <td class='description'>
     <?php $zHTML->Link ($gVIEWTARGET, $gVIEWDATA->Description); ?>
-  </span> <!-- .description -->
+  </td> <!-- .description -->
 
-  <span class='photocount'>
-    <?php <?php echo __("Photo Count", array ( "count" => $gPHOTOCOUNT ) ); ?>
-  </span> <!-- .photocount -->
+  <td class='photocount'>
+    <?php echo __("Photo Count", array ( "count" => $gPHOTOCOUNT ) ); ?>
+  </td> <!-- .photocount -->
 
-  <span class='edit'>
-    <?php $zHTML->ImageLink ($gTARGET, $gEXTRADATA, "$gTHEMELOCATION/images/buttons/edit.gif"); ?>
-  </span> <!-- .edit -->
+  <td class='edit'>
+    <?php $zHTML->Link ($gTARGET, "Edit", $gEXTRADATA); ?>
+  </td> <!-- .edit -->
 
- </li> <!-- .[alternate] -->
+ </tr> <!-- .[alternate] -->

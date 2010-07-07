@@ -11,7 +11,7 @@
     
  
     <!-- Title --> 
-    <title><?php echo $gPAGETITLE ?></title>
+    <title><?php echo __("Appleseed Page Title", array ( "domain" => $gSITEDOMAIN ) ); ?></title>
     
     <!-- Links --> 
     <?php $zApp->Theme->UseStyles (); ?>

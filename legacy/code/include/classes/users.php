@@ -147,11 +147,11 @@
       $this->userIcons->Add();
 
       // Create the photosets directory.
-      $photosetdir = "photos/" . $this->Username . "/sets/";
+      $photosetdir = "_storage/legacy/photos/" . $this->Username . "/sets/";
       $zOLDAPPLE->CreateDirectory ($photosetdir);
 
       // Create the icons directory.
-      $icondir = "photos/" . $this->Username . "/icons/";
+      $icondir = "_storage/legacy/photos/" . $this->Username . "/icons/";
       $zOLDAPPLE->CreateDirectory ($icondir);
 
       if ($pCREATERELATIONSHIP) {
@@ -258,8 +258,8 @@
       // Load the saved message.
       $this->Message = __("Record Updated");
 
-      $oldphotodir = "photos/" . $this->Username;
-      $newphotodir = "photos/" . $gUSERNAME;
+      $oldphotodir = "_storage/legacy/photos/" . $this->Username;
+      $newphotodir = "_storage/legacy/photos/" . $gUSERNAME;
 
       // Start transactions.
       $this->Begin ();
@@ -333,7 +333,7 @@
         // Validate the uploaded file.
         $zICON->Validate ($uploadfile, $uploaderror, $gUSERICONX, $gUSERICONY);
 
-        $location = "photos/" . $this->Username . "/icons/";
+        $location = "_storage/legacy/photos/" . $this->Username . "/icons/";
 
         // If icon directory doesn't exist, create it.
         if (!is_dir ($location)) $zOLDAPPLE->CreateDirectory ($location);
@@ -447,7 +447,7 @@
       global $zPHOTO, $zICON, $zOLDAPPLE;
 
       // User photos directory.
-      $location = "photos/" . $this->Username . '/';
+      $location = "_storage/legacy/photos/" . $this->Username . '/';
 
       // If photos directory doesn't exist, create it.
       if (!is_dir ($location)) $zOLDAPPLE->CreateDirectory ($location);
@@ -492,7 +492,7 @@
           $this->userIcons->Add ();
 
           // Create a default icon from your profile photo.
-          $location = "photos/" . $this->Username . "/icons/";
+          $location = "_storage/legacy/photos/" . $this->Username . "/icons/";
 
           // If icon directory doesn't exist, create it.
           if (!is_dir ($location)) $zOLDAPPLE->CreateDirectory ($location);
@@ -591,7 +591,7 @@
         $gICONFILENAME = $this->userIcons->Filename;
         
         // Delete the image file.
-        $filename = "photos/" . $this->Username . 
+        $filename = "_storage/legacy/photos/" . $this->Username . 
                     "/icons/"  . $this->userIcons->Filename;
 
         if ($this->userIcons->Filename != NO_ICON) {

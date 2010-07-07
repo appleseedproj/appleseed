@@ -1,8 +1,7 @@
-   </ul>
-   </div> <!-- #full -->
-  </div> <!-- #listing -->
- </div> <!-- #container -->
+   </tbody>
+   </table>
+  </form>
 
  <?php $zHTML->Scroll ($gTARGET, 'user.photos', SCROLL_NOFIRST); ?>
 
-</div> <!-- #photos -->
+</section>

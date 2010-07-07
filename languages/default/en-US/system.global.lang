@@ -25,6 +25,7 @@ NEXT="Next &gt;"
 LAST="Last &gt;&gt;"
 
 [site]
+APPLESEED_PAGE_TITLE="Welcome To The Appleseed Social Network @ %domain$s"
 YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 YOU_ARE_LOGGED_IN_AS="Currently logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 LOGGED_IN_AS_ADMINISTRATOR="Administrator logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"

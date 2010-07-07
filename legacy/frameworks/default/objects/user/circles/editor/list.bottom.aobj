@@ -7,7 +7,7 @@
 
    <form id='back' name='back' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/friends/'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-    <?php $zHTML->Button ("back"); ?>
+    <?php $zHTML->Button ("Back"); ?>
    </form> <!-- #back -->
 
    <form id='new' name='new' method='POST' action='<?php echo $gTARGET; ?>'>

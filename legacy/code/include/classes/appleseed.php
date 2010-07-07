@@ -362,6 +362,14 @@
         $this->Abort ();
       } // if
       
+      if (!file_exists('_storage/legacy/photos')) {
+      	if (!$this->CreateDirectory('_storage/legacy/photos/')) {
+        	// Photos directory isn't writable.
+        	echo "ERROR: _storage/legacy/photos/ directory is not writable.";
+        	$this->Abort ();
+      	} 
+      }
+      
       if (!is_writable('_storage/legacy/photos/')) {
         // Photos directory isn't writable.
         echo "ERROR: _storage/legacy/photos/ directory is not writable.";
@@ -937,7 +945,7 @@
       if ($zFOCUSUSER->userProfile->Birthday != '1969-12-31 00:00:00') {
         $age =$this->CalculateAge ($zFOCUSUSER->userProfile->Birthday);
         $gQUESTIONSTYLE = 'age'; 
-        $gQUESTIONANSWER = "<strong>" . __("Gender") . "</strong> " . $gender;
+        $gQUESTIONANSWER = "<strong>" . __("Age") . "</strong> " . $age;
         $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
       }
  
@@ -1133,7 +1141,7 @@
            unset ($IMAGEDATA);
   
            // Determine the photo location.
-           $thumblocation = "photos/" . $owner . "/sets/" . $photoset . "/_th." . $filename;
+           $thumblocation = "_storage/legacy/photos/" . $owner . "/sets/" . $photoset . "/_th." . $filename;
            $targetlocation = "/profile/" . $owner . "/photos/" . $photoset . "/" . $filename;
            
            global $zHTML;
@@ -1180,7 +1188,7 @@
              if ($tagarray['height']) $height = "height='$tagarray[height]'";
   
              // Determine the photo location.
-             $photolocation = "photos/" . $tagarray['owner'] . "/sets/" . $tagarray['photoset'] . "/" . $tagarray['filename'];
+             $photolocation = "_storage/legacy/photos/" . $tagarray['owner'] . "/sets/" . $tagarray['photoset'] . "/" . $tagarray['filename'];
   
            // Check if file exists.
            if (!file_exists ($photolocation) ) 
@@ -1429,7 +1437,7 @@
 
           // Use the specified image through a direct link.
           $gICONSOURCE = "http://" . $pDOMAIN . "/photos/" . $pUSERNAME . "/icons/" . $pSPECIFIC;
-          $filename = "photos/$pUSERNAME/icons/$pSPECIFIC";
+          $filename = "_storage/legacy/photos/$pUSERNAME/icons/$pSPECIFIC";
 
           // Check if the file exists, if not, use the default.
           if ( ($pDOMAIN == $gSITEDOMAIN) and (!file_exists($filename)) ) $gICONSOURCE = "http://" . $pDOMAIN . "/icon/" . $pUSERNAME . "/";

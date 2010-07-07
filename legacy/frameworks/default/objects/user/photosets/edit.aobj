@@ -39,11 +39,11 @@
     <?php $gVIEWDATA->Broadcast ("field", "Directory"); ?>
 
     <p id='tags'>
-     <?php __"(User Photoset Tags"); ?>
+     <?php echo __("User Photoset Tags"); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->Tags); ?>
     <p id='tags_info'>
-     <?php __("User Photoset Tags Info"); ?>
+     <?php echo __("User Photoset Tags Info"); ?>
     </p> <!-- tags_info -->
     <?php $gVIEWDATA->Broadcast ("field", "Tags"); ?>
  

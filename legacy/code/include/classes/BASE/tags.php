@@ -317,20 +317,20 @@
      
      $gTAGFORMLINK = $pLINK;
      
-     $gTAGSELECTBUTTON = 'tag_select_all';
-     if (count($gTAGMASSLIST) > 0) $gTAGSELECTBUTTON = "tag_select_none";
+     $gTAGSELECTBUTTON = 'Tag Select All';
+     if (count($gTAGMASSLIST) > 0) $gTAGSELECTBUTTON = "Tag Select None";
      
      if ($zAUTHUSER->Anonymous) return (FALSE);
      
      // Handle the action
      switch ($gACTION) {
        case 'TAG_SELECT_ALL':
-         $gTAGSELECTBUTTON = 'tag_select_none';
+         $gTAGSELECTBUTTON = 'Tag Select None';
          return (TRUE);
        break;
        case 'TAG_SELECT_NONE':
          $gTAGMASSLIST = array ();
-         $gTAGSELECTBUTTON = 'tag_select_all';
+         $gTAGSELECTBUTTON = 'Tag Select All';
          return (TRUE);
        break;
        case 'TAG_EMPHASIZE_ALL':
