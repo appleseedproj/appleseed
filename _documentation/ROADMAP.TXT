@@ -1,7 +1,7 @@
 
 Appleseed Roadmap
 
-Updated:  07-02-2010
+Updated:  07-07-2010
 Version:  0.7.4
 
 0.7 SERIES
@@ -21,11 +21,13 @@ Base features, API, Framework, Themability, Internationalisation, UI Overhaul.
 
 0.8 SERIES
 ----------
-Optimization, Standards, Security, Connectivity and Compatibility.  
+Optimization, Standards, Security, Error Checking and Reporting, Connectivity and Compatibility, Cloud Storage.
 
 - Finalization of a standard, open protocol for communication between Appleseed sites and other open source projects
 - Compatibility with Flickr, Twitter, and other major services (via newsfeed hooks).
 - Profile importers for Facebook, MySpace, and others.
+- Creation of cloud storage (ie, Amazon S3) file system hooks 
+- Full audit for proper error checking, reporting, logging and exception handling.
 - Speed and performance optimization: server, browser, and network.
 - Full audits for sensible defaults and system security.
 

@@ -26,6 +26,14 @@ class cExampleController extends cController {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		
+		/*
+		 * @tutorial 
+		 */
+		 
+		$this->Language->Load ('en-US', 'system.global.lang');
+        
+		 
 		parent::__construct( );
 	}
 	
@@ -181,7 +189,7 @@ class cExampleController extends cController {
 		 * @philosophy Using SimpleHTMLDom's original functions, use proper case to follow Appleseed standards.
 		 *
 		 */
-		$this->Form->Find("select[name=SalesRep_Employee_FK]", 0)->innertext .= "<option value=''>Select A Sales Rep</option>";
+		$this->Form->Find("select[name=SalesRep_Employee_FK]", 0)->innertext .= "<option value=''>" . __ ("Select A Sales Rep") . "</option>";
 		
 		/* 
 		 * @tutorial Quirk of SimpleHTMLDom, reload after modifying innertext/outertext, otherwise new Children won't be found.
