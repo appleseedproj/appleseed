@@ -23,11 +23,13 @@ class cModel extends cBase {
 	protected $_Prefix;
 	protected $_Tablename;
 	protected $_Fields;
+	protected $_Protected;
 	
 	protected $_PrimaryKey;
 	protected $_ForeignKeys;
 	
 	protected $_Query;
+	protected $_Rows;
 	protected $_Total;
 	
 	/**
@@ -64,6 +66,8 @@ class cModel extends cBase {
 			if ( $field['Key'] == "PRI" ) $this->_PrimaryKey = $field['Field'];
 		}
 		
+		$this->_Protected = array ();
+		
 		parent::__construct();
 	}
 	
@@ -78,6 +82,9 @@ class cModel extends cBase {
 	 */
 	public function Save ( $pCriteria = null ) {
 		
+		/*
+		 * REFERENCE:
+		 * 
 		$criteria = array (
 			"Username" => "Search1",
 			array (
@@ -88,12 +95,10 @@ class cModel extends cBase {
 		
 		$ordering = "Username DESC";
 		
-		/*
 			WHERE 
 				Username = '%s' 
 				OR ( Email NOT EQUAL '%s' AND LastLogin LIKE '%s' ) 
 			GROUP BY Username DESC
-		*/
 		
 		// ~~ LIKE
 		// !~ NOT LIKE
@@ -102,6 +107,8 @@ class cModel extends cBase {
 		// !n NOT NULL
 		// >> GREATER THAN
 		// << LESS THAN
+		 
+		*/
 		
 		if ( is_array ( $pCriteria ) ) 
 			return ( $this->_SaveWhere ( $pCriteria ) );
@@ -125,6 +132,71 @@ class cModel extends cBase {
 	 * @var string $pCriteria A single value (for primary key based storage)
 	 */
 	protected function _Save ( $pCriteria = null ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = 'UPDATE %table$s';
+		$replacements["table"] = $table;
+		
+		$sql .= ' SET ';
+		
+		foreach ( $this->_Fields as $f => $fields ) {
+			$fieldname = $fields['Field'];	
+			
+			// Don't update the primary key.
+			if ($fieldname == $this->_PrimaryKey) continue;
+			
+			// Skip anything on the protected list.
+			if ( in_array ( $fieldname, $this->_Protected ) ) continue;
+			
+			$internal = "_" . strtolower ( $fieldname );
+			$internal_field = $internal . "_field";
+			$internal_value = $internal . "_value";
+			
+			$queries[] = ' %' . $internal_field . '$s = \'%' . $internal_value . '$s\'';
+			
+			$replacements[$internal_field] = $fieldname;
+			$replacements[$internal_value] = $this->Get ( $fieldname );
+			
+		}
+		
+		$sql .= implode ( ", ", $queries );
+		
+		$sql .= ' WHERE %pk$s = \'%criteria$s\' ';
+		$replacements["pk"] = $pk;
+		
+		// Without criteria, we'll use the current primary key value
+		if ( $pCriteria ) {
+			$replacements["criteria"] = $pCriteria;
+		} else {
+			$primarykey_value = $this->Get ( $pk );
+			
+			// We don't want to update everything in the table, too dangerous, so error out.
+			if ( !$primarykey_value ) return ( false );
+			
+			$replacements["criteria"] = $primarykey_value;
+		}
+		
+		// @todo PDO already has named prepared statements.  Switch to those.
+		$sql = sprintfn ( $sql, $replacements );
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$this->_Handle = $DBO->Prepare ( $sql );
+		$this->_Handle->Execute ();
+		
+		$this->_Query = $sql;
+		
+		$this->_Rows = $this->_Handle->rowCount();
+		$this->_Total = $this->_Handle->rowCount();
+		
+		// @todo Add query to global list.
+		
+		return ( true );
 	}
 	
 	/**
@@ -136,9 +208,9 @@ class cModel extends cBase {
 	 */
 	public function Retrieve ( $pCriteria = null, $pOrdering = null ) {
 		if ( is_array ( $pCriteria ) ) 
-			return ( $this->_RetrieveWhere ( $pCriteria ) );
+			return ( $this->_RetrieveWhere ( $pCriteria, $pOrdering ) );
 		else 
-			return ( $this->_Retrieve ( $pCriteria ) );
+			return ( $this->_Retrieve ( $pCriteria, $pOrdering  ) );
 	}
 	
 	/**
@@ -166,19 +238,31 @@ class cModel extends cBase {
 		
 		$table = $this->_Prefix . $this->_Tablename;
 		
-		$sql = "
-			SELECT * FROM %s
-				WHERE %s = '%s'
-		";
+		$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM %table$s';
+		$replacements["table"] = $table;
 		
-		$sql = sprintf ( $sql, $table, $pk, $pCriteria );
+		// Without criteria, we'll find everything in the table.
+		if ( $pCriteria ) {
+			$sql .= ' WHERE %pk$s = "%criteria$s" ';
+			$replacements["pk"] = $pk;
+			$replacements["criteria"] = $pCriteria;
+		}
+		
+		if ( $pOrdering ) {
+			$sql .= ' ORDER BY %ordering$s ';
+			$replacements["ordering"] = $pOrdering;
+		}
+		
+		$sql = sprintfn ( $sql, $replacements );
 		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
-		$Result = $DBO->Prepare ( $sql );
-		$Result->Execute ();
+		$this->_Handle = $DBO->Prepare ( $sql );
+		$this->_Handle->Execute ();
 		
-		$data = $Result->Fetch ( PDO::FETCH_OBJ );
+		$data = & $this->_Handle->Fetch ( PDO::FETCH_OBJ );
+		
+		if ( !$data ) return ( false );
 		
 		$this->_Data = (array) $data;
 		
@@ -189,8 +273,24 @@ class cModel extends cBase {
 		
 		$this->_Query = $sql;
 		
+		$this->_CountResults();
+		
 		// @todo Add query to global list.
 		
+		return ( true );
+	}
+	
+	protected function _CountResults ( ) {
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$result = $DBO->query('SELECT FOUND_ROWS()'); 
+		$rowCount = (int) $result->fetchColumn(); 
+		
+		$this->_Total = $rowCount;
+		$this->_Rows = $this->_Handle->rowCount();
+		
+		return ( true );
 	}
 	
 	/**
@@ -245,6 +345,19 @@ class cModel extends cBase {
 		 * Regina: Gretchen, stop trying to make fetch happen. It's not going to happen.
 		 *
 		 */
+		 
+		$data = & $this->_Handle->Fetch ( PDO::FETCH_OBJ );
+		
+		if ( !$data ) return ( false );
+		
+		$this->_Data = (array) $data;
+		
+		foreach ( $this->_Data as $field => $value ) {
+			$internal = "_" . $field;
+			$this->$internal = $value;
+		}
+		
+		return ( true );
 	}
 	
 	/**
@@ -253,6 +366,51 @@ class cModel extends cBase {
 	 * @access public
 	 */
 	public function Synchronize ( ) {
+		
+		$requests = cRequest::Get();
+		
+		foreach ( $this->_Fields as $f => $field ) {
+			$fieldname = $field['Field'];
+			$fieldname_lower = strtolower ( $fieldname );
+			
+			if ( $requests[$fieldname_lower] ) {
+				$this->Set ( $fieldname, $requests[$fieldname_lower] );
+			}
+		}
+		
+		return ( true );
+	}
+	
+	/**
+	 * Protect the listed fields from updates or modifications.
+	 *
+	 * @access public
+	 */
+	public function Protect ( $pProtected ) {
+		
+		$protected = (array) $pProtected;
+		
+		foreach ( $protected as $p => $protect ) {
+			$this->_Protected[$protect] = $protect;
+		}
+		
+		return ( true );
+	}
+	
+	/**
+	 * Take the listed fields off of the protected list.
+	 *
+	 * @access public
+	 */
+	public function Endanger ( $pEndangered ) {
+		
+		$endangered = (array) $pEndangered;
+		
+		foreach ( $endangered as $e => $endanger ) {
+			unset ( $this->_Protected[$endanger] );
+		}
+		
+		return ( true );
 	}
 	
 	/**

@@ -8,30 +8,31 @@
 	 * @tutorial The view is a skeleton for the controller to manipulate based on the model.
 	 * @tutorial You can either modify the view before displaying to the browser (using the HTML class) or after (using JQuery).
 	 
-	 * @tutorial Labels are automatically translated to use the cLanguage (__) calls.
+	 * @tutorial Labels, paragraphs, and legends are automatically translated to use the cLanguage (__) calls.
 	 */
 -->
 <section id="general_form">
 	<form method="post">
+		<input type="hidden" name="Customer_PK" />
 		<fieldset>
 			<legend>General Form</legend>
 			<p>Description of form's purpose would be here.</p>
 			
 			<fieldset>
 				<legend>Sub-Fieldset 1</legend>
-				<p>Some text entry inputs.</p>
+				<p>Some text entry inputs</p>
 				<table>
 					<tbody>
 						<tr>
-							<th><label for="text">Customer Name</label></th>
+							<th><label for="text">Customer Name <em>*</em></label></th>
 							<td><input type="text" name="CustomerName" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Contact First Name </label></th>
+							<th><label for="text">Contact First Name <em>*</em></label></th>
 							<td><input type="text" name="ContactFirstName" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Contact Last Name </label></th>
+							<th><label for="text">Contact Last Name <em>*</em></label></th>
 							<td><input type="text" name="ContactLastName" /></td>
 						</tr>
 						<tr>
@@ -59,20 +60,11 @@
 							<td><input type="text" name="PostalCode" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Removed Input </label></th>
-							<td><input type="text" name="removed_text" /></td>
-						</tr>
-						<tr>
-							<th><label for="text">Removed Row (This row should not display) </label></th>
-							<td><input type="text" name="removed_row" /></td>
-						</tr>
-						<tr>
-							<th><label for="passwd">Password Input</label></th>
-							<td><input type="password" name="passwd" /></td>
-						</tr>
-						<tr>
-							<th><label for="text_area">Text Area Input</label></th>
-							<td><textarea rows="10" cols="50" name="text_area"></textarea></td>
+							<th><label for="select">Sales Rep</label></th>
+							<td>
+								<select name="SalesRep_Employee_FK">
+								</select>
+							</td>
 						</tr>
 					</tbody>
 				</table>
@@ -106,13 +98,6 @@
 										<option>Thing 3.2</option>
 										<option>Thing 3.3</option>
 									</optgroup>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<th><label for="select">Dynamic Selection Field</label></th>
-							<td>
-								<select name="DynamicSelect">
 								</select>
 							</td>
 						</tr>

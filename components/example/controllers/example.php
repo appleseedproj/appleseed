@@ -103,10 +103,6 @@ class cExampleController extends cController {
 	function Edit ( ) {
 	}
 	
-	function Save ( ) {
-		
-	}
-	
 	/**
 	 * Prepare the Edit form
 	 * 
@@ -139,40 +135,6 @@ class cExampleController extends cController {
 		$this->Form->Modify ( "textarea[name=text_area]", array ( "innertext" => "Blah!" ) );
 		
 		/*
-		 * @tutorial You can traverse the DOM to set attributes or modify values.
-		 * 
-		 * @philosophy Using SimpleHTMLDom's original functions, use proper case to follow Appleseed standards.
-		 *
-		 */
-		$this->Form->Find("select[name=DynamicSelect]", 0)->innertext .= "<option value='1'>One</option>";
-		$this->Form->Find("select[name=DynamicSelect]", 0)->innertext .= "<option value='2'>Two</option>";
-		$this->Form->Find("select[name=DynamicSelect]", 0)->innertext .= "<option selected value='3'>Three</option>";
-		$this->Form->Find("select[name=DynamicSelect]", 0)->innertext .= "<option value='4'>Four</option>";
-		
-		/* 
-		 * @tutorial Quirk of SimpleHTMLDom, reload after modifying innertext/outertext, otherwise new Children won't be found.
-		 *
-		 */
-		$this->Form->Reload();
-		
-		/*
-		 * @tutorial We've dynamically populated a select list.  
-		 * @tutorial Now let's disable one option and select another.
-		 * 
-		 */
-		$this->Form->Find("select[name=DynamicSelect]", 0)->Children(0)->disabled = "disabled";
-		$this->Form->Find("select[name=DynamicSelect]", 0)->Children(0)->selected = "selected";
-		
-		/*
-		 * @tutorial Here's an easier way to populate a select list, though.  
-		 * @tutorial All you need is an associative array (value => label)
-		 * 
-		 */
-		$options = array ( "5" => "Five", "6" => "Six", "7" => "Seven", "8" => "Eight" );
-		$this->Form->AddOptions ("select[name=DynamicSelect]", $options );
-		
-		
-		/*
 		 * @tutorial You can remove a specified element as well.
 		 * 
 		 */
@@ -181,46 +143,134 @@ class cExampleController extends cController {
 		/*
 		 * @tutorial Here's a trick:
 		 * @tutorial If you know that your element is wrapped inside other elements (ie, a table), you can delete parent nodes
+		 * 
+		 * @tutorial If the element you're looking for doesn't exist, however, this will cause a fatal error.
 		 *
 		 * @philosophy You may not know what your view structure looks like.
 		 * @philosophy Since themes are able to overwrite views, you need to be careful with tricks like this.
 		 * @philosophy A better way would be to target rows directly using classes or id's.
 		 *  
 		 */
-		$this->Form->Find("input[name=removed_row]", 0)->Parent(0)->Parent(0)->outertext = "";
+		$this->Form->Find("input[name=Phone]", 0)->Parent(0)->Parent(0)->outertext = "";
 		
 		/*
 		 * @tutorial And you can disable an element, too.
 		 * 
 		 */
-		$this->Form->DisableElement ( "input[name=file]" );
+		$this->Form->DisableElement ( "input[name=PostalCode]" );
+		
 		
 		/*
-		 * @tutorial Retrieve the primary key of what record we're editing.
+		 * @tutorial Get the primary key of what record we're editing.
 		 * 
 		 * @philosophy The rules for tables are: Primary Keys = _PK, Foreign Keys = _FK, Tables = Plural, naming is ProperCase.
 		 * @philosophy Otherwise, prioritize readability above all else.
 		 * 
 		 */
-		$Customer_PK = cRequest::Get ( "Customer_PK", 103);
+		$Customer_PK = cRequest::Get ( "Customer_PK", 131);
 		
 		/*
-		 * @tutorial Load from the database based on this primary key.
+		 * @tutorial Retrieve a single record based on the primary key.
 		 * 
 		 */
 		$this->Customers->Retrieve ( $Customer_PK );
+		
+		/*
+		 * @tutorial You can traverse the DOM to set attributes or modify values.
+		 * 
+		 * @philosophy Using SimpleHTMLDom's original functions, use proper case to follow Appleseed standards.
+		 *
+		 */
+		$this->Form->Find("select[name=SalesRep_Employee_FK]", 0)->innertext .= "<option value=''>Select A Sales Rep</option>";
+		
+		/* 
+		 * @tutorial Quirk of SimpleHTMLDom, reload after modifying innertext/outertext, otherwise new Children won't be found.
+		 *
+		 */
+		$this->Form->Reload();
+		
+		/*
+		 * @tutorial We've dynamically populated a select list.
+		 * @tutorial Now let's disable the option we added.
+		 * 
+		 * @tutorial You can select an option the same way by using ->selected = "selected"
+		 * 
+		 */
+		$this->Form->Find("select[name=SalesRep_Employee_FK]", 0)->Children(0)->disabled = "disabled";
+		
+		/*
+		 * @tutorial Load from the database based on this primary key.
+		 * @tutorial Then load a list of employees to be used for a select option. 
+		 * 
+		 */
+		$this->Employees->Retrieve( null, "LastName DESC" );
+		
+		// First element from Retrieve
+		$employees[$this->Employees->Get ( "Employee_PK" )] = $this->Employees->Get ( "FirstName" ) . " " . $this->Employees->Get ( "LastName" );
+		
+		// Loop until no more results are found.
+		while ( $this->Employees->Fetch() ) {
+			$employees[$this->Employees->Get ( "Employee_PK" )] = $this->Employees->Get ( "FirstName" ) . " " . $this->Employees->Get ( "LastName" );
+		}
+		
+		/*
+		 * @tutorial Here's an easy way to populate a select list.  
+		 * @tutorial All you need is an associative array (value => label)
+		 * 
+		 * @tutorial If you want to get more advanced, you can create optgroups by using a multidimensional array.
+		 * @tutorial For instance:
+		 * @tutorial array ( "Group 1" => array ( "1" => "First", "2" => "Second" ), "Group 2" => array ( "3" => "Third" ) )
+		 * 
+		 */
+		$this->Form->AddOptions ("select[name=SalesRep_Employee_FK]", $employees );
 		
 		/*
 		 * @tutorial Finally, you can automatically synchronize between $_REQUEST data and an optional set of defaults.
 		 * @tutorial Be sure to inject any data from the database from the database into the defaults array.
 		 * 
 		 */
-		$defaults = array ( "CustomerName" => "Michael Chisari", "text_area" => "This is the default", "StaticCheck[0]" => "checked", "StaticSelect" => "Thing 2.1", "DynamicSelect" => "6" );
+		$defaults = array ( "CustomerName" => "Michael Chisari", "AddressLine2" => "Default");
 		$data = (array) $this->Customers->Get ( "Data" );
+		
 		$defaults = array_merge ( (array)$defaults, (array)$data );
 		$this->Form->Synchronize ( $defaults );
 		
 		return ( true );
+	}
+	
+	function Save ( ) {
+		
+		/*
+		 * @tutorial First, we create our model.
+		 * @tutorial Then, we synchronize our record data with the information from the URL request.
+		 * 
+		 */
+		$this->Customers = $this->GetModel();
+		$this->Customers->Synchronize();
+		
+		/*
+		 * @tutorial We can protect fields from being updated by using the Protect function.
+		 * 
+		 * @tutorial For instance, our database table has a field called CreditLimit, but the form doesn't include it.
+		 * @tutorial If we don't protect it, it will get set to "null" in the database when the record is saved.
+		 * 
+		 * @tutorial Same with PostalCode, which is disabled and doesn't submit with the form.
+		 * 
+		 * @tutorial The function "Endanger" will do the opposite, and take the field off of the protected list.
+		 *
+		 */
+		$this->Customers->Protect ( "CreditLimit" );
+		$this->Customers->Protect ( "PostalCode" );
+		 
+		/*
+		 * @tutorial Now, simply save the data.
+		 *
+		 */
+		 $this->Customers->Save();
+		 
+		 $this->Display ();
+		 
+		 return ( true );
 	}
 	
 }

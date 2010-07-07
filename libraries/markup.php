@@ -61,10 +61,27 @@ class cMarkup extends simple_html_dom {
 	
 	public function Display () {
 		
-		$labels = $this->Find ("label");
+		// Add an html element here to have it's innertext modified to use the __ function.
+		$translate = array ( "label", "p", "legend", "[label=" );
 		
-		foreach ( $labels as $l => $label ) {
-			$labels[$l]->innertext = __( ltrim ( rtrim ( $label->innertext ) ) );
+		foreach ( $translate as $t => $selector ) {
+			$elements = $this->Find ($selector);
+			
+			// Loop through each tag and use the cLanguage function on them.
+			foreach ( $elements as $e=> $element ) {
+				$modified = __( ltrim ( rtrim ( $element->plaintext ) ) );
+				
+				// We're modifying the internal label, not the innertext
+				if ( $element->label ) { 
+					$elements[$e]->label = __( ltrim ( rtrim ( $element->label ) ) );
+					continue;
+				}
+				
+				// Check if any changes were made first, so that we can restore any lost HTML if no translation was provided.
+				if ( $modified != ltrim ( rtrim ( $elements[$e]->plaintext ) ) ) {
+					$elements[$e]->innertext = __( ltrim ( rtrim ( $element->plaintext ) ) );
+				}
+			}
 		}
 		
 		echo $this->Save();
@@ -102,9 +119,18 @@ class cHTML extends cMarkup {
 	
 	public function AddOptions ( $pSelector, array $pValues ) {
 		
-		foreach ( $pValues as $value => $label ) {
-			$option = '<option value="%s">%s</option>';
-			$this->Find($pSelector, 0)->innertext .= sprintf ( $option, $value, $label );
+		foreach ( $pValues as $v => $value ) {
+			if ( is_array ( $value ) ) {
+				$option = sprintf ( "<optgroup label=\"%s\">", $v );
+				foreach ( $value as $l => $label ) {
+					$option .= sprintf ( '<option value="%s">%s</option>', $l, $label );
+				}
+				$option .= '</optgroup>';
+				$this->Find($pSelector, 0)->innertext .= $option;
+			} else { 
+				$option = '<option value="%s">%s</option>';
+				$this->Find($pSelector, 0)->innertext .= sprintf ( $option, $v, $value );
+			}
 			
 		}
 		
@@ -164,11 +190,17 @@ class cHTML extends cMarkup {
 								$option->selected = "selected";
 							}
 						}
+					case 'button':
+						continue;
+					break;
 					break;
 					default:
 						switch ( $type ) {
 							case 'checkbox':
 								$input->checked = $assign;
+							break;
+							case 'submit':
+								continue;
 							break;
 							default:
 								$input->value = $assign;
