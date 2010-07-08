@@ -80,7 +80,8 @@ class cExampleController extends cController {
 		
 		$this->Customers = $this->GetModel();
 		
-		$this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
+		// $this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
+		$this->Customers->Query ( "SELECT * FROM #__ExampleCustomers" ); 
 		
 		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
 		

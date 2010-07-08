@@ -352,9 +352,16 @@ class cModel extends cBase {
 	 */
 	protected function _Prepare ( $pQuery, $pPrepared = null ) {
 		
-		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		$query = $pQuery;
 		
-		if ( !$pPrepared ) return ( $pQuery );
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		if ( preg_match ( '/#__/', $query ) ) {
+			$query = preg_replace ( '/#__/', $this->_Prefix, $query );
+		}
+		
+		// Start by replacing #_ with the system table prefix
+		
+		if ( !$pPrepared ) return ( $query );
 		
 		// Quote each value, to prevent injection.
 		foreach ( $pPrepared as $p => $prepare ) {
