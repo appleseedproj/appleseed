@@ -70,11 +70,11 @@ class cExampleController extends cController {
 		/*
 		 * @tutorial The Talk function allows you to send a request to the Interface class of another component.
 		 * @tutorial This allows you to communicate between components
-		 * @tutorial The paramters correspond to which cComponent class, and which method in that class to call.
+		 * @tutorial The parameters correspond to which cComponent class, and which method in that class to call.
 		 * @tutorial You can optionally pass parameters in a third variable of type "array".
 		 * 
 		 */
-		// echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		$exampleResponse = $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
 		
 		$this->List = $this->GetView ( "example_list" );
 		
@@ -125,7 +125,7 @@ class cExampleController extends cController {
 		 * 
 		 */
 		 
-		// This query fails because it has nothign to do with out database structure.
+		// This query fails because it has nothing to do with our database structure.
 		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
 		
 		$this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
@@ -137,9 +137,9 @@ class cExampleController extends cController {
 		
 		while ( $this->Customers->Fetch() ) {
 			
-		    $oddeven = empty($oddeven) || $oddeven == 'even' ? 'odd' : 'even';
+		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
 			
-			$row->class = $oddeven;
+			$row->class = $oddEven;
 			
 			$row->Find( "[class=Customer_PK]", 0 )->innertext = $this->Customers->Get ( 'Customer_PK' );
 			$row->Find( "[class=CustomerName]", 0 )->innertext = $this->Customers->Get ( 'CustomerName' );
@@ -160,8 +160,6 @@ class cExampleController extends cController {
 		
 		$this->List->Clear();
 		unset ( $this->List );
-		
-		// $this->EventTrigger ( "End" );  // Shorthand
 		
 		/*
 		 * @tutorial Clear the memory and unset the variables

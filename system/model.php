@@ -181,7 +181,6 @@ class cModel extends cBase {
 			$replacements["criteria"] = $primarykey_value;
 		}
 		
-		// @todo PDO already has named prepared statements.  Switch to those.
 		$sql = sprintfn ( $sql, $replacements );
 		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );

@@ -72,7 +72,7 @@
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);
 
   // Load admin strings into cache.
-  cLanguage::Load ('en-US', 'system.admin.lang');
+  cLanguage::Load ('_system/admin.lang');
 
   // Check to see if user has read access for this area.
   if ($zLOCALUSER->userAccess->r == FALSE) {
