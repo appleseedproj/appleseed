@@ -239,10 +239,6 @@ class cModel extends cBase {
 		// Execute query with prepared statements.
 		$this->Query ( $sql, $prepared );
 		
-		echo $sql, '<hr />';
-		
-		echo $this->_Query, "<hr/>";
-		
 		// @todo Add query to global list.
 		
 	}
