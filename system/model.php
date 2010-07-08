@@ -239,18 +239,18 @@ class cModel extends cBase {
 		$table = $this->_Prefix . $this->_Tablename;
 		
 		$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM %table$s';
-		$replacements["table"] = $table;
+		$replacements['table'] = $table;
 		
 		// Without criteria, we'll find everything in the table.
 		if ( $pCriteria ) {
-			$sql .= ' WHERE %pk$s = "%criteria$s" ';
-			$replacements["pk"] = $pk;
-			$replacements["criteria"] = $pCriteria;
+			$sql .= ' WHERE %pk$s = ? ';
+			$replacements['pk'] = $pk;
+			$prepared[] = $pCriteria;
 		}
 		
 		if ( $pOrdering ) {
 			$sql .= ' ORDER BY %ordering$s ';
-			$replacements["ordering"] = $pOrdering;
+			$replacements['ordering'] = $pOrdering;
 		}
 		
 		if ( $pLimit ) {
@@ -261,16 +261,11 @@ class cModel extends cBase {
 			
 		}
 		
+		// Replace tablenames, fieldnames, ordering, limits, etc.
 		$sql = sprintfn ( $sql, $replacements );
 		
-		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
-		
-		$this->_Handle = $DBO->Prepare ( $sql );
-		$this->_Handle->Execute ();
-		
-		$this->_Query = $sql;
-		
-		$this->_CountResults();
+		// Execute query with prepared statements.
+		$this->Query ( $sql, $prepared );
 		
 		// @todo Add query to global list.
 		
@@ -328,11 +323,65 @@ class cModel extends cBase {
 	 * @access public
 	 * @var string $pQuery The SQL query to execute.
 	 */
-	public function Query ( $pQuery ) {
+	public function Query ( $pQuery, $pPrepared = null ) {
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$query = $this->_Prepare ( $pQuery, $pPrepared );
+		
+		$this->_Handle = $DBO->Prepare ( $query );
+		
+		$this->_Handle->Execute ();
+		
+		$this->_Query = $this->_Handle->queryString;
+		
+		$this->_CountResults();
+		
+		return ( true );
 	}
 	
 	/**
-	 * Fetch a single row of data from a query.
+	 * Prepare a string for execution
+	 * 
+	 * This is necessary because PDO doesn't have a method for retrieving post-prepared statements.
+	 * For debugging and optimization purposes, we want to be able to keep a list of executed sql statements.
+	 *
+	 * @access public
+	 * @var string $pQuery The SQL query to execute.
+	 * @var array $pPrepared Associative array list of prepared values.
+	 */
+	protected function _Prepare ( $pQuery, $pPrepared = null ) {
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		if ( !$pPrepared ) return ( $pQuery );
+		
+		// Quote each value, to prevent injection.
+		foreach ( $pPrepared as $p => $prepare ) {
+			$prepared[$p] = $DBO->quote ( $prepare );
+		}
+		
+		// Replace all the %variable$s references first
+		$query = sprintfn ( $pQuery, $prepared );
+		
+		// Now replace all ? placeholders
+		$pcount= 0;
+		while ( preg_match ( '/\?/', $query ) ) {
+			$query = preg_replace ( '/\?/', $prepared[$pcount++], $query, 1);
+		}
+		
+		// Finally replace all :variable placeholders
+		while ( preg_match ( '/\:(\w+)/', $query, $result) ) {
+			list ( $null, $match ) = explode ( ':', $result[0] );
+			$query = preg_replace ( '/:(\w+)/', $prepared[$match], $query, 1);
+		}
+		
+		return ( $query );
+		
+	}
+	
+	/**
+	 * Fetch a single row of data into an object from a query.
 	 *
 	 * @access public
 	 */
@@ -408,15 +457,6 @@ class cModel extends cBase {
 		}
 		
 		return ( true );
-	}
-	
-	/**
-	 * Seek to a position in the sql results
-	 *
-	 * @access public
-	 * @string integer $pPosition Which position to seek to.
-	 */
-	public function Seek ( $pPosition ) {
 	}
 	
 	/**
