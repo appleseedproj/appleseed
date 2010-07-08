@@ -211,11 +211,11 @@
         $USER->Select ("uID", $this->userAuth_uID);
         $USER->FetchArray();
         $gIMG = '/profile/' . $USER->Username . '/photos/' . $this->Directory . '/' . $this->photoInfo->Filename;
-        $gIMGSRC = '/photos/' . $USER->Username . '/sets/' . $this->Directory . '/' . '_sm.' . $this->photoInfo->Filename;
+        $gIMGSRC = '_storage/legacy/photos/' . $USER->Username . '/sets/' . $this->Directory . '/' . '_sm.' . $this->photoInfo->Filename;
         $gOWNER = $USER->userProfile->GetAlias();
         $gOWNERSRC = '/profile/' . $USER->Username;
         $gDIRECTORY = $this->Name;
-        $gDIRECTORYSRC = '/photos/' . $USER->Username . '/sets/' . $this->Directory . '/';
+        $gDIRECTORYSRC = '_storage/legacy/photos/' . $USER->Username . '/sets/' . $this->Directory . '/';
         $gSTAMP = $this->photoInfo->FormatDate ('Stamp');
         $gSTAMP = $this->photoInfo->fStamp;
         $gDESCRIPTION = $this->photoInfo->Description;

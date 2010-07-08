@@ -175,7 +175,11 @@ class cComponents extends cBase {
 		
 		ob_start ();
 		
+		$this->GetSys ( "Event" )->Trigger ( "Begin", $pComponent, $pTask ); 
+		
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
+		
+		$this->GetSys ( "Event" )->Trigger ( "End", $pComponent, $pTask ); 
 		
 		$bdata = ob_get_clean ();
 		

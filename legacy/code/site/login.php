@@ -119,6 +119,7 @@
 
       // Redirect back to origin.
       $location = 'http://' . $host . '/login/return/' . $username . '@' . $self . '/' . $redirect;
+      
       Header ('Location: ' . $location);
       exit;
     break;
@@ -275,8 +276,8 @@
       
       if (!$zOLDAPPLE->CheckEmail ($gLOCATION) ) {
         $zLOCALUSER->Error = -1;
-        $zLOCALUSER->Message = "An error occurred while logging in.";
-        $zLOCALUSER->Errorlist['Location'] = "This is not a valid address.";
+        $zLOCALUSER->Message = __("An error occurred while logging in");
+        $zLOCALUSER->Errorlist['Location'] = __("This is not a valid address");
         break;
       } // if
 

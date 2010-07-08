@@ -51,15 +51,21 @@ class cExampleController extends cController {
 		/*
 		 * @tutorial This triggers an event, which loads the appropriate hooks.
 		 * @tutorial This shorthand automatically determines the current component and method.
-		 * @tutorial Long version: $this->GetSys ( "Event" )->Trigger ( "Begin", "Example", "Display" );
+		 * @tutorial Long version: $this->GetSys ( "Event" )->Trigger ( "Load", "Example", "Display" );
 		 * @tutorial An optional array of parameters can be sent as the fourth method parameter.
 		 * 
-		 * @philosophy Your components should include a lot of hooks, so that it can be easily extended.
+		 * @tutorial Components are referenced by <Action><Controller><Task>
+		 * @tutorial For example, the trigger below corresponds to a hook class method called LoadExampleDisplay;
+		 * 
+		 * @tutorial Some events are automatically triggered whenever certain actions occur.
+		 * @tutorial ie: Begin, End: Entry and exit points of a controller task.  
+		 * 
+		 * @philosophy Your components should include custom hooks, so that it can be easily extended.
 		 * @philosophy Be careful to not make your component dependant on hooks, however.
 		 * @philosophy A component should accomplish it's goals by itself. Hooks simply let others extend it to do more. 
 		 * 
 		 */
-		$this->EventTrigger ( "Begin" );
+		// $this->EventTrigger ( "Load" );
 		
 		/*
 		 * @tutorial The Talk function allows you to send a request to the Interface class of another component.
@@ -68,17 +74,16 @@ class cExampleController extends cController {
 		 * @tutorial You can optionally pass parameters in a third variable of type "array".
 		 * 
 		 */
-		echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		// echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
 		
 		$this->List = $this->GetView ( "example_list" );
 		
 		$this->Customers = $this->GetModel();
 		
-		$this->Customers->Retrieve( null, null, array ( "start" => 10, "step" => 10 ) );
+		$this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
 		
 		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
 		
-		$oddeven = "even";
 		$row = $tbody->Find ( "tr", 0);
 		
 		while ( $this->Customers->Fetch() ) {
@@ -107,9 +112,7 @@ class cExampleController extends cController {
 		$this->List->Clear();
 		unset ( $this->List );
 		
-		return ( true );
-		
-		$this->EventTrigger ( "End" );  // Shorthand
+		// $this->EventTrigger ( "End" );  // Shorthand
 		
 		/*
 		 * @tutorial Clear the memory and unset the variables
