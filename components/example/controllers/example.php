@@ -126,7 +126,7 @@ class cExampleController extends cController {
 		 */
 		 
 		// This query fails because it has nothign to do with out database structure.
-		$this->Customers->Retrieve ( $criteria );
+		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
 		
 		$this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
 		// $this->Customers->Query ( "SELECT * FROM #__ExampleCustomers" ); 

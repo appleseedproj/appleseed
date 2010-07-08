@@ -231,7 +231,22 @@ class cModel extends cBase {
 		$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM %table$s';
 		$replacements['table'] = $table;
 		
-		list ( $sql, $prepared ) = $this->_BuildCriteria ( $pCriteria ); 
+		list ( $where, $prepared ) = $this->_BuildCriteria ( $pCriteria ); 
+		
+		$sql .= " WHERE " . $where;
+		
+		if ( $pOrdering ) {
+			$sql .= ' ORDER BY %ordering$s ';
+			$replacements['ordering'] = $pOrdering;
+		}
+		
+		if ( $pLimit ) {
+			$replacements['start'] = (int) $pLimit['start'] ? $pLimit['start'] : 0;
+			$replacements['step'] = (int) $pLimit['step'] ? $pLimit['step'] : 20;
+			
+			$sql .= ' LIMIT %start$s, %step$s ';
+			
+		}
 		
 		// Replace tablenames, fieldnames, ordering, limits, etc.
 		$sql = sprintfn ( $sql, $replacements );
