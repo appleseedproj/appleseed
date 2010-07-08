@@ -43,8 +43,17 @@ class cEvent extends cBase {
 		
 		foreach ( $hooks as $h => $hook ) {
 			if ( in_array ( $function, get_class_methods ( $hook ) ) ) {
-				$this->Hooks->$component->$function ( $pData );
+				$lang_component = $hook->Get ( "Component" );
+				$lang_hook = $hook->Get ( "Hook" );
+			
+				$hook_lang = 'hooks' . DS . strtolower ( $lang_component ) . '.' . $lang_hook . '.lang';
+				$store = $this->GetSys ( "Language" )->Load ( $hook_lang );
+		
+				$this->Hooks->$h->$function ( $pData );
+				
+				$this->GetSys ( "Language" )->Restore( $store );
 			} // if
 		}
 	}
+	
 }

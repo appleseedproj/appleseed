@@ -13,4 +13,4 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
 ?>
 
-<?php $this->Form->Display ( "example_form.php" ); ?>
+<?php $this->List->Display(); ?>

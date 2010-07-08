@@ -206,11 +206,11 @@ class cModel extends cBase {
 	 * @var string $pCriteria A single value (for primary key based retrieval) or an array of criteria.
 	 * @var string $pOrdering Ordering instructions
 	 */
-	public function Retrieve ( $pCriteria = null, $pOrdering = null ) {
+	public function Retrieve ( $pCriteria = null, $pOrdering = null, $pLimit = null ) {
 		if ( is_array ( $pCriteria ) ) 
-			return ( $this->_RetrieveWhere ( $pCriteria, $pOrdering ) );
+			return ( $this->_RetrieveWhere ( $pCriteria, $pOrdering, $pLimit ) );
 		else 
-			return ( $this->_Retrieve ( $pCriteria, $pOrdering  ) );
+			return ( $this->_Retrieve ( $pCriteria, $pOrdering, $pLimit ) );
 	}
 	
 	/**
@@ -220,7 +220,7 @@ class cModel extends cBase {
 	 * @var string $pCriteria A single value (for primary key based retrieval) or an array of criteria.
 	 * @var string $pOrdering Ordering instructions
 	 */
-	protected function _RetrieveWhere ( $pCriteria, $pOrdering = null ) {
+	protected function _RetrieveWhere ( $pCriteria, $pOrdering = null, $pLimit = null ) {
 	}
 	
 	/**
@@ -230,7 +230,7 @@ class cModel extends cBase {
 	 * @var string $pCriteria A single value (for primary key based retrieval)
 	 * @var string $pOrdering Ordering instructions
 	 */
-	protected function _Retrieve ( $pCriteria = null, $pOrdering = null ) {
+	protected function _Retrieve ( $pCriteria = null, $pOrdering = null, $pLimit = null ) {
 		
 		$pk = $this->_PrimaryKey;
 		$tbl = $this->_Tablename;
@@ -253,23 +253,20 @@ class cModel extends cBase {
 			$replacements["ordering"] = $pOrdering;
 		}
 		
+		if ( $pLimit ) {
+			$replacements['start'] = (int) $pLimit['start'] ? $pLimit['start'] : 0;
+			$replacements['step'] = (int) $pLimit['step'] ? $pLimit['step'] : 20;
+			
+			$sql .= ' LIMIT %start$s, %step$s ';
+			
+		}
+		
 		$sql = sprintfn ( $sql, $replacements );
 		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
 		$this->_Handle = $DBO->Prepare ( $sql );
 		$this->_Handle->Execute ();
-		
-		$data = & $this->_Handle->Fetch ( PDO::FETCH_OBJ );
-		
-		if ( !$data ) return ( false );
-		
-		$this->_Data = (array) $data;
-		
-		foreach ( $this->_Data as $field => $value ) {
-			$internal = "_" . $field;
-			$this->$internal = $value;
-		}
 		
 		$this->_Query = $sql;
 		

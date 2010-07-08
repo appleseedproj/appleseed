@@ -22,6 +22,8 @@ class cLanguage {
 	
 	protected $_Config;
 	
+	protected $_Stores;
+	
 	/**
 	 * Constructor
 	 *
@@ -42,26 +44,69 @@ class cLanguage {
  	 * @param string Which language file to load.
  	 * @return bool True on success, false on error.
  	 */
- 	function Load ($pLanguage, $pContextFile) {
+ 	function Load ( $pContextFile, $pLanguage = "en-US" ) {
  		eval(GLOBALS);
  		
+ 		// Get the list of language packs installed.
 		$paths = $zApp->Language->_Config->GetPath ();
 		
-		$found = false;
+		// Find out which type of language file we're loading ( "_system", "hooks", "components" )
+		list ( $type, $filename ) = explode ( '/', $pContextFile );
+		
+		// Skip if we're looking for the internal system language files.
+		switch ( $type ) {
+			case '_system':
+			break;
+			
+			case 'hooks':
+				list ( $component, $hook, $extension ) = explode ( '.', $filename );
+				$filename = join ( '.', array ( $hook, $extension ) );
+ 				$locations[] = $zApp->GetPath() . DS . $type . DS . $component . DS . $hook . DS . 'languages' . DS . $pLanguage . DS . $filename;
+			break;
+			case 'components':
+				// Find out which component or hook we're loading.
+				list ( $component, $extension ) = explode ( '.', $filename );
+		
+ 				$locations[] = $zApp->GetPath() . DS . $type . DS . $component . DS . 'languages' . DS . $pLanguage . DS . $filename;
+			break;
+		}
 		
  		foreach ( $paths as $p => $path ) {
+ 			switch ( $type ) {
+ 				case 'hooks':
+ 					$locations[] = $zApp->GetPath() . DS . 'languages' . DS . $path . DS . $pLanguage . DS . 'hooks' . DS . $component . DS . $hook . '.lang';
+ 				break;
+ 				case '_system':
+ 				case 'components':
+ 					$locations[] = $zApp->GetPath() . DS . 'languages' . DS . $path . DS . $pLanguage . DS . $pContextFile;
+ 				break;
+ 			}
+ 		}
+ 		
+ 		$store = $type . '.' . $filename;
+ 		
+ 		/*
+ 		 * Store the current language set for restoration once we're done.
+ 		 * 
+ 		 * This can get a little complicated.  But this way, if you have two hooks or components right next to each other 
+ 		 * that use the same phrase (ie, "Upload A Photo"), the language file for one hook or component doesn't stay in 
+ 		 * memory for when the next hook/component loads.
+ 		 * 
+ 		 * If you load a hook or component within a hook or component, however, the child will inherit the parent's language.
+ 		 * 
+ 		 */
+ 		$this->_Stores[$store] = $zApp->StoreCache ( 'Language' );
+ 		
+ 		foreach ( $locations as $l => $location ) {
  			
- 			$location = $zApp->GetPath() . DS . 'languages' . DS . $path . DS . $pLanguage . DS . $pContextFile;
  			// File does not exist, return false. 
  			// _set _system _error
  			if (!file_exists ($location)) continue;
  			
- 			$found = true;
- 		
- 			// File can not be parsed, return false.
+ 			// File can not be parsed, continue through.
  			// _set _system _error
  			if (!$data = parse_ini_file ($location)) {
- 				return (false);
+ 				continue;
  			} // if
  		
  			// Put data into the global cache.
@@ -71,7 +116,7 @@ class cLanguage {
  		
  		} 
  		
- 		return (true);
+ 		return ($store);
  	} // Load
  	
  	/**
@@ -88,6 +133,7 @@ class cLanguage {
         $key = str_replace (' ', '_', $pString);
         $key = strtoupper ($key);
         
+        if ( !$key ) return ( $pString );
  		
         $value = $zApp->GetCache ( 'Language', $key );
         
@@ -104,6 +150,20 @@ class cLanguage {
         return ($return);
         
  	} // _
+ 	
+ 	function Restore ( $pStore ) {
+ 		eval ( GLOBALS );
+ 		
+ 		$store = $pStore;
+ 		
+ 		if ( isset ( $this->_Stores[$store] ) ) {
+ 			
+ 			$zApp->RestoreCache ( 'Language', $this->_Stores[$store] );
+ 			unset ( $this->_Stores[$store] );
+ 		}
+ 		
+ 		return ( true );
+ 	}
  	
 } // cLanguage
 

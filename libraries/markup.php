@@ -62,7 +62,14 @@ class cMarkup extends simple_html_dom {
 	public function Display () {
 		
 		// Add an html element here to have it's innertext modified to use the __ function.
-		$translate = array ( "label", "p", "legend", "[label=" );
+		$translate = array ( 
+			"label", 
+			"p", 
+			"legend", 
+			"[label=", 
+			"a",
+			"h1", "h2", "h3", "h4", "h5", "h6"
+		);
 		
 		foreach ( $translate as $t => $selector ) {
 			$elements = $this->Find ($selector);

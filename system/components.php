@@ -169,7 +169,12 @@ class cComponents extends cBase {
 			return ( false );
 		};
 		
+		$component_lang = 'components' . DS . strtolower ( $componentname ) . '.lang';
+		
+		$store = $this->GetSys ( "Language" )->Load ( $component_lang );
+		
 		ob_start ();
+		
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
 		
 		$bdata = ob_get_clean ();
@@ -181,6 +186,8 @@ class cComponents extends cBase {
 		$Buffer->Placeholder ( 'component', $parameters );
 		
 		$Buffer->Queue ( 'component', $parameters, $bdata );
+		
+		$this->GetSys ( "Language" )->Restore ( $store );
 		
 		return ( true );
 	}

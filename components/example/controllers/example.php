@@ -31,9 +31,6 @@ class cExampleController extends cController {
 		 * @tutorial 
 		 */
 		 
-		$this->Language->Load ('en-US', 'system.global.lang');
-        
-		 
 		parent::__construct( );
 	}
 	
@@ -73,6 +70,58 @@ class cExampleController extends cController {
 		 */
 		echo $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
 		
+		$this->List = $this->GetView ( "example_list" );
+		
+		$this->Customers = $this->GetModel();
+		
+		$this->Customers->Retrieve( null, null, array ( "start" => 10, "step" => 10 ) );
+		
+		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
+		
+		$oddeven = "even";
+		$row = $tbody->Find ( "tr", 0);
+		
+		while ( $this->Customers->Fetch() ) {
+			
+		    $oddeven = empty($oddeven) || $oddeven == 'even' ? 'odd' : 'even';
+			
+			$row->class = $oddeven;
+			
+			$row->Find( "[class=Customer_PK]", 0 )->innertext = $this->Customers->Get ( 'Customer_PK' );
+			$row->Find( "[class=CustomerName]", 0 )->innertext = $this->Customers->Get ( 'CustomerName' );
+			$row->Find( "[class=Country]", 0 )->innertext = $this->Customers->Get ( 'Country' );
+			
+			// Exception, CustomerName combined ContactFirstName and ContactLastName
+			$row->Find( "[class=ContactName]", 0 )->innertext = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
+				
+		    $this->List->Find ( "[id=customer_table_body]", 0)->innertext .= $row->outertext;
+		    
+		}
+		
+		$this->List->Reload();
+		
+		$this->List->RemoveElement ( "[id=customer_table_body] tr" );
+		
+		$this->List->Display();
+		
+		$this->List->Clear();
+		unset ( $this->List );
+		
+		return ( true );
+		
+		$this->EventTrigger ( "End" );  // Shorthand
+		
+		/*
+		 * @tutorial Clear the memory and unset the variables
+		 * 
+		 * @philosophy This is just good practice, although it may also help with memory leaks in SimpleHTMLDom
+		 * 
+		 */
+		return ( true );
+	}
+	
+	function Edit ( ) {
+		
 		/*
 		 * @tutorial This loads an instance of your model class.  
 		 * @tutorial First parameter is the "Suffix", so, "Tags" looks for the cExampleTagsModel class.
@@ -93,22 +142,11 @@ class cExampleController extends cController {
 		 */
 		$this->View = $this->GetView ( "example" );
 		$this->View->Display();
-
-		$this->EventTrigger ( "End" );  // Shorthand
 		
-		/*
-		 * @tutorial Clear the memory and unset the variables
-		 * 
-		 * @philosophy This is just good practice, although it may also help with memory leaks in SimpleHTMLDom
-		 * 
-		 */
 		$this->View->Clear(); $this->Form->Clear();
 		unset ( $this->View ); unset ( $this->Form );
 		
 		return ( true );
-	}
-	
-	function Edit ( ) {
 	}
 	
 	/**

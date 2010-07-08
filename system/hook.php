@@ -19,6 +19,9 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cHook extends cBase {
+	
+	protected $_Component;
+	protected $_Hook;
 
         /**
          * Constructor
@@ -26,6 +29,14 @@ class cHook extends cBase {
          * @access  public
          */
         public function __construct ( ) {       
+        	$rc = new ReflectionClass ( get_class ( $this ) );
+            $location = dirname ( $rc->getFileName() );
+            
+            unset ( $rc );
+        	
+			list ( $null, $hookdata ) = explode ( 'hooks/', $location );
+		
+			list ( $this->_Component, $this->_Hook ) = explode ( '/', $hookdata );
         }
 
 }

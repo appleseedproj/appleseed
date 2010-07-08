@@ -49,8 +49,11 @@ class cHooks extends cBase {
 				$filename = $zApp->GetPath () . DS . 'hooks' . DS . $c . DS . $hook . DS . $hook . '.php';
 				
 				$hookname = ucwords ( $hook );
+				$componentname = ucwords ( $c );
+				
+				$hookref = $componentname . $hookname;
 			
-				$class = 'c' . $hookname . "Hook";
+				$class = 'c' . $componentname . $hookname . "Hook";
 				
 				if ( !is_file ( $filename ) ) {
 					unset ( $this->_Config->_Hooks[$c] );
@@ -64,9 +67,9 @@ class cHooks extends cBase {
 					continue;
 				}
 			
-				$this->$hookname = new $class;
+				$this->$hookref = new $class;
 				
-				$this->_Hooks->$hookname = $this->$hookname;
+				$this->_Hooks->$hookref = $this->$hookref;
 			
 			}
 		}

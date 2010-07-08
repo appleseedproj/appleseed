@@ -87,7 +87,7 @@ class cApplication extends cBase {
 		$this->Event->Hooks = $this->Hooks;
 		
 		// Load global strings into cache.
-		$this->Language->Load ('en-US', 'system.global.lang');
+		$this->Language->Load ('_system/global.lang');
         
 		$this->Router = new cRouter();
 		
@@ -161,11 +161,39 @@ class cApplication extends cBase {
 	 * @param string pContext  Which cache to use
 	 * @param string pKey
 	 */
-	public function GetCache ( $pContext, $pKey ) {
+	public function GetCache ( $pContext, $pKey = null ) {
+		
+		if (!$pKey) return ( $this->_cache[$pContext] );
 		
 		if ( isset ( $this->_cache[$pContext][$pKey] ) ) return ( $this->_cache[$pContext][$pKey] );
 		
 		return ( false );
+	}
+	
+	/**
+	 * Store Cache values
+	 *
+	 * @access  public
+	 * @param string pContext  Which cache to use
+	 */
+	public function StoreCache ( $pContext ) {
+		
+		if ( isset ( $this->_cache[$pContext] ) ) return ( $this->_cache[$pContext] );
+		
+		return ( false );
+	}
+	
+	/**
+	 * Restore Cache values
+	 *
+	 * @access  public
+	 * @param string pContext  Which cache to use
+	 */
+	public function RestoreCache ( $pContext, $pCache ) {
+		
+		$this->_cache[$pContext] = $pCache;
+		
+		return ( true );
 	}
 	
 	/**
