@@ -221,6 +221,138 @@ class cModel extends cBase {
 	 * @var string $pOrdering Ordering instructions
 	 */
 	protected function _RetrieveWhere ( $pCriteria, $pOrdering = null, $pLimit = null ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM %table$s';
+		$replacements['table'] = $table;
+		
+		list ( $sql, $prepared ) = $this->_BuildCriteria ( $pCriteria ); 
+		
+		// Replace tablenames, fieldnames, ordering, limits, etc.
+		$sql = sprintfn ( $sql, $replacements );
+		
+		// Execute query with prepared statements.
+		$this->Query ( $sql, $prepared );
+		
+		echo $sql, '<hr />';
+		
+		echo $this->_Query, "<hr/>";
+		
+		// @todo Add query to global list.
+		
+	}
+	
+	/**
+	 * Construct a complex set of criteria based on a multi-dimensional array.
+	 *
+	 * @access  public
+	 * @var array $pCriteria An array from which to construct the criteria.
+	 */
+	protected function _BuildCriteria ( array $pCriteria ) {
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$statements = array ();
+		
+		foreach ( $pCriteria as $c => $criteria ) {
+			
+			if ( is_array ( $criteria ) ) {
+				$comparison = 'AND';
+				$compare = substr ( $c, 0, 2 );
+				
+				if ( $compare == '||' ) $comparison = 'OR';
+				if ( count ( $statements ) == 0 ) $comparison = null;
+				list ( $inner_statement, $null ) = $this->_BuildCriteria ( $criteria ); 
+				$statements[] = $comparison . ' (' . $inner_statement . ')';
+				continue;
+			}
+			
+			$operand = null;
+			$comparison = null;
+			
+			// The first two characters of the value determine the operand.
+			$directive = substr ( $criteria, 0, 2 );
+			
+			switch ( $directive ) {
+				case '~~':
+					$operand = "LIKE";
+				break;
+				case '!~':
+					$operand = "NOT LIKE";
+				break;
+				case '!=':
+					$operand = "NOT EQUAL";
+				break;
+				case '=n':
+					$operand = "IS NULL";
+					$criteria = null;
+				break;
+				case '!n':
+					$operand = "IS NOT NULL";
+					$criteria = null;
+				break;
+				case '>>':
+					$operand = ">";
+				break;
+				case '<<':
+					$operand = "<";
+				break;
+				case '>=':
+					$operand = ">=";
+				break;
+				case '<=':
+					$operand = "<=";
+				break;
+			}
+			
+			if ( $operand ) {
+				// Strip the operand information from the criteria.
+				$criteria = substr ( $criteria, 2, strlen ( $criteria ) );
+			} else {
+				// Default to equal comparison
+				$operand = "=";
+			}
+			
+			$compare = substr ( $c, 0, 2 );
+			
+			switch ( $compare ) {
+				case '||':
+					$comparison = 'OR';
+				break;
+			}
+			
+			if ( $comparison ) {
+				// Strip the operand information from the criteria.
+				$c = substr ( $c, 2, strlen ( $c ) );
+			} else {
+				// Default to equal comparison
+				$comparison = "AND";
+			}
+			
+			if ( count ( $statements ) == 0 ) $comparison = null;
+			if ( $comparison ) $comparison_string = $comparison . ' ' ;
+			
+			switch ( $operand ) {
+				case 'IS NULL':
+				case 'IS NOT NULL':
+					// No criteria used for NULL and NOT NULL
+					$statements[] = $comparison_string . $c . ' ' . $operand . ' ';
+				break;
+				default:
+					$statements[] = $comparison_string . $c . ' ' . $operand . ' ' . '?';
+					$this->_Prepared[] = $criteria;
+				break;
+			}
+			
+		}
+		
+		$where = implode ( " ", $statements );
+		
+		return ( array ( $where, $this->_Prepared ) );
 	}
 	
 	/**
@@ -355,11 +487,11 @@ class cModel extends cBase {
 		$query = $pQuery;
 		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		// Start by replacing #_ with the system table prefix
 		if ( preg_match ( '/#__/', $query ) ) {
 			$query = preg_replace ( '/#__/', $this->_Prefix, $query );
 		}
-		
-		// Start by replacing #_ with the system table prefix
 		
 		if ( !$pPrepared ) return ( $query );
 		

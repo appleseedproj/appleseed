@@ -80,8 +80,56 @@ class cExampleController extends cController {
 		
 		$this->Customers = $this->GetModel();
 		
-		// $this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
-		$this->Customers->Query ( "SELECT * FROM #__ExampleCustomers" ); 
+		/*
+		 * @tutorial You can construct a query based on a multi-dimensional array of criteria.  
+		 * @tutorial Keys on the left correspond to fieldnames, values on the right.
+		 * @tutorial You can prefix the values with the following symbols to modify the query:
+		 * 
+		 * @tutorial ~~ (LIKE) !~ (NOT LIKE) != (NOT EQUAL) =n (IS NULL) !n (NOT NULL)
+		 * @tutorial >> (GREATER THAN) << (LESS THAN) >= (GREATER THAN OR EQUAL TO) <= (LESS THAN OR EQUAL TO)
+		 * @tutorial An equal comparison is the default.
+		 * 
+		 * @tutorial You can also prefix the field names with an "||" symbol to specify an "OR" comparison.
+		 * @tutorial An "AND" comparison is default.
+		 * 
+		 */
+		$criteria = array ( 
+			"x"        => array ( "y" => "YYY", "z" => "ZZZ" ),
+			"zero"     => "0Zero",
+			"first"    => "~~%%1First%%", 
+			"second"   => "!~%%2Second%%", 
+			"third"    => "!=3Third", 
+			"fourth"   => "=n", 
+			"||a"      => array ( "b" => "~~BBB", "c" => "~~CCC" ),
+			"fifth"    => "!n",
+			"sixth"    => ">>6", 
+			"seventh"  => "<<7",
+			"eighth"   => ">=8", 
+			"ninth"    => "<=9"
+		);
+		
+		/*
+		 * @tutorial The above criteria evaluates to:
+		 * 
+		 * @tutorial (y = 'YYY' AND z = 'ZZZ') AND zero = '0Zero' AND first LIKE '%1First%' 
+		 * @tutorial AND second NOT LIKE '%2Second%' AND third NOT EQUAL '3Third' AND fourth IS NULL 
+		 * @tutorial OR (b LIKE 'BBB' AND c LIKE 'CCC') AND fifth IS NOT NULL AND sixth > '6' 
+		 * @tutorial AND seventh < '7' AND eighth >= '8' AND ninth <= '9'
+		 * 
+		 * @tutorial Note the double %% for LIKE comparisons. We use sprintf internally, this avoids conflict.
+		 * 
+		 * @philosophy This monster is here to give you an idea of how to build query criteria only.
+		 * @philosophy These shortcuts are meant as just that, shortcuts.
+		 * @philosophy If you ever find yourself creating a query criteria anywhere near as complex as this,
+		 * @philosophy then just use a custom query!
+		 * 
+		 */
+		 
+		// Commented out because this query would most definitely fail
+		// $this->Customers->Retrieve ( $criteria );
+		
+		$this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
+		// $this->Customers->Query ( "SELECT * FROM #__ExampleCustomers" ); 
 		
 		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
 		
