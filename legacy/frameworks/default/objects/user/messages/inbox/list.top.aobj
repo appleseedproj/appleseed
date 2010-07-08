@@ -1,9 +1,8 @@
-<div id='messages'>
+<section id='messages'>
 
  <!-- tabs objects -->
  <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
   <?php $zSEARCH->Ask (); ?>
 
   <?php $zMESSAGE->Broadcast ("messages"); ?>
@@ -11,18 +10,20 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-  <div id='buttons'>
-   <span id='foldername'>
-    <?php echo $gMESSAGELOCATION; ?>
-   </span>
-
-   <?php $zHTML->Button ($gSELECTBUTTON); ?>
-
-   <?php $zHTML->Button ('Archive All'); ?>
-
-   <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
-   <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE, "LABEL_ALL"); ?>
-
-  </div> <!-- #buttons -->
+   <h1> <?php echo $gMESSAGELOCATION; ?> </h1>
+   
+  <nav>
 
    <ul>
+     <li> <?php $zHTML->Button ($gSELECTBUTTON); ?> </li>
+
+     <li> <?php $zHTML->Button ('Archive All'); ?> </li>
+
+          <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
+     <li> <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE, "LABEL_ALL"); ?> </li>
+
+    </ul>
+  </nav>
+
+   <table>
+   	 <tbody>

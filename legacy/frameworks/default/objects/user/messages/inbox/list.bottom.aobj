@@ -1,19 +1,17 @@
-  </ul>
+    </tbody>
+  </table>
 
-  <div id='buttons'>
+  <nav>
   
-   <span class='move_inbox_all'>&nbsp;</span>
-   
-   <?php $zHTML->Button ("Spam All"); ?>
+   <ul>
+     <li> <?php $zHTML->Button ("Spam All"); ?> </li>
+     <li> <?php $zHTML->Button ('Trash All', __("Confirm Trash Selected")); ?> </li>
+     <li> <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?> </li>
 
-   <?php $zHTML->Button ('Trash All', __("Confirm Trash Selected")); ?>
-
-   <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
-
-  </div> <!-- #buttons -->
+   </ul>
+  </nav>
  </form> <!-- #masslist -->
 
- </div> <!-- #container -->
  <? $zHTML->Scroll ($gTARGET, 'messages', 'users.messages'); ?>
-</div> <!-- #messages -->
+</section>
 
