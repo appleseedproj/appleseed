@@ -2,16 +2,16 @@
 
   <h1><?php echo __("User Messages Labels Title"); ?></h1>
 
-  <div id='edit'>
    <form name='message' id='labels' method='POST' action='<?php echo $gLABELSTARGET; ?>'>
     <?php $zHTML->Button ('Edit Labels'); ?>
    </form>
-  </div> <!-- #edit -->
 
-  <ul>
    <?php $zMESSAGE->messageLabelList->Broadcast ("labels"); ?>
+<nav>
+  <ul>
 
    <?php echo $bLABELLISTING; ?>
   </ul>
+</nav>
 
  </section>

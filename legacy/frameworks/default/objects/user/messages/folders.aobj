@@ -4,42 +4,42 @@
 
    <?php $zFOCUSUSER->userInvites->Broadcast ("folders"); ?>
 
-  <div id='compose'>
    <form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
     <?php $zHTML->Button ('Compose'); ?>
    </form> <!-- #compose -->
-  </div>
 
+<nav>
   <ul>
     <li id='<?php echo $gFOLDERSELECT['INBOX']; ?>'>
-      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/inbox/'><?php echo __("Inbox"); ?></a></div>
-       <div id='new'><?php echo $gFOLDERCOUNT['INBOX']; ?></div>
+      <span class='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/inbox/'><?php echo __("Inbox"); ?></a></span>
+       <span class='new'><?php echo $gFOLDERCOUNT['INBOX']; ?></span>
     </li>
 
     <li id='<?php echo $gFOLDERSELECT['SENT']; ?>'>
-      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/sent/'><?php echo __("Sent"); ?></a></div>
-      <div id='new'><?php echo $gFOLDERCOUNT['SENT']; ?></div>
+      <span class='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/sent/'><?php echo __("Sent"); ?></a></span>
+      <span class='new'><?php echo $gFOLDERCOUNT['SENT']; ?></span>
     </li>
 
     <li id='<?php echo $gFOLDERSELECT['DRAFTS']; ?>'>
-      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/drafts/'><?php echo __("Drafts"); ?></a></div>
-      <div id='new'><?php echo $gFOLDERCOUNT['DRAFTS']; ?></div>
+      <span class='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/drafts/'><?php echo __("Drafts"); ?></a></span>
+      <span class='new'><?php echo $gFOLDERCOUNT['DRAFTS']; ?></span>
     </li>
 
     <li id='<?php echo $gFOLDERSELECT['ALL']; ?>'>
-      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/all/'><?php echo __("All"); ?></a></div>
-      <div id='new'></div>
+      <span class='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/all/'><?php echo __("All"); ?></a></span>
+      <span class='new'></span>
     </li>
 
     <li id='<?php echo $gFOLDERSELECT['SPAM']; ?>'>
-      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/spam/'><?php echo __("Spam"); ?></a></div>
-      <div id='new'><?php echo $gFOLDERCOUNT['SPAM']; ?></div>
+      <span class='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/spam/'><?php echo __("Spam"); ?></a></span>
+      <span class='new'><?php echo $gFOLDERCOUNT['SPAM']; ?></span>
     </li>
 
     <li id='<?php echo $gFOLDERSELECT['TRASH']; ?>'>
-      <div id='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/trash/'><?php echo __("Trash"); ?></a></div>
-      <div id='new'><?php echo $gFOLDERCOUNT['TRASH']; ?></div>
+      <span class='title'><a href='/profile/<?php echo $gFOCUSUSERNAME ?>/messages/trash/'><?php echo __("Trash"); ?></a></span>
+      <span class='new'><?php echo $gFOLDERCOUNT['TRASH']; ?></span>
     </li>
 
   </ul>
+	</nav>
 </section>
