@@ -125,10 +125,10 @@ class cLanguage {
  	 * @param array list of variables to sprintf
  	 * @return string
  	 */
- 	function _ ($pString, $pParams = array()) {
- 		
+ 	function _ ( $pString, $pParams = null ) {
  		eval(GLOBALS);
  		
+ 		$debug = $zApp->Config->GetConfiguration ( "debug" );
 
         $key = str_replace (' ', '_', $pString);
         $key = strtoupper ($key);
@@ -141,6 +141,12 @@ class cLanguage {
         	$return = $value;
         } else {
  		    $return = $pString;
+ 		    
+ 		    if ( $debug == "true" ) {
+ 		    	$parameters = join ( " : ", $pParams );
+ 		    	$return = '<span class="untranslated">' . $return . '<span class="parameters">' . $parameters . '</span></span>';
+ 		    }
+ 		    
         } // if
         
         if (count ($pParams) >= 1) {

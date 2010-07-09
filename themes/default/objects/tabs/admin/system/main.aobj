@@ -1,7 +1,6 @@
  <nav id="admin_controls"> 
 
   <ul>
- 	<li class="<?php echo $gSelectedTab['admin_system_strings']; ?>"><a href='_admin/system/strings/'><?php echo __("Strings"); ?></a></li>
  	<li class="<?php echo $gSelectedTab['admin_system_options']; ?>"><a href='_admin/system/options/'><?php echo __("Options"); ?></a></li>
     <li class="<?php echo $gSelectedTab['admin_system_tooltips']; ?>"><a href='_admin/system/tooltips/'><?php echo __("Tooltips"); ?></a></li>
     <li class="<?php echo $gSelectedTab['admin_system_nodes']; ?>"><a href='_admin/system/nodes/'><?php echo __("Nodes"); ?></a></li>

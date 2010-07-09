@@ -52,3 +52,5 @@ time { font-size: 85%; }
 #user_comments img { margin: 0px 0px 10px 0px; }
 
 footer ul li { list-style: none; }
+
+span.untranslated { margin:0; padding:0px 1px; color:#2a2afa; border:1px dotted #4a4aea; background-color:#cacafa;}
