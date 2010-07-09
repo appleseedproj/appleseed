@@ -796,7 +796,7 @@
   
       $gCOMMENTREADTAB = "_off"; $gCOMMENTADDTAB = "_off";
   
-      $gALTERNATE = 0;
+      $gALTERNATE = 1;
   
       $gSELECTBUTTON = '';
   
