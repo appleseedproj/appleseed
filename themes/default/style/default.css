@@ -53,4 +53,5 @@ time { font-size: 85%; }
 
 footer ul li { list-style: none; }
 
-span.untranslated { margin:0; padding:0px 1px; color:#2a2afa; border:1px dotted #4a4aea; background-color:#cacafa;}
+span.untranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#cacafa;}
+span.untranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca;}

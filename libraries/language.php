@@ -143,8 +143,11 @@ class cLanguage {
  		    $return = $pString;
  		    
  		    if ( $debug == "true" ) {
- 		    	$parameters = join ( " : ", $pParams );
- 		    	$return = '<span class="untranslated">' . $return . '<span class="parameters">' . $parameters . '</span></span>';
+ 		    	$return = '<span class="untranslated">' . $return . '</span>';
+ 		    	if ( $pParams ) {
+ 		    		$parameters = join ( " | ", array_keys ( $pParams ) );
+ 		    		$return .= '<span class="untranslatedp">' . $parameters . '</span>';
+ 		    	}
  		    }
  		    
         } // if
