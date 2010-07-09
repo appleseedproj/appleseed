@@ -93,7 +93,7 @@
 	      
 	        if (req) {
 	          if (req == 'ERROR.SHUTDOWN') {
-                this.currentFullname.innerHTML = loadString ('ERROR.SHUTDOWN', 'USER.FRIENDS.AJAX');
+                this.currentFullname.innerHTML = loadString ('System Is Shut Down');
      	        ChangeLoadingState (this.current, 'failed');
 	          } else {
 	            var userInfo = Json.evaluate (req);

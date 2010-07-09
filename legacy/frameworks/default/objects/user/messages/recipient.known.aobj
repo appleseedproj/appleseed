@@ -1,6 +1,2 @@
-<p id='recipient'>
-  <?php echo __("To"); ?>
-</p>
-
 <?php $zHTML->Hidden ("gRECIPIENTADDRESS", $gRECIPIENTNAME . '@' . $gRECIPIENTDOMAIN); ?>
 <?php $zHTML->UserLink ($gRECIPIENTNAME, $gRECIPIENTDOMAIN); ?>

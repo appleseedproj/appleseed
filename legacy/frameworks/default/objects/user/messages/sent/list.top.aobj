@@ -1,9 +1,7 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section id='messages'>
 
- <div id='container'>
   <?php $zSEARCH->Ask (); ?>
 
   <?php $zMESSAGE->Broadcast ("messages"); ?>
@@ -11,16 +9,17 @@
 
    <?php $zHTML->Post ($gPOSTDATA); ?>
 
-  <div id='buttons'>
-   <span id='foldername'>
-    <?php echo $gMESSAGELOCATION; ?>
-   </span>
+   <h1> <?php echo $gMESSAGELOCATION; ?> </h1>
 
-   <?php $zHTML->Button ($gSELECTBUTTON); ?>
+  <nav>
+	 <ul>
+   <li> <?php $zHTML->Button ($gSELECTBUTTON); ?></li>
    
-   <span class='archive_all'>&nbsp;</span>
-   <span class='labelvalue'>&nbsp;</span>
+   <li> <span class='archive_all'>&nbsp;</span></li>
+   <li> <span class='labelvalue'>&nbsp;</span></li>
+   </ul>
 
-  </div> <!-- #buttons -->
+  </nav> <!-- #buttons -->
 
-   <ul>
+   <table>
+	  <tbody>

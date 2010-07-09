@@ -1304,7 +1304,7 @@
       $gTOKEN           = $_POST['gTOKEN'];
       $gDOMAIN          = $_POST['gDOMAIN'];
       $gIDENTIFIER      = $_POST['gIDENTIFIER'];
-      
+
       $this->Initialize($gDOMAIN);
       
       // Check if site or user is blocked.
@@ -1378,76 +1378,22 @@
       
       // Send email notification.
       
-      // Load the notification subject.
-      $systemStrings = $this->TablePrefix . "systemStrings";
-      
-      $sql_statement = "
-        SELECT $systemStrings.Output as Output
-        FROM   $systemStrings
-        WHERE  $systemStrings.Title = 'MAIL.FROM'
-        AND    $systemStrings.Context = 'USER.MESSAGES'
-      ";
-      
-      $sql_result = mysql_query ($sql_statement);
-      
-      // Check if we got a result row.
-      $result_count = mysql_num_rows ($sql_result);
-      
-      $result = mysql_fetch_assoc ($sql_result);
-      $subject = $result['Output'];
-      
-      mysql_free_result ($sql_result);
-      
-      // Load the notification message body.
-      $sql_statement = "
-        SELECT $systemStrings.Output as Output
-        FROM   $systemStrings
-        WHERE  $systemStrings.Title = 'MAIL.BODY'
-        AND    $systemStrings.Context = 'USER.MESSAGES'
-      ";
-      
-      $sql_result = mysql_query ($sql_statement);
-      
-      // Check if we got a result row.
-      $result_count = mysql_num_rows ($sql_result);
-      
-      $result = mysql_fetch_assoc ($sql_result);
-      $message = $result['Output'];
-      
-      mysql_free_result ($sql_result);
-      
-      // Load the notification sender.
-      $sql_statement = "
-        SELECT $systemStrings.Output as Output
-        FROM   $systemStrings
-        WHERE  $systemStrings.Title = 'MAIL.FROM'
-        AND    $systemStrings.Context = 'USER.MESSAGES'
-      ";
-      
-      $sql_result = mysql_query ($sql_statement);
-      
-      // Check if we got a result row.
-      $result_count = mysql_num_rows ($sql_result);
-      
-      $result = mysql_fetch_assoc ($sql_result);
-      $from = $result['Output'];
-      
-      mysql_free_result ($sql_result);
+			$sender = $gUSERNAME . '@' . $gDOMAIN;
+      $messagesurl = "http://" . $this->SiteDomain . "/profile/" . $gRECIPIENT . "/messages/";
+
+			$from = __("Message Notify Sender", array ( "domain" => $this->SiteDomain ) );
+
+			$subject = __("Message Notify Subject", array ( "sender" => $sender) );
+
+			$body = __("Message Notify Body", array ( "recipient" => $gFULLNAME, "sender" => $sender, "url" => $messagesurl ) );
       
       $gSUCCESS = TRUE;
-      
-      $messagesurl = "http://" . $this->SiteDomain . "/profile/" . $gRECIPIENT . "/messages/";
-      $from = str_replace ('%SITEDOMAIN%', $this->SiteDomain, $from);
-      $subject = str_replace ('%SITEDOMAIN%', $this->SiteDomain, $subject);
-      $message = str_replace ('%SENDERNAME%', $gFULLNAME, $message);
-      $message = str_replace ('%RECIPIENTFULLNAME%', $gFULLNAME, $message);
-      $message = str_replace ('%MESSAGESURL%', $messagesurl, $message);
       
       $headers = 'From: ' . $from . "\r\n" .
         'Reply-To: ' . $from . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
         
-      mail ($email, $subject, $message, $headers);
+      mail ($email, $subject, $body, $headers);
       
       $this->XML->Load ("legacy/code/include/data/xml/message_notify.xml");
       $return = $this->XML->Data;
@@ -1965,33 +1911,6 @@
   
       return ($return_string);
     } // RandomString
-    
-    function GetString ($pTITLE, $pCONTEXT) {
-    	
-        $systemStrings = $this->TablePrefix . "systemStrings";
-    	
-    	// Get the language associated with this user.
-    	// NOTE: For now, just use english.
-    	$language = 'en';
-    	
-      	$sql_statement = "
-			SELECT Output 
-			FROM $systemStrings 
-			WHERE Title = '%s' 
-			AND Context = '%s';
-      	";
-    
-      	$sql_statement = sprintf ($sql_statement,
-      	                          mysql_real_escape_string ($pTITLE),
-      	                          mysql_real_escape_string ($pCONTEXT));
-                                
-		$sql_result = mysql_query ($sql_statement);
-      
-		$result = mysql_fetch_assoc ($sql_result);
-    	
-    	return ($result['Output']);
-    	
-    } // GetString
     
   } // cAJAX
   

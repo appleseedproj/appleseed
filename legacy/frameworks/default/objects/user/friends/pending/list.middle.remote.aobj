@@ -16,7 +16,7 @@
    <?php $zHTML->Post ($gPOSTDATA); ?>
    <input type='hidden' id='gFRIENDUSERNAME' name='gFRIENDUSERNAME' value='<?php echo $zFRIENDS->Username; ?>'>
    <input type='hidden' id='gFRIENDDOMAIN' name='gFRIENDDOMAIN' value='<?php echo $zFRIENDS->Domain; ?>'>
-   <?php $zHTML->Button ('friend_cancel', __("Confirm Cancel")); ?>
+   <?php $zHTML->Button ('Friend Cancel', __("Confirm Cancel")); ?>
   </form>
 
  </li> <!-- #[alternate] -->

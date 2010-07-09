@@ -1,16 +1,18 @@
-  </ul>
+    </tbody>
+  </table>
 
-  <div id='buttons'>
-   <?php $zHTML->Button ('Move Inbox All'); ?>
+  <nav>
+	 <ul>
+     <li> <?php $zHTML->Button ('Move Inbox All'); ?> </li>
    
-   <?php $zHTML->Button ("Spam All"); ?>
+     <li> <?php $zHTML->Button ("Spam All"); ?> </li>
 
-   <?php $zHTML->Button ('Delete Forever All', __("Confirm Delete Selected")) ?>
+     <li> <?php $zHTML->Button ('Delete Forever All', __("Confirm Delete Selected")) ?> </li>
 
-   <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?>
+     <li> <?php $zHTML->Menu ("gREADACTION", $gREADDATA, "", "", TRUE, "READ"); ?> </li>
+	  </ul>
+  </nav>
 
-  </div> <!-- #buttons -->
- </form> <!-- #masslist -->
+ </form>
 
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section>

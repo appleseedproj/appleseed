@@ -463,7 +463,7 @@
 
       // Convert and save the file.
       if ($zPHOTO->Error != -1) {
-        $profilepicture = "photos/" . $this->Username . "/profile.jpg";
+        $profilepicture = "_storage/legacy/photos/" . $this->Username . "/profile.jpg";
         $zPHOTO->Convert ($_FILES['gPROFILEPHOTO']['tmp_name']);
         $zPHOTO->Attributes ($_FILES['gPROFILEPHOTO']['tmp_name']);
         global $gPROFILEPHOTOX, $gPROFILEPHOTOY;

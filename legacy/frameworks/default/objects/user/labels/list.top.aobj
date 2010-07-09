@@ -1,12 +1,10 @@
-<section id='editlabels'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section id='editlabels'>
 
    <?php $zMESSAGE->messageLabels->Broadcast (); ?>
  
-   <p id='top'>
-     <?php echo __("Edit"); ?>
-   </p>
+   <h1> <?php echo __("Edit"); ?> </h1>
 
-   <ul>
+   <table>
+    <tbody>

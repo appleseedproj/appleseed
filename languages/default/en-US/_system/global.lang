@@ -24,6 +24,57 @@ FIRST="&lt;&lt; First"
 NEXT="Next &gt;"
 LAST="Last &gt;&gt;"
 
+[invite]
+USER_INVITE_SENDER="webmaster@%domain$s"
+USER_INVITE_SUBJECT="Welcome To Appleseed @ %domain$s"
+USER_INVITE_BODY="Congratulations!
+
+You have been invited by %by$s to open a free account at %domain$s.
+
+To accept this invitation and set up an account, click this link:
+
+%url$s
+
+Once your account has been created, %by$s will be notified in order to add you to their friend's list!
+
+Appleseed is a new open source social networking software that is currently in development.  Planned features include: Journals, Photo Albums, Email, and Groups all in one place, and fully distributed social networking.  You can add friends from any Appleseed site.
+
+Appleseed is still in early beta, and many features are still not available. But if you set up an account, you'll be able to help us fix bugs and add features.
+
+Thank You,
+The Appleseed Collective"
+
+[messagenotification]
+MESSAGE_NOTIFY_SENDER="""New Message"" <messages@%domain$s>"
+MESSAGE_NOTIFY_SUBJECT="New message from %sender$s"
+MESSAGE_NOTIFY_BODY="%recipient$s,
+
+You have a new message from %sender$s
+
+Click here to read your messages:
+%url$s"
+
+[friend]
+FRIEND_SENDER="""Friend Request"" <friends@%domain$s>"
+
+[friendrequest]
+FRIEND_REQUESTED_SUBJECT="%source$s would like to be added as one of your friends!"
+FRIEND_REQUESTED_BODY="Hello, %target$s.
+
+%source$s would like to be added to your friends list.
+
+Click here to approve your Appleseed friends requests:
+<a href='%url$s'>%url$s%</a>"
+
+[friendaccepted]
+FRIEND_ACCEPTED_SUBJECT="%source$s has accepted!"
+FRIEND_ACCEPTED_BODY="Hello, %target$s.
+
+%source$s has approved your friend request!
+
+Click here to view your Appleseed friends:
+<a href='%url$s'>%url$s%</a>"
+
 [site]
 APPLESEED_PAGE_TITLE="Welcome To The Appleseed Social Network @ %domain$s"
 YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
@@ -64,7 +115,14 @@ USER_PROFILE="%fullname$s's Profile";
 CONTACT_USER="Contact %fullname$s";
 
 [user.messages]
-QUOTE_REPLY="\n\n> From: ""%authorfullname$s"" (%authorusername$s@%authordomain$s)\n> Date: %messagedate$s\n>\n"
+FWD="Fwd: "
+RE="Re: "
+QUOTE_REPLY="
+
+> From: ""%authorfullname$s"" (%authorusername$s@%authordomain$s)
+> Date: %messagedate$s
+>
+"
 
 [user.invites]
 USER_INVITES_TITLE="Invite A Friend!"
@@ -369,8 +427,6 @@ TABLE_DOES_NOT_EXIST="The requested database table '%name$s' does not exist."
 ;MESSAGE.APPLY:USER.FRIENDS=This friend has been added to '%APPLYCIRCLENAME%'.
 ;MESSAGE.REMOVE:USER.FRIENDS=This friend has been removed from '%REMOVECIRCLENAME%'.
 ;ERROR.ALREADY.PENDING:USER.FRIENDS=%REQUESTNAME% has already been sent a friend request.
-;MAIL.BODY:USER.FRIENDS.APPROVE=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has approved your friend request!\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
-;MAIL.SUBJECT:USER.FRIENDS.APPROVE=%SOURCEUSER% has accepted!
 ;LABEL.CIRCLES:USER.FRIENDS.CIRCLES=Edit your friend circles.
 ;LABEL.COUNT:USER.FRIENDS.CIRCLES=%FRIENDSCOUNT% friend(s).
 ;CONFIRM.DELETE:USER.FRIENDS.CIRCLES=Are you sure you want to delete this circle?
@@ -393,8 +449,6 @@ TABLE_DOES_NOT_EXIST="The requested database table '%name$s' does not exist."
 ;MAIL.BODY:USER.FRIENDS.DENY=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has denied your friend request.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
 ;MAIL.BODY:USER.FRIENDS.REMOVE=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has removed you from their friends list.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
 ;MAIL.SUBJECT:USER.FRIENDS.REMOVE=%SOURCEUSER% has removed you as a friend.
-;MAIL.SUBJECT:USER.FRIENDS.REQUEST=%SOURCEUSER% would like to be added as one of your friends! 
-;MAIL.BODY:USER.FRIENDS.REQUEST=Hello, %TARGETUSER%.\n\n%SOURCEUSER% would like to be added to your friends list.\n\nClick here to approve your Appleseed friends requests:\n<a href='%FRIENDSURL%'>%FRIENDSURL%</a>\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
 ;MESSAGE.NONE:USER.GROUPS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> Is Not A Member Of Any Groups.
 ;LABEL.MEMBERS:USER.GROUPS=Members: %MEMBERCOUNT%
 ;LABEL.STATS:USER.INFO=STATISTICS FOR <asd id='global' name='FOCUSFULLNAME' case='upper' />

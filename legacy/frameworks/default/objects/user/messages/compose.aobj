@@ -1,51 +1,54 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section>
 
- <div id='container'>
-  <div id='compose'>
-
-   <p id='top'>
-     <?php echo __("Compose New Message"); ?>
-   </p>
+   <h1> <?php echo __("Compose New Message"); ?> </h1>
  
    <?php $zMESSAGE->Broadcast(); ?>
  
    <form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
-    <?php $zHTML->Post ($gPOSTDATA); ?>
-    
+     <?php $zHTML->Post ($gPOSTDATA); ?>
      <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
+		<fieldset>
+
      <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", "X"); ?>
  
-    <?php echo $bRECIPIENT; ?>
+		<table>
+		  <tbody>
+        <tr>
+				   <th><label for="recipient"> <?php echo __("To"); ?> </label> </th>
+				   <td><?php echo $bRECIPIENT; ?></td>
+				</tr>
  
-    <p id='subject'>
-     <?php echo __("Subject"); ?>
-    </p>
+        <tr>
+				  <th><label for="subject"> <?php echo __("Subject"); ?> </label> </th>
  
-    <?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?>
+          <td><?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?></td>
+				</tr>
+				<tr>
  
-    <p id='body'>
-     <?php echo __("Body"); ?>
-    </p>
+          <th><label for='body'> <?php echo __("Body"); ?> </label></th>
  
-    <?php $zHTML->TextArea ("BODY", $gBODY); ?>
-    <?php $zMESSAGE->Broadcast('field', 'body'); ?>
+          <td> <?php $zHTML->TextArea ("BODY", $gBODY); ?>
+    <?php $zMESSAGE->Broadcast('field', 'body'); ?></td>
+		    </tr>
+			</tbody>
+		</table>
+	</fieldset>
  
-   <div id='buttons'>
-    <?php $zHTML->Button ('Save Draft'); ?>
+   <nav>
+	   <ul>
+
+       <li> <?php $zHTML->Button ('Save Draft'); ?> </li>
  
-    <?php $zHTML->Button ('Send'); ?>
+       <li> <?php $zHTML->Button ('Send'); ?> </li>
   </form> <!-- #compose -->
  
      <form method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
-      <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
+      <li> <?php $zHTML->Post ($gPOSTDATA); ?> </li>
+      <li> <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?> </li>
      </form> <!-- #cancel -->
-   </div> <!-- #buttons -->
- 
-  </div> <!-- #compose -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+   </nav>
+
+</section>

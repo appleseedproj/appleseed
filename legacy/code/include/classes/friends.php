@@ -159,12 +159,18 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $subject = __("Friend Request Accepted Subject", array ( "source" => $gSOURCEUSER ) );
+			$from = __("Friend Sender", array ( "domain" => $gSITEDOMAIN ) );
 
-      $body = __("Friend Request Accepted Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
-      
+      $subject = __("Friend Accepted Subject", array ( "source" => $gSOURCEUSER ) );
+
+      $body = __("Friend Accepted Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "url" => $gFRIENDSURL ) );
+
+      $headers = 'From: ' . $from . "\r\n" .
+        'Reply-To: ' . $from . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+
       $MESSAGE = new cMESSAGE ();
-      $MESSAGE->Send ($address, $subject, $body);
+      $MESSAGE->Send ($address, $subject, $body, $headers);
       unset ($MESSAGE); 
 
       return (TRUE);
@@ -189,9 +195,11 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $subject = __("Friend Removed Subject", array ( "source" => $gSOURCEUSER ) );
+			$from = __("Friend Sender", array ( "domain" => $gSITEDOMAIN ) );
 
-      $body = __("Friend Removed Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
+      $subject = __("Friend Subject", array ( "source" => $gSOURCEUSER ) );
+
+      $body = __("Friend Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "url" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);
@@ -219,9 +227,11 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
-      $subject = __("Friend Request Denied Subject", array ( "source" => $gSOURCEUSER ) );
+			$from = __("Friend Sender", array ( "domain" => $gSITEDOMAIN ) );
 
-      $body = __("Friend Request Denied Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
+      $subject = __("Friend Denied Subject", array ( "source" => $gSOURCEUSER ) );
+
+      $body = __("Friend Denied Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "url" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);
@@ -249,9 +259,11 @@
         $address = $pTARGETUSERNAME . '@' . $gSITEDOMAIN;
       } // if
 
+			$from = __("Friend Sender", array ( "domain" => $gSITEDOMAIN ) );
+
       $subject = __("Friend Requested Subject", array ( "source" => $gSOURCEUSER ) );
 
-      $body = __("Friend Requested Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "link" => $gFRIENDSURL ) );
+      $body = __("Friend Requested Body", array ( "source" => $gSOURCEUSER, "target" => $gTARGETUSER, "url" => $gFRIENDSURL ) );
       
       $MESSAGE = new cMESSAGE ();
       $MESSAGE->Send ($address, $subject, $body);

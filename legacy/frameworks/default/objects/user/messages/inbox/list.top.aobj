@@ -1,7 +1,6 @@
-<section id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section id='messages'>
 
   <?php $zSEARCH->Ask (); ?>
 

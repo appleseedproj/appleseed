@@ -429,6 +429,7 @@
 
       $NotificationTable = $this->messageNotification->TableName;
       $InformationTable = $this->messageInformation->TableName;
+      $messageLabelListTable = $this->messageLabelList->TableName;
 
       $statement_left  = "(SELECT $NotificationTable.tID, " .
                          "        $NotificationTable.userAuth_uID, " .
@@ -439,14 +440,14 @@
                          "        $NotificationTable.Stamp, " .
                          "        $NotificationTable.Standing, " .
                          "        $NotificationTable.Location " .
-                         " FROM   $NotificationTable, messageLabelList " .
-                         " WHERE  messageLabelList.Identifier = $NotificationTable.Identifier " .
+                         " FROM   $NotificationTable, $messageLabelListTable " .
+                         " WHERE  $messageLabelListTable.Identifier = $NotificationTable.Identifier " .
                          " AND    $NotificationTable.userAuth_uID = " . $zFOCUSUSER->uID . " " .
                          " AND    $NotificationTable.Location != " . FOLDER_SENT . " " .
                          " AND    $NotificationTable.Location != " . FOLDER_DRAFTS . " " .
                          " AND    $NotificationTable.Location != " . FOLDER_TRASH . " " .
                          " AND    $NotificationTable.Location != " . FOLDER_SPAM . " " .
-                         " AND    messageLabelList.messageLabels_tID = " . $labelid . ")";
+                         " AND    $messageLabelListTable.messageLabels_tID = " . $labelid . ")";
       $statement_right = "(SELECT $InformationTable.tID, " .
                          "        $InformationTable.userAuth_uID, " .
                          "        $InformationTable.Sender_Username, " .
@@ -456,14 +457,14 @@
                          "        $InformationTable.Received_Stamp AS Stamp, " .
                          "        $InformationTable.Standing, " .
                          "        $InformationTable.Location " .
-                         " FROM   $InformationTable, messageLabelList " .
-                         " WHERE  messageLabelList.Identifier = $InformationTable.Identifier " .
+                         " FROM   $InformationTable, $messageLabelListTable " .
+                         " WHERE  $messageLabelListTable.Identifier = $InformationTable.Identifier " .
                          " AND    $InformationTable.userAuth_uID = " . $zFOCUSUSER->uID . " " .
                          " AND    $InformationTable.Location != " . FOLDER_SENT . " " .
                          " AND    $InformationTable.Location != " . FOLDER_DRAFTS . " " .
                          " AND    $InformationTable.Location != " . FOLDER_TRASH . " " .
                          " AND    $InformationTable.Location != " . FOLDER_SPAM . " " .
-                         " AND    messageLabelList.messageLabels_tID = " . $labelid . ")";
+                         " AND    $messageLabelListTable.messageLabels_tID = " . $labelid . ")";
       $query = $statement_left . " UNION " . $statement_right . " ORDER BY Stamp DESC";
 
       $this->Query ($query);
@@ -640,7 +641,7 @@
         } // if
 
         $gMESSAGESTANDING = "";
-        if ($this->Standing == MESSAGE_UNREAD) $gMESSAGESTANDING = "_new";
+        if ($this->Standing == MESSAGE_UNREAD) $gMESSAGESTANDING = "new";
 
         global $gPOSTDATA;
         $gPOSTDATA['ACTION'] = "VIEW";
@@ -2644,15 +2645,16 @@
 
       $NotificationTable = $this->messageNotification->TableName;
       $InformationTable = $this->messageInformation->TableName;
+			$messageLabelListTable = $this->messageLabelList->TableName;
 
       $query  = "(SELECT COUNT($NotificationTable.tID) AS CountResult " .
-                " FROM   $NotificationTable, messageLabelList " .
-                " WHERE  messageLabelList.Identifier = $NotificationTable.Identifier " .
+                " FROM   $NotificationTable, $messageLabelListTable " .
+                " WHERE  $messageLabelListTable.Identifier = $NotificationTable.Identifier " .
                 " AND    $NotificationTable.Standing = " . MESSAGE_UNREAD . " " .
                 " AND    $NotificationTable.Location != " . FOLDER_SPAM . " " .
                 " AND    $NotificationTable.Location != " . FOLDER_TRASH . " " .
                 " AND    $NotificationTable.userAuth_uID = " . $zFOCUSUSER->uID . " " .
-                " AND    messageLabelList.messageLabels_tID = " . $pLABELID . ")";
+                " AND    $messageLabelListTable.messageLabels_tID = " . $pLABELID . ")";
 
       $this->Query ($query);
       $this->FetchArray();
@@ -2660,13 +2662,13 @@
       $this->CountResult = 0;
 
       $query = "(SELECT COUNT($InformationTable.tID) AS CountResult " .
-               " FROM   $InformationTable, messageLabelList " .
-               " WHERE  messageLabelList.Identifier = $InformationTable.Identifier " .
+               " FROM   $InformationTable, $messageLabelListTable " .
+               " WHERE  $messageLabelListTable.Identifier = $InformationTable.Identifier " .
                " AND    $InformationTable.Standing = " . MESSAGE_UNREAD . " " .
                " AND    $InformationTable.userAuth_uID = " . $zFOCUSUSER->uID . " " .
                " AND    $InformationTable.Location != " . FOLDER_SPAM . " " .
                " AND    $InformationTable.Location != " . FOLDER_TRASH . " " .
-               " AND    messageLabelList.messageLabels_tID = " . $pLABELID . ")";
+               " AND    $messageLabelListTable.messageLabels_tID = " . $pLABELID . ")";
 
       $this->Query ($query);
       $this->FetchArray();

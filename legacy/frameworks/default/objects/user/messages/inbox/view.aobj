@@ -1,87 +1,87 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section>
 
- <div id='container'>
-  <div id='view'>
    <?php $zMESSAGE->Broadcast ("message"); ?>
    <?php $zMESSAGE->messageLabels->Broadcast ("message"); ?>
  
-   <div id='buttons'>
+   <nav>
+    <ul>
  
-    <span id='back'>
-     <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a>
-    </span> <!-- #back -->
+      <li> <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a> </li>
  
     <form id='not_spam' name='not_spam' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('Spam'); ?>
+      <li> <?php $zHTML->Button ('Spam'); ?> </li>
     </form> <!-- #not_spam -->
  
     <form id='delete' name='delete' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('Trash', __("Confirm Trash")); ?>
+     <li> <?php $zHTML->Button ('Trash', __("Confirm Trash")); ?> </li>
     </form> <!-- #delete -->
+    </ul>
  
-   </div> <!-- #buttons -->
+   </nav>
+
+	 <div class='clear'></div>
+
+	 <h1> <?php echo $zMESSAGE->Subject; ?> </h1>
  
-   <div id='header'>
-    <div id='top'>
-     <span id='subject'><?php echo $zMESSAGE->Subject; ?></span>
+    <h3>
      <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
-    </div> <!-- #top -->
+    </h3>
   
-    <div id='bottom'>
+    <h3>
      <span id='sender'><?php $zHTML->UserLink ($zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain); ?></span>
      <span id='labels'><?php echo $bLABELSMARK; ?></span>
-    </div> <!-- #bottom -->
-   </div> <!-- #header -->
+    </h3>
  
-   <div id='body'>
+   <p>
  
       <?php echo $zOLDAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?>
  
-   </div> <!-- #body -->
+   </p>
  
-   <div id='buttons'>
+   <nav>
+	  <ul>
  
-    <span class='reply'>
+    <li>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
        <?php $zHTML->Button ('Reply'); ?>
       </form> <!-- #reply -->
-    </span> <!-- #reply -->
+    </li> <!-- #reply -->
  
-    <span class='forward'>
+    <li>
      <form id='forward' name='forward' method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
       <?php $zHTML->Button ('Forward'); ?>
      </form> <!-- #forward -->
     </span> <!-- #forward -->
  
-    <span class='unread'>
+    <li>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
        <?php $zHTML->Button ('Unread'); ?>
       </form> <!-- #unread -->
-    </span> <!-- #unread -->
+    </li>
  
+		<li>
     <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
      <?php $zHTML->Button ('Archive'); ?>
-    </form> <!-- #archive -->
+    </form>
+		</li>
  
-    <span class='label'>
+    <li>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
        <input type='hidden' name='gACTION' value='LABEL' />
        <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE); ?>
-      </form> <!-- #label -->
-    </span> <!-- #label -->
+      </form>
+    </li>
+	
+		  </ul>
+	  </nav>
  
-   </div> <!-- #buttons -->
- 
-  </div> <!-- #view -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section>

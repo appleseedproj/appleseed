@@ -174,3 +174,8 @@ select, input, textarea { clear:both; }
 textarea { min-width:500px; min-height:160px; }
 
 #user_page ul li { list-style: none; }
+
+.new { font-weight:bold; }
+
+.mark_inbox { font-weight:bold; padding:0 2px; color:#639a00; border:1px dotted #82b22c }
+.mark_labels { font-weight:bold; padding:0 2px; color:#639a00; border:1px dotted #639a00 }

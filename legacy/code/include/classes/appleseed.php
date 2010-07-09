@@ -942,7 +942,9 @@
       $gQUESTIONANSWER = "<strong>" . __("Gender") . "</strong> " . $gender;
       $this->IncludeFile ("$gFRAMELOCATION/objects/user/profile/question.aobj", INCLUDE_SECURITY_NONE);
  
-      if ($zFOCUSUSER->userProfile->Birthday != '1969-12-31 00:00:00') {
+
+      if ( ($zFOCUSUSER->userProfile->Birthday != '1969-12-31 00:00:00') && 
+           ($zFOCUSUSER->userProfile->Birthday != '0000-00-00 00:00:00') ) {
         $age =$this->CalculateAge ($zFOCUSUSER->userProfile->Birthday);
         $gQUESTIONSTYLE = 'age'; 
         $gQUESTIONANSWER = "<strong>" . __("Age") . "</strong> " . $age;

@@ -1,7 +1,3 @@
-<p id='recipient'>
-  <?php echo __("To"); ?>
-</p>
-
 <?php $zHTML->TextArea ("RECIPIENTADDRESS", $gRECIPIENTADDRESS); ?>
 
 <?php $zMESSAGE->Broadcast('field', 'recipientaddress'); ?>

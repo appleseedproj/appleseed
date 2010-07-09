@@ -378,21 +378,11 @@
       // Select the message we're replying to.
       $zMESSAGE->SelectMessage ($gIDENTIFIER);
 
-      $zMESSAGE->messageRecipient->Select ("messageStore_tID", $zMESSAGE->tID);
-      $addresses = array ();
-      while ($zMESSAGE->messageRecipient->FetchArray ()) {
-        $addresses[] = $zMESSAGE->messageRecipient->Username . '@' . $zMESSAGE->messageRecipient->Domain;
-      }
-      
-      list ($username, $domain) = explode ('@', $addresses[0]);
-      
-      unset ($addresses);
-      
-      list ($senderfullname, $null) = $zOLDAPPLE->GetUserInformation ($username, $domain);
+      list ($senderfullname, $null) = $zOLDAPPLE->GetUserInformation ($zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain);
 
       global $gBODY;
       $zMESSAGE->FormatVerboseDate ("Stamp");
-      $gBODY = $zOLDAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $username, $domain, $zMESSAGE->fStamp);
+      $gBODY = $zOLDAPPLE->QuoteReply ($zMESSAGE->Body, $senderfullname, $zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain, $zMESSAGE->fStamp);
 
       global $gSUBJECT;
       $gSUBJECT = $zMESSAGE->Subject;

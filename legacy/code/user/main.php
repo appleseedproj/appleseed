@@ -155,23 +155,24 @@
         } else {
 
           global $gSITEURL;
+					global $gSITEDOMAIN;
           global $gINVITEDBY, $gINVITEURL;
   
           $gINVITEDBY = ucwords ($zLOCALUSER->userProfile->GetAlias ());
           $gINVITEURL = $gSITEURL . "/join/" . $zFOCUSUSER->userInvites->Value;
   
-          $subject = __( "User Invite Subject" );
+          $subject = __( "User Invite Subject", array ( "domain" => $gSITEDOMAIN ) );
   
-          $body = __( "User Invite Body" );
-      
-          $from = __( "User Invite Sender" );
-  
+          $body = __( "User Invite Body", array ( "domain" => $gSITEDOMAIN, "url" => $gINVITEURL, "by" => $gINVITEDBY ) );
+
+          $from = __( "User Invite Sender", array ( "domain" => $gSITEDOMAIN ) );
+
           $headers = "From: $from" . "\r\n" .
                      "Reply-To: $from" . "\r\n" .
                      "X-Mailer: PHP/" . phpversion();
-  
+
           mail ($zFOCUSUSER->userInvites->Recipient, $subject, $body, $headers);
-  
+
           // Update invite information.
           $zFOCUSUSER->userInvites->Stamp = SQL_NOW;
           $zFOCUSUSER->userInvites->Active = PENDING;

@@ -132,12 +132,11 @@ function getElementsByClass(node,searchClass,tag) {
   return classElements;
 }
 
-function loadString (Title, Context) {
+function loadString (pString) {
 
 	var jsonString = Json.toString( { 
 		action: 'AJAX_GET_STRING', 
-		title: Title, 
-		context: Context
+		string: pString, 
 	});
   
 	var returnValue = null;

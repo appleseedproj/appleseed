@@ -1,22 +1,23 @@
-   <?php $zHTML->Alternate(); ?>
+   <tr class="<?php echo $zHTML->Alternate(); ?> "> 
 
     <form method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gtID' value='<?php echo $gtID; ?>' />
-     <span class='label'>
+     <td class='label'>
       <?php $zHTML->TextBox ("LABEL", 32, $zMESSAGE->messageLabels->Label); ?>
-     </span> 
+     </td> 
 
-     <span class='count'>
+     <td class='count'>
        <?php echo __("Message Count", array ( "count" => $gMESSAGECOUNT ) ); ?>
-     </span> <!-- .count -->
+     </td> <!-- .count -->
 
-      <?php $zHTML->Button ("save_label"); ?>
+     <td> <?php $zHTML->Button ("Save Label"); ?> </td>
      </form>
 
+		 <td>
      <form method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gtID' value='<?php echo $gtID; ?>' />
-      <?php $zHTML->Button ('delete_label', __("Confirm Delete")); ?>
+      <?php $zHTML->Button ('Delete Label', __("Confirm Delete")); ?>
      </form>
+		 </td>
      <?php echo $gFIELDERROR; ?>
-   </li> <!-- .[alternate] -->
- 
+   </tr>

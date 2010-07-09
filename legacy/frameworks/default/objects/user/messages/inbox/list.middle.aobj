@@ -1,4 +1,4 @@
-   <tr class="<?php echo $zHTML->Alternate(); ?>"> 
+   <tr class="<?php echo $zHTML->Alternate(); ?> <?php echo $gMESSAGESTANDING; ?>"> 
 
      <td class='username'>
        <?php $zHTML->Link ($gTARGET, $gSENDERNAME); ?>

@@ -1,18 +1,17 @@
-<div id='messages'>
+<section>
 
  <!-- tabs objects -->
  <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
   <div id='view'>
    <?php $zMESSAGE->Broadcast ("message"); ?>
    <?php $zMESSAGE->messageLabels->Broadcast ("message"); ?>
  
    <div id='buttons'>
  
-    <span id='back'>
+    <h2>
      <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a>
-    </span> <!-- #back -->
+    </h2> <!-- #back -->
  
     <form id='spam' name='spam' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
@@ -83,5 +82,4 @@
    </div> <!-- #buttons -->
  
   </div> <!-- #view -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section>

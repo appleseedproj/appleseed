@@ -1,14 +1,8 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section>
 
- <div id='container'>
-  <div id='compose'>
-
-   <p id='top'>
-    <?php echo __("Forward Message"); ?>
-   </p>
+   <h1> <?php echo __("Forward Message"); ?> </h1>
  
    <?php $zMESSAGE->Broadcast(); ?>
  
@@ -17,36 +11,46 @@
  
      <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
      <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", "X"); ?>
+
+		<fieldset>
  
-    <?php echo $bRECIPIENT; ?>
+		<table>
+		  <tbody>
+        <tr>
+				   <th><label for="recipient"> <?php echo __("To"); ?> </label> </th>
+				   <td><?php echo $bRECIPIENT; ?></td>
+				</tr>
  
-    <p id='subject'>
-    <?php echo __("Subject"); ?>
-    </p>
+        <tr>
+				  <th><label for="subject"> <?php echo __("Subject"); ?> </label> </th>
  
-    <?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?>
+          <td><?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?></td>
+				</tr>
+
+			  <tr>
+          <th><label for='body'> <?php echo __("Body"); ?> </label></th>
  
-    <p id='body'>
-    <?php echo __("Body"); ?>
-    </p>
+          <td> <?php $zHTML->TextArea ("BODY", $gBODY); ?>
+    <?php $zMESSAGE->Broadcast('field', 'body'); ?></td>
+		    </tr>
  
-    <?php $zHTML->TextArea ("BODY", $gBODY); ?>
-    <?php $zMESSAGE->Broadcast('field', 'body'); ?>
+	   </tbody>
+	</table>
+
+   <nav>
+    <ul>
+		  <li> <?php $zHTML->Button ('Save Draft'); ?> </li>
  
-   <div id='buttons'>
-    <?php $zHTML->Button ('Save Draft'); ?>
- 
-    <?php $zHTML->Button ('Send'); ?>
+      <li> <?php $zHTML->Button ('Send'); ?> </li>
   </form> <!-- #compose -->
  
      <form method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <input type='hidden' id='gIDENTIFIER' name='gIDENTIFIER' value='<?php echo $gIDENTIFIER; ?>'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
+      <li> <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?></li>
      </form> <!-- #cancel -->
-   </div> <!-- #buttons -->
+	   </ul>
+   </nav> <!-- #buttons -->
  
-  </div> <!-- #compose -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section>

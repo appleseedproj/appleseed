@@ -1,8 +1,13 @@
-   </ul>
+     </tbody>
+	 </table>
 
-   <div id='buttons'>
-     <form method='POST' action='<?php echo $gTARGET; ?>'>
-      <?php $zHTML->Button ("New Label"); ?>
-     </form>
-   </div> <!-- #buttons -->
+   <form method='POST' action='<?php echo $gTARGET; ?>'>
+
+   <nav>
+	   <ul>
+      <li> <?php $zHTML->Button ("New Label"); ?> </li>
+		 </ul>
+   </nav>
+
+   </form>
  </section>
