@@ -127,22 +127,22 @@ class cComponents extends cBase {
 		eval ( GLOBALS );
 		
 		// Overwrite the Controller from Request data.
-		if ( cRequest::Get ('Controller') ) {
-			$pController = cRequest::Get ( 'Controller' );
+		if ( $this->GetSys ( "Request" )->Get ('Controller') ) {
+			$pController = $this->GetSys ( "Request" )->Get ( 'Controller' );
 		} else {
 			if ( !$pController ) $pController = $pComponent;
 		}
 		
 		// Overwrite the View from Request data.
-		if ( cRequest::Get ('View') ) {
-			$pView = cRequest::Get ( 'View' );
+		if ( $this->GetSys ( "Request" )->Get ('View') ) {
+			$pView = $this->GetSys ( "Request" )->Get ( 'View' );
 		} else {
 			if ( !$pView ) $pView = $pComponent;
 		}
 		
 		// Overwrite the Task from Request data.
-		if ( cRequest::Get ('Task') ) {
-			$pTask = cRequest::Get ( 'Task' );
+		if ( $rtask = $this->GetSys ( "Request" )->Get ('Task') ) {
+			$pTask = $rtask;
 		} else {
 			if ( !$pTask ) $pTask = 'display';
 		}
@@ -175,11 +175,7 @@ class cComponents extends cBase {
 		
 		ob_start ();
 		
-		$this->GetSys ( "Event" )->Trigger ( "Begin", $pComponent, $pTask ); 
-		
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
-		
-		$this->GetSys ( "Event" )->Trigger ( "End", $pComponent, $pTask ); 
 		
 		$bdata = ob_get_clean ();
 		

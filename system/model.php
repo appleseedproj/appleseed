@@ -561,8 +561,9 @@ class cModel extends cBase {
 	 * @access public
 	 */
 	public function Synchronize ( ) {
+		eval ( GLOBALS );
 		
-		$requests = cRequest::Get();
+		$requests = $zApp->Request->Get();
 		
 		foreach ( $this->_Fields as $f => $field ) {
 			$fieldname = $field['Field'];

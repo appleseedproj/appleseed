@@ -67,6 +67,8 @@ class cExampleController extends cController {
 		 */
 		// $this->EventTrigger ( "Load" );
 		
+		$request = $this->GetSys ( "Request" )->Get();
+		
 		/*
 		 * @tutorial The Talk function allows you to send a request to the Interface class of another component.
 		 * @tutorial This allows you to communicate between components
@@ -182,6 +184,8 @@ class cExampleController extends cController {
 		
 		$this->Employees = $this->GetModel("Employees");
 		
+		$this->Form = $this->GetView ( "example_form" );
+		
 		$this->_PrepareEditForm();
 		
 		/*
@@ -190,11 +194,10 @@ class cExampleController extends cController {
 		 * @tutorial In this instance, the "example" view wraps "example_form", so load and edit "example" after "example_form"
 		 * 
 		 */
-		$this->View = $this->GetView ( "example" );
-		$this->View->Display();
+		$this->Form->Display();
 		
-		$this->View->Clear(); $this->Form->Clear();
-		unset ( $this->View ); unset ( $this->Form );
+		$this->Form->Clear();
+		unset ( $this->Form );
 		
 		return ( true );
 	}
@@ -263,13 +266,17 @@ class cExampleController extends cController {
 		 * @philosophy Otherwise, prioritize readability above all else.
 		 * 
 		 */
-		$Customer_PK = cRequest::Get ( "Customer_PK", 131);
+		// $Customer_PK = $this->GetSys ( "Request" )->Get ( 'id' );
+		$Customer_PK = $this->GetSys ( "Request" )->Get ( '1' );
+		
+		// $Customer_PK = $this->GetSys ( "Request" )->Get ( "Customer_PK", 131);
 		
 		/*
 		 * @tutorial Retrieve a single record based on the primary key.
 		 * 
 		 */
 		$this->Customers->Retrieve ( $Customer_PK );
+		$this->Customers->Fetch();
 		
 		/*
 		 * @tutorial You can traverse the DOM to set attributes or modify values.

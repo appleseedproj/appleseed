@@ -19,31 +19,65 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  Library
  */
 class cRequest {
+	
+	protected $_Request;
+	protected $_Unassigned;
+	
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+		
+		foreach ( $_REQUEST as $key => $value ) {
+			$lowerkey = strtolower ( $key );
+			$this->_Request[$lowerkey] = $_REQUEST[$key];
+		}
+		
+		$this->_Unassigned = array ();
+		
+		return ( true );
+	}
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
-        
-        public function Get ( $pVariable = null , $pDefault = null ) {
-        	
-        	// Makes all request variable names case insensitive.
-        	$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
-        	
-        	foreach ( $_REQUEST as $key => $value ) {
-        		$lowerkey = strtolower ( $key );
-        		$request[$lowerkey] = $_REQUEST[$key];
-        	}
-        	
-        	if ( !$pVariable ) return ( $request );
-        	
-        	if ( !$request[$variable] ) return ( $pDefault );
-        	
-        	return ( $request[$variable] );
-        	
-        }
+	public function Get ( $pVariable = null , $pDefault = null ) {
 
+		// Makes all request variable names case insensitive.
+		$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
+		
+		if ( !$this->_URI ) $this->_ParseURI();
+		
+		if ( $pVariable === null ) return ( $this->_Request );
+		
+		if ( !$this->_Request[$variable] ) return ( $pDefault );
+
+		return ( $this->_Request[$variable] );
+
+	}
+	
+	protected function _ParseURI ( ) {
+		eval ( GLOBALS );
+		
+		$this->_URI = substr ( $_SERVER['REQUEST_URI'], 1, strlen ( $_SERVER['REQUEST_URI'] ) );
+		$pattern = $zApp->Router->Get ( "Route" );
+		
+		$this->_URI = preg_replace ( '/\/$/', '', $this->_URI );
+		preg_match ( $pattern, $this->_URI, $return );
+		
+		$matches = explode ( '/', $return[1] );
+		
+		foreach ( $matches as $m => $match ) {
+			if ( strstr ( $match, ',' ) ) {
+				list ( $key, $value ) = explode ( ',', $match );
+				$key = strtolower ( $key );
+				$this->_Request[$key] = $value;
+			} else {
+				$this->_Unassigned[] = $match;
+				$key = count ( $this->_Unassigned ) - 1;
+				$this->_Request[$key] = $match;
+			}
+		}
+	}
+		
+	
 }

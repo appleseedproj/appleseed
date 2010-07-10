@@ -67,7 +67,11 @@ class cComponent extends cBase {
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
 		$this->Controllers->$controllername->Set ( "Alias", $this->Get ( "Alias" ) ) ;
 		
+		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
+		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
+		
+		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
 		
 		return ( true );
 	}

@@ -152,11 +152,12 @@ class cHTML extends cMarkup {
 	 * @access  public
 	 */
 	public function Synchronize ( $pDefaults = array() ) {
+		eval ( GLOBALS );
 		
 		$inputs = $this->Find("[name=]");
 		
 		// Set all request variable names to lower case
-		foreach ( cRequest::Get() as $r => $request ) {
+		foreach ( $zApp->Request->Get() as $r => $request ) {
 			$r = strtolower ( ltrim ( rtrim ( $r ) ) );
 			$requests[$r] = $request; 
 		}
@@ -166,7 +167,6 @@ class cHTML extends cMarkup {
 			$d = strtolower ( ltrim ( rtrim ( $d ) ) );
 			$defaults[$d] = $default; 
 		}
-		
 		
 		// Loop through the named input tags
 		foreach ( $inputs as $i => $input ) {
@@ -217,7 +217,7 @@ class cHTML extends cMarkup {
 				} 
 			}
 		}
-			
+		
 		return ( true );
 	}
 	

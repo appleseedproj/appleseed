@@ -19,6 +19,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cRouter extends cBase {
+	
+	protected $_Route;
 
 	/**
 	 * Constructor
@@ -49,6 +51,7 @@ class cRouter extends cBase {
 			$pattern = '/^' . addcslashes ($r, '/') . '$/';
 			
 			if ( preg_match ( $pattern, $request ) ) {
+				$this->_Route = $pattern;
 				$Foundation->Load ( $route );
 				return ( true );
 			}
