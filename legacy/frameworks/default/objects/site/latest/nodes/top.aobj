@@ -1,6 +1,5 @@
 <section id="latest_nodes"> 
-  <h1>
-   <?php echo __("Extended Network Title"); ?>
-  </h1>
+  <h1> <?php echo __("Extended Network Title"); ?> </h1>
 
- <ul>
+ <table>
+  <tbody>

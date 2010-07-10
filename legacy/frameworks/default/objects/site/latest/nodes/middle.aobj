@@ -1,8 +1,9 @@
-<?php $zHTML->Alternate(); ?>
+<tr class="<?php echo $zHTML->Alternate(); ?>">
 
-  <a href='<?php echo $gNODEDOMAINLINK; ?>'><?php echo $gNODEDOMAIN; ?></a>
-  <?php echo __("Node User Count", array ( "count" => $gNODEUSERS ) ); ?>
+  <td>
+    <p class='summary'><?php echo $gNODESUMMARY; ?></p>
+    <p class='users'><?php echo __("Node User Count", array ( "count" => $gNODEUSERS ) ); ?></p>
+	  <p class='url'><a href='<?php echo $gNODEDOMAINLINK; ?>'><?php echo $gNODEDOMAIN; ?></a></p>
+	</td>
  
-  <?php echo $gNODESUMMARY; ?>
- 
- </li>
+ </tr>

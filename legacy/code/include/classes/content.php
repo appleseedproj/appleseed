@@ -406,6 +406,10 @@
           $zOLDAPPLE->SetTag ('NODEDOMAINLINK', $nodedomainlink);
           $zOLDAPPLE->SetTag ('NODEDOMAIN', $nodedomain);
           $zOLDAPPLE->SetTag ('NODEUSERS', $this->Users);
+					global $gNODEUSERS, $gNODEDOMAIN, $gNODEDOMAINLINK;
+					$gNODEUSERS = $this->Users;
+					$gNODEDOMAIN = $nodedomain;
+					$gNODEDOMAINLINK = $nodedomainlink;
           $buffer .= $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/nodes/middle.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
         } // while
       } // if

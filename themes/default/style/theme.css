@@ -181,3 +181,9 @@ textarea { min-width:500px; min-height:160px; }
 
 .mark_inbox { font-weight:bold; padding:0 2px; color:#639a00; border:1px dotted #82b22c }
 .mark_labels { font-weight:bold; padding:0 2px; color:#639a00; border:1px dotted #639a00 }
+
+section#latest_nodes table tbody td { text-align:left }
+section#latest_nodes table tbody td p { margin:0; padding:0; }
+section#latest_nodes table tbody td p.users { font-weight:bold; }
+section#latest_nodes table tbody td p.summary { font-size:85%; font-style:italic; }
+section#latest_nodes table tbody td p.url { border-bottom:1px solid #c0d895; }

@@ -1,4 +1,4 @@
-  </ul>
+  </tbody>
+</table>
   
-  <?php echo __("View Full Network"); ?>
 </section>
