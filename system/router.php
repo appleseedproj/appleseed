@@ -52,7 +52,27 @@ class cRouter extends cBase {
 			
 			if ( preg_match ( $pattern, $request ) ) {
 				$this->_Route = $pattern;
-				$Foundation->Load ( $route );
+				
+				if ( preg_match ( '/\?/', $route ) ) {
+					list ( $finalDestination, $variables ) = explode ( '?', $route, 2);
+					$pairs = split ( '&', $variables );
+					
+					preg_match ( $pattern, $request, $matches );
+					
+					foreach ( $pairs as $p => $pair ) {
+						list ( $key, $value) = explode ( '=', $pair, 2 );
+						
+						$value_pattern = '/\$' . ($p+1) . '/';
+						$value = preg_replace ( $value_pattern, $matches[$p+1], $value );
+						
+						$zApp->Request->Set ( $key, $value );
+					}
+					
+				} else {
+					$finalDestination = $route;
+				}
+				
+				$Foundation->Load ( $finalDestination );
 				return ( true );
 			}
 		}

@@ -69,6 +69,8 @@ class cExampleController extends cController {
 		
 		$request = $this->GetSys ( "Request" )->Get();
 		
+		$task = $this->GetSys ( "Request" )->Get ( "Task" );
+		
 		/*
 		 * @tutorial The Talk function allows you to send a request to the Interface class of another component.
 		 * @tutorial This allows you to communicate between components
@@ -151,7 +153,6 @@ class cExampleController extends cController {
 			$row->Find( "[class=ContactName]", 0 )->innertext = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
 				
 		    $this->List->Find ( "[id=customer_table_body]", 0)->innertext .= $row->outertext;
-		    
 		}
 		
 		$this->List->Reload();
@@ -267,7 +268,7 @@ class cExampleController extends cController {
 		 * 
 		 */
 		// $Customer_PK = $this->GetSys ( "Request" )->Get ( 'id' );
-		$Customer_PK = $this->GetSys ( "Request" )->Get ( '1' );
+		$Customer_PK = $this->GetSys ( "Request" )->Get ( 'Customer_PK' );
 		
 		// $Customer_PK = $this->GetSys ( "Request" )->Get ( "Customer_PK", 131);
 		

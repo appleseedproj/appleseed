@@ -9,7 +9,7 @@ Version:  0.7.4
 Base features, API, Framework, Themability, Internationalisation, UI Overhaul.
 
 0.7.4  - MVC framework, Internationalisation, Refactor CRUD functions, Html form functions, Configuration inheritance, New theme, SHA512 for password storage
-0.7.5  - Refactor legacy code, Integrate JQuery, Form validation, Administrator framework and front end refactoring.
+0.7.5  - Refactor legacy code, Integrate JQuery, Session Management, Form validation, Administrator framework and front end refactoring.
 0.7.6  - Round out features and bug fix node control, automatic update, and friends component.
 0.7.7  - Add micro-blogging and "wall" components, round out features and bug fix privacy, messaging, and login components.
 0.7.8  - Add user options and system logging components, round out features and bug fix photos, journals, and comments components.

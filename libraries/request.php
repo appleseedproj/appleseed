@@ -41,7 +41,8 @@ class cRequest {
 	}
 
 	public function Get ( $pVariable = null , $pDefault = null ) {
-
+		
+		
 		// Makes all request variable names case insensitive.
 		$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
 		
@@ -50,7 +51,7 @@ class cRequest {
 		if ( $pVariable === null ) return ( $this->_Request );
 		
 		if ( !$this->_Request[$variable] ) return ( $pDefault );
-
+		
 		return ( $this->_Request[$variable] );
 
 	}
@@ -62,21 +63,36 @@ class cRequest {
 		$pattern = $zApp->Router->Get ( "Route" );
 		
 		$this->_URI = preg_replace ( '/\/$/', '', $this->_URI );
-		preg_match ( $pattern, $this->_URI, $return );
+		preg_match ( $pattern, $this->_URI, $returns );
 		
-		$matches = explode ( '/', $return[1] );
+		// Discard the first element, which is the full string.
+		unset ( $returns[0] );
 		
-		foreach ( $matches as $m => $match ) {
-			if ( strstr ( $match, ',' ) ) {
-				list ( $key, $value ) = explode ( ',', $match );
-				$key = strtolower ( $key );
-				$this->_Request[$key] = $value;
-			} else {
-				$this->_Unassigned[] = $match;
-				$key = count ( $this->_Unassigned ) - 1;
-				$this->_Request[$key] = $match;
+		foreach ( $returns as $r => $return ) {
+		
+			$matches = explode ( '/', $return );
+		
+			foreach ( $matches as $m => $match ) {
+				if ( strstr ( $match, ',' ) ) {
+					list ( $key, $value ) = explode ( ',', $match, 2 );
+					$key = strtolower ( $key );
+					$this->_Request[$key] = $value;
+				} else {
+					$this->_Unassigned[] = $match;
+					$key = count ( $this->_Unassigned ) - 1;
+					$this->_Request[$key] = $match;
+				}
 			}
-		}
+		} 
+	}
+	
+	public function Set ( $pVariable, $pValue ) {
+		
+		$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
+		
+		$this->_Request[$variable] = $pValue;
+		
+		return ( true );
 	}
 		
 	
