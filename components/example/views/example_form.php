@@ -56,6 +56,10 @@
 							<td><input type="text" name="State" /></td>
 						</tr>
 						<tr>
+							<th><label for="text">Country </label></th>
+							<td><input type="text" name="Country" /></td>
+						</tr>
+						<tr>
 							<th><label for="text">Postal Code </label></th>
 							<td><input type="text" name="PostalCode" /></td>
 						</tr>

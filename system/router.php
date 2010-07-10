@@ -50,9 +50,9 @@ class cRouter extends cBase {
 			
 			$pattern = '/^' . addcslashes ($r, '/') . '$/';
 			
-			if ( preg_match ( $pattern, $request ) ) {
-				$this->_Route = $pattern;
+			if ( preg_match ( $pattern, $request, $routed ) ) {
 				
+				// See if we're matching variables in the url and store them in cRequest 
 				if ( preg_match ( '/\?/', $route ) ) {
 					list ( $finalDestination, $variables ) = explode ( '?', $route, 2);
 					$pairs = split ( '&', $variables );
@@ -71,6 +71,37 @@ class cRouter extends cBase {
 				} else {
 					$finalDestination = $route;
 				}
+				
+				// Get information about the route, pattern, and request and store it
+				unset ( $routed[0] );
+				
+				$routedVars = implode ( '\/', $routed );
+				
+				$routedVarsPattern = '/' . $routedVars . '/';
+				$base = '/' . preg_replace ( $routedVarsPattern, '', $request );
+				
+				// Put leading and trailing slashes on the base url
+				$baseFirstChar = $base[0];
+				$baseLastChar = $base[strlen($base)-1];
+				
+				if ( $baseFirstChar != '/' ) $base = '/' . $base;
+				if ( $baseLastChar != '/' ) $base = $base . '/';
+				
+				// Put leading and trailing slashes on the request url
+				$requestFirstChar = $request[0];
+				$requestLastChar = $request[strlen($request)-1];
+				
+				if ( $requestFirstChar != '/' ) $request = '/' . $request;
+				if ( $requestLastChar != '/' ) $request = $request . '/';
+				
+				// Route is the regular expression used to route, defined in foundation configuration
+				$this->_Route = $pattern;
+				
+				// Request is the requested uri
+				$this->_Request = $request;
+				
+				// Base is the requested uri without the pattern matched variables.
+				$this->_Base = $base;
 				
 				$Foundation->Load ( $finalDestination );
 				return ( true );

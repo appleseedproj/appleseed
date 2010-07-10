@@ -139,18 +139,29 @@ class cExampleController extends cController {
 		
 		$row = $tbody->Find ( "tr", 0);
 		
+		$baseURL = $this->GetSys ( "Router" )->Get ( "Base" );
+		
 		while ( $this->Customers->Fetch() ) {
 			
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
 			
 			$row->class = $oddEven;
 			
-			$row->Find( "[class=Customer_PK]", 0 )->innertext = $this->Customers->Get ( 'Customer_PK' );
-			$row->Find( "[class=CustomerName]", 0 )->innertext = $this->Customers->Get ( 'CustomerName' );
-			$row->Find( "[class=Country]", 0 )->innertext = $this->Customers->Get ( 'Country' );
+			$id = $this->Customers->Get ( 'Customer_PK' );
+			
+			$url = $baseURL . "edit" . DS . $id . DS;
+			
+			$customerName = $this->Customers->Get ( 'CustomerName' );
+			$country = $this->Customers->Get ( 'Country' );
+			
+			$row->Find( "[class=Customer_PK]", 0 )->innertext = $this->List->Link ( $id, $url );
+			$row->Find( "[class=CustomerName]", 0 )->innertext = $this->List->Link ( $customerName, $url );
+			$row->Find( "[class=Country]", 0 )->innertext = $this->List->Link ( $country, $url );
+			
+			$customerName = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
 			
 			// Exception, CustomerName combined ContactFirstName and ContactLastName
-			$row->Find( "[class=ContactName]", 0 )->innertext = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
+			$row->Find( "[class=ContactName]", 0 )->innertext = $this->List->Link ( $customerName, $url );
 				
 		    $this->List->Find ( "[id=customer_table_body]", 0)->innertext .= $row->outertext;
 		}
@@ -326,7 +337,14 @@ class cExampleController extends cController {
 		 * @tutorial array ( "Group 1" => array ( "1" => "First", "2" => "Second" ), "Group 2" => array ( "3" => "Third" ) )
 		 * 
 		 */
-		$this->Form->AddOptions ("select[name=SalesRep_Employee_FK]", $employees );
+		$this->Form->AddOptions ( "select[name=SalesRep_Employee_FK]", $employees );
+		
+		/*
+		 * @tutorial Set the target for the form.
+		 * @tutorial
+		 * 
+		 */
+		$this->Form->Find ( "form", 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
 		
 		/*
 		 * @tutorial Finally, you can automatically synchronize between $_REQUEST data and an optional set of defaults.
@@ -342,7 +360,56 @@ class cExampleController extends cController {
 		return ( true );
 	}
 	
+	function Cancel ( ) {
+		
+		$this->Go ( "Display" );
+		
+		return ( true );
+	}
+	
+	function Apply ( ) {
+		
+		$this->_Save();
+		
+		$this->Go ( "Edit" );
+		 
+		return ( true );
+	}
+	
 	function Save ( ) {
+		
+		$this->_Save();
+		
+		/*
+		 * @tutorial Here we tell the controller to load the Display method.
+		 * @tutorial Why don't we just call the task directly?
+		 * @tutorial We can, but the event triggers for that task won't occur if we do.
+		 * 
+		 */
+		$this->Go ( "Display" );
+		
+		/*
+		 * @tutorial We can also do a browser redirect.
+		 * 
+		 * @philosophy This isn't as efficient, though,
+		 * @philosophy since we've already loaded the Appleseed framework, 
+		 * @philosophy we're loading it again on refresh.
+		 * 
+		 */
+		// $location = $this->GetSys ( "Router" )->Get ( "Base" ); 
+		// $this->GetSys ( "Router" )->Redirect ( $location );
+		 
+		return ( true );
+	}
+	
+	/**
+	 * Internal function to save the data.
+	 * 
+	 * @tutorial This gets called by both Save and Apply
+	 * 
+	 * @access  public
+	 */
+	function _Save ( ) {
 		
 		/*
 		 * @tutorial First, we create our model.
@@ -371,8 +438,6 @@ class cExampleController extends cController {
 		 *
 		 */
 		 $this->Customers->Save();
-		 
-		 $this->Display ();
 		 
 		 return ( true );
 	}

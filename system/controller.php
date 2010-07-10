@@ -177,6 +177,23 @@ class cController extends cBase {
 	}
 	
 	/**
+	 * Calls a controller task with begin & after event triggers.
+	 *
+	 * @access  public
+	 * @param string $pTask Task to execute
+	 */
+	function Go ( $pTask = "display" ) {
+		
+		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
+		
+		$this->$pTask ();
+		
+		$this->GetSys ( "Event" )->Trigger ( "End", $this->_Component, $pTask ); 
+		
+		return ( true );
+	}
+	
+	/**
 	 * Shorthand for event trigger function.  Determines the event and component origins automatically.
 	 *
 	 * @access  public

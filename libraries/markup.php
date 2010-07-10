@@ -221,6 +221,17 @@ class cHTML extends cMarkup {
 		return ( true );
 	}
 	
+	public function Link ( $pText, $pURL ) {
+		
+		$return = '<a href="' . $pURL . '">';
+		
+		$return .= $pText;
+		
+		$return .= '</a>';
+		
+		return ( $return );
+	}
+	
 	public function DisableElement ( $pSelector ) {
 		
 		$element = $this->Find($pSelector, 0);

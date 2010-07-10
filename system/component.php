@@ -71,7 +71,7 @@ class cComponent extends cBase {
 		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
-		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
+		$this->GetSys ( "Event" )->Trigger ( "End", $this->_Component, $pTask ); 
 		
 		return ( true );
 	}
