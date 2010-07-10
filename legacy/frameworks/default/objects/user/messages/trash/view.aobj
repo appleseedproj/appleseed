@@ -1,87 +1,68 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
-
- <div id='container'>
-  <div id='view'>
    <?php $zMESSAGE->Broadcast ("message"); ?>
    <?php $zMESSAGE->messageLabels->Broadcast(); ?>
  
-   <div id='buttons'>
+   <nav>
+	  <ul>
  
-    <span id='back'>
-     <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a>
-    </span> <!-- #back -->
+     <li> <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a> </li>
  
     <form id='spam' name='spam' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('Spam'); ?>
+     <li> <?php $zHTML->Button ('Spam'); ?> </li>
     </form> <!-- #spam -->
  
     <form id='delete' name='delete' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('Delete Forever', __("Confirm Delete")); ?>
+     <li> <?php $zHTML->Button ('Delete Forever', __("Confirm Delete")); ?> </li>
     </form> <!-- #delete -->
  
-   </div> <!-- #buttons -->
+   </nav>
  
-   <div id='header'>
-    <div id='top'>
-     <span id='subject'><?php echo $zMESSAGE->Subject; ?></span>
-     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
-    </div> <!-- #top -->
+	 <div class='clear'></div>
+
+		<h1> <span id='subject'><?php echo $zMESSAGE->Subject; ?></h1>
+     <h3 id='stamp'><?php echo $zMESSAGE->fStamp; ?></h3>
   
-    <div id='bottom'>
-     <span id='sender'><?php $zHTML->UserLink ($zMESSAGE->Sender_Username); ?></span>
+	  <h3>
+     <span id='sender'><?php $zHTML->UserLink ($zMESSAGE->Sender_Username, $zMESSAGE->Sender_Domain); ?></span>
      <span id='labels'><?php echo $gLABELLIST; ?></span>
-    </div> <!-- #bottom -->
-   </div> <!-- #header -->
+	  </h3>
  
-   <div id='body'>
+   <p> <?php echo $zOLDAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?> </p>
  
-      <?php echo $zOLDAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?>
+   <nav>
+	 <ul>
  
-   </div> <!-- #body -->
- 
-   <div id='buttons'>
- 
-    <span class='reply'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('Reply'); ?>
+       <li> <?php $zHTML->Button ('Reply'); ?> </li>
       </form> <!-- #reply -->
-    </span> <!-- #reply -->
  
-    <span class='forward'>
      <form id='forward' name='forward' method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-      <?php $zHTML->Button ('Forward'); ?>
+      <li> <?php $zHTML->Button ('Forward'); ?> </li>
      </form> <!-- #forward -->
-    </span> <!-- #forward -->
  
-    <span class='unread'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('Unread'); ?>
+       <li> <?php $zHTML->Button ('Unread'); ?> </li>
       </form> <!-- #unread -->
-    </span> <!-- #unread -->
  
     <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('Move Inbox'); ?>
+     <li> <?php $zHTML->Button ('Move Inbox'); ?> </li>
     </form> <!-- #archive -->
  
-    <span class='label'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
        <input type='hidden' name='gACTION' value='LABEL' />
-       <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE); ?>
+       <li> <?php $zHTML->Menu ("LABELVALUE", $gLABELDATA, "", "", TRUE); ?> </li>
       </form> <!-- #label -->
-    </span> <!-- #label -->
  
-   </div> <!-- #buttons -->
+    </ul>
+   </nav>
  
-  </div> <!-- #view -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section>

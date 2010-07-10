@@ -1,80 +1,57 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+
+<section id='messages'>
 
  <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
-  <div id='view'>
    <?php $zMESSAGE->Broadcast ("message"); ?>
    <?php $zMESSAGE->messageLabels->Broadcast ("message"); ?>
  
-   <div id='buttons'>
+   <nav>
+	  <ul>
  
-    <span id='back'>
-     <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a>
-    </span> <!-- #back -->
- 
-    <span class='spam'>
-     &nbsp;
-    </span>
+    <li> <a href='<?php echo $gBACKTARGET ?>'><?php echo __("Back To Message", array ( "location" => $gMESSAGELOCATION) ); ?></a> </li>
  
     <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
      <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-     <?php $zHTML->Button ('Delete Forever', __("Confirm Delete")); ?>
+     <li> <?php $zHTML->Button ('Delete Forever', __("Confirm Delete")); ?> </li>
     </form> <!-- #delete -->
  
-   </div> <!-- #buttons -->
+	  </ul>
+   </nav>
  
-   <div id='header'>
-    <div id='top'>
-     <span id='subject'><?php echo $zMESSAGE->Subject; ?></a></span>
-     <span id='stamp'><?php echo $zMESSAGE->fStamp; ?></span>
-    </div> <!-- #top -->
+	 <div class='clear'></div>
+
+    <h1> <span id='subject'><?php echo $zMESSAGE->Subject; ?></a></h1>
+     <h3 id='stamp'><?php echo $zMESSAGE->fStamp; ?></h3>
   
-    <div id='bottom'>
-     <span id='recipients'><?php echo $bRECIPIENTLIST; ?></span>
-    </div> <!-- #bottom -->
-   </div> <!-- #header -->
+    <h3><?php echo $bRECIPIENTLIST; ?></h3>
  
-   <div id='body'>
+   <p>
  
       <?php echo $zOLDAPPLE->Format ($zMESSAGE->Body, FORMAT_EXT); ?>
  
-   </div> <!-- #body -->
+   </p>
  
-   <div id='buttons'>
+   <nav>
+	   <ul>
  
-    <span class='reply'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('Reply'); ?>
+       <li> <?php $zHTML->Button ('Reply'); ?> </li>
       </form> <!-- #reply -->
-    </span> <!-- #reply -->
  
-    <span class='forward'>
      <form id='forward' name='forward' method='POST' action='<?php echo $gTARGET; ?>'>
       <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-      <?php $zHTML->Button ('Forward'); ?>
+      <li> <?php $zHTML->Button ('Forward'); ?> </li>
      </form> <!-- #forward -->
-    </span> <!-- #forward -->
  
-    <span class='unread'>
       <form id='message' name='message' method='POST' action='<?php echo $gTARGET; ?>'>
        <input type='hidden' name='gIDENTIFIER' value='<?php echo $zMESSAGE->Identifier; ?>' />
-       <?php $zHTML->Button ('Unread'); ?>
+       <li> <?php $zHTML->Button ('Unread'); ?> </li>
       </form> <!-- #unread -->
-    </span> <!-- #unread -->
  
-    <span class='archive'>
-     &nbsp;
-    </span> <!-- #archive -->
+     </ul>
+   </nav>
  
-    <span class='label'>
-     &nbsp;
-    </span> <!-- #label -->
- 
-   </div> <!-- #buttons -->
- 
-  </div> <!-- #view -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section>

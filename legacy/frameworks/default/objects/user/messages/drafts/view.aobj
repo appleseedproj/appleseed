@@ -1,14 +1,7 @@
-<div id='messages'>
+<?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
+<section>
 
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
-
- <div id='container'>
-  <div id='compose'>
-
-  <p id='top'>
-     <?php echo __("Restore From Draft"); ?>
-  </p>
+  <h1> <?php echo __("Restore From Draft"); ?> </h1>
 
   <?php $zMESSAGE->Broadcast(); ?>
 
@@ -20,34 +13,44 @@
      <input type='hidden' name='gAUTOSUBMITACTION' id='gAUTOSUBMITACTION' />
      <?php $zHTML->Menu ("MAILCIRCLE", $gCIRCLEDATA, "", "X"); ?>
  
-   <?php echo $bRECIPIENT; ?>
+		<fieldset>
+ 
+		<table>
+		  <tbody>
+        <tr>
+				   <th><label for="recipient"> <?php echo __("To"); ?> </label> </th>
+				   <td><?php echo $bRECIPIENT; ?></td>
+				</tr>
+ 
+        <tr>
+				  <th><label for="subject"> <?php echo __("Subject"); ?> </label> </th>
+ 
+          <td><?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?></td>
+				</tr>
 
-   <p id='subject'>
-     <?php echo __("Subject"); ?>
-   </p>
+			  <tr>
+          <th><label for='body'> <?php echo __("Body"); ?> </label></th>
+ 
+          <td> <?php $zHTML->TextArea ("BODY", $gBODY); ?>
+    <?php $zMESSAGE->Broadcast('field', 'body'); ?></td>
+		    </tr>
+			</tbody>
+		</table>
+	</fieldset>
 
-   <?php $zHTML->TextBox ("SUBJECT", 64, $gSUBJECT); ?>
+  <nav>
+	 <ul>
+     <li> <?php $zHTML->Button ('Save Draft'); ?> </li>
 
-   <p id='body'>
-     <?php echo __("Body"); ?>
-   </p>
-
-   <?php $zHTML->TextArea ("BODY", $gBODY); ?>
-
-  <div id='buttons'>
-   <?php $zHTML->Button ('Save Draft'); ?>
-
-   <?php $zHTML->Button ('Send'); ?>
- </form> <!-- #compose -->
+     <li> <?php $zHTML->Button ('Send'); ?> </li>
 
    <form id='cancel' name='cancel' method='POST' action='<?php echo $gTARGET; ?>'>
     <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
     <input type='hidden' id='gtID' name='gtID' value='<?php echo $gtID; ?>'>
     <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('Cancel Draft', __("Confirm Cancel")); ?>
+      <li> <?php $zHTML->Button ('Cancel Draft', __("Confirm Cancel")); ?> </li>
    </form> <!-- #cancel -->
-  </div> <!-- #buttons -->
+	 </ul>
+ </nav>
 
-  </div> <!-- #compose -->
- </div> <!-- #container -->
-</div> <!-- #messages -->
+</section> 

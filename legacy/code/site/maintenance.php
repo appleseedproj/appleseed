@@ -38,9 +38,9 @@
   
   // Exit out if someone's accessing the script directly.
   if ($remote_ip != $local_ip) {
-    exit;
+    //exit;
   } // if
-  
+
   eval( GLOBALS ); // Import all global variables  
   
   // Change to document root directory

@@ -46,6 +46,7 @@
 
 	list ( $gCUSTOM ) = explode ('.', $_SERVER['HTTP_HOST']);
   
+
   $INSTALL = new cINSTALL;
   
   $INSTALL->PreLoadSiteData ();
