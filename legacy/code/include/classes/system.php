@@ -285,10 +285,10 @@
       // Use an HTTP request which times out quickly to 
       global $gSITEDOMAIN;
       $path = "/maintenance/";
-      
+
       // Check if any maintenance actions are due.
       $this->Select (NULL, NULL);
-      
+
       // Loop through action timestamps.
       while ($this->FetchArray ()) {
         $timestamp = strtotime ($this->Stamp);
@@ -302,7 +302,7 @@
         
         $seconds = $this->Time * 60;
         $future = $timestamp + $seconds;
-        
+
         // Check if we've hit the update time yet.
         if ($now < $future) {
           // We haven't.  On to the next action.
