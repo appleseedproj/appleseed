@@ -43,9 +43,43 @@ class cPaginationController extends cController {
 		
 		$this->List = $this->GetView ( "pagination" );
 		
+		$this->_PreparePagination ( $pData );
+		
 		$this->List->Display ();
 		
 		return ( true );
 	}
+	
+	private function _PreparePagination ( $pData ) {
+		
+		$start = $pData['start'];
+		$step = $pData['step'];
+		$total = $pData['total'];
+		
+		echo $start, "<br />";
+		echo $step, "<br />";
+		echo $total, "<hr />";
+		
+		$pages = array ();
+		
+		$page = $this->List->Find ( "li[class=page]", 0);
+		$list = $this->List->Find ( "ol", 0);
+		$p = 0;
+		while ( $p < $total ) {
+			$page += 1;
+			$list->innertext .= "<li><span><a>" . $page . "</a></span></li>";
+			$p += $step;
+		}
+		
+		// $this->List->Find ( "li[class=page] a", 0)->outertext =  $this->List->Find ( "li[class=page] a", 0)->plaintext;
+		
+		//$pageLink = $this->List->Find ( "li[class=first] a span", 0)->outertext =  $this->List->Find ( "li[class=first] a span", 0)->plaintext;
+		//$pageLink = $this->List->Find ( "li[class=prev] a span", 0)->outertext =  $this->List->Find ( "li[class=prev] a span", 0)->plaintext;
+		//$pageLink = $this->List->Find ( "li[class=page] a span", 0)->outertext =  $this->List->Find ( "li[class=page] a span", 0)->plaintext;
+		//$pageLink = $this->List->Find ( "li[class=next] a span", 0)->outertext =  $this->List->Find ( "li[class=next] a span", 0)->plaintext;
+		//$pageLink = $this->List->Find ( "li[class=last] a span", 0)->outertext =  $this->List->Find ( "li[class=last] a span", 0)->plaintext;
+		
+	}
+	
 }
 

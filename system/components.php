@@ -126,6 +126,26 @@ class cComponents extends cBase {
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );
 		
+		/* 
+		 * This allows developers to shorten the "Go" parameters.
+		 * 
+		 */
+		
+		if ( is_array ( $pController ) ) {
+			$pData = $pController;
+			$pController = null;
+		}
+		
+		if ( is_array ( $pView ) ) {
+			$pData = $pView;
+			$pView = null;
+		}
+		
+		if ( is_array ( $pTask ) ) {
+			$pData = $pTask;
+			$pTask = null;
+		}
+		
 		// Overwrite the Controller from Request data.
 		if ( $this->GetSys ( "Request" )->Get ('Controller') ) {
 			$pController = $this->GetSys ( "Request" )->Get ( 'Controller' );

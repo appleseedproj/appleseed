@@ -26,11 +26,6 @@ class cExampleController extends cController {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
-		
-		/*
-		 * @tutorial 
-		 */
-		 
 		parent::__construct( );
 	}
 	
@@ -190,9 +185,29 @@ class cExampleController extends cController {
 		 * @tutorial You can also call components from within other components.
 		 * @tutorial Here we call the pagination component, passing along a set of parameters
 		 * 
+		 * @tutorial The "Buffer" function is similar to the "Go" function, 
+		 * @tutorial except it returns a buffer instead of echoing to the display.
+		 * 
+		 * @tutorial You can use a shortcut with the parameters of both "Go" and "Buffer"
+		 * @tutorial If you use an array for any parameter except the first ("component"),
+		 * @tutorial then the function will assume that's the Data parameter, 
+		 * @tutorial and will use defaults for the remaining.
+		 * 
+		 * @tutorial For instance, this allows you to shorten:
+		 * @tutorial Buffer ( "pagination", null, null, null, array ( "key" => "value" ) );
+		 * @tutorial to:
+		 * @tutorial Buffer ( "pagination", array ( "key" => "value" ) );
+		 * 
+		 * @philosophy Sometimes, it's the little things in life.
+		 * 
 		 */
-		$pageParameters = array ( 'start' => $start, 'step'  => $step, 'limit' => $limit, );
-		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", null, null, null, $pageParameters ); 
+		 
+		
+		$start = $this->GetSys ( "Request" )->Get ( "start", 0 );
+		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
+		$total = $this->Customers->Get ( "Total" );
+		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, );
+		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
 		
 		$this->List->Reload();
 		

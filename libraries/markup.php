@@ -64,6 +64,7 @@ class cMarkup extends simple_html_dom {
 		// Add an html element here to have it's innertext modified to use the __ function.
 		$translate = array ( 
 			"label", 
+			"span",
 			"p", 
 			"button",
 			"legend", 
