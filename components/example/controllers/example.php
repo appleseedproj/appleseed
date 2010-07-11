@@ -141,6 +141,23 @@ class cExampleController extends cController {
 		
 		$baseURL = $this->GetSys ( "Router" )->Get ( "Base" );
 		
+		/*
+		 * @tutorial Each instance of a component is given an internal context variable
+		 * @tutorial This variable looks like: <component>.#.<controller>
+		 * @tutorial You can use the context to avoid what's called "component collisions".
+		 * @tutorial That's when you have two instances of the same component on the same page.
+		 * 
+		 * @tutorial For instance, with two instances of the Example component in one foundation,
+		 * @tutorial the first one's context will be "example.1.example"
+		 * @tutorial and the second will be "example.2.example".
+		 * 
+		 * @philosophy If you're reasonably sure your component won't be called twice in a foundation,
+		 * @philosophy you can easily get away without caring about the context.  But it's generally
+		 * @philosophy a good idea to use contexts to prevent component collisions.
+		 * 
+		 */
+		$this->List->Find( "input[name=Context]", 0 )->value = $this->_Context;
+		
 		while ( $this->Customers->Fetch() ) {
 			
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
@@ -154,9 +171,12 @@ class cExampleController extends cController {
 			$customerName = $this->Customers->Get ( 'CustomerName' );
 			$country = $this->Customers->Get ( 'Country' );
 			
+			$context = $this->_Component . '.' . strtolower ( __FUNCTION__ );
+			
 			$row->Find( "[class=Customer_PK]", 0 )->innertext = $this->List->Link ( $id, $url );
 			$row->Find( "[class=CustomerName]", 0 )->innertext = $this->List->Link ( $customerName, $url );
 			$row->Find( "[class=Country]", 0 )->innertext = $this->List->Link ( $country, $url );
+			$row->Find( "[class=Masslist] input[type=checkbox]", 0 )->name = "Masslist[" . $id . "]";
 			
 			$customerName = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
 			
@@ -165,6 +185,14 @@ class cExampleController extends cController {
 				
 		    $this->List->Find ( "[id=customer_table_body]", 0)->innertext .= $row->outertext;
 		}
+		
+		/*
+		 * @tutorial You can also call components from within other components.
+		 * @tutorial Here we call the pagination component, passing along a set of parameters
+		 * 
+		 */
+		$pageParameters = array ( 'start' => $start, 'step'  => $step, 'limit' => $limit, );
+		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", null, null, null, $pageParameters ); 
 		
 		$this->List->Reload();
 		
@@ -441,5 +469,32 @@ class cExampleController extends cController {
 		 
 		 return ( true );
 	}
+	
+	function Move_Up ( ) {
+		/* 
+		 * @tutorial Here we check to see if the context for the task matches our current context.
+		 * @tutorial This way we don't process the form twice (one example of a "component collision").
+		 * 
+		 * @philosophy A good practice for building components is to put two instances in a foundation.
+		 * @philosophy That way you can check for collisions as you build your component.
+		 * 
+		 */
+		$context = $this->GetSys ( "Request" )->Get ( "Context" );
+		
+		if ( $context != $this->_Context ) {
+			$this->Go ( "Display" );
+			return ( false );
+		}
+		
+		$masslist = $this->GetSys ( "Request" )->Get ( "Masslist" );
+		
+		$selected = $masslist[$this->_Context];
+		
+		$this->Go ( "Display" );
+	}
+	
+	function Move_Down ( ) {
+	}
+	
 	
 }

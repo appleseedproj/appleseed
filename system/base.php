@@ -36,6 +36,7 @@ class cBase {
 	public function Get ( $pVariable ) {
 		$variable = '_' . ltrim ( rtrim ( $pVariable ) );
 		
+		// Return false if nothing is set.
 		if ( !isset ( $this->$variable ) ) return ( false );
 		
 		return ( $this->$variable );

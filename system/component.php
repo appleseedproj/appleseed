@@ -21,6 +21,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 class cComponent extends cBase {
 	
 	var $Controllers;
+	
+	protected $_Instance;
 
 	/**
 	 * Constructor
@@ -66,6 +68,14 @@ class cComponent extends cBase {
 		$this->Set ( "Controller", $controller );
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
 		$this->Controllers->$controllername->Set ( "Alias", $this->Get ( "Alias" ) ) ;
+		
+		$this->_Instance++;
+		
+		$this->Controllers->$controllername->Set ( "Instance", $this->_Instance );
+		
+		$context = $this->_Component . '.' . $this->_Instance . '.' . $pController;
+		
+		$this->Controllers->$controllername->Set ( "Context", $context);
 		
 		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
 		

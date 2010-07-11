@@ -20,7 +20,9 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cController extends cBase {
 	
-	private $_Models;
+	protected $_Models;
+	
+	protected $_Instance = 0;
 
 	/**
 	 * Constructor
@@ -28,6 +30,7 @@ class cController extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {
+		
 		parent::__construct();
 	}
 

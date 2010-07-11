@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cComponents extends cBase {
 	
-	private $_ComponentCount = 0;
+	protected $_ComponentCount;
 
 	/**
 	 * Constructor
@@ -190,6 +190,17 @@ class cComponents extends cBase {
 		$this->GetSys ( "Language" )->Restore ( $store );
 		
 		return ( true );
+	}
+	
+	public function Buffer ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
+		
+		ob_start ();
+		
+		$this->Go ( $pComponent, $pController, $pView, $pTask, $pData );
+		
+		$return = ob_get_clean ();
+		
+		return ( $return );
 	}
 	
 	public function Talk ( $pComponent, $pRequest, $pData = null ) {

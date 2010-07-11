@@ -65,6 +65,7 @@ class cMarkup extends simple_html_dom {
 		$translate = array ( 
 			"label", 
 			"p", 
+			"button",
 			"legend", 
 			"[label=", 
 			"a",
