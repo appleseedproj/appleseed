@@ -146,12 +146,29 @@ class cComponents extends cBase {
 			$pTask = null;
 		}
 		
+		$component = ltrim ( rtrim ( strtolower ( $pComponent ) ) );
+		$componentname = ucwords ( strtolower ( $component ) );
+		
+		// Skip components which use reserved names
+		if ( in_array ( $component, $zApp->Reserved () ) ) {
+			$warning = __("Bad Component Name", array ( 'name' => $component ) );
+			$zApp->Logs->Add ( $warning, "Warnings" );
+			return ( false );
+		}
+		
+		if ( !isset ( $this->$componentname ) ) {
+			echo __("Component Not Found", array ( 'name' => $componentname ) );
+			return ( false );
+		};
+		
 		// Overwrite the Controller from Request data.
 		if ( $this->GetSys ( "Request" )->Get ('Controller') ) {
 			$pController = $this->GetSys ( "Request" )->Get ( 'Controller' );
 		} else {
 			if ( !$pController ) $pController = $pComponent;
 		}
+		
+		$context = $this->$componentname->GetContext( $pController );
 		
 		// Overwrite the View from Request data.
 		if ( $this->GetSys ( "Request" )->Get ('View') ) {
@@ -162,7 +179,15 @@ class cComponents extends cBase {
 		
 		// Overwrite the Task from Request data.
 		if ( $rtask = $this->GetSys ( "Request" )->Get ('Task') ) {
-			$pTask = $rtask;
+			if ( $usecontext = $this->GetSys ( "Request" )->Get ( "Context" ) ) {
+				if ( ( $usecontext != $context ) ) {
+					$pTask = "display";
+				} else {
+					$pTask = $rtask;
+				}
+			} else {
+				$pTask = $rtask;
+			}
 		} else {
 			if ( !$pTask ) $pTask = 'display';
 		}
@@ -173,27 +198,13 @@ class cComponents extends cBase {
 		if ( $pTask ) $parameters['task'] = $pTask;
 		if ( $pData ) $parameters['data'] = $pData;
 		
-		$component = ltrim ( rtrim ( strtolower ( $pComponent ) ) );
-		
-		// Skip components which use reserved names
-		if ( in_array ( $component, $zApp->Reserved () ) ) {
-			$warning = __("Bad Component Name", array ( 'name' => $component ) );
-			$zApp->Logs->Add ( $warning, "Warnings" );
-			return ( false );
-		}
-		
-		$componentname = ucwords ( strtolower ( $component ) );
-		
-		if ( !isset ( $this->$componentname ) ) {
-			echo __("Component Not Found", array ( 'name' => $componentname ) );
-			return ( false );
-		};
-		
 		$component_lang = 'components' . DS . strtolower ( $componentname ) . '.lang';
 		
 		$store = $this->GetSys ( "Language" )->Load ( $component_lang );
 		
 		ob_start ();
+		
+		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
 		
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
 		
@@ -208,6 +219,8 @@ class cComponents extends cBase {
 		$Buffer->Queue ( 'component', $parameters, $bdata );
 		
 		$this->GetSys ( "Language" )->Restore ( $store );
+		
+		$this->$componentname->AddToInstance();
 		
 		return ( true );
 	}

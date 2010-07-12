@@ -127,7 +127,11 @@ class cExampleController extends cController {
 		// This query fails because it has nothing to do with our database structure.
 		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
 		
-		$this->Customers->Retrieve( null, null, array ( "start" => 0, "step" => 10 ) );
+		$page = $this->GetSys ( "Request" )->Get ( "Page", 1);
+		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
+		$start = ( $page - 1 ) * $step;
+		
+		$this->Customers->Retrieve( null, null, array ( "start" => $start, "step" => $step ) );
 		// $this->Customers->Query ( "SELECT * FROM #__ExampleCustomers" ); 
 		
 		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
@@ -210,13 +214,13 @@ class cExampleController extends cController {
 		 * 
 		 */
 		 
-		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
-		$start = $this->GetSys ( "Request" )->Get ( "start", 0 );
-		$total = $this->Customers->Get ( "Total" );
 		$link = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
+		$total = $this->Customers->Get ( "Total" );
 		
 		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
+		
+		$this->List->Synchronize ();
 		
 		$this->List->Display();
 		
@@ -389,10 +393,15 @@ class cExampleController extends cController {
 		
 		/*
 		 * @tutorial Set the target for the form.
-		 * @tutorial
 		 * 
 		 */
 		$this->Form->Find ( "form", 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
+		
+		/*
+		 * @tutorial Don't forget to set the current context.
+		 * 
+		 */
+		$this->Form->Find( "input[name=Context]", 0 )->value = $this->_Context;
 		
 		/*
 		 * @tutorial Finally, you can automatically synchronize between $_REQUEST data and an optional set of defaults.
@@ -506,9 +515,7 @@ class cExampleController extends cController {
 			return ( false );
 		}
 		
-		$masslist = $this->GetSys ( "Request" )->Get ( "Masslist" );
-		
-		$selected = $masslist[$this->_Context];
+		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
 		
 		$this->Go ( "Display" );
 	}

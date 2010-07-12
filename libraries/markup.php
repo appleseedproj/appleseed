@@ -160,6 +160,9 @@ class cHTML extends cMarkup {
 	public function Synchronize ( $pDefaults = array() ) {
 		eval ( GLOBALS );
 		
+		// Throw in a reload for good measure.
+		$this->Reload();
+		
 		$inputs = $this->Find("[name=]");
 		
 		// Set all request variable names to lower case
@@ -181,8 +184,19 @@ class cHTML extends cMarkup {
 			$tag = strtolower ( ltrim ( rtrim ( $input->tag ) ) );
 			$type = strtolower ( ltrim ( rtrim ( $input->type ) ) );
 			
+			// Remove the array reference from the name, and get the key array.
+			if ( strstr ( $name, ']' ) ) {
+				$result = preg_match ( '/\[(.*)\]/', $name, $nameKeys );
+				$nameKey = $nameKeys[1];
+				$name = preg_replace ( '/\[(.*)\]/', '', $name );
+			}
+			
 			if ( isset ( $requests[$name] ) ) {
-				$assign = $requests[$name];
+				if ( is_array ( $requests[$name] ) ) {
+					$assign = $requests[$name][$nameKey];
+				} else {
+					$assign = $requests[$name];
+				}
 			} elseif ( isset ( $defaults[$name] ) ) {
 				$assign = $defaults[$name];
 			}

@@ -144,6 +144,7 @@ class cModel extends cBase {
 		
 		$sql .= ' SET ';
 		
+		$prepared = array ();
 		foreach ( $this->_Fields as $f => $fields ) {
 			$fieldname = $fields['Field'];	
 			
@@ -157,16 +158,17 @@ class cModel extends cBase {
 			$internal_field = $internal . "_field";
 			$internal_value = $internal . "_value";
 			
-			$queries[] = ' %' . $internal_field . '$s = \'%' . $internal_value . '$s\'';
+			$queries[] = ' %' . $internal_field . '$s = ?';
+			$prepared[] = $this->Get ( $fieldname );
 			
 			$replacements[$internal_field] = $fieldname;
-			$replacements[$internal_value] = $this->Get ( $fieldname );
 			
 		}
 		
 		$sql .= implode ( ", ", $queries );
 		
 		$sql .= ' WHERE %pk$s = \'%criteria$s\' ';
+		
 		$replacements["pk"] = $pk;
 		
 		// Without criteria, we'll use the current primary key value
@@ -185,10 +187,7 @@ class cModel extends cBase {
 		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
-		$this->_Handle = $DBO->Prepare ( $sql );
-		$this->_Handle->Execute ();
-		
-		$this->_Query = $sql;
+		$this->Query ( $sql, $prepared );
 		
 		$this->_Rows = $this->_Handle->rowCount();
 		$this->_Total = $this->_Handle->rowCount();

@@ -22,7 +22,7 @@ class cComponent extends cBase {
 	
 	var $Controllers;
 	
-	protected $_Instance;
+	protected $_Instance = 1;
 
 	/**
 	 * Constructor
@@ -61,33 +61,41 @@ class cComponent extends cBase {
 		
 		if ( !$pTask ) $pTask = 'display';
 		
-		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
-		
 		$controllername = ucwords ( strtolower ( ltrim ( rtrim ( $controller ) ) ) );
 		
-		$class = get_class ( $this->Controllers->$controllername );
+		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
 		
 		$this->Set ( "Controller", $controller );
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
 		$this->Controllers->$controllername->Set ( "Alias", $this->Get ( "Alias" ) ) ;
 		
-		$this->_Instance++;
-		
 		$this->Controllers->$controllername->Set ( "Instance", $this->_Instance );
 		
-		$context = $this->_Component . '.' . $this->_Instance . '.' . $pController;
+		$context = $this->GetContext( $this->_Controller );
 		
 		$this->Controllers->$controllername->Set ( "Context", $context);
 		
 		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
 		
-		if ( !method_exists ( $this->Controllers->$controllername, $taskname ) ) $taskname = "display";
+		// if ( !method_exists ( $this->Controllers->$controllername, $taskname ) ) $taskname = "display";
 		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		$this->GetSys ( "Event" )->Trigger ( "End", $this->_Component, $pTask ); 
 		
 		return ( true );
+	}
+	
+	public function AddToInstance ( ) {
+		$this->_Instance++;
+		
+		return ( true );
+	}
+	
+	public function GetContext ( $pController ) {
+		$context = $this->_Component . '.' . $this->_Instance . '.' . $pController;
+		
+		return ( $context );
 	}
 	
 	/**

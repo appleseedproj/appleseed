@@ -14,6 +14,7 @@
 <section id="general_form">
 	<form method="post">
 		<input type="hidden" name="Customer_PK" />
+		<input type="hidden" name="Context" />
 		<fieldset>
 			<legend>Customers</legend>
 			<p>Description of form's purpose would be here.</p>
