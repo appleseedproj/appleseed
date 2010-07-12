@@ -187,3 +187,18 @@ section#latest_nodes table tbody td p { margin:0; padding:0; }
 section#latest_nodes table tbody td p.users { font-weight:bold; }
 section#latest_nodes table tbody td p.summary { font-size:85%; font-style:italic; }
 section#latest_nodes table tbody td p.url { border-bottom:1px solid #c0d895; }
+
+
+section#site_articles ol { list-style-type:none; }
+
+section#site_articles article { float:left; clear:both; width:100%; padding:0; margin:0; padding-bottom:2px; margin-bottom:10px; border-bottom:1px solid; }
+section#site_articles article a img.icon_img { float:left; min-width:100px; min-height:100px; margin:0; margin-right:10px; }
+section#site_articles article p { float:left; margin:0px 0px 10px 0; }
+section#site_articles article div.readmore { clear:both; width:100%; margin:0px 10px 10px 0; }
+section#site_articles article div.readmore a { float:right; margin-right:10px; }
+
+span.untranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#cacafa;}
+span.untranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca;}
+
+span.mistranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#ff4444; font-style:italic; }
+span.mistranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca; font-style:italic; }

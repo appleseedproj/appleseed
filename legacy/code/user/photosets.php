@@ -172,7 +172,7 @@
         $gVIEWDATA->FetchArray ();
 
         // Remove the directory.
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
         // Begin transaction.
         $gVIEWDATA->Begin ();
@@ -243,7 +243,7 @@
         $gVIEWDATA->Sanity();
 
         // Create the photosets directory.
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory . "/";
 
         // Begin Transaction.
         $gVIEWDATA->Begin ();
@@ -284,8 +284,8 @@
         $OLDDATA->Select ("tID", $gVIEWDATA->tID);
         $OLDDATA->FetchArray ();
 
-        $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
-        $olddir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $OLDDATA->Directory;
+        $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+        $olddir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $OLDDATA->Directory;
 
         // Begin Transaction.
         $gVIEWDATA->Begin ();
@@ -341,7 +341,7 @@
       $gVIEWDATA->Select ("tID", $gVIEWDATA->tID);
       $gVIEWDATA->FetchArray ();
 
-      $photosetdir = "photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
+      $photosetdir = "_storage/legacy/photos/" . $zFOCUSUSER->Username . "/sets/" . $gVIEWDATA->Directory;
 
       if (!$zOLDAPPLE->RemoveDirectory ($photosetdir) ) {
         $gVIEWDATA->Message = __("Error Modifying Photoset Directory");

@@ -154,6 +154,16 @@ class cLanguage {
         
         if (count ($pParams) >= 1) {
         	$return = sprintfn($return, $pParams);
+        	if (!$return) {
+        		$return = $pString;
+        		if ( $debug == "true" ) {
+ 		    		$return = '<span class="mistranslated">' . $return . '</span>';
+ 		    		if ( $pParams ) {
+ 		    			$parameters = join ( " | ", array_keys ( $pParams ) );
+ 		    			$return .= '<span class="mistranslatedp">' . $parameters . '</span>';
+ 		    		}
+        		}
+        	}
         } // if
         
         return ($return);

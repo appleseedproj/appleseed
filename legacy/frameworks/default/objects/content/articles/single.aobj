@@ -1,44 +1,21 @@
-<div id='articles'>
-
 <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
+<section id='site_articles'>
 
-  <div class='header'>
-   <span class='icon'>
+   <article> 
     <?php echo $bARTICLEICON; ?>
-   </span>
-
-   <span class='title'>
-    <?php echo $zARTICLES->Title; ?>
-   </span> <!-- #title -->
-
-   <span class='stamp'>
-    <?php echo $zARTICLES->fStamp; ?>
-   </span> <!-- #stamp -->
-
-   <span class='posted'>
-    Posted By <?php $zHTML->UserLink ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain, FALSE); ?>
-   </span> <!-- #stamp -->
-
- </div> <!-- .header -->
-
- <div class='article'>
-
-   <p class='full'>
-    <?php echo $zOLDAPPLE->Format ($zARTICLES->Full, $zARTICLES->Formatting); ?>
-   </p> <!-- #full -->
-
- </div> <!-- .article -->
-
-   <div class='footer'>
-    <span class='back'>
-     <form method='POST' id='back' name='back' action='/articles/'>
-      <?php $zHTML->Post(); ?>
-      <?php $zHTML->Button ("Back"); ?>
-     </form>
-    </span> <!-- .read -->
-   </div> <!-- .footer -->
-
-  </div> <!-- #container -->
-</div> <!-- #articles -->
+    <h2><?php echo $zARTICLES->Title; ?></h2> 
+    <h3> <? echo __("Posted By"); ?> <?php echo $zHTML->CreateUserLink ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain, FALSE); ?> </h3>
+    
+    <time datetime="2010-05-19T20:27:47-07:00" pubdate> 
+      <?php echo $zARTICLES->fStamp; ?>
+    </time> 
+    <p>
+      <?php echo $zOLDAPPLE->Format ($zARTICLES->Summary, $zARTICLES->Formatting); ?>
+    </p>
+    <div class='readmore'>
+    	<a href='articles/<?php echo $zARTICLES->tID; ?>/'>Read More</a>
+    	<a href='articles/<?php echo $zARTICLES->tID; ?>/#comments'><?php echo $bCOMMENTCOUNT; ?></a>
+    </div>
+   </article>
+</section>

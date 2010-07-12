@@ -2,7 +2,7 @@
    <article> 
     <?php echo $bARTICLEICON; ?>
     <h2><?php echo $zARTICLES->Title; ?></h2> 
-    <h3> <? echo __("Posted By"); ?> <?php echo $zHTML->CreateUserLink ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain, FALSE); ?> </p>
+    <h3> <? echo __("Posted By"); ?> <?php echo $zHTML->CreateUserLink ($zARTICLES->Submitted_Username, $zARTICLES->Submitted_Domain, FALSE); ?> </h3>
     
     <time datetime="2010-05-19T20:27:47-07:00" pubdate> 
       <?php echo $zARTICLES->fStamp; ?>
@@ -10,7 +10,9 @@
     <p>
       <?php echo $zOLDAPPLE->Format ($zARTICLES->Summary, $zARTICLES->Formatting); ?>
     </p>
-    <span><a href='articles/<?php echo $zARTICLES->tID; ?>/'>Read More</a></span>
-    <span><a href='articles/<?php echo $zARTICLES->tID; ?>/#comments'><?php echo $bCOMMENTCOUNT; ?></a></span>
+    <div class='readmore'>
+    	<a href='articles/<?php echo $zARTICLES->tID; ?>/'>Read More</a>
+    	<a href='articles/<?php echo $zARTICLES->tID; ?>/#comments'><?php echo $bCOMMENTCOUNT; ?></a>
+    </div>
    </article>
   </li>

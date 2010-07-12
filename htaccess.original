@@ -14,15 +14,14 @@ RewriteRule .*^themes.*\.png$ - [L]
 # Redirect to legacy location for now
 RedirectMatch 301 ^/legacy/photos/(.*)/profile.jpg$ /_storage/legacy/photos/$1/profile.jpg
 RewriteRule ^_storage/legacy/photos/.*/profile.jpg - [L]
-RewriteRule .*^photos/.*/icons/.*\.gif$ - [L]
-RewriteRule .*^photos/.*/icons/.*\.jpg$ - [L]
-RewriteRule .*^photos/.*/icons/.*\.png$ - [L]
+RewriteRule .*^_storage/legacy/photos/.*/icons/.*\.gif$ - [L]
+RewriteRule .*^_storage/legacy/photos/.*/icons/.*\.jpg$ - [L]
+RewriteRule .*^_storage/legacy/photos/.*/icons/.*\.png$ - [L]
 
 # Redirect to image.php
 RewriteRule .*\.jpg$ system/appleseed.php [L]
-# RewriteRule .*\.jpg$ legacy/code/common/images.php [L]
-# RewriteRule .*\.gif$ legacy/code/common/images.php [L]
-# RewriteRule .*\.png$ legacy/code/common/images.php [L]
+RewriteRule .*\.gif$ system/appleseed.php [L]
+RewriteRule .*\.png$ system/appleseed.php [L]
 
 # Redirect appleseed configuration request attempts to 403 Forbidden message.
 RewriteRule .*conf$ legacy/code/error/403.php [L]

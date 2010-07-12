@@ -24,6 +24,8 @@ FIRST="&lt;&lt; First"
 NEXT="Next &gt;"
 LAST="Last &gt;&gt;"
 
+COMMENT_COUNT="%count$s Comment(s)"
+
 [invite]
 USER_INVITE_SENDER="webmaster@%domain$s"
 USER_INVITE_SUBJECT="Welcome To Appleseed @ %domain$s"

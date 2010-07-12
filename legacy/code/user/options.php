@@ -295,7 +295,7 @@
       if ($zFOCUSUSER->userIcons->Filename == NO_ICON) {
         $gICONLOCATION = $gTHEMELOCATION . "/images/icons/noicon.gif";
       } else {
-        $gICONLOCATION = "/photos/" . $zFOCUSUSER->Username . "/icons/" . $zFOCUSUSER->userIcons->Filename;
+        $gICONLOCATION = "/_storage/legacy/photos/" . $zFOCUSUSER->Username . "/icons/" . $zFOCUSUSER->userIcons->Filename;
       } // if
 
       $gPOSTDATA['tID'] = $zFOCUSUSER->userIcons->tID; 

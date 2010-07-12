@@ -114,7 +114,7 @@
         global $gCOMMENTCOUNT;
         $gCOMMENTCOUNT = $COMMENTS->CountComments ($this->tID, $this->PageContext);
  
-        $bCOMMENTCOUNT = __("Comment Count", array ("commentcount" => $gCOMMENTCOUNT));
+        $bCOMMENTCOUNT = __("Comment Count", array ("count" => $gCOMMENTCOUNT));
  
         global $bARTICLEICON;
         $bARTICLEICON = $zOLDAPPLE->BufferUserIcon ($this->Submitted_Username, $this->Submitted_Domain);

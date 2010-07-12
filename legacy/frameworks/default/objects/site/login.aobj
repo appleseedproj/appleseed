@@ -1,6 +1,6 @@
 <section id='login'>
 
- <? $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
+<? $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
 
   <?php $zLOCALUSER->Broadcast ('login'); ?>
 
