@@ -126,8 +126,6 @@ li.selected a { text-decoration: underline; color: #bf4630; }
 #admin_page table th { background: #c0d895; }
 #admin_page table tr.odd td { background: #fff; }
 
-table tr.odd td { background: #f1ffd6; }
-
 footer { padding-bottom: 40px; }
 footer h1 { font-size: 110%; border-bottom: 1px solid #639a00; }
 footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }

@@ -139,6 +139,7 @@ class cExampleController extends cController {
 		$row = $tbody->Find ( "tr", 0);
 		
 		$baseURL = $this->GetSys ( "Router" )->Get ( "Base" );
+		$this->List->Find ( "form", 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
 		
 		/*
 		 * @tutorial Each instance of a component is given an internal context variable
