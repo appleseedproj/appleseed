@@ -61,6 +61,9 @@ class cMarkup extends simple_html_dom {
 	
 	public function Display () {
 		
+		// Throw in a reload for good measure.
+		$this->Reload();
+		
 		// Add an html element here to have it's innertext modified to use the __ function.
 		$translate = array ( 
 			"label", 
@@ -78,6 +81,7 @@ class cMarkup extends simple_html_dom {
 			
 			// Loop through each tag and use the cLanguage function on them.
 			foreach ( $elements as $e=> $element ) {
+				
 				$modified = __( ltrim ( rtrim ( $element->plaintext ) ) );
 				
 				// We're modifying the internal label, not the innertext

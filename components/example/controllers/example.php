@@ -210,8 +210,8 @@ class cExampleController extends cController {
 		 * 
 		 */
 		 
-		$start = $this->GetSys ( "Request" )->Get ( "start", 0 );
 		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
+		$start = $this->GetSys ( "Request" )->Get ( "start", 0 );
 		$total = $this->Customers->Get ( "Total" );
 		$link = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
 		
