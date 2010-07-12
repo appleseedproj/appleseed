@@ -21,6 +21,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 class cRouter extends cBase {
 	
 	protected $_Route;
+	protected $_Request;
+	protected $_Base;
 
 	/**
 	 * Constructor

@@ -181,6 +181,14 @@ class cExampleController extends cController {
 		    $this->List->Find ( "[id=customer_table_body]", 0)->innertext .= $row->outertext;
 		}
 		
+		$this->List->Reload();
+		
+		/*
+		 * @tutorial Remove the original template element we built the table from.
+		 *
+		 */
+		$this->List->RemoveElement ( "[id=customer_table_body] tr" );
+		
 		/*
 		 * @tutorial You can also call components from within other components.
 		 * @tutorial Here we call the pagination component, passing along a set of parameters
@@ -202,16 +210,13 @@ class cExampleController extends cController {
 		 * 
 		 */
 		 
-		
 		$start = $this->GetSys ( "Request" )->Get ( "start", 0 );
 		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
 		$total = $this->Customers->Get ( "Total" );
-		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, );
+		$link = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
+		
+		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
-		
-		$this->List->Reload();
-		
-		$this->List->RemoveElement ( "[id=customer_table_body] tr" );
 		
 		$this->List->Display();
 		

@@ -55,21 +55,28 @@ class cPaginationController extends cController {
 		$start = $pData['start'];
 		$step = $pData['step'];
 		$total = $pData['total'];
-		
-		echo $start, "<br />";
-		echo $step, "<br />";
-		echo $total, "<hr />";
+		$uselink = $pData['link'];
 		
 		$pages = array ();
 		
-		$page = $this->List->Find ( "li[class=page]", 0);
-		$list = $this->List->Find ( "ol", 0);
-		$p = 0;
-		while ( $p < $total ) {
-			$page += 1;
-			$list->innertext .= "<li><span><a>" . $page . "</a></span></li>";
+		$base =$this->GetSys ( "Router")->Get ("Base" );
+		
+		$page = 1; $p = 0;
+		while ( $p <= $total ) {
+			if ( $uselink ) {
+				$link = preg_replace ( '/\(\.\*\)/', $page, $uselink );
+			} else {
+				$link = $base . "Page," . $page;
+			}
+			$outertext .= "<li><span><a href=\"$link\">" . $page . "</a></span></li>";
 			$p += $step;
+			$page += 1;
 		}
+		
+		$this->List->Find ( "li[class=prev]", 0)->outertext .= $outertext;
+		
+		$this->List->Reload();
+		$this->List->RemoveElement ( "li[class=page]" );
 		
 		// $this->List->Find ( "li[class=page] a", 0)->outertext =  $this->List->Find ( "li[class=page] a", 0)->plaintext;
 		
@@ -79,6 +86,9 @@ class cPaginationController extends cController {
 		//$pageLink = $this->List->Find ( "li[class=next] a span", 0)->outertext =  $this->List->Find ( "li[class=next] a span", 0)->plaintext;
 		//$pageLink = $this->List->Find ( "li[class=last] a span", 0)->outertext =  $this->List->Find ( "li[class=last] a span", 0)->plaintext;
 		
+	}
+	
+	function Cancel () {
 	}
 	
 }
