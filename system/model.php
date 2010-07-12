@@ -56,8 +56,21 @@ class cModel extends cBase {
 		
 		$this->_Tablename = $tablename;
 		
-		// @todo: replace with $this->Structure
-		$fieldinfo = $Database->GetFieldInformation ( $this->_Tablename );
+		// Pull the table structure into the class.
+		$this->Structure ();
+		
+		$this->_Protected = array ();
+		
+		parent::__construct();
+	}
+	
+	public function Structure ( $pTablename = null) {
+		
+		$Database = $this->GetSys ( "Database" );
+		
+		if ( !$pTablename ) $pTablename = $this->_Tablename;
+		
+		$fieldinfo = $Database->GetFieldInformation ( $pTablename );
 		
 		foreach ( $fieldinfo as $f => $field ) {
 			$fieldname = $field['Field'];
@@ -66,12 +79,7 @@ class cModel extends cBase {
 			if ( $field['Key'] == "PRI" ) $this->_PrimaryKey = $field['Field'];
 		}
 		
-		$this->_Protected = array ();
-		
-		parent::__construct();
-	}
-	
-	public function Structure ( $pTablename ) {
+		return ( true );
 	}
 	
 	/**
@@ -107,6 +115,7 @@ class cModel extends cBase {
 		// !n NOT NULL
 		// >> GREATER THAN
 		// << LESS THAN
+		// () IN
 		 
 		*/
 		
@@ -123,6 +132,78 @@ class cModel extends cBase {
 	 * @var string $pCriteria An array of criteria.
 	 */
 	protected function _SaveWhere ( $pCriteria ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = 'UPDATE %table$s';
+		$replacements["table"] = $table;
+		
+		$sql .= ' SET ';
+		
+		$prepared = array ();
+		foreach ( $this->_Fields as $f => $fields ) {
+			$fieldname = $fields['Field'];	
+			
+			// Don't update the primary key.
+			if ($fieldname == $this->_PrimaryKey) continue;
+			
+			// Skip anything on the protected list.
+			if ( in_array ( $fieldname, $this->_Protected ) ) continue;
+			
+			$internal = "_" . strtolower ( $fieldname );
+			$internal_field = $internal . "_field";
+			$internal_value = $internal . "_value";
+			
+			$queries[] = ' %' . $internal_field . '$s = ?';
+			$prepared[] = $this->Get ( $fieldname );
+			
+			$replacements[$internal_field] = $fieldname;
+			
+		}
+		
+		list ( $where, $criteriaPrepared ) = $this->_BuildCriteria ( $pCriteria ); 
+		
+		$prepared = array_merge ( $prepared, $criteriaPrepared );
+		
+		echo "<pre>";
+		print_r ( $prepared );
+		
+		$sql .= implode ( ", ", $queries );
+		
+		$sql .= " WHERE " . $where;
+		
+		$replacements["pk"] = $pk;
+		
+		// Without criteria, we'll use the current primary key value
+		if ( $pCriteria ) {
+			$replacements["criteria"] = $pCriteria;
+		} else {
+			$primarykey_value = $this->Get ( $pk );
+			
+			// We don't want to update everything in the table, too dangerous, so error out.
+			if ( !$primarykey_value ) return ( false );
+			
+			$replacements["criteria"] = $primarykey_value;
+		}
+		
+		$sql = sprintfn ( $sql, $replacements );
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$this->Query ( $sql, $prepared );
+		
+		echo $this->_Query;
+		
+		$this->_Rows = $this->_Handle->rowCount();
+		$this->_Total = $this->_Handle->rowCount();
+		
+		// @todo Add query to global list.
+		
+		return ( true );
 	}
 	
 	/**
@@ -269,7 +350,12 @@ class cModel extends cBase {
 		
 		foreach ( $pCriteria as $c => $criteria ) {
 			
-			if ( is_array ( $criteria ) ) {
+			$operand = null;
+			$comparison = null;
+			
+			if ( $this->_IsMasslist ( $criteria ) ) {
+				$directive = '()';
+			} elseif ( is_array ( $criteria ) ) {
 				$comparison = 'AND';
 				$compare = substr ( $c, 0, 2 );
 				
@@ -278,13 +364,10 @@ class cModel extends cBase {
 				list ( $inner_statement, $null ) = $this->_BuildCriteria ( $criteria ); 
 				$statements[] = $comparison . ' (' . $inner_statement . ')';
 				continue;
+			} else {
+				// The first two characters of the value determine the operand.
+				$directive = substr ( $criteria, 0, 2 );
 			}
-			
-			$operand = null;
-			$comparison = null;
-			
-			// The first two characters of the value determine the operand.
-			$directive = substr ( $criteria, 0, 2 );
 			
 			switch ( $directive ) {
 				case '~~':
@@ -316,11 +399,14 @@ class cModel extends cBase {
 				case '<=':
 					$operand = "<=";
 				break;
+				case '()':
+					$operand = "IN";
+				break;
 			}
 			
 			if ( $operand ) {
 				// Strip the operand information from the criteria.
-				$criteria = substr ( $criteria, 2, strlen ( $criteria ) );
+				if ( !is_array ( $criteria ) ) $criteria = substr ( $criteria, 2, strlen ( $criteria ) );
 			} else {
 				// Default to equal comparison
 				$operand = "=";
@@ -351,6 +437,15 @@ class cModel extends cBase {
 					// No criteria used for NULL and NOT NULL
 					$statements[] = $comparison_string . $c . ' ' . $operand . ' ';
 				break;
+				case 'IN':
+					$elements = array_keys ( $criteria );
+					$statements[] = $comparison_string . $c . ' ' . $operand . ' (';
+					foreach ( $elements as $e => $element ) {
+						$in[] = '?';
+						$this->_Prepared[] = ltrim ( rtrim ( $element ) );
+					} 
+					$statements[count($statements)-1] .= implode ( ', ', $in) . ')';
+				break;
 				default:
 					$statements[] = $comparison_string . $c . ' ' . $operand . ' ' . '?';
 					$this->_Prepared[] = $criteria;
@@ -362,6 +457,18 @@ class cModel extends cBase {
 		$where = implode ( " ", $statements );
 		
 		return ( array ( $where, $this->_Prepared ) );
+	}
+	
+	protected function _IsMasslist ( $pCriteria ) {
+		
+		if ( !is_array ( $pCriteria ) ) return ( false );
+		
+		foreach ( $pCriteria as $c => $criteria ) {
+			if ( $criteria == 'on' ) continue;
+			return ( false );
+		}
+		
+		return ( true );
 	}
 	
 	/**
@@ -423,6 +530,8 @@ class cModel extends cBase {
 		$this->_Total = $rowCount;
 		$this->_Rows = $this->_Handle->rowCount();
 		
+		if ( !$this->_Total ) $this->_Total = $this->_Rows;
+		
 		return ( true );
 	}
 	
@@ -447,6 +556,28 @@ class cModel extends cBase {
 	 * @var string $pCriteria An array of criteria.
 	 */
 	protected function _DeleteWhere ( $pCriteria = null ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = 'DELETE FROM %table$s';
+		$replacements['table'] = $table;
+		
+		list ( $where, $prepared ) = $this->_BuildCriteria ( $pCriteria ); 
+		
+		$sql .= " WHERE " . $where;
+		
+		// Replace tablenames, fieldnames, ordering, limits, etc.
+		$sql = sprintfn ( $sql, $replacements );
+		
+		// Execute query with prepared statements.
+		$this->Query ( $sql, $prepared );
+		
+		// @todo Add query to global list.
+		
 	}
 	
 	/**
@@ -456,6 +587,32 @@ class cModel extends cBase {
 	 * @var string $pCriteria A single value (for primary key based retrieval).
 	 */
 	protected function _Delete ( $pCriteria = null ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = 'DELETE FROM %table$s';
+		$replacements['table'] = $table;
+		
+		// Without criteria, we'll find everything in the table.
+		if ( $pCriteria ) {
+			$sql .= ' WHERE %pk$s = ? ';
+			$replacements['pk'] = $pk;
+			$prepared[] = $pCriteria;
+		}
+		
+		// Replace tablenames, fieldnames, ordering, limits, etc.
+		$sql = sprintfn ( $sql, $replacements );
+		
+		// Execute query with prepared statements.
+		$this->Query ( $sql, $prepared );
+		
+		// @todo Add query to global list.
+		
+		return ( true );
 	}
 	
 	/**

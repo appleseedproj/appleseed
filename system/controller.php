@@ -197,7 +197,7 @@ class cController extends cBase {
 	}
 	
 	/**
-	 * Shorthand for event trigger function.  Determines the event and component origins automatically.
+	 * Shorthand for event trigger method.  Determines the event and component origins automatically.
 	 *
 	 * @access  public
 	 * @param string $pEvent Which event to trigger
@@ -216,6 +216,20 @@ class cController extends cBase {
 		$event = ltrim ( rtrim ( $pEvent ) ); 
 		
 		$return = $this->GetSys ( "Event" )->Trigger ( $pEvent, $component, $function, $pData );
+		
+		return ( $return );
+	}
+	
+	/**
+	 * Shortcut to cComponents Talk method
+	 *
+	 * @access  public
+	 * @param string $pEvent Which event to trigger
+	 * @param array $pEvent Extra data to pass to event hook
+	 */
+	public function Talk ( $pComponent, $pRequest, $pData = null ) {
+		
+		$return = $this->GetSys ( "Components" )->Talk ( $pComponent, $pRequest, $pData );
 		
 		return ( $return );
 	}

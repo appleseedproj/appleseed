@@ -70,10 +70,11 @@ class cExampleController extends cController {
 		 * @tutorial The Talk function allows you to send a request to the Interface class of another component.
 		 * @tutorial This allows you to communicate between components
 		 * @tutorial The parameters correspond to which cComponent class, and which method in that class to call.
+		 * 
 		 * @tutorial You can optionally pass parameters in a third variable of type "array".
 		 * 
 		 */
-		$exampleResponse = $this->GetSys ( "Components" )->Talk ( "Example", "GetResponse" );
+		$exampleResponse = $this->Talk ( "Example", "GetResponse" );
 		
 		$this->List = $this->GetView ( "example_list" );
 		
@@ -524,5 +525,17 @@ class cExampleController extends cController {
 	function Move_Down ( ) {
 	}
 	
+	function Delete_All ( ) {
+		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
+		
+		//$criteria['Customer_PK'] = "()" . join ( ', ', array_keys ( $selected ) );
+		$criteria['Customer_PK'] = $selected;
+		
+		$this->Customers = $this->GetModel();
+		
+		$this->Customers->Delete ( $criteria );
+		
+		$this->Go ( "Display" );
+	}
 	
 }

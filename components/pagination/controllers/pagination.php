@@ -71,7 +71,7 @@ class cPaginationController extends cController {
 		$base =$this->GetSys ( "Router")->Get ("Base" );
 		
 		$page = 1; $p = 0;
-		while ( $p <= $total ) {
+		while ( $p < $total ) {
 			if ( $uselink ) {
 				$firstlink = preg_replace ( '/\(\.\*\)/', 1, $uselink );
 				$prevlink = preg_replace ( '/\(\.\*\)/', $prevpage, $uselink );
@@ -105,16 +105,16 @@ class cPaginationController extends cController {
 		$this->List->Find ( "li[class=next] a", 0)->href = $nextlink;
 		$this->List->Find ( "li[class=last] a", 0)->href = $lastlink;
 		
-		if ( $currentpage == 1)
+		if ( $currentpage <= 1)
 			$this->List->Find ( "li[class=first]", 0)->innertext =  $this->List->Find ( "li[class=first] a span", 0)->outertext;
 		
-		if ( $currentpage == $prevpage)
+		if ( $currentpage <= $prevpage)
 			$this->List->Find ( "li[class=prev]", 0)->innertext =  $this->List->Find ( "li[class=prev] a span", 0)->outertext;
 		
-		if ( $currentpage == $nextpage)
+		if ( $currentpage >= $nextpage)
 			$this->List->Find ( "li[class=next]", 0)->innertext =  $this->List->Find ( "li[class=next] a span", 0)->outertext;
 		
-		if ( $currentpage == $lastpage)
+		if ( $currentpage >= $lastpage)
 			$this->List->Find ( "li[class=last]", 0)->innertext =  $this->List->Find ( "li[class=last] a span", 0)->outertext;
 		
 		return ( true );
