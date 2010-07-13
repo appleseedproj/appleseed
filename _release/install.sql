@@ -47,6 +47,9 @@ DROP TABLE IF EXISTS `%PREFIX%userQuestions`;
 DROP TABLE IF EXISTS `%PREFIX%userSessions`;
 DROP TABLE IF EXISTS `%PREFIX%userSettings`;
 DROP TABLE IF EXISTS `%PREFIX%userAuthorization`;
+DROP TABLE IF EXISTS `%PREFIX%ExampleCustomers`;
+DROP TABLE IF EXISTS `%PREFIX%ExampleEmployees`;
+
 
 CREATE TABLE `%PREFIX%userAuthorization` ( `uID` int(10) unsigned zerofill NOT NULL auto_increment, `Username` varchar(32) NOT NULL default '', `Pass` varchar(144) NOT NULL default '', `Verification` int(1) default NULL, `Standing` int(1) default NULL, PRIMARY KEY  (`uID`), UNIQUE KEY `%PREFIX%userAuthorization_index` (`Username`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 CREATE TABLE `%PREFIX%authSessions` ( `tID` int(10) unsigned NOT NULL auto_increment, `Username` varchar(32) NOT NULL default '', `Domain` varchar(128) NOT NULL default '', `Identifier` varchar(32) default '00000000000000000000000000000000', `Stamp` datetime default NULL, `Address` varchar(16) default '0.0.0.0', `Host` varchar(128) default NULL, `Fullname` varchar(64) default NULL, PRIMARY KEY  (`tID`) ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

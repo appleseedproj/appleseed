@@ -41,4 +41,4 @@ API Enhancement, Scalability, User Interface Refinement, Security Fixes, and Opt
 
 1.1 SERIES
 ----------
-Content Management, Taxonomy, Social Graph, Analytics, and more TBD.
+Content Management, Taxonomy, Social Graph, Analytics, Client-side apps, and more TBD.

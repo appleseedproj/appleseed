@@ -1,0 +1,27 @@
+RELEASE CHANGES
+
+-- 0.7.4 --
+
++ MVC framework
+  - Ability to write Appleseed components.  See components/example
+  - Hooks for extending the framework and comopnents
++ Internationalisation
+  - Every string should output using the __ function for translations
+  - Removed old system (systemStrings)
++ Refactor CRUD functions
+  - Wrote new functions using PDO
++ Html form functions
+  - Modify views using SimpleHTMLDom
++ Configuration inheritance
+  - Themes, Languages, and Configurations use a system of object inheritance.
++ New theme
+  - A new theme, courtesy of Justin Fuhrer (coestar@gmail.com) using HTML5/CSS3
++ SHA512 for password storage
+  - Stronger, more compatible hashing.
++ Created a future roadmap (in _documentation/roadmap.txt)
++ Added option to disable invite codes.
++ Bugs
+  - Fixed message recipient notification bug.
+  - Removed zipcode requirement for signup
+  - Fixed and simplified install
+  - Disabled magic_quotes no longer required.
