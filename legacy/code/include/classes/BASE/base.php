@@ -3074,7 +3074,7 @@
 
       // If no starting point is set, start at '0'
       if (!isset($gSCROLLSTART[$pCONTEXT])) $gSCROLLSTART[$pCONTEXT] = 0;
-
+      
       // Determine the Maximum and Current page amounts.
       $gMAXPAGES = ceil ($gSCROLLMAX[$pCONTEXT] / $gSCROLLSTEP[$pCONTEXT]);
       $gCURRENTPAGE = ceil ($gSCROLLSTART[$pCONTEXT] / $gSCROLLSTEP[$pCONTEXT]) + 1;
