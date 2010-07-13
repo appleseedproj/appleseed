@@ -323,6 +323,7 @@
             $output = $zOLDAPPLE->Format ($ADMINDATA->Output, FORMAT_VIEW);
             if ($gACTION == 'SELECT_ALL') $checked = TRUE;
 
+			global $gEXTRAPOSTDATA;
             $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
             $gEXTRAPOSTDATA['tID']    = $ADMINDATA->tID;
             $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/system/tooltips/list.middle.aobj", INCLUDE_SECURITY_NONE);

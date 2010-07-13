@@ -319,6 +319,7 @@
             $username = $PROFILEINFO->Username;
             if ($gACTION == 'SELECT_ALL') $checked = TRUE;
 
+			global $gEXTRAPOSTDATA;
             $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
             $gEXTRAPOSTDATA['tID']    = $ADMINDATA->tID;
             $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/admin/users/access/list.middle.aobj", INCLUDE_SECURITY_NONE);

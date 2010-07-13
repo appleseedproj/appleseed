@@ -336,6 +336,7 @@
             $output = $zOLDAPPLE->Format ($ADMINDATA->Output, FORMAT_VIEW);
             if ($gACTION == 'SELECT_ALL') $checked = TRUE;
 
+			global $gEXTRAPOSTDATA;
             $gEXTRAPOSTDATA['ACTION'] = "EDIT"; 
             $gEXTRAPOSTDATA['tID']    = $ADMINDATA->tID;
             $ADMINDATA->FormatVerboseDate ('EndStamp');
