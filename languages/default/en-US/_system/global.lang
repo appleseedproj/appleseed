@@ -44,7 +44,7 @@ Appleseed is a new open source social networking software that is currently in d
 Appleseed is still in early beta, and many features are still not available. But if you set up an account, you'll be able to help us fix bugs and add features.
 
 Thank You,
-The Appleseed Collective"
+The Appleseed Project"
 
 [messagenotification]
 MESSAGE_NOTIFY_SENDER="""New Message"" <messages@%domain$s>"
@@ -173,7 +173,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;LABEL.ANONYMOUS.FULLNAME:=An Anonymous User
 ;ERROR.NOTNULL:=Do not leave this field blank
 ;FOOTNOTE.PAGES:=Pages: %PAGESLIST%
-;LABEL.COPYRIGHT:=Copyleft ;&copy; 2004-2007 by the Appleseed Collective.  All Rights Reversed.
+;LABEL.COPYRIGHT:=Copyleft ;&copy; 2004-2007 by the Appleseed Project.  All Rights Reversed.
 ;LABEL.ADMINLOGIN:=You are currently logged in as <asd user='%AUTHUSERNAME%' popup='off' />
 ;BROWSER.REFRESH:=\n<asd id='link' target='%SITEURL%' text='Click here to continue' style='outside' />
 ;LABEL.NEWMESSAGES:=%MESSAGECOUNT% new message(s).
@@ -244,7 +244,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;MESSAGE.PENDING:CONTENT.ARTICLES=%PENDING% article(s) are awaiting editor approval.
 ;LABEL.SUBJECT:CONTENT.ARTICLES.COMMENT=%COMMENTINGUSER% has replied to your comment.
 ;MAIL.FROM:CONTENT.ARTICLES.COMMENTS=comments@%SITEDOMAIN%
-;MAIL.BODY:CONTENT.ARTICLES.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has replied to your article.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:CONTENT.ARTICLES.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has replied to your article.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;MAIL.SUBJECT:CONTENT.ARTICLES.COMMENTS=%COMMENTINGUSER% has replied to your article.
 ;MAIL.FROMNAME:CONTENT.ARTICLES.COMMENTS=Appleseed Comments
 ;LABEL.FULLNAME:CONTENT.GROUP=Full Group Name:
@@ -289,7 +289,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;LINK.PARENT:CONTENT.GROUP=Parent
 ;LABEL.DELETED:CONTENT.GROUP=( Deleted Entry )
 ;MAIL.FROM:CONTENT.GROUP=group@%SITEDOMAIN%
-;MAIL.BODY:CONTENT.GROUP=Hello, %REPLIEDUSER%.\n\n%REPLYINGUSER% has replied to your group post.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:CONTENT.GROUP=Hello, %REPLIEDUSER%.\n\n%REPLYINGUSER% has replied to your group post.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;MAIL.SUBJECT:CONTENT.GROUp=%REPLYINGUSER% has replied to your group post.
 ;MAIL.FROMNAME:CONTENT.GROUP=Appleseed Groups
 ;CONFIRM.DELETE.ENTRY:CONTENT.GROUP=Are you sure you want to delete this entry?
@@ -357,7 +357,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;INFO.LOCATION:SITE.LOGIN=NOTE: You must be logged in to your main appleseed site for remote login to work.
 ;MAIL.FROM:SITE.LOGIN=password@%SITEDOMAIN%
 ;MAIL.SUBJECT:SITE.LOGIN=Your new password for %SITEDOMAIN%
-;MAIL.BODY:SITE.LOGIN=Hello, %FULLNAME%\n\nYour password has been reset.  Your new password is:\n\n%PASSWORD%\n\nThank You,\nThe Appleseed Collective\n
+;MAIL.BODY:SITE.LOGIN=Hello, %FULLNAME%\n\nYour password has been reset.  Your new password is:\n\n%PASSWORD%\n\nThank You,\nThe Appleseed Project\n
 ;ERROR.UPDATE:SITE.LOGIN=Database error while updating account.
 ;MESSAGE.SENT:SITE.LOGIN=A new password has been emailed.
 ;ERROR.USERNAME:SITE.LOGIN=You must  enter your username.
@@ -406,7 +406,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;LABEL.DELETED:USER.COMMENTS=( Deleted Comment )
 ;MAIL.SUBJECT:USER.COMMENTS=%COMMENTINGUSER% has replied to your comment.
 ;MAIL.FROM:USER.COMMENTS=comments@%SITEDOMAIN%
-;MAIL.BODY:USER.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has replied to your comment.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:USER.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has replied to your comment.\n\nClick here to view the thread:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;MAIL.FROMNAME:USER.COMMENTS=Appleseed Comments
 ;MESSAGE.CANCELLED:USER.FRIENDS=The friend request from %DENIEDNAME% has been cancelled.
 ;CONFIRM.CANCEL:USER.FRIENDS=Are you sure you want to cancel this friend request?
@@ -451,19 +451,19 @@ NODE_USER_COUNT="%count$s User(s)"
 ;ERROR.FROMONE:USER.FRIENDS.CIRCLES=Cannot move the first friends circle up any farther.
 ;ERROR.CANTWRITE:USER.FRIENDS.CIRCLES=INSUFFICIENT ACCESS TO MODIFY FRIENDS CIRCLES.
 ;MAIL.SUBJECT:USER.FRIENDS.DENY=%SOURCEUSER% has denied your friend request!
-;MAIL.BODY:USER.FRIENDS.DENY=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has denied your friend request.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
-;MAIL.BODY:USER.FRIENDS.REMOVE=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has removed you from their friends list.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:USER.FRIENDS.DENY=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has denied your friend request.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
+;MAIL.BODY:USER.FRIENDS.REMOVE=Hello, %TARGETUSER%.\n\n%SOURCEUSER% has removed you from their friends list.\n\nClick here to view your Appleseed friends:\n%FRIENDSURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;MAIL.SUBJECT:USER.FRIENDS.REMOVE=%SOURCEUSER% has removed you as a friend.
 ;MESSAGE.NONE:USER.GROUPS=<asd id='global' name='FOCUSFULLNAME' case='proper' /> Is Not A Member Of Any Groups.
 ;LABEL.MEMBERS:USER.GROUPS=Members: %MEMBERCOUNT%
 ;LABEL.STATS:USER.INFO=STATISTICS FOR <asd id='global' name='FOCUSFULLNAME' case='upper' />
 ;MAIL.SUBJECT:USER.INFO.COMMENTS=%COMMENTINGUSER% has left a comment on your profile.
 ;MAIL.FROM:USER.INFO.COMMENTS=comments@%SITEDOMAIN%
-;MAIL.BODY:USER.INFO.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your profile.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:USER.INFO.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your profile.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;MAIL.FROMNAME:USER.INFO.COMMENTS=Appleseed Comments
 ;MAIL.FROM:USER.INVITE=webmaster@%SITEDOMAIN%
 ;MAIL.SUBJECT:USER.INVITE=Welcome To Appleseed @ %SITEDOMAIN%!
-;MAIL.BODY:USER.INVITE=Congratulations!\n\nYou have been invited by %INVITEDBY% to open a free account at %SITEURL%.\n\nTo accept this invitation and set up an account, click this link:\n\n %INVITEURL%\n\nOnce your account has been created, %INVITEDBY% will be notified in order to add you to their friend's list!\n\nAppleseed is a new open source social networking software that is currently in development.  Planned features include: Journals, Photo Albums, Email, and Groups all in one place, and fully distributed social networking.  You can add friends from any Appleseed site.\n\nAppleseed is still in early beta, and many features are still not available. But if you set up an account, you'll be able to help us fix bugs and add features.\n\nThank You,\nThe Appleseed Collective\n
+;MAIL.BODY:USER.INVITE=Congratulations!\n\nYou have been invited by %INVITEDBY% to open a free account at %SITEURL%.\n\nTo accept this invitation and set up an account, click this link:\n\n %INVITEURL%\n\nOnce your account has been created, %INVITEDBY% will be notified in order to add you to their friend's list!\n\nAppleseed is a new open source social networking software that is currently in development.  Planned features include: Journals, Photo Albums, Email, and Groups all in one place, and fully distributed social networking.  You can add friends from any Appleseed site.\n\nAppleseed is still in early beta, and many features are still not available. But if you set up an account, you'll be able to help us fix bugs and add features.\n\nThank You,\nThe Appleseed Project\n
 ;OBJECT.TITLE:USER.INVITE=INVITE A FRIEND
 ;OBJECT.CONTENT:USER.INVITE=You have <b>%INVITECOUNT%</b> invite(s) available!  Enter an email address below and click the 'invite' button to tell a friend about <asd id='global' name='SITETITLE' case='proper' />.
 ;ERROR.BADEMAIL:USER.INVITE=This is not a valid email address.
@@ -491,7 +491,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;LABEL.TAGS:USER.JOURNAL=Tags:
 ;MAIL.SUBJECT:USER.JOURNAL.COMMENTS=%COMMENTINGUSER% has left a comment on your journal.
 ;MAIL.FROM:USER.JOURNAL.COMMENTS=comments@%SITEDOMAIN%
-;MAIL.BODY:USER.JOURNAL.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your journal entry.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:USER.JOURNAL.COMMENTS=Hello, %COMMENTEDUSER%.\n\n%COMMENTINGUSER% has added a comment to your journal entry.\n\nClick here to view your Appleseed comments:\n%INFOURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;MAIL.FROMNAME:USER.JOURNAL.COMMENTS=Appleseed Comments
 ;LABEL.COUNT:USER.JOURNALS=%COMMENTCOUNT% comment(s).
 ;ERROR.CANTWRITE:USER.JOURNALS=INSUFFICIENT ACCESS TO MODIFY JOURNAL.
@@ -504,7 +504,7 @@ NODE_USER_COUNT="%count$s User(s)"
 ;LABEL.RE:USER.MESSAGES=Re: 
 ;MAIL.FROM:USER.MESSAGES="New Message" <messages@%SITEDOMAIN%>
 ;MAIL.SUBJECT:USER.MESSAGES=New message from %SENDERNAME% on <asd id='global' name='SITEDOMAIN' case='proper' />
-;MAIL.BODY:USER.MESSAGES=%RECIPIENTFULLNAME%,\n\nYou have a new message from %SENDERNAME% on AppleseedProject.org!\n\nClick here to read your Appleseed messages:\n%MESSAGESURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Collective. All Rights Reversed.
+;MAIL.BODY:USER.MESSAGES=%RECIPIENTFULLNAME%,\n\nYou have a new message from %SENDERNAME% on AppleseedProject.org!\n\nClick here to read your Appleseed messages:\n%MESSAGESURL%\n\n--\n\nAppleseedProject.org\nCopyleft (c) 2004-2007 by the Appleseed Project. All Rights Reversed.
 ;LABEL.APPLY:USER.MESSAGES=Apply Label:
 ;LABEL.REMOVE:USER.MESSAGES=Remove Label:
 ;MESSAGE.APPLY:USER.MESSAGES=This message has been labeled '%LABELNAME%'
