@@ -762,11 +762,11 @@
       $to = $this->Email;
       $gFULLNAME = $this->Fullname;
 
-      $subject = __( "Password Reset Subject", array ( "site" => $gSITEDOMAIN ) );
+      $subject = __( "Password Reset Subject", array ( "domain" => $gSITEDOMAIN ) );
 
       $body = __("Password Reset Body", array ( "fullname" => $gFULLNAME, "password" => $gPASSWORD ) );
 
-      $from = __("password@site", array ( "domain" => $gSITEDOMAIN ) );
+      $from = __("Password Reset From", array ( "domain" => $gSITEDOMAIN ) );
 
       $headers = "From: $from" . "\r\n" .
                  "Reply-To: $from" . "\r\n" .

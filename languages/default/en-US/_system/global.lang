@@ -77,6 +77,19 @@ FRIEND_ACCEPTED_BODY="Hello, %target$s.
 Click here to view your Appleseed friends:
 <a href='%url$s'>%url$s%</a>"
 
+
+[passwordreset]
+PASSWORD_RESET_FROM="password@%domain$s"
+PASSWORD_RESET_SUBJECT="Your new password for %domain$s"
+PASSWORD_RESET_BODY="Hello, %fullname$s
+
+Your password has been reset.  Your new password is:
+
+%password$s
+
+Thank You,
+The Appleseed Project"
+
 [site]
 APPLESEED_PAGE_TITLE="Welcome To The Appleseed Social Network @ %domain$s"
 YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
