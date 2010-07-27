@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Privacy Class
+/** Session Class
  * 
- * Privacy management
+ * Session management
  * 
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cPrivacy {
+class cSession {
 
 	/**
 	 * Constructor
@@ -29,3 +29,4 @@ class cPrivacy {
 	}
 
 }
+

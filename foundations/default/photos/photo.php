@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +8,7 @@
     <meta charset="utf-8" />
 
     <!-- Title -->
-    <title><?php echo __("Example Component | Appleseed"); ?></title>
+    <title><?php echo __("Photos For | Appleseed"); ?></title>
     
     <!-- Links -->
     <?php $zApp->Theme->UseStyles (); ?>
@@ -45,21 +46,7 @@
         
 		  	<?php $zApp->Components->Go ( "profile", "menu", "menu" ); ?>
 		  	
-		  	<?php
-		  	/*
-		  	 * @tutorial Parameters:  
-		  	 * @tutorial string pComponent, string pController, string pView, string pTask, array pData
-		  	 * 
-		  	 * @tutorial You can shorten a component call by putting pData earlier than 
-		  	 * @tutorial it should be.  For instance:
-		  	 * 
-		  	 * @tutorial ->Go ( "example", array ( "Key" => "Value" ) );
-		  	 * 
-		  	 * @tutorial The system will detect the array being passed, and call the example 
-		  	 * @tutorial component with the default controller, view, and task.
-		  	 */
-		  	?>
-			<?php $zApp->Components->Go ( "example", "example", "example" ); ?>
+			<?php $zApp->Components->Go ( "photos", "photos", "photo" ); ?>
         
         </div>
         

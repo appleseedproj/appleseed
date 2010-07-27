@@ -1,14 +1,10 @@
-<div id='photosets'>
+<section id='photosets'>
 
  <!-- tabs objects -->
  <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
 
- <div id='container'>
-  <p id='heading'>
-   	<?php echo __("Edit"); ?>
-  </p>
+  <h1> <?php echo __("Edit"); ?> </h1>
 
-  <div id='edit'>
    <?php $gVIEWDATA->Broadcast(); ?>
 
    <form id='add' name='add' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
@@ -17,41 +13,39 @@
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
 
     <p id='name'>
-     <?php __("User Photoset Name"); ?>
+     <?php echo __("User Photoset Name"); ?>
     </p> <!-- #name -->
     <?php $zHTML->TextBox ("NAME", 70, $gVIEWDATA->Name); ?>
     <?php $gVIEWDATA->Broadcast ("field", "Name"); ?>
 
     <p id='description'>
-     <?php __("User Photoset Description"); ?>
+     <?php echo __("User Photoset Description"); ?>
     </p> <!-- #description -->
     <?php $zHTML->TextArea ("DESCRIPTION", $gVIEWDATA->Description); ?>
     <?php $gVIEWDATA->Broadcast ("field", "Description"); ?>
 
     <p id='directory'>
-     <?php __("User Photoset Directory"); ?>
+     <?php echo __("User Photoset Directory"); ?>
     </p> <!-- #directory -->
     <?php $zHTML->TextBox ("DIRECTORY", 70, $gVIEWDATA->Directory); ?>
     <p id='directory_info'>
-     <?php __("User Photoset Directory Info"); ?>
+     <?php echo __("User Photoset Directory Info"); ?>
     </p> <!-- #directory_info -->
     <?php $gVIEWDATA->Broadcast ("field", "Directory"); ?>
 
     <p id='tags'>
-     <?php __"(User Photoset Tags"); ?>
+     <?php echo __("User Photoset Tags"); ?>
     </p> <!-- #tags -->
     <?php $zHTML->TextBox ("TAGS", 70, $gVIEWDATA->Tags); ?>
     <p id='tags_info'>
-     <?php __("User Photoset Tags Info"); ?>
+     <?php echo __("User Photoset Tags Info"); ?>
     </p> <!-- tags_info -->
     <?php $gVIEWDATA->Broadcast ("field", "Tags"); ?>
  
     <?php echo $bPRIVACYOPTIONS; ?>
 
-  </div> <!-- #edit -->
-
     <div id='actions'>
-     <?php $zHTML->Button ('save'); ?>
+     <?php $zHTML->Button ('Save'); ?>
      </form> <!-- #add -->
 
      <span class='delete'>&nbsp;</span>
@@ -59,9 +53,8 @@
      <form id='cancel' method='POST' action='profile/<?php echo $zFOCUSUSER->Username; ?>/photos/'>
       <input type='hidden' id='gACTION' name='gACTION' value='CANCEL'>
       <?php $zHTML->Post ($gPOSTDATA); ?>
-      <?php $zHTML->Button ('cancel', __("Confirm Cancel")); ?>
+      <?php $zHTML->Button ('Cancel', __("Confirm Cancel")); ?>
      </form> <!-- #cancel -->
     </div> <!-- #actions -->
 
- </div> <!-- #container -->
-</div> <!-- #photosets -->
+</section> <!-- #photosets -->
