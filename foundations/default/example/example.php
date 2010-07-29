@@ -14,9 +14,19 @@
     
     <!-- Javascript --> 
     <!--[if IE]>
-    <script src="js/html5.js"></script>
+    <script src="/themes/default/style/html5.js"></script>
     <![endif]-->
     
+    <!-- Load JLoader framework -->
+   	<script type="text/javascript" src="/libraries/javascript/jloader.init.js"></script>
+   	<script type="text/javascript" src="/foundations/default/default.js"></script>
+   	
+   	<!-- Load JQuery -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/jquery-1.4.2.min.js"></script>
+   	
+   	<!-- Load JQuery::Validation -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
+   	
 </head>
 
 <body id="www-website-com">

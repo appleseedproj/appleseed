@@ -90,9 +90,9 @@ li.selected a { text-decoration: underline; color: #bf4630; }
     border-bottom: 1px solid #c0d895;
     border-right: 1px solid #c0d895;
 }
-#user_comments, #admin_page { padding-bottom: 0px; }
-#user_comments nav ol, #admin_page nav ol { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
-#user_comments nav ol, #admin_page nav ol {
+#user_comments, .admin_page { padding-bottom: 0px; }
+#user_comments nav ol, .admin_page nav ol { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
+#user_comments nav ol, .admin_page nav ol {
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     -moz-border-radius-topright: 10px;
@@ -123,8 +123,8 @@ li.selected a { text-decoration: underline; color: #bf4630; }
 #admin_menu nav ul #admin_system.selected a { background: #d9fa9e url('../images/icons/database.png') 5px 10px no-repeat; text-decoration: none; }
 #admin_menu nav ul #admin_control.selected a { background: #d9fa9e url('../images/icons/lock.png') 5px 10px no-repeat; text-decoration: none; }
 
-#admin_page table th { background: #c0d895; }
-#admin_page table tr.odd td { background: #fff; }
+.admin_page table th { background: #c0d895; }
+.admin_page table tr.odd td { background: #fff; }
 
 table tr.odd td { background: #f1ffd6; }
 
@@ -137,7 +137,7 @@ footer nav li, footer section li { margin: 0px 0px 0px 20px; list-style: disc; }
 
 
 
-#admin_page table { width:100%; clear:both; }
+.admin_page table { width:100%; clear:both; }
 
 p.message { width:96%; clear:both; padding:3px 2%; margin:2px 0; background-color:#639a00; color:#f1ffd6; }
 
@@ -164,13 +164,14 @@ button[disabled] {
 .scroll ol { list-style-type:none; }
 .scroll ol li { float:left; padding:0px 5px; }
 
-#admin_page nav button, .scroll button { background:none; border:none; font-weight:bold; color:#406300; padding:0; }
+.admin_page nav button, .scroll button { background:none; border:none; font-weight:bold; color:#406300; padding:0; }
 .scroll li.selected button { text-decoration: underline; color: #bf4630; }
 .scroll button:hover { cursor:pointer; }
 
 .search {width:100%; text-align:right; float:right; clear:both; }
 
 label { margin-top:10px; clear:both; }
+label.error { float: none; color: red; padding-left: .5em; vertical-align: top; }
 select, input, textarea { clear:both; }
 
 textarea { min-width:500px; min-height:160px; }

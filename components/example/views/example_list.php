@@ -1,4 +1,6 @@
-<section id="admin_page">
+<script type="text/javascript" src="/components/example/assets/javascript/example.js"></script>
+
+<section id="example" class="admin_page">
 
 	<form method="post">
 		<input type="hidden" name="Context" />
