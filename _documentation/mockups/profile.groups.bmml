@@ -1,0 +1,224 @@
+<mockup version="1.0" skin="sketch" measuredW="1139" measuredH="843" mockupW="800" mockupH="800">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="329" y="33" w="800" h="800" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Image" x="361" y="132" w="198" h="186" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::SearchBox" x="986" y="132" w="101" h="-1" measuredW="64" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>search</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="361" y="33" w="726" h="-1" measuredW="113" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20Message</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::TextArea" x="361" y="333" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Full%20Name%0A%20%0ALocation%0A%20%0A%23%20Friends%0A%23%20Mutual%20Friends</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="573" y="132" w="514" h="542" measuredW="468" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Options%2CNews%2CWall%2CInfo%2CFriends%2CJournals%2CPhotos%2C+</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::MenuBar" x="573" y="82" w="336" h="30" measuredW="330" measuredH="29" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%2CProfile%2CAbout%2CContact%20Us%2CHelp</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::TextInput" x="924" y="85" w="159" h="-1" measuredW="91" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logged%20In%20As</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Link" x="1012" y="90" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>user@user</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Label" x="903" y="241" w="167" h="18" measuredW="159" measuredH="23" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>8554646</color>
+        <italic>true</italic>
+        <size>13</size>
+        <text>Updated%3A%20Today%20@%204%3A15pm</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Link" x="689" y="172" w="-1" h="-1" measuredW="92" measuredH="23" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Group%20%231%20Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Button" x="1012" y="169" w="-1" h="-1" measuredW="58" measuredH="28" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Leave</text>
+      </controlProperties>
+    </control>
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Paragraph" x="689" y="195" w="383" h="42" measuredW="200" measuredH="140" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28Description%29%20Suspendisse%20potenti.%20Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit.</text>
+      </controlProperties>
+    </control>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Label" x="691" y="239" w="-1" h="-1" measuredW="74" measuredH="23" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%23%20Members</text>
+      </controlProperties>
+    </control>
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Image" x="588" y="172" w="95" h="80" measuredW="77" measuredH="79" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::PointyButton" x="939" y="632" w="63" h="-1" measuredW="61" measuredH="27" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Next%20%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::PointyButton" x="1004" y="631" w="66" h="-1" measuredW="64" measuredH="27" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Last%20%3E%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::PointyButton" x="588" y="632" w="68" h="-1" measuredW="66" measuredH="27" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>%3C%3C%20First</text>
+      </controlProperties>
+    </control>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::PointyButton" x="660" y="632" w="61" h="-1" measuredW="59" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>%3C%20Prev</text>
+      </controlProperties>
+    </control>
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Link" x="782" y="633" w="-1" h="-1" measuredW="10" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1</text>
+      </controlProperties>
+    </control>
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Link" x="823" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>3</text>
+      </controlProperties>
+    </control>
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="843" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>4</text>
+      </controlProperties>
+    </control>
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Link" x="864" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>5</text>
+      </controlProperties>
+    </control>
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Label" x="802" y="633" w="13" h="23" measuredW="13" measuredH="23" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2</text>
+      </controlProperties>
+    </control>
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::Label" x="876" y="337" w="192" h="21" measuredW="187" measuredH="23" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>8554646</color>
+        <italic>true</italic>
+        <size>13</size>
+        <text>Updated%3A%20Yesterday%20@%202%3A15pm</text>
+      </controlProperties>
+    </control>
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Link" x="689" y="270" w="-1" h="-1" measuredW="95" measuredH="23" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Group%20%232%20Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::Button" x="1012" y="267" w="-1" h="-1" measuredW="58" measuredH="28" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Leave</text>
+      </controlProperties>
+    </control>
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::Paragraph" x="689" y="293" w="383" h="42" measuredW="200" measuredH="140" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28Description%29%20Suspendisse%20potenti.%20Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit.</text>
+      </controlProperties>
+    </control>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="691" y="337" w="-1" h="-1" measuredW="74" measuredH="23" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%23%20Members</text>
+      </controlProperties>
+    </control>
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Image" x="588" y="270" w="95" h="80" measuredW="77" measuredH="79" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Label" x="924" y="442" w="145" h="18" measuredW="138" measuredH="23" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>8554646</color>
+        <italic>true</italic>
+        <size>13</size>
+        <text>Updated%3A%202%20weeks%20ago</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Link" x="689" y="373" w="-1" h="-1" measuredW="94" measuredH="23" zOrder="31" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Group%20%233%20Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Button" x="1012" y="370" w="-1" h="-1" measuredW="58" measuredH="28" zOrder="32" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Leave</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Paragraph" x="689" y="396" w="383" h="42" measuredW="200" measuredH="140" zOrder="33" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28Description%29%20Suspendisse%20potenti.%20Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit.</text>
+      </controlProperties>
+    </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Label" x="691" y="440" w="-1" h="-1" measuredW="74" measuredH="23" zOrder="34" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%23%20Members</text>
+      </controlProperties>
+    </control>
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Image" x="588" y="373" w="95" h="80" measuredW="77" measuredH="79" zOrder="35" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Label" x="939" y="545" w="127" h="18" measuredW="126" measuredH="23" zOrder="36" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>8554646</color>
+        <italic>true</italic>
+        <size>13</size>
+        <text>Updated%3A%201%20year%20ago</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Link" x="689" y="476" w="-1" h="-1" measuredW="94" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Group%20%234%20Title</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Button" x="1012" y="473" w="-1" h="-1" measuredW="58" measuredH="28" zOrder="38" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Leave</text>
+      </controlProperties>
+    </control>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Paragraph" x="689" y="499" w="383" h="42" measuredW="200" measuredH="140" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28Description%29%20Suspendisse%20potenti.%20Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit.</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Label" x="691" y="543" w="-1" h="-1" measuredW="74" measuredH="23" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%23%20Members</text>
+      </controlProperties>
+    </control>
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Image" x="588" y="476" w="95" h="80" measuredW="77" measuredH="79" zOrder="41" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

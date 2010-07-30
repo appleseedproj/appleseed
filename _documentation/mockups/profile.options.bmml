@@ -1,0 +1,50 @@
+<mockup version="1.0" skin="sketch" measuredW="1139" measuredH="843" mockupW="800" mockupH="800">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="329" y="33" w="800" h="800" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Image" x="361" y="132" w="198" h="186" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::SearchBox" x="986" y="132" w="101" h="-1" measuredW="64" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>search</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="361" y="33" w="726" h="-1" measuredW="113" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20Message</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::TextArea" x="361" y="333" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Full%20Name%0A%20%0ALocation%0A%20%0A%23%20Friends%0A%23%20Mutual%20Friends</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="573" y="132" w="514" h="542" measuredW="468" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5BOptions%5D%2CNews%2CWall%2CInfo%2CFriends%2CJournals%2CPhotos%2C+</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::MenuBar" x="573" y="82" w="336" h="30" measuredW="330" measuredH="29" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%2CProfile%2CAbout%2CContact%20Us%2CHelp</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::TextInput" x="924" y="85" w="159" h="-1" measuredW="91" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logged%20In%20As</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Link" x="1012" y="90" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>user@user</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="588" y="172" w="477" h="487" measuredW="200" measuredH="209" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Privacy%0ASettings%0ABasic%20Info%0AQ%26A%0ANotifications</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
