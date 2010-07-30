@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="1139" measuredH="843" mockupW="1069" mockupH="823">
+<mockup version="1.0" skin="sketch" measuredW="1139" measuredH="843" mockupW="800" mockupH="800">
   <controls>
     <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="329" y="33" w="800" h="800" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
     <control controlID="5" controlTypeID="com.balsamiq.mockups::Image" x="361" y="132" w="198" h="186" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="-1">
@@ -41,58 +41,55 @@
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="17" controlTypeID="com.balsamiq.mockups::Paragraph" x="60" y="10" w="-1" h="-1" measuredW="200" measuredH="140" zOrder="9" locked="false" isInGroup="-1">
-      <controlProperties/>
-    </control>
-    <control controlID="18" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="172" w="95" h="89" measuredW="300" measuredH="200" zOrder="10" locked="false" isInGroup="-1"/>
-    <control controlID="22" controlTypeID="com.balsamiq.mockups::PointyButton" x="937" y="632" w="-1" h="-1" measuredW="61" measuredH="27" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="172" w="95" h="89" measuredW="300" measuredH="200" zOrder="9" locked="false" isInGroup="-1"/>
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::PointyButton" x="937" y="632" w="-1" h="-1" measuredW="61" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Next%20%3E</text>
       </controlProperties>
     </control>
-    <control controlID="23" controlTypeID="com.balsamiq.mockups::PointyButton" x="1001" y="631" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::PointyButton" x="1001" y="631" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Last%20%3E%3E</text>
       </controlProperties>
     </control>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::PointyButton" x="595" y="632" w="-1" h="-1" measuredW="66" measuredH="27" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::PointyButton" x="595" y="632" w="-1" h="-1" measuredW="66" measuredH="27" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <direction>left</direction>
         <text>%3C%3C%20First</text>
       </controlProperties>
     </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::PointyButton" x="665" y="632" w="-1" h="-1" measuredW="59" measuredH="27" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::PointyButton" x="665" y="632" w="-1" h="-1" measuredW="59" measuredH="27" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
         <direction>left</direction>
         <text>%3C%20Prev</text>
       </controlProperties>
     </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Link" x="784" y="633" w="-1" h="-1" measuredW="10" measuredH="23" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Link" x="784" y="633" w="-1" h="-1" measuredW="10" measuredH="23" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <text>1</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="824" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="824" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <text>3</text>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::Link" x="844" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Link" x="844" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <text>4</text>
       </controlProperties>
     </control>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::Link" x="864" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Link" x="864" y="633" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
         <text>5</text>
       </controlProperties>
     </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::Label" x="804" y="633" w="-1" h="-1" measuredW="13" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
+    <control controlID="30" controlTypeID="com.balsamiq.mockups::Label" x="804" y="633" w="-1" h="-1" measuredW="13" measuredH="23" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>2</text>
       </controlProperties>
     </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::Label" x="689" y="196" w="67" h="18" measuredW="67" measuredH="16" zOrder="20" locked="false" isInGroup="-1">
+    <control controlID="31" controlTypeID="com.balsamiq.mockups::Label" x="689" y="196" w="67" h="18" measuredW="67" measuredH="16" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
         <color>8554646</color>
         <italic>true</italic>
@@ -100,95 +97,95 @@
         <text>Today%20@%204%3A15pm</text>
       </controlProperties>
     </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="689" y="172" w="-1" h="-1" measuredW="56" measuredH="23" zOrder="21" locked="false" isInGroup="-1">
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="689" y="172" w="-1" h="-1" measuredW="56" measuredH="23" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Video%20%231</text>
       </controlProperties>
     </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="762" y="194" w="-1" h="-1" measuredW="142" measuredH="23" zOrder="22" locked="false" isInGroup="-1">
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Label" x="762" y="194" w="-1" h="-1" measuredW="142" measuredH="23" zOrder="21" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Description%20of%20video%20%231</text>
       </controlProperties>
     </control>
-    <control controlID="35" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="240" w="169" h="21" measuredW="224" measuredH="29" zOrder="23" locked="false" isInGroup="-1">
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="240" w="169" h="21" measuredW="224" measuredH="29" zOrder="22" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%23%20Comments%2CLike%2CShare</text>
       </controlProperties>
     </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="172" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="24" locked="false" isInGroup="-1">
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="172" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="23" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Edit</text>
       </controlProperties>
     </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="276" w="95" h="89" measuredW="300" measuredH="200" zOrder="25" locked="false" isInGroup="-1"/>
-    <control controlID="39" controlTypeID="com.balsamiq.mockups::Link" x="689" y="276" w="-1" h="-1" measuredW="59" measuredH="23" zOrder="26" locked="false" isInGroup="-1">
+    <control controlID="38" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="276" w="95" h="89" measuredW="300" measuredH="200" zOrder="24" locked="false" isInGroup="-1"/>
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Link" x="689" y="276" w="-1" h="-1" measuredW="59" measuredH="23" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Video%20%232</text>
       </controlProperties>
     </control>
-    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="762" y="298" w="-1" h="-1" measuredW="144" measuredH="23" zOrder="27" locked="false" isInGroup="-1">
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Label" x="762" y="298" w="-1" h="-1" measuredW="144" measuredH="23" zOrder="26" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Description%20of%20video%20%233</text>
       </controlProperties>
     </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="344" w="169" h="21" measuredW="224" measuredH="29" zOrder="28" locked="false" isInGroup="-1">
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="344" w="169" h="21" measuredW="224" measuredH="29" zOrder="27" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%23%20Comments%2CLike%2CShare</text>
       </controlProperties>
     </control>
-    <control controlID="42" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="276" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="29" locked="false" isInGroup="-1">
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="276" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="28" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Edit</text>
       </controlProperties>
     </control>
-    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="689" y="317" w="-1" h="-1" measuredW="319" measuredH="23" zOrder="30" locked="false" isInGroup="-1">
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="689" y="317" w="-1" h="-1" measuredW="319" measuredH="23" zOrder="29" locked="false" isInGroup="-1">
       <controlProperties>
         <text>In%20this%20video%3A%20%5Buser@user%5D%2C%20%5Bother@user%5D%2C%20%5Banother@user%5D</text>
       </controlProperties>
     </control>
-    <control controlID="44" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="380" w="95" h="89" measuredW="300" measuredH="200" zOrder="31" locked="false" isInGroup="-1"/>
-    <control controlID="45" controlTypeID="com.balsamiq.mockups::Link" x="689" y="380" w="-1" h="-1" measuredW="58" measuredH="23" zOrder="32" locked="false" isInGroup="-1">
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="380" w="95" h="89" measuredW="300" measuredH="200" zOrder="30" locked="false" isInGroup="-1"/>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Link" x="689" y="380" w="-1" h="-1" measuredW="58" measuredH="23" zOrder="31" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Video%20%233</text>
       </controlProperties>
     </control>
-    <control controlID="46" controlTypeID="com.balsamiq.mockups::Label" x="762" y="402" w="-1" h="-1" measuredW="144" measuredH="23" zOrder="33" locked="false" isInGroup="-1">
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Label" x="762" y="402" w="-1" h="-1" measuredW="144" measuredH="23" zOrder="32" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Description%20of%20video%20%233</text>
       </controlProperties>
     </control>
-    <control controlID="47" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="448" w="169" h="21" measuredW="224" measuredH="29" zOrder="34" locked="false" isInGroup="-1">
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="448" w="169" h="21" measuredW="224" measuredH="29" zOrder="33" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%23%20Comments%2CLike%2CShare</text>
       </controlProperties>
     </control>
-    <control controlID="48" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="380" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="35" locked="false" isInGroup="-1">
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="380" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="34" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Edit</text>
       </controlProperties>
     </control>
-    <control controlID="50" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="488" w="95" h="89" measuredW="300" measuredH="200" zOrder="36" locked="false" isInGroup="-1"/>
-    <control controlID="51" controlTypeID="com.balsamiq.mockups::Link" x="689" y="488" w="-1" h="-1" measuredW="58" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::VideoPlayer" x="588" y="488" w="95" h="89" measuredW="300" measuredH="200" zOrder="35" locked="false" isInGroup="-1"/>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Link" x="689" y="488" w="-1" h="-1" measuredW="58" measuredH="23" zOrder="36" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Video%20%234</text>
       </controlProperties>
     </control>
-    <control controlID="52" controlTypeID="com.balsamiq.mockups::Label" x="762" y="510" w="-1" h="-1" measuredW="144" measuredH="23" zOrder="38" locked="false" isInGroup="-1">
+    <control controlID="52" controlTypeID="com.balsamiq.mockups::Label" x="762" y="510" w="-1" h="-1" measuredW="144" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Description%20of%20video%20%234</text>
       </controlProperties>
     </control>
-    <control controlID="53" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="556" w="169" h="21" measuredW="224" measuredH="29" zOrder="39" locked="false" isInGroup="-1">
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="556" w="169" h="21" measuredW="224" measuredH="29" zOrder="38" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%23%20Comments%2CLike%2CShare</text>
       </controlProperties>
     </control>
-    <control controlID="54" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="488" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="40" locked="false" isInGroup="-1">
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::Button" x="1022" y="488" w="-1" h="-1" measuredW="47" measuredH="28" zOrder="39" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Edit</text>
       </controlProperties>
     </control>
-    <control controlID="56" controlTypeID="com.balsamiq.mockups::Label" x="689" y="301" w="-1" h="-1" measuredW="43" measuredH="16" zOrder="41" locked="false" isInGroup="-1">
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::Label" x="689" y="301" w="-1" h="-1" measuredW="43" measuredH="16" zOrder="40" locked="false" isInGroup="-1">
       <controlProperties>
         <color>8554646</color>
         <italic>true</italic>
@@ -196,7 +193,7 @@
         <text>Yesterday</text>
       </controlProperties>
     </control>
-    <control controlID="57" controlTypeID="com.balsamiq.mockups::Label" x="689" y="404" w="67" h="17" measuredW="45" measuredH="16" zOrder="42" locked="false" isInGroup="-1">
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::Label" x="689" y="404" w="67" h="17" measuredW="45" measuredH="16" zOrder="41" locked="false" isInGroup="-1">
       <controlProperties>
         <color>8554646</color>
         <italic>true</italic>
@@ -204,7 +201,7 @@
         <text>1%20year%20ago</text>
       </controlProperties>
     </control>
-    <control controlID="58" controlTypeID="com.balsamiq.mockups::Label" x="689" y="513" w="-1" h="-1" measuredW="50" measuredH="16" zOrder="43" locked="false" isInGroup="-1">
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::Label" x="689" y="513" w="-1" h="-1" measuredW="50" measuredH="16" zOrder="42" locked="false" isInGroup="-1">
       <controlProperties>
         <color>8554646</color>
         <italic>true</italic>
