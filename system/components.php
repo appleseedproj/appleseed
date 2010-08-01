@@ -168,14 +168,16 @@ class cComponents extends cBase {
 			if ( !$pController ) $pController = $pComponent;
 		}
 		
-		$context = $this->$componentname->GetContext( $pController );
-		
 		// Overwrite the View from Request data.
 		if ( $this->GetSys ( "Request" )->Get ('View') ) {
 			$pView = $this->GetSys ( "Request" )->Get ( 'View' );
 		} else {
 			if ( !$pView ) $pView = $pComponent;
 		}
+		
+		$this->$componentname->Set ( "View", $pView );
+		
+		$context = $this->$componentname->CreateContext( $pController );
 		
 		// Overwrite the Task from Request data.
 		if ( $rtask = $this->GetSys ( "Request" )->Get ('Task') ) {

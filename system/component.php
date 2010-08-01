@@ -22,6 +22,10 @@ class cComponent extends cBase {
 	
 	var $Controllers;
 	
+	protected $_Context;
+	
+	protected $_Controller;
+	protected $_View;
 	protected $_Instance = 1;
 
 	/**
@@ -66,12 +70,14 @@ class cComponent extends cBase {
 		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
 		
 		$this->Set ( "Controller", $controller );
+		$this->Set ( "View", $view );
+		
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
 		$this->Controllers->$controllername->Set ( "Alias", $this->Get ( "Alias" ) ) ;
 		
 		$this->Controllers->$controllername->Set ( "Instance", $this->_Instance );
 		
-		$context = $this->GetContext( $this->_Controller );
+		$context = $this->CreateContext( $this->_Controller, $this->_View );
 		
 		$this->Controllers->$controllername->Set ( "Context", $context);
 		
@@ -92,8 +98,21 @@ class cComponent extends cBase {
 		return ( true );
 	}
 	
-	public function GetContext ( $pController ) {
-		$context = $this->_Component . '.' . $this->_Instance . '.' . $pController;
+	/**
+	 * Create the context string of the current instance of the component.
+	 * 
+	 * Context: <component>.<controller>.<INSTANCE#>.<view>
+	 *
+	 * @access  public
+	 * @param string $pController Which controller is being used.
+	 */
+	public function CreateContext ( $pController ) {
+		
+		$contextData = array ( $pController, $this->_Component, $this->_Instance, $this->_View );
+		
+		$context = join ( '.', $contextData );
+		
+		$this->_Context = $context;
 		
 		return ( $context );
 	}

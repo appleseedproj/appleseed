@@ -214,6 +214,10 @@ class cModel extends cBase {
 	 */
 	protected function _Save ( $pCriteria = null ) {
 		
+		if ( ( !$pCriteria ) and ( !$this->Get ( "pk" ) ) ) {
+			return ( $this->_SaveNew () );
+		}
+		
 		$pk = $this->_PrimaryKey;
 		$tbl = $this->_Tablename;
 		$pre = $this->_Prefix;
@@ -263,6 +267,83 @@ class cModel extends cBase {
 			
 			$replacements["criteria"] = $primarykey_value;
 		}
+		
+		$sql = sprintfn ( $sql, $replacements );
+		
+		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$this->Query ( $sql, $prepared );
+		
+		$this->_Rows = $this->_Handle->rowCount();
+		$this->_Total = $this->_Handle->rowCount();
+		
+		// @todo Add query to global list.
+		
+		return ( true );
+	}
+	
+	/**
+	 * Save a new record
+	 *
+	 * @access  public
+	 */
+	protected function _SaveNew ( ) {
+		
+		$pk = $this->_PrimaryKey;
+		$tbl = $this->_Tablename;
+		$pre = $this->_Prefix;
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$sql = 'INSERT INTO %table$s';
+		$replacements["table"] = $table;
+		
+		$prepared = array ();
+		foreach ( $this->_Fields as $f => $fields ) {
+			$fieldname = $fields['Field'];	
+			
+			// Don't update the primary key.
+			if ($fieldname == $this->_PrimaryKey) continue;
+			
+			// Skip anything on the protected list.
+			if ( in_array ( $fieldname, $this->_Protected ) ) continue;
+			
+			$internal = "_" . strtolower ( $fieldname );
+			$internal_field = $internal . "_field";
+			$internal_value = $internal . "_value";
+			
+			$fieldnames[] = '`%' . $internal_field . '$s`';
+			$prepared[] = $this->Get ( $fieldname );
+			
+			$replacements[$internal_field] = $fieldname;
+		}
+		
+		$sql .= ' ( ' . join ( ', ', $fieldnames ) . ' ) ';
+		
+		$sql .= ' VALUES ';
+		
+		$prepared = array ();
+		foreach ( $this->_Fields as $f => $fields ) {
+			$fieldname = $fields['Field'];	
+			
+			// Don't update the primary key.
+			if ($fieldname == $this->_PrimaryKey) continue;
+			
+			// Skip anything on the protected list.
+			if ( in_array ( $fieldname, $this->_Protected ) ) continue;
+			
+			$internal = "_" . strtolower ( $fieldname );
+			$internal_field = $internal . "_field";
+			$internal_value = $internal . "_value";
+			
+			$values[] = '?';
+			$prepared[] = $this->Get ( $fieldname );
+			
+			$replacements[$internal_field] = $fieldname;
+			
+		}
+		
+		$sql .= ' ( ' . implode ( ", ", $values ) . ' ) ';
 		
 		$sql = sprintfn ( $sql, $replacements );
 		
@@ -634,6 +715,8 @@ class cModel extends cBase {
 		$this->_Query = $this->_Handle->queryString;
 		
 		$this->_CountResults();
+		
+		$this->Set ( $this->_PrimaryKey, $DBO->lastInsertId() );
 		
 		return ( true );
 	}

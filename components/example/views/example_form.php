@@ -72,7 +72,7 @@
 						<tr>
 							<th><label for="select">Sales Rep</label></th>
 							<td>
-								<select name="SalesRep_Employee_FK">
+								<select class='required' name="SalesRep_Employee_FK">
 								</select>
 							</td>
 						</tr>

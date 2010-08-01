@@ -84,6 +84,9 @@ class cApplication extends cBase {
 		$this->Request = new cRequest();
 		$this->HTML = new cHTML();
 		
+		$this->Session = new cSession();
+		$this->Validate = new cValidation();
+		
 		$this->Event->Hooks = $this->Hooks;
 		
 		// Load global strings into cache.
@@ -103,6 +106,8 @@ class cApplication extends cBase {
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'request.php' );
 		require_once ( ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
+		require_once ( ASD_PATH . DS . 'libraries' . DS . 'session.php' );
+		require_once ( ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
 	}
 	
 	/**

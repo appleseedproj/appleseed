@@ -45,6 +45,12 @@
 				<li><button name="task" value="delete_all">Delete All</button></li>
 			</ul>
 		</nav>
+		
+		<nav>
+			<ul>
+				<li><button name="task" value="add">Add New</button></li>
+			</ul>
+		</nav>
 
 	</form>
 </section>

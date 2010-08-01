@@ -31,7 +31,7 @@ class cExampleExampleHook extends cHook {
 	
 	public function BeginExampleDisplay ( $pData = null ) {
 		
-		echo "<h2>" . __("Start Hook") . "</h2>";
+		//echo "<h2>" . __("Start Hook") . "</h2>";
 		
 		return ( true );
 	}

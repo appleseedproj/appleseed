@@ -62,6 +62,21 @@ class cExampleController extends cController {
 		 */
 		// $this->EventTrigger ( "Load" );
 		
+		/*
+		 * Session management
+		 * 
+		 */
+		$session = $this->GetSys ( "Session" );
+		
+		$session->Context ( $this->Get ( "Context" ) );
+		$session->Set ( "Variable", "100" );
+		
+		$Variable = $session->Get ( "Variable", "200" );
+		
+		$session->Clear ( "Variable" );
+		
+		// -- 
+		
 		$request = $this->GetSys ( "Request" )->Get();
 		
 		$task = $this->GetSys ( "Request" )->Get ( "Task" );
@@ -268,6 +283,35 @@ class cExampleController extends cController {
 		return ( true );
 	}
 	
+	function Add ( ) {
+		/*
+		 * @tutorial This loads an instance of your model class.  
+		 * @tutorial First parameter is the "Suffix", so, "Tags" looks for the cExampleTagsModel class.
+		 * @tutorial Second parameter is an alternate table name, default is the same as your component (ie, "Example");
+		 * 
+		 */
+		$this->Customers = $this->GetModel();
+		
+		$this->Employees = $this->GetModel("Employees");
+		
+		$this->Form = $this->GetView ( "example_form" );
+		
+		$this->_PrepareEditForm();
+		
+		/*
+		 * @tutorial The order in which views are loaded and edited is important.  
+		 * @tutorial If you call one view within another view, make sure to edit them separately, and in the proper order (outer view last).
+		 * @tutorial In this instance, the "example" view wraps "example_form", so load and edit "example" after "example_form"
+		 * 
+		 */
+		$this->Form->Display();
+		
+		$this->Form->Clear();
+		unset ( $this->Form );
+		
+		return ( true );
+	}
+	
 	/**
 	 * Prepare the Edit form
 	 * 
@@ -332,17 +376,17 @@ class cExampleController extends cController {
 		 * @philosophy Otherwise, prioritize readability above all else.
 		 * 
 		 */
-		// $Customer_PK = $this->GetSys ( "Request" )->Get ( 'id' );
 		$Customer_PK = $this->GetSys ( "Request" )->Get ( 'Customer_PK' );
-		
-		// $Customer_PK = $this->GetSys ( "Request" )->Get ( "Customer_PK", 131);
 		
 		/*
 		 * @tutorial Retrieve a single record based on the primary key.
 		 * 
 		 */
-		$this->Customers->Retrieve ( $Customer_PK );
-		$this->Customers->Fetch();
+		 
+		if ( $Customer_PK ) {
+			$this->Customers->Retrieve ( $Customer_PK );
+			$this->Customers->Fetch();
+		}
 		
 		/*
 		 * @tutorial You can traverse the DOM to set attributes or modify values.
@@ -410,10 +454,33 @@ class cExampleController extends cController {
 		 * @tutorial Be sure to inject any data from the database from the database into the defaults array.
 		 * 
 		 */
-		$defaults = array ( "CustomerName" => "Michael Chisari", "AddressLine2" => "Default");
+		$defaults = array ( "CustomerName" => "Michael Chisari", "AddressLine2" => "2nd Floor");
 		$data = (array) $this->Customers->Get ( "Data" );
 		
-		$defaults = array_merge ( (array)$defaults, (array)$data );
+		/*
+		 * @tutorial You can also retrieve saved session data, and then merge it in.
+		 */
+		$session = $this->GetSys ( "Session" );
+		
+		/*
+		 * @tutorial Set a context first before you use sessions.  
+		 * 
+		 * @tutorial This allows you to save variables that may also be being saved by other
+		 * @tutorial compoenents or another instance of the same component.
+		 */
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		/*
+		 * @tutorial Retrieve an array of all the session variables in the current context.
+		 * 
+		 * @tutorial You can "Set", "Get", "Delete" single session variables.
+		 * @tutorial And you can also "Save" an array of data, 
+		 * @tutorial or "Clear" all session data in the current context.
+		 * 
+		 */
+		$saved = $session->Get();
+		
+		$defaults = array_merge ( (array)$defaults, (array)$data, (array)$saved );
 		$this->Form->Synchronize ( $defaults );
 		
 		return ( true );
