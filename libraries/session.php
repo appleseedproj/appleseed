@@ -37,7 +37,10 @@ class cSession {
 	 * @access  public
 	 * @param string $pContext Which context is being used.
 	 */
-	public function Context ( $pContext ) {
+	public function Context ( $pContext = null ) {
+		
+		if ( !$pContext ) return ( $this->_Context );
+		
 		$this->_Context = $pContext;
 		
 		return ( true );
@@ -62,7 +65,7 @@ class cSession {
 			return ( $_SESSION[$this->_Context] );
 		}
 		
-		$variable = strtolower ( $pVariable );
+		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
 		$return = $_SESSION[$this->_Context][$variable];
 		
@@ -85,7 +88,7 @@ class cSession {
 			return ( false );
 		}
 		
-		$variable = strtolower ( $pVariable );
+		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
 		$_SESSION[$this->_Context][$variable] = $pValue;
 		
@@ -105,10 +108,11 @@ class cSession {
 			return ( false );
 		}
 		
-		$variable = strtolower ( $pVariable );
+		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
 		unset ( $_SESSION[$this->_Context][$variable] );
 		
+		return ( true );
 	}
 
 	/**
@@ -142,7 +146,7 @@ class cSession {
 		}
 		
 		foreach ( $pData as $key => $value ) {
-			$key = strtolower ( $key );
+			$key = strtolower ( ltrim ( rtrim ( $key ) ) );
 			$_SESSION[$this->_Context][$key] = $value;
 		}
 		

@@ -21,12 +21,12 @@
 		<input type="hidden" name="Customer_PK" />
 		<input type="hidden" name="Context" />
 		<fieldset>
-			<legend>Customers</legend>
-			<p>Description of form's purpose would be here.</p>
+			<legend id='example_title'>Customers</legend>
+			<p id='example_message'></p>
 			
 			<fieldset>
-				<legend>Edit</legend>
-				<p>Some text entry inputs</p>
+				<legend id='example_subtitle'>Edit</legend>
+				<p>Edit form field description</p>
 				<table>
 					<tbody>
 						<tr>

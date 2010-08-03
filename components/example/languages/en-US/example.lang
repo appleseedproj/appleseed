@@ -1,0 +1,3 @@
+EDIT_CANCELLED="Your changes have been cancelled."
+RECORD_SAVED="Customer #%id$s has been saved."
+RECORD_APPLIED="Changes to customer #%id$s has been applied."

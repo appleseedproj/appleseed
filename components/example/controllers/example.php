@@ -32,7 +32,7 @@ class cExampleController extends cController {
 	/**
 	 * Display the default view
 	 * 
-	 * @tutorial The default task is to display the default view.  
+	 * @tutorial The default task is the Display view.
 	 * @tutorial Tasks passed through browser requests are mapped to a class method.
 	 * @tutorial For instance, if a form passes Task=Edit, then $this->Edit() will be executed.
 	 * 
@@ -61,21 +61,6 @@ class cExampleController extends cController {
 		 * 
 		 */
 		// $this->EventTrigger ( "Load" );
-		
-		/*
-		 * Session management
-		 * 
-		 */
-		$session = $this->GetSys ( "Session" );
-		
-		$session->Context ( $this->Get ( "Context" ) );
-		$session->Set ( "Variable", "100" );
-		
-		$Variable = $session->Get ( "Variable", "200" );
-		
-		$session->Clear ( "Variable" );
-		
-		// -- 
 		
 		$request = $this->GetSys ( "Request" )->Get();
 		
@@ -143,12 +128,55 @@ class cExampleController extends cController {
 		// This query fails because it has nothing to do with our database structure.
 		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
 		
-		$page = $this->GetSys ( "Request" )->Get ( "Page", 1);
+		$page = $this->GetSys ( "Request" )->Get ( "Page");
 		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
+		
+		/*
+		 * @tutorial You can also retrieve saved session data.
+		 */
+		$session = $this->GetSys ( "Session" );
+		
+		/*
+		 * @tutorial Set a context first before you use sessions.  
+		 * 
+		 * @tutorial This allows you to save variables that may also be being saved by other
+		 * @tutorial components or another instance of the same component.
+		 * 
+		 * @tutorial This is set by default when the component is loaded, so you don't usually
+		 * @tutorial need to set it manually.
+		 */
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		/*
+		 * @tutorial Retrieve an array of all the session variables in the current context.
+		 * 
+		 * @tutorial You can "Set", "Get", "Delete" single session variables.
+		 * @tutorial And you can also "Save" an array of data, 
+		 * @tutorial or "Clear" all session data in the current context.
+		 * 
+		 */
+		$saved = $session->Get();
+		
+		/*
+		 * @tutorial You can use stored session data to do a lot of things.  Here, we skip
+		 * @tutorial to the page in the list that had previously been viewed.  So if the user
+		 * @tutorial leaves the page and comes back, it stores their position.
+		 * 
+		 */
+		 
+		if ( !$page ) {
+			// Get which page was stored, defaulting to page 1
+			$page = $session->Get ( "Page", 1 );
+		} else {
+			// Store the current page for retrieval
+			$session->Set ( "Page", $page );
+		}
+		
+		// Calculate the starting point in the list.
 		$start = ( $page - 1 ) * $step;
 		
+		// Retrieve from the db, using no criteria except for the pagination settings.
 		$this->Customers->Retrieve( null, null, array ( "start" => $start, "step" => $step ) );
-		// $this->Customers->Query ( "SELECT * FROM #__ExampleCustomers" ); 
 		
 		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
 		
@@ -237,7 +265,9 @@ class cExampleController extends cController {
 		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
 		
-		$this->List->Synchronize ();
+		$this->List->Synchronize();
+		
+		$this->_PrepareMessage();
 		
 		$this->List->Display();
 		
@@ -267,7 +297,7 @@ class cExampleController extends cController {
 		
 		$this->Form = $this->GetView ( "example_form" );
 		
-		$this->_PrepareEditForm();
+		$this->_PrepareForm();
 		
 		/*
 		 * @tutorial The order in which views are loaded and edited is important.  
@@ -296,7 +326,7 @@ class cExampleController extends cController {
 		
 		$this->Form = $this->GetView ( "example_form" );
 		
-		$this->_PrepareEditForm();
+		$this->_PrepareForm();
 		
 		/*
 		 * @tutorial The order in which views are loaded and edited is important.  
@@ -313,7 +343,7 @@ class cExampleController extends cController {
 	}
 	
 	/**
-	 * Prepare the Edit form
+	 * Prepare the form
 	 * 
 	 * @tutorial The default task is to display the default view.  
 	 * @tutorial Tasks passed through browser requests are mapped to a class method.
@@ -325,7 +355,8 @@ class cExampleController extends cController {
 	 *
 	 * @access  public
 	 */
-	public function _PrepareEditForm() {
+	public function _PrepareForm() {
+		
 		/*
 		 * @tutorial In order to modify views based on your model, you load the view into an DOM parser.
 		 * @tutorial The DOM parser is based extends SimpleHTMLDom
@@ -376,7 +407,7 @@ class cExampleController extends cController {
 		 * @philosophy Otherwise, prioritize readability above all else.
 		 * 
 		 */
-		$Customer_PK = $this->GetSys ( "Request" )->Get ( 'Customer_PK' );
+		$Customer_PK = $this->GetSys ( "Request" )->Get ( 'Customer_PK', $this->Customers->Get ( "Customer_PK" ) );
 		
 		/*
 		 * @tutorial Retrieve a single record based on the primary key.
@@ -457,36 +488,45 @@ class cExampleController extends cController {
 		$defaults = array ( "CustomerName" => "Michael Chisari", "AddressLine2" => "2nd Floor");
 		$data = (array) $this->Customers->Get ( "Data" );
 		
-		/*
-		 * @tutorial You can also retrieve saved session data, and then merge it in.
-		 */
-		$session = $this->GetSys ( "Session" );
+		$defaults = array_merge ( (array)$defaults, (array)$data );
 		
-		/*
-		 * @tutorial Set a context first before you use sessions.  
-		 * 
-		 * @tutorial This allows you to save variables that may also be being saved by other
-		 * @tutorial compoenents or another instance of the same component.
-		 */
-		$session->Context ( $this->Get ( "Context" ) );
-		
-		/*
-		 * @tutorial Retrieve an array of all the session variables in the current context.
-		 * 
-		 * @tutorial You can "Set", "Get", "Delete" single session variables.
-		 * @tutorial And you can also "Save" an array of data, 
-		 * @tutorial or "Clear" all session data in the current context.
-		 * 
-		 */
-		$saved = $session->Get();
-		
-		$defaults = array_merge ( (array)$defaults, (array)$data, (array)$saved );
 		$this->Form->Synchronize ( $defaults );
+		
+		$this->_PrepareMessage();
+		
+		if ( $this->Customers->Get ( "Customer_PK" ) ) {
+			$this->_PrepareEditForm ( );
+		} else {
+			$this->_PrepareAddForm ( );
+		}
+		
+		return ( true );
+	}
+	
+	function _PrepareEditForm ( ) {
+	}
+	
+	function _PrepareAddForm ( ) {
+		
+		/*
+		 * @tutorial No need to use __() translation function, since the legend element is 
+		 * @tutorial automatically 
+		 */
+		$this->Form->Find ( "[id=example_subtitle]", 0)->innertext = "Add New";
 		
 		return ( true );
 	}
 	
 	function Cancel ( ) {
+		
+		/*
+		 * @philosophy Keep in mind that this is only *one* way to do this.  You aren't 
+		 * @philosophy restricted to using most of the methods presented in this tutorial,
+		 * @philosophy and hopefully the framework is flexible enough so that other 
+		 * @philosophy methods can be used just as easily.
+		 * 
+		 */
+		$this->GetSys ( "Session" )->Set ( "Message", "Edit Cancelled" );
 		
 		$this->Go ( "Display" );
 		
@@ -497,6 +537,22 @@ class cExampleController extends cController {
 		
 		$this->_Save();
 		
+		/*
+		 * @tutorial When saving a new record, you can set the Request value to the primary key, so that it switches
+		 * @tutorial from an Add form to an Edit form.  This isn't the only way to manage the difference between
+		 * @tutorial Edit and Add, but it allows you to have the same view and preparation for both forms.
+		 * 
+		 */
+		$this->GetSys ( "Request" )->Set ( "Customer_PK", $this->Customers->Get ( "Customer_PK" ) );
+		
+		/*
+		 * @tutorial Here you can set a session variable with the result messages
+		 * @tutorial The Display function will check the session and display the message it finds.
+		 * 
+		 */
+		$message = __( "Record Applied", array ( "id" => $this->Customers->Get ( "Customer_PK" ) ) ); 
+		$this->GetSys ( "Session" )->Set ( "Message", $message );
+		
 		$this->Go ( "Edit" );
 		 
 		return ( true );
@@ -505,6 +561,9 @@ class cExampleController extends cController {
 	function Save ( ) {
 		
 		$this->_Save();
+		
+		$message = __( "Record Saved", array ( "id" => $this->Customers->Get ( "Customer_PK" ) ) ); 
+		$this->GetSys ( "Session" )->Set ( "Message", $message );
 		
 		/*
 		 * @tutorial Here we tell the controller to load the Display method.
@@ -586,14 +645,39 @@ class cExampleController extends cController {
 		
 		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
 		
+		if ( !$selected ) {
+			$this->GetSys ( "Session" )->Set ( "Message", "None Selected" );
+			$this->GetSys ( "Session" )->Set ( "Error", TRUE );
+		}
+		
 		$this->Go ( "Display" );
 	}
 	
 	function Move_Down ( ) {
+		
+		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
+		
+		if ( !$selected ) {
+			$this->GetSys ( "Session" )->Set ( "Message", "None Selected" );
+			$this->GetSys ( "Session" )->Set ( "Error", TRUE );
+		}
+		
+		$this->Go ( "Display" );
 	}
 	
 	function Delete_All ( ) {
 		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
+		
+		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
+		
+		if ( !$selected ) {
+			$this->GetSys ( "Session" )->Set ( "Message", "None Selected" );
+			$this->GetSys ( "Session" )->Set ( "Error", TRUE );
+			
+			$this->Go ( "Display" );
+			
+			return ( false );
+		}
 		
 		//$criteria['Customer_PK'] = "()" . join ( ', ', array_keys ( $selected ) );
 		$criteria['Customer_PK'] = $selected;
@@ -603,6 +687,32 @@ class cExampleController extends cController {
 		$this->Customers->Delete ( $criteria );
 		
 		$this->Go ( "Display" );
+		
+		return ( true );
+	}
+	
+	private function _PrepareMessage ( ) {
+		
+		if ( $this->Form ) {
+			$markup = & $this->Form;
+		} else if ( $this->List ) {
+			$markup = & $this->List;
+		} else {
+			return ( false );
+		}
+		
+		if ( $message =  $this->GetSys ( "Session" )->Get ( "Message" ) ) {
+			$markup->Find ( "[id=example_message]", 0 )->innertext = $message;
+			if ( $error =  $this->GetSys ( "Session" )->Get ( "Error" ) ) {
+				$markup->Find ( "[id=example_message]", 0 )->class = "error";
+			} else {
+				$markup->Find ( "[id=example_message]", 0 )->class = "message";
+			}
+			$this->GetSys ( "Session" )->Delete ( "Message ");
+			$this->GetSys ( "Session" )->Delete ( "Error ");
+		}
+		
+		return ( true );
 	}
 	
 }

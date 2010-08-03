@@ -169,9 +169,6 @@ class cModel extends cBase {
 		
 		$prepared = array_merge ( $prepared, $criteriaPrepared );
 		
-		echo "<pre>";
-		print_r ( $prepared );
-		
 		$sql .= implode ( ", ", $queries );
 		
 		$sql .= " WHERE " . $where;
@@ -214,13 +211,13 @@ class cModel extends cBase {
 	 */
 	protected function _Save ( $pCriteria = null ) {
 		
-		if ( ( !$pCriteria ) and ( !$this->Get ( "pk" ) ) ) {
-			return ( $this->_SaveNew () );
-		}
-		
 		$pk = $this->_PrimaryKey;
 		$tbl = $this->_Tablename;
 		$pre = $this->_Prefix;
+		
+		if ( ( !$pCriteria ) and ( !$this->Get ( $pk ) ) ) {
+			return ( $this->_SaveNew () );
+		}
 		
 		$table = $this->_Prefix . $this->_Tablename;
 		
@@ -716,7 +713,9 @@ class cModel extends cBase {
 		
 		$this->_CountResults();
 		
-		$this->Set ( $this->_PrimaryKey, $DBO->lastInsertId() );
+		if ( $DBO->lastInsertId() ) {
+			$this->Set ( $this->_PrimaryKey, $DBO->lastInsertId() );
+		}
 		
 		return ( true );
 	}

@@ -81,13 +81,20 @@ class cComponent extends cBase {
 		
 		$this->Controllers->$controllername->Set ( "Context", $context);
 		
-		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
+		// Store the current session context
+		$oldSessionContext = $this->GetSys ( "Session" )->Context();
 		
-		// if ( !method_exists ( $this->Controllers->$controllername, $taskname ) ) $taskname = "display";
+		// Set the current session context
+		$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );
+		
+		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
 		
 		$this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		$this->GetSys ( "Event" )->Trigger ( "End", $this->_Component, $pTask ); 
+		
+		// Restore the stored session context (for embedded component calls)
+		$this->GetSys ( "Session" )->Context ( $oldSessionContext );
 		
 		return ( true );
 	}

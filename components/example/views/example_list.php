@@ -6,6 +6,8 @@
 		<input type="hidden" name="Context" />
 
 		<h1>Example Customers Title</h1>
+		
+		<p id='example_message'></p>
 
 		<p>Example Customers Description</p>
 

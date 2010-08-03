@@ -206,8 +206,6 @@ class cComponents extends cBase {
 		
 		ob_start ();
 		
-		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
-		
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
 		
 		$bdata = ob_get_clean ();
