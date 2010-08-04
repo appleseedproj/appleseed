@@ -30,47 +30,51 @@
 				<table>
 					<tbody>
 						<tr>
-							<th><label for="text">Customer Name <em>*</em></label></th>
+							<th><label for="CustomerName">Customer Name <em>*</em></label></th>
 							<td><input class="required" type="text" name="CustomerName" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Contact First Name <em>*</em></label></th>
+							<th><label for="ContactFirstName">Contact First Name <em>*</em></label></th>
 							<td><input class="required" type="text" name="ContactFirstName" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Contact Last Name <em>*</em></label></th>
+							<th><label for="ContactLastName">Contact Last Name <em>*</em></label></th>
 							<td><input class="required" type="text" name="ContactLastName" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Phone </label></th>
+							<th><label for="Phone">Phone </label></th>
 							<td><input type="text" name="Phone" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Address 1 </label></th>
+							<th><label for="Email">E-Mail <em>*</em></label></th>
+							<td><input type="text" name="Email" /></td>
+						</tr>
+						<tr>
+							<th><label for="AddressLine1">Address 1 </label></th>
 							<td><input type="text" name="AddressLine1" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Address 2 </label></th>
+							<th><label for="AddressLine2">Address 2 </label></th>
 							<td><input type="text" name="addressLine2" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">City </label></th>
+							<th><label for="City">City </label></th>
 							<td><input type="text" name="City" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">State </label></th>
+							<th><label for="State">State </label></th>
 							<td><input type="text" name="State" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Country </label></th>
+							<th><label for="Country">Country </label></th>
 							<td><input type="text" name="Country" /></td>
 						</tr>
 						<tr>
-							<th><label for="text">Postal Code </label></th>
+							<th><label for="PostalCode">Postal Code </label></th>
 							<td><input type="text" name="PostalCode" /></td>
 						</tr>
 						<tr>
-							<th><label for="select">Sales Rep</label></th>
+							<th><label for="SalesRep_Employee_FK">Sales Rep</label></th>
 							<td>
 								<select class='required' name="SalesRep_Employee_FK">
 								</select>

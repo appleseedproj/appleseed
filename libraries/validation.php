@@ -19,6 +19,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  Library
  */
 class cValidation {
+	
+	protected $_Reasons = array ();
 
 	/**
 	 * Constructor
@@ -28,22 +30,53 @@ class cValidation {
 	public function __construct ( ) {       
 	}
 	
+	public function GetReasons ( ) {
+		
+		return ( $this->_Reasons );
+	}
+	
 	public function Email ( $pValue ) {
+		$result = filter_var ( $pValue , FILTER_VALIDATE_EMAIL );
+		
+		if ( $result ) return ( true );
+		
+		return ( false );
 	}
 
 	public function Url ( $pValue ) {
+		$result = filter_var ( $pValue , FILTER_VALIDATE_URL );
+		
+		if ( $result ) return ( true );
+		
+		return ( false );
 	}
 
 	public function Username ( $pValue ) {
+		
+		$illegal = '/ * \ < > ( ) [ ] & ^ $ # @ ! ? ; \' " { } | ~ + = %20';
+		
+		if ( !$this->Required ( $pValue, $illegal ) ) return ( false ); 
+		
+		if ( !$this->MinLength ( $pValue, 6 ) ) return ( false ); 
+		
+		if ( !$this->MinLength ( $pValue, 16 ) ) return ( false ); 
+		
+		return ( true );
 	}
 
 	public function Domain ( $pValue ) {
 	}
 
 	public function Null ( $pValue ) {
+		if ( !$pValue ) return ( true );
+		
+		return ( false );
 	}
 
 	public function NotNull ( $pValue ) {
+		if ( $pValue ) return ( true );
+		
+		return ( false );
 	}
 
 	public function Digits ( $pValue ) {
@@ -53,27 +86,77 @@ class cValidation {
 	}
 
 	public function Required ( $pValue, $pCharacters ) {
+		
+		$characters = explode ( ' ', $pCharacters );
+
+		foreach ($characters as $c) {
+			
+			if ($c == "%20") $c = " ";
+
+				if (!strpos ($pValue, $c)) {
+					return ( false );
+				} // if
+			} 
+        
+        return ( true );
 	}
 
 	public function Illegal ( $pValue, $pCharacters ) {
+		
+		$characters = explode ( ' ', $pCharacters );
+
+		foreach ($characters as $c) {
+			
+			if ($c == "%20") $c = " ";
+
+				if (strpos ($pValue, $c)) {
+					return ( false );
+				} // if
+			} 
+        
+        return ( true );
 	}
 
 	public function Length ( $pValue, $pMin, $pMax ) {
+		
+		if ( ( strlen ( $pValue ) >= $pMin ) && ( strlen ( $pValue ) <= $pMax ) ) return ( true );
+		
+		return ( false );
 	}
 
 	public function MinLength ( $pValue, $pMin ) {
+		
+		if ( ( strlen ( $pValue ) >= $pMin ) ) return ( true );
+		
+		return ( false );
 	}
 
 	public function MaxLength ( $pValue, $pMax ) {
+		
+		if ( ( strlen ( $pValue ) <= $pMax ) ) return ( true );
+		
+		return ( false );
 	}
 
 	public function Size ( $pValue, $pMin, $pMax ) {
+		
+		if ( ( $pValue >= $pMin ) && ( $pValue <= $pMax ) ) return ( true );
+		
+		return ( false );
 	}
 
 	public function MinSize ( $pValue, $pMin ) {
+		
+		if ( ( $pValue >= $pMin ) ) return ( true );
+		
+		return ( false );
 	}
 	
 	public function MaxSize ( $pValue, $pMax ) {
+		
+		if ( ( $pValue <= $pMax ) ) return ( true );
+		
+		return ( false );
 	}
 	
 }

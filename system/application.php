@@ -85,7 +85,7 @@ class cApplication extends cBase {
 		$this->HTML = new cHTML();
 		
 		$this->Session = new cSession();
-		$this->Validate = new cValidation();
+		$this->Validation = new cValidation();
 		
 		$this->Event->Hooks = $this->Hooks;
 		

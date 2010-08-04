@@ -816,6 +816,14 @@ class cModel extends cBase {
 	}
 	
 	/**
+	 * Validate the form values against the database rules.
+	 *
+	 * @access public
+	 */
+	public function Validate ( $pData ) {
+	}
+	
+	/**
 	 * Protect the listed fields from updates or modifications.
 	 *
 	 * @access public

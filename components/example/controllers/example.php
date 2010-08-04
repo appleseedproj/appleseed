@@ -492,6 +492,8 @@ class cExampleController extends cController {
 		
 		$this->Form->Synchronize ( $defaults );
 		
+		$this->Form->Find ( "input[name=Email]", 0 )->innertext = '<label for="Email" class="error">Invalid Email</label>';
+		
 		$this->_PrepareMessage();
 		
 		if ( $this->Customers->Get ( "Customer_PK" ) ) {
@@ -535,7 +537,10 @@ class cExampleController extends cController {
 	
 	function Apply ( ) {
 		
-		$this->_Save();
+		if ( !$this->_Save() ) {
+			$this->Go ( "Edit" );
+			return ( false );
+		}
 		
 		/*
 		 * @tutorial When saving a new record, you can set the Request value to the primary key, so that it switches
@@ -560,7 +565,10 @@ class cExampleController extends cController {
 	
 	function Save ( ) {
 		
-		$this->_Save();
+		if ( !$this->_Save() ) {
+			$this->Go ( "Edit" );
+			return ( false );
+		}
 		
 		$message = __( "Record Saved", array ( "id" => $this->Customers->Get ( "Customer_PK" ) ) ); 
 		$this->GetSys ( "Session" )->Set ( "Message", $message );
@@ -605,6 +613,44 @@ class cExampleController extends cController {
 		$this->Customers->Synchronize();
 		
 		/*
+		 * @tutorial There are two ways to validate the data against the database.  You can do it
+		 * @tutorial somewhat automatically, using the Validate model function.  
+		 * 
+		 * @tutorial This looks at the field structure in the database, and makes sure that the 
+		 * @tutorial data provided will enter properly.
+		 */
+		$reasons = $this->Customers->Validate ( );
+		
+		/*
+		 * @tutorial The other way is to use the Validation class to manually check each field.
+		 * @tutorial This is useful for custom validations that can't be expressed in the database.
+		 * 
+		 * @tutorial The following functions are available in the Validation class:
+		 * 
+		 * @tutorial Email Url Username Domain Null NotNull Digits Number Required Illegal
+		 * @tutorial Length MinLength MaxLength Size MinSize MaxSize
+		 */
+		$validate = $this->GetSys ( "Validation" );
+		
+		$email = $this->GetSys ( "Request" )->Get ( "Email" );
+		
+		if ( !$validate->NotNull ( $email ) ) {
+			$message = __( "Cannot Be Null", array ( "field" => "Email" ) ); 
+			$this->GetSys ( "Session" )->Set ( "Message", $message );
+			$this->GetSys ( "Session" )->Set ( "Error", true );
+			
+			return ( false );
+		}
+		
+		if ( !$validate->Email ( $email ) ) {
+			$message = __( "Invalid Email", array ( "email" => $email ) ); 
+			$this->GetSys ( "Session" )->Set ( "Message", $message );
+			$this->GetSys ( "Session" )->Set ( "Error", true );
+			
+			return ( false );
+		}
+		
+		/*
 		 * @tutorial We can protect fields from being updated by using the Protect function.
 		 * 
 		 * @tutorial For instance, our database table has a field called CreditLimit, but the form doesn't include it.
@@ -617,7 +663,7 @@ class cExampleController extends cController {
 		 */
 		$this->Customers->Protect ( "CreditLimit" );
 		$this->Customers->Protect ( "PostalCode" );
-		 
+		
 		/*
 		 * @tutorial Now, simply save the data.
 		 *
