@@ -126,7 +126,7 @@ class cRouter extends cBase {
 		eval (GLOBALS);
 	
 		$routes = explode ( '/', $_SERVER['REQUEST_URI'] );
-			
+		
 		// Set proper global variables
 		cRouter::LegacyPrepGlobals ( );
 	

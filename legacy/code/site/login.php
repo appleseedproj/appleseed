@@ -58,7 +58,7 @@
   require_once ('legacy/code/include/classes/asd/0.7.3.php'); 
 
   // Create the Application class.
-  $zOLDAPPLE = new cAPPLESEED ();
+  $zOLDAPPLE = new cOLDAPPLESEED ();
   
   // Set Global Variables (Put this at the top of wrapper scripts)
   $zOLDAPPLE->SetGlobals ();

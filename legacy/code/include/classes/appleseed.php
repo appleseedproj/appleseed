@@ -39,7 +39,7 @@
   require_once 'legacy/code/include/external/phpmailer/class.phpmailer.php';
   require_once 'legacy/code/include/external/phpmailer/class.smtp.php';
   
-  class cAPPLESEED extends cOLDAPPLICATION {
+  class cOLDAPPLESEED extends cOLDAPPLICATION {
 
     var $Context;
     var $PurifierConfig;
@@ -48,7 +48,7 @@
     var $JSON;
     var $Tags;
 
-    function cAPPLESEED () {
+    function cOLDAPPLESEED () {
       
       $this->Context = "";
 
@@ -72,7 +72,7 @@
       
       
       global $zDEBUG;
-  
+      
       $zDEBUG = new cDEBUG;
       
       $zDEBUG->BenchmarkStart ('SITE');
