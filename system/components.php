@@ -182,7 +182,7 @@ class cComponents extends cBase {
 		// Overwrite the Task from Request data.
 		if ( $rtask = $this->GetSys ( "Request" )->Get ('Task') ) {
 			if ( $usecontext = $this->GetSys ( "Request" )->Get ( "Context" ) ) {
-				if ( ( $usecontext != $context ) ) {
+				if ( !preg_match ( '/' . $usecontext . '/', $context ) ) {
 					$pTask = "display";
 				} else {
 					$pTask = $rtask;

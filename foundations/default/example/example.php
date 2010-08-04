@@ -47,9 +47,11 @@
     
         <div id="page_left" class="grid_3">
         
-		  	<?php $zApp->Components->Go ( "profile" ); ?>
+		 	<?php $zApp->Components->Go ( "profile" ); ?>
+		 	
+		 	<?php $zApp->Components->Go ( "appleseed", "appleseed", "donate" ); ?>
 		  	
-        </div>
+		</div>
         
         <div id="page_right" class="grid_9">
         

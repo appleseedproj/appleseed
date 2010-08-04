@@ -50,6 +50,19 @@ class cFoundation extends cBase {
 		
 		$Buffer = $this->GetSys ( "Buffer" );
 		
+		$contexts = $this->Get ( "Config" )->GetConfiguration ( "contexts" );
+		
+		$context = $contexts[$pRoute];
+		
+		if ( !$context ) {
+			# @TODO: Throw a warning.
+ 		}
+		
+		// If the context isn't set in the Request data, set it with the specified default.
+		if ( !$this->GetSys ( "Request" )->Get ( "Context" ) ) {
+			$this->GetSys ( "Request" )->Set ( "Context", $context );
+		}
+		
 		foreach ( $paths as $p => $path ) {
 			$route = ltrim ( rtrim ( $pRoute, '/' ), '/' );
 			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;

@@ -628,20 +628,6 @@ class cExampleController extends cController {
 	}
 	
 	function Move_Up ( ) {
-		/* 
-		 * @tutorial Here we check to see if the context for the task matches our current context.
-		 * @tutorial This way we don't process the form twice (one example of a "component collision").
-		 * 
-		 * @philosophy A good practice for building components is to put two instances in a foundation.
-		 * @philosophy That way you can check for collisions as you build your component.
-		 * 
-		 */
-		$context = $this->GetSys ( "Request" )->Get ( "Context" );
-		
-		if ( $context != $this->_Context ) {
-			$this->Go ( "Display" );
-			return ( false );
-		}
 		
 		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
 		

@@ -45,6 +45,7 @@ class cRouter extends cBase {
 		$FoundationConfig = $Foundation->Get ( "Config" );
 		
 		$routes = $FoundationConfig->GetConfiguration ( "routes" );
+		
 		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
 			
 		foreach ( $routes as $r => $route ) {
