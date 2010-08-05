@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="1143" measuredH="842" mockupW="1057" mockupH="800">
+<mockup version="1.0" skin="sketch" measuredW="1143" measuredH="842" mockupW="800" mockupH="800">
   <controls>
     <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="333" y="32" w="800" h="800" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
     <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="361" y="33" w="726" h="-1" measuredW="113" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
@@ -140,6 +140,5 @@
         <text>Join</text>
       </controlProperties>
     </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::ButtonBar" x="76" y="49" w="-1" h="-1" measuredW="166" measuredH="29" zOrder="28" locked="false" isInGroup="-1"/>
   </controls>
 </mockup>
