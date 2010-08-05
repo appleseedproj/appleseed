@@ -11,14 +11,16 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Security Class
+require ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'htmLawed-1.1.9.4' . DS . 'htmLawed.php' );
+
+/** Purifier Class
  * 
- * Security and access management.
+ * Purifier and access management.
  * 
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cSecurity {
+class cPurifier {
 
 	/**
 	 * Constructor

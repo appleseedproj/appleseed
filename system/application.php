@@ -108,6 +108,7 @@ class cApplication extends cBase {
 		$this->AddSys ( "Validation",  ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
 		$this->AddSys ( "Request",  ASD_PATH . DS . 'libraries' . DS . 'request.php' );
 		$this->AddSys ( "HTML",  ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
+		$this->AddSys ( "Purifier",  ASD_PATH . DS . 'libraries' . DS . 'purifier.php' );
 		
 		return ( true );
 	}

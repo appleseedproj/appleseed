@@ -74,9 +74,16 @@ class cBase {
 		$class = 'c' . $variable;
 		
 		if ( !isset ( $zApp->$variable ) ) {
-			if ( file_exists ( $zApp->_System[$variable] ) ) {
-				require ( $zApp->_System[$variable] );
+			if ( class_exists ( $class ) ) {
 				$zApp->$variable = new $class ();
+			} else if ( file_exists ( $zApp->_System[$variable] ) ) {
+				require ( $zApp->_System[$variable] );
+				if ( class_exists ( $class ) ) {
+					$zApp->$variable = new $class ();
+				} else {
+					echo __("System Object Not Found", array ( 'name' => $variable ) );
+					exit;
+				}
 			} else {
 				echo __("System Object Not Found", array ( 'name' => $variable ) );
 				exit;
