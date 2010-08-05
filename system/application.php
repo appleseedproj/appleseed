@@ -48,6 +48,7 @@ class cApplication extends cBase {
 		
 		$this->_DisableMagicQuotes ( );
 		
+		require ( ASD_PATH . DS . 'system' . DS . 'benchmark.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'database.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
@@ -73,6 +74,7 @@ class cApplication extends cBase {
 		
 		$this->Theme = new cTheme ();
 		$this->Logs = new cLogs();
+		$this->Benchmark = new cBenchmark();
 		$this->Buffer = new cBuffer();
 		
 		$this->Components = new cComponents();
