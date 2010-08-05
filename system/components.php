@@ -58,7 +58,7 @@ class cComponents extends cBase {
 				continue;
 			}
 			
-			require_once ( $filename );
+			require ( $filename );
 			
 			$componentname = ucwords ( strtolower ( $component ) );
 			
@@ -206,7 +206,12 @@ class cComponents extends cBase {
 		
 		ob_start ();
 		
+		$benchmark_start = (float) array_sum(explode(' ',microtime())); 
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
+		$benchmark_end = (float) array_sum(explode(' ',microtime())); 
+				
+		// Uncomment for component benchmarks.
+		// echo "<h1>Component Time: ", sprintf("%.4f", ($benchmark_end-$benchmark_start)) . " seconds</h1>";
 		
 		$bdata = ob_get_clean ();
 		

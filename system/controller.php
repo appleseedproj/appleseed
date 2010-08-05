@@ -171,7 +171,7 @@ class cController extends cBase {
 			echo __("Model Not Found", array ( 'name' => $model ) );
 		}
 		
-		require_once ( $filename );
+		require ( $filename );
 		
 		$this->_Models->$model = new $class ( $pTable );
 		

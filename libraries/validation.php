@@ -35,6 +35,131 @@ class cValidation {
 		return ( $this->_Reasons );
 	}
 	
+	public function ClearReasons ( ) {
+		
+		$this->_Reasons = array();
+		
+		return ( true );
+	}
+	
+	public function Validate ( $pFields, $pData ) {
+		
+		foreach ( $pData as $d => $data) {
+			$variables[] = $d;
+		}
+		
+		foreach ( $pFields as $f => $field ) {
+			$fieldName = $field['Field'];
+			$fieldNameLower = strtolower ( ltrim ( rtrim ( $fieldName ) ) );
+			if ( !in_array ( $fieldNameLower, $variables ) ) continue;
+			
+			$validate[$fieldName] = $field;
+		}
+		
+		$return = true;
+		
+		foreach ( $validate as $v => $valid ) {
+			$fieldNameLower = ltrim ( rtrim ( strtolower ( $v ) ) );
+			$type = $valid['Type'];
+			$null = $valid['Null'];
+			
+			preg_match ( '/(.*)\((.*)\)/', $type, $info );
+			$type = $info[1];
+			$storageSize = $info[2];
+			
+			/*
+			 * tinyint		1 bytes	-128 to 127									0 to 255
+			 * smallint		2 bytes	-32768 to 32767								0 to 65535
+			 * mediumint	3 bytes	-8388608 to 8388607							0 to 16777215
+			 * int			4 bytes	-2147483648 to 2147483647					0 to 4294967295
+			 * bigint		8 bytes	-9223372036854775808 to 9223372036854775807	0 to 18446744073709551615
+			 */
+			
+			$value = $pData[$fieldNameLower];
+			
+			if ( $null == 'NO' ) {
+				if ( ! $this->NotNull ( $value ) ) {
+					$return = false;
+					$this->_Reasons[$v][] = "Cannot Be Null";
+				}
+			}
+			
+			switch ( $type ) {
+				case 'varchar':
+				case 'char':
+					$maxlength = $storageSize;
+					if ( ! $this->MaxLength ( $value, $maxlength ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Long";
+					}
+				break;
+				case 'tinyint':
+					$minSize = -128;
+					$maxSize = 127;
+					if ( ! $this->MinSize ( $value, $minSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Small";
+					}
+					if ( ! $this->MaxSize ( $value, $maxSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Large";
+					}
+				break;
+				case 'smallint':
+					$minSize = -32768;
+					$maxSize = 32767;
+					if ( ! $this->MinSize ( $value, $minSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Small";
+					}
+					if ( ! $this->MaxSize ( $value, $maxSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Large";
+					}
+				break;
+				case 'mediumint':
+					$minSize = -8388608;
+					$maxSize = 8388607;
+					if ( ! $this->MinSize ( $value, $minSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Small";
+					}
+					if ( ! $this->MaxSize ( $value, $maxSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Large";
+					}
+				break;
+				case 'int':
+					$minSize = -2147483648;
+					$maxSize = 2147483647;
+					if ( ! $this->MinSize ( $value, $minSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Small";
+					}
+					if ( ! $this->MaxSize ( $value, $maxSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Large";
+					}
+				break;
+				case 'bigint':
+					$minSize = -9223372036854775808;
+					$maxSize = 9223372036854775807;
+					if ( ! $this->MinSize ( $value, $minSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Small";
+					}
+					if ( ! $this->MaxSize ( $value, $maxSize ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Too Large";
+					}
+				break;
+			}
+			
+		}
+		
+		return ( $return );
+	}
+	
 	public function Email ( $pValue ) {
 		$result = filter_var ( $pValue , FILTER_VALIDATE_EMAIL );
 		

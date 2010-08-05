@@ -11,8 +11,7 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-//require_once ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'QueryPath-2.0.1' . DS . 'QueryPath.php' );
-require_once ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'SimpleHTMLDom-1.11' . DS . 'simple_html_dom.php' );
+require ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'SimpleHTMLDom-1.11' . DS . 'simple_html_dom.php' );
 
 /** Markup Class
  * 

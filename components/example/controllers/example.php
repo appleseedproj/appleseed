@@ -492,7 +492,7 @@ class cExampleController extends cController {
 		
 		$this->Form->Synchronize ( $defaults );
 		
-		$this->Form->Find ( "input[name=Email]", 0 )->innertext = '<label for="Email" class="error">Invalid Email</label>';
+		$this->_ShowReasons ();
 		
 		$this->_PrepareMessage();
 		
@@ -619,7 +619,12 @@ class cExampleController extends cController {
 		 * @tutorial This looks at the field structure in the database, and makes sure that the 
 		 * @tutorial data provided will enter properly.
 		 */
-		$reasons = $this->Customers->Validate ( );
+		$validate = $this->GetSys ( "Validation" );
+		
+		$fields = $this->Customers->Get ( "Fields" );
+		$data = $this->GetSys ( "Request" )->Get ();
+		
+		if ( !$validate->Validate ( $fields, $data ) ) return ( false );
 		
 		/*
 		 * @tutorial The other way is to use the Validation class to manually check each field.
@@ -630,7 +635,6 @@ class cExampleController extends cController {
 		 * @tutorial Email Url Username Domain Null NotNull Digits Number Required Illegal
 		 * @tutorial Length MinLength MaxLength Size MinSize MaxSize
 		 */
-		$validate = $this->GetSys ( "Validation" );
 		
 		$email = $this->GetSys ( "Request" )->Get ( "Email" );
 		
@@ -743,6 +747,24 @@ class cExampleController extends cController {
 			$this->GetSys ( "Session" )->Delete ( "Message ");
 			$this->GetSys ( "Session" )->Delete ( "Error ");
 		}
+		
+		return ( true );
+	}
+	
+	function _ShowReasons ( ) {
+		$reasons = $this->GetSys ( "Validation" )->GetReasons();
+		
+		if ( count ( $reasons ) < 1 ) return ( false );
+			
+		foreach ( $reasons as $field => $reason ) {
+			
+			$search = "[name=" . $field . "]";
+			$this->Form->Find ( $search, 0 )->outertext .= '<label for="' . $field . '" class="error">' . $reason[0] . '</label>';
+		}
+		
+		$message = __( "Errors On Page" ); 
+		$this->GetSys ( "Session" )->Set ( "Message", $message );
+		$this->GetSys ( "Session" )->Set ( "Error", true );
 		
 		return ( true );
 	}

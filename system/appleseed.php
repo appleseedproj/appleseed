@@ -16,8 +16,10 @@ define ( 'APPLESEED', true );
 define ( 'DS', DIRECTORY_SEPARATOR );
 define ( 'ASD_PATH', $_SERVER['DOCUMENT_ROOT'] . DS);
 
-require_once ( ASD_PATH . DS . 'system' . DS . 'base.php' );
-require_once ( ASD_PATH . 'system' . DS . 'application.php' );
+require ( ASD_PATH . DS . 'system' . DS . 'base.php' );
+require ( ASD_PATH . 'system' . DS . 'application.php' );
+
+$benchmark['_'] = (float) array_sum(explode(' ',microtime())); 
 
 /** 
  * Entry Point
@@ -35,7 +37,6 @@ echo $zApp->Buffer->Process ();
 
 $end_mem = memory_get_usage(); 
 $end_time = (float) array_sum(explode(' ',microtime())); 
- 
 
 echo "<h1>Memory Usage: ", sprintf ( "%2.2f", ( $end_mem - $start_mem ) / 1024 / 1024 ) . " mb</h1>";
 echo "<h1>Execution Time: ", sprintf("%.4f", ($end_time-$start_time)) . " seconds</h1>";

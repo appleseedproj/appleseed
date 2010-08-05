@@ -60,7 +60,7 @@ class cHooks extends cBase {
 					continue;
 				}
 			
-				require_once ( $filename );
+				require ( $filename );
 				
 				if ( !class_exists ( $class ) ) {
 					unset ( $this->_Config->_Hooks[$c] );

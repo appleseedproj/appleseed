@@ -40,7 +40,7 @@ class cRouter extends cBase {
 	 */
 	public function Route ( ) {
 		eval ( GLOBALS );
-		
+			
 		$Foundation = $this->GetSys ( "Foundation" );
 		$FoundationConfig = $Foundation->Get ( "Config" );
 		
@@ -107,6 +107,8 @@ class cRouter extends cBase {
 				$this->_Base = $base;
 				
 				$Foundation->Load ( $finalDestination );
+				
+		
 				return ( true );
 			}
 		}
@@ -141,7 +143,7 @@ class cRouter extends cBase {
 			case 'gif':
 				$location = ASD_PATH . implode ( DS, $routes );
 				if ( file_exists ( $location ) ) {
-					require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'common' . DS . 'images.php' );
+					require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'common' . DS . 'images.php' );
 					exit;
 				}
 			break;
@@ -156,9 +158,9 @@ class cRouter extends cBase {
 				$path = ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' ;
 				
 				if (is_file ($path) ) {
-				  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' );
+				  require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'admin' . DS . $routes[0] . DS . $routes[1] . '.php' );
 				} else {
-				  require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'error' . DS . '404.php' );
+				  require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'error' . DS . '404.php' );
 				}
 				
 				exit;
@@ -168,14 +170,14 @@ class cRouter extends cBase {
 				
 				global $gPROFILEREQUEST;
 				$gPROFILEREQUEST = join ('/', $routes);
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'user' . DS . 'main.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'user' . DS . 'main.php' );
 				exit;
 			case 'icon':
 				array_shift ( $routes );
 				
 				global $gICONUSER;
 				$gICONUSER = $routes[0];
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'common' . DS . 'icon.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'common' . DS . 'icon.php' );
 			break;	
 			case 'news':
 			case 'articles':
@@ -183,65 +185,65 @@ class cRouter extends cBase {
 				
 				global $gARTICLEREQUEST;
 				$gARTICLEREQUEST = $routes[0];
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'articles.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'articles.php' );
 			break;	
 			case 'group':
 				array_shift ( $routes );
 				
 				global $gGROUPREQUEST;
 				$gGROUPREQUEST = $routes[0];
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'group.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'group.php' );
 			break;	
 			case 'groups':
 				array_shift ( $routes );
 		
 				global $gGROUPSECTION;
 				$gGROUPSECTION = $routes[0];
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'groups.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'content' . DS . 'groups.php' );
 			break;	
 			case 'join':
 				array_shift ( $routes );
 		
 				global $gVALUE;
 				$gVALUE = $routes[0];
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'join.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'join.php' );
 			break;	
 			case 'login':
 			    if ( $routes[1] == 'bounce' ) {
-					require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'bounce.php' );
+					require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'bounce.php' );
 					exit;
 			    } else {
 					array_shift ( $routes );
 			
 					global $gLOGINREQUEST;
 					$gLOGINREQUEST = join ('/', $routes);
-					require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'login.php' );
+					require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'login.php' );
 					exit;
 			    }
 			break;
 			case 'asd':
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'asd.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'asd.php' );
 				exit;
 			break;
 			case 'ajax':
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'ajax.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'ajax.php' );
 				exit;
 			break;
 			case 'maintenance':
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'maintenance.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'maintenance.php' );
 				exit;
 			break;
 			case 'logout':
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'logout.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'logout.php' );
 				exit;
 			break;
 			case 'index.php':
 			case '':
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'main.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'main.php' );
 				exit;
 			break;
 			default:
-				require_once ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'redirect.php' );
+				require ( ASD_PATH . 'legacy' . DS . 'code' . DS . 'site' . DS . 'redirect.php' );
 				exit;
 			break;
 		}

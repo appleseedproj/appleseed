@@ -68,6 +68,7 @@ class cFoundation extends cBase {
 			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
 			if ( is_file ( $filename ) ) {
 				$Buffer->LoadFoundation ( $filename );
+		
 				return ( true );
 			}
 		}

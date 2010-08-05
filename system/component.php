@@ -151,7 +151,7 @@ class cComponent extends cBase {
 			return ( false );
 		}
 		
-		require_once ( $filename );
+		require ( $filename );
 		
 		if ( !class_exists ( $class ) ) {
 			echo __("Controller Not Found", array ( 'name' => $class ) );

@@ -48,7 +48,7 @@ class cBuffer extends cBase {
 		
 		ob_start ();
 		
-		require_once ( $pFoundation );
+		require ( $pFoundation );
 		
 		$buffer = ob_get_contents ();
 		ob_end_clean ();
@@ -81,6 +81,9 @@ class cBuffer extends cBase {
 			foreach ( $this->_Queue['component'] as $q => $queue ) {
 				$pattern = "/\#\@ component$q \[(.*)\] \@\#/";
 			
+				// Manually escape dollar signs so that they aren't processed.
+				$queue->Buffer = preg_replace("!" . '\x24' . "!" , '\\\$' , $queue->Buffer);
+				
 				$processed = preg_replace ( $pattern, $queue->Buffer, $processed );
 			}
 		} while ( preg_match ( $whilepattern, $processed ) );

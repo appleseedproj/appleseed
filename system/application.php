@@ -11,7 +11,7 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-require_once ( ASD_PATH . DS . 'system' . DS . 'router.php' );
+require ( ASD_PATH . DS . 'system' . DS . 'router.php' );
 
 SETGLOBAL("zApp");
 
@@ -48,19 +48,19 @@ class cApplication extends cBase {
 		
 		$this->_DisableMagicQuotes ( );
 		
-		require_once ( ASD_PATH . DS . 'system' . DS . 'database.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'component.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'components.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'event.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'hook.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'hooks.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'model.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'buffer.php' );
-		require_once ( ASD_PATH . DS . 'system' . DS . 'logs.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'database.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'component.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'components.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'event.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'hook.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'hooks.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'model.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'buffer.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'logs.php' );
 		
 		$this->_LoadLibraries ();
             
@@ -103,11 +103,11 @@ class cApplication extends cBase {
 	 * @access  private
 	 */
 	private function _LoadLibraries ( ) {
-		require_once ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
-		require_once ( ASD_PATH . DS . 'libraries' . DS . 'request.php' );
-		require_once ( ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
-		require_once ( ASD_PATH . DS . 'libraries' . DS . 'session.php' );
-		require_once ( ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
+		require ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
+		require ( ASD_PATH . DS . 'libraries' . DS . 'request.php' );
+		require ( ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
+		require ( ASD_PATH . DS . 'libraries' . DS . 'session.php' );
+		require ( ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
 	}
 	
 	/**
