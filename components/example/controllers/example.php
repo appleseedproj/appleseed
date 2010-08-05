@@ -638,20 +638,14 @@ class cExampleController extends cController {
 		
 		$email = $this->GetSys ( "Request" )->Get ( "Email" );
 		
-		if ( !$validate->NotNull ( $email ) ) {
-			$message = __( "Cannot Be Null", array ( "field" => "Email" ) ); 
-			$this->GetSys ( "Session" )->Set ( "Message", $message );
-			$this->GetSys ( "Session" )->Set ( "Error", true );
+		if ( $email ) {
+			if ( !$validate->Email ( $email ) ) {
+				$message = __( "Invalid Email", array ( "email" => $email ) ); 
+				$this->GetSys ( "Session" )->Set ( "Message", $message );
+				$this->GetSys ( "Session" )->Set ( "Error", true );
 			
-			return ( false );
-		}
-		
-		if ( !$validate->Email ( $email ) ) {
-			$message = __( "Invalid Email", array ( "email" => $email ) ); 
-			$this->GetSys ( "Session" )->Set ( "Message", $message );
-			$this->GetSys ( "Session" )->Set ( "Error", true );
-			
-			return ( false );
+				return ( false );
+			}
 		}
 		
 		/*
