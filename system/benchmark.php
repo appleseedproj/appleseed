@@ -11,16 +11,17 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Logs Class
+/** Benchmark Class
  * 
- * Base class for Logging
+ * Base class for Performance and Memory Benchmarking
  * 
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cLogs extends cBase {
+class cBenchmark extends cBase {
 	
-	private $_Log;
+	private $_Starts = array ();
+	private $_Stops = array ();
 
 	/**
 	 * Constructor
@@ -30,18 +31,4 @@ class cLogs extends cBase {
 	public function __construct ( ) {       
 	}
 	
-	public function Add ( $pValue, $pContext ) {
-		
-		$current = count ( $this->_Log[$pContext] );
-		
-		$this->_Log[$pContext][$current] = new StdClass();
-		
-		$this->_Log[$pContext][$current]->Value = $pValue;
-		$this->_Log[$pContext][$current]->Stamp = time();
-		$this->_Log[$pContext][$current]->Timezone = date("T");
-		
-		return ( $this->_Log[$pContext][$current] );
-	}
-
 }
-
