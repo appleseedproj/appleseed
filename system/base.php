@@ -19,6 +19,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @subpackage  System
  */
 class cBase {
+	
+	protected $_System = array ();
 
 	/**
 	 * Constructor
@@ -56,14 +58,29 @@ class cBase {
 		return ( true );
 	}
 	
+	public function AddSys ( $pVariable, $pLocation ) {
+		
+		$variable = ltrim ( rtrim ( $pVariable ) );
+		
+		$this->_System[$variable] = $pLocation;
+		
+		return ( true );
+	}
+	
 	public function GetSys ( $pVariable ) {
 		eval ( GLOBALS );
 		
 		$variable = ltrim ( rtrim ( $pVariable ) );
+		$class = 'c' . $variable;
 		
 		if ( !isset ( $zApp->$variable ) ) {
-			echo __("System Object Not Found", array ( 'name' => $variable ) );
-			exit;
+			if ( file_exists ( $zApp->_System[$variable] ) ) {
+				require ( $zApp->_System[$variable] );
+				$zApp->$variable = new $class ();
+			} else {
+				echo __("System Object Not Found", array ( 'name' => $variable ) );
+				exit;
+			}
 		}
 		
 		return ( $zApp->$variable );

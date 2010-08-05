@@ -71,7 +71,6 @@ class cApplication extends cBase {
 
 		$this->Database = new cDatabase();
 		
-		$this->Language = new cLanguage();
 		$this->Theme = new cTheme ();
 		$this->Logs = new cLogs();
 		$this->Buffer = new cBuffer();
@@ -80,12 +79,6 @@ class cApplication extends cBase {
 		$this->Foundation = new cFoundation();
 		$this->Event = new cEvent();
 		$this->Hooks = new cHooks();
-		
-		$this->Request = new cRequest();
-		$this->HTML = new cHTML();
-		
-		$this->Session = new cSession();
-		$this->Validation = new cValidation();
 		
 		$this->Event->Hooks = $this->Hooks;
 		
@@ -103,11 +96,18 @@ class cApplication extends cBase {
 	 * @access  private
 	 */
 	private function _LoadLibraries ( ) {
+		
+		// Statically loaded library classes.
 		require ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
-		require ( ASD_PATH . DS . 'libraries' . DS . 'request.php' );
-		require ( ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
-		require ( ASD_PATH . DS . 'libraries' . DS . 'session.php' );
-		require ( ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
+		$this->Language = new cLanguage();
+		
+		// Dynamically loaded library classes.	
+		$this->AddSys ( "Session",  ASD_PATH . DS . 'libraries' . DS . 'session.php' );
+		$this->AddSys ( "Validation",  ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
+		$this->AddSys ( "Request",  ASD_PATH . DS . 'libraries' . DS . 'request.php' );
+		$this->AddSys ( "HTML",  ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
+		
+		return ( true );
 	}
 	
 	/**
