@@ -165,7 +165,7 @@ class cHTML extends cMarkup {
 		$inputs = $this->Find("[name=]");
 		
 		// Set all request variable names to lower case
-		foreach ( $zApp->Request->Get() as $r => $request ) {
+		foreach ( $zApp->GetSys ( "Request" )->Get() as $r => $request ) {
 			$r = strtolower ( ltrim ( rtrim ( $r ) ) );
 			$requests[$r] = $request; 
 		}

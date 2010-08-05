@@ -60,7 +60,7 @@ class cRequest {
 		eval ( GLOBALS );
 		
 		$this->_URI = substr ( $_SERVER['REQUEST_URI'], 1, strlen ( $_SERVER['REQUEST_URI'] ) );
-		$pattern = $zApp->Router->Get ( "Route" );
+		$pattern = $zApp->GetSys ( "Router" )->Get ( "Route" );
 		
 		$this->_URI = preg_replace ( '/\/$/', '', $this->_URI );
 		preg_match ( $pattern, $this->_URI, $returns );

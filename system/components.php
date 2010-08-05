@@ -94,7 +94,7 @@ class cComponents extends cBase {
 							$this->$alias->Set ( "Alias", $alias );
 						} else {
 							$warning = __("Alias Name Exists", array ( 'name' => $alias ) );
-							$zApp->Logs->Add ( $warning, "Warnings" );
+							$zApp->GetSys ( "Logs" )->Add ( $warning, "Warnings" );
 						}
 					} 
 				} else {
@@ -105,7 +105,7 @@ class cComponents extends cBase {
 						$this->$aliases->Set ( "Alias", $aliases );
 					} else {
 						$warning = __("Alias Name Exists", array ( 'name' => $aliases ) );
-						$zApp->Logs->Add ( $warning, "Warnings" );
+						$zApp->GetSys ( "Logs" )->Add ( $warning, "Warnings" );
 					}
 				}
 			} 
@@ -152,7 +152,7 @@ class cComponents extends cBase {
 		// Skip components which use reserved names
 		if ( in_array ( $component, $zApp->Reserved () ) ) {
 			$warning = __("Bad Component Name", array ( 'name' => $component ) );
-			$zApp->Logs->Add ( $warning, "Warnings" );
+			$zApp->GetSys ( "Logs" )->Add ( $warning, "Warnings" );
 			return ( false );
 		}
 		

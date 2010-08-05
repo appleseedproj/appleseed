@@ -31,9 +31,9 @@ $zApp = new cApplication ( );
 
 $zApp->Initialize ( );
 
-$zApp->Router->Route ( );
+$zApp->GetSys ( "Router" )->Route ( );
 
-echo $zApp->Buffer->Process ();
+echo $zApp->GetSys ( "Buffer" )->Process ();
 
 $end_mem = memory_get_usage(); 
 $end_time = (float) array_sum(explode(' ',microtime())); 

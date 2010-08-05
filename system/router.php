@@ -68,7 +68,7 @@ class cRouter extends cBase {
 						$value_pattern = '/\$' . ($p+1) . '/';
 						$value = preg_replace ( $value_pattern, $matches[$p+1], $value );
 						
-						$zApp->Request->Set ( $key, $value );
+						$zApp->GetSys ( "Request" )->Set ( $key, $value );
 					}
 					
 				} else {
