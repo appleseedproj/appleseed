@@ -85,7 +85,7 @@
   
       $zLOCALUSER = new cUSERAUTHORIZATION;
       
-      $zDEBUG = new cDEBUG;
+      $zDEBUG = new cOLDDEBUG;
       
       $zDEBUG->BenchmarkStart ('SITE');
       

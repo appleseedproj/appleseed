@@ -35,6 +35,10 @@ header, section, footer { padding: 10px 0; }
 #page_left nav ul li, #page_left nav ol li { float: none; }
 #page_left nav.tabs ul li { float: left; }
 
+nav ul { float:left; clear:both; }
+nav ul li, nav ol li { float: none; }
+nav.tabs ul li { float: left; padding-right:10px; }
+
 time { font-size: 85%; }
 
 #user_login { text-align: right; }
@@ -53,3 +57,7 @@ time { font-size: 85%; }
 #user_comments img { margin: 0px 0px 10px 0px; }
 
 footer ul li { list-style: none; }
+
+.ui-tabs .ui-tabs-hide {
+	display: none;
+}

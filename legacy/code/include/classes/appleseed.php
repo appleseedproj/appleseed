@@ -73,7 +73,7 @@
       
       global $zDEBUG;
       
-      $zDEBUG = new cDEBUG;
+      $zDEBUG = new cOLDDEBUG;
       
       $zDEBUG->BenchmarkStart ('SITE');
       

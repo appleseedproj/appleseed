@@ -24,6 +24,9 @@
    	<!-- Load JQuery -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/jquery-1.4.2.min.js"></script>
    	
+   	<!-- Load JQuery::UI -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery-ui-1.8.2.custom.min.js"></script>
+   	
    	<!-- Load JQuery::Validation -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
    	
@@ -73,5 +76,7 @@
         
     </footer>
 
+	<?php $zApp->Components->Go ( "debug" ); ?>
+        
 </body>
 </html>

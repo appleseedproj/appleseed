@@ -36,7 +36,7 @@
   // +-------------------------------------------------------------------+
 
   // Debug class.
-  class cDEBUG {
+  class cOLDDEBUG {
     var $StatementCount;
     var $StatementList;
     var $ErrorList;
@@ -45,7 +45,7 @@
     var $BenchmarkStop;
     var $BenchmarkTotal;
 
-    function cDEBUG () {
+    function cOLDDEBUG () {
       
       $this->BenchmarkStart = array ();
       $this->BenchmarkStop = array ();
@@ -250,4 +250,4 @@
       return (TRUE);
       
     } // HandleError
-  } // cDEBUG
+  } // cOLDDEBUG

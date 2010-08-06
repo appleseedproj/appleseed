@@ -64,5 +64,7 @@
         
     </footer>
 
+	<?php $zApp->Components->Go ( "debug" ); ?>
+        
 </body>
 </html>
