@@ -1,0 +1,301 @@
+
+QUICKSOCIAL
+-------------
+
+Appleseed QuickSocial is a simple, unified protocol for distributed social networking 
+that uses HTTP and JSON to pass data between nodes.  
+
+More information is available at: http://opensource.appleseedproject.org/quicksocial/
+
+Overview
+-------------
+
+QuickSocial is a unified protocol, and much of it's implementation relies on other parts of
+the protocol. For instance, QuickFriend requires QuickConnect to verify identify before the
+establishment of a relationship can be made.  A few simple rules define the protocol flow:
+
+0. Users have to remotely login to establish their identity. 
+1. Stored tokens are used to verify identity through callbacks before actions are taken.
+2. Actions (friending, messaging) are taken by the home node.
+
+There are three levels of protocol support.  Each level is dependant on the level above it.
+
+1. Social, Node, Connect, User
+2. Friend, Message
+3. Feed, Tag, Search
+
+Optimization
+--------------
+
+Where possible, the QuickSearch library does various optimizations, including concurrent and/or 
+persistent HTTP connections, and bulk data retrieval.
+
+Token and node discovery caching must be handled by the application.
+
+Protocol
+-------------
+
+	QuickSocial
+		- Verify / ReplyToVerify
+			- GET: 	_social=true
+					_task=verify
+					_token=<token>
+					_account=<user@domain>
+					_source=<domain>
+			- JSON: success=<true|false>
+					error=<error>
+			- NOTE: If _username is empty, represents a site verification token only.
+	
+	QuickNode
+		- Discover / ReplyToDiscover
+			 - GET:	_social=true
+					_task=node.discover
+			- JSON:	success=<true|false>
+					error=<error>
+					methods=<[array]>
+					tasks=<[array=(verify,node.update,friend.add,etc)]>
+					version=<version>
+			- NOTE:	Fully public, no token verification required
+	
+		- Callback / ReplyToCallback
+			- GET:	_social=true
+					_task=node.update
+					_token=<token>
+					_method=<method>
+					_source=<domain>
+					_trusted=<[array]>
+					_description=<description>
+					_users=<#users>
+			- JSON:	success=<true|false>
+					error=<error>
+			- NOTE:	Receiving site decides whether to use trusted list.
+	
+	QuickConnect
+		- Redirect / Check / Process
+			- GET:	_social=true
+					_task=connect.check
+					_username=<username>
+					_method=<method>
+					_source=<domain>
+			- GET:	_social=true
+					_task=connect.return
+					_username=<_username>
+					_source=<_source>
+					_identifier=<identifier>
+					_success=<true|false>
+					_error=<error>
+		- Verify / ReplyToVerify
+			- GET: 	_social=true
+					_task=connect.verify
+					_identifier=<identifier>
+					_username=<username>
+					_source=<domain>
+			- JSON: success=<true|false>
+					error=<error>
+	
+	QuickUser
+		- Info / ReplyToInfo
+			- GET: 	_social=true
+					_task=user.info
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_request=<username>
+			- JSON:	success=<true|false>
+					error=<error>
+					fullname=<fullname>
+					online=<true|false>
+		- Icon
+	
+			- GET: 	_social=true
+					_task=user.icon
+					_request=<username>
+	
+	QuickFriend
+		- Friend / ReplyToFriend
+			- GET: 	_social=true
+					_task=friend.add
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_friend=<friend>
+			- JSON:	success=<true|false>
+					error=<error>
+		- Approve / ReplyToApprove
+			- GET: 	_social=true
+					_task=friend.approve
+					_token=<token>
+					_method=<method>
+					_users=<user>
+					_source=<domain>
+					_friend=<friend>
+			- JSON:	success=<true|false>
+					error=<error>
+		- Remove / ReplyToRemove
+			- GET: 	_social=true
+					_task=friend.remove
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_friend=<friend>
+			- JSON:	success=<true|false>
+					error=<error>
+	
+	QuickMessage
+		- Notify / ReplyToNotify
+			- GET: 	_social=true
+					_task=message.notify
+					_account=<user@domain>
+					_source=<domain>
+					_recipient=<recipient>
+					_token=<token>
+					_subject=<subject>
+					_fullname=<fullname>
+					_identifier=<identifier>
+			- JSON:	success=<true|false>
+					error=<error>
+	
+		- Retrieve / ReplyToRetrieve
+			- GET: 	_social=true
+					_task=message.retrieve
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_subject=<subject>
+					_identifier=<identifier>
+			- JSON:	success=<true|false>
+					error=<error>
+					fullname=<fullname>
+					body=<body>
+	
+	QuickFeed
+		- Push / ReplyToPush
+			- GET: 	_social=true
+					_task=feed.push
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_recipient=<username>
+					_actionOwner=<user@domain>
+					_action=<action>
+					_actionLink=<actionlink>
+					_subjectOwner=<user@domain>
+					_contextOwner=<user@domain>
+					_context=<context>
+					_contextLink=<contextlink>
+					_comment=<comment>
+					_description=<description>
+					_stamp=<datetime>
+			- JSON:	success=<true|false>
+					error=<error>
+		- Pull / ReplyToPull
+			- GET: 	_social=true
+					_task=feed.pull
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_requested=<username>
+					_begin=<datetime>
+					_end=<datetime>
+					_start=<start>
+					_limit=<limit>
+			- JSON:	success=<true|false>
+					error=<error>
+					data=<array>
+						actionOwner=<user@domain>
+						action=<action>
+						actionLink=<actionlink>
+						subjectOwner=<user@domain>
+						contextOwner=<user@domain>
+						context=<context>
+						contextLink=<contextlink>
+						comment=<comment>
+						description=<description>
+						stamp=<datetime>
+	
+		- Report / ReplyToReport
+			- GET: 	_social=true
+					_task=feed.report
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_actionOwner=<user@domain>
+					_action=<action>
+					_actionLink=<actionlink>
+					_subjectOwner=<user@domain>
+					_contextOwner=<user@domain>
+					_context=<context>
+					_contextLink=<contextlink>
+					_comment=<comment>
+					_description=<description>
+					_stamp=<datetime>
+					_identifier=<identifier>
+			- JSON:	success=<true|false>
+					error=<error>
+	
+	QuickTag
+		- Tag / ReplyToTag
+			- GET: 	_social=true
+					_task=tag.add
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_tagged=<username>
+					_context=<context>
+					_contextLink=<contextlink>
+					_identifier=<identifier>
+			- JSON:	success=<true|false>
+					error=<error>
+		- Approve / ReplyToApprove
+			- GET: 	_social=true
+					_task=tag.approve
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_tagged=<username>
+					_identifier=<identifier>
+			- JSON:	success=<true|false>
+					error=<error>
+		- Remove / ReplyToRemove
+			- GET: 	_social=true
+					_task=tag.remove
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_tagged=<username>
+					_identifier=<identifier>
+			- JSON:	success=<true|false>
+					error=<error>
+	
+	QuickSearch
+		- Search / ReplyToSearch
+			- GET: 	_social=true
+					_task=search.keyword
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_keywords=<keywords>
+			- JSON:	success=<true|false>
+					error=<error>
+					results=<array>
+						title=<title>
+						link=<link>
+						owner=<owner>
+						description=<description>
+						stamp=<datetime>
+					network=<array>
+						user=<username>
+						domain=<domain>
+						fullname=<fullname>
+						online=<online>
+			- NOTE:	Must prevent recursive loops.

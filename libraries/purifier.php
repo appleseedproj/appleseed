@@ -8,6 +8,7 @@
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
  */
 
+
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
