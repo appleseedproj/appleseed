@@ -1,0 +1,40 @@
+<mockup version="1.0" skin="sketch" measuredW="1295" measuredH="966" mockupW="1112" mockupH="923">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="329" y="33" w="800" h="800" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::TextInput" x="361" y="33" w="726" h="-1" measuredW="113" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20Message</text>
+      </controlProperties>
+    </control>
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="173" y="465" w="1112" h="491" measuredW="330" measuredH="100" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5BWarnings%5D%2CErrors%2CBenchmarks%2CSQL</text>
+      </controlProperties>
+    </control>
+    <control controlID="14" controlTypeID="com.balsamiq.mockups::MenuBar" x="573" y="82" w="336" h="30" measuredW="330" measuredH="29" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Home%2CProfile%2CAbout%2CContact%20Us%2CHelp</text>
+      </controlProperties>
+    </control>
+    <control controlID="15" controlTypeID="com.balsamiq.mockups::TextInput" x="924" y="85" w="159" h="-1" measuredW="91" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logged%20In%20As</text>
+      </controlProperties>
+    </control>
+    <control controlID="16" controlTypeID="com.balsamiq.mockups::Link" x="1012" y="90" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>user@user</text>
+      </controlProperties>
+    </control>
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::DataGrid" x="191" y="532" w="1067" h="395" measuredW="280" measuredH="146" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Warning%20%5E%2C%20Filename%2C%20Line%20%23%0AWarning%20%231%2C%20/path/to/filename1%2C%20%23%0AWarning%20%232%2C%20/path/to/filename2%2C%20%23%0AWarning%20%233%2C%20/path/to/filename3%2C%20%23%0AWarning%20%234%2C%20/path/to/filename4%2C%20%23</text>
+      </controlProperties>
+    </control>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Label" x="191" y="509" w="82" h="23" measuredW="54" measuredH="23" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Total%3A%20%23</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

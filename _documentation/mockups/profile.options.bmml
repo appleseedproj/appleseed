@@ -3,7 +3,7 @@
     <control controlID="1" controlTypeID="com.balsamiq.mockups::Canvas" x="329" y="33" w="800" h="800" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
     <control controlID="5" controlTypeID="com.balsamiq.mockups::Image" x="361" y="132" w="198" h="186" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
-        <text/>
+        <text>Profile%20Photo</text>
       </controlProperties>
     </control>
     <control controlID="8" controlTypeID="com.balsamiq.mockups::SearchBox" x="986" y="132" w="101" h="-1" measuredW="64" measuredH="25" zOrder="2" locked="false" isInGroup="-1">
@@ -44,6 +44,11 @@
     <control controlID="18" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="588" y="172" w="477" h="487" measuredW="200" measuredH="209" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Privacy%0ASettings%0ABasic%20Info%0AQ%26A%0ANotifications</text>
+      </controlProperties>
+    </control>
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Image" x="368" y="83" w="193" h="23" measuredW="77" measuredH="79" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo</text>
       </controlProperties>
     </control>
   </controls>
