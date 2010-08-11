@@ -51,10 +51,10 @@
         <text>Label+</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="899" y="190" w="-1" h="-1" measuredW="173" measuredH="19" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="889" y="190" w="-1" h="-1" measuredW="181" measuredH="19" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
-        <text>%3C%3CFirst%20%3CPrev%201%202%203%204%205%20Next%3E%20Last%3E%3E</text>
+        <text>%3C%3CFirst%20%3CPrev%20%201%202%203%204%205%20%20Next%3E%20Last%3E%3E</text>
       </controlProperties>
     </control>
     <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="588" y="594" w="193" h="23" measuredW="193" measuredH="23" zOrder="12" locked="false" isInGroup="-1">
@@ -72,10 +72,10 @@
         <text>Label+</text>
       </controlProperties>
     </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="898" y="595" w="-1" h="-1" measuredW="173" measuredH="19" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="891" y="595" w="-1" h="-1" measuredW="181" measuredH="19" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
-        <text>%3C%3CFirst%20%3CPrev%201%202%203%204%205%20Next%3E%20Last%3E%3E</text>
+        <text>%3C%3CFirst%20%3CPrev%20%201%202%203%204%205%20%20Next%3E%20Last%3E%3E</text>
       </controlProperties>
     </control>
     <control controlID="34" controlTypeID="com.balsamiq.mockups::List" x="361" y="157" w="200" h="152" measuredW="100" measuredH="147" zOrder="16" locked="false" isInGroup="-1">

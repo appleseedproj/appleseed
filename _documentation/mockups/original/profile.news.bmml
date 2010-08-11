@@ -21,7 +21,7 @@
         <text>Full%20Name%0A%20%0ALocation%0A%20%0A%23%20Friends%0A%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="573" y="132" w="514" h="542" measuredW="468" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="573" y="132" w="514" h="653" measuredW="468" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Options%2C%5BNews%5D%2CWall%2CInfo%2CFriends%2CJournals%2CPhotos%2C+</text>
       </controlProperties>
@@ -190,6 +190,16 @@
     <control controlID="48" controlTypeID="com.balsamiq.mockups::Image" x="620" y="597" w="51" h="52" measuredW="77" measuredH="79" zOrder="38" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
+      </controlProperties>
+    </control>
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::Button" x="763" y="673" w="133" h="26" measuredW="133" measuredH="28" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Load%20More%20Entries</text>
+      </controlProperties>
+    </control>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::Image" x="368" y="83" w="193" h="23" measuredW="77" measuredH="79" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo</text>
       </controlProperties>
     </control>
   </controls>

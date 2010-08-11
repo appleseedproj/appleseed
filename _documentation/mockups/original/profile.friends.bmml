@@ -41,218 +41,182 @@
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="17" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="588" y="172" w="477" h="487" measuredW="200" measuredH="232" zOrder="9" locked="false" isInGroup="-1">
+    <control controlID="17" controlTypeID="com.balsamiq.mockups::VerticalTabBar" x="588" y="192" w="477" h="467" measuredW="200" measuredH="232" zOrder="9" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%5BRequests%5D%0APending%0AFriends%0A%28Group%201%29%0A%28Group%202%29%0A%28Group%203%29</text>
       </controlProperties>
     </control>
-    <control controlID="18" controlTypeID="com.balsamiq.mockups::Image" x="668" y="187" w="42" h="43" measuredW="77" measuredH="79" zOrder="10" locked="false" isInGroup="-1">
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Image" x="668" y="207" w="42" h="43" measuredW="77" measuredH="79" zOrder="10" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="19" controlTypeID="com.balsamiq.mockups::Link" x="718" y="187" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="11" locked="false" isInGroup="-1">
+    <control controlID="19" controlTypeID="com.balsamiq.mockups::Link" x="718" y="207" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="20" controlTypeID="com.balsamiq.mockups::Label" x="997" y="186" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="20" controlTypeID="com.balsamiq.mockups::Label" x="997" y="206" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <color>5263440</color>
         <text>Location</text>
       </controlProperties>
     </control>
-    <control controlID="21" controlTypeID="com.balsamiq.mockups::Label" x="718" y="210" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Label" x="718" y="230" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
         <italic>true</italic>
         <text>%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="22" controlTypeID="com.balsamiq.mockups::Image" x="668" y="239" w="42" h="43" measuredW="77" measuredH="79" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Image" x="668" y="259" w="42" h="43" measuredW="77" measuredH="79" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="23" controlTypeID="com.balsamiq.mockups::Link" x="718" y="239" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Link" x="718" y="259" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::Label" x="997" y="238" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::Label" x="997" y="258" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <color>5263440</color>
         <text>Location</text>
       </controlProperties>
     </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="718" y="262" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Label" x="718" y="282" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
         <italic>true</italic>
         <text>%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Image" x="668" y="301" w="42" h="43" measuredW="77" measuredH="79" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Image" x="668" y="321" w="42" h="43" measuredW="77" measuredH="79" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="718" y="301" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="718" y="321" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
       <controlProperties>
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="997" y="300" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="20" locked="false" isInGroup="-1">
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Label" x="997" y="320" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
         <color>5263440</color>
         <text>Location</text>
       </controlProperties>
     </control>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="718" y="324" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="21" locked="false" isInGroup="-1">
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Label" x="718" y="344" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="21" locked="false" isInGroup="-1">
       <controlProperties>
         <italic>true</italic>
         <text>%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="30" controlTypeID="com.balsamiq.mockups::PointyButton" x="924" y="617" w="-1" h="-1" measuredW="61" measuredH="27" zOrder="22" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Next%20%3E</text>
-      </controlProperties>
-    </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::PointyButton" x="988" y="616" w="-1" h="-1" measuredW="64" measuredH="27" zOrder="23" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Last%20%3E%3E</text>
-      </controlProperties>
-    </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::PointyButton" x="672" y="617" w="-1" h="-1" measuredW="66" measuredH="27" zOrder="24" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>%3C%3C%20First</text>
-      </controlProperties>
-    </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::PointyButton" x="742" y="617" w="-1" h="-1" measuredW="59" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>%3C%20Prev</text>
-      </controlProperties>
-    </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::Link" x="817" y="618" w="-1" h="-1" measuredW="10" measuredH="23" zOrder="26" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>1</text>
-      </controlProperties>
-    </control>
-    <control controlID="35" controlTypeID="com.balsamiq.mockups::Link" x="857" y="618" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="27" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>3</text>
-      </controlProperties>
-    </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::Link" x="877" y="618" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="28" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>4</text>
-      </controlProperties>
-    </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::Link" x="897" y="618" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="29" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>5</text>
-      </controlProperties>
-    </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::Label" x="837" y="618" w="-1" h="-1" measuredW="13" measuredH="23" zOrder="30" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>2</text>
-      </controlProperties>
-    </control>
-    <control controlID="40" controlTypeID="com.balsamiq.mockups::Image" x="668" y="363" w="42" h="43" measuredW="77" measuredH="79" zOrder="31" locked="false" isInGroup="-1">
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::Image" x="668" y="383" w="42" h="43" measuredW="77" measuredH="79" zOrder="22" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::Link" x="718" y="363" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="32" locked="false" isInGroup="-1">
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Link" x="718" y="383" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="23" locked="false" isInGroup="-1">
       <controlProperties>
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="997" y="362" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="33" locked="false" isInGroup="-1">
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="997" y="382" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="24" locked="false" isInGroup="-1">
       <controlProperties>
         <color>5263440</color>
         <text>Location</text>
       </controlProperties>
     </control>
-    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="718" y="386" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="34" locked="false" isInGroup="-1">
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="718" y="406" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <italic>true</italic>
         <text>%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="44" controlTypeID="com.balsamiq.mockups::Image" x="668" y="425" w="42" h="43" measuredW="77" measuredH="79" zOrder="35" locked="false" isInGroup="-1">
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Image" x="668" y="445" w="42" h="43" measuredW="77" measuredH="79" zOrder="26" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="45" controlTypeID="com.balsamiq.mockups::Link" x="718" y="425" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="36" locked="false" isInGroup="-1">
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::Link" x="718" y="445" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="27" locked="false" isInGroup="-1">
       <controlProperties>
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="46" controlTypeID="com.balsamiq.mockups::Label" x="997" y="424" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Label" x="997" y="444" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="28" locked="false" isInGroup="-1">
       <controlProperties>
         <color>5263440</color>
         <text>Location</text>
       </controlProperties>
     </control>
-    <control controlID="47" controlTypeID="com.balsamiq.mockups::Label" x="718" y="448" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="38" locked="false" isInGroup="-1">
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::Label" x="718" y="468" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="29" locked="false" isInGroup="-1">
       <controlProperties>
         <italic>true</italic>
         <text>%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="48" controlTypeID="com.balsamiq.mockups::Image" x="668" y="487" w="42" h="43" measuredW="77" measuredH="79" zOrder="39" locked="false" isInGroup="-1">
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Image" x="668" y="507" w="42" h="43" measuredW="77" measuredH="79" zOrder="30" locked="false" isInGroup="-1">
       <controlProperties>
         <text/>
       </controlProperties>
     </control>
-    <control controlID="49" controlTypeID="com.balsamiq.mockups::Link" x="718" y="487" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="40" locked="false" isInGroup="-1">
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Link" x="718" y="507" w="-1" h="-1" measuredW="68" measuredH="23" zOrder="31" locked="false" isInGroup="-1">
       <controlProperties>
         <text>user@user</text>
       </controlProperties>
     </control>
-    <control controlID="50" controlTypeID="com.balsamiq.mockups::Label" x="997" y="486" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="41" locked="false" isInGroup="-1">
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Label" x="997" y="506" w="-1" h="-1" measuredW="53" measuredH="23" zOrder="32" locked="false" isInGroup="-1">
       <controlProperties>
         <color>5263440</color>
         <text>Location</text>
       </controlProperties>
     </control>
-    <control controlID="51" controlTypeID="com.balsamiq.mockups::Label" x="718" y="510" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="42" locked="false" isInGroup="-1">
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Label" x="718" y="530" w="-1" h="-1" measuredW="110" measuredH="23" zOrder="33" locked="false" isInGroup="-1">
       <controlProperties>
         <italic>true</italic>
         <text>%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="53" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="210" w="94" h="21" measuredW="134" measuredH="29" zOrder="43" locked="false" isInGroup="-1">
+    <control controlID="53" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="230" w="94" h="21" measuredW="134" measuredH="29" zOrder="34" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Confirm%2CDeny</text>
       </controlProperties>
     </control>
-    <control controlID="54" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="265" w="94" h="21" measuredW="134" measuredH="29" zOrder="44" locked="false" isInGroup="-1">
+    <control controlID="54" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="285" w="94" h="21" measuredW="134" measuredH="29" zOrder="35" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Confirm%2CDeny</text>
       </controlProperties>
     </control>
-    <control controlID="55" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="324" w="94" h="21" measuredW="134" measuredH="29" zOrder="45" locked="false" isInGroup="-1">
+    <control controlID="55" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="344" w="94" h="21" measuredW="134" measuredH="29" zOrder="36" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Confirm%2CDeny</text>
       </controlProperties>
     </control>
-    <control controlID="56" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="386" w="94" h="21" measuredW="134" measuredH="29" zOrder="46" locked="false" isInGroup="-1">
+    <control controlID="56" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="406" w="94" h="21" measuredW="134" measuredH="29" zOrder="37" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Confirm%2CDeny</text>
       </controlProperties>
     </control>
-    <control controlID="57" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="448" w="94" h="21" measuredW="134" measuredH="29" zOrder="47" locked="false" isInGroup="-1">
+    <control controlID="57" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="468" w="94" h="21" measuredW="134" measuredH="29" zOrder="38" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Confirm%2CDeny</text>
       </controlProperties>
     </control>
-    <control controlID="58" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="510" w="94" h="21" measuredW="134" measuredH="29" zOrder="48" locked="false" isInGroup="-1">
+    <control controlID="58" controlTypeID="com.balsamiq.mockups::ButtonBar" x="909" y="530" w="94" h="21" measuredW="134" measuredH="29" zOrder="39" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Confirm%2CDeny</text>
+      </controlProperties>
+    </control>
+    <control controlID="59" controlTypeID="com.balsamiq.mockups::Link" x="948" y="173" w="-1" h="-1" measuredW="117" measuredH="19" zOrder="40" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>%3CPrev%20%201%202%203%204%205%20%20Next%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="60" controlTypeID="com.balsamiq.mockups::Image" x="368" y="83" w="193" h="23" measuredW="77" measuredH="79" zOrder="41" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo</text>
       </controlProperties>
     </control>
   </controls>

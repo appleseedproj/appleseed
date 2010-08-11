@@ -56,47 +56,59 @@
         <text>Logo</text>
       </controlProperties>
     </control>
-    <control controlID="39" controlTypeID="com.balsamiq.mockups::Paragraph" x="588" y="217" w="483" h="347" measuredW="200" measuredH="140" zOrder="12" locked="false" isInGroup="-1">
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::Paragraph" x="588" y="257" w="469" h="158" measuredW="200" measuredH="140" zOrder="21" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%28Body%29%20Nulla%20facilisi.%20Fusce%20pellentesque%20lectus%20eu%20nunc%20consequat%20ac%20condimentum%20justo%20tempus.%20Suspendisse%20volutpat%20venenatis%20tortor%2C%20nec%20tincidunt%20dui%20eleifend%20et.%20Donec%20eget%20eros%20vitae%20augue%20eleifend%20tristique.%20Praesent%20eu%20augue%20at%20sem%20posuere%20rutrum%20id%20id%20nisi.%20Ut%20et%20sodales%20nulla.%20Curabitur%20nisi%20turpis%2C%20luctus%20tincidunt%20fermentum%20non%2C%20commodo%20in%20orci.%20Nam%20quis%20sem%20magna%2C%20eget%20lobortis%20arcu.%20Suspendisse%20bibendum%20odio%20vel%20dolor%20interdum%20condimentum.%20Proin%20quis%20blandit%20ante.%20Integer%20tempor%20lorem%20mauris.%20Morbi%20euismod%20diam%20non%20augue%20elementum%20eget%20pulvinar%20tortor%20malesuada.</text>
       </controlProperties>
     </control>
-    <control controlID="40" controlTypeID="com.balsamiq.mockups::SubTitle" x="588" y="180" w="-1" h="-1" measuredW="90" measuredH="37" zOrder="13" locked="false" isInGroup="-1">
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::SubTitle" x="588" y="180" w="-1" h="-1" measuredW="90" measuredH="37" zOrder="12" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Subject</text>
       </controlProperties>
     </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::Link" x="693" y="189" w="-1" h="-1" measuredW="36" measuredH="19" zOrder="14" locked="false" isInGroup="-1">
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::Link" x="693" y="189" w="-1" h="-1" measuredW="36" measuredH="19" zOrder="13" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
         <text>INBOX</text>
       </controlProperties>
     </control>
-    <control controlID="42" controlTypeID="com.balsamiq.mockups::Link" x="738" y="188" w="-1" h="-1" measuredW="37" measuredH="19" zOrder="15" locked="false" isInGroup="-1">
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Link" x="738" y="188" w="-1" h="-1" measuredW="37" measuredH="19" zOrder="14" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
         <text>Label%201</text>
       </controlProperties>
     </control>
-    <control controlID="43" controlTypeID="com.balsamiq.mockups::Link" x="785" y="188" w="-1" h="-1" measuredW="39" measuredH="19" zOrder="16" locked="false" isInGroup="-1">
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Link" x="785" y="188" w="-1" h="-1" measuredW="39" measuredH="19" zOrder="15" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
         <text>Label%202</text>
       </controlProperties>
     </control>
-    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="939" y="189" w="-1" h="-1" measuredW="127" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="944" y="208" w="-1" h="-1" measuredW="127" measuredH="23" zOrder="16" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Yesterday%20@%204%3A15pm</text>
       </controlProperties>
     </control>
-    <control controlID="45" controlTypeID="com.balsamiq.mockups::ButtonBar" x="588" y="388" w="-1" h="-1" measuredW="283" measuredH="29" zOrder="18" locked="false" isInGroup="-1">
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::ButtonBar" x="588" y="448" w="-1" h="-1" measuredW="283" measuredH="29" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Reply%2CForward%2CUnread%2CArchive</text>
       </controlProperties>
     </control>
-    <control controlID="46" controlTypeID="com.balsamiq.mockups::Link" x="588" y="166" w="-1" h="-1" measuredW="49" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
+    <control controlID="46" controlTypeID="com.balsamiq.mockups::Link" x="588" y="166" w="-1" h="-1" measuredW="49" measuredH="23" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%3C%3C%20Back</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::Label" x="588" y="213" w="-1" h="-1" measuredW="107" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5Buser@user%5D%20to%20me</text>
+      </controlProperties>
+    </control>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::Canvas" x="584" y="235" w="487" h="213" measuredW="100" measuredH="70" zOrder="20" locked="false" isInGroup="-1"/>
+    <control controlID="50" controlTypeID="com.balsamiq.mockups::Link" x="1003" y="167" w="-1" h="-1" measuredW="65" measuredH="19" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>%3CPrev%20%20Next%3E</text>
       </controlProperties>
     </control>
   </controls>

@@ -36,10 +36,10 @@
         <text>%20%0ALabel%201%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%202%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%203%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%204%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%205%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%206%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%207%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%208%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%209%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D%0ALabel%2010%2C%20%23%23%20message%28s%29%2C%20%5Bsave%5D%2C%20%5Bdelete%5D</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="899" y="190" w="-1" h="-1" measuredW="173" measuredH="19" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Link" x="890" y="188" w="-1" h="-1" measuredW="181" measuredH="19" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
         <size>10</size>
-        <text>%3C%3CFirst%20%3CPrev%201%202%203%204%205%20Next%3E%20Last%3E%3E</text>
+        <text>%3C%3CFirst%20%3CPrev%20%201%202%203%204%205%20%20Next%3E%20Last%3E%3E</text>
       </controlProperties>
     </control>
     <control controlID="32" controlTypeID="com.balsamiq.mockups::Link" x="898" y="595" w="-1" h="-1" measuredW="173" measuredH="19" zOrder="9" locked="false" isInGroup="-1">

@@ -374,5 +374,10 @@
         <text>user@user</text>
       </controlProperties>
     </control>
+    <control controlID="102" controlTypeID="com.balsamiq.mockups::Image" x="368" y="83" w="193" h="23" measuredW="77" measuredH="79" zOrder="77" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo</text>
+      </controlProperties>
+    </control>
   </controls>
 </mockup>

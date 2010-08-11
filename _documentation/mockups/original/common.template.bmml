@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="1099" measuredH="735" mockupW="1023" mockupH="695">
+<mockup version="1.0" skin="sketch" measuredW="1099" measuredH="754" mockupW="1023" mockupH="714">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::TextInput" x="81" y="79" w="400" h="-1" measuredW="116" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
       <controlProperties>
@@ -84,7 +84,7 @@
         <text>Nested%20Comments</text>
       </controlProperties>
     </control>
-    <control controlID="18" controlTypeID="com.balsamiq.mockups::Canvas" x="596" y="63" w="493" h="662" measuredW="100" measuredH="70" zOrder="17" locked="false" isInGroup="-1"/>
+    <control controlID="18" controlTypeID="com.balsamiq.mockups::Canvas" x="596" y="63" w="493" h="418" measuredW="100" measuredH="70" zOrder="17" locked="false" isInGroup="-1"/>
     <control controlID="19" controlTypeID="com.balsamiq.mockups::TextInput" x="611" y="78" w="400" h="-1" measuredW="116" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Add%20a%20comment...</text>
@@ -244,6 +244,50 @@
     <control controlID="50" controlTypeID="com.balsamiq.mockups::Label" x="66" y="387" w="-1" h="-1" measuredW="66" measuredH="23" zOrder="48" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Pagination</text>
+      </controlProperties>
+    </control>
+    <control controlID="51" controlTypeID="com.balsamiq.mockups::Label" x="70" y="522" w="-1" h="-1" measuredW="121" measuredH="23" zOrder="49" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Compact%20Pagination</text>
+      </controlProperties>
+    </control>
+    <control controlID="65" controlTypeID="com.balsamiq.mockups::Link" x="355" y="583" w="-1" h="-1" measuredW="181" measuredH="19" zOrder="50" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>%3C%3CFirst%20%3CPrev%20%201%202%203%204%205%20%20Next%3E%20Last%3E%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::Link" x="419" y="545" w="-1" h="-1" measuredW="117" measuredH="19" zOrder="51" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>%3CPrev%20%201%202%203%204%205%20%20Next%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::Link" x="471" y="513" w="-1" h="-1" measuredW="65" measuredH="19" zOrder="52" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>%3CPrev%20%20Next%3E</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::Button" x="214" y="654" w="133" h="26" measuredW="133" measuredH="28" zOrder="53" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Load%20More%20Entries</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Label" x="74" y="617" w="121" h="22" measuredW="120" measuredH="23" zOrder="54" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Variable%20Pagination</text>
+      </controlProperties>
+    </control>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::ComboBox" x="481" y="725" w="-1" h="-1" measuredW="42" measuredH="19" zOrder="55" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>10</size>
+        <text>10</text>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Label" x="74" y="703" w="121" h="22" measuredW="75" measuredH="23" zOrder="56" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%23%20Per%20Page</text>
       </controlProperties>
     </control>
   </controls>

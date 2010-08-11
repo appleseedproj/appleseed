@@ -21,7 +21,7 @@
         <text>Full%20Name%0A%20%0ALocation%0A%20%0A%23%20Friends%0A%23%20Mutual%20Friends</text>
       </controlProperties>
     </control>
-    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="573" y="132" w="514" h="576" measuredW="468" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
+    <control controlID="13" controlTypeID="com.balsamiq.mockups::TabBar" x="573" y="132" w="514" h="638" measuredW="468" measuredH="100" zOrder="5" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Options%2CNews%2CWall%2CInfo%2CFriends%2C%5BJournals%5D%2CPhotos%2C+</text>
       </controlProperties>
@@ -92,56 +92,24 @@
         <text>%28Body%29%20Suspendisse%20potenti.%20Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit.%20Class%20aptent%20taciti%20sociosqu%20ad%20litora%20torquent%20per%20conubia%20nostra%2C%20per%20inceptos%20himenaeos.%20Cras%20dolor%20lorem%2C%20aliquet%20sit%20amet%20scelerisque%20in%2C%20facilisis%20et%20arcu.%20...%20%5BRead%20More%5D</text>
       </controlProperties>
     </control>
-    <control controlID="31" controlTypeID="com.balsamiq.mockups::PointyButton" x="940" y="666" w="63" h="-1" measuredW="61" measuredH="27" zOrder="18" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Next%20%3E</text>
-      </controlProperties>
-    </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::PointyButton" x="1006" y="665" w="66" h="-1" measuredW="64" measuredH="27" zOrder="19" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Last%20%3E%3E</text>
-      </controlProperties>
-    </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::PointyButton" x="588" y="666" w="68" h="-1" measuredW="66" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>%3C%3C%20First</text>
-      </controlProperties>
-    </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::PointyButton" x="660" y="666" w="61" h="-1" measuredW="59" measuredH="27" zOrder="21" locked="false" isInGroup="-1">
-      <controlProperties>
-        <direction>left</direction>
-        <text>%3C%20Prev</text>
-      </controlProperties>
-    </control>
-    <control controlID="35" controlTypeID="com.balsamiq.mockups::Link" x="783" y="667" w="-1" h="-1" measuredW="10" measuredH="23" zOrder="22" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>1</text>
-      </controlProperties>
-    </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::Link" x="824" y="667" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="23" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>3</text>
-      </controlProperties>
-    </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::Link" x="844" y="667" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="24" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>4</text>
-      </controlProperties>
-    </control>
-    <control controlID="38" controlTypeID="com.balsamiq.mockups::Link" x="865" y="667" w="-1" h="-1" measuredW="12" measuredH="23" zOrder="25" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>5</text>
-      </controlProperties>
-    </control>
-    <control controlID="39" controlTypeID="com.balsamiq.mockups::Label" x="803" y="667" w="13" h="23" measuredW="13" measuredH="23" zOrder="26" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>2</text>
-      </controlProperties>
-    </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="617" w="169" h="21" measuredW="224" measuredH="29" zOrder="27" locked="false" isInGroup="-1">
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::ButtonBar" x="844" y="617" w="169" h="21" measuredW="224" measuredH="29" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>%23%20Comments%2CLike%2CShare</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Button" x="763" y="653" w="133" h="26" measuredW="133" measuredH="28" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Load%20More%20Entries</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::HRule" x="588" y="645" w="484" h="-1" measuredW="100" measuredH="5" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>13421772</color>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Image" x="368" y="83" w="193" h="23" measuredW="77" measuredH="79" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Logo</text>
       </controlProperties>
     </control>
   </controls>
