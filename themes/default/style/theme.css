@@ -63,6 +63,8 @@ li.selected a { text-decoration: underline; color: #bf4630; }
 #user_id h1 { display: none; }
 #user_id img { max-width: 220px; }
 
+section nav  { float:left; clear:both; }
+#user_nav { float:left; clear:both; }
 #user_nav, #admin_controls { padding: 0px; }
 #user_nav ul, #admin_controls ul { padding: 14px 20px 20px 20px; min-height: 10px; background: #d9fa9e; }
 #user_nav ul, #admin_controls ul {
