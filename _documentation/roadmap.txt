@@ -1,16 +1,16 @@
 
 Appleseed Roadmap
 
-Updated:  07-07-2010
-Version:  0.7.4
+Updated:  08-10-2010
+Version:  0.7.5
 
 0.7 SERIES
 ----------
 Base features, API, Framework, Themability, Internationalisation, UI Overhaul.
 
 * 0.7.4  - MVC framework, Internationalisation, Refactor CRUD functions, Html form functions, Configuration inheritance, New theme, SHA512 for password storage
-0.7.5  - Refactor legacy code, Integrate JQuery, Session Management, Form validation, Administrator framework refactoring.
-0.7.6  - Round out features and bug fix node control, automatic update, and friends component, Client-side i18n, Front end refactoring.
+* 0.7.5  - Integrate JQuery, Session management, Form validation, QuickSocial specification, Documentation
+0.7.6  - Input purification, Refactor legacy code, Round out features and bug fix node control, Automatic update, and Friends component, Client-side i18n
 0.7.7  - Add micro-blogging and "wall" components, round out features and bug fix privacy, messaging, and login components.
 0.7.8  - Add user options and system logging components, round out features and bug fix photos, journals, and comments components.
 0.7.9  - Add newsfeed component, round out features and bug fix control and config components.

@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.4                                               |
+  // | VERSION:      0.7.5                                               |
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
   
@@ -99,7 +99,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-  <title>Appleseed 0.7.4 Install Script</title>
+  <title>Appleseed 0.7.5 Install Script</title>
 </head>
 
 <style type="text/css" media="screen">
@@ -1074,7 +1074,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS, $gUPGRADE;
     
-    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.4', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.5', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
@@ -1148,7 +1148,7 @@ class cINSTALL {
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.4</h1>
+            <h1>Appleseed Install v0.7.5</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
@@ -1364,7 +1364,7 @@ class cINSTALL {
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.4</h1>
+            <h1>Appleseed Install v0.7.5</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>

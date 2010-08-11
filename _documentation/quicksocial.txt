@@ -50,12 +50,15 @@ Protocol
 		- Discover / ReplyToDiscover
 			 - GET:	_social=true
 					_task=node.discover
+					_source=<domain>
+					_token=<token>
 			- JSON:	success=<true|false>
 					error=<error>
 					methods=<[array]>
 					tasks=<[array=(verify,node.update,friend.add,etc)]>
+					trusted=<[array]>
 					version=<version>
-			- NOTE:	Fully public, no token verification required
+			- NOTE:	Token optional
 	
 		- Callback / ReplyToCallback
 			- GET:	_social=true
@@ -63,12 +66,11 @@ Protocol
 					_token=<token>
 					_method=<method>
 					_source=<domain>
-					_trusted=<[array]>
 					_description=<description>
 					_users=<#users>
+					_admin=<user@domain>
 			- JSON:	success=<true|false>
 					error=<error>
-			- NOTE:	Receiving site decides whether to use trusted list.
 	
 	QuickConnect
 		- Redirect / Check / Process
@@ -81,17 +83,9 @@ Protocol
 					_task=connect.return
 					_username=<_username>
 					_source=<_source>
-					_identifier=<identifier>
+					_token=<token>
 					_success=<true|false>
 					_error=<error>
-		- Verify / ReplyToVerify
-			- GET: 	_social=true
-					_task=connect.verify
-					_identifier=<identifier>
-					_username=<username>
-					_source=<domain>
-			- JSON: success=<true|false>
-					error=<error>
 	
 	QuickUser
 		- Info / ReplyToInfo

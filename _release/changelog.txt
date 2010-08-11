@@ -1,5 +1,24 @@
 RELEASE CHANGES
 
+-- 0.7.5 --
+
++ Javascript Framework
+  - JLoader provides an OO style approach to loading javascript.  JQuery integration added as well.
++ Protocol
+  - Beginning of the QuickSocial specification
++ Documentation
+  - UI mockups using Balsamiq
+  - QuickSocial protocol flow 
++ Framework
+  - Session Management
+  - Input Validation
+  - Benchmarking
++ Components
+  - Header
+  - Footer
+  - System
+  - Appleseed
+
 -- 0.7.4 --
 
 + MVC framework

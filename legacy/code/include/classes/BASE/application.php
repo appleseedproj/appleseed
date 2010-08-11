@@ -377,7 +377,7 @@
       
       // Current Appleseed version.  Must be updated for each release.
       global $gAPPLESEEDVERSION;
-      $gAPPLESEEDVERSION = '0.7.4';
+      $gAPPLESEEDVERSION = '0.7.5';
       
       global $gSITEURL;
       $gSITEURL =  $zApp->Config->GetConfiguration ( "url" );
