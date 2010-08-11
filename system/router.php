@@ -52,7 +52,7 @@ class cRouter extends cBase {
 			$r = ltrim ( rtrim ( $r, '/' ), '/' );
 			
 			$pattern = '/^' . addcslashes ($r, '/') . '$/';
-			
+
 			if ( preg_match ( $pattern, $request, $routed ) ) {
 				
 				// See if we're matching variables in the url and store them in cRequest 

@@ -386,7 +386,7 @@ class cConfiguration extends cBase {
 			if ($match = preg_match ( '/\[\S+\]=/', $data ) ) {
 			  $datalines = split ( "\n", $data );
 
-				$counter = 0;
+				$counter = array ();
 				foreach ( $datalines as $l => $line ) {
 					// Skip over comments
 					if ( preg_match ( '/^;/', $line ) ) continue;
@@ -398,8 +398,9 @@ class cConfiguration extends cBase {
 						if ( preg_match ( '/^(\S+)\[/', $line, $name ) ) {
 							$name = $name[1];
 							$regexp = $retrieved[1];
-							$expressions[$name][$counter] = $regexp;
-							$counter++;
+							$c = (int)$counter[$name];
+							$expressions[$name][$c] = $regexp;
+							$counter[$name]++;
 						}
 					}
 					$modified[] = preg_replace ( '/\[\S+\]=/', "[]=", $line);
