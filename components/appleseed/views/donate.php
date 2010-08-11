@@ -24,5 +24,16 @@
 		<input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" alt="PayPal - The safer, easier way to pay online">
 		<img alt="" border="0" width="1" height="1" src="https://www.paypal.com/en_US/i/scr/pixel.gif" >
 	</form> 
-
+	
 </section>
+
+<!--
+<section id="appleseed_indiegogo">
+	<h1>Fundraising Drive!</h1>
+	
+	<p>We're also on <a href="http://www.indiegogo.com/The-Appleseed-Project">Indiegogo.com</a>, looking to raise money for the project until December 1, 2010.</p>
+	<p>Donate through Indiegogo, and have your donation counted towards our goal!</p>
+	
+	<iframe src="http://www.indiegogo.com/project/widget/4462?a=17789" width="220px" height="390px" frameborder="1" scrolling="no"></iframe>
+</section>
+-->
