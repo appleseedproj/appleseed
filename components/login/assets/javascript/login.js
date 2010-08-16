@@ -1,6 +1,6 @@
 jLoader.Initialize( "login" );
 
-jLoader.Debug = function ( ) { 
+jLoader.Login = function ( ) { 
 
 	// Add tabs to debug section
     $("#login_tabs").tabs();

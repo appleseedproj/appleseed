@@ -8,10 +8,10 @@
     <div id='debug_tabs'>
 	<nav class='tabs'> 
     	<ul>
-    	    <li><a href='#debug_warnings'><span><span>Warnings</span></a></li>
-    	    <li><a href='#debug_errors'><span><span>Errors</span></a></li>
-    	    <li><a href='#debug_queries'><span><span>SQL Queries</span></a></li>
-    	    <li><a href='#debug_benchmarks'><span>System Benchmarks</?span></a></li>
+    	    <li><a href='#debug_warnings'><span>Warnings</span></a></li>
+    	    <li><a href='#debug_errors'><span>Errors</span></a></li>
+    	    <li><a href='#debug_queries'><span>SQL Queries</span></a></li>
+    	    <li><a href='#debug_benchmarks'><span>System Benchmarks</span></a></li>
     	</ul>
     </nav>
     

@@ -1,13 +1,17 @@
-<script type="text/javascript" src="/components/debug/assets/javascript/login.js"></script>
+<script type="text/javascript" src="/components/login/assets/javascript/login.js"></script>
 
 <section id="login">
-	<nav class='tabs'> 
+
+	<div id="login_tabs">
+
+	<nav class="tabs"> 
 		<ul> 
-			<li id="login_local_button"><a href='/login/'>Local</a></li> 
-			<li id="login_remote_button"><a href='/login/remote/'>Remote</a></li> 
+			<li id="login_local_button"><a href="#login_local">Local</a></li> 
+			<li id="login_remote_button"><a href="#login_remote">Remote</a></li> 
 		</ul> 
 	</nav>
 
+  <div id="login_local">
   <form id='userinfo' name='userinfo' action='login/' method='post'> 
    <input type='hidden' name='gACTION' value='LOGIN' /> 
  
@@ -21,11 +25,6 @@
     <button   type='submit' name='gACTION' value='LOGIN'>Login</button>    <button   type='submit' name='gACTION' value='FORGOT'>Forgot Password</button> 
   </form>
  
-  <form id='userinfo' name='userinfo' action='login/remote/' method='post'> 
-   <span class='glocation'><input  type='text' name='gLOCATION' class='location' maxlength='128' value="" /></span>   
-   <button   type='submit' name='gACTION' value='REMOTE LOGIN'>Remote Login</button> 
-  </form>
-  
   <h1>Join This Site</h1> 
  
  
@@ -55,10 +54,21 @@
     Confirm Password   </p> <!-- .confirm --> 
    <span class='gconfirm'><input  type='password' name='gCONFIRM' class='confirm' maxlength='16' value="" /> 
 </span>   
- 
       
     <button   type='submit' name='gACTION' value='SUBMIT'>Submit</button> 
- </form> <!-- #join --> 
+ </form>
  
+  </div>
+ 
+  <div id="login_remote">
+
+  <form id='userinfo' name='userinfo' action='login/remote/' method='post'> 
+   <span class='glocation'><input  type='text' name='gLOCATION' class='location' maxlength='128' value="" /></span>   
+   <button   type='submit' name='gACTION' value='REMOTE LOGIN'>Remote Login</button> 
+  </form>
+  
+  </div>
+  
+  </div>
 </section>
 
