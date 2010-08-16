@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Debug
  */
-class cDebugController extends cController {
+class cDebugDebugController extends cController {
 	
 	/**
 	 * Constructor

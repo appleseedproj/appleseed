@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Footer
+ * @subpackage   Login
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Footer Component Controller
+/** Login Component Controller
  * 
- * Footer Component Controller Class
+ * Login Component Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Footer
+ * @subpackage  Login
  */
-class cFooterFooterController extends cController {
+class cLoginLoginController extends cController {
 	
 	/**
 	 * Constructor
@@ -31,15 +31,18 @@ class cFooterFooterController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$login = null;
+		if ( !$this->Login = $this->GetView ( $pView ) ) return ( false );
 		
-		switch ( $login ) {
-			default:
-				$pView = 'main';
-			break;
+		$remote = $this->GetSys ( "Request" )->Get ( "Remote" );
+		
+		if ( $remote ) {
+			$this->Login->Find ( "[id=login_remote_button]", 0)->class = "selected";
+		} else {
+			$this->Login->Find ( "[id=login_local_button]", 0)->class = "selected";
 		}
 		
-		parent::Display( $pView, $pData );
+		$this->Login->Display();
+		
 		return ( true );
 	}
 

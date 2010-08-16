@@ -44,9 +44,9 @@ class cController extends cBase {
 	public function Display ( $pView = null, $pData = null) {
 		eval ( GLOBALS );
 		
-		if ( !$this->LoadView ( $pView ) ) return ( false );
+		if ( !$this->Form = $this->GetView ( $pView ) ) return ( false );
 		
-		echo $this->LoadView ( $pView );
+		$this->Form->Display();
 		
 		return ( true );
 	}

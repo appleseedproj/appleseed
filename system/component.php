@@ -141,10 +141,10 @@ class cComponent extends cBase {
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'controllers' . DS . $pController . '.php';
 		
-		// @todo Controller name has to include component name.  ie, cExampleTestController, not cTestController.
 		$controllername = ucwords ( $pController );
+		$componentname = ucwords ( $this->_Component );
 		
-		$class = 'c' . $controllername . 'Controller';
+		$class = 'c' . $componentname . $controllername . 'Controller';
 		
 		if ( !is_file ( $filename ) ) {
 			echo __("Controller Not Found", array ( 'name' => $pController ) );

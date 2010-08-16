@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Example
  */
-class cExampleController extends cController {
+class cExampleExampleController extends cController {
 	
 	/**
 	 * Constructor

@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Header
  */
-class cHeaderController extends cController {
+class cHeaderHeaderController extends cController {
 	
 	/**
 	 * Constructor
@@ -39,11 +39,8 @@ class cHeaderController extends cController {
 			break;
 		}
 		
-		$this->Form = $this->GetView ( $pView );
-		
-		$this->Form->Display();
-		
-		//parent::Display( $pView, $pData );
+		parent::Display( $pView, $pData );
+		return ( true );
 	}
 
 }

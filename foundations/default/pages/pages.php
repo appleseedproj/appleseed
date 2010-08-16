@@ -7,7 +7,7 @@
     <meta charset="utf-8" />
 
     <!-- Title -->
-    <title><?php echo __("Login Component | Appleseed"); ?></title>
+    <title><?php echo __("Pages Component | Appleseed"); ?></title>
     
     <!-- Links -->
     <?php $zApp->Theme->UseStyles (); ?>
@@ -50,15 +50,17 @@
     
         <div id="page_left" class="grid_3">
         
-			<?php $zApp->Components->Go ( "login", "info", "info" ); ?>
-        
+		 	<?php $zApp->Components->Go ( "profile" ); ?>
+		 	
 		 	<?php $zApp->Components->Go ( "appleseed", "appleseed", "donate" ); ?>
 		  	
 		</div>
         
         <div id="page_right" class="grid_9">
         
-			<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
+		  	<?php $zApp->Components->Go ( "profile", "menu", "menu" ); ?>
+		  	
+			<?php $zApp->Components->Go ( "pages", "pages", "pages" ); ?>
         
         </div>
         
