@@ -46,7 +46,7 @@ class cModel extends cBase {
 		
 		// Check if the tablename was specified.
 		if ( $pTable ) {
-			$tablename = ucwords ( strtolower ( ltrim ( rtrim ( $pTable ) ) ) );
+			$tablename = $pTable;
 		} elseif ( $this->_Tablename ) {
 			$tablename = $this->_Tablename;
 		} else {
@@ -192,8 +192,6 @@ class cModel extends cBase {
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
 		$this->Query ( $sql, $prepared );
-		
-		echo $this->_Query;
 		
 		$this->_Rows = $this->_Handle->rowCount();
 		$this->_Total = $this->_Handle->rowCount();
@@ -749,7 +747,7 @@ class cModel extends cBase {
 		}
 		
 		// Replace all the %variable$s references first
-		$query = sprintfn ( $pQuery, $prepared );
+		$query = sprintfn ( $query, $prepared );
 		
 		// Now replace all ? placeholders
 		$pcount= 0;
