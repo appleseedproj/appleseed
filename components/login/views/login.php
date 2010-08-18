@@ -13,7 +13,8 @@
 
   <div id="login_local">
   <form id='userinfo' name='userinfo' action='login/' method='post'> 
-   <input type='hidden' name='gACTION' value='LOGIN' /> 
+	<input type='hidden' name='Task' value='login'> 
+	<input type='hidden' name='Context' value=''> 
  
    <p id='username'>Username</p>
    <span class='gusername'><input  type='text' name='gUSERNAME' class='username' maxlength='64' value="" /></span>   
@@ -31,43 +32,35 @@
  <p class='content'> 
    Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons. </p> <!-- .content --> 
  
- <form name='join' id='join' action='join/' method='post'> 
-  <input type='hidden' name='gACTION' id='gACTION' value='join'> 
+<form name='join' id='join' action='login/' method='post'> 
+	<input type='hidden' name='Task' value='join'> 
+	<input type='hidden' name='Context' value=''> 
  
-   <p id='fullname'> 
-    Full Name   </p> <!-- .fullname --> 
-   <span class='gfullname'><input  type='text' name='gFULLNAME' class='fullname' maxlength='16' value="" /> 
-</span>   
-   <p id='username'> 
-    Username   </p> <!-- .username --> 
-   <span class='gusername'><input  type='text' name='gUSERNAME' class='username' maxlength='16' value="" /> 
-</span>   
-   <p id='email'> 
-    Email   </p> <!-- .email --> 
-   <span class='gemail'><input  type='text' name='gEMAIL' class='email' maxlength='128' value="" /> 
-</span>   
-   <p id='password'> 
-    Password   </p> <!-- .password --> 
-   <span class='gpass'><input  type='password' name='gPASS' class='pass' maxlength='16' value="" /> 
-</span> 
-   <p id='confirm'> 
-    Confirm Password   </p> <!-- .confirm --> 
-   <span class='gconfirm'><input  type='password' name='gCONFIRM' class='confirm' maxlength='16' value="" /> 
-</span>   
-      
-    <button   type='submit' name='gACTION' value='SUBMIT'>Submit</button> 
- </form>
+	<p id='fullname'>Full Name</p>
+	<input type='text' name='Fullname' value="" /> 
+	<p id='username'>Username</p>
+	<input  type='text' name='Username' value="" /> 
+	<p id='email'>Email   </p>
+	<input type='text' name='Email' value="" /> 
+	<p id='password'>Password</p>
+	<input  type='password' name='Pass' value="" /> 
+	<p id='confirm'>Confirm Password</p>
+	<input  type='password' name='Confirm' value="" /> 
+	<button   type='submit' name='gACTION' value='SUBMIT'>Submit</button> 
+</form>
  
   </div>
  
-  <div id="login_remote">
+		<div id="login_remote">
 
-  <form id='userinfo' name='userinfo' action='login/remote/' method='post'> 
-   <span class='glocation'><input  type='text' name='gLOCATION' class='location' maxlength='128' value="" /></span>   
-   <button   type='submit' name='gACTION' value='REMOTE LOGIN'>Remote Login</button> 
-  </form>
+			<form id='userinfo' name='userinfo' action='/login/remote/' method='post'> 
+				<input type='hidden' name='Task' value='remote'> 
+				<input type='hidden' name='Context' value=''> 
+				<input  type='text' name='Identity' value="" />
+				<button type='submit' name='Task' value='Remote'>Remote Login</button> 
+			</form>
   
-  </div>
+		</div>
   
   </div>
 </section>
