@@ -56,6 +56,7 @@ class cApplication extends cBase {
 		require ( ASD_PATH . DS . 'system' . DS . 'component.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'components.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'language.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'event.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'hook.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'hooks.php' );
@@ -84,9 +85,15 @@ class cApplication extends cBase {
 		
 		$this->Event->Hooks = $this->Hooks;
 		
+		$this->Event->Trigger ( "_System", "Initialize", "Begin" );
+		
+		$this->Language = new cLanguage();
+		
 		// Load global strings into cache.
 		$this->Language->Load ('_system/global.lang');
         
+		$this->Event->Trigger ( "_System", "Initialize", "End" );
+		
 		$this->Router = new cRouter();
 		
 		return ( true );
@@ -98,10 +105,6 @@ class cApplication extends cBase {
 	 * @access  private
 	 */
 	private function _LoadLibraries ( ) {
-		
-		// Statically loaded library classes.
-		require ( ASD_PATH . DS . 'libraries' . DS . 'language.php' );
-		$this->Language = new cLanguage();
 		
 		// Dynamically loaded library classes.	
 		$this->AddSys ( "Session",  ASD_PATH . DS . 'libraries' . DS . 'session.php' );
@@ -335,4 +338,13 @@ function sprintfn ($format, array $args = array()) {
 	
 	return vsprintf($format, array_values($args));
 }
+
+/**
+ * Returns the current time in a MYSQL format
+ */
+function NOW() {
 	
+	$now = date ("Y-m-d H:i:s", time ( ) );
+	
+	return ( $now );
+}
