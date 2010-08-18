@@ -27,7 +27,7 @@ header hgroup h1 a:hover { background: url('../images/asp_logo_150x66.png') 0px 
 time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4px 0px 0px 22px; min-height: 16px; display: block; }
 #user_comments article time { margin-left: 70px; }
 
-li.selected a { text-decoration: underline; color: #bf4630; }
+li.ui-tabs-selected a, li.selected a { text-decoration: underline; color: #bf4630; }
 
 #sys_message { background: #82b22c; color: #d9fa9e; padding: 0px 10px 5px 10px; margin-bottom: 5px; }
 #sys_message {
