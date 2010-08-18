@@ -53,7 +53,33 @@ class cBuffer extends cBase {
 		$buffer = ob_get_contents ();
 		ob_end_clean ();
 		
+		$replacement = "#@ head @#";
+		preg_match("/<head.*>(.*)<\/head>/smU", $buffer, $headData);
+		$buffer = preg_replace("/<head.*>(.*)<\/head>/smU", $replacement, $buffer);
+		
+		$this->_Queue['head'] = $headData[0];
+		
 		$this->_Buffer = $buffer;
+		
+		return ( true );
+	}
+	
+	/**
+	 * Get a private queue entry
+	 *
+	 * @access  public
+	 */
+	public function GetQueue ( $pEntry ) {
+		return ( $this->_Queue[$pEntry] );
+	}
+	
+	/**
+	 * Set the private queue entry
+	 *
+	 * @access  public
+	 */
+	public function SetQueue ( $pEntry, $pValue ) {
+		$this->_Queue[$pEntry] = $pValue;
 		
 		return ( true );
 	}
@@ -68,11 +94,24 @@ class cBuffer extends cBase {
 	}
 	
 	/**
+	 * Set the private buffer value
+	 *
+	 * @access  public
+	 */
+	public function SetBuffer ( $pBuffer ) {
+		$this->_Buffer = $pBuffer;
+		
+		return ( true );
+	}
+	
+	/**
 	 * Process the buffer, merging the queue.
 	 *
 	 * @access  public
 	 */
 	public function Process ( ) {
+		
+		$this->GetSys ( "Event" )->Trigger ( "Begin", "System", "Buffer" );
 		
 		$processed = $this->_Buffer;
 		$whilepattern = "/\#\@ component(.*) \@\#/";
@@ -88,7 +127,14 @@ class cBuffer extends cBase {
 			}
 		} while ( preg_match ( $whilepattern, $processed ) );
 		
-		return ( $processed );
+		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Buffer" );
+		
+		$pattern = "/\#\@ head \@\#/";
+		$processed = preg_replace ( $pattern, $this->_Queue['head'], $processed );
+		
+		$this->_Buffer = $processed;
+		
+		return ( $this->_Buffer );
 	}
 	
 	/**

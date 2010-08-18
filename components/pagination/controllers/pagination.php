@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Pagination
  */
-class cPaginationController extends cController {
+class cPaginationPaginationController extends cController {
 	
 	/**
 	 * Constructor

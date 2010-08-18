@@ -1,10 +1,24 @@
-A list of built-in hooks for extending the Appleseed framework.
+
+A "hook" is an entry point into a component or event that allows you to make modifications to data or output.
+
+Here is list of built-in hooks for extending the Appleseed framework.
 
 SYSTEM HOOKS
 ------------
 
 BeginSystemInitialize
 EndSystemInitialize
+
+BeginSystemBuffer
+EndSystemBuffer
+
+BeginSystemRoute
+OnSystemRoute
+EndSystemRoute
+
+NOTE: It is recommended that you do not output anything in the system hooks, 
+and only use it to manipulate the output buffer if necessary.  Otherwise, you
+may interfere with cookies and protocol handling.
 
 SOCIAL HOOKS
 ------------
@@ -46,4 +60,18 @@ Event = Custom event name
 Component = Name of component triggering the event
 Task = Component task triggering the event
 
-ie, BeginExampleDisplay
+From within the Example component, in the Delete task, run:
+
+$this->EventTrigger ( "On" );
+
+And any hooks with this class method will be called:
+
+OnExampleDelete
+
+
+AUTOMATIC HOOKS
+---------------
+
+Each component task has an automatic Begin and End event created.
+
+ie, BeginExampleDisplay, EndExampleDisplay

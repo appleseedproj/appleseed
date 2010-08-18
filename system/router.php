@@ -41,6 +41,8 @@ class cRouter extends cBase {
 	public function Route ( ) {
 		eval ( GLOBALS );
 			
+		$this->GetSys ( "Event" )->Trigger ( "Begin", "System", "Route" );
+		
 		$Foundation = $this->GetSys ( "Foundation" );
 		$FoundationConfig = $Foundation->Get ( "Config" );
 		
@@ -106,6 +108,10 @@ class cRouter extends cBase {
 				// Base is the requested uri without the pattern matched variables.
 				$this->_Base = $base;
 				
+				$data = array ( "foundation" => $finalDestination );
+				$modified = $this->GetSys ( "Event" )->Trigger ( "On", "System", "Route", $data );
+				if ( $modified ) $finalDestination = $modified;
+		
 				$Foundation->Load ( $finalDestination );
 				
 		
@@ -115,6 +121,8 @@ class cRouter extends cBase {
 		
 		$this->Legacy ( );
        	
+		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
+		
 		return ( true );
 	}
 

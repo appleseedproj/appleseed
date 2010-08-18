@@ -321,29 +321,32 @@ class cConfiguration extends cBase {
 			}
 		}
 		
-		// No configuration files found, continue loop
-		if ( !isset ( $path[$hook] ) ) return ( array ( ) );
-		
-		$config[$hook] = array();
+		foreach ( $path as $hook=> $paths ) {
 			
-		foreach ( $path[$hook] as $p => $filename ) {
-			$currentvalues = $config[$hook];
-			$configvalues = $this->Parse ( $filename );
+			$config[$hook] = array();
 			
-			if ( $configvalues['clearall'] == 'true' ) {
-				$currentvalues = array ();
-				unset ( $configvalues['clearall'] );
+			foreach ( $paths as $p => $filename ) {
+			
+				$currentvalues = $config[$hook];
+				$configvalues = $this->Parse ( $filename );
+				
+				if ( $configvalues['clearall'] == 'true' ) {
+					$currentvalues = array ();
+					unset ( $configvalues['clearall'] );
+				}
+			
+				$config[$hook] = array_merge ( $currentvalues, $configvalues );
+			
 			}
 			
-			$config[$hook] = array_merge ( $currentvalues, $configvalues );
-		}
-		
-		// If the hook isn't enabled, then unset the values and continue
-		if ($config[$hook]['enabled'] != 'true' ) {
-			unset ($config[$hook]);
-			continue;
-		} else {
-			$this->_Hooks[] = $hook;
+			// If the hook isn't enabled, then unset the values and continue
+			if ($config[$hook]['enabled'] != 'true' ) {
+				unset ($config[$hook]);
+				continue;
+			} else {
+				$this->_Hooks[] = $hook;
+			}
+			
 		}
 		
 		if ( count ( $config ) < 1 ) {

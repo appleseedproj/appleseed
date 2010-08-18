@@ -19,8 +19,11 @@ RewriteRule .*^_storage/legacy/photos/.*/icons/.*\.jpg$ - [L]
 RewriteRule .*^_storage/legacy/photos/.*/icons/.*\.png$ - [L]
 
 # Redirect to image.php
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule .*\.jpg$ system/appleseed.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule .*\.gif$ system/appleseed.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule .*\.png$ system/appleseed.php [L]
 
 # Redirect appleseed configuration request attempts to 403 Forbidden message.

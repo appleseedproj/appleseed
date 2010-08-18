@@ -85,14 +85,14 @@ class cApplication extends cBase {
 		
 		$this->Event->Hooks = $this->Hooks;
 		
-		$this->Event->Trigger ( "_System", "Initialize", "Begin" );
+		$this->Event->Trigger ( "Begin", "System", "Initialize" );
 		
 		$this->Language = new cLanguage();
 		
 		// Load global strings into cache.
 		$this->Language->Load ('_system/global.lang');
         
-		$this->Event->Trigger ( "_System", "Initialize", "End" );
+		$this->Event->Trigger ( "End", "System", "Initialize" );
 		
 		$this->Router = new cRouter();
 		

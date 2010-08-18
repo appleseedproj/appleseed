@@ -70,7 +70,7 @@
   if ($pic_location[0] == '/') $pic_location[0] = '';
 
   // Step 0: Check if file exists.
-
+  
   $filename = $_SERVER['DOCUMENT_ROOT'] . $_SERVER[REQUEST_URI];
   if (!file_exists ($filename)) {
     chdir ("legacy/code/site/error/");

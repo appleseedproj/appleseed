@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cExampleExampleHook extends cHook {
+class cExampleHook extends cHook {
 
 	/**
 	 * Constructor
@@ -31,7 +31,7 @@ class cExampleExampleHook extends cHook {
 	
 	public function BeginExampleDisplay ( $pData = null ) {
 		
-		//echo "<h2>" . __("Start Hook") . "</h2>";
+		// echo "<h2>" . __("Start Hook") . "</h2>";
 		
 		return ( true );
 	}

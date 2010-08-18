@@ -29,9 +29,9 @@ class cQuicksocialHook extends cHook {
 		parent::__construct();
 	}
 	
-	public function _SystemNodeDiscovery ( $pData = array() ) {
+	public function SystemNodeDiscovery ( $pData = array() ) {
 		
-		if (!class_exists ( 'cQuickNode' ) ) require ( ASD_PATH . 'hooks' . DS . '_system' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+		if (!class_exists ( 'cQuickNode' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
 		
 		// Set caching on by default.
 		$cache = $pData['cache'] ? isset ( $pData['cache'] ) : true;
@@ -49,14 +49,10 @@ class cQuicksocialHook extends cHook {
 		
 		$node = $node->Discover ( $domain );
 		
-		echo "<pre>";
-		print_r ( $node );
-		echo "</pre>";
+		return ( $node );
 	}
 	
-	
-	
-	public function _SystemInitializeBegin ( $pData = null ) {
+	public function BeginSystemInitialize ( $pData = null ) {
 		
 		$social = $this->GetSys ( "Request" )->Get ( "_social" );
 		
@@ -66,7 +62,7 @@ class cQuicksocialHook extends cHook {
 		
 		switch ( $task ) {
 			case 'verify':
-				require ( ASD_PATH . 'hooks' . DS . '_system' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				$data = $this->GetSys ( "Request" )->Get(); 
 				 
 				$social = new cQuickSocial ();
@@ -82,7 +78,7 @@ class cQuicksocialHook extends cHook {
 				echo "connect.return";
 			break;
 			case 'node.discover':
-				require ( ASD_PATH . 'hooks' . DS . '_system' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
 				 
 				$node = new cQuickNode ();
 				$node->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
@@ -122,7 +118,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _CheckLocalToken ( $pUsername, $pTarget, $pToken ) {
 		
-		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . '_system' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
 				
 		$social = new cQuickSocial ();
 		
@@ -174,7 +170,7 @@ class cQuicksocialHook extends cHook {
 		} else {
 			
 			// Create a new token and store it.
-			if ( !class_exists ( cQuickSocial ) ) require ( ASD_PATH . 'hooks' . DS . '_system' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
+			if ( !class_exists ( cQuickSocial ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 			$social = new cQuickSocial ();
 			$token = $social->Token();
 			
@@ -191,7 +187,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _CheckRemoteToken ( $pUsername, $pSource, $pToken ) {
 		
-		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . '_system' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
 				
 		$social = new cQuickSocial ();
 		

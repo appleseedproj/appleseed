@@ -52,11 +52,13 @@ class cEvent extends cBase {
 				$hook_lang = 'hooks' . DS . strtolower ( $lang_component ) . '.' . $lang_hook . '.lang';
 				$store = $this->GetSys ( "Language" )->Load ( $hook_lang );
 		
-				$this->Hooks->$h->$function ( $pData );
+				$return = $this->Hooks->$h->$function ( $pData );
 				
 				$this->GetSys ( "Language" )->Restore( $store );
 			} // if
 		}
+		
+		return ( $return );
 	}
 	
 }
