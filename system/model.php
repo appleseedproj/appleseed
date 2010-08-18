@@ -755,14 +755,15 @@ class cModel extends cBase {
 			$query = preg_replace ( '/\?/', $prepared[$pcount++], $query, 1);
 		}
 		
-		// Finally replace all :variable placeholders
-		while ( preg_match ( '/\:(\w+)/', $query, $result) ) {
-			list ( $null, $match ) = explode ( ':', $result[0] );
+		preg_match ( '/\:(\w+)/', $query, $results); 
+		
+		foreach ( $results as $r => $result ) {
+			list ( $null, $match ) = explode ( ':', $result );
+			if ( !isset ( $prepared[$match] ) ) continue;
 			$query = preg_replace ( '/:(\w+)/', $prepared[$match], $query, 1);
 		}
 		
 		return ( $query );
-		
 	}
 	
 	/**

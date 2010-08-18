@@ -58,7 +58,7 @@ Protocol
 					tasks=<[array=(verify,node.update,friend.add,etc)]>
 					trusted=<[array]>
 					version=<version>
-			- NOTE:	Token optional
+			- NOTE:	Source & Token optional
 	
 		- Callback / ReplyToCallback
 			- GET:	_social=true

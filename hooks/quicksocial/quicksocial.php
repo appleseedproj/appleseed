@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cQuickSocialHooks extends cHook {
+class cQuicksocialHook extends cHook {
 
 	/**
 	 * Constructor

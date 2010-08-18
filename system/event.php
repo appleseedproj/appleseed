@@ -37,6 +37,9 @@ class cEvent extends cBase {
 		$component = ucwords ( strtolower ( ltrim ( rtrim ( $pComponent ) ) ) ); 
 		$task = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) ); 
 		
+		// Make an exception for system events and do proper casing manually.
+		if ( strtolower ($event == "_system" ) ) $event = "_System";
+		
 		$function = $event . $component . $task;
 		
 		$hooks = $this->Hooks->GetHooks ();

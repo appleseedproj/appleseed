@@ -299,67 +299,57 @@ class cConfiguration extends cBase {
 		
 		$configpaths = $Config->GetPath();
 		
-		$componentdir = $zApp->GetPath() . DS . 'hooks';
+		$hooksdir = $zApp->GetPath() . DS . 'hooks';
 		
-		$components = scandirs ( $componentdir );
+		$hooks = scandirs ( $hooksdir );
 		
 		$config = array ();
-		foreach ( $components as $comp => $component ) {
-			$hookdir = $zApp->GetPath() . DS . 'hooks' . DS . $component;
-		
-			$hooks = scandirs ( $hookdir );
-
-			if ( count ( $hooks ) < 1 ) continue;
-
-			foreach ( $hooks as $h => $hook ) {
-				
-				$filename = $hookdir . DS . $hook . DS . $hook . '.conf';
+		foreach ( $hooks as $h => $hook ) {
+			$hookdir = $zApp->GetPath() . DS . 'hooks' . DS . $hook;
 			
+			$filename = $hookdir . DS . $hook . '.conf';
+		
+			if ( is_file ( $filename ) ) {
+				$path[$hook][] = $filename;
+			}
+		
+			foreach ( $configpaths as $cpath => $configpath ) {
+				$filename = $zApp->GetPath() . DS . 'configurations' . DS . $configpath . DS . 'hooks' . DS . $hook . DS . $hook . '.conf';
 				if ( is_file ( $filename ) ) {
 					$path[$hook][] = $filename;
 				}
-			
-				foreach ( $configpaths as $cpath => $configpath ) {
-					$filename = $zApp->GetPath() . DS . 'configurations' . DS . $configpath . DS . 'hooks' . DS . $component . DS . $hook . '.conf';
-					if ( is_file ( $filename ) ) {
-						$path[$hook][] = $filename;
-					}
-				}
-				
-				// No configuration files found, continue loop
-				if ( !isset ( $path[$hook] ) ) continue;
-				
-				
-				$config[$component][$hook] = array();
-				
-				foreach ( $path[$hook] as $p => $filename ) {
-					$currentvalues = $config[$component][$hook];
-					$configvalues = $this->Parse ( $filename );
-					
-					if ( $configvalues['clearall'] == 'true' ) {
-						$currentvalues = array ();
-						unset ( $configvalues['clearall'] );
-					}
-					
-					$config[$component][$hook] = array_merge ( $currentvalues, $configvalues );
-				}
-				
-				// If the hook isn't enabled, then unset the values and continue
-				if ($config[$component][$hook]['enabled'] != 'true' ) {
-					unset ($config[$component][$hook]);
-					continue;
-				} else {
-					$this->_Hooks[$component][] = $hook;
-				}
-				
 			}
-			
-			if ( count ( $config[$component] ) < 1 ) {
-				unset ( $config [$component] );
-			}
-			
 		}
 		
+		// No configuration files found, continue loop
+		if ( !isset ( $path[$hook] ) ) return ( array ( ) );
+		
+		$config[$hook] = array();
+			
+		foreach ( $path[$hook] as $p => $filename ) {
+			$currentvalues = $config[$hook];
+			$configvalues = $this->Parse ( $filename );
+			
+			if ( $configvalues['clearall'] == 'true' ) {
+				$currentvalues = array ();
+				unset ( $configvalues['clearall'] );
+			}
+			
+			$config[$hook] = array_merge ( $currentvalues, $configvalues );
+		}
+		
+		// If the hook isn't enabled, then unset the values and continue
+		if ($config[$hook]['enabled'] != 'true' ) {
+			unset ($config[$hook]);
+			continue;
+		} else {
+			$this->_Hooks[] = $hook;
+		}
+		
+		if ( count ( $config ) < 1 ) {
+			unset ( $config );
+		}
+			
 		return ($config);
 		
 	}

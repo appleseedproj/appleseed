@@ -42,21 +42,18 @@ class cHooks extends cBase {
 	public function _Load ( ) {
 		eval ( GLOBALS );
 		
-		foreach ( $this->_Config->_Hooks as $c => $component ) {
+		foreach ( $this->_Config->_Hooks as $h => $hook ) {
 			
-			foreach ( $component as $h => $hook ) {
-			
-				$filename = $zApp->GetPath () . DS . 'hooks' . DS . $c . DS . $hook . DS . $hook . '.php';
+				$filename = $zApp->GetPath () . DS . 'hooks' . DS . $hook . DS . $hook . '.php';
 				
-				$hookname = ucwords ( $hook );
-				$componentname = ucwords ( $c );
+				$hookname = ltrim ( rtrim ( $hook ) );
 				
-				$hookref = $componentname . $hookname;
+				$hookref = $hookname;
 			
-				$class = 'c' . $componentname . $hookname . "Hook";
+				$class = 'c' . $hookname . "Hook";
 				
 				if ( !is_file ( $filename ) ) {
-					unset ( $this->_Config->_Hooks[$c] );
+					unset ( $this->_Config->_Hooks[$h] );
 					continue;
 				}
 			
@@ -71,7 +68,6 @@ class cHooks extends cBase {
 				
 				$this->_Hooks->$hookref = $this->$hookref;
 			
-			}
 		}
 		
 		$this->_Hooks->_Config = $this->_Config;

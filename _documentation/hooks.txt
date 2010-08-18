@@ -1,0 +1,49 @@
+A list of built-in hooks for extending the Appleseed framework.
+
+SYSTEM HOOKS
+------------
+
+BeginSystemInitialize
+EndSystemInitialize
+
+SOCIAL HOOKS
+------------
+
+OnNodeDiscover
+OnNodeCallback
+OnNodeVerify
+
+OnFriendAdd
+OnFriendApprove
+OnFriendRemove
+
+OnLoginAuthenticate
+OnLoginCheck
+OnLoginProcess
+
+OnUserInfo
+OnUserVerify
+
+OnMessageNotify
+OnMessageRetrieve
+
+OnFeedPush
+OnFeedPull
+OnFeedReport
+
+OnTagAdd
+OnTagApprove
+OnTagRemove
+
+OnSearchQuery
+
+CUSTOM HOOKS
+------------
+
+EventComponentTask
+
+Event = Custom event name
+Component = Name of component triggering the event
+Task = Component task triggering the event
+
+ie, BeginExampleDisplay
