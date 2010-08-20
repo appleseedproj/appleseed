@@ -687,7 +687,7 @@
           // Check if entry is hidden or blocked for this user.
           // $gPRIVACYSETTING = $this->friendCirclesPrivacy->Determine ("zFOCUSUSER", "zLOCALUSER", "friendCircles_tID", $this->friendCircles->tID);
     
-          $USER = new cUSER ($zOLDAPPLE->Context);
+          $USER = new cOLDUSER ($zOLDAPPLE->Context);
     
           $USER->Select ("Username", $this->Username);
           $USER->FetchArray (); 
@@ -814,7 +814,7 @@
       } else {
 
         // Check online (local)
-        $USER = new cUSER ($zOLDAPPLE->Context);
+        $USER = new cOLDUSER ($zOLDAPPLE->Context);
    
         $USER->Select ("Username", $this->Username);
         $USER->FetchArray (); 
@@ -850,7 +850,7 @@
       
       $source_verification = $this->CheckVerification ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
       
-      $USER = new cUSER();
+      $USER = new cOLDUSER();
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
       $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
@@ -1287,7 +1287,7 @@
       
       $source_verification = $this->CheckVerification ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
       
-      $USER = new cUSER();
+      $USER = new cOLDUSER();
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
       $target_verification = $this->CheckVerification ($USER->uID, $zLOCALUSER->Username, $gSITEDOMAIN);
@@ -1412,7 +1412,7 @@
       $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
       
       // Get Information On The Target User.
-      $USER =  new cUSER ();
+      $USER =  new cOLDUSER ();
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
       $uid = $USER->uID;
@@ -1446,7 +1446,7 @@
       $this->DeleteLocal ($zLOCALUSER->uID, $pUSERNAME, $gSITEDOMAIN);
       
       // Get Information On The Target User.
-      $USER =  new cUSER ();
+      $USER =  new cOLDUSER ();
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
       $uid = $USER->uID;
@@ -1471,7 +1471,7 @@
       global $gSITEDOMAIN;
 
       // Get Information On The Source User.
-      $USER =  new cUSER ();
+      $USER =  new cOLDUSER ();
       $USER->Select ("Username", $pUSERNAME);
       $USER->FetchArray ();
 

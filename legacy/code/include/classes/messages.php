@@ -2288,7 +2288,7 @@
       global $gSITEDOMAIN;
       
       // Get the information about the sender.
-      $USER = new cUSER();
+      $USER = new cOLDUSER();
       $USER->Select ("uID", $pSENDERID);
       $USER->FetchArray ();
       $username = $USER->Username;
@@ -2346,7 +2346,7 @@
       global $gSITEDOMAIN;
       
       // Get the information about the sender.
-      $USER = new cUSER();
+      $USER = new cOLDUSER();
       $USER->Select ("uID", $pSENDERID);
       $USER->FetchArray();
       $senderfullname = $USER->userProfile->getAlias();

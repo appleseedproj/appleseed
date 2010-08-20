@@ -36,14 +36,14 @@
   // +-------------------------------------------------------------------+
  
   // User Authorization class.
-  class cUSERAUTHORIZATION extends cBASEDATACLASS {
+  class cOLDUSERAUTHORIZATION extends cBASEDATACLASS {
 
     var $uID, $Username, $Pass, $Invite, $Verification, $Standing;
     var $userSession, $userProfile, $userAccess, $userAnswers;
     var $userInformation;
     var $Cascade;
 
-    function cUSERAUTHORIZATION ($pDEFAULTCONTEXT = '') {
+    function cOLDUSERAUTHORIZATION ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userAuthorization';
@@ -262,7 +262,7 @@
 
     } // Access
 
-  } // cUSERAUTHORIZATION
+  } // cOLDUSERAUTHORIZATION
 
   // User sessions class.
   class cUSERSESSIONS extends cBASEDATACLASS {

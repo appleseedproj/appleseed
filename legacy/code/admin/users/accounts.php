@@ -66,7 +66,7 @@
   $zOLDAPPLE->Initialize("admin.users.accounts", TRUE);
 
   // Create local classes.
-  $ADMINDATA = new cUSER ($zOLDAPPLE->Context);
+  $ADMINDATA = new cOLDUSER ($zOLDAPPLE->Context);
 
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);

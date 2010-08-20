@@ -74,7 +74,7 @@
   // Initialize Appleseed.
   $zOLDAPPLE->Initialize("common.images", TRUE);
 
-  $USER = new cUSER();
+  $USER = new cOLDUSER();
   $USER->Select ("Username", $gICONUSER);
   $USER->FetchArray ();
 

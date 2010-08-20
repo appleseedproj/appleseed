@@ -300,7 +300,7 @@
       if ($zFRIENDS->Domain != $gSITEDOMAIN) {
         $gFRIENDFULLNAME = $zFRIENDS->Username;
       } else {
-        $USER = new cUSER ($zOLDAPPLE->Context);
+        $USER = new cOLDUSER ($zOLDAPPLE->Context);
         $USER->Select ("Username", $zFRIENDS->Username);
         $USER->FetchArray (); 
     

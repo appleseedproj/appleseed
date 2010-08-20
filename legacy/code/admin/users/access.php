@@ -67,7 +67,7 @@
 
   // Create local classes.
   $ADMINDATA = new cUSERACCESS ($zOLDAPPLE->Context);
-  $PROFILEINFO = new cUSER ();
+  $PROFILEINFO = new cOLDUSER ();
            
   // Load security settings for the current page.
   $zLOCALUSER->Access (FALSE, FALSE, FALSE);

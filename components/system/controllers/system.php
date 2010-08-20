@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Header
+ * @subpackage   System
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Header Component Controller
+/** System Component Controller
  * 
- * Header Component Controller Class
+ * System Component Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Header
+ * @subpackage  System
  */
-class cHeaderHeaderController extends cController {
+class cSystemSystemController extends cController {
 	
 	/**
 	 * Constructor
@@ -31,14 +31,13 @@ class cHeaderHeaderController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$user = $this->Talk ( "User", "Current" );
+		$login = null;
 		
-		$pView = 'main';
-		
-		if ( $user->Remote ) $pView = 'remote';
-		else if ( $user->Username ) $pView = 'local';
-		
-		if ( ( $user->Username ) && ( $user->Admin ) ) $pView .= '.admin';
+		switch ( $login ) {
+			default:
+				$pView = 'message';
+			break;
+		}
 		
 		parent::Display( $pView, $pData );
 		return ( true );

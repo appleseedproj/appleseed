@@ -175,7 +175,7 @@
       
       $buffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
-      $USER = new cUSER();
+      $USER = new cOLDUSER();
       $userAuth = $gTABLEPREFIX . "userAuthorization";
       $userSessions = $gTABLEPREFIX . "userSessions";
       $authSessions = $gTABLEPREFIX . "authSessions";

@@ -966,7 +966,7 @@
       $ARTICLE->Select ("tID", $this->rID);
       $ARTICLE->FetchArray();
 
-      $USER = new cUSER ();
+      $USER = new cOLDUSER ();
 
       // Return if comment notification is turned off.
       // NOTE: This requires an XML request.

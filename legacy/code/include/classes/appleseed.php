@@ -149,8 +149,8 @@
       $zSEARCH  = new cSEARCH ();
       $zTAGS  = new cTAGLIST ();
   
-      $zFOCUSUSER = new cUSER ();
-      $zLOCALUSER = new cUSER ();
+      $zFOCUSUSER = new cOLDUSER ();
+      $zLOCALUSER = new cOLDUSER ();
       $zREMOTEUSER = new cAUTHSESSIONS ();
 
       $zAUTHUSER = new cAUTHUSER ();
@@ -1337,7 +1337,7 @@
                  $output = $zHTML->CreateUserLink (ANONYMOUS, $gSITEDOMAIN, $popup);
                } else {
                  //Check for an unknown user.
-                 $CHECKUSER = new cUSER ();
+                 $CHECKUSER = new cOLDUSER ();
                  $CHECKUSER->Select ("Username", $tagarray['user']);
                  $CHECKUSER->FetchArray();
                  if ($CHECKUSER->CountResult () == 0) {

@@ -1538,7 +1538,7 @@
         $domain  = $gGROUPINVITEDOMAIN[$count];
         switch ($action) {
           case GROUP_ACTION_REMOVE:
-           $USER = new cUSER ();
+           $USER = new cOLDUSER ();
            $USER->Select ("Username", $username);
            $USER->FetchArray ();
            if ($USER->uID != $this->userAuth_uID) {
@@ -1613,7 +1613,7 @@
            $this->Approve ($username, $domain);
           break;
           case GROUP_ACTION_REMOVE:
-           $USER = new cUSER ();
+           $USER = new cOLDUSER ();
            $USER->Select ("Username", $username);
            $USER->FetchArray ();
            if ($USER->uID != $this->userAuth_uID) {
@@ -1644,7 +1644,7 @@
            $this->Approve ($username, $domain);
           break;
           case GROUP_ACTION_REMOVE:
-           $USER = new cUSER ();
+           $USER = new cOLDUSER ();
            $USER->Select ("Username", $username);
            $USER->FetchArray ();
            if ($USER->uID != $this->userAuth_uID) {

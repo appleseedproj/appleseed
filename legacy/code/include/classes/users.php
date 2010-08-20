@@ -36,14 +36,14 @@
   require_once ("legacy/code/include/classes/BASE/user.php");
  
   // User class.
-  class cUSER extends cUSERAUTHORIZATION {
+  class cOLDUSER extends cOLDUSERAUTHORIZATION {
 
     var $uID, $Username, $Pass, $Invite, $Verification, $Standing;
     var $userSession, $userProfile, $userAccess, $userAnswers;
     var $userInformation;
     var $Cascade;
 
-    function cUSER ($pDEFAULTCONTEXT = '') {
+    function cOLDUSER ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userAuthorization';
@@ -160,7 +160,7 @@
       	$INVITE->Select ("Value", $gVALUE);
       	$INVITE->FetchArray();
 	 
-      	$USER = new cUSER();
+      	$USER = new cOLDUSER();
       	$USER->Select ("uID", $INVITE->userAuth_uID);
       	$USER->FetchArray();
 
@@ -621,7 +621,7 @@
       return (TRUE);
     } // DeleteIcon
 
-  } // cUSER
+  } // cOLDUSER
 
   // User profile class.
   class cUSERPROFILE extends cDATACLASS {

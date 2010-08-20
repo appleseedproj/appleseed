@@ -83,7 +83,7 @@
       $zHTML    = new cOLDHTML;
       $zXML     = new cOLDXML;
   
-      $zLOCALUSER = new cUSERAUTHORIZATION;
+      $zLOCALUSER = new cOLDUSERAUTHORIZATION;
       
       $zDEBUG = new cOLDDEBUG;
       

@@ -176,7 +176,7 @@
        if ($zMESSAGE->messageLabels->FetchArray()) {
 
          // Load sender username from user table in case username has changed.
-         $SENDER = new cUSER ();
+         $SENDER = new cOLDUSER ();
          $SENDER->Select ("uID", $zMESSAGE->messageLabels->Sender_uID);
          $SENDER->FetchArray ();
          $zMESSAGE->messageLabels->Sender_Username = $SENDER->Username;

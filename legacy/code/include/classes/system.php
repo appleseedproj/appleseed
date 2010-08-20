@@ -135,7 +135,7 @@
       $zNODES->SelectByMultiple ($criteria);
       
       // Count the number of users on the system.
-      $USER = new cUSERAUTHORIZATION();
+      $USER = new cOLDUSERAUTHORIZATION();
       $USER->Select (NULL, NULL);
       $users = $USER->CountResult();
       unset ($USER);
