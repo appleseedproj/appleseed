@@ -33,5 +33,37 @@ class cLoginHook extends cHook {
 		return ( true );
 	}
 	
+	public function OnLoginLogout ( $pData = null ) {
+		
+		$this->_Logout();
+		
+		return ( true );
+	}
+	
+	private function _Logout ( ) {
+		
+		// Get the current cookies
+      	$loginSession = isset($_COOKIE["gLOGINSESSION"]) ?  $_COOKIE["gLOGINSESSION"] : "";
+      	$remoteLoginSession = isset($_COOKIE["gREMOTELOGINSESSION"]) ?  $_COOKIE["gREMOTELOGINSESSION"] : "";
+		
+		// Delete the local session info database entry.
+		if ( $loginSession ) {
+      		$sessionModel = new cModel ( "userSessions" );
+      		$sessionModel->Delete ( array ( "Identifier" => $loginSession ) );
+		}
+		
+		// Delete the remote session info database entry.
+		if ( $remoteLoginSession ) {
+      		$sessionModel = new cModel ( "authSessions" );
+      		$sessionModel->Delete ( array ( "Identifier" => $remoteLoginSession ) );
+		}
+		
+		// Delete the cookies.
+		setcookie ("gLOGINSESSION", "", time() - 3600);
+		setcookie ("gREMOTELOGINSESSION", "", time() - 3600);
+		
+		return ( false );
+	}
+	
 }
 

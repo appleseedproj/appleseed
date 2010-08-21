@@ -59,10 +59,25 @@ class cUserAuthorization extends cBase {
 	public function LoggedIn () {
 		
       	$loginSession = isset($_COOKIE["gLOGINSESSION"]) ?  $_COOKIE["gLOGINSESSION"] : "";
+      	$remoteLoginSession = isset($_COOKIE["gREMOTELOGINSESSION"]) ?  $_COOKIE["gREMOTELOGINSESSION"] : "";
       	
+      	if ( $loginSession ) {
+      		$this->_LocalLoggedIn ( $loginSession );
+      	} else if ( $remoteLoginSession ) {
+      		$this->_RemoteLoggedIn ( $remoteLoginSession );
+      	} else {
+      		return ( false );
+      	}
+      	
+      	return ( true );
+      	
+	}
+	
+	private function _LocalLoggedIn ( $pSession ) {
+		
       	// Load the session information.
       	$sessionModel = new cModel ( "userSessions" );
-      	$sessionModel->Retrieve ( array ( "Identifier" => $loginSession ) );
+      	$sessionModel->Retrieve ( array ( "Identifier" => $pSession ) );
       	$sessionModel->Fetch();
       	
       	if ( !$sessionModel->Get ( "userAuth_uID" ) ) return ( false );
@@ -87,7 +102,21 @@ class cUserAuthorization extends cBase {
       	$this->Remote = false;
       	
       	return ( true );
-      	
 	}
 	
+	private function _RemoteLoggedIn ( $pSession ) {
+      	// Load the session information.
+      	$sessionModel = new cModel ( "authSessions" );
+      	$sessionModel->Retrieve ( array ( "Identifier" => $pSession ) );
+      	$sessionModel->Fetch();
+      	
+      	if ( !$sessionModel->Get ( "Username" ) ) return ( false );
+      	
+      	$this->Username = $sessionModel->Get ( "Username" );
+      	$this->Domain = $sessionModel->Get ( "Domain" );
+      	$this->Fullname = $sessionModel->Get ( "Fullname" );
+      	$this->Remote = true;
+      	
+      	return ( true );
+	}
 }

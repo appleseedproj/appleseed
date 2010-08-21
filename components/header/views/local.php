@@ -22,12 +22,11 @@
         
 	<div id="user_login" class="grid_3"> 
 		<p>
-			<span><a  id="user_login_profile_link" href="">You Are Logged In As</a></span>
+			<span id="user_login_profile_link">You Are Currently Logged In As</span>
 			<span><a href="/logout/">Logout</a></span> 
 		</p>
 	</div> 
         
 	<div class="clear"></div> 
         
-</header> 
- 
+</header>

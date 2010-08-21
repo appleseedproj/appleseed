@@ -21,7 +21,7 @@ nav { font-weight: bold; }
 header hgroup h1 { color: #406300; }
 header hgroup h2 { color: #639a00; }
 
-header hgroup h1 a { background: url('/images/asp_logo_150x66.png') no-repeat; color: #c0d895; font-size: 1px; height: 32px; display: block; }
+header hgroup h1 a { background: url('../images/asp_logo_150x66.png') no-repeat; color: #c0d895; font-size: 1px; height: 32px; display: block; }
 header hgroup h1 a:hover { background: url('../images/asp_logo_150x66.png') 0px -33px no-repeat; text-decoration: none; color: #c0d895; }
 
 time { background: url('../images/icons/date.png') 2px 2px no-repeat; padding: 4px 0px 0px 22px; min-height: 16px; display: block; }

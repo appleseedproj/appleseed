@@ -22,7 +22,7 @@
         
 	<div id="user_login" class="grid_3"> 
 		<p>
-			<span><a  id="user_login_profile_link" href="">Logged In As Administrator</a></span>
+			<span id="user_login_profile_link"></span>
 			<span><a href="/logout/">Logout</a></span> 
 		</p>
 	</div> 

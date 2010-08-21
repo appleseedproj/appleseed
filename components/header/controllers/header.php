@@ -40,7 +40,15 @@ class cHeaderHeaderController extends cController {
 		
 		if ( ( $user->Username ) && ( $user->Admin ) ) $pView .= '.admin';
 		
-		parent::Display( $pView, $pData );
+		$header = $this->GetView ( $pView );
+		
+		$link = $header->Find ( "[id=user_login_profile_link]", 0 );
+		
+		$logged_in_text = $link->innertext;
+		$link->innertext = __ ($logged_in_text, array ( "username" => $user->Username, "domain" => $user->Domain ) );
+		
+		$header->Display();
+		
 		return ( true );
 	}
 
