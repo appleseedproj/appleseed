@@ -213,14 +213,36 @@ class cModel extends cBase {
 		$tbl = $this->_Tablename;
 		$pre = $this->_Prefix;
 		
-		if ( ( !$pCriteria ) and ( !$this->Get ( $pk ) ) ) {
-			return ( $this->_SaveNew () );
-		}
-		
 		$table = $this->_Prefix . $this->_Tablename;
 		
-		$sql = 'UPDATE %table$s';
+		$primarykey_value = $this->Get ( $pk );
+		
+		$replacements["pk"] = $pk;
+		$replacements["criteria"] = $primarykey_value;
 		$replacements["table"] = $table;
+		
+		$prepared = array ();
+		
+		// Check for an existing record.
+		$sql = 'SELECT * FROM %table$s WHERE %pk$s = \'%criteria$s\' ';
+		
+		$sql = sprintfn ( $sql, $replacements );
+		
+		$this->Query ( $sql, $prepared );
+		
+		$resultCount = $this->Get ( "Rows" );
+		
+		$usePrimary = false;
+		if ( isset ( $primarykey_value ) ) $usePrimary = true;
+		
+		if ( ( !$pCriteria ) and ( !$this->Get ( $pk ) ) ) {
+			return ( $this->_SaveNew ( $usePrimary ) );
+		} else if ( $resultCount == 0 ) {
+			$this->Set ( $pk, $primarykey_value );
+			return ( $this->_SaveNew ( $usePrimary ) );
+		}
+		
+		$sql = 'UPDATE %table$s';
 		
 		$sql .= ' SET ';
 		
@@ -249,14 +271,10 @@ class cModel extends cBase {
 		
 		$sql .= ' WHERE %pk$s = \'%criteria$s\' ';
 		
-		$replacements["pk"] = $pk;
-		
 		// Without criteria, we'll use the current primary key value
 		if ( $pCriteria ) {
 			$replacements["criteria"] = $pCriteria;
 		} else {
-			$primarykey_value = $this->Get ( $pk );
-			
 			// We don't want to update everything in the table, too dangerous, so error out.
 			if ( !$primarykey_value ) return ( false );
 			
@@ -264,8 +282,6 @@ class cModel extends cBase {
 		}
 		
 		$sql = sprintfn ( $sql, $replacements );
-		
-		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
 		$this->Query ( $sql, $prepared );
 		
@@ -282,7 +298,7 @@ class cModel extends cBase {
 	 *
 	 * @access  public
 	 */
-	protected function _SaveNew ( ) {
+	protected function _SaveNew ( $pUsePrimary = false ) {
 		
 		$pk = $this->_PrimaryKey;
 		$tbl = $this->_Tablename;
@@ -298,7 +314,7 @@ class cModel extends cBase {
 			$fieldname = $fields['Field'];	
 			
 			// Don't update the primary key.
-			if ($fieldname == $this->_PrimaryKey) continue;
+			if ( ( !$pUsePrimary ) && ($fieldname == $this->_PrimaryKey ) ) continue;
 			
 			// Skip anything on the protected list.
 			if ( in_array ( $fieldname, $this->_Protected ) ) continue;
@@ -322,7 +338,7 @@ class cModel extends cBase {
 			$fieldname = $fields['Field'];	
 			
 			// Don't update the primary key.
-			if ($fieldname == $this->_PrimaryKey) continue;
+			if ( ( !$pUsePrimary ) && ($fieldname == $this->_PrimaryKey ) ) continue;
 			
 			// Skip anything on the protected list.
 			if ( in_array ( $fieldname, $this->_Protected ) ) continue;

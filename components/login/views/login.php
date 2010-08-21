@@ -12,18 +12,19 @@
 	</nav>
 
   <div id="login_local">
-  <form id='userinfo' name='userinfo' action='login/' method='post'> 
+  <p id='local_login_message'></p>
+  <form id='userinfo' name='userinfo' action='/login/' method='post'> 
 	<input type='hidden' name='Task' value='login'> 
 	<input type='hidden' name='Context' value=''> 
  
    <p id='username'>Username</p>
-   <span class='gusername'><input  type='text' name='gUSERNAME' class='username' maxlength='64' value="" /></span>   
+   <span class='username'><input  type='text' name='Username' class='username' maxlength='64' value="" /></span>   
    <p id='password'>Password</p>
-   <span class='gpass'><input  type='password' name='gPASS' class='pass' maxlength='16' value="" /></span>   
+   <span class='pass'><input  type='password' name='Pass' class='pass' maxlength='16' value="" /></span>   
    <p id='rememberme'>Remember Me</p>
-   <input id='remember' type='checkbox' name='gREMEMBER'  checked='checked' /> 
+   <input id='remember' type='checkbox' name='Remember' checked='checked' /> 
  
-    <button   type='submit' name='gACTION' value='LOGIN'>Login</button>    <button   type='submit' name='gACTION' value='FORGOT'>Forgot Password</button> 
+    <button   type='submit' name='Task' value='Login'>Login</button>    <button   type='submit' name='Task' value='FORGOT'>Forgot Password</button> 
   </form>
  
   <h1>Join This Site</h1> 
@@ -32,7 +33,7 @@
  <p class='content'> 
    Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons. </p> <!-- .content --> 
  
-<form name='join' id='join' action='login/' method='post'> 
+<form name='join' id='join' action='/login/' method='post'> 
 	<input type='hidden' name='Task' value='join'> 
 	<input type='hidden' name='Context' value=''> 
  
@@ -46,7 +47,7 @@
 	<input  type='password' name='Pass' value="" /> 
 	<p id='confirm'>Confirm Password</p>
 	<input  type='password' name='Confirm' value="" /> 
-	<button   type='submit' name='gACTION' value='SUBMIT'>Submit</button> 
+	<button   type='submit' name='Task' value='Join'>Join</button> 
 </form>
  
   </div>
@@ -64,4 +65,3 @@
   
   </div>
 </section>
-

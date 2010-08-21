@@ -101,23 +101,23 @@ class cLanguage {
  			
  			// File does not exist, return false. 
  			// _set _system _error
- 			if (!file_exists ($location)) continue;
+ 			if ( !file_exists ( $location ) ) continue;
  			
  			// File can not be parsed, continue through.
  			// _set _system _error
- 			if (!$data = parse_ini_file ($location)) {
+ 			if ( !$data = parse_ini_file ( $location ) ) {
  				continue;
- 			} // if
+ 			} 
  		
  			// Put data into the global cache.
- 			foreach ($data as $key => $value) {
+ 			foreach ( $data as $key => $value ) {
  	        	$zApp->setCache ( 'Language', $key, $value );	
- 			} // foreach
+ 			}
  		
  		} 
  		
- 		return ($store);
- 	} // Load
+ 		return ( $store );
+ 	}
  	
  	/**
  	 * @access public
@@ -125,13 +125,13 @@ class cLanguage {
  	 * @param array list of variables to sprintf
  	 * @return string
  	 */
- 	function _ ( $pString, $pParams = null ) {
+ 	static function _ ( $pString, $pParams = null ) {
  		eval(GLOBALS);
  		
  		$debug = $zApp->Config->GetConfiguration ( "debug" );
 
-        $key = str_replace (' ', '_', $pString);
-        $key = strtoupper ($key);
+        $key = str_replace ( ' ', '_', $pString );
+        $key = strtoupper ( $key );
         
         if ( !$key ) return ( $pString );
  		
@@ -150,11 +150,11 @@ class cLanguage {
  		    	}
  		    }
  		    
-        } // if
+        }
         
-        if (count ($pParams) >= 1) {
-        	$return = sprintfn($return, $pParams);
-        	if (!$return) {
+        if ( count ( $pParams ) >= 1 ) {
+        	$return = sprintfn ( $return, $pParams );
+        	if ( !$return ) {
         		$return = $pString;
         		if ( $debug == "true" ) {
  		    		$return = '<span class="mistranslated">' . $return . '</span>';
@@ -164,11 +164,11 @@ class cLanguage {
  		    		}
         		}
         	}
-        } // if
+        }
         
-        return ($return);
+        return ( $return );
         
- 	} // _
+ 	}
  	
  	function Restore ( $pStore ) {
  		eval ( GLOBALS );
@@ -184,7 +184,7 @@ class cLanguage {
  		return ( true );
  	}
  	
-} // cLanguage
+}
 
 /** Lang Class
  * 

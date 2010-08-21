@@ -2,28 +2,21 @@
 
  <? $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/site/login.aobj", INCLUDE_SECURITY_BASIC); ?>
 
-  <form id='login' action='login/' method='post'>
-   <input type='hidden' name='gACTION' value='LOGIN' />
-
-   <p id='username'>
-     <?php echo __("Username"); ?>
-   </p> <!-- #username -->
-   <?php $zHTML->TextBox ("USERNAME", 64, $gUSERNAME); ?>
-
-   <p id='password'>
-     <?php echo __("Password"); ?>
-   </p> <!-- #password -->
-   <?php $zHTML->TextBox ("PASS", 16, $gPASS, TRUE); ?>
-
-   <p id='rememberme'>
-     <?php echo __("Remember Me"); ?>
-   </p> <!-- #rememberme -->
-   <?php $zHTML->CheckBox ('REMEMBER', $gREMEMBER, FALSE, FALSE); ?>
-
-   <?php $zHTML->Button ("Login"); ?>
-   <?php $zHTML->Button ("Forgot"); ?>
-
-  </form> <!-- #login -->
-
+  <form id='userinfo' name='userinfo' action='/login/' method='post'> 
+	<input type='hidden' name='Task' value='login'> 
+	<input type='hidden' name='Context' value=''> 
+ 
+   <p id='username'>Username</p>
+   <span class='username'><input  type='text' name='Username' class='username' maxlength='64' value="" /></span>   
+   <p id='password'>Password</p>
+   <span class='pass'><input  type='password' name='Pass' class='pass' maxlength='16' value="" /></span>   
+   <p id='rememberme'>Remember Me</p>
+   <input id='remember' type='checkbox' name='Remember' checked='checked' /> 
+ 
+    <button   type='submit' name='Task' value='Login'>Login</button>    <button   type='submit' name='Task' value='FORGOT'>Forgot Password</button> 
+    
+   <input type="hidden" name="context" value="login.login.2.login" />
+  </form>
+ 
 </section>
 

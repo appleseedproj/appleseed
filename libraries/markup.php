@@ -228,12 +228,21 @@ class cHTML extends cMarkup {
 							case 'submit':
 								continue;
 							break;
+							case 'password':
+								continue;
+							break;
 							default:
 								$input->value = $assign;
 							break;
 						}
 					break;
 				} 
+			} else {
+				// Special exception for checkboxes, since an unchecked box means no key/value pair was sent by the browser. 
+				// @todo A similar check for radio boxes may be required.
+				if ( $type == "checkbox" ) {
+					$input->checked = null;
+				}
 			}
 		}
 		
