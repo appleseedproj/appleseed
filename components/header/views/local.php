@@ -22,7 +22,7 @@
         
 	<div id="user_login" class="grid_3"> 
 		<p>
-			<span id="user_login_profile_link">You Are Currently Logged In As</span>
+			<span id="user_login_profile_link">You Are Logged In As</span>
 			<span><a href="/logout/">Logout</a></span> 
 		</p>
 	</div> 
