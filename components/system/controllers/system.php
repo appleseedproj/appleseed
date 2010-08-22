@@ -33,6 +33,12 @@ class cSystemSystemController extends cController {
 		
 		$login = null;
 		
+		$access = $this->Talk ( "Security", "Access" );
+		
+		if ( $access->Get ( "Admin" ) ) {
+			return ( true );
+		}
+		
 		switch ( $login ) {
 			default:
 				$pView = 'message';

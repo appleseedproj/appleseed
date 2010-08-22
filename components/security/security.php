@@ -20,6 +20,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cSecurity extends cComponent {
 	
+	private $_Cache;
+	
 	/**
 	 * Constructor
 	 *
@@ -34,10 +36,33 @@ class cSecurity extends cComponent {
 		$account = $pData['account'];
 		$context = $pData['context'];
 		
+		$access = new cSecurityAccess();
+		
+		if ( !$account ) {
+			$user = $this->GetSys ( "Components" )->Talk ( "User", "Current" );
+			
+			// No user is logged in, so send back the defaults.
+			if ( !$user ) {
+				$access->Set ( "Read", isset ($pData['Read'] ) ? $pData['Read'] : false); 
+				$access->Set ( "Write", isset ($pData['Write'] ) ? $pData['Write'] : false);  
+				$access->Set ( "Admin", isset ($pData['Admin'] ) ? $pData['Admin'] : false); 
+				return ( $access );
+			}
+			
+			$account = $user->Username . '@' . $user->Domain;
+		}
+		
 		if ( !$context ) {
 			$context = $_SERVER['REQUEST_URI'];
 		}
-
+		
+		$account = strtolower ( $account );
+		
+		// Return cached value to avoid duplicate effort.
+		if ( isset ( $this->_Cache[$account][$context] ) ) {
+			return ( $this->_Cache[$account][$context] );
+		}
+		
 		$accessModel = new cModel ( "AccessControl" );
 		
 		$domain = $_SERVER['HTTP_HOST'];
@@ -52,8 +77,6 @@ class cSecurity extends cComponent {
 		
 		$accessModel->Retrieve ( $criteria );
 		$accessModel->Fetch();
-		
-		$access = new cSecurityAccess();
 		
 		// If no entries were found, go backwards for inheritance.
 		if ( ($accessModel->Get ( "Total" ) == 0 ) and ($context != '/') ) {
@@ -77,9 +100,9 @@ class cSecurity extends cComponent {
 			} else {
 				// Use default values;
 				$this->userAccess->Location = $context; 
-				$this->userAccess->r = isset ($pData['Read'] ) ? $pData['Read'] : null;
-				$this->userAccess->w = isset ($pData['Write'] ) ? $pData['Write'] : null; 
-				$this->userAccess->a = isset ($pData['Admin'] ) ? $pData['Admin'] : null; 
+				$access->Set ( "Read", isset ($pData['Read'] ) ? $pData['Read'] : false); 
+				$access->Set ( "Write", isset ($pData['Write'] ) ? $pData['Write'] : false);  
+				$access->Set ( "Admin", isset ($pData['Admin'] ) ? $pData['Admin'] : false); 
 			} // if
 	
 			unset ($parentAccess);
@@ -89,6 +112,9 @@ class cSecurity extends cComponent {
 			$access->Set ( "Admin", $accessModel->Get ( "a" ) );
 			$access->Set ( "Inheritance", $accessModel->Get ( "Inheritance" ) );
 		} // if 
+		
+		// Store result in internal cache.
+		$this->_Cache[$account][$context] = $access;
 		
 		return ($access);
 	}

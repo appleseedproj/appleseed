@@ -22,9 +22,7 @@
 
 <body id="www-website-com">
 
-    <div id="sys_message" class="container_12">
-  		<?php $zApp->Components->Go ( "system" ); ?>
-    </div>
+	<?php $zApp->Components->Go ( "system" ); ?>
 
     <header class="container_12">
     

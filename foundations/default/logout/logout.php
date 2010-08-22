@@ -20,8 +20,6 @@
 
 <body id="www-website-com">
 
-    <div id="sys_message" class="container_12">
-  		<?php $zApp->Components->Go ( "login", "logout", "logout", "logout" ); ?>
-    </div>
+	<?php $zApp->Components->Go ( "login", "logout", "logout", "logout" ); ?>
 
 </html>
