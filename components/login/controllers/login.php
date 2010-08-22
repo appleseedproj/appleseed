@@ -58,6 +58,14 @@ class cLoginLoginController extends cController {
 			$hiddenContext->value = $this->_Context;
 		}
 		
+		$this->_PrepareMessages ( 'remote' );
+		
+		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );	
+		$sessionData['Identity'] = $this->GetSys ( 'Session' )->Get( 'Identity' );
+		$this->GetSys ( 'Session' )->Delete ( 'Identity' );
+			
+		$this->Login->Synchronize( $sessionData );
+			
 		$this->Login->Display();
 		
 		return ( true );
@@ -80,16 +88,53 @@ class cLoginLoginController extends cController {
 		
 			$this->Login->Synchronize ( );
 		
+			$this->_PrepareMessages ( "remote" );
+		
 			$this->Login->Display ();
 			
 			return ( true );
 		}
 		
 		$data = array ( "username" => $username, "domain" => $domain );
-		$this->GetSys ( "Event" )->Trigger ( "On", "Login", "Authenticate", $data );
+		$result = $this->GetSys ( "Event" )->Trigger ( "On", "Login", "Authenticate", $data );
+		
+		if ( $result->error ) {
+		
+			$this->Login->Find ( "[id=remote_login_message]", 0 )->innertext = $result->error;
+			$this->Login->Find ( "[id=remote_login_message]", 0 )->class = 'error';
+			
+			$this->Login->Find ( "[id=login_remote_button]", 0)->class = "ui-tabs-selected";
+		
+			$this->Login->Synchronize ( );
+		
+			$this->_PrepareMessages ( "remote" );
+		
+			$this->Login->Display ();
+			
+			return ( true );
+		}
 		
 		return ( true );
 	}
+	
+	private function _PrepareMessages ( $pScope ) {
+		
+		$id = $pScope . "_login_message";
+		
+		$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );	
+		$message = $this->GetSys ( "Session" )->Get ( "Message" );
+		$error = $this->GetSys ( "Session" )->Get ( "Error" );
+		
+		if ( $message ) {
+			$this->Login->Find ( "[id=$id]", 0)->innertext = $message;
+			if ( $error ) $this->Login->Find ( "[id=$id]", 0)->class = "error";
+			
+			$this->GetSys ( "Session" )->Delete ( "Message" );
+			$this->GetSys ( "Session" )->Delete ( "Error" );
+		}
+		
+		return ( true );
+	}	
 
 	function Login () {
 		
@@ -128,7 +173,7 @@ class cLoginLoginController extends cController {
 				$hiddenContext->value = $this->_Context;
 			}
 			
-			$this->Login->Synchronize ( );
+			$this->Login->Synchronize();
 			
 			$this->Login->Display();
 			

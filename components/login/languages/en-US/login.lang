@@ -4,3 +4,7 @@ CLICK_HERE_TO_CONTINUE="Click <a href=\"/\">here</a> to continue."
 YOU_ARE_LOGGED_IN._CLICK_HERE_TO_CONTINUE="You are logged in. Click <a href=\"/\">here</a> to continue."
 INVALID_LOGIN="Login Failed.  Please Try Again."
 INVALID_ID="Your remote id is formatted like an email address, &lt;username@domain.com&gt;"
+
+INVALID_CALLBACK="A system error occurred: Invalid Callback."
+INVALID_NODE="This is not a valid Appleseed node."
+NOT_LOGGED_IN="You are not logged in to this Appleseed node."

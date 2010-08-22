@@ -8,7 +8,7 @@
  * @license      GNU Lesser General Public License (LGPL) version 3.0
  */
 
- require ( __DIR__ . DIRECTORY_SEPARATOR . 'quicksocial.php' );
+ if ( !class_exists ( "cQuickSocial" ) ) require ( __DIR__ . DIRECTORY_SEPARATOR . 'quicksocial.php' );
 
 /** QuickConnect Class
  * 
@@ -85,7 +85,7 @@ class cQuickConnect extends cQuickSocial {
 			$request['_task'] = "connect.return";
 			$request['_success'] = "false";
 			$request['_error'] = "Invalid Callback";
-		
+			
 			$redirect = $http . $source . '/?' . http_build_query ( $request );
 		
 			header('Location: ' . $redirect);
@@ -116,6 +116,12 @@ class cQuickConnect extends cQuickSocial {
 		
 				$request['_token'] = $token;
 			}
+		} else {
+			$request['_username'] = $username;
+			$request['_source'] = $_SERVER['HTTP_HOST'];
+		
+			$request['_success'] = "false";
+			$request['_error'] = "Not Logged In";
 		}
 		
 		$redirect = $http . $source . '/?' . http_build_query ( $request );
@@ -128,8 +134,21 @@ class cQuickConnect extends cQuickSocial {
 	public function Process ( ) {
 		
 		$success = $_GET['_success'];
+		$error = $_GET['_error'];
+		$return = new stdClass ();
 		
-		if ( $success != "true" ) return ( false );
+		$return->success = $success;
+		$return->error = $error;
+		
+		$source = $_GET['_source'];
+		$username = $_GET['_username'];
+		
+		if ( $success != "true" ) {
+			$return->username = $username;
+			$return->domain = $source;
+			
+			return ( $return );
+		}
 					
 		$social = $_GET['_social'];
 		$task = $_GET['_task'];
@@ -141,20 +160,20 @@ class cQuickConnect extends cQuickSocial {
 		if ( $social != "true" ) return ( false );
 		if ( $task != "connect.return" ) return ( false );
 		
-		$source = $_GET['_source'];
-		$username = $_GET['_username'];
-		
 		$token = $_GET['_token'];
 		
 		$verification = $this->Verify( $username, $source, $token );
 		
-		if ( $verification ) {
+		if ( $verification->success == "true" ) {
 			$stored = @call_user_func ( $fCreateRemoteToken, $username, $source, $token );
 		
-			return ( true );
+			$return->username = $username;
+			$return->domain = $source;
+			
+			return ( $return );
+		} else {
+			return ( $verification );
 		}
-		
-		return ( false );
 	}
 	
 }

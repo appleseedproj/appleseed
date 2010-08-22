@@ -7,8 +7,8 @@
  * @link         http://opensource.appleseedproject.org/quicksocial/
  * @license      GNU Lesser General Public License (LGPL) version 3.0
  */
- 
- require ( __DIR__ . DIRECTORY_SEPARATOR . 'quicksocial.php' );
+
+if ( !class_exists ( "cQuickSocial" ) ) require ( __DIR__ . DIRECTORY_SEPARATOR . 'quicksocial.php' );
 
 /** QuickNode Class
  * 
@@ -67,7 +67,7 @@ class cQuickNode extends cQuickSocial {
 		
 		$fNodeInformation = $this->GetCallback ( "NodeInformation" );
 		
-		if ( !is_callable ( $fNodeInformation ) ) $this->_Error ( "Invalid Callback" );
+		if ( !is_callable ( $fNodeInformation ) ) $this->_Error ( "Invalid Callback: NodeInformation" );
 		
 		$data = @call_user_func ( $fNodeInformation, $source, $verified );
 		

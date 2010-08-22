@@ -89,10 +89,19 @@ class cQuicksocialHook extends cHook {
 				
 				$verified = $connect->Process();
 				
-				if ( $verified ) {
-					$username = $this->GetSys ( "Request" )->Get ( "_username" );
-					$domain = $this->GetSys ( "Request" )->Get ( "_source" );
+				if ( $verified->success == "true" ) {
+					$username = $verified->username;
+					$domain = $verified->domain;
 					$this->_SetRemoteSession( $username, $domain );
+				} else {
+					
+					$this->GetSys ( "Session" )->Context ( "login.login.2.login" );
+					$this->GetSys ( "Session" )->Set ( "Message", $verified->error );
+					$this->GetSys ( "Session" )->Set ( "Identity", $verified->username . '@' . $verified->domain );
+					$this->GetSys ( "Session" )->Set ( "Error", true );
+					
+					$redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/login/remote/';
+					header('Location: ' . $redirect);
 				}
 				
 				exit;
@@ -117,6 +126,28 @@ class cQuicksocialHook extends cHook {
 	
 	public function OnLoginAuthenticate ( $pData ) {
 		
+		if (!class_exists ( 'cQuickNode' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+		
+		$node = new cQuickNode ();
+		
+		$domain = $pData['domain'];
+		
+		$node->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+		$node->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+		
+		$node = $node->Discover ( $domain );
+		
+		if ( $node->success != "true" ) {
+			$return = new stdClass();
+			if ( $node->error ) {
+				$return->error = $node->error;
+			} else {
+				$return->error = "Invalid Node";
+			}
+			
+			return ( $return );
+		}
+		
 		if (!class_exists ( 'cQuickConnect' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
 		
 		$connect = new cQuickConnect ();
@@ -128,7 +159,7 @@ class cQuicksocialHook extends cHook {
 		exit;
 	}
 	
-	private function _NodeInformation ( $pSource = null, $pVerified = false) {
+	public function _NodeInformation ( $pSource = null, $pVerified = false) {
 		
 		$return = array ();
 		
@@ -136,6 +167,7 @@ class cQuicksocialHook extends cHook {
 		
 		$return['tasks'] = array (
 			'node.discover',
+			'verify',
 			'connect.return',
 			'connect.check'
 		);
@@ -143,7 +175,6 @@ class cQuicksocialHook extends cHook {
 		$return['trusted'] = array ( );
 		
 		if ( $pVerified ) {
-			$return['trusted'][] = '30rock.appleseed';
 		}
 		
 		return ( $return );
@@ -293,7 +324,8 @@ class cQuicksocialHook extends cHook {
 		$criteria = array ( "uID" => $uID );
 		$authorization->Retrieve ( $criteria );
 		$authorization->Fetch();
-		$Username = $authorization->get ( "Username" );
+		$Username = strtolower ( $authorization->get ( "Username" ) );
+		$pUsername = strtolower ( $pUsername );
 		
 		if ( $Username == $pUsername ) return ( true );
 		

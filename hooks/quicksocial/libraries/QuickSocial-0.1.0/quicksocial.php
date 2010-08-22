@@ -61,11 +61,14 @@ class cQuickSocial {
 					$token = @call_user_func ( $fCreateRemoteToken, $pUsername, $pTarget, $pToken );
 				}
 				
-				return ( true );
+				$result->username = $pUsername;
+				$result->domain = $pTarget;
+				
+				return ( $result );
 			}
 			
 		} else {
-			return ( true );
+			return ( false );
 		}
 		
 		return ( false );
