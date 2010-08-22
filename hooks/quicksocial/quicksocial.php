@@ -76,9 +76,8 @@ class cQuicksocialHook extends cHook {
 				$connect = new cQuickConnect ();
 				$connect->SetCallback ( "CheckLogin", array ( $this, '_CheckLogin' ) );
 				$connect->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
-				$connect->Check();
 				
-				$social->ReplyToVerify();
+				$connect->Check();
 				exit;
 			break;
 			case 'connect.return':
@@ -86,11 +85,17 @@ class cQuicksocialHook extends cHook {
 				 
 				$connect = new cQuickConnect ();
 				$connect->SetCallback ( "CreateRemoteToken", array ( $this, '_CreateLocalToken' ) );
-				$connect->Process();
+				$connect->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
 				
-				$social->ReplyToVerify();
+				$verified = $connect->Process();
+				
+				if ( $verified ) {
+					$username = $this->GetSys ( "Request" )->Get ( "_username" );
+					$domain = $this->GetSys ( "Request" )->Get ( "_source" );
+					$this->_SetRemoteSession( $username, $domain );
+				}
+				
 				exit;
-			
 			break;
 			case 'node.discover':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
@@ -293,6 +298,44 @@ class cQuicksocialHook extends cHook {
 		if ( $Username == $pUsername ) return ( true );
 		
 		return ( false );
+	}
+	
+	private function _SetRemoteSession( $pUsername, $pDomain ) {
+		
+		$sessionModel = new cModel ( "authSessions" );
+		
+		// Delete current session id's.
+		$criteria = array ( "Username" => $pUsername, "Domain" => $pDomain );
+		
+		$sessionModel->Delete ( $criteria );
+		
+		// Create a unique session identifier.
+        $identifier = md5(uniqid(rand(), true));
+        
+		// Set the session database information.
+		$sessionModel->Set ( "Username", $pUsername );
+		$sessionModel->Set ( "Domain", $pDomain );
+		$sessionModel->Set ( "Identifier", $identifier );
+		$sessionModel->Set ( "Stamp", NOW() );
+		$sessionModel->Set ( "Address", $_SERVER['REMOTE_ADDR'] );
+		$sessionModel->Set ( "Host", $_SERVER['REMOTE_HOST'] );
+		$sessionModel->Set ( "Fullname", "Bob Barker" );
+		
+		$sessionModel->Save ();
+		
+		// Set the cookie
+      	if ( !setcookie ("gREMOTELOGINSESSION", $identifier, time()+60*60*24*30, '/') ) {
+      		// @todo Set error that we couldn't set the cookie.
+      		
+      		return ( false );
+      	};
+		
+		// Update the userInformation table
+		$infoModel = new cModel ( "userInformation" );
+		
+		header ("Location:/");
+		
+		return ( true );
 	}
 	
 }

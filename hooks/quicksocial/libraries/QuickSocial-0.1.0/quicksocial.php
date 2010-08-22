@@ -51,15 +51,15 @@ class cQuickSocial {
 				"_source" => $source
 			);
 			
+			
 			$result = $this->_Communicate ( $pTarget, $data );
 			
 			if ( $result->success == "true" ) {
 				$fCreateRemoteToken = $this->GetCallback ( "CreateRemoteToken" );
-		
+				
 				if ( is_callable ( $fCreateRemoteToken ) ) {
 					$token = @call_user_func ( $fCreateRemoteToken, $pUsername, $pTarget, $pToken );
 				}
-				
 				
 				return ( true );
 			}

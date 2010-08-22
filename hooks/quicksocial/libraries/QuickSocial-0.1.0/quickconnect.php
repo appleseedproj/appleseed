@@ -148,7 +148,7 @@ class cQuickConnect extends cQuickSocial {
 		
 		$verification = $this->Verify( $username, $source, $token );
 		
-		if ( $verification->success == "true" ) {
+		if ( $verification ) {
 			$stored = @call_user_func ( $fCreateRemoteToken, $username, $source, $token );
 		
 			return ( true );
@@ -157,48 +157,4 @@ class cQuickConnect extends cQuickSocial {
 		return ( false );
 	}
 	
-	public function Verify ( $pUsername, $pTarget, $pIdentifier ) {
-		
-		$source = $_SERVER['HTTP_HOST'];
-		
-		$data = array (
-			"_social" => "true",
-			"_task" => "connect.verify",
-			"_identifier" => $pIdentifier,
-			"_username" => $pUsername,
-			"_source" => $source
-		);
-		
-		$result = $this->_Communicate ( $pTarget, $data );
-		
-		return ( $result );
-	}
-	
-	public function ReplyToVerify ( $fVerifyReply ) {
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
-		
-		if ( $social != "true" ) return ( false );
-		if ( $task != "connect.verify" ) return ( false );
-		
-		$source = $_GET['_source'];
-		$username = $_GET['_username'];
-		$identifier = $_GET['_identifier'];
-		
-		if ( !is_callable ( $fVerifyReply ) ) $this->_Error ( "Invalid Callback" );
-		
-		$verified = @call_user_func ( $fVerifyReply, $username, $source, $identifier );
-		
-		if ( $verified ) {
-			$data['success'] = "true";
-			$data['error'] = "";
-		} else {
-			$this->_Error ( "Invalid Identifier" );
-		}
-		
-		echo json_encode ( $data );
-		exit;
-	}	
-	
-
 }

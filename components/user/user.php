@@ -30,7 +30,6 @@ class cUser extends cComponent {
 	}
 	
 	public function Current ( $pData = null ) {
-		$this->_Test++;
 		
 		$AuthUser = new cUserAuthorization ( );
 		
