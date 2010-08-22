@@ -63,7 +63,6 @@ class cQuicksocialHook extends cHook {
 		switch ( $task ) {
 			case 'verify':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
-				$data = $this->GetSys ( "Request" )->Get(); 
 				 
 				$social = new cQuickSocial ();
 				$social->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
@@ -72,7 +71,15 @@ class cQuicksocialHook extends cHook {
 				exit;
 			break;
 			case 'connect.check':
-				echo "connect.check";
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
+				 
+				$connect = new cQuickConnect ();
+				$connect->SetCallback ( "CheckLogin", array ( $this, '_CheckLogin' ) );
+				$connect->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+				$connect->Check ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				
+				$social->ReplyToVerify();
+				exit;
 			break;
 			case 'connect.return':
 				echo "connect.return";
@@ -252,6 +259,32 @@ class cQuicksocialHook extends cHook {
 		
 		return ( true );
 		
+	}
+	
+	public function _CheckLogin ( $pUsername ) {
+		
+		$cookie = $_COOKIE['gLOGINSESSION'];
+		
+		$session = new cModel ( "userSessions" );
+		
+		// Get the session by the identifier
+		$criteria = array ( "Identifier" => $cookie );
+		$session->Retrieve ( $criteria );
+		$session->Fetch();
+		$uID = $session->get ( "userAuth_uID" );
+		
+		if ( !$uID ) return ( false );
+		
+		$authorization = new cModel ( "userAuthorization" );
+		
+		$criteria = array ( "uID" => $uID );
+		$authorization->Retrieve ( $criteria );
+		$authorization->Fetch();
+		$Username = $authorization->get ( "Username" );
+		
+		if ( $Username == $pUsername ) return ( true );
+		
+		return ( false );
 	}
 	
 }

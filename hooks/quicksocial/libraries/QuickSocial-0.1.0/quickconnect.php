@@ -53,7 +53,7 @@ class cQuickConnect extends cQuickSocial {
 		exit;
 	}
 	
-	public function Check ( $fCheckLogin, $fStoreIdentifier ) {
+	public function Check ( ) {
 		
 		$social = $_GET['_social'];
 		$task = $_GET['_task'];
@@ -75,9 +75,14 @@ class cQuickConnect extends cQuickSocial {
 			break;
 		}
 		
-		// If either of the callbacks don't exist, redirect back with an error.
-		if ( ( !is_callable ( $fCheckLogin ) ) OR ( !is_callable ( $fStoreIdentifier ) ) ) {
+		$fCheckLogin = $this->GetCallBack ( "CheckLogin" );
+		$fCreateLocalToken = $this->GetCallBack ( "CreateLocalToken" );
 		
+		// If either of the callbacks don't exist, redirect back with an error.
+		if ( ( !is_callable ( $fCheckLogin ) ) OR ( !is_callable ( $fCreateLocalToken ) ) ) {
+		
+			$request['_social'] = "true";
+			$request['_task'] = "connect.return";
 			$request['_success'] = "false";
 			$request['_error'] = "Invalid Callback";
 		
@@ -92,8 +97,7 @@ class cQuickConnect extends cQuickSocial {
 		
 		// 2. Store identifier
 		if ( $loggedIn ) {
-			$identifier = $this->_Token ( $username );
-			$stored = @call_user_func ( $fStoreIdentifier, $username, $source, $identifier );
+			$stored = @call_user_func ( $fCreateLocalToken, $username, $source );
 			
 			if ( !$stored ) {
 				$request['_identifier'] = $identifier;
