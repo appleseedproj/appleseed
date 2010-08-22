@@ -97,14 +97,14 @@ class cQuickConnect extends cQuickSocial {
 		
 		// 2. Store identifier
 		if ( $loggedIn ) {
-			$stored = @call_user_func ( $fCreateLocalToken, $username, $source );
+			$token = @call_user_func ( $fCreateLocalToken, $username, $source );
 			
-			if ( !$stored ) {
-				$request['_identifier'] = $identifier;
+			if ( !$token ) {
+				$request['_token'] = null;
 				$request['_success'] = "false";
 				$request['_error'] = "Identifier Not Stored";
 			} else {
-				$request['_identifier'] = null;
+				$request['_token'] = $token;
 				$request['_success'] = "true";
 				$request['_error'] = "";
 			}
@@ -113,7 +113,7 @@ class cQuickConnect extends cQuickSocial {
 		$request['_social'] = "true";
 		$request['_task'] = "connect.return";
 		
-		$request['_account'] = $username;
+		$request['_username'] = $username;
 		$request['_source'] = $_SERVER['HTTP_HOST'];
 		
 		$redirect = $source . '/?' . http_build_query ( $request );
