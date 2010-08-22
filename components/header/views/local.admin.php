@@ -13,7 +13,7 @@
 			<li>Groups</li>
 			<li>Journals</li>
 			<li>Search</li>
-			<li><a id="header_admin_link" href="">Options</a></li>
+			<li><a id="header_admin_link" href="">Admin</a></li>
 			<li>Help</li>
 		</ul> 
 		<span id="notification_new_friends"></span>
@@ -22,13 +22,11 @@
         
 	<div id="user_login" class="grid_3"> 
 		<p>
-			<span id="user_login_profile_link"></span>
+			<span id="user_login_profile_link">Logged In As Administrator</span>
 			<span><a href="/logout/">Logout</a></span> 
 		</p>
 	</div> 
         
 	<div class="clear"></div> 
         
-</header> 
- 
-
+</header>

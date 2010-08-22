@@ -33,12 +33,15 @@ class cHeaderHeaderController extends cController {
 		
 		$user = $this->Talk ( "User", "Current" );
 		
+		$parameters['account'] = $user->Username . '@' . $user->Domain;
+		$access = $this->Talk ( "Security", "Access", $parameters );
+		
 		$pView = 'main';
 		
 		if ( $user->Remote ) $pView = 'remote';
 		else if ( $user->Username ) $pView = 'local';
 		
-		if ( ( $user->Username ) && ( $user->Admin ) ) $pView .= '.admin';
+		if ( ( $user->Username ) && ( $access->Get ( "Admin" ) ) ) $pView .= '.admin';
 		
 		$header = $this->GetView ( $pView );
 		
