@@ -96,34 +96,36 @@ class cQuickConnect extends cQuickSocial {
 		$loggedIn = @call_user_func ( $fCheckLogin, $username );
 		
 		// 2. Store identifier
-		if ( $loggedIn ) {
-			$token = @call_user_func ( $fCreateLocalToken, $username, $source );
-			
-			if ( !$token ) {
-				$request['_token'] = null;
-				$request['_success'] = "false";
-				$request['_error'] = "Identifier Not Stored";
-			} else {
-				$request['_token'] = $token;
-				$request['_success'] = "true";
-				$request['_error'] = "";
-			}
-		}
 		
 		$request['_social'] = "true";
 		$request['_task'] = "connect.return";
 		
-		$request['_username'] = $username;
-		$request['_source'] = $_SERVER['HTTP_HOST'];
+		if ( $loggedIn ) {
+			$token = @call_user_func ( $fCreateLocalToken, $username, $source );
+			
+			if ( !$token ) {
+				$request['_success'] = "false";
+				$request['_error'] = "Token Not Stored";
+				
+			} else {
+				$request['_success'] = "true";
+				$request['_error'] = "";
+				
+				$request['_username'] = $username;
+				$request['_source'] = $_SERVER['HTTP_HOST'];
 		
-		$redirect = $source . '/?' . http_build_query ( $request );
+				$request['_token'] = $token;
+			}
+		}
+		
+		$redirect = $http . $source . '/?' . http_build_query ( $request );
 		
 		// 3. Redirect back
 		header('Location: ' . $redirect);
 		exit;
 	}
 	
-	public function Process ( $fStoreIdentifierToken ) {
+	public function Process ( ) {
 		
 		$success = $_GET['_success'];
 		
@@ -132,7 +134,9 @@ class cQuickConnect extends cQuickSocial {
 		$social = $_GET['_social'];
 		$task = $_GET['_task'];
 		
-		if ( !is_callable ( $fStoreIdentifierToken ) ) return ( false );
+		$fCreateRemoteToken = $this->GetCallBack ( "CreateRemoteToken" );
+		
+		if ( !is_callable ( $fCreateRemoteToken ) ) return ( false );
 		
 		if ( $social != "true" ) return ( false );
 		if ( $task != "connect.return" ) return ( false );
@@ -140,13 +144,15 @@ class cQuickConnect extends cQuickSocial {
 		$source = $_GET['_source'];
 		$username = $_GET['_username'];
 		
-		$identifier = $_GET['_username'];
+		$token = $_GET['_token'];
 		
-		$verification = $this->Verify( $username, $source, $identifier );
+		$verification = $this->Verify( $username, $source, $token );
 		
-		$stored = @call_user_func ( $fStoreIdentifierToken, $username, $source, $identifier );
+		if ( $verification->success == "true" ) {
+			$stored = @call_user_func ( $fCreateRemoteToken, $username, $source, $token );
 		
-		if ( $verification->success == "true" ) return ( true );
+			return ( true );
+		}
 		
 		return ( false );
 	}

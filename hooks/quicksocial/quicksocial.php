@@ -76,13 +76,21 @@ class cQuicksocialHook extends cHook {
 				$connect = new cQuickConnect ();
 				$connect->SetCallback ( "CheckLogin", array ( $this, '_CheckLogin' ) );
 				$connect->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
-				$connect->Check ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$connect->Check();
 				
 				$social->ReplyToVerify();
 				exit;
 			break;
 			case 'connect.return':
-				echo "connect.return";
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
+				 
+				$connect = new cQuickConnect ();
+				$connect->SetCallback ( "CreateRemoteToken", array ( $this, '_CreateLocalToken' ) );
+				$connect->Process();
+				
+				$social->ReplyToVerify();
+				exit;
+			
 			break;
 			case 'node.discover':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
