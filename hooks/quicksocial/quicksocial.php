@@ -95,7 +95,20 @@ class cQuicksocialHook extends cHook {
 		
 	}
 	
-	public function _NodeInformation ( $pSource = null, $pVerified = false) {
+	public function OnLoginAuthenticate ( $pData ) {
+		
+		if (!class_exists ( 'cQuickConnect' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
+		
+		$connect = new cQuickConnect ();
+		
+		$username = $pData['username'];
+		$domain = $pData['domain'];
+		
+		$connect->Redirect ( $domain, $username );
+		exit;
+	}
+	
+	private function _NodeInformation ( $pSource = null, $pVerified = false) {
 		
 		$return = array ();
 		
@@ -118,7 +131,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _CheckLocalToken ( $pUsername, $pTarget, $pToken ) {
 		
-		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				
 		$social = new cQuickSocial ();
 		
@@ -187,7 +200,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _CheckRemoteToken ( $pUsername, $pSource, $pToken ) {
 		
-		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				
 		$social = new cQuickSocial ();
 		

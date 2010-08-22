@@ -53,8 +53,9 @@
   </div>
  
 		<div id="login_remote">
+		<p id='remote_login_message'></p>
 
-			<form id='userinfo' name='userinfo' action='/login/remote/' method='post'> 
+			<form id='userinfo' name='userinfo' action='/login/' method='post'> 
 				<input type='hidden' name='Task' value='remote'> 
 				<input type='hidden' name='Context' value=''> 
 				<input  type='text' name='Identity' value="" />

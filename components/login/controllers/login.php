@@ -64,9 +64,31 @@ class cLoginLoginController extends cController {
 	}
 	
 	function Remote () {
-		echo "Remote";
 		
-		return ( $this->Display() );
+		$identity = $this->GetSys ( "Request" )->Get ( "Identity" );
+		
+		list ( $username, $domain ) = explode ( '@', $identity );
+		
+		$this->Login = $this->GetView ( "login" );
+		
+		if ( ( !$username ) or ( !$domain ) ) {
+			
+			$this->Login->Find ( "[id=remote_login_message]", 0 )->innertext = __( 'Invalid ID' );
+			$this->Login->Find ( "[id=remote_login_message]", 0 )->class = 'error';
+			
+			$this->Login->Find ( "[id=login_remote_button]", 0)->class = "ui-tabs-selected";
+		
+			$this->Login->Synchronize ( );
+		
+			$this->Login->Display ();
+			
+			return ( true );
+		}
+		
+		$data = array ( "username" => $username, "domain" => $domain );
+		$this->GetSys ( "Event" )->Trigger ( "On", "Login", "Authenticate", $data );
+		
+		return ( true );
 	}
 
 	function Login () {
@@ -149,32 +171,6 @@ class cLoginLoginController extends cController {
 		return ( true );
 	}
 	
-	private function _PrepareMessage ( $pType = "local" ) {
-		
-		$markup = & $this->Form;
-		
-		if ( $pType == 'local' ) {
-			$id = 'local_login_message';
-		} else {
-			$id = 'remote_login_message';
-		}
-		
-		if ( $message =  $this->GetSys ( "Session" )->Get ( "Message" ) ) {
-			$markup->Find ( "[id=$id]", 0 )->innertext = $message;
-			if ( $error =  $this->GetSys ( "Session" )->Get ( "Error" ) ) {
-			$markup->Find ( "[id=$id]", 0 )->innertext = $message;
-				$markup->Find ( "[id=$id]", 0 )->class = "error";
-			} else {
-				$markup->Find ( "[id=$id]", 0 )->class = "message";
-			}
-			$this->GetSys ( "Session" )->Delete ( "Message ");
-			$this->GetSys ( "Session" )->Delete ( "Error ");
-		}
-		
-		return ( true );
-	}
-	
-
 	function Join () {
 		echo "Join";
 		

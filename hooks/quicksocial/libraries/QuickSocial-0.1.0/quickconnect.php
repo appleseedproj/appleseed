@@ -8,6 +8,8 @@
  * @license      GNU Lesser General Public License (LGPL) version 3.0
  */
 
+ require ( __DIR__ . DIRECTORY_SEPARATOR . 'quicksocial.php' );
+
 /** QuickConnect Class
  * 
  * User remote login and connection class
@@ -25,7 +27,7 @@ class cQuickConnect extends cQuickSocial {
 	public function __construct ( ) {       
 	}
 	
-	public function Redirect ( $pTarget, $pUser, $pMethod ) {
+	public function Redirect ( $pTarget, $pUser, $pMethod = "http" ) {
 		
 		$request['_social'] = "true";
 		$request['_task'] = "connect.check";
@@ -47,6 +49,7 @@ class cQuickConnect extends cQuickSocial {
 		$redirect = $http . $pTarget . '/?' . http_build_query ( $request );
 		
 		header('Location: ' . $redirect);
+		
 		exit;
 	}
 	
