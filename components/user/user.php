@@ -20,6 +20,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cUser extends cComponent {
 	
+	private $_Cache;
+	
 	/**
 	 * Constructor
 	 *
@@ -31,9 +33,15 @@ class cUser extends cComponent {
 	
 	public function Current ( $pData = null ) {
 		
+		if ( isset ( $this->_Cache['Current'] ) ) {
+			return ( $this->_Cache['Current'] );
+		}
+		
 		$AuthUser = new cUserAuthorization ( );
 		
 		$AuthUser->LoggedIn();
+		
+		$this->_Cache['Current'] = $AuthUser;
 		
 		return ( $AuthUser );
 	}
