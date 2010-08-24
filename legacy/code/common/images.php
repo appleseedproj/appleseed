@@ -148,7 +148,7 @@
       //$theme = LoadThemeInformation ($Identifier);
       $theme = "default";
       $gCONNECT['username'] = $zApp->Config->GetConfiguration ( "un" );
-      $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/themes/$theme/images/icons/block.png";
+      $blockedfilename = $_SERVER['DOCUMENT_ROOT'] . "/legacy/themes/$theme/images/icons/block.png";
       
       // Show the blocked image.
       $zIMAGE->Show ($blockedfilename);

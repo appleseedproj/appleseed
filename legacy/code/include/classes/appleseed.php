@@ -115,12 +115,12 @@
       $this->SetTag ('USERTHEME', $gUSERTHEME);
       $gFRAMEWORK = $gSETTINGS['Framework'];
       
-      if (!file_exists ("themes/$gUSERTHEME")) $gUSERTHEME = 'default';
+      if (!file_exists ("legacy/themes/$gUSERTHEME")) $gUSERTHEME = 'default';
       
       global $gFRAMELOCATION, $gTHEMELOCATION;
       
       $gFRAMELOCATION = "legacy/frameworks/$gFRAMEWORK/";
-      $gTHEMELOCATION = "themes/$gUSERTHEME/";
+      $gTHEMELOCATION = "legacy/themes/$gUSERTHEME/";
       
       // Global Variables
       global $gUSERTHEME;
@@ -275,9 +275,9 @@
         $gUSERTHEME = 'default';
         $this->SetTag ('USERTHEME', $gUSERTHEME);
 
-        if (!file_exists ("themes/$gUSERTHEME")) $gUSERTHEME = 'default';
+        if (!file_exists ("legacy/themes/$gUSERTHEME")) $gUSERTHEME = 'default';
       
-        $gTHEMELOCATION = "themes/$gUSERTHEME/";
+        $gTHEMELOCATION = "legacy/themes/$gUSERTHEME/";
       } // if
       
       // Check whether site is in shutdown state.
@@ -1480,7 +1480,7 @@
     // Get a list of directories in the themes directory.
     function GetThemeList () {
 
-      $return = $this->ListDirectories ("themes/");
+      $return = $this->ListDirectories ("legacy/themes/");
       
       // Remove all hidden directories.
       foreach ($return as $count => $theme) {

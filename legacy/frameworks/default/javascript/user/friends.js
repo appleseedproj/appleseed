@@ -102,7 +102,7 @@
 	              this.currentFullname.innerHTML = userInfo.fullname;
 	              if (userInfo.online == 'ONLINE') {
 	                var online = new Element ('img');
-	                online.setProperty ('src', '/themes/' + asdTheme + '/images/icons/onlinenow.gif'); 
+	                online.setProperty ('src', '/legacy/themes/' + asdTheme + '/images/icons/onlinenow.gif'); 
 	                this.currentOnline.adopt (online);
 	              } // if
 	            

@@ -527,7 +527,7 @@
 
       global $gUSERTHEME;
       $gUSERTHEME = $gDEFAULTTHEME;
-      $gTHEMELOCATION = "themes/$gUSERTHEME";
+      $gTHEMELOCATION = "legacy/themes/$gUSERTHEME";
       $gUSERTABSLOCATION = $gTHEMELOCATION . $gUSERTABS;
 
       if (!$this->userSettings->Error) {

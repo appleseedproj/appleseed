@@ -14,12 +14,17 @@
     <title><?php echo __("Appleseed Page Title", array ( "domain" => $gSITEDOMAIN ) ); ?></title>
     
     <!-- Links --> 
-    <?php $zApp->Theme->UseStyles (); ?>
+	<link rel="stylesheet" href="<?php echo $gTHEMELOCATION; ?>style/html5reset-1.4.1.css" /> 
+	<link rel="stylesheet" href="<?php echo $gTHEMELOCATION; ?>style/fonts-min.css" /> 
+	<link rel="stylesheet" href="<?php echo $gTHEMELOCATION; ?>style/960.css" /> 
+	<link rel="stylesheet" href="<?php echo $gTHEMELOCATION; ?>style/default.css" /> 
+	<link rel="stylesheet" href="<?php echo $gTHEMELOCATION; ?>style/theme.css" /> 
+ 
 
     
     <!-- Javascript --> 
     <!--[if IE]>
-    <script src="<?php echo $gTHEMELOCATION; ?>/js/html5.js"></script>
+    <script src="<?php echo $gTHEMELOCATION; ?>js/html5.js"></script>
     <![endif]--> 
     
     <script type="text/javascript" src="<?php echo $gFRAMELOCATION ?>javascript/external/mootools.v1.00.js"></script>   
