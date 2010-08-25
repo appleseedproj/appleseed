@@ -28,7 +28,7 @@
 		/*
 			#406300 - dark green
 			#80af1f - green
-			#c0d693 - light green
+			#c0d895 - light green
 			
 			#f1fed5 - light lima
 			
@@ -62,9 +62,9 @@
 		
 		nav.pagination ol { float:right; clear:both; }
 		nav.pagination ol li { list-style-type:none; float:left; }
-		nav.pagination ol li button { border:none; background:none; font-size:80%; font-weight:bold; color:#406900; margin:0 1px; padding:0 1px; }
+		nav.pagination ol li button { border:none; background:none; font-size:80%; font-weight:bold; color:#406300; margin:0 1px; padding:0 1px; }
 		nav.pagination ol li button:hover { text-decoration:underline; cursor:pointer; }
-		nav.pagination ol li.selected button { border-bottom:2px solid #406900; }
+		nav.pagination ol li.selected button { border-bottom:2px solid #406300; }
 		nav.pagination ol li.first,  nav.pagination ol li.prev,  nav.pagination ol li.next,  nav.pagination ol li.last { margin:0 2px; }
 		
 		.additional-info { margin-left:10px; color:#8a8a8a; font-style:italic; font-weight:normal; font-size:80%; }
@@ -87,7 +87,7 @@
 		
 		/* Footer */
 		footer#appleseed-footer, header#appleseed-header { width:100%; height:46px; padding:0; margin:0; text-align:center; color:#d9fa9e; border-top:1px solid #406300; border-bottom:1px solid #406300; background-color:#80af1f; }
-		footer#appleseed-footer { color:#c0d693; }
+		footer#appleseed-footer { color:#c0d895; }
 		footer#appleseed-footer a { color:#f1fed5; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -93px; }
 		footer#appleseed-footer a:hover { color:#406300; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -45px; }
 		footer#appleseed-footer p { margin:3px 0; padding:0; }
@@ -140,7 +140,7 @@
 		/* Main */
 		#appleseed-profile { float:left; background-color:#f1fed5; min-height:840px; }
 		#appleseed-profile-main { }
-		#appleseed-profile-menu { height:80px; background-color:#c0d693; border-bottom:1px solid #80af1f; }
+		#appleseed-profile-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
 		
 		#appleseed-profile-info { float:left; position:relative; top:-60px;  }
 		#appleseed-profile-content { }
@@ -150,6 +150,7 @@
 		#profile-photo img { max-width:220px; border-bottom:1px solid #80af1f; }
 		
 		/* profile-summary */
+		#summary-information h2, p { font-size:90%; }
 		#summary-information h2 { margin:0; padding:0; margin-top:10px; }
 		#summary-information p { margin:0; padding:0; }
 		#summary-information p, #summary-information h2 { margin-left:10px; }
@@ -158,7 +159,7 @@
 		#profile-tabs { float:left; position:relative; top:49px; }
 		#profile-tabs a { background:none; color:#406300; margin:0; padding:0; }
 		#profile-tabs nav ul li { float:left; padding:4px 4px 0 4px; margin:0px 1px; background-color:#80af1f; border:1px solid #406300; }
-		#profile-tabs nav ul li a { color:#c0d693; }
+		#profile-tabs nav ul li a { color:#c0d895; }
 		#profile-tabs nav ul li:nth-child(1)   { margin-left:1px; }
 		#profile-tabs nav ul li.selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
 		#profile-tabs nav ul li.selected a { color:#2a2a2a; }
@@ -187,7 +188,7 @@
 		#debug-tabs { position:relative; top:1px; }
 		#debug-tabs a { background:none; color:#406300; margin:0; padding:0; }
 		#debug-tabs nav ul li { float:left; padding:4px 4px 0 4px; margin:0px 1px; background-color:#80af1f; border:1px solid #406300; }
-		#debug-tabs nav ul li a { color:#c0d693; }
+		#debug-tabs nav ul li a { color:#c0d895; }
 		#debug-tabs nav ul li:nth-child(1)   { margin-left:1px; }
 		#debug-tabs nav ul li.selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
 		#debug-tabs nav ul li.selected a { color:#2a2a2a; }
