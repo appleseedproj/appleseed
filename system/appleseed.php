@@ -38,7 +38,7 @@ echo $zApp->GetSys ( "Buffer" )->Process ();
 $end_mem = memory_get_usage(); 
 $end_time = (float) array_sum(explode(' ',microtime())); 
 
-echo "<div style='clear:both;'>";
+echo '<div id="temporary-debug-info" style="clear:both;">';
 echo "<h1>Memory Usage: ", sprintf ( "%2.2f", ( $end_mem - $start_mem ) / 1024 / 1024 ) . " mb</h1>";
 echo "<h1>Execution Time: ", sprintf("%.4f", ($end_time-$start_time)) . " seconds</h1>";
 echo "</div>";
