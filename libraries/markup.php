@@ -95,7 +95,6 @@ class cMarkup extends simple_html_dom {
 				}
 			}
 		}
-		
 		echo $this->Save();
 		
 		return ( true );

@@ -55,7 +55,9 @@ class cBuffer extends cBase {
 		
 		$replacement = "#@ head @#";
 		preg_match("/<head.*>(.*)<\/head>/smU", $buffer, $headData);
-		$buffer = preg_replace("/<head.*>(.*)<\/head>/smU", $replacement, $buffer);
+		
+		$newbuffer = preg_replace("/<head.*>(.*)<\/head>/smU", $replacement, $buffer);
+		if ( $newbuffer ) $buffer = $newbuffer;
 		
 		$this->_Queue['head'] = $headData[0];
 		

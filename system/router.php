@@ -114,7 +114,6 @@ class cRouter extends cBase {
 		
 				$Foundation->Load ( $finalDestination );
 				
-		
 				return ( true );
 			}
 		}
