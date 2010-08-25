@@ -70,8 +70,8 @@
 		.additional-info { margin-left:10px; color:#8a8a8a; font-style:italic; font-weight:normal; font-size:80%; }
 			
 		/* appleseed-logo */
-		#appleseed-logo { position:absolute; margin:32px 0 0 20px; width:150px; height:32px; background: url('themes/default/images/appleseed-logo.png') no-repeat; display:block; }
-		#appleseed-logo:hover { background: url('themes/default/images/appleseed-logo.png') 0px -33px no-repeat; display:block; }
+		#appleseed-logo { position:absolute; margin:32px 0 0 20px; width:150px; height:32px; background: url('/themes/default/images/appleseed-logo.png') no-repeat; display:block; }
+		#appleseed-logo:hover { background: url('/themes/default/images/appleseed-logo.png') 0px -33px no-repeat; display:block; }
 		
 		
 		/* System Messages */
@@ -99,7 +99,8 @@
 		#header-search { margin-top:14px; }
 		
 		#header-notifications { margin-top:14px; }
-		#header-notifications a { float:left; height:16px; width:24px; overflow:visible; padding:0; margin:0; background:none; }
+		#header-notifications a { float:left; height:16px; width:24px; overflow:visible; padding:0 0 12px 0; margin:0; background:none; }
+		#header-notifications a:hover { text-decoration:none; }
 		#header-notifications span { float:left; }
 		
 		
@@ -134,10 +135,10 @@
 		#header-current span.current-identity a { margin:0; padding:2px 2px; background:none; font-size:80%; font-weight:bold; }
 		
 		#header-links { text-align:right; margin-top:16px; }
-		#header-links a { float:left; margin:0; padding:2px 3px; background:none; font-size:8%;}
+		#header-links a { float:left; margin:0; padding:2px 3px; background:none; font-size:85%;}
 		
 		/* Main */
-		#appleseed-profile { float:left; background-color:#f1fed5; }
+		#appleseed-profile { float:left; background-color:#f1fed5; min-height:840px; }
 		#appleseed-profile-main { }
 		#appleseed-profile-menu { height:80px; background-color:#c0d693; border-bottom:1px solid #80af1f; }
 		
