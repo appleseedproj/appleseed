@@ -1,0 +1,71 @@
+		/* Admin */
+		#appleseed-admin { float:left; background-color:#f1fed5; min-height:840px; }
+		#appleseed-admin-main { }
+		#appleseed-admin-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
+		
+		#appleseed-admin-info { float:left; position:relative; top:-60px;  }
+		#appleseed-admin-content { }
+		
+		#admin-tabs { float:left; position:relative; top:49px; }
+		#admin-tabs a { padding:0; background:none; color:#406300; }
+		#admin-tabs nav ul li { float:left; padding:4px 4px 0 4px; margin:0px 1px; background-color:#80af1f; border:1px solid #406300; }
+		#admin-tabs nav ul li a { color:#c0d895; }
+		#admin-tabs nav ul li:nth-child(1)   { margin-left:1px; }
+		#admin-tabs nav ul li.selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		#admin-tabs nav ul li.selected a { color:#2a2a2a; }
+		#admin-tabs nav ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		#admin-tabs nav ul li:hover a { color:#2a2a2a; }
+		#admin-tabs nav ul li a:hover { text-decoration:none; }
+		
+		#admin-main-menu ul li { float:left; width:200px; padding:5px 0 5px 10px; list-style-type:none; clear:both; }
+		#admin-main-menu ul li:hover { font-weight:normal; background-color:#c0d895; }
+		#admin-main-menu ul li span.admin-menu-link { float:left; color:#406300; margin-top:4px; height:24px; width:24px; }
+		#admin-main-menu ul li span.config-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -70px; height:24px; width:24px; }
+		#admin-main-menu ul li span.users-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -48px; height:24px; width:24px; }
+		#admin-main-menu ul li span.content-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -45px; height:24px; width:24px; }
+		#admin-main-menu ul li span.system-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -70px; height:24px; width:24px; }
+		#admin-main-menu ul li span.control-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -70px; height:24px; width:24px; }
+		#admin-main-menu ul li a { background:none; padding:0; height:32px; font-size:110%; font-weight:bold; }
+		#admin-main-menu ul li.selected { font-weight:normal; background-color:#c0d895; }
+		#admin-main-menu ul li.selected a { color:#f1fed5; }
+		#admin-main-menu ul li.selected a span.admin-menu-link { color:#f1fed5; }
+		#admin-main-menu ul li.selected span.config-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -118px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.users-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -94px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.content-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -94px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.system-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -118px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.control-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -120px; height:24px; width:24px; }
+		
+		/* admin-search */
+		#admin-search { float:left; position:relative; top:58px; text-align:right; }
+		#admin-search input.search { font-size:80%; width:130px; height:16px; padding:2px 4px; border:none; background-color:#fafafa; }
+		#admin-search input.search-submit { width:22px; height:20px; border:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
+		
+		.admin-content h1 { margin-bottom:20px; }
+		
+		.admin-content table { float:left; font-size:90%; padding:0; margin:0; }
+		.admin-content table a { background:none; padding:0; }
+		.admin-content table td { background:none; padding:0; }
+		.admin-content table th a { color:#fafafa; }
+		.admin-content th { color:#fafafa; border-right: 1px solid #406300; border-bottom: 1px solid #406300; border-top: 1px solid #406300; letter-spacing: 2px; text-align:left; padding: 6px 0px 6px 12px;  background-color:#80af1f; }
+		.admin-content th.nobg { border-top: 0; border-left: 0; border-right: 1px solid #406300; color:#406300; background:#f1ffd6; } 
+		.admin-content th.nobg a { color:#406300; } 
+		.admin-content td { border-right: 1px solid #406300; border-bottom: 1px solid #406300; padding: 6px 6px 6px 12px; color:#2a2a2a; }
+		.admin-content th.spec { border-left: 1px solid #406300; border-top:0; color:#fafafa; }
+		.admin-content tr { background:#f1ffd6; }
+		.admin-content tr.alt { background:#c0d895; }
+		.admin-content table tr td input[type="checkbox"] { float:left; margin-left:12px; text-align:right; }
+		.admin-content tr:hover { background-color:#fafafa; }
+		
+		.admin-content nav.controls { font-weight:bold; float:left; width:50%; margin:0; padding:0; height:18px; } 
+		.admin-content nav.controls li { float:left; margin:0 10px 0 0; padding:0; }
+		.admin-content nav.controls a { background:none; padding:0; }
+		
+		.admin-content nav.pagination-amount { float:right; width:50%; margin:0; padding:0; height:18px; }
+		.admin-content nav.pagination-amount select { float:right; width:auto; padding:0; margin:0; }
+		
+		.admin-content nav.pagination { font-size:110%; float:right; padding:0; margin:0; width:50%; height:18px; }
+		.admin-content nav.pagination ol { padding:0; margin:0; }
+		
+		.admin-content nav.select { font-size:90%; float:left; clear:left; padding:0; width:50%; margin:0; padding:2px 0; height:14px;  }
+		.admin-content nav.select a { background:none; padding:0; }
+		
