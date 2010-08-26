@@ -39,9 +39,9 @@
 				<input type="text" name="search" placeholder="Search..." class="search"><input type="submit" name="search" value="" class="search-submit">
 			</div>
 			<div id="header-notifications" class="grid_2">
-				<a href="#"><span class="new-friend "></span><span class="new-friend-count ">2</span></a>
-				<a href="#"><span class="new-mail"></span><span class="new-mail-count ">9</span></a>
-				<a href="#"><span class="new-notification "></span><span class="new-notification-count ">6</span></a>
+				<a href="#"><span class="new-friend notify"></span><span class="new-friend-count">2</span></a>
+				<a href="#"><span class="new-mail"></span><span class="new-mail-count none"></span></a>
+				<a href="#"><span class="new-notification "></span><span class="new-notification-count none"></span></a>
 			</div>
 			<div id="header-current" class="grid_6"> 
 				<span class="current-remote"></span>
