@@ -143,7 +143,6 @@
   					</nav>
 					<section id="profile-friends">
 						<h1>Michael's Friends <span class="profile-friends-count additional-info">246 friends</span> </h1>
-						<p>Lorem Ipsum <a href="">is simply dummy text</a> of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 						<ul>
 							<li>
 								<img class="friends-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc3/hs316.snc3/28457_10150199647515293_527500292_13078983_3735516_s.jpg">
@@ -177,6 +176,221 @@
 							</li>
 						</ul>
 					</section>
+					
+					<section id="profile-comments">
+						<h1>Nested Comments</h1>
+						<ol class="comments outer"> 
+					
+     		               <li> 
+     		               	<div class="comment">
+     		               		<div class="comment-icon">
+									<a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a> 
+								</div>
+								<div class="comment-content">
+									<p><a class="comment-user-link" href="#">Flint Arthur</a> (1) Um... no... that's not what it means. It means that there is an amount of anti-matter/anti-energy that balances the Flint matter/energy; but by no means is that in any sort of coherent arrangement.<br /><br />
+
+It's a very good thing that the amount of anti-matter/anti-energy in the universe balances with the amount of matter/energy. If it wasn't balanced and there was more positive energy/matter... SOMETHING would have had to put that there.</p> 
+									<abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr>
+									<nav> 
+										<ul> 
+											<li><a href="#"><span>Reply</span></a></li> 
+											<li><a href="#"><span>Hide</span></a></li> 
+											<li><a href="#"><span>Delete</span></a></li> 
+										</ul> 
+									</nav> 
+								</div>
+							</div>
+     		               </li> 
+     	               
+     	               		<li>
+     	               			<ol class="comments nested">
+     		               		<li> 
+     		               			<div class="comment">
+     		               				<div class="comment-icon">
+											<a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a> 
+										</div>
+										<div class="comment-content">
+											<p><a class="comment-user-link" href="#">Flint Arthur</a> (2) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p> 
+											<abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr>
+											<nav> 
+												<ul> 
+													<li><a href="#"><span>Reply</span></a></li> 
+													<li><a href="#"><span>Hide</span></a></li> 
+													<li><a href="#"><span>Delete</span></a></li> 
+												</ul> 
+											</nav> 
+										</div>
+									</div>
+     			              	 </li> 
+     			              	 <li>
+     			              	 	<ol class="comments nested"> 
+     	               					<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (3) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+     	               					<li> 
+		     			              	 	<ol class="comments nested"> 
+ 		    	               					<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (4) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+     	               							<li> 
+		     			              	 			<ol class="comments nested"> 
+ 		    	               							<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (5) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               							<li> 
+				     			              	 			<ol class="comments nested"> 
+ 				    	               							<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (6) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               									<li> 
+				     			              	 					<ol class="comments nested"> 
+ 				    	               									<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (7) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               											<li> 
+				     			              	 							<ol class="comments nested"> 
+ 				    	               											<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (8) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               													<li> 
+				     			              	 									<ol class="comments nested"> 
+ 				    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (9) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+				     	               													<li> 
+						     			              	 									<ol class="comments nested"> 
+ 						    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (10) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+						     	               													<li> 
+								     			              	 									<ol class="comments nested"> 
+ 								    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (11) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+								     	               													<li> 
+										     			              	 									<ol class="comments nested"> 
+ 										    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (12) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+										     	               													<li> 
+												     			              	 									<ol class="comments nested"> 
+ 												    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (13) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+ 										    			               												</ol>
+ 										    			               											</li>
+ 								    			               												</ol>
+ 								    			               											</li>
+ 						    			               												</ol>
+ 						    			               											</li>
+ 				    			               												</ol>
+ 				    			               											</li>
+ 		    			               												</ol>
+ 		    			               											</li>
+ 		    			               										</ol>
+ 		    			               									</li>
+ 		    			               								</ol>
+ 		    			               							</li>
+ 		    			               						</ol>
+ 		    			               					</li>
+     			               						</ol>
+     			               					</li>
+     			               				</ol>
+     			               			</li>
+     	               				</ol>
+     			              	 </li>
+     			               </ol>
+     			               
+     			          	</li>
+     			          	
+     		           </ol>
+					</section>
+					
+					<section id="profile-comments">
+						<h1>Flat Comments</h1>
+						<ol class="comments outer"> 
+					
+     		               <li> 
+     		               	<div class="comment">
+     		               		<div class="comment-icon">
+									<a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a> 
+								</div>
+								<div class="comment-content">
+									<p><a class="comment-user-link" href="#">Flint Arthur</a> (1) Um... no... that's not what it means. It means that there is an amount of anti-matter/anti-energy that balances the Flint matter/energy; but by no means is that in any sort of coherent arrangement.<br /><br />
+
+It's a very good thing that the amount of anti-matter/anti-energy in the universe balances with the amount of matter/energy. If it wasn't balanced and there was more positive energy/matter... SOMETHING would have had to put that there.</p> 
+									<abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr>
+									<nav> 
+										<ul> 
+											<li><a href="#"><span>Reply</span></a></li> 
+											<li><a href="#"><span>Hide</span></a></li> 
+											<li><a href="#"><span>Delete</span></a></li> 
+										</ul> 
+									</nav> 
+								</div>
+							</div>
+     		               </li> 
+     	               
+     	               		<li>
+     	               			<ol class="comments ">
+     		               		<li> 
+     		               			<div class="comment">
+     		               				<div class="comment-icon">
+											<a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a> 
+										</div>
+										<div class="comment-content">
+											<p><a class="comment-user-link" href="#">Flint Arthur</a> (2) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p> 
+											<abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr>
+											<nav> 
+												<ul> 
+													<li><a href="#"><span>Reply</span></a></li> 
+													<li><a href="#"><span>Hide</span></a></li> 
+													<li><a href="#"><span>Delete</span></a></li> 
+												</ul> 
+											</nav> 
+										</div>
+									</div>
+     			              	 </li> 
+     			              	 <li>
+     			              	 	<ol class="comments "> 
+     	               					<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (3) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+     	               					<li> 
+		     			              	 	<ol class="comments "> 
+ 		    	               					<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (4) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+     	               							<li> 
+		     			              	 			<ol class="comments "> 
+ 		    	               							<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (5) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               							<li> 
+				     			              	 			<ol class="comments "> 
+ 				    	               							<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (6) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               									<li> 
+				     			              	 					<ol class="comments "> 
+ 				    	               									<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (7) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               											<li> 
+				     			              	 							<ol class="comments "> 
+ 				    	               											<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (8) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+		     	               													<li> 
+				     			              	 									<ol class="comments "> 
+ 				    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (9) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+				     	               													<li> 
+						     			              	 									<ol class="comments "> 
+ 						    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (10) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+						     	               													<li> 
+								     			              	 									<ol class="comments "> 
+ 								    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (11) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+								     	               													<li> 
+										     			              	 									<ol class="comments "> 
+ 										    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (12) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+										     	               													<li> 
+												     			              	 									<ol class="comments "> 
+ 												    	               													<li>  <div class="comment"> <div class="comment-icon"> <a href="#"><img src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg" alt="Commenter Icon" /></a>  </div> <div class="comment-content"> <p><a class="comment-user-link" href="#">Flint Arthur</a> (13) Theremin lecture at baltimore node next wed, 8/25, 7:00 PM</p>  <abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr> <nav>  <ul>  <li><a href="#"><span>Reply</span></a></li>  <li><a href="#"><span>Hide</span></a></li>  <li><a href="#"><span>Delete</span></a></li>  </ul>  </nav>  </div> </div> </li>  
+ 										    			               												</ol>
+ 										    			               											</li>
+ 								    			               												</ol>
+ 								    			               											</li>
+ 						    			               												</ol>
+ 						    			               											</li>
+ 				    			               												</ol>
+ 				    			               											</li>
+ 		    			               												</ol>
+ 		    			               											</li>
+ 		    			               										</ol>
+ 		    			               									</li>
+ 		    			               								</ol>
+ 		    			               							</li>
+ 		    			               						</ol>
+ 		    			               					</li>
+     			               						</ol>
+     			               					</li>
+     			               				</ol>
+     			               			</li>
+     	               				</ol>
+     			              	 </li>
+     			               </ol>
+     			               
+     			          	</li>
+     			          	
+     		           </ol>
+					</section>
+					
 				</div>
 			</div>
 		</div>

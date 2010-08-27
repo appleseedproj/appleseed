@@ -158,7 +158,7 @@
 		#profile-mutual #mutual-friends ul li img { float:left; width:32px; height:32px; margin:5px 5px 0 0; }
 		
 		/* profile-friends */
-		#profile-friends ul { float:left; border-bottom:1px solid #c0d895; padding-bottom:10px;}
+		#profile-friends ul { float:left; border-bottom:1px solid #c0d895; padding-bottom:10px; margin-bottom:10px; }
 		#profile-friends ul li { clear:both; list-style-type:none; }
 		#profile-friends ul li img.friends-icon { float:left; clear:none; width:64px; height:64px; margin:10px 5px 0 0; border-bottom:1px solid #406300; }
 		
@@ -204,6 +204,77 @@
 		input[type="checkbox"], input[type="radio"] { clear:none; display:inline; margin:5px 0; background-color:#ff00ff; width:auto; float:left; text-align:right; }
 		label.radio, label.checkbox { float:left; clear:none; display:inline; width:auto; margin:5px 15px 5px 5px; }
 		
+		/* Admin Tables */
+		#appleseed-admin { float:left; background-color:#f1fed5; min-height:840px; }
+		#appleseed-admin-main { }
+		#appleseed-admin-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
+		
+		#appleseed-admin-info { float:left; position:relative; top:-60px;  }
+		#appleseed-admin-content { }
+		
+		#admin-tabs { float:left; position:relative; top:49px; }
+		#admin-tabs a { padding:0; background:none; color:#406300; }
+		#admin-tabs nav ul li { float:left; padding:4px 4px 0 4px; margin:0px 1px; background-color:#80af1f; border:1px solid #406300; }
+		#admin-tabs nav ul li a { color:#c0d895; }
+		#admin-tabs nav ul li:nth-child(1)   { margin-left:1px; }
+		#admin-tabs nav ul li.selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		#admin-tabs nav ul li.selected a { color:#2a2a2a; }
+		#admin-tabs nav ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		#admin-tabs nav ul li:hover a { color:#2a2a2a; }
+		#admin-tabs nav ul li a:hover { text-decoration:none; }
+		
+		#admin-main-menu ul li { float:left; width:200px; padding:5px 0 5px 10px; list-style-type:none; clear:both; }
+		#admin-main-menu ul li:hover { font-weight:normal; background-color:#c0d895; }
+		#admin-main-menu ul li span.admin-menu-link { float:left; color:#406300; margin-top:4px; height:24px; width:24px; }
+		#admin-main-menu ul li span.config-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -70px; height:24px; width:24px; }
+		#admin-main-menu ul li span.users-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -48px; height:24px; width:24px; }
+		#admin-main-menu ul li span.content-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -45px; height:24px; width:24px; }
+		#admin-main-menu ul li span.system-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -70px; height:24px; width:24px; }
+		#admin-main-menu ul li span.control-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -70px; height:24px; width:24px; }
+		#admin-main-menu ul li a { background:none; padding:0; height:32px; font-size:110%; font-weight:bold; }
+		#admin-main-menu ul li.selected { font-weight:normal; background-color:#c0d895; }
+		#admin-main-menu ul li.selected a { color:#f1fed5; }
+		#admin-main-menu ul li.selected a span.admin-menu-link { color:#f1fed5; }
+		#admin-main-menu ul li.selected span.config-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -118px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.users-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -94px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.content-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -94px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.system-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -118px; height:24px; width:24px; }
+		#admin-main-menu ul li.selected span.control-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -120px; height:24px; width:24px; }
+		
+		/* admin-search */
+		#admin-search { float:left; position:relative; top:58px; text-align:right; }
+		#admin-search input.search { font-size:80%; width:130px; height:16px; padding:2px 4px; border:none; background-color:#fafafa; }
+		#admin-search input.search-submit { width:22px; height:20px; border:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
+		
+		.admin-content h1 { margin-bottom:20px; }
+		
+		.admin-content table { float:left; font-size:90%; padding:0; margin:0; }
+		.admin-content table a { background:none; padding:0; }
+		.admin-content table td { background:none; padding:0; }
+		.admin-content table th a { color:#fafafa; }
+		.admin-content th { color:#fafafa; border-right: 1px solid #406300; border-bottom: 1px solid #406300; border-top: 1px solid #406300; letter-spacing: 2px; text-align:left; padding: 6px 0px 6px 12px;  background-color:#80af1f; }
+		.admin-content th.nobg { border-top: 0; border-left: 0; border-right: 1px solid #406300; color:#406300; background:#f1ffd6; } 
+		.admin-content th.nobg a { color:#406300; } 
+		.admin-content td { border-right: 1px solid #406300; border-bottom: 1px solid #406300; padding: 6px 6px 6px 12px; color:#2a2a2a; }
+		.admin-content th.spec { border-left: 1px solid #406300; border-top:0; color:#fafafa; }
+		.admin-content tr { background:#f1ffd6; }
+		.admin-content tr.alt { background:#c0d895; }
+		.admin-content table tr td input[type="checkbox"] { float:left; margin-left:12px; text-align:right; }
+		.admin-content tr:hover { background-color:#fafafa; }
+		
+		.admin-content nav.controls { font-weight:bold; float:left; width:50%; margin:0; padding:0; height:18px; } 
+		.admin-content nav.controls li { float:left; margin:0 10px 0 0; padding:0; }
+		.admin-content nav.controls a { background:none; padding:0; }
+		
+		.admin-content nav.pagination-amount { float:right; width:50%; margin:0; padding:0; height:18px; }
+		.admin-content nav.pagination-amount select { float:right; width:auto; padding:0; margin:0; }
+		
+		.admin-content nav.pagination { font-size:110%; float:right; padding:0; margin:0; width:50%; height:18px; }
+		.admin-content nav.pagination ol { padding:0; margin:0; }
+		
+		.admin-content nav.select { font-size:90%; float:left; clear:left; padding:0; width:50%; margin:0; padding:2px 0; height:14px;  }
+		.admin-content nav.select a { background:none; padding:0; }
+		
 		/* Search */
 		input.search { width:232px; height:18px; margin:0; float:none; padding:2px 4px; border:none; background-color:#fafafa; }
 		input.search-submit { padding:0; margin:0; width:22px; float:none; height:22px; border:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
@@ -211,3 +282,36 @@
 		input.search {  -webkit-border-bottom-left-radius:4px; -webkit-border-top-left-radius:4px;  -moz-border-radius-bottomleft:4px; -moz-border-radius-topleft:4px; -border-bottom-left-radius:4px; -border-top-left-radius:4px;  }
 		input.search-submit {  -webkit-border-bottom-right-radius:4px; -webkit-border-top-right-radius:4px;  -moz-border-radius-bottomright:4px; -moz-border-radius-topright:4px;  -border-bottom-right-radius:4px; -border-top-right-radius:4px;  }
 		
+		/* Comments */
+		
+		ol.outer { font-size:110%; }
+		ol.comments { float:left; clear:both; width:100%; list-style-type:none; margin:0; }
+		ol.comments li { clear: left; }
+		ol.comments li div.comment { float:left; clear:both; background:#c0d895; border-top:1px solid #80af1f; margin-bottom:1px; } 
+		ol.outer li div.comment { border:none; } 
+		ol.comments li div.comment-icon { float:left; display:inline; clear:none; width:32px; padding:5px 5px 0 5px; }
+		ol.comments li div.comment-icon a { background:none; padding:0; }
+		ol.comments li div.comment-icon img { width:32px; height:32px; padding:0; margin:0; }
+		
+		ol.comments li div.comment-content { float:right; clear:none; display:inline; width:658px; margin:5px 0 0 0; padding:0; vertical-align:top; }
+		
+		ol.comments li div.comment-content p { float:left; width:100%; margin:0 0 5px 0; padding:0; }
+		ol.comments li div.comment-content a { background:none; padding:0; font-weight:bold; margin-right:5px; }
+		ol.comments li div.comment-content abbr { float:left; clear:none; font-size:80%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
+		ol.comments li div.comment-content nav { font-size:80%; float:right; margin:0; padding:0; clear:none; }
+		ol.comments li div.comment-content nav ul li { float:left; display:inline; border:none; width:auto; padding:0; margin-right:10px; clear:none; }
+		ol.comments li div.comment-content nav ul li a { font-weight:normal; }
+		
+		ol.comments ol.nested { margin: 0px 0px 0px 20px; clear: left; }
+		ol.comments ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested { margin: 0px 0px 0px 0px; clear:left; }
+		
+		ol.comments li ol.nested li div.comment-content { width:638px; }
+		ol.comments li ol.nested li ol.nested li div.comment-content { width:618px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li div.comment-content { width:598px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:578px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:558px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:538px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:518px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:498px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:478px; }
+		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:458px; }

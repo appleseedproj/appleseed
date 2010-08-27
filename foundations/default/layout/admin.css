@@ -16,7 +16,7 @@
 		#admin-tabs nav ul li:hover a { color:#2a2a2a; }
 		#admin-tabs nav ul li a:hover { text-decoration:none; }
 		
-		#admin-main-menu ul li { float:left; width:200px; padding:5px 0 5px 10px; list-style-type:none; clear:both; }
+		#admin-main-menu ul li { float:left; width:200px; padding:5px 0 0 10px; list-style-type:none; clear:both; }
 		#admin-main-menu ul li:hover { font-weight:normal; background-color:#c0d895; }
 		#admin-main-menu ul li span.admin-menu-link { float:left; color:#406300; margin-top:4px; height:24px; width:24px; }
 		#admin-main-menu ul li span.config-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -70px; height:24px; width:24px; }
