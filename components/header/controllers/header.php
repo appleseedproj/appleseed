@@ -45,10 +45,13 @@ class cHeaderHeaderController extends cController {
 		
 		$header = $this->GetView ( $pView );
 		
-		$link = $header->Find ( "[id=user_login_profile_link]", 0 );
+		$link = $header->Find ( "[id=current-user-profile-link]", 0 );
 		
-		$logged_in_text = $link->innertext;
-		$link->innertext = __ ($logged_in_text, array ( "username" => $user->Username, "domain" => $user->Domain ) );
+		$icon = $header->Find ( "[class=current-icon]", 0);
+		$icon->src = 'http://' . $user->Domain . '/_storage/legacy/photos/' . $user->Username . '/profile.jpg';
+		
+		$link->innertext = $user->Username . '@' . $user->Domain;
+		$link->href = 'http://' . $user->Domain . '/profile/' . $user->Username ;
 		
 		$header->Display();
 		

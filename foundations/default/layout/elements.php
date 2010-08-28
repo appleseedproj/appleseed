@@ -14,12 +14,25 @@
 	<link rel="stylesheet" href="/themes/default/style/fonts-min.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
-	<link rel="stylesheet" href="/foundations/default/layout/theme.css" /> 
+	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
 	
 	<!-- Javascript --> 
 	<!--[if IE]>
 	<script src="/themes/default/style/html5.js"></script>
 	<![endif]-->
+	
+    <!-- Load JLoader framework -->
+   	<script type="text/javascript" src="/libraries/javascript/jloader.init.js"></script>
+   	<script type="text/javascript" src="/foundations/default/default.js"></script>
+   	
+	<!-- Load JQuery -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/jquery-1.4.2.min.js"></script>
+   	
+   	<!-- Load JQuery::UI -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery-ui-1.8.2.custom.min.js"></script>
+   	
+   	<!-- Load JQuery::Validation -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
 	
 </head>
 
@@ -62,6 +75,14 @@
 	<div id="appleseed-container" class="container_16">
 	
     	<div id="appleseed-profile" class="container_16">
+    		<div id="appleseed-profile-status" class="container_16">
+    			<div id="status-container" class="grid_12 push_4">
+    				<span id="status-name">Michael Chisari</span><span id="status-current">can't. stop.  thinkin' about tomorrow!</span>
+    				<!-- <span id="status-name">Michael Chisari</span><span id="status-current">can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow!</span> -->
+					<abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr>
+					<a href="#" class="edit">Edit</a>
+    			</div>
+    		</div>
 	       	<div id="appleseed-profile-menu" class="container_16">
 	       		<div id="profile-tabs" class="grid_9 push_4">
 	       			<nav>
@@ -131,24 +152,24 @@
 					</div>
 				</div>
 				<div id="appleseed-profile-content" class="grid_12 omega">
-					<nav class="pagination">   
-						<ol>     
-							<li class="first"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="FIRST">First</button></li> 
-    						<li class="prev"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="PREVIOUS">Prev</button></li> 
-    						<li class="selected"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="-1">1</button></li> 
-    						<li><button type="submit" name="gSCROLLSTART[admin.users.questions]" value="9">2</button></li> 
-    						<li class="next"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Next</button></li> 
-    						<li class="last"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Last</button></li> 
-  						</ol>
+					<nav class='pagination'>
+						<ol>
+							<li class='first'><a href="#"><span>First Page</span></a></li>
+							<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+							<li class='page selected'><a href="#"><span>1</span></a></li>
+							<li class='page'><a href="#"><span>2</span></a></li>
+							<li class='next'><a href="#"><span>Next Page</span></a></li>
+							<li class='last'><a href="#"><span>Last Page</span></a></li>
+						</ol>
   					</nav>
-					<section id="general_form"> 
+					<section id="profile-form"> 
 						<h1>Form Elements</h1>
 						
-						<form action="whatever.php">
+						<form id="form-elements" action="whatever.php">
 							<fieldset> 
 								<legend>Tableless Form</legend>
                     
-									<div><label>Input #1</label><input /></div>
+									<div><label>Input #1</label><input class="required" /></div>
 									<div><label>Input #2</label><input /></div>
 									<div><label>Input #3</label><textarea></textarea></div>
 									<div><label>Really long input label #4 testing of how it handles this.</label><textarea></textarea></div>
@@ -236,102 +257,6 @@
 							</fieldset> 
 						</form> 
 						
-						               <!--
-                <p>Description of what to do in this particular section of the admin area.</p> 
-                
-                <nav> 
-                    <ul> 
-                        <li><a href="#">Move Up &uarr;</a></li> 
-                        <li><a href="#">Move Down &darr;</a></li> 
-                        <li><a href="#">Delete</a></li> 
-                    </ul> 
-                </nav> 
-                
-                <table> 
-                    <thead> 
-                        <tr> 
-                            <th scope="col"><a href="#"># &uarr;</a></th> 
-                            <th scope="col"><a href="#">Name</a></th> 
-                            <th scope="col"><a href="#">Type</a></th> 
-                            <th scope="col"><a href="#">Lang</a></th> 
-                            <th scope="col"><input type="checkbox" /></th> 
-                        </tr> 
-                    </thead> 
-                    <tbody> 
-                        <tr class="odd"> 
-                            <td scope="row">1</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr> 
-                            <td scope="row">2</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr class="odd"> 
-                            <td scope="row">3</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr> 
-                            <td scope="row">4</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr class="odd"> 
-                            <td scope="row">5</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr> 
-                            <td scope="row">6</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr class="odd"> 
-                            <td scope="row">7</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr> 
-                            <td scope="row">8</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr class="odd"> 
-                            <td scope="row">9</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                        <tr> 
-                            <td scope="row">10</td> 
-                            <td><a href="#">What is your favorite color?</a></td> 
-                            <td>String</td> 
-                            <td>en</td> 
-                            <td><input type="checkbox" /></td> 
-                        </tr> 
-                    </tbody> 
-                </table> 
-                -->
-						
 					</section> 
 				</div>
 			</div>
@@ -355,10 +280,10 @@
 			<div id="debug-tabs" class="grid_16">
 				<nav>
 					<ul>
-						<li><a href="#">Warnings</a></li>
-						<li><a href="#">Errors</a></li>
-						<li><a href="#">SQL Queries</a></li>
-						<li class="selected" ><a href="#">Benchmarks</a></li>
+						<li class="ui-tabs-selected" ><a href="#debug-warnings">Warnings</a></li>
+						<li><a href="#debug-errors">Errors</a></li>
+						<li><a href="#debug-queries">SQL Queries</a></li>
+						<li><a href="#debug-benchmarks">Benchmarks</a></li>
 					</ul>
 				</nav>
 				
@@ -369,6 +294,8 @@
 			
 				<section id="debug-warnings">
 					<h1>Warnings</h1>
+					<p>This week the insomnia is back. Insomnia, and now the whole world figures to stop by and take a dump on my grave. My boss is wearing his gray tie so today must be a Tuesday. My boss brings a sheet of paper to my desk and asks if I'm looking for something. This paper was left in the copy machine, he says, and begins to read: "The first rule of fight club is you don't talk about fight club." His eyes go side to side across the paper, and he giggles. "The second rule of fight club is you don't talk about fight club."</p>
+					
 				</section>
 				
 				<section id="debug-errors">
@@ -385,6 +312,8 @@
 			</div>
 		</div>
 	</div>
-    
+	
+	<div id="clear"></div>
+	
 </body>
 </html>

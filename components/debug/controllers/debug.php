@@ -30,6 +30,13 @@ class cDebugDebugController extends cController {
 	}
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
+		$user = $this->Talk ( "User", "Current" );
+		
+		$parameters['account'] = $user->Username . '@' . $user->Domain;
+		$access = $this->Talk ( "Security", "Access", $parameters );
+		
+		if ( ( !$user->Username ) or ( !$access->Get ( "Admin" ) ) ) return ( true );
+		
 		parent::Display( $pView, $pData );
 	}
 

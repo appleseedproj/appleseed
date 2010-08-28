@@ -29,6 +29,8 @@ _JLoader.prototype.Load = function ( ) {
 			var _Element = document.getElementById ( _ElementList[e] );
 		}
 		
+		_ElementList[e] = _ElementList[e].replace ( "-", "_" );
+		
 		// Constructor
 		Class = _ElementList[e].UCWords ();
 		if ( typeof window['jLoader'][Class] == "function" ) {

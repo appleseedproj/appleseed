@@ -2,6 +2,9 @@ jLoader.Initialize();
 
 // ---[ ]---------------------------------------------------------------------------
 jLoader.Document = function ( ) {
+
+	$("#form-elements").validate();
+	
 }
 
 jLoader.Document.Anchor = function ( ) {

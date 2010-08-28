@@ -97,7 +97,7 @@ YOU_ARE_REMOTELY_LOGGED_IN_AS="Currently logged in <strong>remotely</strong> as 
 YOU_ARE_LOGGED_IN_AS="Currently logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 LOGGED_IN_AS_ADMINISTRATOR="Administrator logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 ANONYMOUS_USER="An Anonymous User"
-COPYRIGHT_NOTICE="Copyright &copy; 2004-2010 by the Appleseed Project under the GNU General Public License.  All Rights Reserved."
+COPYRIGHT_NOTICE="<a href=\"http://opensource.appleseedproject.org\">Appleseed Social Networking Software</a> is Copyright &copy; 2004-2010 by Michael Chisari under the GNU General Public License. All Rights Reserved."
 WRITE_ACCESS_DENIED="Insufficient Access To Make Modifications."
 NONE_SELECTED="Error: Nothing was selected."
 NO_RESULTS_FOUND="No results were found."

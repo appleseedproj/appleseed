@@ -14,7 +14,7 @@
 	<link rel="stylesheet" href="/themes/default/style/fonts-min.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
-	<link rel="stylesheet" href="/foundations/default/layout/theme.css" /> 
+	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
 	
 	<!-- Javascript --> 
 	<!--[if IE]>
@@ -62,6 +62,14 @@
 	<div id="appleseed-container" class="container_16">
 	
     	<div id="appleseed-profile" class="container_16">
+    		<div id="appleseed-profile-status" class="container_16">
+    			<div id="status-container" class="grid_12 push_4">
+    				<span id="status-name">Michael Chisari</span><span id="status-current">can't. stop.  thinkin' about tomorrow!</span>
+    				<!-- <span id="status-name">Michael Chisari</span><span id="status-current">can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow! can't. stop.  thinkin' about tomorrow!</span> -->
+					<abbr title="Thursday, August 26, 2010 at 4:19pm" data-date="Thu, 26 Aug 2010 14:19:57 -0700" class="timestamp">4 minutes ago</abbr>
+					<a href="#" class="edit">Edit</a>
+    			</div>
+    		</div>
 	       	<div id="appleseed-profile-menu" class="container_16">
 	       		<div id="profile-tabs" class="grid_9 push_4">
 	       			<nav>
@@ -131,15 +139,15 @@
 					</div>
 				</div>
 				<div id="appleseed-profile-content" class="grid_12 omega">
-					<nav class="pagination">   
-						<ol>     
-							<li class="first"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="FIRST">First</button></li> 
-    						<li class="prev"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="PREVIOUS">Prev</button></li> 
-    						<li class="selected"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="-1">1</button></li> 
-    						<li><button type="submit" name="gSCROLLSTART[admin.users.questions]" value="9">2</button></li> 
-    						<li class="next"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Next</button></li> 
-    						<li class="last"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Last</button></li> 
-  						</ol>
+					<nav class='pagination'>
+						<ol>
+							<li class='first'><a href="#"><span>First Page</span></a></li>
+							<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+							<li class='page selected'><a href="#"><span>1</span></a></li>
+							<li class='page'><a href="#"><span>2</span></a></li>
+							<li class='next'><a href="#"><span>Next Page</span></a></li>
+							<li class='last'><a href="#"><span>Last Page</span></a></li>
+						</ol>
   					</nav>
 					<section id="profile-friends">
 						<h1>Michael's Friends <span class="profile-friends-count additional-info">246 friends</span> </h1>
@@ -177,6 +185,16 @@
 						</ul>
 					</section>
 					
+					<nav class='pagination'>
+						<ol>
+							<li class='first'><a href="#"><span>First Page</span></a></li>
+							<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+							<li class='page selected'><a href="#"><span>1</span></a></li>
+							<li class='page'><a href="#"><span>2</span></a></li>
+							<li class='next'><a href="#"><span>Next Page</span></a></li>
+							<li class='last'><a href="#"><span>Last Page</span></a></li>
+						</ol>
+  					</nav>
 					<section id="profile-comments">
 						<h1>Nested Comments</h1>
 						<ol class="comments outer"> 
@@ -284,7 +302,17 @@ It's a very good thing that the amount of anti-matter/anti-energy in the univers
      		           </ol>
 					</section>
 					
-					<section id="profile-comments">
+					<nav class='pagination'>
+						<ol>
+							<li class='first'><a href="#"><span>First Page</span></a></li>
+							<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+							<li class='page selected'><a href="#"><span>1</span></a></li>
+							<li class='page'><a href="#"><span>2</span></a></li>
+							<li class='next'><a href="#"><span>Next Page</span></a></li>
+							<li class='last'><a href="#"><span>Last Page</span></a></li>
+						</ol>
+  					</nav>
+					<section id="profile-comments-two">
 						<h1>Flat Comments</h1>
 						<ol class="comments outer"> 
 					

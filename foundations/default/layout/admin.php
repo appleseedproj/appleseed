@@ -14,8 +14,8 @@
 	<link rel="stylesheet" href="/themes/default/style/fonts-min.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
-	<link rel="stylesheet" href="/foundations/default/layout/theme.css" /> 
-	<link rel="stylesheet" href="/foundations/default/layout/admin.css" /> 
+	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
+	<link rel="stylesheet" href="/themes/default/style/admin.css" /> 
 	
 	<!-- Javascript --> 
 	<!--[if IE]>
@@ -68,14 +68,10 @@
 	       			<nav>
 	       				<ul>
 	       					<li><a href="#">Options</a></li>
-	       					<li><a href="#">News</a></li>
-	       					<li><a href="#">Wall</a></li>
-							<li><a href="#">Info</a></li>
-							<li class="selected"><a href="#">Friends</a></li>
-							<li><a href="#">Journals</a></li>
-							<li><a href="#">Photos</a></li>
-							<li><a href="#">Events</a></li>
-							<li><a href="#">Groups</a></li>
+							<li><a href="#">Tooltips</a></li>
+							<li class="selected"><a href="#">Nodes</a></li>
+							<li><a href="#">Logs</a></li>
+							<li><a href="#">Maintenance</a></li>
 		       			</ul>
 		       		</nav>
 		       	</div>
@@ -115,16 +111,16 @@
                 		<nav class="select">
                 			Select: <a href="#">All</a>, <a href="#">None</a>
                 		</nav>
-						<nav class="pagination">   
-							<ol>     
-								<li class="first"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="FIRST">First</button></li> 
-    							<li class="prev"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="PREVIOUS">Prev</button></li> 
-    							<li class="selected"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="-1">1</button></li> 
-    							<li><button type="submit" name="gSCROLLSTART[admin.users.questions]" value="9">2</button></li> 
-    							<li class="next"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Next</button></li> 
-    							<li class="last"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Last</button></li> 
-  							</ol>
-  						</nav>
+						<nav class='pagination'>
+							<ol>
+								<li class='first'><a href="#"><span>First Page</span></a></li>
+								<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+								<li class='page selected'><a href="#"><span>1</span></a></li>
+								<li class='page'><a href="#"><span>2</span></a></li>
+								<li class='next'><a href="#"><span>Next Page</span></a></li>
+								<li class='last'><a href="#"><span>Last Page</span></a></li>
+							</ol>
+	  					</nav>
 						<table id="mytable" cellspacing="0" summary="The technical specifications of the Apple PowerMac G5 series"> 
 							<tr> 
 								<th scope="col" abbr="Configurations" class="nobg"><a href="#">#</a></th> 
@@ -207,16 +203,16 @@
                 		<nav class="select">
                 			Select: <a href="#">All</a>, <a href="#">None</a>
                 		</nav>
-						<nav class="pagination">   
-							<ol>     
-								<li class="first"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="FIRST">First</button></li> 
-    							<li class="prev"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="PREVIOUS">Prev</button></li> 
-    							<li class="selected"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="-1">1</button></li> 
-    							<li><button type="submit" name="gSCROLLSTART[admin.users.questions]" value="9">2</button></li> 
-    							<li class="next"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Next</button></li> 
-    							<li class="last"><button   type="submit" name="gSCROLLSTART[admin.users.questions]" value="10">Last</button></li> 
-  							</ol>
-  						</nav>
+						<nav class='pagination'>
+							<ol>
+								<li class='first'><a href="#"><span>First Page</span></a></li>
+								<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+								<li class='page selected'><a href="#"><span>1</span></a></li>
+								<li class='page'><a href="#"><span>2</span></a></li>
+								<li class='next'><a href="#"><span>Next Page</span></a></li>
+								<li class='last'><a href="#"><span>Last Page</span></a></li>
+							</ol>
+	  					</nav>
 						<nav class="controls"> 
 							<ul> 
 								<li><a href="#">Move Up &uarr;</a></li> 

@@ -1,32 +1,26 @@
-<header class="container_12"> 
-    
-	<hgroup class="grid_3"> 
-		<h1><a href="http://opensource.appleseedproject.org/" title="Click here to learn more about the Appleseed Project.">Appleseed</a></h1> 
-		<h2>Appleseed Tagline</h2> 
-	</hgroup> 
-        
-	<nav class="grid_6"> 
-		<ul> 
-			<li><a href="/">Home</a></li>
-			<li><a href="about/">About</a></li>
-			<li>Photos</li>
-			<li>Groups</li>
-			<li>Journals</li>
-			<li>Search</li>
-			<li><a id="header_admin_link" href="">Admin</a></li>
-			<li>Help</li>
-		</ul> 
-		<span id="notification_new_friends"></span>
-		<span id="notification_new_messages"></span>
-	</nav> 
-        
-	<div id="user_login" class="grid_3"> 
-		<p>
-			<span id="user_login_profile_link">Logged In As Administrator</span>
-			<span><a href="/logout/">Logout</a></span> 
-		</p>
-	</div> 
-        
-	<div class="clear"></div> 
-        
+<header id="appleseed-header">
+	<div id="appleseed-header-content" class="container_16">
+	
+		<!-- Network Search -->
+		<div id="header-search" class="grid_5"> 
+			<input type="text" name="search" placeholder="Search..." class="search"><input type="submit" name="search" value="" class="search-submit">
+		</div>
+		
+		<div id="header-notifications" class="grid_2">
+			<a href="#"><span class="new-friend"></span><span class="new-friend-count none"></span></a>
+			<a href="#"><span class="new-mail"></span><span class="new-mail-count none"></span></a>
+			<a href="#"><span class="new-notification "></span><span class="new-notification-count none"></span></a>
+		</div>
+		<div id="header-current" class="grid_6"> 
+			<span class="current-local"></span>
+			<img class="current-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc3/hs223.snc3/21036_243577049405_510304405_3041527_5461526_n.jpg">
+			<span class="current-identity"><a id="current-user-profile-link" href="#"></a></span>
+		</div>
+		<div id="header-links" class="grid_3">
+			<a class="links-news" href="#">News</a>
+			<a class="links-profile" href="#">Profile</a>
+			<a class="links-options" href="/_admin">Admin</a>
+			<a class="links-logout" href="/logout/">Logout</a>
+		</div>
+	</div>
 </header>

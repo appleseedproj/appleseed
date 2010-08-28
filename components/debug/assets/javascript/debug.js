@@ -1,8 +1,7 @@
-jLoader.Initialize( "debug" );
+jLoader.Initialize( "appleseed-debug" );
 
-jLoader.Debug = function ( ) { 
+jLoader.Appleseed_debug = function ( ) { 
 
-	// Add tabs to debug section
-    $("#debug_tabs").tabs();
+	$("#appleseed-debug").tabs();
 	
 }

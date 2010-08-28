@@ -1,29 +1,15 @@
-<header class="container_12"> 
-    
-	<hgroup class="grid_3"> 
-		<h1><a href="http://opensource.appleseedproject.org/" title="Click here to learn more about the Appleseed Project.">Appleseed</a></h1> 
-		<h2>Appleseed Tagline</h2> 
-	</hgroup> 
-        
-	<nav class="grid_6"> 
-		<ul> 
-			<li><a href='/'>Home</a></li>
-			<li><a href='about/'>About</a></li>
-			<li>Photos</li>
-			<li>Groups</li>
-			<li>Journals</li>
-			<li>Search</li>
-			<li>Options</li>
-			<li>Help</li>
-		</ul> 
-	</nav> 
+<header id="appleseed-header">
+	<div id="appleseed-header-content" class="container_16">
 	
-	<div id="user_login" class="grid_3"> 
-		<p>
-			<span><a href="/login/">Login</a></span> 
-		</p>
-	</div> 
-        
-	<div class="clear"></div> 
-        
-</header> 
+		<!-- Network Search -->
+		<div id="header-search" class="grid_5"> 
+			<input type="text" name="search" placeholder="Search..." class="search"><input type="submit" name="search" value="" class="search-submit">
+		</div>
+		
+		<div id="header-notifications" class="grid_2"> &nbsp; </div>
+		<div id="header-current" class="grid_6"> &nbsp; </div>
+		<div id="header-links" class="grid_3">
+			<a class="links-logout" href="/login/">Login</a>
+		</div>
+	</div>
+</header>
