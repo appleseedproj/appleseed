@@ -105,6 +105,8 @@ Protocol
 			- GET: 	_social=true
 					_task=user.icon
 					_request=<username>
+					_width=<width>
+					_height=<height>
 	
 	QuickFriend
 		- Friend / ReplyToFriend
@@ -231,6 +233,37 @@ Protocol
 					_stamp=<datetime>
 					_identifier=<identifier>
 			- JSON:	success=<true|false>
+					error=<error>
+					
+	QuickNotification
+			- GET: 	_social=true
+					_task=notification.feed
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+			- JSON	success=<true|false>
+					error=<error>
+					results=<array>
+						type=<general|mail|request>
+						actionOwner=<user@domain>
+						action=<action>
+						actionLink=<actionlink>
+						subjectOwner=<user@domain>
+						contextOwner=<user@domain>
+						context=<context>
+						contextLink=<contextlink>
+						comment=<comment>
+						description=<description>
+						stamp=<datetime>
+			- GET: 	_social=true
+					_task=notification.read
+					_token=<token>
+					_method=<method>
+					_account=<user@domain>
+					_source=<domain>
+					_stamp=<stamp>
+			- JSON	success=<true|false>
 					error=<error>
 	
 	QuickTag

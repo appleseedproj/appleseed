@@ -12,7 +12,7 @@
 			<a href="#"><span class="new-notification "></span><span class="new-notification-count none"></span></a>
 		</div>
 		<div id="header-current" class="grid_6"> 
-			<span class="current-remote"></span>
+			<span class="current-local"></span>
 			<img class="current-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc3/hs223.snc3/21036_243577049405_510304405_3041527_5461526_n.jpg">
 			<span class="current-identity"><a id="current-user-profile-link" href="#"></a></span>
 		</div>
