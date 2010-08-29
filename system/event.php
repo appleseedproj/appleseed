@@ -44,6 +44,8 @@ class cEvent extends cBase {
 		
 		$hooks = $this->Hooks->GetHooks ();
 		
+		$return = null;
+		
 		foreach ( $hooks as $h => $hook ) {
 			if ( in_array ( $function, get_class_methods ( $hook ) ) ) {
 				$lang_component = $hook->Get ( "Component" );

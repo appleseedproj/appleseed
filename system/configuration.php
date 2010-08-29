@@ -267,7 +267,9 @@ class cConfiguration extends cBase {
 				$currentvalues = $config[$component];
 				$configvalues = $this->Parse ( $filename );
 				
-				if ( $configvalues['clearall'] == 'true' ) {
+				$clearall = isset ( $configvalues['clearall'] ) ? $configvalues['clearall'] : false;
+				
+				if ( $clearall == 'true' ) {
 					$currentvalues = array ();
 					unset ( $configvalues['clearall'] );
 				}
@@ -332,7 +334,9 @@ class cConfiguration extends cBase {
 				$currentvalues = $config[$hook];
 				$configvalues = $this->Parse ( $filename );
 				
-				if ( $configvalues['clearall'] == 'true' ) {
+				$clearall = isset ( $configvalues['clearall'] ) ? $configvalues['clearall'] : false;
+				
+				if ( $clearall == 'true' ) {
 					$currentvalues = array ();
 					unset ( $configvalues['clearall'] );
 				}

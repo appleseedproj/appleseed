@@ -20,23 +20,24 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cHook extends cBase {
 	
-	protected $_Component;
 	protected $_Hook;
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        	$rc = new ReflectionClass ( get_class ( $this ) );
-            $location = dirname ( $rc->getFileName() );
-            
-            unset ( $rc );
-        	
-			list ( $null, $hookdata ) = explode ( 'hooks/', $location );
+	/**
+	 * Constructor
+	 *
+	 * @access  public
+	 */
+	public function __construct ( ) {       
+		$rc = new ReflectionClass ( get_class ( $this ) );
+		$location = dirname ( $rc->getFileName() );
+	            
+		unset ( $rc );
+	        	
+		list ( $null, $hook ) = explode ( 'hooks/', $location );
 		
-			list ( $this->_Component, $this->_Hook ) = explode ( '/', $hookdata );
-        }
+		$this->_Hook = $hook;
+		
+		return ( true );
+	}
 
 }
