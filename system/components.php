@@ -124,6 +124,15 @@ class cComponents extends cBase {
 	 * @param array $pData Extended controller data.
 	 */
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
+		
+		ob_start ();
+		
+		$this->Execute ( $pComponent, $pController, $pView, $pTask, $pData );
+		
+		return ( true );
+	}
+	
+	public function Execute ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		eval ( GLOBALS );
 		
 		/* 
@@ -204,29 +213,16 @@ class cComponents extends cBase {
 		
 		$store = $this->GetSys ( "Language" )->Load ( $component_lang );
 		
-		ob_start ();
+		$this->GetSys ( "Benchmark" )->MemBegin ( $context );
+		$this->GetSys ( "Benchmark" )->Start ( $context );
 		
-		$benchmark_start = (float) array_sum(explode(' ',microtime())); 
 		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
-		$benchmark_end = (float) array_sum(explode(' ',microtime())); 
-				
-		// Uncomment for component benchmarks.
-		// echo "<h1>Component Time: ", sprintf("%.4f", ($benchmark_end-$benchmark_start)) . " seconds</h1>";
 		
-		$bdata = ob_get_clean ();
-		
-		$Buffer = $this->GetSys ( "Buffer" );
-		
-		$Buffer->AddToCount ( 'component' );
-		
-		$Buffer->Placeholder ( 'component', $parameters );
-		
-		$Buffer->Queue ( 'component', $parameters, $bdata );
-		
-		$this->GetSys ( "Language" )->Restore ( $store );
+		$this->GetSys ( "Benchmark" )->Stop ( $context );
+		$this->GetSys ( "Benchmark" )->MemEnd ( $context );
 		
 		$this->$componentname->AddToInstance();
-		
+				
 		return ( true );
 	}
 	

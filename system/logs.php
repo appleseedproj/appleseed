@@ -30,13 +30,19 @@ class cLogs extends cBase {
 	public function __construct ( ) {       
 	}
 	
-	public function Add ( $pValue, $pContext ) {
+	public function GetLogs ( $pContext ) {
+		
+		return ( $this->_Log[$pContext] );
+	}
+	
+	public function Add ( $pContext, $pValue, $pComponentContext ) {
 		
 		$current = count ( $this->_Log[$pContext] );
 		
 		$this->_Log[$pContext][$current] = new StdClass();
 		
 		$this->_Log[$pContext][$current]->Value = $pValue;
+		$this->_Log[$pContext][$current]->Context = $pComponentContext;
 		$this->_Log[$pContext][$current]->Stamp = time();
 		$this->_Log[$pContext][$current]->Timezone = date("T");
 		

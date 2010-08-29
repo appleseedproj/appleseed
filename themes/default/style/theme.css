@@ -64,7 +64,7 @@
 		footer#appleseed-footer, header#appleseed-header { width:100%; height:46px; text-align:center; color:#d9fa9e; border-top:1px solid #406300; border-bottom:1px solid #406300; background-color:#80af1f; }
 		footer#appleseed-footer { color:#c0d895; }
 		footer#appleseed-footer a { color:#f1fed5; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -93px; }
-		footer#appleseed-footer a:hover { color:#406300; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -45px; }
+		footer#appleseed-footer a:hover { color:#406300; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -45px; }
 		footer#appleseed-footer p { margin:3px 0; }
 		
 		/* Header */
@@ -200,6 +200,8 @@
 		#debug-tabs nav ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
 		#debug-tabs nav ul li:hover a { color:#2a2a2a; text-decoration:none;  }
 		
+		#debug-benchmarks h2, #debug-memory h2 { position:relative; top:-14px; float:right; font-weight:normal; font-size:100%; font-style:italic; color:#bf4630; }
+		
 		/* Temporary */
 		#temporary-debug-info { display:none; }
 		
@@ -217,13 +219,20 @@
 		input[type="checkbox"], input[type="radio"] { clear:none; display:inline; margin:5px 0; background-color:#ff00ff; width:auto; float:left; text-align:right; }
 		label.radio, label.checkbox { float:left; clear:none; display:inline; width:auto; margin:5px 15px 5px 5px; }
 		
-		.admin-content nav.pagination-amount select { float:right; width:auto; padding:0; margin:0; }
-		
-		.admin-content nav.pagination { font-size:110%; float:right; padding:0; margin:0; width:50%; height:18px; }
-		.admin-content nav.pagination ol { padding:0; margin:0; }
-		
-		.admin-content nav.select { font-size:90%; float:left; clear:left; padding:0; width:50%; margin:0; padding:2px 0; height:14px;  }
-		.admin-content nav.select a { background:none; padding:0; }
+		/* Tables */
+		table { float:left; font-size:90%; padding:0; margin:0; }
+		table a { background:none; padding:0; }
+		table td { background:none; padding:0; }
+		table th a { color:#fafafa; }
+		th { color:#fafafa; letter-spacing: 2px; text-align:left; padding: 6px 0px 6px 12px;  background-color:#80af1f; }
+		th.nobg { color:#406300; background:#f1ffd6; } 
+		th.nobg a { color:#406300; } 
+		td { padding: 6px 6px 6px 12px; color:#2a2a2a; }
+		th.spec { color:#fafafa; }
+		tr { padding:5px 0; background:#f1ffd6; }
+		tr.even { background:#c0d895; }
+		table tr td input[type="checkbox"] { float:left; margin-left:12px; text-align:right; }
+		tr:hover { background-color:#fafafa; }
 		
 		/* Search */
 		input.search { width:232px; height:18px; margin:0; float:none; padding:2px 4px; border:none; background-color:#fafafa; }

@@ -184,7 +184,5 @@
     
  	<?php $zApp->Components->Go ( "footer" ); ?>
 
-	<?php $zApp->Components->Go ( "debug" ); ?>
-        
 </body>
 </html>
