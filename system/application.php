@@ -64,6 +64,10 @@ class cApplication extends cBase {
 		require ( ASD_PATH . DS . 'system' . DS . 'buffer.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'logs.php' );
 		
+		$this->Logs = new cLogs();
+		
+		set_error_handler ( array ( $this->Logs, "HandleError" ) );
+		
 		$this->_LoadLibraries ();
             
 		$this->Config = new cConf ();
@@ -74,7 +78,6 @@ class cApplication extends cBase {
 		$this->Database = new cDatabase();
 		
 		$this->Theme = new cTheme ();
-		$this->Logs = new cLogs();
 		$this->Benchmark = new cBenchmark();
 		$this->Buffer = new cBuffer();
 		

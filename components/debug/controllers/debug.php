@@ -42,6 +42,7 @@ class cDebugDebugController extends cController {
 		$this->Debug = $this->GetView ( $pView );
 		
 		// Warnings
+		$this->_PrepareWarnings ();
 		
 		// Queries
 		$this->_PrepareQueries ();
@@ -52,11 +53,55 @@ class cDebugDebugController extends cController {
 		// Benchmarks
 		$this->_PrepareBenchmarks ();
 		
-		$this->Debug->Display(); 
+		echo $this->Debug; 
 		
 		return ( false );
 	}
 	
+	private function _PrepareWarnings ( ) {
+		
+		$warnings = $this->GetSys ( "Logs" )->GetLogs ( "Warnings" );
+		
+		list ( $dir, $null ) = explode ( 'components', __FILE__ );
+		
+		$count = count ( $warnings );
+		
+		$this->Debug->Find ( "[id=warnings-system-total]", 0)->innertext = __ ("System Total Warnings", array ( "count" => $count ) );
+		
+		$tbody = $this->Debug->Find ( "[id=debug-warnings] table tbody", 0);
+		
+		$row = $tbody->Find ( "tr", 0);
+		
+		$debugWarningsId = $row->Find( "[class=debug-warnings-id]", 0 );
+		$debugWarningsWarning = $row->Find( "[class=debug-warnings-warning]", 0 );
+		$debugWarningsFile = $row->Find( "[class=debug-warnings-file]", 0 );
+		$debugWarningsLine = $row->Find( "[class=debug-warnings-line]", 0 );
+		
+		foreach ( $warnings as $w => $warning ) {
+		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
+			
+			$row->class = $oddEven;
+			
+			$text = $warning->Value;
+			$context = $warning->Context;
+			
+			list ( $null, $context ) = explode ( $dir, $context );
+			
+			list ( $file, $line ) = explode ( ':', $context );
+			
+			$debugWarningsId->innertext = $w;
+			$debugWarningsWarning->innertext = $text;
+			$debugWarningsFile->innertext = $file;
+			$debugWarningsLine->innertext = $line;
+			
+			$tbody->innertext .= $row->outertext;
+		}
+		
+		//$this->Debug->RemoveElement ( "[id=debug-warnings] tr" );
+		
+		return ( true );
+		
+	}
 	private function _PrepareQueries ( ) {
 		
 		$queries = $this->GetSys ( "Logs" )->GetLogs ( "Queries" );
@@ -87,8 +132,6 @@ class cDebugDebugController extends cController {
 			$this->Debug->Find ( "[id=debug-queries] table tbody", 0)->innertext .= $row->outertext;
 		
 		}
-		
-		$this->Debug->Reload();
 		
 		$this->Debug->RemoveElement ( "[id=debug-queries] tr" );
 		
@@ -135,8 +178,6 @@ class cDebugDebugController extends cController {
 		
 		}
 		
-		$this->Debug->Reload();
-		
 		$this->Debug->RemoveElement ( "[id=debug-memory] tr" );
 		
 		return ( true );
@@ -181,8 +222,6 @@ class cDebugDebugController extends cController {
 			$this->Debug->Find ( "[id=debug-benchmarks] table tbody", 0)->innertext .= $row->outertext;
 		
 		}
-		
-		$this->Debug->Reload();
 		
 		$this->Debug->RemoveElement ( "[id=debug-benchmarks] tr" );
 		

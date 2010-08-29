@@ -35,6 +35,15 @@ class cLogs extends cBase {
 		return ( $this->_Log[$pContext] );
 	}
 	
+	public function HandleError ( $pErrorNumber, $pErrorString, $pErrorFile, $pErrorLine ) {
+		
+		$context = $pErrorFile . ":" . $pErrorLine;
+		$this->Add ( "Warnings", $pErrorString, $context );
+		
+		return ( true );
+	}
+	
+	
 	public function Add ( $pContext, $pValue, $pComponentContext ) {
 		
 		$current = count ( $this->_Log[$pContext] );

@@ -20,8 +20,23 @@
 		
 			<section id="debug-warnings">
 				<h1>Warnings</h1>
-				<p>This week the insomnia is back. Insomnia, and now the whole world figures to stop by and take a dump on my grave. My boss is wearing his gray tie so today must be a Tuesday. My boss brings a sheet of paper to my desk and asks if I'm looking for something. This paper was left in the copy machine, he says, and begins to read: "The first rule of fight club is you don't talk about fight club." His eyes go side to side across the paper, and he giggles. "The second rule of fight club is you don't talk about fight club."</p>
-				
+				<h2 id="warnings-system-total"></h2>
+				<table>
+					<thead>
+						<th>#</th>
+						<th>Warning</th>
+						<th>File</th>
+						<th>Line#<th>
+					</thead>
+					<tbody>
+						<tr>
+							<td class='debug-warnings-id'></td>
+							<td class='debug-warnings-warning'></td>
+							<td class='debug-warnings-file'></td>
+							<td class='debug-warnings-line'></td>
+						</tr>
+					</tbody>
+				</table>
 			</section>
 			
 			<section id="debug-queries">

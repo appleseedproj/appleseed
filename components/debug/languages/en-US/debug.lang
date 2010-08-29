@@ -2,3 +2,6 @@ BENCHMARK_IN_SECONDS="%seconds$s Seconds"
 MEMORY_IN_MEGABYTES="%memory$s MB"
 SYSTEM_TOTAL_TIME="Total: %seconds$s Seconds"
 SYSTEM_TOTAL_MEMORY="Total: %memory$s MB"
+
+SYSTEM_TOTAL_WARNINGS="Total: %count$s Warnings"
+SYSTEM_TOTAL_QUERIES="Total: %count$s Queries"

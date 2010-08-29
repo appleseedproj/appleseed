@@ -52,16 +52,13 @@ class cMarkup extends simple_html_dom {
 		
 		$element = $this->Find($pSelector, 0);
 		
-		$element->outertext = "";
+		$element->clear();
 		
 		return ( true );
 		
 	}
 	
 	public function Display () {
-		
-		// Throw in a reload for good measure.
-		$this->Reload();
 		
 		// Add an html element here to have it's innertext modified to use the __ function.
 		$translate = array ( 

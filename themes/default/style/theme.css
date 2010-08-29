@@ -186,7 +186,7 @@
 		#appleseed-debug { margin-top:10px; }
 		
 		#debug-container { float:left; background-color:#f1fed5; border-top:1px solid #406300; color:#406300; min-height:200px; }
-		#debug-container { border-bottom:50px solid #c0d895; }		
+		#debug-container { border-bottom:30px solid #c0d895; padding-bottom:20px; }		
 		
 		#debug-main { }
 		
@@ -200,7 +200,7 @@
 		#debug-tabs nav ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
 		#debug-tabs nav ul li:hover a { color:#2a2a2a; text-decoration:none;  }
 		
-		#debug-benchmarks h2, #debug-memory h2 { position:relative; top:-14px; float:right; font-weight:normal; font-size:100%; font-style:italic; color:#bf4630; }
+		#debug-main h2 { position:relative; top:-14px; float:right; font-weight:normal; font-size:100%; font-style:italic; color:#bf4630; }
 		#debug-queries .debug-queries-query { text-align:left; max-width:300px; }
 		
 		/* Temporary */
