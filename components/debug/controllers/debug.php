@@ -30,6 +30,7 @@ class cDebugDebugController extends cController {
 	}
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
+		
 		$user = $this->Talk ( "User", "Current" );
 		
 		$parameters['account'] = $user->Username . '@' . $user->Domain;
@@ -70,8 +71,8 @@ class cDebugDebugController extends cController {
 		
 		$tbody = $this->Debug->Find ( "[id=debug-warnings] table tbody", 0);
 		
-		$row = $tbody->Find ( "tr", 0);
-		
+		$row = $this->Debug->Copy ( "[id=debug-warnings] table tbody tr" )->Find ( "tr", 0 );
+
 		$debugWarningsId = $row->Find( "[class=debug-warnings-id]", 0 );
 		$debugWarningsWarning = $row->Find( "[class=debug-warnings-warning]", 0 );
 		$debugWarningsFile = $row->Find( "[class=debug-warnings-file]", 0 );
@@ -112,8 +113,14 @@ class cDebugDebugController extends cController {
 		
 		$tbody = $this->Debug->Find ( "[id=debug-queries] table tbody", 0);
 		
-		$row = $tbody->Find ( "tr", 0);
+		$row = $this->Debug->Copy ( "[id=debug-queries] table tbody tr" )->Find ( "tr", 0 );
 		
+		
+		$debugQueriesId = $row->Find( "[class=debug-queries-id]", 0 );
+		$debugQueriesClass = $row->Find( "[class=debug-queries-class]", 0 );
+		$debugQueriesTable = $row->Find( "[class=debug-queries-table]", 0 );
+		$debugQueriesQuery = $row->Find( "[class=debug-queries-query]", 0 );
+			
 		foreach ( $queries as $q => $query ) {
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
 			
@@ -124,12 +131,12 @@ class cDebugDebugController extends cController {
 			
 			list ( $class, $table ) = explode ('.', $context );
 			
-			$row->Find( "[class=debug-queries-id]", 0 )->innertext = $q;
-			$row->Find( "[class=debug-queries-class]", 0 )->innertext = $class;
-			$row->Find( "[class=debug-queries-table]", 0 )->innertext = $table;
-			$row->Find( "[class=debug-queries-query]", 0 )->innertext = $statement;
+			$debugQueriesId->innertext = $q;
+			$debugQueriesClass->innertext = $class;
+			$debugQueriesTable->innertext = $table;
+			$debugQueriesQuery->innertext = $statement;
 			
-			$this->Debug->Find ( "[id=debug-queries] table tbody", 0)->innertext .= $row->outertext;
+			$tbody->innertext .= $row->outertext;
 		
 		}
 		
@@ -150,11 +157,18 @@ class cDebugDebugController extends cController {
 				unset ( $memories[$m]);
 			}
 		}
+		
 		$this->Debug->Find ( "[id=memory-system-total]", 0)->innertext = __ ("System Total Memory", array ( "memory" => $memory ) );
 		
 		$tbody = $this->Debug->Find ( "[id=debug-memory] table tbody", 0);
 		
-		$row = $tbody->Find ( "tr", 0);
+		$row = $this->Debug->Copy ( "[id=debug-memory] table tbody tr" )->Find ( "tr", 0 );
+		
+		$debugMemoryId = $row->Find( "[class=debug-memory-id]", 0 );
+		$debugMemoryController = $row->Find( "[class=debug-memory-controller]", 0 );
+		$debugMemoryComponent = $row->Find( "[class=debug-memory-component]", 0 );
+		$debugMemoryInstance = $row->Find( "[class=debug-memory-instance]", 0 );
+		$debugMemoryView = $row->Find( "[class=debug-memory-view]", 0 );
 		
 		foreach ( $memories as $l => $log ) {
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
@@ -166,15 +180,16 @@ class cDebugDebugController extends cController {
 			
 			list ( $controller, $component, $instance, $view ) = explode ('.', $context );
 			
-			$row->Find( "[class=debug-memory-id]", 0 )->innertext = $l;
-			$row->Find( "[class=debug-memory-controller]", 0 )->innertext = $controller;
-			$row->Find( "[class=debug-memory-component]", 0 )->innertext = $component;
-			$row->Find( "[class=debug-memory-instance]", 0 )->innertext = $instance;
-			$row->Find( "[class=debug-memory-view]", 0 )->innertext = $view;
+			$debugMemoryId->innertext = $l;
+			$debugMemoryController->innertext = $controller;
+			$debugMemoryComponent->innertext = $component;
+			$debugMemoryInstance->innertext = $instance;
+			$debugMemoryView->innertext = $view;
+			
 			$memory = sprintf("%2.2f", ( $value / 1024 / 1024 ) );
 			$row->Find( "[class=debug-memory-amount]", 0 )->innertext = __("Memory In Megabytes", array ( "memory" => $memory ) );
 			
-			$this->Debug->Find ( "[id=debug-memory] table tbody", 0)->innertext .= $row->outertext;
+			$tbody->innertext .= $row->outertext;
 		
 		}
 		
@@ -199,8 +214,15 @@ class cDebugDebugController extends cController {
 		
 		$tbody = $this->Debug->Find ( "[id=debug-benchmarks] table tbody", 0);
 		
-		$row = $tbody->Find ( "tr", 0);
+		$row = $this->Debug->Copy ( "[id=debug-benchmarks] table tbody tr" )->Find ( "tr", 0 );
 		
+		$debugBenchmarkId = $row->Find( "[class=debug-benchmark-id]", 0 );
+		$debugBenchmarkController = $row->Find( "[class=debug-benchmark-controller]", 0 );
+		$debugBenchmarkComponent = $row->Find( "[class=debug-benchmark-component]", 0 );
+		$debugBenchmarkInstance = $row->Find( "[class=debug-benchmark-instance]", 0 );
+		$debugBenchmarkView = $row->Find( "[class=debug-benchmark-view]", 0 );
+		$debugBenchmarkTime = $row->Find( "[class=debug-benchmark-time]", 0 );
+			
 		foreach ( $benchmarks as $l => $log ) {
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
 			
@@ -208,19 +230,18 @@ class cDebugDebugController extends cController {
 			
 			$value = $log->Value;
 			$context = $log->Context;
+			$seconds = sprintf("%.4f", ($value));
 			
 			list ( $controller, $component, $instance, $view ) = explode ('.', $context );
 			
-			$row->Find( "[class=debug-benchmark-id]", 0 )->innertext = $l;
-			$row->Find( "[class=debug-benchmark-controller]", 0 )->innertext = $controller;
-			$row->Find( "[class=debug-benchmark-component]", 0 )->innertext = $component;
-			$row->Find( "[class=debug-benchmark-instance]", 0 )->innertext = $instance;
-			$row->Find( "[class=debug-benchmark-view]", 0 )->innertext = $view;
-			$seconds = sprintf("%.4f", ($value));
-			$row->Find( "[class=debug-benchmark-time]", 0 )->innertext = __("Benchmark In Seconds", array ( "seconds" => $seconds ) );
+			$debugBenchmarkId->innertext = $l;
+			$debugBenchmarkController->innertext = $controller;
+			$debugBenchmarkComponent->innertext = $component;
+			$debugBenchmarkInstance->innertext = $instance;
+			$debugBenchmarkView->innertext = $view;
+			$debugBenchmarkTime->innertext = __("Benchmark In Seconds", array ( "seconds" => $seconds ) );
 			
-			$this->Debug->Find ( "[id=debug-benchmarks] table tbody", 0)->innertext .= $row->outertext;
-		
+			$tbody->innertext .= $row->outertext;
 		}
 		
 		$this->Debug->RemoveElement ( "[id=debug-benchmarks] tr" );

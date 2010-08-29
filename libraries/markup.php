@@ -58,6 +58,16 @@ class cMarkup extends simple_html_dom {
 		
 	}
 	
+	public function Copy ( $pSelector ) {
+		
+		$rowData = $this->Find ( $pSelector, 0 )->outertext;
+		
+		$element = new cHTML ();
+		$element->Load ( $rowData );
+		
+		return ( $element );
+	}
+	
 	public function Display () {
 		
 		// Add an html element here to have it's innertext modified to use the __ function.

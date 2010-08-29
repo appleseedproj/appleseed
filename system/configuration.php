@@ -78,11 +78,11 @@ class cConfiguration extends cBase {
 		
 		do {
 			foreach ( $dirs as $dir => $values ) {
-				$inherit = $configurations[$dir]->_Data['inherit'];
+				$inherit = isset ( $configurations[$dir]->_Data['inherit'] ) ? $configurations[$dir]->_Data['inherit'] : false;
 				
 				$inheritanceflag = false;
 				
-				if ( isset ( $inherit ) ) {
+				if ( $inherit ) {
 		
 					// If inheriting from self, continue
 					if ($configurations[$dir]->Directory == $inherit) {
@@ -171,7 +171,9 @@ class cConfiguration extends cBase {
 		$parent = $pConfiguration;
 		$child = $parent->Child;
 		
-		if ( $clear = $child->_Data['clear'] ) {
+		$clear = isset ( $child->_Data['clear'] ) ? $configurations->_Data['clear'] : false;
+		
+		if ( $clear ) {
 			$parent = $this->_Clear ( $parent, $child );
 		}
 			
