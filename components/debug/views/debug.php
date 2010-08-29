@@ -26,6 +26,23 @@
 			
 			<section id="debug-queries">
 				<h1>SQL Queries</h1>
+				<h2 id="queries-system-total"></h2>
+				<table>
+					<thead>
+						<th>#</th>
+						<th>Query</th>
+						<th>Class</th>
+						<th>Table</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td class='debug-queries-id'></td>
+							<td class='debug-queries-query'></td>
+							<td class='debug-queries-class'></td>
+							<td class='debug-queries-table'></td>
+						</tr>
+					</tbody>
+				</table>
 			</section>
 			
 			<section id="debug-memory">

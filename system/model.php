@@ -288,8 +288,6 @@ class cModel extends cBase {
 		$this->_Rows = $this->_Handle->rowCount();
 		$this->_Total = $this->_Handle->rowCount();
 		
-		// @todo Add query to global list.
-		
 		return ( true );
 	}
 	
@@ -730,6 +728,12 @@ class cModel extends cBase {
 		if ( $DBO->lastInsertId() ) {
 			$this->Set ( $this->_PrimaryKey, $DBO->lastInsertId() );
 		}
+		
+		// Add query to logs
+		$contextArray = array ( get_class ( $this ), $this->_Tablename );
+		$context = implode ( '.', $contextArray );
+		
+		$this->GetSys ( "Logs" )->Add ( "Queries", ( $this->_Handle->queryString ), $context );
 		
 		return ( true );
 	}

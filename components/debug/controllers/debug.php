@@ -44,6 +44,7 @@ class cDebugDebugController extends cController {
 		// Warnings
 		
 		// Queries
+		$this->_PrepareQueries ();
 		
 		// Memory
 		$this->_PrepareMemory ();
@@ -56,16 +57,54 @@ class cDebugDebugController extends cController {
 		return ( false );
 	}
 	
+	private function _PrepareQueries ( ) {
+		
+		$queries = $this->GetSys ( "Logs" )->GetLogs ( "Queries" );
+		
+		$count = count ( $queries );
+		
+		$this->Debug->Find ( "[id=queries-system-total]", 0)->innertext = __ ("System Total Queries", array ( "count" => $count ) );
+		
+		$tbody = $this->Debug->Find ( "[id=debug-queries] table tbody", 0);
+		
+		$row = $tbody->Find ( "tr", 0);
+		
+		foreach ( $queries as $q => $query ) {
+		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
+			
+			$row->class = $oddEven;
+			
+			$statement = $query->Value;
+			$context = $query->Context;
+			
+			list ( $class, $table ) = explode ('.', $context );
+			
+			$row->Find( "[class=debug-queries-id]", 0 )->innertext = $q;
+			$row->Find( "[class=debug-queries-class]", 0 )->innertext = $class;
+			$row->Find( "[class=debug-queries-table]", 0 )->innertext = $table;
+			$row->Find( "[class=debug-queries-query]", 0 )->innertext = $statement;
+			
+			$this->Debug->Find ( "[id=debug-queries] table tbody", 0)->innertext .= $row->outertext;
+		
+		}
+		
+		$this->Debug->Reload();
+		
+		$this->Debug->RemoveElement ( "[id=debug-queries] tr" );
+		
+		return ( true );
+	}
+	
 	private function _PrepareMemory ( ) {
 		
-		$benchmarks = $this->GetSys ( "Logs" )->GetLogs ( "Memory" );
+		$memories = $this->GetSys ( "Logs" )->GetLogs ( "Memory" );
 		
-		// First get the system benchmark
-		foreach ( $benchmarks as $b => $benchmark ) {
-			if ($benchmark->Context == "_system" ) {
-				$total = $benchmark->Value;
+		// First get the system memory amount
+		foreach ( $memories as $m => $memory ) {
+			if ($memory->Context == "_system" ) {
+				$total = $memory->Value;
 				$memory = sprintf("%2.2f", ( $total / 1024 / 1024 ) );
-				unset ( $benchmarks[$b]);
+				unset ( $memories[$m]);
 			}
 		}
 		$this->Debug->Find ( "[id=memory-system-total]", 0)->innertext = __ ("System Total Memory", array ( "memory" => $memory ) );
@@ -74,7 +113,7 @@ class cDebugDebugController extends cController {
 		
 		$row = $tbody->Find ( "tr", 0);
 		
-		foreach ( $benchmarks as $l => $log ) {
+		foreach ( $memories as $l => $log ) {
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
 			
 			$row->class = $oddEven;
@@ -102,6 +141,7 @@ class cDebugDebugController extends cController {
 		
 		return ( true );
 	}
+	
 	private function _PrepareBenchmarks ( ) {
 		
 		$benchmarks = $this->GetSys ( "Logs" )->GetLogs ( "Benchmarks" );

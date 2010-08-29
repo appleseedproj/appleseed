@@ -201,6 +201,7 @@
 		#debug-tabs nav ul li:hover a { color:#2a2a2a; text-decoration:none;  }
 		
 		#debug-benchmarks h2, #debug-memory h2 { position:relative; top:-14px; float:right; font-weight:normal; font-size:100%; font-style:italic; color:#bf4630; }
+		#debug-queries .debug-queries-query { text-align:left; max-width:300px; }
 		
 		/* Temporary */
 		#temporary-debug-info { display:none; }
@@ -222,7 +223,7 @@
 		/* Tables */
 		table { float:left; font-size:90%; padding:0; margin:0; }
 		table a { background:none; padding:0; }
-		table td { background:none; padding:0; }
+		table td { background:none; padding:5px 0; }
 		table th a { color:#fafafa; }
 		th { color:#fafafa; letter-spacing: 2px; text-align:left; padding: 6px 0px 6px 12px;  background-color:#80af1f; }
 		th.nobg { color:#406300; background:#f1ffd6; } 
