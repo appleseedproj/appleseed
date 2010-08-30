@@ -285,4 +285,15 @@
 
 		span.mistranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#ff4444; font-style:italic; }
 		span.mistranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca; font-style:italic; }
+		
+		/* Buttons */
+		button { padding:3px 5px; }
+		
+		/* Nav Buttons */
+		nav button{ color:#406300; border:none; background:none; font-weight:bold; }
+		nav button:hover { text-decoration:underline; cursor:pointer; }
+		nav button:disabled{ color:#c0d895; border:none; background:none; font-weight:bold; }
+		nav button:disabled:hover{ cursor:default; text-decoration:none; }
+		
+		p.error { padding:5px 2%; width:96%; background-color:#bf4630; color:#fafafa; }
 

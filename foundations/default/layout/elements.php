@@ -100,7 +100,7 @@
 		       		</nav>
 		       	</div>
 		       	<div id="profile-search" class="grid_3 push_4">
-					<input type="text" name="search" placeholder="Search..." class="search"><input type="submit" name="search" value="" class="search-submit">
+					<input type="text" name="search" placeholder="Search..." class="search local"><input type="submit" name="search" value="" class="search-submit local">
 				</div>
 			</div>
        

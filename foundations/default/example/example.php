@@ -61,7 +61,7 @@
 		       		</nav>
 		       	</div>
 		       	<div id="admin-search" class="grid_3 push_4">
-					<input type="text" name="search" placeholder="Search..." class="search"><input type="submit" name="search" value="" class="search-submit">
+					<input type="text" name="search" placeholder="Search..." class="search local"><input type="submit" name="search" value="" class="search-submit local">
 				</div>
 			</div>
        
@@ -72,23 +72,21 @@
 					</section>
 				</div>
 				<div id="appleseed-admin-content" class="grid_12 omega">
-					<section id="admin-example">
-		  				<?php
-					  	/*
-					  	 * @tutorial Parameters:  
-					  	 * @tutorial string pComponent, string pController, string pView, string pTask, array pData
-					  	 * 
-					  	 * @tutorial You can shorten a component call by putting pData earlier than 
-					  	 * @tutorial it should be.  For instance:
-					  	 * 
-					  	 * @tutorial ->Go ( "example", array ( "Key" => "Value" ) );
-					  	 * 
-					  	 * @tutorial The system will detect the array being passed, and call the example 
-					  	 * @tutorial component with the default controller, view, and task.
-					  	 */
-					  	?>
-						<?php $zApp->Components->Go ( "example", "example", "example" ); ?>
-					</section>
+		 			<?php
+				  	/*
+				  	 * @tutorial Parameters:  
+				  	 * @tutorial string pComponent, string pController, string pView, string pTask, array pData
+				  	 * 
+				  	 * @tutorial You can shorten a component call by putting pData earlier than 
+				  	 * @tutorial it should be.  For instance:
+				  	 * 
+				  	 * @tutorial ->Go ( "example", array ( "Key" => "Value" ) );
+				  	 * 
+				  	 * @tutorial The system will detect the array being passed, and call the example 
+				  	 * @tutorial component with the default controller, view, and task.
+				  	 */
+				  	?>
+					<?php $zApp->Components->Go ( "example", "example", "example" ); ?>
 				</div>
 			</div>
 		</div>

@@ -89,7 +89,7 @@
 		       		</nav>
 		       	</div>
 		       	<div id="admin-search" class="grid_3 push_4">
-					<input type="text" name="search" placeholder="Search..." class="search"><input type="submit" name="search" value="" class="search-submit">
+					<input type="text" name="search" placeholder="Search..." class="search local"><input type="submit" name="search" value="" class="search-submit local">
 				</div>
 			</div>
        
@@ -109,135 +109,138 @@
 				<div id="appleseed-admin-content" class="grid_12 omega">
   					<section class="admin-content">
   						<h1>Admin Interface</h1>
-						<nav class="controls"> 
-							<ul> 
-								<li><a href="#">Move Up &uarr;</a></li> 
-								<li><a href="#">Move Down &darr;</a></li> 
-								<li><a href="#">Delete</a></li> 
-							</ul> 
-                		</nav> 
-                		<nav class="pagination-amount">
-                			<select>
-                				<option value="5">5</option>
-                			</select>
-                		</nav>	
-                		<nav class="select">
-                			Select: <a href="#">All</a>, <a href="#">None</a>
-                		</nav>
-						<nav class='pagination'>
-							<ol>
-								<li class='first'><a href="#"><span>First Page</span></a></li>
-								<li class='prev'><a href="#"><span>Previous Page</span></a></li>
-								<li class='page selected'><a href="#"><span>1</span></a></li>
-								<li class='page'><a href="#"><span>2</span></a></li>
-								<li class='next'><a href="#"><span>Next Page</span></a></li>
-								<li class='last'><a href="#"><span>Last Page</span></a></li>
-							</ol>
-	  					</nav>
-						<table id="mytable" cellspacing="0" summary="The technical specifications of the Apple PowerMac G5 series"> 
-							<tr> 
-								<th scope="col" abbr="Configurations" class="nobg"><a href="#">#</a></th> 
-								<th scope="col" abbr="Dual 1.8"><a href="#">Dual 1.8GHz</a></th> 
-								<th scope="col" abbr="Dual 2"><a href="#">Dual 2GHz</a></th> 
-								<th scope="col" abbr="Dual 2.5"><a href="#">Dual 2.5GHz</a></th> 
-   	                        	<th><input type="checkbox" /></th> 
-							</tr> 
-							<tr> 
-								<th scope="row" abbr="Model" class="spec">1</th> 
-								<td>M9454LL/A</td> 
-								<td>M9455LL/A</td> 
-								<td>M9457LL/A</td> 
-     	                       	<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr class="alt"> 
-								<th scope="row" abbr="G5 Processor" class="spec">2</th> 
-								<td >Dual 1.8GHz PowerPC G5</td> 
-								<td>Dual 2GHz PowerPC G5</td> 
-								<td>Dual 2.5GHz PowerPC G5</td> 
-								<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr> 
-								<th scope="row" abbr="Frontside bus" class="spec">3</th> 
-								<td>900MHz per processor</td> 
-								<td>1GHz per processor</td> 
-								<td>1.25GHz per processor</td> 
-     	                       <td><input type="checkbox" /></td> 
-							</tr> 
-							<tr class="alt"> 
-								<th scope="row" abbr="L2 Cache" class="spec">4</th> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-     	 						<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr> 
-								<th scope="row" abbr="L2 Cache" class="spec">5</th> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-     	 						<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr class="alt"> 
-								<th scope="row" abbr="L2 Cache" class="spec">6</th> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-     	 						<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr> 
-								<th scope="row" abbr="L2 Cache" class="spec">7</th> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-     	 						<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr class="alt"> 
-								<th scope="row" abbr="L2 Cache" class="spec">8</th> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-								<td>512K per processor</td> 
-     	 						<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr> 
-								<th scope="row" abbr="Model" class="spec">9</th> 
-								<td>M9454LL/A</td> 
-								<td>M9455LL/A</td> 
-								<td>M9457LL/A</td> 
-     	                       	<td><input type="checkbox" /></td> 
-							</tr> 
-							<tr class="alt"> 
-								<th scope="row" abbr="G5 Processor" class="spec">10</th> 
-								<td >Dual 1.8GHz PowerPC G5</td> 
-								<td>Dual 2GHz PowerPC G5</td> 
-								<td>Dual 2.5GHz PowerPC G5</td> 
-								<td><input type="checkbox" /></td> 
-							</tr> 
-						</table>
-                		<nav class="select">
-                			Select: <a href="#">All</a>, <a href="#">None</a>
-                		</nav>
-						<nav class='pagination'>
-							<ol>
-								<li class='first'><a href="#"><span>First Page</span></a></li>
-								<li class='prev'><a href="#"><span>Previous Page</span></a></li>
-								<li class='page selected'><a href="#"><span>1</span></a></li>
-								<li class='page'><a href="#"><span>2</span></a></li>
-								<li class='next'><a href="#"><span>Next Page</span></a></li>
-								<li class='last'><a href="#"><span>Last Page</span></a></li>
-							</ol>
-	  					</nav>
-						<nav class="controls"> 
-							<ul> 
-								<li><a href="#">Move Up &uarr;</a></li> 
-								<li><a href="#">Move Down &darr;</a></li> 
-								<li><a href="#">Delete</a></li> 
-							</ul> 
-                		</nav> 
-                		<nav class="pagination-amount">
-                			<select>
-                				<option value="5">5</option>
-                			</select>
-                		</nav>	
+						<p id='admin-message'></p>
+  						<form>
+							<nav class="controls"> 
+								<ul> 
+									<li><a href="#">Move Up &uarr;</a></li> 
+									<li><a href="#">Move Down &darr;</a></li> 
+									<li><a href="#">Delete</a></li> 
+								</ul> 
+	                		</nav> 
+	                		<nav class="pagination-amount">
+	                			<select>
+	                				<option value="5">5</option>
+	                			</select>
+	                		</nav>	
+	                		<nav class="select">
+	                			Select: <a href="#">All</a>, <a href="#">None</a>
+	                		</nav>
+							<nav class='pagination'>
+								<ol>
+									<li class='first'><a href="#"><span>First Page</span></a></li>
+									<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+									<li class='page selected'><a href="#"><span>1</span></a></li>
+									<li class='page'><a href="#"><span>2</span></a></li>
+									<li class='next'><a href="#"><span>Next Page</span></a></li>
+									<li class='last'><a href="#"><span>Last Page</span></a></li>
+								</ol>
+		  					</nav>
+							<table id="mytable" cellspacing="0" summary="The technical specifications of the Apple PowerMac G5 series"> 
+								<tr> 
+									<th scope="col" abbr="Configurations" class="nobg"><a href="#">#</a></th> 
+									<th scope="col" abbr="Dual 1.8"><a href="#">Dual 1.8GHz</a></th> 
+									<th scope="col" abbr="Dual 2"><a href="#">Dual 2GHz</a></th> 
+									<th scope="col" abbr="Dual 2.5"><a href="#">Dual 2.5GHz</a></th> 
+	   	                        	<th><input type="checkbox" /></th> 
+								</tr> 
+								<tr> 
+									<th scope="row" abbr="Model" class="spec">1</th> 
+									<td>M9454LL/A</td> 
+									<td>M9455LL/A</td> 
+									<td>M9457LL/A</td> 
+	     	                       	<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr class="alt"> 
+									<th scope="row" abbr="G5 Processor" class="spec">2</th> 
+									<td >Dual 1.8GHz PowerPC G5</td> 
+									<td>Dual 2GHz PowerPC G5</td> 
+									<td>Dual 2.5GHz PowerPC G5</td> 
+									<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr> 
+									<th scope="row" abbr="Frontside bus" class="spec">3</th> 
+									<td>900MHz per processor</td> 
+									<td>1GHz per processor</td> 
+									<td>1.25GHz per processor</td> 
+	     	                       <td><input type="checkbox" /></td> 
+								</tr> 
+								<tr class="alt"> 
+									<th scope="row" abbr="L2 Cache" class="spec">4</th> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+	     	 						<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr> 
+									<th scope="row" abbr="L2 Cache" class="spec">5</th> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+	     	 						<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr class="alt"> 
+									<th scope="row" abbr="L2 Cache" class="spec">6</th> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+	     	 						<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr> 
+									<th scope="row" abbr="L2 Cache" class="spec">7</th> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+	     	 						<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr class="alt"> 
+									<th scope="row" abbr="L2 Cache" class="spec">8</th> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+									<td>512K per processor</td> 
+	     	 						<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr> 
+									<th scope="row" abbr="Model" class="spec">9</th> 
+									<td>M9454LL/A</td> 
+									<td>M9455LL/A</td> 
+									<td>M9457LL/A</td> 
+	     	                       	<td><input type="checkbox" /></td> 
+								</tr> 
+								<tr class="alt"> 
+									<th scope="row" abbr="G5 Processor" class="spec">10</th> 
+									<td >Dual 1.8GHz PowerPC G5</td> 
+									<td>Dual 2GHz PowerPC G5</td> 
+									<td>Dual 2.5GHz PowerPC G5</td> 
+									<td><input type="checkbox" /></td> 
+								</tr> 
+							</table>
+	                		<nav class="select">
+	                			Select: <a href="#">All</a>, <a href="#">None</a>
+	                		</nav>
+							<nav class='pagination'>
+								<ol>
+									<li class='first'><a href="#"><span>First Page</span></a></li>
+									<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+									<li class='page selected'><a href="#"><span>1</span></a></li>
+									<li class='page'><a href="#"><span>2</span></a></li>
+									<li class='next'><a href="#"><span>Next Page</span></a></li>
+									<li class='last'><a href="#"><span>Last Page</span></a></li>
+								</ol>
+		  					</nav>
+							<nav class="controls"> 
+								<ul> 
+									<li><a href="#">Move Up &uarr;</a></li> 
+									<li><a href="#">Move Down &darr;</a></li> 
+									<li><a href="#">Delete</a></li> 
+								</ul> 
+	                		</nav> 
+	                		<nav class="pagination-amount">
+	                			<select>
+	                				<option value="5">5</option>
+	                			</select>
+	                		</nav>	
+	                	</form>
 					</section>
 				</div>
 			</div>

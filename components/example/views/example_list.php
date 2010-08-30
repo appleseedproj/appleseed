@@ -2,32 +2,34 @@
 
 <section id="example" class="admin-content">
 	<h1>Example</h1>
-		<nav class="controls"> 
-			<ul> 
-				<li><a href="#">Move Up</a></li> 
-				<li><a href="#">Move Down</a></li> 
-				<li><a href="#">Delete +</a></li> 
-			</ul> 
-		</nav> 
-		<nav class="pagination-amount">
-			<select>
-				<option value="5">5</option>
-			</select>
-		</nav>	
-		<nav class="select">
-			<a href="#">All</a>, <a href="#">None</a>
-		</nav>
-		<nav class='pagination'>
-			<ol>
-				<li class='first'><a href="#"><span>First Page</span></a></li>
-				<li class='prev'><a href="#"><span>Previous Page</span></a></li>
-				<li class='page selected'><a href="#"><span>1</span></a></li>
-				<li class='page'><a href="#"><span>2</span></a></li>
-				<li class='next'><a href="#"><span>Next Page</span></a></li>
-				<li class='last'><a href="#"><span>Last Page</span></a></li>
-			</ol>
-		</nav>
+	<p id='example_message'></p>
+
 		<form method="post">
+			<nav class="controls"> 
+				<ul> 
+					<li><button name="task" value="move_up" disabled="disabled">Move Up</button></li> 
+					<li><button name="task" value="move_down" disabled="disabled">Move Down</button></li> 
+					<li><button name="task" value="delete_all" >Delete +</button></li> 
+				</ul> 
+			</nav> 
+			<nav class="pagination-amount">
+				<select>
+					<option value="5">5</option>
+				</select>
+			</nav>	
+			<nav class="select">
+				<span>Select Options</span> <a href="#">All</a>, <a href="#">None</a>
+			</nav>
+			<nav class='pagination'>
+				<ol>
+					<li class='first'><a href="#"><span>First Page</span></a></li>
+					<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+					<li class='page selected'><a href="#"><span>1</span></a></li>
+					<li class='page'><a href="#"><span>2</span></a></li>
+					<li class='next'><a href="#"><span>Next Page</span></a></li>
+					<li class='last'><a href="#"><span>Last Page</span></a></li>
+				</ol>
+			</nav>
 			<table id="customer-table-body" cellspacing="0" summary="The technical specifications of the Apple PowerMac G5 series"> 
 				<thead> 
 					<th scope="col" class="nobg">#</th> 
@@ -48,30 +50,30 @@
 			</table>
 		
 			<input type="hidden" name="Context" />
+			<nav class="select">
+				<span>Select Options<span> <a href="#">All</a>, <a href="#">None</a>
+			</nav>
+			<nav class='pagination'>
+				<ol>
+					<li class='first'><a href="#"><span>First Page</span></a></li>
+					<li class='prev'><a href="#"><span>Previous Page</span></a></li>
+					<li class='page selected'><a href="#"><span>1</span></a></li>
+					<li class='page'><a href="#"><span>2</span></a></li>
+					<li class='next'><a href="#"><span>Next Page</span></a></li>
+					<li class='last'><a href="#"><span>Last Page</span></a></li>
+				</ol>
+			</nav>
+			<nav class="controls"> 
+				<ul> 
+					<li><button name="task" value="move_up" disabled="disabled">Move Up</button></li> 
+					<li><button name="task" value="move_down" disabled="disabled">Move Down</button></li> 
+					<li><button name="task" value="delete_all" >Delete +</button></li> 
+				</ul> 
+			</nav> 
+			<nav class="pagination-amount">
+				<select>
+					<option value="5">5</option>
+				</select>
+			</nav>	
 		</form>
-		<nav class="select">
-			Select: <a href="#">All</a>, <a href="#">None</a>
-		</nav>
-		<nav class='pagination'>
-			<ol>
-				<li class='first'><a href="#"><span>First Page</span></a></li>
-				<li class='prev'><a href="#"><span>Previous Page</span></a></li>
-				<li class='page selected'><a href="#"><span>1</span></a></li>
-				<li class='page'><a href="#"><span>2</span></a></li>
-				<li class='next'><a href="#"><span>Next Page</span></a></li>
-				<li class='last'><a href="#"><span>Last Page</span></a></li>
-			</ol>
-		</nav>
-		<nav class="controls"> 
-			<ul> 
-				<li><a href="#">Move Up</a></li> 
-				<li><a href="#">Move Down</a></li> 
-				<li><a href="#">Delete All</a></li> 
-			</ul> 
-		</nav> 
-		<nav class="pagination-amount">
-			<select>
-				<option value="5">5</option>
-			</select>
-		</nav>	
 </section>

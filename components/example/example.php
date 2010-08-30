@@ -26,6 +26,7 @@ class cExample extends cComponent {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		
 		parent::__construct();
 	}
 	
