@@ -1,4 +1,4 @@
-<mockup version="1.0" skin="sketch" measuredW="1274" measuredH="757" mockupW="1198" mockupH="714">
+<mockup version="1.0" skin="sketch" measuredW="1274" measuredH="757" mockupW="1212" mockupH="714">
   <controls>
     <control controlID="0" controlTypeID="com.balsamiq.mockups::Canvas" x="66" y="34" w="540" h="351" measuredW="100" measuredH="70" zOrder="0" locked="false" isInGroup="-1"/>
     <control controlID="1" controlTypeID="com.balsamiq.mockups::TextArea" x="97" y="61" w="478" h="179" measuredW="200" measuredH="140" zOrder="1" locked="false" isInGroup="-1">
@@ -165,6 +165,21 @@
       <controlProperties>
         <icon>SadFaceIcon%7Csmall</icon>
         <text>Cousin</text>
+      </controlProperties>
+    </control>
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="52" y="34" w="14" h="23" measuredW="10" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>1</text>
+      </controlProperties>
+    </control>
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="52" y="396" w="14" h="23" measuredW="13" measuredH="23" zOrder="38" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>2</text>
+      </controlProperties>
+    </control>
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="710" y="33" w="14" h="23" measuredW="12" measuredH="23" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>3</text>
       </controlProperties>
     </control>
   </controls>
