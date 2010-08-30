@@ -435,42 +435,5 @@ It's a very good thing that the amount of anti-matter/anti-energy in the univers
     
 	<div class="clear"></div>
 	
-	<!-- Debug -->
-	<div id="appleseed-debug" class="container_16">
-		<div id="debug-menu" class="container_16">
-			<div id="debug-tabs" class="grid_16">
-				<nav>
-					<ul>
-						<li><a href="#">Warnings</a></li>
-						<li><a href="#">Errors</a></li>
-						<li><a href="#">SQL Queries</a></li>
-						<li class="selected" ><a href="#">Benchmarks</a></li>
-					</ul>
-				</nav>
-				
-			</div>
-		</div>
-		<div id="debug-container" class="container_16">
-			<div id="debug-main" class="grid_16">
-			
-				<section id="debug-warnings">
-					<h1>Warnings</h1>
-				</section>
-				
-				<section id="debug-errors">
-					<h1>Errors</h1>
-				</section>
-				
-				<section id="debug-queries">
-					<h1>SQL Queries</h1>
-				</section>
-				
-				<section id="debug-benchmarks">
-					<h1>Benchmarks</h1>
-				</section>
-			</div>
-		</div>
-	</div>
-    
 </body>
 </html>
