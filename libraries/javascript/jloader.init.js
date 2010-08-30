@@ -23,6 +23,7 @@ _JLoader.prototype.Initialize = function ( pTarget ) {
 _JLoader.prototype.Load = function ( ) {
 
 	for ( e = 0; e < _ElementList.length; e++ ) {
+	
 		if ( _ElementList[e] == "document" ) {
 			var _Element = document;
 		} else {
@@ -37,12 +38,16 @@ _JLoader.prototype.Load = function ( ) {
 			window['jLoader'][Class] ();
 		}
 		
+		// @todo: Find a way to trigger a warning.
+		if ( _Element == null ) continue;
+		
 		var elements = _Element.getElementsByTagName ( "*" );
 		
 		var target = _ElementList[e] ;
 		for ( e2 = 0; e2 < elements.length; e2++ ) {
 			jLoader.AttachEvents ( target, elements[e2] );
 		} 
+	
 	}
 
 	return (true);

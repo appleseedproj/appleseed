@@ -181,9 +181,7 @@ class cExampleExampleController extends cController {
 		// Retrieve from the db, using no criteria except for the pagination settings.
 		$this->Customers->Retrieve( null, null, array ( "start" => $start, "step" => $step ) );
 		
-		$tbody = $this->List->Find ( "[id=customer_table_body]", 0);
-		
-		$row = $tbody->Find ( "tr", 0);
+		$tbody = $this->List->Find ( "[id=customer-table-body] tbody tr", 0);
 		
 		$baseURL = $this->GetSys ( "Router" )->Get ( "Base" );
 		$this->List->Find ( "form", 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
@@ -205,6 +203,18 @@ class cExampleExampleController extends cController {
 		 */
 		$this->List->Find( "input[name=Context]", 0 )->value = $this->_Context;
 		
+		$row = $this->List->Copy ( "[id=customer-table-body] tbody tr" )->Find ( "tr", 0 );
+		
+		$tbody->innertext = " " ;
+		
+		$cellCustomer_PK = $row->Find( "[class=Customer_PK]", 0 );
+		$cellCustomerName = $row->Find( "[class=CustomerName]", 0 );
+		$cellContactName = $row->Find( "[class=ContactName]", 0 );
+		$cellCountry = $row->Find( "[class=Country]", 0 );
+		$cellMasslist = $row->Find( "[class=Masslist] input[type=checkbox]", 0 );
+		
+		$customerName = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
+		
 		while ( $this->Customers->Fetch() ) {
 			
 		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
@@ -220,26 +230,24 @@ class cExampleExampleController extends cController {
 			
 			$context = $this->_Component . '.' . strtolower ( __FUNCTION__ );
 			
-			$row->Find( "[class=Customer_PK]", 0 )->innertext = $this->List->Link ( $id, $url );
-			$row->Find( "[class=CustomerName]", 0 )->innertext = $this->List->Link ( $customerName, $url );
-			$row->Find( "[class=Country]", 0 )->innertext = $this->List->Link ( $country, $url );
-			$row->Find( "[class=Masslist] input[type=checkbox]", 0 )->name = "Masslist[" . $id . "]";
+			$cellCustomer_PK->innertext = $this->List->Link ( $id, $url );
+			$cellCustomerName->innertext = $this->List->Link ( $customerName, $url );
+			$cellCountry->innertext = $this->List->Link ( $country, $url );
+			$cellMasslist->name = "Masslist[" . $id . "]";
 			
 			$customerName = $this->Customers->Get ( 'ContactFirstName' ) . ' ' . $this->Customers->Get ( "ContactLastName" );
 			
 			// Exception, CustomerName combined ContactFirstName and ContactLastName
-			$row->Find( "[class=ContactName]", 0 )->innertext = $this->List->Link ( $customerName, $url );
+			$cellContactName->innertext = $this->List->Link ( $customerName, $url );
 				
-		    $this->List->Find ( "[id=customer_table_body]", 0)->innertext .= $row->outertext;
+		    $tbody->innertext .= $row->outertext;
 		}
-		
-		$this->List->Reload();
 		
 		/*
 		 * @tutorial Remove the original template element we built the table from.
 		 *
 		 */
-		$this->List->RemoveElement ( "[id=customer_table_body] tr" );
+		//$this->List->RemoveElement ( "[id=customer-table-body] tr" );
 		
 		/*
 		 * @tutorial You can also call components from within other components.
@@ -266,7 +274,7 @@ class cExampleExampleController extends cController {
 		$total = $this->Customers->Get ( "Total" );
 		
 		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
-		$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
+		//$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
 		
 		$this->List->Synchronize();
 		

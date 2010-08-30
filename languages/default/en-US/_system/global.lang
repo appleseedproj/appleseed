@@ -19,10 +19,10 @@ DELETE_FOREVER_ALL="Delete Forever +"
 MOVE_INBOX_ALL="Move To Inbox +"
 
 [global]
-PREVIOUS="&lt; Prev"
-FIRST="&lt;&lt; First"
-NEXT="Next &gt;"
-LAST="Last &gt;&gt;"
+PREVIOUS_PAGE="&lt; Prev"
+FIRST_PAGE="&lt;&lt; First"
+NEXT_PAGE="Next &gt;"
+LAST_PAGE="Last &gt;&gt;"
 
 COMMENT_COUNT="%count$s Comment(s)"
 

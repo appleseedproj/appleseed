@@ -69,9 +69,11 @@ class cDebugDebugController extends cController {
 		
 		$this->Debug->Find ( "[id=warnings-system-total]", 0)->innertext = __ ("System Total Warnings", array ( "count" => $count ) );
 		
-		$tbody = $this->Debug->Find ( "[id=debug-warnings] table tbody", 0);
+		$tbody = $this->Debug->Find ( "[id=debug-warnings] table tbody tr", 0);
 		
 		$row = $this->Debug->Copy ( "[id=debug-warnings] table tbody tr" )->Find ( "tr", 0 );
+		
+		$tbody->innertext = " ";
 
 		$debugWarningsId = $row->Find( "[class=debug-warnings-id]", 0 );
 		$debugWarningsWarning = $row->Find( "[class=debug-warnings-warning]", 0 );
@@ -98,8 +100,6 @@ class cDebugDebugController extends cController {
 			$tbody->innertext .= $row->outertext;
 		}
 		
-		//$this->Debug->RemoveElement ( "[id=debug-warnings] tr" );
-		
 		return ( true );
 		
 	}
@@ -111,11 +111,12 @@ class cDebugDebugController extends cController {
 		
 		$this->Debug->Find ( "[id=queries-system-total]", 0)->innertext = __ ("System Total Queries", array ( "count" => $count ) );
 		
-		$tbody = $this->Debug->Find ( "[id=debug-queries] table tbody", 0);
+		$tbody = $this->Debug->Find ( "[id=debug-queries] table tbody tr", 0);
 		
 		$row = $this->Debug->Copy ( "[id=debug-queries] table tbody tr" )->Find ( "tr", 0 );
 		
-		
+		$tbody->innertext = " ";
+
 		$debugQueriesId = $row->Find( "[class=debug-queries-id]", 0 );
 		$debugQueriesClass = $row->Find( "[class=debug-queries-class]", 0 );
 		$debugQueriesTable = $row->Find( "[class=debug-queries-table]", 0 );
@@ -140,8 +141,6 @@ class cDebugDebugController extends cController {
 		
 		}
 		
-		$this->Debug->RemoveElement ( "[id=debug-queries] tr" );
-		
 		return ( true );
 	}
 	
@@ -160,10 +159,12 @@ class cDebugDebugController extends cController {
 		
 		$this->Debug->Find ( "[id=memory-system-total]", 0)->innertext = __ ("System Total Memory", array ( "memory" => $memory ) );
 		
-		$tbody = $this->Debug->Find ( "[id=debug-memory] table tbody", 0);
+		$tbody = $this->Debug->Find ( "[id=debug-memory] table tbody tr", 0);
 		
 		$row = $this->Debug->Copy ( "[id=debug-memory] table tbody tr" )->Find ( "tr", 0 );
 		
+		$tbody->innertext = " ";
+
 		$debugMemoryId = $row->Find( "[class=debug-memory-id]", 0 );
 		$debugMemoryController = $row->Find( "[class=debug-memory-controller]", 0 );
 		$debugMemoryComponent = $row->Find( "[class=debug-memory-component]", 0 );
@@ -193,8 +194,6 @@ class cDebugDebugController extends cController {
 		
 		}
 		
-		$this->Debug->RemoveElement ( "[id=debug-memory] tr" );
-		
 		return ( true );
 	}
 	
@@ -212,10 +211,12 @@ class cDebugDebugController extends cController {
 		}
 		$this->Debug->Find ( "[id=benchmarks-system-total]", 0)->innertext = __ ("System Total Time", array ( "seconds" => $seconds ) );
 		
-		$tbody = $this->Debug->Find ( "[id=debug-benchmarks] table tbody", 0);
+		$tbody = $this->Debug->Find ( "[id=debug-benchmarks] table tbody tr", 0);
 		
 		$row = $this->Debug->Copy ( "[id=debug-benchmarks] table tbody tr" )->Find ( "tr", 0 );
 		
+		$tbody->innertext = " ";
+
 		$debugBenchmarkId = $row->Find( "[class=debug-benchmark-id]", 0 );
 		$debugBenchmarkController = $row->Find( "[class=debug-benchmark-controller]", 0 );
 		$debugBenchmarkComponent = $row->Find( "[class=debug-benchmark-component]", 0 );
@@ -243,8 +244,6 @@ class cDebugDebugController extends cController {
 			
 			$tbody->innertext .= $row->outertext;
 		}
-		
-		$this->Debug->RemoveElement ( "[id=debug-benchmarks] tr" );
 		
 		return ( true );
 	}

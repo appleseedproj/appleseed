@@ -51,7 +51,7 @@
 		.admin-content td { border-right: 1px solid #406300; border-bottom: 1px solid #406300; padding: 6px 6px 6px 12px; color:#2a2a2a; }
 		.admin-content th.spec { border-left: 1px solid #406300; border-top:0; color:#fafafa; }
 		.admin-content tr { background:#f1ffd6; }
-		.admin-content tr.alt { background:#c0d895; }
+		.admin-content tr.even { background:#c0d895; }
 		.admin-content table tr td input[type="checkbox"] { float:left; margin-left:12px; text-align:right; }
 		.admin-content tr:hover { background-color:#fafafa; }
 		
