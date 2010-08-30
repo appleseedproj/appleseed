@@ -35,9 +35,9 @@
 		#admin-main-menu ul li.selected span.control-icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -120px; height:24px; width:24px; }
 		
 		/* admin-search */
-		#admin-search { float:left; position:relative; top:58px; text-align:right; }
-		#admin-search input.search { font-size:80%; width:130px; height:16px; padding:2px 4px; border:none; background-color:#fafafa; }
-		#admin-search input.search-submit { width:22px; height:20px; border:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
+		#admin-search { float:left; position:relative; top:88px; text-align:right; }
+		#admin-search input.search { font-size:80%; width:128px; height:16px; padding:2px 4px; border:1px solid #c0d895; border-right:none; background-color:#fafafa; }
+		#admin-search input.search-submit { width:22px; height:22px; border:1px solid #c0d895; border-left:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
 		
 		.admin-content h1 { margin-bottom:20px; }
 		

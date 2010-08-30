@@ -4,9 +4,9 @@
 	<h1>Example</h1>
 		<nav class="controls"> 
 			<ul> 
-				<li><a href="#">Move Up &uarr;</a></li> 
-				<li><a href="#">Move Down &darr;</a></li> 
-				<li><a href="#">Delete</a></li> 
+				<li><a href="#">Move Up</a></li> 
+				<li><a href="#">Move Down</a></li> 
+				<li><a href="#">Delete +</a></li> 
 			</ul> 
 		</nav> 
 		<nav class="pagination-amount">
@@ -64,9 +64,9 @@
 		</nav>
 		<nav class="controls"> 
 			<ul> 
-				<li><a href="#">Move Up &uarr;</a></li> 
-				<li><a href="#">Move Down &darr;</a></li> 
-				<li><a href="#">Delete</a></li> 
+				<li><a href="#">Move Up</a></li> 
+				<li><a href="#">Move Down</a></li> 
+				<li><a href="#">Delete All</a></li> 
 			</ul> 
 		</nav> 
 		<nav class="pagination-amount">
