@@ -51,7 +51,7 @@
 		
 			<input type="hidden" name="Context" />
 			<nav class="select">
-				<span>Select Options<span> <a href="#">All</a>, <a href="#">None</a>
+				<span>Select Options</span> <a href="#">All</a>, <a href="#">None</a>
 			</nav>
 			<nav class='pagination'>
 				<ol>
