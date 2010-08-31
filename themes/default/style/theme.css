@@ -260,8 +260,8 @@
 		input.search { width:232px; height:18px; margin:0; float:none; padding:2px 4px; border:none; background-color:#fafafa; }
 		input.search-submit { padding:0; margin:0; width:22px; float:none; height:22px; border:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
 		
-		input.search.local { font-size:80%; width:130px; height:16px; padding:2px 4px; border:none; background-color:#fafafa; }
-		input.search-submit.local { width:22px; height:20px; border:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
+		input.search.local { font-size:80%; width:129px; height:16px; padding:2px 4px; border:1px solid #80af1f; border-right:none; background-color:#fafafa; }
+		input.search-submit.local { width:22px; height:22px; border:1px solid #80af1f; border-left:none; color:#fafafa; background-color:#fafafa; background-image:url('/themes/default/images/appleseed-icons.png'); background-position:2px -46px; }
 		
 		input.search {  -webkit-border-bottom-left-radius:4px; -webkit-border-top-left-radius:4px;  -moz-border-radius-bottomleft:4px; -moz-border-radius-topleft:4px; -border-bottom-left-radius:4px; -border-top-left-radius:4px;  }
 		input.search-submit {  -webkit-border-bottom-right-radius:4px; -webkit-border-top-right-radius:4px;  -moz-border-radius-bottomright:4px; -moz-border-radius-topright:4px;  -border-bottom-right-radius:4px; -border-top-right-radius:4px;  }
