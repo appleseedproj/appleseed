@@ -8,11 +8,11 @@
 
 
 
-class cSEARCH {
+class cOLDSEARCH {
   function Ask () {
     global $zOLDAPPLE;
     
     global $gFRAMELOCATION;
     $zOLDAPPLE->IncludeFile ($gFRAMELOCATION . "objects/common/search/ask.aobj", INCLUDE_SECURITY_NONE);
   } // Ask
-} // cSEARCH
+} // cOLDSEARCH

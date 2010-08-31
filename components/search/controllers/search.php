@@ -45,7 +45,7 @@ class cSearchSearchController extends cController {
 		
 		$this->Ask = $this->GetView ( $pView );
 		
-		$this->Ask->Display ();
+		$this->Ask->Display();
 		
 		return ( true );
 	}

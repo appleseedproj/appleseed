@@ -50,7 +50,7 @@ class cHeaderHeaderController extends cController {
 		$icon = $this->Header->Find ( "[class=current-icon]", 0);
 		$icon->src = 'http://' . $user->Domain . '/_storage/legacy/photos/' . $user->Username . '/profile.jpg';
 		
-		$this->Header->Find ( "[id=header-search]", 0)->innertext = $this->GetSys ( "Components" )->Buffer ( "search", "search", "global" ); 
+		$this->Header->Find ( "[id=header-search]", 0)->innertext = $this->GetSys ( "Components" )->Buffer ( "search", "search", "global", "ask" ); 
 		
 		$link->innertext = $user->Username . '@' . $user->Domain;
 		$link->href = 'http://' . $user->Domain . '/profile/' . $user->Username ;

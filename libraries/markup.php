@@ -79,7 +79,8 @@ class cMarkup extends simple_html_dom {
 			"p", 
 			"button",
 			"legend", 
-			"[label=", 
+			"[placeholder]",
+			"[label]", 
 			"a",
 			"h1", "h2", "h3", "h4", "h5", "h6"
 		);
@@ -93,8 +94,9 @@ class cMarkup extends simple_html_dom {
 				$modified = __( ltrim ( rtrim ( $element->plaintext ) ) );
 				
 				// We're modifying the internal label, not the innertext
-				if ( $element->label ) { 
-					$elements[$e]->label = __( ltrim ( rtrim ( $element->label ) ) );
+				if ( preg_match ( "/\[(.*)\]/", $selector, $attributeMatches ) ) {
+					$attributeName = $attributeMatches[1];
+					$elements[$e]->$attributeName = __( ltrim ( rtrim ( $element->$attributeName ) ) );
 					continue;
 				}
 				

@@ -146,7 +146,7 @@
       $zIMAGE   = new cIMAGE ();
       $zHTML    = new cOLDHTML ();
       $zXML     = new cOLDXML ();
-      $zSEARCH  = new cSEARCH ();
+      $zSEARCH  = new cOLDSEARCH ();
       $zTAGS  = new cTAGLIST ();
   
       $zFOCUSUSER = new cOLDUSER ();
