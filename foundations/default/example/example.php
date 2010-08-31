@@ -45,7 +45,10 @@
 
 	<!-- System Message -->
 	
- 	<?php $zApp->Components->Go ( "header" ); ?>
+	<!-- Header -->
+	<header id="appleseed-header">
+ 		<?php $zApp->Components->Go ( "header" ); ?>
+ 	</header>
 
 	<div id="appleseed-logo"></div>
 	
@@ -95,7 +98,9 @@
 
 	<div class="clear"></div>
     
- 	<?php $zApp->Components->Go ( "footer" ); ?>
+    <footer id="appleseed-footer" class="container_16">
+ 		<?php $zApp->Components->Go ( "footer" ); ?>
+ 	</footer>
 
 </body>
 </html>

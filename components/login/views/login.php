@@ -1,68 +1,54 @@
 <script type="text/javascript" src="/components/login/assets/javascript/login.js"></script>
 
-<section id="login">
+<section id="login-local">
+  	<h1>Login</h1> 
+	<p id='local_login_message'></p>
+	<form id='userinfo' name='userinfo' action='/login/' method='post'> 
+		<fieldset>
+		<input type='hidden' name='Task' value='login'> 
+		<input type='hidden' name='Context' value=''> 
+ 
+		<div><label for='username'>Username</label><input type='text' name='Username' class='username' maxlength='64' value="" /></div>
+		<div><label for='password'>Password</label><input type='password' name='Pass' class='pass' maxlength='16' value="" /></div>
+		<div><label for='rememberme'>Remember Me</label><input id='remember' type='checkbox' name='Remember' checked='checked' /></div>
+		</fieldset>
+ 
+		<button type='submit' name='Task' value='Login'>Login</button>    
+		<button type='submit' name='Task' value='FORGOT'>Forgot Password</button> 
+	</form>
+ 
+</section>
+ 
+<section id="login-remote">
+	<h1>Remote Login</h1>
+	<p id='remote_login_message'></p>
 
-	<div id="login_tabs">
+	<form id='userinfo' name='userinfo' action='/login/' method='post'> 
+		<fieldset>
+			<input type='hidden' name='Task' value='remote'> 
+			<input type='hidden' name='Context' value=''> 
+			<div><label for="Identity">Identity</label><input type="text" name="Identity" /></div>
+		</fieldset>
+		<button type='submit' name='Task' value='Remote'>Remote Login</button> 
+	</form>
+</section>
 
-	<nav class="tabs"> 
-		<ul> 
-			<li id="login_local_button"><a href="#login_local">Local</a></li> 
-			<li id="login_remote_button"><a href="#login_remote">Remote</a></li> 
-		</ul> 
-	</nav>
-
-  <div id="login_local">
-  <p id='local_login_message'></p>
-  <form id='userinfo' name='userinfo' action='/login/' method='post'> 
-	<input type='hidden' name='Task' value='login'> 
-	<input type='hidden' name='Context' value=''> 
+<section id="login-join">
+	<h1>Join This Site</h1> 
+	<p class='content'>Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons. </p>
  
-   <p id='username'>Username</p>
-   <span class='username'><input  type='text' name='Username' class='username' maxlength='64' value="" /></span>   
-   <p id='password'>Password</p>
-   <span class='pass'><input  type='password' name='Pass' class='pass' maxlength='16' value="" /></span>   
-   <p id='rememberme'>Remember Me</p>
-   <input id='remember' type='checkbox' name='Remember' checked='checked' /> 
+	<form name='join' id='join' action='/login/' method='post'> 
+		<fieldset>
+			<input type='hidden' name='Task' value='join'> 
+			<input type='hidden' name='Context' value=''> 
+	 
+			<div><label for='fullname'>Full Name</label><input type='text' name='Fullname' value="" /></div>
+			<div><label for='username'>Username</label><input  type='text' name='Username' value="" /></div>
+			<div><label for='email'>Email   </label><input type='text' name='Email' value="" /></div>
+			<div><label for='password'>Password</label><input  type='password' name='Pass' value="" /></div>
+			<div><label for='confirm'>Confirm Password</label><input  type='password' name='Confirm' value="" /></div>
+		</fieldset>
+		<button   type='submit' name='Task' value='Join'>Join</button> 
+	</form>
  
-    <button   type='submit' name='Task' value='Login'>Login</button>    <button   type='submit' name='Task' value='FORGOT'>Forgot Password</button> 
-  </form>
- 
-  <h1>Join This Site</h1> 
- 
- 
- <p class='content'> 
-   Create a new account by filling out the information below.  Once the account is created, you can log in and set up your profile, and upload a profile photo and user icons. </p> <!-- .content --> 
- 
-<form name='join' id='join' action='/login/' method='post'> 
-	<input type='hidden' name='Task' value='join'> 
-	<input type='hidden' name='Context' value=''> 
- 
-	<p id='fullname'>Full Name</p>
-	<input type='text' name='Fullname' value="" /> 
-	<p id='username'>Username</p>
-	<input  type='text' name='Username' value="" /> 
-	<p id='email'>Email   </p>
-	<input type='text' name='Email' value="" /> 
-	<p id='password'>Password</p>
-	<input  type='password' name='Pass' value="" /> 
-	<p id='confirm'>Confirm Password</p>
-	<input  type='password' name='Confirm' value="" /> 
-	<button   type='submit' name='Task' value='Join'>Join</button> 
-</form>
- 
-  </div>
- 
-		<div id="login_remote">
-		<p id='remote_login_message'></p>
-
-			<form id='userinfo' name='userinfo' action='/login/' method='post'> 
-				<input type='hidden' name='Task' value='remote'> 
-				<input type='hidden' name='Context' value=''> 
-				<input  type='text' name='Identity' value="" />
-				<button type='submit' name='Task' value='Remote'>Remote Login</button> 
-			</form>
-  
-		</div>
-  
-  </div>
 </section>

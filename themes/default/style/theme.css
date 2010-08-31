@@ -36,7 +36,8 @@
 		
 		nav.pagination ol { float:right; clear:both; margin-top:10px; }
 		nav.pagination ol li { list-style-type:none; float:left; }
-		nav.pagination ol li a { border:none; background:none; font-size:80%; font-weight:bold; color:#406300; margin:0 1px; padding:0 1px; }
+		nav.pagination ol li span { border:none; background:none; font-size:80%; font-weight:bold; color:#406300; margin:0 1px; padding:0 1px; }
+		nav.pagination ol li a { border:none; background:none; padding:0; font-weight:bold; color:#406300; }
 		nav.pagination ol li a:hover { background-color:#406300; color:#fafafa; cursor:pointer; margin:0; padding:0 2px;}
 		nav.pagination ol li.selected a { border-bottom:2px solid #406300; }
 		nav.pagination ol li.first,  nav.pagination ol li.prev,  nav.pagination ol li.next,  nav.pagination ol li.last { margin:0 2px; }
@@ -144,11 +145,12 @@
 		#profile-tabs nav ul li { float:left; padding:4px 4px 0 4px; margin:0px 1px; background-color:#80af1f; border:1px solid #406300; }
 		#profile-tabs nav ul li a { color:#c0d895; }
 		#profile-tabs nav ul li:nth-child(1)   { margin-left:1px; }
-		#profile-tabs nav ul li.selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
-		#profile-tabs nav ul li.selected a { color:#2a2a2a; }
+		#profile-tabs nav ul li.ui-tabs-selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		#profile-tabs nav ul li.ui-tabs-selected a { color:#2a2a2a; }
 		#profile-tabs nav ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
 		#profile-tabs nav ul li:hover a { color:#2a2a2a; }
 		#profile-tabs nav ul li a:hover { text-decoration:none; }
+		#profile-tabs nav ul li.more { font-weight:bold; }
 		
 		/* profile-search */
 		#profile-search { float:left; position:relative; top:8px; text-align:right; }
@@ -180,6 +182,26 @@
 		#profile-comments { float:left; position:relative; top:-24px; }
 		#profile-comments-two { float:left; position:relative; top:-24px; }
 		
+		/* Main */
+		#appleseed-login { float:left; background-color:#f1fed5; min-height:840px; }
+		#appleseed-login-main { }
+		#appleseed-login-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
+		
+		#appleseed-login-info { float:left; }
+		#appleseed-login-content { }
+		
+		/* login-tabs */
+		nav#login-tabs { float:left; position:relative; top:49px; }
+		nav#login-tabs a { padding:0; background:none; color:#406300; }
+		nav#login-tabs ul li { float:left; padding:4px 4px 0 4px; margin:0px 1px; background-color:#80af1f; border:1px solid #406300; }
+		nav#login-tabs ul li a { color:#c0d895; }
+		nav#login-tabs ul li:nth-child(1)   { margin-left:1px; }
+		nav#login-tabs ul li.ui-tabs-selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		nav#login-tabs ul li.ui-tabs-selected a { color:#2a2a2a; }
+		nav#login-tabs ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		nav#login-tabs ul li:hover a { color:#2a2a2a; }
+		nav#login-tabs ul li a:hover { text-decoration:none; }
+		
 		/* appleseed-debug */
 		#appleseed-debug { margin-top:10px; }
 		
@@ -209,6 +231,7 @@
 		fieldset{margin-top:5px; padding:5px 10px;border:1px solid #c0d895;}
 		legend{margin:1em 0;padding:0 .5em;color:#036;background:transparent;font-size:1.3em;font-weight:bold;}
 		label{float:left;width:35%; margin:5px 5% 5px 5px; font-size:90%; padding:0; clear:both; text-align:right; }
+		label.error{float:left;width:55%; margin:5px 0; color:#bf4630; font-style:italic; font-size:90%; padding:0; clear:both; text-align:right; }
 		fieldset div select{padding:1px;}
 		textarea,input,select{ float:left; font-size:100%; width:200px; margin:5px 0; color:#2a2a2a; }
 		input[type="submit"], input[type="cancel"], input[type="reset"], input[type="button"] { width:auto; margin:0 5px 0 0; }
@@ -245,7 +268,7 @@
 		
 		/* Comments */
 		
-		#profile-comments
+		#login-comments
 		
 		ol.comments.outer { font-size:110%; }
 		ol.comments { float:left; clear:both; width:100%; list-style-type:none; margin:0; }
@@ -296,4 +319,4 @@
 		nav button:disabled:hover{ cursor:default; text-decoration:none; }
 		
 		p.error { padding:5px 2%; width:96%; background-color:#bf4630; color:#fafafa; }
-
+		p.message { padding:5px 2%; width:96%; background-color:#80af1f; color:#fafafa; }

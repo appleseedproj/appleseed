@@ -96,6 +96,7 @@
 							<li><a href="#">Photos</a></li>
 							<li><a href="#">Events</a></li>
 							<li><a href="#">Groups</a></li>
+							<li class="more"><a href="#">+</a></li>
 		       			</ul>
 		       		</nav>
 		       	</div>

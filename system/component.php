@@ -27,6 +27,8 @@ class cComponent extends cBase {
 	protected $_Controller;
 	protected $_View;
 	protected $_Instance = 1;
+	
+	protected $_API = false;
 
 	/**
 	 * Constructor
@@ -151,7 +153,7 @@ class cComponent extends cBase {
 			return ( false );
 		}
 		
-		require ( $filename );
+		if ( !class_exists ( $class ) ) include ( $filename );
 		
 		if ( !class_exists ( $class ) ) {
 			echo __("Controller Not Found", array ( 'name' => $class ) );

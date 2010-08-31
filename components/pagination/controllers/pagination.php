@@ -45,7 +45,9 @@ class cPaginationPaginationController extends cController {
 		
 		$this->_PreparePagination ( $pData );
 		
-		$this->List->Display ();
+		$this->List->Display (); 
+		
+		// $this->List->Display ();
 		
 		return ( true );
 	}
@@ -95,8 +97,6 @@ class cPaginationPaginationController extends cController {
 		}
 		
 		$this->List->Find ( "li[class=prev]", 0)->outertext .= $outertext;
-		
-		$this->List->Reload();
 		
 		$this->List->RemoveElement ( "li[class=page]" );
 		

@@ -52,7 +52,9 @@ class cMarkup extends simple_html_dom {
 		
 		$element = $this->Find($pSelector, 0);
 		
-		$element->clear();
+		if ( !$element ) return ( false );
+		
+		$element->outertext = '';
 		
 		return ( true );
 		
@@ -102,6 +104,7 @@ class cMarkup extends simple_html_dom {
 				}
 			}
 		}
+		
 		echo $this->Save();
 		
 		return ( true );

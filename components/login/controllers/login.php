@@ -221,5 +221,5 @@ class cLoginLoginController extends cController {
 		
 		return ( $this->Display("success") );
 	}
-
+	
 }

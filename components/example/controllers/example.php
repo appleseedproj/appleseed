@@ -274,7 +274,10 @@ class cExampleExampleController extends cController {
 		$total = $this->Customers->Get ( "Total" );
 		
 		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
-		//$this->List->Find ("form", 0)->outertext .= $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
+		$pageControls =  $this->List->Find ("nav[class=pagination]");
+		foreach ( $pageControls as $p => $pageControl ) {
+			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
+		}
 		
 		$this->List->Synchronize();
 		
@@ -381,10 +384,6 @@ class cExampleExampleController extends cController {
 		
 		// $this->Form->SetDefaults ( "select[name=country]" );
 		
-		$this->Form->Modify ( "label[for=passwd]", array ( "innertext" => "Blah Blah!" ) );
-		$this->Form->Modify ( "input[name=text]", array ( "value" => "Default Value!" ) );
-		$this->Form->Modify ( "textarea[name=text_area]", array ( "innertext" => "Blah!" ) );
-		
 		/*
 		 * @tutorial You can remove a specified element as well.
 		 * 
@@ -402,7 +401,7 @@ class cExampleExampleController extends cController {
 		 * @philosophy A better way would be to target rows directly using classes or id's.
 		 *  
 		 */
-		$this->Form->Find("input[name=Phone]", 0)->Parent(0)->Parent(0)->outertext = "";
+		$this->Form->Find("input[name=Phone]", 0)->Parent(0)->outertext = "";
 		
 		/*
 		 * @tutorial And you can disable an element, too.

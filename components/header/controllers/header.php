@@ -43,17 +43,19 @@ class cHeaderHeaderController extends cController {
 		
 		if ( ( $user->Username ) && ( $access->Get ( "Admin" ) ) ) $pView .= '.admin';
 		
-		$header = $this->GetView ( $pView );
+		$this->Header = $this->GetView ( $pView );
 		
-		$link = $header->Find ( "[id=current-user-profile-link]", 0 );
+		$link = $this->Header->Find ( "[id=current-user-profile-link]", 0 );
 		
-		$icon = $header->Find ( "[class=current-icon]", 0);
+		$icon = $this->Header->Find ( "[class=current-icon]", 0);
 		$icon->src = 'http://' . $user->Domain . '/_storage/legacy/photos/' . $user->Username . '/profile.jpg';
+		
+		$this->Header->Find ( "[id=header-search]", 0)->innertext = $this->GetSys ( "Components" )->Buffer ( "search", "search", "global" ); 
 		
 		$link->innertext = $user->Username . '@' . $user->Domain;
 		$link->href = 'http://' . $user->Domain . '/profile/' . $user->Username ;
 		
-		$header->Display();
+		$this->Header->Display();
 		
 		return ( true );
 	}

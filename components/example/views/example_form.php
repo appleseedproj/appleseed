@@ -20,75 +20,33 @@
 	<form id="edit_form" method="post">
 		<input type="hidden" name="Customer_PK" />
 		<input type="hidden" name="Context" />
+		<h1>Customers</h1>
+		<p id='example_message'></p>
+		
 		<fieldset>
-			<legend id='example_title'>Customers</legend>
-			<p id='example_message'></p>
-			
-			<fieldset>
-				<legend id='example_subtitle'>Edit</legend>
-				<p>Edit form field description</p>
-				<table>
-					<tbody>
-						<tr>
-							<th><label for="CustomerName">Customer Name <em>*</em></label></th>
-							<td><input class="required" type="text" name="CustomerName" /></td>
-						</tr>
-						<tr>
-							<th><label for="ContactFirstName">Contact First Name <em>*</em></label></th>
-							<td><input class="required" type="text" name="ContactFirstName" /></td>
-						</tr>
-						<tr>
-							<th><label for="ContactLastName">Contact Last Name <em>*</em></label></th>
-							<td><input class="required" type="text" name="ContactLastName" /></td>
-						</tr>
-						<tr>
-							<th><label for="Phone">Phone </label></th>
-							<td><input type="text" name="Phone" /></td>
-						</tr>
-						<tr>
-							<th><label for="Email">E-Mail <em>*</em></label></th>
-							<td><input type="text" name="Email" /></td>
-						</tr>
-						<tr>
-							<th><label for="AddressLine1">Address 1 </label></th>
-							<td><input type="text" name="AddressLine1" /></td>
-						</tr>
-						<tr>
-							<th><label for="AddressLine2">Address 2 </label></th>
-							<td><input type="text" name="addressLine2" /></td>
-						</tr>
-						<tr>
-							<th><label for="City">City </label></th>
-							<td><input type="text" name="City" /></td>
-						</tr>
-						<tr>
-							<th><label for="State">State </label></th>
-							<td><input type="text" name="State" /></td>
-						</tr>
-						<tr>
-							<th><label for="Country">Country </label></th>
-							<td><input type="text" name="Country" /></td>
-						</tr>
-						<tr>
-							<th><label for="PostalCode">Postal Code </label></th>
-							<td><input type="text" name="PostalCode" /></td>
-						</tr>
-						<tr>
-							<th><label for="SalesRep_Employee_FK">Sales Rep</label></th>
-							<td>
-								<select class='required' name="SalesRep_Employee_FK">
-								</select>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</fieldset>
-			<p>
-				<input type="submit" name="task" value="Save" />
-				<input type="submit" name="task" value="Apply" />
-				<input type="submit" name="task" class="cancel" value="Cancel" />
-			</p>
-			
+			<legend id='example_subtitle'>Edit</legend>
+			<p>Edit form field description</p>
+						<div><label for="CustomerName">Customer Name <em>*</em></label><input class="required" type="text" name="CustomerName" /></div>
+						<div><label for="ContactFirstName">Contact First Name <em>*</em></label><input class="required" type="text" name="ContactFirstName" /></div>
+						<div><label for="ContactLastName">Contact Last Name <em>*</em></label><input class="required" type="text" name="ContactLastName" /></div>
+						<div><label for="Phone">Phone </label><input type="text" name="Phone" /></div>
+						<div><label for="Email">E-Mail <em>*</em></label><input type="text" name="Email" /></div>
+						<div><label for="AddressLine1">Address 1 </label><input type="text" name="AddressLine1" /></div>
+						<div><label for="AddressLine2">Address 2 </label><input type="text" name="addressLine2" /></div>
+						<div><label for="City">City </label><input type="text" name="City" /></div>
+						<div><label for="State">State </label><input type="text" name="State" /></div>
+						<div><label for="Country">Country </label><input type="text" name="Country" /></div>
+						<div><label for="PostalCode">Postal Code </label><input type="text" name="PostalCode" /></div>
+						<div><label for="SalesRep_Employee_FK">Sales Rep</label><select class='required' name="SalesRep_Employee_FK"></select></div>
+					</tr>
+				</tbody>
+			</table>
 		</fieldset>
+		<p>
+			<input type="submit" name="task" value="Save" />
+			<input type="submit" name="task" value="Apply" />
+			<input type="submit" name="task" class="cancel" value="Cancel" />
+		</p>
+			
 	</form>
 </section>
