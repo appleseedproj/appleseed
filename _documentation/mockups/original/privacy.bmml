@@ -34,12 +34,12 @@
         <text>Add</text>
       </controlProperties>
     </control>
-    <control controlID="9" controlTypeID="com.balsamiq.mockups::List" x="558" y="212" w="151" h="119" measuredW="100" measuredH="126" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::List" x="558" y="211" w="151" h="120" measuredW="100" measuredH="126" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Everyone%0AFriends%0AFamily%0ACo-Workers%0ADrinking%20Buddies</text>
+        <text>Everyone%0AFriends%20Only%0AFamily%0ACo-Workers%0ADrinking%20Buddies</text>
       </controlProperties>
     </control>
-    <control controlID="10" controlTypeID="com.balsamiq.mockups::HRule" x="559" y="231" w="143" h="-1" measuredW="100" measuredH="5" zOrder="9" locked="false" isInGroup="-1"/>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::HRule" x="559" y="251" w="143" h="-1" measuredW="100" measuredH="5" zOrder="9" locked="false" isInGroup="-1"/>
     <control controlID="11" controlTypeID="com.balsamiq.mockups::Canvas" x="66" y="396" w="540" h="351" measuredW="100" measuredH="70" zOrder="10" locked="false" isInGroup="-1"/>
     <control controlID="12" controlTypeID="com.balsamiq.mockups::TextArea" x="97" y="423" w="478" h="179" measuredW="200" measuredH="140" zOrder="11" locked="false" isInGroup="-1">
       <controlProperties>
@@ -70,24 +70,18 @@
         <text>Add</text>
       </controlProperties>
     </control>
-    <control controlID="19" controlTypeID="com.balsamiq.mockups::List" x="558" y="572" w="151" h="119" measuredW="100" measuredH="126" zOrder="17" locked="false" isInGroup="-1">
+    <control controlID="21" controlTypeID="com.balsamiq.mockups::Label" x="105" y="648" w="-1" h="-1" measuredW="218" measuredH="23" zOrder="17" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Everyone%0ACo-Workers%0ADrinking%20Buddies</text>
+        <text>Co-Workers%20%5Bremove%5D%20%20Family%20%5Bremove%5D</text>
       </controlProperties>
     </control>
-    <control controlID="20" controlTypeID="com.balsamiq.mockups::HRule" x="558" y="591" w="151" h="-1" measuredW="100" measuredH="5" zOrder="18" locked="false" isInGroup="-1"/>
-    <control controlID="21" controlTypeID="com.balsamiq.mockups::Label" x="105" y="648" w="-1" h="-1" measuredW="190" measuredH="23" zOrder="19" locked="false" isInGroup="-1">
-      <controlProperties>
-        <text>Friends%20%5Bremove%5D%20%20Family%20%5Bremove%5D</text>
-      </controlProperties>
-    </control>
-    <control controlID="22" controlTypeID="com.balsamiq.mockups::Link" x="106" y="673" w="-1" h="-1" measuredW="70" measuredH="23" zOrder="20" locked="false" isInGroup="-1">
+    <control controlID="22" controlTypeID="com.balsamiq.mockups::Link" x="106" y="673" w="-1" h="-1" measuredW="70" measuredH="23" zOrder="18" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Remove%20All</text>
       </controlProperties>
     </control>
-    <control controlID="23" controlTypeID="com.balsamiq.mockups::Canvas" x="724" y="33" w="540" h="351" measuredW="100" measuredH="70" zOrder="21" locked="false" isInGroup="-1"/>
-    <control controlID="24" controlTypeID="com.balsamiq.mockups::TextArea" x="755" y="60" w="478" h="179" measuredW="200" measuredH="140" zOrder="22" locked="false" isInGroup="-1">
+    <control controlID="23" controlTypeID="com.balsamiq.mockups::Canvas" x="724" y="33" w="540" h="351" measuredW="100" measuredH="70" zOrder="19" locked="false" isInGroup="-1"/>
+    <control controlID="24" controlTypeID="com.balsamiq.mockups::TextArea" x="755" y="60" w="478" h="179" measuredW="200" measuredH="140" zOrder="20" locked="false" isInGroup="-1">
       <controlProperties>
         <backgroundAlpha>1</backgroundAlpha>
         <color>16777215</color>
@@ -95,92 +89,100 @@
         <verticalScrollbar>false</verticalScrollbar>
       </controlProperties>
     </control>
-    <control controlID="25" controlTypeID="com.balsamiq.mockups::Button" x="1174" y="341" w="-1" h="-1" measuredW="59" measuredH="28" zOrder="23" locked="false" isInGroup="-1">
+    <control controlID="25" controlTypeID="com.balsamiq.mockups::Button" x="1174" y="341" w="-1" h="-1" measuredW="59" measuredH="28" zOrder="21" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Share</text>
       </controlProperties>
     </control>
-    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="779" y="250" w="-1" h="-1" measuredW="114" measuredH="23" zOrder="24" locked="false" isInGroup="-1">
+    <control controlID="26" controlTypeID="com.balsamiq.mockups::Label" x="779" y="250" w="-1" h="-1" measuredW="114" measuredH="23" zOrder="22" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Who%20can%20see%20this%3F</text>
       </controlProperties>
     </control>
-    <control controlID="27" controlTypeID="com.balsamiq.mockups::Icon" x="755" y="244" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="25" locked="false" isInGroup="-1">
+    <control controlID="27" controlTypeID="com.balsamiq.mockups::Icon" x="755" y="244" w="-1" h="-1" measuredW="24" measuredH="24" zOrder="23" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>LockIcon%7Csmall</icon>
       </controlProperties>
     </control>
-    <control controlID="28" controlTypeID="com.balsamiq.mockups::Canvas" x="754" y="276" w="479" h="65" measuredW="100" measuredH="70" zOrder="26" locked="false" isInGroup="-1"/>
-    <control controlID="29" controlTypeID="com.balsamiq.mockups::Link" x="1189" y="311" w="-1" h="-1" measuredW="27" measuredH="23" zOrder="27" locked="false" isInGroup="-1">
+    <control controlID="28" controlTypeID="com.balsamiq.mockups::Canvas" x="754" y="276" w="479" h="65" measuredW="100" measuredH="70" zOrder="24" locked="false" isInGroup="-1"/>
+    <control controlID="29" controlTypeID="com.balsamiq.mockups::Link" x="1189" y="311" w="-1" h="-1" measuredW="27" measuredH="23" zOrder="25" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Add</text>
       </controlProperties>
     </control>
-    <control controlID="32" controlTypeID="com.balsamiq.mockups::Label" x="763" y="285" w="-1" h="-1" measuredW="190" measuredH="23" zOrder="28" locked="false" isInGroup="-1">
+    <control controlID="32" controlTypeID="com.balsamiq.mockups::Label" x="763" y="285" w="-1" h="-1" measuredW="190" measuredH="23" zOrder="26" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Friends%20%5Bremove%5D%20%20Family%20%5Bremove%5D</text>
       </controlProperties>
     </control>
-    <control controlID="33" controlTypeID="com.balsamiq.mockups::Link" x="764" y="310" w="-1" h="-1" measuredW="70" measuredH="23" zOrder="29" locked="false" isInGroup="-1">
+    <control controlID="33" controlTypeID="com.balsamiq.mockups::Link" x="764" y="310" w="-1" h="-1" measuredW="70" measuredH="23" zOrder="27" locked="false" isInGroup="-1">
       <controlProperties>
         <text>Remove%20All</text>
       </controlProperties>
     </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::Canvas" x="889" y="197" w="155" h="108" measuredW="100" measuredH="70" zOrder="30" locked="false" isInGroup="-1">
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::Canvas" x="889" y="197" w="155" h="108" measuredW="100" measuredH="70" zOrder="28" locked="false" isInGroup="-1">
       <controlProperties>
         <backgroundAlpha>0.75</backgroundAlpha>
       </controlProperties>
     </control>
-    <control controlID="35" controlTypeID="com.balsamiq.mockups::IconLabel" x="901" y="206" w="-1" h="-1" measuredW="32" measuredH="47" zOrder="31" locked="false" isInGroup="-1">
+    <control controlID="35" controlTypeID="com.balsamiq.mockups::IconLabel" x="901" y="206" w="-1" h="-1" measuredW="32" measuredH="47" zOrder="29" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>EmoticonIcon%7Csmall</icon>
         <text>Mom</text>
       </controlProperties>
     </control>
-    <control controlID="36" controlTypeID="com.balsamiq.mockups::IconLabel" x="946" y="256" w="-1" h="-1" measuredW="33" measuredH="47" zOrder="32" locked="false" isInGroup="-1">
+    <control controlID="36" controlTypeID="com.balsamiq.mockups::IconLabel" x="946" y="256" w="-1" h="-1" measuredW="33" measuredH="47" zOrder="30" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>YIMIcon%7Csmall</icon>
         <text>Aunt</text>
       </controlProperties>
     </control>
-    <control controlID="37" controlTypeID="com.balsamiq.mockups::IconLabel" x="987" y="206" w="-1" h="-1" measuredW="41" measuredH="47" zOrder="33" locked="false" isInGroup="-1">
+    <control controlID="37" controlTypeID="com.balsamiq.mockups::IconLabel" x="987" y="206" w="-1" h="-1" measuredW="41" measuredH="47" zOrder="31" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>SadFaceIcon%7Csmall</icon>
         <text>Sister</text>
       </controlProperties>
     </control>
-    <control controlID="39" controlTypeID="com.balsamiq.mockups::IconLabel" x="946" y="206" w="-1" h="-1" measuredW="28" measuredH="47" zOrder="34" locked="false" isInGroup="-1">
+    <control controlID="39" controlTypeID="com.balsamiq.mockups::IconLabel" x="946" y="206" w="-1" h="-1" measuredW="28" measuredH="47" zOrder="32" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>EmoticonIcon%7Csmall</icon>
         <text>Dad</text>
       </controlProperties>
     </control>
-    <control controlID="40" controlTypeID="com.balsamiq.mockups::IconLabel" x="901" y="257" w="-1" h="-1" measuredW="38" measuredH="47" zOrder="35" locked="false" isInGroup="-1">
+    <control controlID="40" controlTypeID="com.balsamiq.mockups::IconLabel" x="901" y="257" w="-1" h="-1" measuredW="38" measuredH="47" zOrder="33" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>YIMIcon%7Csmall</icon>
         <text>Uncle</text>
       </controlProperties>
     </control>
-    <control controlID="41" controlTypeID="com.balsamiq.mockups::IconLabel" x="987" y="255" w="-1" h="-1" measuredW="42" measuredH="47" zOrder="36" locked="false" isInGroup="-1">
+    <control controlID="41" controlTypeID="com.balsamiq.mockups::IconLabel" x="987" y="255" w="-1" h="-1" measuredW="42" measuredH="47" zOrder="34" locked="false" isInGroup="-1">
       <controlProperties>
         <icon>SadFaceIcon%7Csmall</icon>
         <text>Cousin</text>
       </controlProperties>
     </control>
-    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="52" y="34" w="14" h="23" measuredW="10" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
+    <control controlID="42" controlTypeID="com.balsamiq.mockups::Label" x="52" y="34" w="14" h="23" measuredW="10" measuredH="23" zOrder="35" locked="false" isInGroup="-1">
       <controlProperties>
         <text>1</text>
       </controlProperties>
     </control>
-    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="52" y="396" w="14" h="23" measuredW="13" measuredH="23" zOrder="38" locked="false" isInGroup="-1">
+    <control controlID="43" controlTypeID="com.balsamiq.mockups::Label" x="52" y="396" w="14" h="23" measuredW="13" measuredH="23" zOrder="36" locked="false" isInGroup="-1">
       <controlProperties>
         <text>2</text>
       </controlProperties>
     </control>
-    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="710" y="33" w="14" h="23" measuredW="12" measuredH="23" zOrder="39" locked="false" isInGroup="-1">
+    <control controlID="44" controlTypeID="com.balsamiq.mockups::Label" x="710" y="33" w="14" h="23" measuredW="12" measuredH="23" zOrder="37" locked="false" isInGroup="-1">
       <controlProperties>
         <text>3</text>
       </controlProperties>
     </control>
+    <control controlID="45" controlTypeID="com.balsamiq.mockups::HRule" x="559" y="231" w="143" h="-1" measuredW="100" measuredH="5" zOrder="38" locked="false" isInGroup="-1"/>
+    <control controlID="47" controlTypeID="com.balsamiq.mockups::List" x="558" y="602" w="151" h="72" measuredW="100" measuredH="126" zOrder="39" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Everyone%0AFriends%20Only%0ADrinking%20Buddies</text>
+      </controlProperties>
+    </control>
+    <control controlID="48" controlTypeID="com.balsamiq.mockups::HRule" x="559" y="642" w="143" h="-1" measuredW="100" measuredH="5" zOrder="40" locked="false" isInGroup="-1"/>
+    <control controlID="49" controlTypeID="com.balsamiq.mockups::HRule" x="559" y="620" w="143" h="-1" measuredW="100" measuredH="5" zOrder="41" locked="false" isInGroup="-1"/>
   </controls>
 </mockup>
