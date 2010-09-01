@@ -31,6 +31,9 @@ class cLoginLoginController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
+		$config = $this->Get ( "Config" );
+		$invites = $config['invites'];
+		
 		// Check if the user is already logged in.
 		$user = $this->Talk ( "User", "Current" );
 		
@@ -52,6 +55,10 @@ class cLoginLoginController extends cController {
 			$this->_PrepareMessages ( 'join' );
 		} else {
 			$this->_PrepareMessages ( 'local' );
+		}
+		
+		if ( $invites != "true" ) {
+			$this->Login->Find ( "[id=invite-code-requirement]", 0 )->outertext = "";
 		}
 		
 		// Set the context for all of the forms.
@@ -225,10 +232,14 @@ class cLoginLoginController extends cController {
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
+		$config = $this->Get ( "Config" );
+		$invites = $config['invites'];
+		
 		$fullname = ltrim ( rtrim ( $this->GetSys ( "Request" )->Get ( "Fullname" ) ) );
 		$username = strtolower ( ltrim ( rtrim ($this->GetSys ( "Request" )->Get ( "Username" ) ) ) );
 		$email = ltrim ( rtrim ( $this->GetSys ( "Request" )->Get ( "Email" ) ) );
 		$password = $this->GetSys ( "Request" )->Get ( "Pass" );
+		$invite = $this->GetSys ( "Request" )->Get ( "Invite" );
 		$confirm = $this->GetSys ( "Request" )->Get ( "Confirm" );
 		
 		$error = false;
@@ -239,28 +250,40 @@ class cLoginLoginController extends cController {
 		}
 		
 		if ( $password != $confirm ) {
-			$session->Set ( "Message", "Passwords do not match" );
+			$session->Set ( "Message", "Passwords Do Not Match" );
 			$session->Set ( "Error", 1 );
 			$error = true;
 		}
 			
 		if ( strlen ( $password ) < 5 ) {
-			$session->Set ( "Message", "Username is too short" );
+			$session->Set ( "Message", "Username Is Too Short" );
 			$session->Set ( "Error", 1 );
 			$error = true;
 		}
 			
 		if ( strlen ( $password ) < 6 ) {
-			$session->Set ( "Message", "Password is too short" );
+			$session->Set ( "Message", "Password Is Too Short" );
 			$session->Set ( "Error", 1 );
 			$error = true;
 		}
 			
 			
 		if ( !preg_match ('/^[a-zA-Z0-9.]+$/', $username ) ) {
-			$session->Set ( "Message", "Username can only have letters and numbers" );
+			$session->Set ( "Message", "Invalid Characters In Username" );
 			$session->Set ( "Error", 1 );
 			$error = true;
+		}
+		
+		if ( $invites == "true" ) {
+			$userInvites = new cModel ( "userInvites" );
+			
+			$userInvites->Retrieve ( array ( "Recipient" => $email, "Value" => $invite ) );
+			if ( $userInvites->Get ( "Total" ) == 0 ) {
+				$session->Set ( "Message", "Invalid Invite Code" );
+				$session->Set ( "Error", 1 );
+				$error = true;
+			}
+			
 		}
 			
 		if ( $error ) {
@@ -288,7 +311,7 @@ class cLoginLoginController extends cController {
 		$userAuth->Fetch();
 		
 		if ( $userAuth->Get ( "Total" ) > 0 ) {
-			$session->Set ( "Message", "Username is taken" );
+			$session->Set ( "Message", "Username Is Taken" );
 			$session->Set ( "Error", 1 );
 			if ( !$this->Login = $this->GetView ( "login" ) ) return ( false );
 		
@@ -345,6 +368,13 @@ class cLoginLoginController extends cController {
 			
 		$session->Set ( 'Message', 'Your Account Has Been Created' );
 		$session->Set ( 'Error', 0 );
+		
+		if ( $invites == "true" ) {
+			$userInvites->Fetch();
+			$userInvites->Set ( "Active", "0" );
+			$userInvites->Set ( "Stamp", NOW() );
+			$userInvites->Save( array ( "Recipient" => $email, "Value" => $invite ) );
+		}
 		
 		$this->_PrepareMessages ( 'local' );
 		$this->Login->Synchronize();

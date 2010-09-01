@@ -49,6 +49,7 @@
 			<div><label for='Email'>Email   </label><input type='text' name='Email' class="required email" value="" /></div>
 			<div><label for='Password'>Password</label><input  type='password' name='Pass' class="required" minlength="6" value="" /></div>
 			<div><label for='Confirm'>Confirm Password</label><input  type='password' name='Confirm' class="required" minlength="6" value="" /></div>
+			<div id="invite-code-requirement"><label for='Invite'>Invite Code</label><input type='text' name='Invite' class="required" value="" /></div>
 		</fieldset>
 		<button   type='submit' name='Task' value='Join'>Join</button> 
 	</form>

@@ -83,6 +83,8 @@ class cComponent extends cBase {
 		
 		$this->Controllers->$controllername->Set ( "Context", $context);
 		
+		$this->Controllers->$controllername->Set ( "Config", $this->_Config );
+		
 		// Store the current session context
 		$oldSessionContext = $this->GetSys ( "Session" )->Context();
 		

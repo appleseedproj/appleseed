@@ -38,11 +38,6 @@
            </tr>
 
            <tr>
-             <th><label for='shutdown'><?php echo __("Use Invites"); ?></label></th>
-             <td><?php $zHTML->Menu ('USEINVITES', $gINVITESLISTING, 1, $gSETTINGS['UseInvites']); ?></td>
-           </tr>
-    
-           <tr>
              <th><label for='Default Invites'><?php echo __("Default Invites"); ?></label></th>
              <td><?php $zHTML->TextBox ("INVITES", 5, $gSETTINGS['InviteAmount']); ?></td>
            </tr>
