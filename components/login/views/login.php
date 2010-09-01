@@ -8,9 +8,9 @@
 		<input type='hidden' name='Task' value='login'> 
 		<input type='hidden' name='Context' value=''> 
  
-		<div><label for='username'>Username</label><input type='text' name='Username' class='username' maxlength='64' value="" /></div>
-		<div><label for='password'>Password</label><input type='password' name='Pass' class='pass' maxlength='16' value="" /></div>
-		<div><label for='rememberme'>Remember Me</label><input id='remember' type='checkbox' name='Remember' /></div>
+		<div><label for='Username'>Username</label><input type='Text' name='Username' class='username' maxlength='64' value="" /></div>
+		<div><label for='Password'>Password</label><input type='Password' name='Pass' class='pass' maxlength='16' value="" /></div>
+		<div><label for='Remember'>Remember Me</label><input id='Remember' type='checkbox' name='Remember' /></div>
 		</fieldset>
  
 		<button type='submit' name='Task' value='Login'>Login</button>    

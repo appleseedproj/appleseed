@@ -148,6 +148,7 @@ class cLoginLoginController extends cController {
 		
 		$username = $this->GetSys ( "Request" )->Get ( "Username" );
 		$password = $this->GetSys ( "Request" )->Get ( "Pass" );
+		$remember = $this->GetSys ( "Request" )->Get ( "Remember" );
 		
 		$loginModel = new cModel ( "userAuthorization" );
 		
@@ -165,7 +166,7 @@ class cLoginLoginController extends cController {
 		
 		if ( $loginModel->Get ( "Pass" ) == $newpass ) {
 			
-			$this->_SetLogin ( $loginModel->Get ( "uID") );
+			$this->_SetLogin ( $loginModel->Get ( "uID"), $remember );
 			
 			$this->Display( "redirect" );
 			return ( true );
@@ -193,7 +194,7 @@ class cLoginLoginController extends cController {
 		}
 	}
 	
-	private function _SetLogin ( $pUserID ) {
+	private function _SetLogin ( $pUserID, $pRemember = false ) {
 		
 		$sessionModel = new cModel ( "userSessions" );
 		
@@ -214,8 +215,14 @@ class cLoginLoginController extends cController {
 		
 		$sessionModel->Save ();
 		
+		// If "Remember" is selected, set a faux-permanent cookie (1 year).
+		if ( $pRemember ) 
+			$time = time()+60*60*24*365;
+		else
+			$time = 0;
+		
 		// Set the cookie
-      	if ( !setcookie ("gLOGINSESSION", $identifier, time()+60*60*24*30, '/') ) {
+      	if ( !setcookie ("gLOGINSESSION", $identifier, $time, '/') ) {
       		// @todo Set error that we couldn't set the cookie.
       		
       		return ( false );
