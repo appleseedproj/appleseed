@@ -38,9 +38,9 @@
         <text>%3C%3CFirst%20%3CPrev%20%201%202%203%204%205%20%20Next%3E%20Last%3E%3E</text>
       </controlProperties>
     </control>
-    <control controlID="34" controlTypeID="com.balsamiq.mockups::List" x="361" y="157" w="200" h="152" measuredW="100" measuredH="126" zOrder="8" locked="false" isInGroup="-1">
+    <control controlID="34" controlTypeID="com.balsamiq.mockups::List" x="361" y="157" w="200" h="260" measuredW="100" measuredH="189" zOrder="8" locked="false" isInGroup="-1">
       <controlProperties>
-        <text>Settings%0APrivacy%0ATags%0AUpdates%0A%5BAccess%5D</text>
+        <text>Basic%20Info%0ACaption%0AProfile%0A%20%0AApproval%0APrivacy%0ANotification%0A%20%0A%5BDelete%20Account%5D</text>
       </controlProperties>
     </control>
     <control controlID="39" controlTypeID="com.balsamiq.mockups::ButtonBar" x="940" y="165" w="132" h="23" measuredW="132" measuredH="29" zOrder="9" locked="false" isInGroup="-1">
