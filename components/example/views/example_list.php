@@ -18,7 +18,7 @@
 				</select>
 			</nav>	
 			<nav class="select">
-				<span>Select Options</span> <a href="#">All</a>, <a href="#">None</a>
+				<span>Select Options</span> <a class="tooltip" tip="Select All Items" href="#">All</a>, <a href="#">None</a>
 			</nav>
 			<nav class='pagination'>
 			</nav>

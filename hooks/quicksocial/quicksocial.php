@@ -54,6 +54,9 @@ class cQuicksocialHook extends cHook {
 	
 	public function BeginSystemInitialize ( $pData = null ) {
 		
+		// Bounce if requested.
+		$this->_Bounce ( );
+		
 		$social = $this->GetSys ( "Request" )->Get ( "_social" );
 		
 		if ( $social != "true" ) return ( false );
@@ -92,7 +95,14 @@ class cQuicksocialHook extends cHook {
 				if ( $verified->success == "true" ) {
 					$username = $verified->username;
 					$domain = $verified->domain;
+					$returnTo = $verified->returnTo;
+					if ( !strstr ( $returnTo, "://" ) ) $returnTo = "http://" . $returnTo;
+					
 					$this->_SetRemoteSession( $username, $domain );
+					
+					header ("Location:$returnTo");
+		
+					exit;
 				} else {
 					
 					$this->GetSys ( "Session" )->Context ( "login.login.2.login" );
@@ -155,7 +165,12 @@ class cQuicksocialHook extends cHook {
 		$username = $pData['username'];
 		$domain = $pData['domain'];
 		
-		$connect->Redirect ( $domain, $username );
+		// @todo Use HTTP for now, but allow for other methods later.
+		$method = "http";
+		
+		$returnTo = $pData['return'];
+		
+		$connect->Redirect ( $domain, $username, $method, $returnTo );
 		exit;
 	}
 	
@@ -365,10 +380,46 @@ class cQuicksocialHook extends cHook {
 		// Update the userInformation table
 		$infoModel = new cModel ( "userInformation" );
 		
-		header ("Location:/");
-		
 		return ( true );
 	}
 	
+	private function _Bounce ( ) {
+		
+		$URI = $_SERVER['REQUEST_URI'];
+		
+		if ( preg_match ( "/.*_bounce=(.*)/", $URI, $matches ) ) {
+			$bounceRequest = $matches[1];
+			
+			list ( $bounce, $null ) = explode ( '&', $bounceRequest, 2 );
+			list ( $username, $domain ) = explode ( '@', $bounce, 2 );
+			
+			$return = $_SERVER["REQUEST_URI"];
+			
+			$return = str_replace ( "?_bounce=" . $bounce, "", $return );
+			$return = str_replace ( "&_bounce=" . $bounce, "", $return );
+			$return = str_replace ( "_bounce=" . $bounce, "", $return );
+			
+			$return = $_SERVER['HTTP_HOST'] . $return;
+			
+			$data = array ( "username" => $username, "domain" => $domain, "return" => $return );
+			
+			$this->OnLoginAuthenticate ( $data );
+			exit;
+			
+		} elseif ( ( $bounce = $_REQUEST['_bounce'] ) and ( $_REQUEST['_social'] != "true" ) ) {
+			// @note This is for legacy support, the old system turns all links to POST forms. 
+			// @note We may or may not keep that for the new system.
+			list ( $username, $domain ) = explode ( '@', $bounce, 2 );
+			
+			$return = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			
+			$data = array ( "username" => $username, "domain" => $domain, "return" => $return );
+			
+			$this->OnLoginAuthenticate ( $data );
+			exit;
+		}
+		
+		return ( false );
+	}
 }
 

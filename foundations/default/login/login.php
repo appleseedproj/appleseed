@@ -7,7 +7,7 @@
 	<meta charset="utf-8" />
 
 	<!-- Title -->
-	<title><?php echo __("Layout"); ?></title>
+	<title><?php echo __("Login | Appleseed"); ?></title>
 	
 	<!-- Links -->
 	<link rel="stylesheet" href="/themes/default/style/html5reset-1.4.1.css" /> 

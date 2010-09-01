@@ -80,6 +80,7 @@ class cMarkup extends simple_html_dom {
 			"button",
 			"legend", 
 			"[placeholder]",
+			"[title]",
 			"[label]", 
 			"a",
 			"h1", "h2", "h3", "h4", "h5", "h6"

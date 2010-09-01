@@ -55,6 +55,7 @@
 				<a href="#"><span class="new-friend notify"></span><span class="new-friend-count">2</span></a>
 				<a href="#"><span class="new-mail"></span><span class="new-mail-count none"></span></a>
 				<a href="#"><span class="new-notification "></span><span class="new-notification-count none"></span></a>
+				<a href="#"><span class="new-approval notify"></span><span class="new-approval-count">1</span></a>
 			</div>
 			<div id="header-current" class="grid_6"> 
 				<span class="current-remote"></span>
@@ -63,7 +64,7 @@
 			</div>
 			<div id="header-links" class="grid_3">
 				<a class="links-news" href="#">News</a>
-				<a class="links-profile" href="#">Profile</a>
+				<a class="links-profile" href="#">Mail</a>
 				<a class="links-options" href="#">Options</a>
 				<a class="links-logout" href="#">Logout</a>
 			</div>
@@ -87,8 +88,9 @@
 	       		<div id="profile-tabs" class="grid_9 push_4">
 	       			<nav>
 	       				<ul>
-	       					<li><a href="#">Options</a></li>
 	       					<li><a href="#">News</a></li>
+	       					<li><a href="#">Mail</a></li>
+	       					<li><a href="#">Options</a></li>
 	       					<li><a href="#">Wall</a></li>
 							<li><a href="#">Info</a></li>
 							<li class="selected"><a href="#">Friends</a></li>

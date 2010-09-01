@@ -1,2 +1,2 @@
-<meta http-equiv='Refresh' content='1;url=/'>
-<p>Click here to continue</p>
+<meta http-equiv='Refresh' content='0;url=/'>
+<p id="logout-redirect-link">Click here to continue</p>

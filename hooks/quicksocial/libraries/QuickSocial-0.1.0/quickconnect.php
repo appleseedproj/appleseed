@@ -27,13 +27,17 @@ class cQuickConnect extends cQuickSocial {
 	public function __construct ( ) {       
 	}
 	
-	public function Redirect ( $pTarget, $pUser, $pMethod = "http" ) {
+	public function Redirect ( $pTarget, $pUser, $pMethod = "http", $pReturnTo = null) {
 		
 		$request['_social'] = "true";
 		$request['_task'] = "connect.check";
 		
 		$request['_username'] = $pUser;
 		$request['_source'] = $_SERVER['HTTP_HOST'];
+		
+		$request['_return'] = $pReturnTo ? $pReturnTo : $_SERVER['HTTP_HOST'];
+		
+		$request['_return'] = base64_encode ( $request['_return'] );
 		
 		$request['_method'] = $pMethod;
 		
@@ -65,6 +69,8 @@ class cQuickConnect extends cQuickSocial {
 		$username = $_GET['_username'];
 		
 		$method = $_GET['_method'];
+		
+		$returnTo = isset ( $_GET['_return'] ) ? $_GET['_return'] : $source;
 		
 		switch ( $method ) {
 			case 'https':
@@ -111,6 +117,8 @@ class cQuickConnect extends cQuickSocial {
 				$request['_success'] = "true";
 				$request['_error'] = "";
 				
+				$request['_return'] = $returnTo;
+				
 				$request['_username'] = $username;
 				$request['_source'] = $_SERVER['HTTP_HOST'];
 		
@@ -143,6 +151,8 @@ class cQuickConnect extends cQuickSocial {
 		$source = $_GET['_source'];
 		$username = $_GET['_username'];
 		
+		$returnTo = $_GET['_return'];
+		
 		if ( $success != "true" ) {
 			$return->username = $username;
 			$return->domain = $source;
@@ -169,6 +179,8 @@ class cQuickConnect extends cQuickSocial {
 		
 			$return->username = $username;
 			$return->domain = $source;
+			
+			$return->returnTo = base64_decode ( $returnTo );
 			
 			return ( $return );
 		} else {

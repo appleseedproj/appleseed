@@ -42,7 +42,6 @@ class cRequest {
 
 	public function Get ( $pVariable = null , $pDefault = null ) {
 		
-		
 		// Makes all request variable names case insensitive.
 		$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
 		

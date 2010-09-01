@@ -2668,9 +2668,9 @@
         if ($pDOMAIN != $gSITEDOMAIN) {
           if (($zAUTHUSER->Domain) and ($pDOMAIN != $zAUTHUSER->Domain)) {
             // Redirect to home domain for remote authentication.
-            $target = $pDOMAIN;
+            $target = $zAUTHUSER->Username . '@' . $zAUTHUSER->Domain;
             $location = "/profile/" . $pUSERNAME . "/";
-            $gLINKUSERTARGET =  "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location;
+            $gLINKUSERTARGET =  'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/' . '?_bounce=' . $target;
           } else {
             $gLINKUSERTARGET =  'http://' . $pDOMAIN . '/profile/' . $pUSERNAME . '/';
           } // if
@@ -2710,9 +2710,9 @@
       if ($pDOMAIN != $gSITEDOMAIN) {
         if (($zAUTHUSER->Domain) and ($pDOMAIN != $zAUTHUSER->Domain)) {
           // Redirect to home domain for remote authentication.
-          $target = $pDOMAIN;
+          $target = $zAUTHUSER->Username . '@' . $zAUTHUSER->Domain;
           $location = "/group/" . $pGROUPNAME . "/";
-          $gLINKGROUPTARGET = "http://" . $zAUTHUSER->Domain . "/login/bounce/?target=" . $target . "&location=" . $location;
+          $gLINKGROUPTARGET = 'http://' . $pDOMAIN . '/group/' . $pGROUPNAME . '/' . '?_bounce=' . $target;
         } else {
           $gLINKGROUPTARGET = 'http://' . $pDOMAIN . '/group/' . $pGROUPNAME . '/';
         } // if

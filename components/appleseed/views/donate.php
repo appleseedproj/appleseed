@@ -1,4 +1,4 @@
-<section id="appleseed_donate">
+<section id="appleseed-donate">
 
 	<h1>Support Appleseed!</h1>
 	
@@ -12,7 +12,7 @@
 		<input type="hidden" name="item_name" value="The Appleseed Project">
 		<input type="hidden" name="item_number" value="Open Source Donation">
 		
-		<select name="amount">
+		<select id="donate-amount" name="amount">
 			<option value="100"> $100.00 </option>
 			<option value="50"> $50.00 </option>
 			<option value="25"> $25.00 </option>
@@ -28,7 +28,7 @@
 </section>
 
 <!--
-<section id="appleseed_indiegogo">
+<section id="appleseed-indiegogo">
 	<h1>Fundraising Drive!</h1>
 	
 	<p>We're also on <a href="http://www.indiegogo.com/The-Appleseed-Project">Indiegogo.com</a>, looking to raise money for the project until December 1, 2010.</p>

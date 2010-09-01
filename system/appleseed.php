@@ -19,8 +19,6 @@ define ( 'ASD_PATH', $_SERVER['DOCUMENT_ROOT'] . DS);
 require ( ASD_PATH . DS . 'system' . DS . 'base.php' );
 require ( ASD_PATH . 'system' . DS . 'application.php' );
 
-$benchmark['_'] = (float) array_sum(explode(' ',microtime())); 
-
 /** 
  * Entry Point
  * 

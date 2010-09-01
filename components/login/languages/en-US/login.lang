@@ -8,3 +8,25 @@ INVALID_ID="Your remote id is formatted like an email address, &lt;username@doma
 INVALID_CALLBACK="A system error occurred: Invalid Callback."
 INVALID_NODE="This is not a valid Appleseed node."
 NOT_LOGGED_IN="You are not logged in to this Appleseed node."
+
+[password_reset]
+PASSWORD_RESET_FROM="password@%domain$s"
+PASSWORD_RESET_FROM_NAME="Password Reset"
+PASSWORD_RESET_SUBJECT="Your new password for %domain$s"
+PASSWORD_RESET_BODY="Hello, %fullname$s
+
+Your password has been reset.  Your new password is:
+
+%password$s
+
+Thank You,
+The Appleseed Project"
+
+PASSWORD_HAS_BEEN_RESET="Your password has been reset.  A new password has been sent to %email$s"
+USERNAME_NOT_FOUND="User %username$s was not found in our database"
+INVALID_USERNAME="Enter your username to reset your password"
+
+[join]
+YOUR_ACCOUNT_HAS_BEEN_CREATED="Your new account has been created!  Log in to to start setting up your profile."
+USERNAME_IS_TAKEN="That username is already taken. Please choose another."
+EMAIL_ADDRESS_IN_USE="That email address is already associated with an account.  Did you forget your password?"
