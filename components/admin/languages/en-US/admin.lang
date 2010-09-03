@@ -1,0 +1,15 @@
+ADMINISTRATION_MENU_TITLE="Administration"
+ADMINISTRATION_INFO_TITLE="Welcome To The Appleseed Administration Page"
+
+ADMINISTRATION_INFO_CONTENT="
+	Here you can configure your Appleseed node settings.<br /><br />
+
+	Click on a menu item to the left to get started.<br /><br />
+
+
+	More documentation is available (soon!) at 
+	<a href=\"http://opensource.appleseedproject.org/docs/\">http://opensource.appleseedproject.org/docs/</a><br /><br />
+
+	Thanks,<br />
+	The Appleseed Project
+"

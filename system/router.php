@@ -57,6 +57,10 @@ class cRouter extends cBase {
 
 			if ( preg_match ( $pattern, $request, $routed ) ) {
 				
+				$restrictions = $FoundationConfig->GetConfiguration ( "restrictions" );
+				
+				if ( !$this->_CheckRestrictions ( $restrictions ) ) return ( false );
+				
 				// See if we're matching variables in the url and store them in cRequest 
 				if ( preg_match ( '/\?/', $route ) ) {
 					list ( $finalDestination, $variables ) = explode ( '?', $route, 2);
@@ -121,6 +125,23 @@ class cRouter extends cBase {
 		$this->Legacy ( );
        	
 		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
+		
+		return ( true );
+	}
+	
+	private function _CheckRestrictions ( $pRestrictions ) {
+		
+		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
+		
+		foreach ( $pRestrictions as $r => $restriction ) {
+			$r = ltrim ( rtrim ( $r, '/' ), '/' );
+			$pattern = '/^' . addcslashes ($r, '/') . '$/';
+			if ( preg_match ( $pattern, $request ) ) {
+				$data = array ( "restriction" => $restriction );
+				$return = $this->GetSys ( "Event" )->Trigger ( "On", "System", "Restricted", $data );
+				return ( $return );
+			}
+		}
 		
 		return ( true );
 	}

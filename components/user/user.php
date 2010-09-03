@@ -46,6 +46,17 @@ class cUser extends cComponent {
 		return ( $AuthUser );
 	}
 	
+	public function AdminMenu ( $pData = null ) {
+		
+		$return = array ();
+		
+		$return['title'] = "Users";
+		$return['class'] = "users";
+		$return['link'] = "/admin/users/";
+		
+		return ( $return );
+	} 
+	
 }
 
 /** User Authorization Class
@@ -61,7 +72,6 @@ class cUserAuthorization extends cBase {
 	public $Fullname;
 	public $Domain;
 	public $Remote;
-	public $Anonymous;
 	
 	public function LoggedIn () {
 		
@@ -126,4 +136,5 @@ class cUserAuthorization extends cBase {
       	
       	return ( true );
 	}
+	
 }

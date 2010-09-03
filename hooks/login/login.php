@@ -40,6 +40,28 @@ class cLoginHook extends cHook {
 		return ( true );
 	}
 	
+	public function OnSystemRoute ( $pData = null ) {
+		
+		$foundation = $pData['foundation'];
+		
+		if ( $foundation == 'login/login.php' ) {
+			
+			// If we're attempting to login as someone else, then continue with the login foundation.
+			if ( $this->GetSys ( "Request" )->Get ( "Task" ) == "Login" ) return ( false );
+		
+			// Check if the user is already logged in.
+			$user = $this->GetSys ( "Components" )->Talk ( 'User', 'Current' );
+		
+			// If they are logged in, redirect.
+			if ( $user->Username ) {
+				header('Location: /');
+				exit;
+			}
+		}
+			
+		return ( false );
+	}
+	
 	private function _Logout ( ) {
 		
 		// Get the current cookies

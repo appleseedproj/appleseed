@@ -242,7 +242,13 @@ class cComponents extends cBase {
 		$component = ucwords ( strtolower ( ltrim ( rtrim ( $pComponent ) ) ) );
 		$function = ltrim ( rtrim ( $pRequest ) );
 		
-		if ( in_array ( $function, get_class_methods ( $this->$component ) ) ) {
+		if ( !isset ( $this->$component ) ) return ( false );
+		
+		$methods = get_class_methods ( $this->$component );
+		
+		if ( !$methods ) return ( false );
+		
+		if ( in_array ( $function, $methods) ) {
 			return ( $this->$component->$function ( $pData ) );
 		}
 		

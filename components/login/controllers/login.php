@@ -31,23 +31,14 @@ class cLoginLoginController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$config = $this->Get ( "Config" );
+		$noredirect = $pData['noredirect'];
+		
+		$config = $this->Get ( 'Config' );
 		$invites = $config['invites'];
-		
-		// Check if the user is already logged in.
-		$user = $this->Talk ( "User", "Current" );
-		
-		// If they are logged in, redirect.
-		if ( $user->Username ) {
-			$pView = "redirect";
-			
-			parent::Display ( $pView, $pData );
-			return ( true );
-		}
 		
 		if ( !$this->Login = $this->GetView ( $pView ) ) return ( false );
 		
-		$remote = $this->GetSys ( "Request" )->Get ( "Remote" );
+		$remote = $this->GetSys ( 'Request' )->Get ( 'Remote' );
 		
 		if ( $remote ) {
 			$this->_PrepareMessages ( 'remote' );
@@ -168,8 +159,8 @@ class cLoginLoginController extends cController {
 			
 			$this->_SetLogin ( $loginModel->Get ( "uID"), $remember );
 			
-			$this->Display( "redirect" );
-			return ( true );
+			header('Location: /');
+			exit;
 		} else {
 			$this->Login = $this->GetView ( "login" );
 			

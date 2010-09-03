@@ -18,7 +18,7 @@
 	<div id="header-links" class="grid_3">
 		<a class="links-news" href="#">News</a>
 		<a class="links-profile" href="#">Profile</a>
-		<a class="links-admin" href="/_admin">Admin</a>
+		<a class="links-admin" href="/admin/">Admin</a>
 		<a class="links-logout" href="/logout/">Logout</a>
 	</div>
 </div>

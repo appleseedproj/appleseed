@@ -77,8 +77,7 @@
 	
     	<div id="appleseed-admin" class="container_16">
 	       	<div id="appleseed-admin-menu" class="container_16">
-	       		<div id="admin-tabs" class="grid_9 push_4">
-	       			<nav>
+	       		<nav id="admin-tabs" class="grid_9 push_4">
 	       				<ul>
 	       					<li><a href="#">Options</a></li>
 							<li><a href="#">Tooltips</a></li>
@@ -86,8 +85,7 @@
 							<li><a href="#">Logs</a></li>
 							<li><a href="#">Maintenance</a></li>
 		       			</ul>
-		       		</nav>
-		       	</div>
+		       	</nav>
 		       	<div id="admin-search" class="grid_3 push_4">
 					<input type="text" name="search" placeholder="Search..." class="search local"><input type="submit" name="search" value="" class="search-submit local">
 				</div>
@@ -98,11 +96,11 @@
 					<section id="admin-main-menu">
 						<h1>Administration</h1>
 						<ul>
-							<li><a href="#"><span class="config-icon"></span><span class="admin-menu-link">Config</span></a></li>
-							<li><a href="#"><span class="users-icon"></span><span class="admin-menu-link">Users</span></a></li>
-							<li><a href="#"><span class="content-icon"></span><span class="admin-menu-link">Content</span></a></li>
-							<li class="selected"><a href="#"><span class="system-icon"></span><span class="admin-menu-link">System</span></a></li>
-							<li><a href="#"><span class="control-icon"></span><span class="admin-menu-link">Control</span></a></li>
+							<li><a href="#" class="config"><span class="icon"></span>Config</a></li>
+							<li><a href="#" class="users"><span class="icon"></span>Users</a></li>
+							<li><a href="#" class="content"><span class="icon"></span>Content</a></li>
+							<li class="selected" ><a class="system" href="#"><span class="icon"></span>System</a></li>
+							<li><a href="#" class="control"><span class="icon"></span>Control</a></li>
 						</ul>
 					</section>
 				</div>

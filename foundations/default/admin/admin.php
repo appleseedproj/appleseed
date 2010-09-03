@@ -7,7 +7,7 @@
 	<meta charset="utf-8" />
 
 	<!-- Title -->
-	<title><?php echo __("Login | Appleseed"); ?></title>
+    <title><?php echo __("Admin | Appleseed"); ?></title>
 	
 	<!-- Links -->
 	<link rel="stylesheet" href="/themes/default/style/html5reset-1.4.1.css" /> 
@@ -15,6 +15,7 @@
 	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
 	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
+	<link rel="stylesheet" href="/themes/default/style/admin.css" /> 
 	
 	<!-- Javascript --> 
 	<!--[if IE]>
@@ -25,7 +26,7 @@
    	<script type="text/javascript" src="/libraries/javascript/jloader.init.js"></script>
    	<script type="text/javascript" src="/foundations/default/default.js"></script>
    	
-	<!-- Load JQuery -->
+   	<!-- Load JQuery -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/jquery-1.4.2.min.js"></script>
    	
    	<!-- Load JQuery::UI -->
@@ -33,50 +34,45 @@
    	
    	<!-- Load JQuery::Validation -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
-	
+   	
 </head>
 
 <body id="www-website-com">
-
-	<!-- System Message -->
-	<?php $zApp->Components->Go ( "system" ); ?>
 	
+  	<?php $zApp->Components->Go ( "system" ); ?>
+
 	<div class="clear"></div>
 
+	<!-- System Message -->
+	
 	<!-- Header -->
 	<header id="appleseed-header">
-  		<?php $zApp->Components->Go ( "header" ); ?>
-	</header>
-	
+ 		<?php $zApp->Components->Go ( "header" ); ?>
+ 	</header>
+
 	<div id="appleseed-logo"></div>
 	
 	<div id="appleseed-container" class="container_16">
 	
-    	<div id="appleseed-login" class="container_16">
-	       	<div id="appleseed-login-menu" class="container_16">
-	       		<nav id="login-tabs" class="grid_9 push_4">
-					<?php $zApp->Components->Go ( "login", "tabs", "tabs" ); ?>
+    	<div id="appleseed-admin" class="container_16">
+	       	<div id="appleseed-admin-menu" class="container_16">
+	       		<nav id="admin-tabs" class="grid_9 push_4">
+	       			&nbsp;
 		       	</nav>
+		       	<div id="admin-search" class="grid_3 push_4">
+		       		&nbsp;
+				</div>
 			</div>
        
-			<div id="appleseed-login-main" class="grid_16">
-				<div id="appleseed-login-info" class="grid_4 alpha">
-					<?php $zApp->Components->Go ( "login", "info", "info" ); ?>
-        
-		 			<?php $zApp->Components->Go ( "appleseed", "appleseed", "donate" ); ?>
-		  	
+			<div id="appleseed-admin-main" class="grid_16">
+				<div id="appleseed-admin-main-menu" class="grid_4 alpha">
+					<section id="admin-main-menu">
+						<?php $zApp->Components->Go ( "admin", "menu", "menu" ); ?>
+					</section>
 				</div>
-				<div id="appleseed-login-content" class="grid_12 omega">
-					<section id="login-local">
-						<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
-					</section>
- 
-					<section id="login-remote">
-						<?php $zApp->Components->Go ( "login", "login", "remote" ); ?>
-					</section>
-
-					<section id="login-join">
-						<?php $zApp->Components->Go ( "login", "login", "join" ); ?>
+				<div id="appleseed-admin-content" class="grid_12 omega">
+  					<section class="admin-content">
+						<?php $zApp->Components->Go ( "admin", "info", "info" ); ?>
 					</section>
 				</div>
 			</div>
@@ -87,10 +83,8 @@
 	<div class="clear"></div>
     
     <footer id="appleseed-footer" class="container_16">
-		<?php $zApp->Components->Go ( "footer" ); ?>
-    </footer>
-    
-	<div class="clear"></div>
-	
+ 		<?php $zApp->Components->Go ( "footer" ); ?>
+ 	</footer>
+
 </body>
 </html>

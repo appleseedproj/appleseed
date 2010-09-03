@@ -74,10 +74,6 @@
 					<section id="login-remote">
 						<?php $zApp->Components->Go ( "login", "login", "remote" ); ?>
 					</section>
-
-					<section id="login-join">
-						<?php $zApp->Components->Go ( "login", "login", "join" ); ?>
-					</section>
 				</div>
 			</div>
 		</div>
