@@ -72,7 +72,7 @@
 				</div>
 				<div id="appleseed-admin-content" class="grid_12 omega">
   					<section class="admin-content">
-						<?php $zApp->Components->Go ( "user", "admin", "configuration" ); ?>
+						<?php $zApp->Components->Go ( "user", "admin", "access" ); ?>
 					</section>
 				</div>
 			</div>

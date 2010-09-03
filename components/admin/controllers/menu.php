@@ -54,12 +54,13 @@ class cAdminMenuController extends cController {
 			
 			foreach ( $menuItems as $m => $menu ) {
 				$link = ltrim ( rtrim ( $menu['link'], '/' ), '/' );
-			
+				
 				$row->Find ( 'a span[class=title]', 0 )->innertext = $menu['title'];
 				$row->Find ( 'a', 0 )->href = $menu['link'];
 				$row->class = $menu['class'];
 				
-				if ( $request == $link ) { 
+				$requestPattern = '/^' . addcslashes ($link, '/') . '\/(.*)$/';
+				if ( ( $request == $link ) or ( preg_match ( $requestPattern, $request ) ) ) { 
 					$row->class .= " selected";
 				}
 				

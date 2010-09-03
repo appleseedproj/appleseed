@@ -16,7 +16,11 @@
 		nav#admin-tabs ul li:hover { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
 		nav#admin-tabs ul li:hover a { color:#2a2a2a; }
 		nav#admin-tabs ul li a:hover { text-decoration:none; }
+		nav#admin-tabs ul li.ui-tabs-selected { background-color:#f1fed5; border-bottom:1px solid #f1fed5; }
+		nav#admin-tabs ul li.ui-tabs-selected a { color:#2a2a2a; }
 		
+		#admin-main-menu { margin:0; padding:0; }
+		#admin-main-menu h1 { margin-top:10px; padding:0; }
 		#admin-main-menu ul li { float:left; width:200px; padding:10px 0 0 10px; list-style-type:none; clear:both; }
 		#admin-main-menu ul li a { background:none; color:#406300; font-weight:bold; }
 		#admin-main-menu ul li a span.icon { float:left; height:24px; width:24px; }
