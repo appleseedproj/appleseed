@@ -57,10 +57,10 @@
     	<div id="appleseed-admin" class="container_16">
 	       	<div id="appleseed-admin-menu" class="container_16">
 	       		<nav id="admin-tabs" class="grid_9 push_4">
-	       			&nbsp;
+					<?php $zApp->Components->Go ( "user", "admin", "tabs" ); ?>
 		       	</nav>
 		       	<div id="admin-search" class="grid_3 push_4">
-		       		&nbsp;
+					<?php $zApp->Components->Go ( "search", "search", "local" ); ?>
 				</div>
 			</div>
        
@@ -72,7 +72,7 @@
 				</div>
 				<div id="appleseed-admin-content" class="grid_12 omega">
   					<section class="admin-content">
-						<?php $zApp->Components->Go ( "admin", "info", "info" ); ?>
+						<?php $zApp->Components->Go ( "user", "admin", "accounts" ); ?>
 					</section>
 				</div>
 			</div>
