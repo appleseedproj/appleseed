@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   System
+ * @subpackage   Profile
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** System Component
+/** Profile Component
  * 
- * System Component Entry Class
+ * Profile Component Entry Class
  * 
  * @package     Appleseed.Components
- * @subpackage  System
+ * @subpackage  Profile
  */
-class cSystem extends cComponent {
+class cProfile extends cComponent {
 	
 	/**
 	 * Constructor
@@ -33,8 +33,10 @@ class cSystem extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'title' =>"System", 'class' => "system", 'link' => "/admin/system/" );
+		$return[] = array ( 'title' =>"Profile", 'class' => "profile", 'link' => "/admin/profile/" );
 		
 		return ( $return );
 	} 
+	
+	
 }

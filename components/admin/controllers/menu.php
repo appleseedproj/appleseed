@@ -37,28 +37,54 @@ class cAdminMenuController extends cController {
 		
 		$this->Menu = $this->GetView ( 'menu' );
 		
-		$list = $this->Menu->Find ( '[id=admin-main-menu] ul li', 0);
+		$list = $this->Menu->Find ( '[id=admin-main-menu] ul', 0);
 		
 		$row = $this->Menu->Copy ( '[id=admin-main-menu] ul li' )->Find ( 'li', 0 );
 		
-		$list->innertext = '';
+		$list->innertext = "";
+		
+		$config = $this->Get ( "Config" );
+		
+		$ordering = explode ( ' ', $config['menu_ordering'] );
 		
 		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
 		
 		foreach ( $componentList as $c => $component ) {
-			if ( !$menuItem = $components->Talk ( $component, 'AdminMenu' ) ) continue;
+			if ( !$menuItems = $components->Talk ( $component, 'AdminMenu' ) ) continue;
 			
-			$link = ltrim ( rtrim ( $menuItem['link'], '/' ), '/' );
+			foreach ( $menuItems as $m => $menu ) {
+				$link = ltrim ( rtrim ( $menu['link'], '/' ), '/' );
 			
-			$row->Find ( 'a span[class=title]', 0 )->innertext = $menuItem['title'];
-			$row->Find ( 'a', 0 )->href = $menuItem['link'];
-			$row->class = $menuItem['class'];
-			
-			if ( $request == $link ) { 
-				$row->class .= " selected";
+				$row->Find ( 'a span[class=title]', 0 )->innertext = $menu['title'];
+				$row->Find ( 'a', 0 )->href = $menu['link'];
+				$row->class = $menu['class'];
+				
+				if ( $request == $link ) { 
+					$row->class .= " selected";
+				}
+				
+				$title = strtolower ( $menu['title'] );
+				
+				$rows[$title] = $row->outertext;
+				
 			}
-			
-			$list->innertext .= $row->outertext;
+		}
+		
+		$final = array ();
+		
+		foreach ( $ordering as $order ) {
+			$order = strtolower ( $order );
+			if ( !isset ( $rows[$order] ) ) continue;
+			$final[] = $rows[$order];
+			unset ( $rows[$order] );
+		}
+		
+		foreach ( $rows as $row ) {
+			$final[] = $row;
+		}
+		
+		foreach ( $final as $f=> $finalRow ) {
+			 $list->innertext .= $finalRow;
 		}
 		
 		$this->Menu->Display();

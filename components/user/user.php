@@ -50,9 +50,7 @@ class cUser extends cComponent {
 		
 		$return = array ();
 		
-		$return['title'] = "Users";
-		$return['class'] = "users";
-		$return['link'] = "/admin/users/";
+		$return[] = array ( 'title' =>"Users", 'class' => "users", 'link' => "/admin/users/" );
 		
 		return ( $return );
 	} 
@@ -87,7 +85,6 @@ class cUserAuthorization extends cBase {
       	}
       	
       	return ( true );
-      	
 	}
 	
 	private function _LocalLoggedIn ( $pSession ) {

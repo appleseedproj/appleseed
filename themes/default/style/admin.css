@@ -17,22 +17,23 @@
 		nav#admin-tabs ul li:hover a { color:#2a2a2a; }
 		nav#admin-tabs ul li a:hover { text-decoration:none; }
 		
-		#admin-main-menu ul li { float:left; width:200px; padding:0px 0 0 10px; list-style-type:none; clear:both; }
+		#admin-main-menu ul li { float:left; width:200px; padding:10px 0 0 10px; list-style-type:none; clear:both; }
+		#admin-main-menu ul li a { background:none; color:#406300; font-weight:bold; }
+		#admin-main-menu ul li a span.icon { float:left; height:24px; width:24px; }
 		#admin-main-menu ul li:hover { font-weight:normal; background-color:#c0d895; }
-		#admin-main-menu ul li.config a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -70px; height:24px; width:24px; }
-		#admin-main-menu ul li.users a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -48px; height:24px; width:24px; }
-		#admin-main-menu ul li.content a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -45px; height:24px; width:24px; }
-		#admin-main-menu ul li.system a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -70px; height:24px; width:24px; }
-		#admin-main-menu ul li.control a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -70px; height:24px; width:24px; }
-		#admin-main-menu ul li a { background:none; float:left; margin:5px 0; padding:5px 0; height:16px; font-size:110%; font-weight:bold; }
-		#admin-main-menu ul li.selected { font-weight:normal; background-color:#c0d895; }
-		#admin-main-menu ul li.selected a { color:#f1fed5; }
+		#admin-main-menu ul li.config a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -70px; }
+		#admin-main-menu ul li.users a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -48px; }
+		#admin-main-menu ul li.pages a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -45px; }
+		#admin-main-menu ul li.system a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -70px; }
+		#admin-main-menu ul li.control a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -70px; }
+		#admin-main-menu ul li.selected { background-color:#c0d895; }
+		#admin-main-menu ul li.selected a { color:#f1fed5; background:none; font-weight:bold; }
 		#admin-main-menu ul li.selected a span.admin-menu-link { color:#f1fed5; }
-		#admin-main-menu ul li.config.selected a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -118px; height:24px; width:24px; }
-		#admin-main-menu ul li.users.selected a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -94px; height:24px; width:24px; }
-		#admin-main-menu ul li.content.selected a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -94px; height:24px; width:24px; }
-		#admin-main-menu ul li.system.selected a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -118px; height:24px; width:24px; }
-		#admin-main-menu ul li.control.selected a span.icon { float:left; color:#406300; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -120px; height:24px; width:24px; }
+		#admin-main-menu ul li.config.selected a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -118px; }
+		#admin-main-menu ul li.users.selected a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -24px -94px; }
+		#admin-main-menu ul li.pages.selected a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -96px -94px; }
+		#admin-main-menu ul li.system.selected a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -116px -118px; }
+		#admin-main-menu ul li.control.selected a span.icon { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -44px -120px; }
 		
 		/* admin-search */
 		#admin-search { float:left; position:relative; top:88px; text-align:right; }

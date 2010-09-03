@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   System
+ * @subpackage   Config
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** System Component
+/** Config Component
  * 
- * System Component Entry Class
+ * Config Component Entry Class
  * 
  * @package     Appleseed.Components
- * @subpackage  System
+ * @subpackage  Config
  */
-class cSystem extends cComponent {
+class cConfig extends cComponent {
 	
 	/**
 	 * Constructor
@@ -33,8 +33,10 @@ class cSystem extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'title' =>"System", 'class' => "system", 'link' => "/admin/system/" );
+		$return[] = array ( 'title' =>"Configuration", 'class' => "config", 'link' => "/admin/config/" );
 		
 		return ( $return );
 	} 
+	
+	
 }
