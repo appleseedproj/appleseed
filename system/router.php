@@ -49,7 +49,14 @@ class cRouter extends cBase {
 		$routes = $FoundationConfig->GetConfiguration ( "routes" );
 		
 		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
-			
+		
+		list ( $admin, $null ) = explode ( '/', $request, 2);
+		
+		if ( $admin == "admin" ) {
+			// Load admin strings into cache.
+			$this->GetSys ( "Language" )->Load ('_system/admin.lang');
+		}
+		
 		foreach ( $routes as $r => $route ) {
 			$r = ltrim ( rtrim ( $r, '/' ), '/' );
 			

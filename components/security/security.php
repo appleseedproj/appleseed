@@ -107,9 +107,9 @@ class cSecurity extends cComponent {
 	
 			unset ($parentAccess);
 		} else {
-			$access->Set ( "Read", $accessModel->Get ( "r" ) );
-			$access->Set ( "Write", $accessModel->Get ( "w" ) );
-			$access->Set ( "Admin", $accessModel->Get ( "a" ) );
+			$access->Set ( "Read", $accessModel->Get ( "Read" ) );
+			$access->Set ( "Write", $accessModel->Get ( "Write" ) );
+			$access->Set ( "Admin", $accessModel->Get ( "Admin" ) );
 			$access->Set ( "Inheritance", $accessModel->Get ( "Inheritance" ) );
 		} // if 
 		

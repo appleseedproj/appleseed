@@ -205,6 +205,10 @@ class cExampleExampleController extends cController {
 		
 		$row = $this->List->Copy ( "[id=customer-table-body] tbody tr" )->Find ( "tr", 0 );
 		
+		/*
+		 * @tutorial Clear out the original template element we buil the table from.
+		 *
+		 */
 		$tbody->innertext = " " ;
 		
 		$cellCustomer_PK = $row->Find( "[class=Customer_PK]", 0 );
@@ -242,12 +246,6 @@ class cExampleExampleController extends cController {
 				
 		    $tbody->innertext .= $row->outertext;
 		}
-		
-		/*
-		 * @tutorial Remove the original template element we built the table from.
-		 *
-		 */
-		//$this->List->RemoveElement ( "[id=customer-table-body] tr" );
 		
 		/*
 		 * @tutorial You can also call components from within other components.
@@ -288,12 +286,6 @@ class cExampleExampleController extends cController {
 		$this->List->Clear();
 		unset ( $this->List );
 		
-		/*
-		 * @tutorial Clear the memory and unset the variables
-		 * 
-		 * @philosophy This is just good practice, although it may also help with memory leaks in SimpleHTMLDom
-		 * 
-		 */
 		return ( true );
 	}
 	

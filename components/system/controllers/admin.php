@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   User
+ * @subpackage   System
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** User Component Controller
+/** System Component Controller
  * 
- * User Component Admin Controller Class
+ * System Component Admin Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  User
+ * @subpackage  System
  */
-class cUserAdminController extends cController {
+class cSystemAdminController extends cController {
 	
 	/**
 	 * Constructor
@@ -61,15 +61,21 @@ class cUserAdminController extends cController {
 		$this->Tabs = $this->GetView ( $pView );
 		
 		switch ( $link ) {
-			case 'admin/users':
-			case 'admin/users/config':
-				$this->Tabs->Find ( "[id=user-config-tab]", 0 )->class = "ui-tabs-selected";
+			case 'admin/system':
+			case 'admin/system/config':
+				$this->Tabs->Find ( "[id=system-config-tab]", 0 )->class = "ui-tabs-selected";
 			break;
-			case 'admin/users/accounts':
-				$this->Tabs->Find ( "[id=user-accounts-tab]", 0 )->class = "ui-tabs-selected";
+			case 'admin/system/nodes':
+				$this->Tabs->Find ( "[id=system-nodes-tab]", 0 )->class = "ui-tabs-selected";
 			break;
-			case 'admin/users/access':
-				$this->Tabs->Find ( "[id=user-access-tab]", 0 )->class = "ui-tabs-selected";
+			case 'admin/system/logs':
+				$this->Tabs->Find ( "[id=system-logs-tab]", 0 )->class = "ui-tabs-selected";
+			break;
+			case 'admin/system/maintenance':
+				$this->Tabs->Find ( "[id=system-maintenance-tab]", 0 )->class = "ui-tabs-selected";
+			break;
+			case 'admin/system/update':
+				$this->Tabs->Find ( "[id=system-update-tab]", 0 )->class = "ui-tabs-selected";
 			break;
 			break;
 		}

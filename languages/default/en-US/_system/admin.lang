@@ -1,3 +1,11 @@
+[common]
+SELECT_OPTIONS="Select:"
+SELECT_NONE="None"
+SELECT_ALL="All"
+
+OPTION_YES="Yes"
+OPTION_NO="No"
+
 [global]
 RECORD_UPDATED="Record #%id$s has been updated."
 RECORD_ADDED="Record #%id$s has been added."

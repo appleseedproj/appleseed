@@ -67,11 +67,10 @@ class cComponent extends cBase {
 		
 		if ( !$pTask ) $pTask = 'display';
 		
-		$controllername = ucwords ( strtolower ( ltrim ( rtrim ( $controller ) ) ) );
+		$controllername = $this->_Controller;
 		
 		$taskname = ucwords ( strtolower ( ltrim ( rtrim ( $pTask ) ) ) );
 		
-		$this->Set ( "Controller", $controller );
 		$this->Set ( "View", $view );
 		
 		$this->Controllers->$controllername->Set ( "Component", $this->Get ( "Component" ) ) ;
@@ -79,7 +78,7 @@ class cComponent extends cBase {
 		
 		$this->Controllers->$controllername->Set ( "Instance", $this->_Instance );
 		
-		$context = $this->CreateContext( $this->_Controller, $this->_View );
+		$context = $this->CreateContext( strtolower ( $this->_Controller ), $this->_View );
 		
 		$this->Controllers->$controllername->Set ( "Context", $context);
 		
@@ -145,8 +144,21 @@ class cComponent extends cBase {
 		
 		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'controllers' . DS . $pController . '.php';
 		
+		// Remove periods and ucwords the result
+		if ( strstr ( $pController, '.' ) ) {
+			$pControllerElements = explode ( '.', $pController );
+			
+			foreach ( $pControllerElements as $e => $element ) {
+				$pControllerElements[$e] = ucwords ( $element );
+			}
+			
+			$pController = implode ( "", $pControllerElements );
+		}
+		
 		$controllername = ucwords ( $pController );
 		$componentname = ucwords ( $this->_Component );
+		
+		$this->Set ( "Controller", $controllername );
 		
 		$class = 'c' . $componentname . $controllername . 'Controller';
 		

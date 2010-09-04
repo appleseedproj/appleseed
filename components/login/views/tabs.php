@@ -1,4 +1,4 @@
-<script type="text/javascript" src="/components/login/assets/javascript/login.js"></script>
+<script type="text/javascript" src="/components/login/assets/javascript/tabs.js"></script>
 
 <ul>
 	<li id="login-local-tab"><a href="#login-local">Login</a></li>

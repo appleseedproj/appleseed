@@ -7,3 +7,8 @@ create table `#__NodeDiscovery` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Do
 create table `#__LocalTokens` ( `Token_PK` int(11) NOT NULL AUTO_INCREMENT, `Token` varchar(64) DEFAULT NULL, `Username` varchar(255) DEFAULT NULL, `Target` varchar(255) NOT NULL, `Stamp` datetime DEFAULT NULL, PRIMARY KEY (`Token_PK`) ) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1
 
 create table `#__RemoteTokens` ( `Token_PK` int(11) NOT NULL AUTO_INCREMENT, `Token` varchar(64) DEFAULT NULL, `Username` varchar(255) DEFAULT NULL, `Source` varchar(255) NOT NULL, `Address` varchar(255) DEFAULT NULL, `Host` varchar(255) DEFAULT NULL, `Stamp` datetime DEFAULT NULL, PRIMARY KEY (`Token_PK`) ) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1
+
+alter table `#__systemUpdate` rename `#__SystemUpdate`;
+alter table `#__systemUpdate` change tID Server_PK int(11);
+insert into `#__systemUpdate` (Server) values ('update.appleseedproject.org');
+

@@ -1,5 +1,5 @@
 <h1>Login</h1> 
-<p id='local-login-message'>Here</p>
+<p id='local-login-message'></p>
 <form id='userinfo' name='userinfo' action='/login/' method='post'> 
 <fieldset>
 	<input type='hidden' name='Task' value='login'> 
