@@ -2,17 +2,23 @@
  
 <p>Admin System Update Description</p> 
  
-<form id='update' name='update' method='POST' action='_admin/control/update/'> 
+<form id="update" name="update" method="POST"> 
   
-    <label for='Server'>Update Server Location</label> 
-    <select name="Server"></select>
+ 	<fieldset>
+ 	   <label for="Server">Update Server Location</label> 
+ 	   <select name="Server"></select>
     
-    <label for='version'>Version</label> 
-    <select class='version' name='gVERSION'  > 
-	</select> 
+ 	   <label for="NewServer">Add Server</label> 
+ 	   <input  type="text" name="NewServer" class="NewServer" maxlength="255" value="" />
+ 	   <button id="add-server" ype="submit" name="Task" value="AddServer">Add Server Button</button>   
+ 	   
+ 	   <label for="version">Version</label> 
+ 	   <select class="version" name="Version"> 
+		</select> 
     
-    <label for="backupdirectory">Backup Directory</label> 
-    <input  type="text" name="BackupDirectory" class="backupdirectory" maxlength="255" value="" /> 
+    	<label for="BackupDirectory">Backup Directory</label> 
+    	<input  type="text" name="BackupDirectory" class="BackupDirectory" maxlength="255" value="" /> 
        
-     <button   type="submit" name="Task" value="Continue">Continue</button>   
+    </fieldset>
+    <button type="submit" name="Task" value="Continue">Continue</button>   
  </form>

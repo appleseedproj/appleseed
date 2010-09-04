@@ -42,6 +42,9 @@
 		/* admin-search */
 		#admin-search { float:left; position:relative; top:88px; text-align:right; }
 		
+		/* admin-system-update */
+		button#add-server { float:left; margin-left:5px; margin-top:4px; }
+		
 		.admin-content h1 { margin-bottom:0px; margin-top:10px; }
 		
 		.admin-content form { float:left; margin-top:10px; }

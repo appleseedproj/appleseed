@@ -31,7 +31,15 @@ class cSystemAdminUpdateController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
-		return ( parent::Display ( $pView, $pData ) );
+		$this->Form = $this->GetView ( "admin.update" );
+		
+		$defaults = array ( "BackupDirectory" => ASD_PATH . "_backup" );
+		
+		$this->Form->Synchronize( $defaults );
+		
+		$this->Form->Display();
+		
+		return ( true );
 	}
 	
 }

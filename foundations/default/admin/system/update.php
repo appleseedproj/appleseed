@@ -71,7 +71,7 @@
 					</section>
 				</div>
 				<div id="appleseed-admin-content" class="grid_12 omega">
-  					<section class="admin-content">
+  					<section class="admin-system-update">
 						<?php $zApp->Components->Go ( "system", "admin.update", "admin.update" ); ?>
 					</section>
 				</div>
