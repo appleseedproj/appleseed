@@ -8,7 +8,7 @@ create table `#__LocalTokens` ( `Token_PK` int(11) NOT NULL AUTO_INCREMENT, `Tok
 
 create table `#__RemoteTokens` ( `Token_PK` int(11) NOT NULL AUTO_INCREMENT, `Token` varchar(64) DEFAULT NULL, `Username` varchar(255) DEFAULT NULL, `Source` varchar(255) NOT NULL, `Address` varchar(255) DEFAULT NULL, `Host` varchar(255) DEFAULT NULL, `Stamp` datetime DEFAULT NULL, PRIMARY KEY (`Token_PK`) ) ENGINE=MyISAM AUTO_INCREMENT=20 DEFAULT CHARSET=latin1
 
-alter table `#__systemUpdate` rename `#__SystemUpdate`;
-alter table `#__systemUpdate` change tID Server_PK int(11);
-insert into `#__systemUpdate` (Server) values ('update.appleseedproject.org');
-
+alter table `#__systemUpdate` rename `kings_SystemUpdate`;
+alter table `#__SystemUpdate` change `tID` `Server_PK` int(11);
+alter table `#__SystemUpdate` add `Default` tinyint(1) default '0';
+insert into `#__SystemUpdate` (`Server`, `Default`) values ('update.appleseedproject.org', 1 );

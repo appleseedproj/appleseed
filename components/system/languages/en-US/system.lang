@@ -1,2 +1,3 @@
-
 ADD_SERVER_BUTTON="Add"
+NOT_A_VALID_UPDATE_SERVER="%server$s is not a valid update server."
+NO_SERVER_WAS_PROVIDED="You must specify a server to add."

@@ -146,12 +146,25 @@ class cController extends cBase {
 			$pSuffix = null;
 		}
 		
-		$model = ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $pSuffix ) );
+		// Remove periods and ucwords the result
+		if ( strstr ( $pSuffix, '.' ) ) {
+			$pSuffixElements = explode ( '.', $pSuffix );
+			
+			foreach ( $pSuffixElements as $e => $element ) {
+				$pSuffixElements[$e] = ucwords ( $element );
+			}
+			
+			$suffix = strtolower ( implode ( "", $pSuffixElements ) );
+		} else {
+			$suffix = $pSuffix;
+		}
+		
+		$model = ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $suffix ) );
 		
 		// If model has already been created, return it.
 		if ( isset ( $this->_Models->$model ) ) return ( $this->_Models->$model );
 		
-		$class = 'c' . ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $pSuffix ) ) . 'Model';
+		$class = 'c' . ucwords ( strtolower ( $this->_Component ) ) . ucwords ( strtolower ( $suffix ) ) . 'Model';
 		
 		// If class is already available, just create it and return it.
 		if ( class_exists ( $class ) ) {

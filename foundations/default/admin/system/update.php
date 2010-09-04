@@ -35,6 +35,9 @@
    	<!-- Load JQuery::Validation -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
    	
+   	<!-- Load JQuery::Fields -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.field.min.js"></script>
+   	
 </head>
 
 <body id="www-website-com">
@@ -71,7 +74,7 @@
 					</section>
 				</div>
 				<div id="appleseed-admin-content" class="grid_12 omega">
-  					<section class="admin-system-update">
+  					<section id="admin-system-update">
 						<?php $zApp->Components->Go ( "system", "admin.update", "admin.update" ); ?>
 					</section>
 				</div>

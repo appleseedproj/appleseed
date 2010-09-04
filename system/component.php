@@ -118,6 +118,17 @@ class cComponent extends cBase {
 	 */
 	public function CreateContext ( $pController ) {
 		
+		// Remove periods and ucwords the result
+		if ( strstr ( $pController, '.' ) ) {
+			$pControllerElements = explode ( '.', $pController );
+			
+			foreach ( $pControllerElements as $e => $element ) {
+				$pControllerElements[$e] = ucwords ( $element );
+			}
+			
+			$pController = strtolower ( implode ( "", $pControllerElements ) );
+		}
+		
 		$contextData = array ( $pController, $this->_Component, $this->_Instance, $this->_View );
 		
 		$context = join ( '.', $contextData );

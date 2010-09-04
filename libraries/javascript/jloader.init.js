@@ -30,7 +30,8 @@ _JLoader.prototype.Load = function ( ) {
 			var _Element = document.getElementById ( _ElementList[e] );
 		}
 		
-		_ElementList[e] = _ElementList[e].replace ( "-", "_" );
+		// Replace all dashes in the id with underscores.
+		_ElementList[e] = _ElementList[e].replace ( /-/gi, "_" );
 		
 		// Constructor
 		Class = _ElementList[e].UCWords ();
