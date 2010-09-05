@@ -31,13 +31,19 @@ class cSystemAdminUpdateController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
+		$session = $this->GetSys ( "Session" ); 
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		// Current version.
+		$current = $this->GetSys ( "Config" )->GetConfiguration ( "ver" );
+		
 		$this->Form = $this->GetView ( "admin.update" );
 		
 		$update = $this->GetModel ( "admin.update" );
 		
-		$update->Retrieve ();
+		$update->Retrieve();
 		
-		$defaults = array ();
+		$defaults = array();
 		
 		while ( $update->Fetch() ) {
 			$server = $update->Get ( "Server" );
@@ -58,6 +64,11 @@ class cSystemAdminUpdateController extends cController {
 			}
 		}
 		
+		if ( count ( $viableServers ) == 0 ) {
+			$session->Set ( "Message", "No Valid Servers Found" );
+			$session->Set ( "Error", true );
+		}
+		
 		if ( !in_array ( $currentServer, $viableServers ) ) {
 			$currentServer = $viableServers[0];
 		}
@@ -67,12 +78,20 @@ class cSystemAdminUpdateController extends cController {
 		}
 		
 		$this->Form->Find ( "[name=Context]", 0 )->value  = $this->Get ( "Context" );
+		$this->Form->Find ( "[name=Current]", 0 )->value  = $current;
 		
 		foreach ( $servers as $server => $serverInformation ) {
 			$this->Form->Find ( "[name=Server]", 0 )->innertext .= '<option value="' . $server . '">' . $server . '</option>';
 			if ( $currentServer == $server ) {
 				foreach ( $serverInformation->releases as $r => $release ) {
-					$this->Form->Find ( "[name=Version]", 0 )->innertext .= '<option value="' . $release . '">' . $release . '</option>';
+					if ( !$this->_CompareValidUpgrade ( $current, $release ) ) {
+						$disabled = 'disabled="disabled"';
+					} else {
+						$defaults['Version'] = $release;
+						$disabled = null;
+					}
+					
+					$this->Form->Find ( "[name=Version]", 0 )->innertext .= '<option ' . $disabled . ' value="' . $release . '">' . $release . '</option>';
 				}
 			}
 		}
@@ -177,6 +196,31 @@ class cSystemAdminUpdateController extends cController {
 		return ( $this->Display ( $pView, $pData ) );
 	}
 	
+	public function Update ( $pView = null, $pData = array ( ) ) {
+		
+		$session = $this->GetSys ( "Session" ); 
+		$session->Context ( $this->Get ( "Context" ) );
+	
+		$server = $this->GetSys ( "Request" )->Get ( "Server" );
+		$backupDirectory = $this->GetSys ( "Request" )->Get ( "BackupDirectory" );
+		$version = $this->GetSys ( "Request" )->Get ( "Version" );
+		
+		if ( !$server ) {
+			$session->Set ( "Message", "No Valid Servers Found" );
+			$session->Set ( "Error", true );
+			return ( $this->Display ( $pView, $pData ) );
+		}
+		
+		if ( !is_writable ( $backupDirectory ) ) {
+			$session->Set ( "Message", "Backup Directory Unwritable" );
+			$session->Set ( "Error", true );
+			return ( $this->Display ( $pView, $pData ) );
+		}
+		
+		echo "Success!";
+		return ( true );
+	}
+
 	private function _PrepareMessage ( ) {
 		
 		$session = $this->GetSys ( "Session" ); 
@@ -198,5 +242,18 @@ class cSystemAdminUpdateController extends cController {
 		return ( true );
 	}
 	
-
+	private function _CompareValidUpgrade ( $pCurrent, $pNew ) {
+		list ( $currentMajor, $currentMinor, $currentMicro ) = explode ( '.', $pCurrent );
+		
+		$newCurrentMicro = $currentMajor . '.' . $currentMinor . '.' . ($currentMicro+1);
+		$newCurrentMinor = $currentMajor . '.' . ($currentMinor+1) . '.0';
+		$newCurrentMajor = ($currentMajor+1) . '.' . '0.0';
+		
+		if ( $pNew == $newCurrentMajor ) return ( true );
+		if ( $pNew == $newCurrentMinor ) return ( true );
+		if ( $pNew == $newCurrentMicro ) return ( true );
+		
+		return ( false );
+	}
+	
 }
