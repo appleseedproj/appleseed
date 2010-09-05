@@ -20,6 +20,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cSystemAdminUpdateController extends cController {
 	
+	private $_Messages;
+	
 	/**
 	 * Constructor
 	 *
@@ -100,7 +102,7 @@ class cSystemAdminUpdateController extends cController {
 		
 		$this->Form->Synchronize( $defaults );
 		
-		$this->_PrepareMessage ();
+		$this->_PrepareMessage ( &$this->Form );
 		
 		$this->Form->Display();
 		
@@ -124,11 +126,11 @@ class cSystemAdminUpdateController extends cController {
 	}
 	
 	// Single requests
-	private function _Communicate ( $pTarget, $pData ) {
+	private function _Communicate ( $pTarget, $pData, $pRaw = false ) {
 		
 		$url = 'http://' . $pTarget;
 		
-		$url .= '/?' . http_build_query ($pData );
+		if ( count ( $pData ) > 0 ) $url .= '/?' . http_build_query ($pData );
 		
 		$curl = curl_init();
 		
@@ -150,10 +152,12 @@ class cSystemAdminUpdateController extends cController {
 		// Retrieve the result
 		$curl_response = curl_exec ( $curl ) ;
 		
+		$result = $curl_response;
+		
 		curl_close($curl);
 		
 		// Decode the result
-		$result = json_decode ( $curl_response );
+		if ( !$pRaw ) $result = json_decode ( $result );
 		
 		return ( $result );
 	}
@@ -239,7 +243,7 @@ class cSystemAdminUpdateController extends cController {
 				$session->Set ( "Error", true );
 				return ( $this->Display ( $pView, $pData ) );
 			} else {
-				$resultMessages[] = __( "Created Database Backup", array ( "file" => $subdirectory . DS . "data.sql" ) );
+				$this->_Messages[] = __( "Created Database Backup", array ( "file" => $subdirectory . DS . "data.sql" ) );
 			}
 			
 			// Step 2: Back up the files
@@ -249,11 +253,46 @@ class cSystemAdminUpdateController extends cController {
 				$session->Set ( "Error", true );
 				return ( $this->Display ( $pView, $pData ) );
 			} else {
-				$resultMessages[] = __( "Created File Backup", array ( "file" => $subdirectory . DS . "files" . DS ) );
+				$this->_Messages[] = __( "Created File Backup", array ( "file" => $subdirectory . DS . "files" . DS ) );
 			}
+		} else {
+			$this->_Messages[] = __("Skipping Backups");
 		}
 		
-		print_r ( $resultMessages );
+		// Step 3: Update the files.
+		$this->_UpdateFiles ( $server, $version );
+		
+		// Step 4: Update the database.
+		$this->_UpdateDatabase ( $server, $version );
+		
+		// Display the results.
+		$this->Results = $this->GetView ( "admin.update.results" );
+		
+		$tbody = $this->Results->Find ( "[id=update-results-body] tbody tr", 0);
+		
+		$row = $this->Results->Copy ( "[id=update-results-body] tbody tr" )->Find ( "tr", 0 );
+		
+		$cellCurrent = $row->Find( "[class=Current]", 0 );
+		$cellUpdate = $row->Find( "[class=Update]", 0 );
+		
+		$tbody->innertext = " " ;
+		
+		foreach ( $this->_Messages as $m => $message ) {
+		    $oddEven = empty($oddEven) || $oddEven == 'odd' ? 'even' : 'odd';
+			
+			$row->class = $oddEven;
+			
+			$cellUpdate->innertext = $message;
+			$cellCurrent->innertext = ($m + 1);
+			$tbody->innertext .= $row->outertext;
+		}
+		
+		$session->Set ( "Message", __( "Update Has Completed", array ( "version" => $version ) ) );
+		$session->Set ( "Error", false );
+		
+		$this->_PrepareMessage ( &$this->Results );
+		
+		$this->Results->Display();
 		
 		return ( true );
 	}
@@ -361,20 +400,97 @@ class cSystemAdminUpdateController extends cController {
 		
 		return ( $dirs );
 	}
+	
+	private function _UpdateFiles ( $pServer, $pVersion ) {
+		$url = $pServer . "/diffs/" . $pVersion . ".diff";
+		
+		$diff = $this->_Communicate ( $url, array(), true );
+		
+		if ( !$diff ) {
+			$this->_Messages[] = "Error Retrieving File Diff";
+			return ( false );
+		}
+		
+		$diffData = explode ( "\n", $diff );
+		if ( count ( $diffData ) == 0 ) {
+			$this->_Messages[] = "Diff Empty No Files Were Updated";
+			return ( false );
+		}
+		
+		foreach ( $diffData as $d => $data ) {
+			list ( $action, $file, $md5 ) = explode ( "\t", $data );
+			
+			$fileURL = $pServer . '/releases/' . $pVersion . '/' . $file . '.txt';
+			
+			if ( $action == 'U' ) $fileData = $this->_Communicate ( $fileURL, array (), true );
+			
+			$oldFile = ASD_PATH . $file;
+			
+			$oldDirectory = implode ( "/", explode ( "/", ASD_PATH . $file, -1 ) );
+			
+			if ( !is_dir ( $oldDirectory ) ) {
+				if ( !rmkdir ( $oldDirectory ) ) {
+					$this->_Messages[] = __( "Could Not Create Directory", array ( "directory" => $oldDirectory ) );
+					continue;
+				}
+			}
+			
+			$oldMd5 = md5 ( $fileData );
+			
+			if ( $action == 'U' ) {
+				if ( $oldMd5 != $md5 ) {
+					$this->_Messages[] = __( "Checksums Do Not Match", array ( "filename" => $file, "found" => $oldMd5, "expected" => $md5 ) );
+					continue;
+				}
+				if ( !$handle = fopen( $oldFile, 'w+' ) ) {
+					$this->_Messages[] = __( "Could Not Open File", array ( "filename" => $file ) );
+					continue;
+				}
+				if ( !fwrite($handle,$fileData) ) {
+					$this->_Messages[] = __( "Could Not Update File", array ( "filename" => $file ) );
+					continue;
+				}
+				$this->_Messages[] = __( "Updated File Or Directory", array ( "filename" => $file ) );
+				fclose($handle);
+			} else if ( $action == 'D' ) {
+				
+				if ( !rrmdir ( $file ) ) {
+					$this->_Messages[] = __( "Could Not Delete File Or Directory", array ( "filename" => $file ) );
+					continue;
+				}
+				
+				$this->_Messages[] = __( "Deleted File Or Directory", array ( "filename" => $file ) );
+			}
+			
+			/*
+			echo $action, '<br />';
+			echo $file, '<br />';
+			echo $fileURL, '<br />';
+			echo $oldFile, '<br />';
+			echo "File Data: <pre>", htmlspecialchars ($fileData), '</pre><br />';
+			echo "Expected: ", $md5, '<br />';
+			echo "Actual: ", md5 ( $fileData ), '<hr />';
+			*/
+		}
+		
+		return ( true );
+	}
 
-	private function _PrepareMessage ( ) {
+	private function _UpdateDatabase ( $pServer, $pVersion ) {
+		return ( true );
+	}
+
+	private function _PrepareMessage ( $pMarkup ) {
 		
 		$session = $this->GetSys ( "Session" ); 
 		$session->Context ( $this->Get ( "Context" ) );
 	
-		$markup = & $this->Form;
-		
 		if ( $message =  $session->Get ( "Message" ) ) {
-			$markup->Find ( "[id=update-message]", 0 )->innertext = $message;
+			$pMarkup->Find ( "[id=update-message]", 0 )->innertext = $message;
 			if ( $error =  $session->Get ( "Error" ) ) {
-				$markup->Find ( "[id=update-message]", 0 )->class = "error";
+				$pMarkup->Find ( "[id=update-message]", 0 )->class = "error";
 			} else {
-				$markup->Find ( "[id=update-message]", 0 )->class = "message";
+				$pMarkup->Find ( "[id=update-message]", 0 )->class = "message";
 			}
 			$session->Delete ( "Message ");
 			$session->Delete ( "Error ");

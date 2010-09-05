@@ -28,7 +28,20 @@ jLoader.Admin_system_update.Button.OnClick = function ( pElement, pParent ) {
 			return ( false );
 		}
 		
-		return ( confirm ( __( "Are you sure?  This will update your system to version %version$s from server http://%server$s.", { "version":version, "server": server } ) ) );
+		if ( confirm ( __( "Are you sure?  This will update your system to version %version$s from server http://%server$s.", { "version":version, "server": server } ) ) ) {
+			// Change the text and disable the button
+			pElement.innerText = __( "Updating Please Wait" );
+			
+			$('#update').submit ( function ( ) {
+    			$( '#update button' ).attr( 'disabled', 'disabled' );
+				$( "form#update input[name='Task']" ).setValue ( "Update" );
+			} );
+			
+			return ( true );
+		} else {
+			return ( false );
+		}
+		
 	}
 	
 	return ( true );

@@ -351,3 +351,45 @@ function NOW() {
 	
 	return ( $now );
 }
+
+/*
+ * Adapted from: http://php.net/manual/en/function.rmdir.php
+ * 
+ */
+function rrmdir($dir) { 
+	if ( is_dir ( $dir ) ) { 
+		$objects = scandir( $dir ); 
+		foreach ( $objects as $object ) { 
+			if ( $object != "." && $object != ".." ) { 
+				if ( filetype ( $dir . "/" . $object ) == "dir" )  {
+					if ( !rrmdir ( $dir . "/" . $object ) ) return ( false );
+				} else {
+					if ( !unlink ( $dir."/".$object ) ) return ( false );
+				}
+			} 
+		} 
+		reset($objects); 
+		rmdir($dir); 
+	} 
+} 
+
+/*
+ * Adapted from: http://php.net/manual/en/function.rmkdir.php
+ * 
+ */
+function rmkdir ( $path, $mode = 0755 ) {
+	$path = rtrim ( preg_replace ( array ( "/\\\\/", "/\/{2,}/" ), "/", $path ), "/" );
+	$e = explode ( "/", ltrim ( $path, "/" ) );
+	if ( substr ( $path, 0, 1 ) == "/" ) {
+		$e[0] = "/".$e[0];
+	}
+	$c = count ( $e );
+	$cp = $e[0];
+	for ( $i = 1; $i < $c; $i++ ) {
+		if ( !is_dir ( $cp ) && !@mkdir ( $cp, $mode ) ) {
+			return false;
+		}
+		$cp .= "/".$e[$i];
+	}
+	return @mkdir ( $path, $mode );
+}

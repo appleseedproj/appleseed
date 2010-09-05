@@ -76,3 +76,7 @@
 		
 		.admin-content nav.select { font-size:90%; float:left; clear:left; padding:0; width:50%; margin:0; padding:2px 0; height:14px;  }
 		.admin-content nav.select a { background:none; padding:0; }
+		
+		#admin-system-update #update-results-body { margin-top:10px; }
+		#admin-system-update #update-results-body td { padding-left:5px; text-align:left; }
+		#admin-system-update #update-results-body tbody tr th { width:20px; }

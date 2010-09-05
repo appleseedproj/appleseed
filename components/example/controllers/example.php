@@ -181,8 +181,6 @@ class cExampleExampleController extends cController {
 		// Retrieve from the db, using no criteria except for the pagination settings.
 		$this->Customers->Retrieve( null, null, array ( "start" => $start, "step" => $step ) );
 		
-		$tbody = $this->List->Find ( "[id=customer-table-body] tbody tr", 0);
-		
 		$baseURL = $this->GetSys ( "Router" )->Get ( "Base" );
 		$this->List->Find ( "form", 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
 		
@@ -202,6 +200,8 @@ class cExampleExampleController extends cController {
 		 * 
 		 */
 		$this->List->Find( "input[name=Context]", 0 )->value = $this->_Context;
+		
+		$tbody = $this->List->Find ( "[id=customer-table-body] tbody tr", 0);
 		
 		$row = $this->List->Copy ( "[id=customer-table-body] tbody tr" )->Find ( "tr", 0 );
 		

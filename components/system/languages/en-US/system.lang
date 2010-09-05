@@ -6,4 +6,17 @@ NO_VALID_SERVERS_FOUND="No valid update servers were found.  Add one to continue
 BACKUP_DIRECTORY_UNWRITABLE="Cannot write to backup directory: %directory$s"
 
 ADMIN_SYSTEM_UPDATE_TITLE="System Update"
-ADMIN_SYSTEM_UPDATE_DESCRIPTION="Welcome to the one-click system update tool for Appleseed. Here you can upgrade your Appleseed server to the latest version with a few simple steps.  Backups of your database and files will be created.<br /><br /><b>Note:</b><br />- You can only upgrade versions one at a time.<br />- Only code is backed up, others (ie, storage) must be backed up manually."
+ADMIN_SYSTEM_UPDATE_DESCRIPTION="Welcome to the one-click system update tool for Appleseed. Here you can upgrade your Appleseed server to the latest version with a few simple steps.  Backups of your database and files will be created.<br /><br /><b>Note:</b><br />- You can only upgrade one version at a time.<br />- Only code is backed up, others (ie, storage) must be backed up manually."
+
+UPDATE_HAS_COMPLETED="System update to version %version$s has completed."
+
+YOUR_SYSTEM_HAS_BEEN_UPDATED="Your system has been updated.  A log of events is listed below."
+
+COULD_NOT_DELETE_FILE_OR_DIRECTORY="Could not delete: %filename$s"
+DELETED_FILE_OR_DIRECTORY="Deleted: %filename$s"
+
+CHECKSUMS_DO_NOT_MATCH="Invalid Checksum: %filename$s, expected: %expected$s found: %found$s"
+COULD_NOT_OPEN_FILE="Could not open file for writing: %filename$s"
+COULD_NOT_UPDATE_FILE="Could not update file: %filename$s"
+
+SKIPPING_BACKUPS="Skipping backups by user request"

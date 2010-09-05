@@ -23,7 +23,7 @@
 			</nav>
 			<nav class='pagination'>
 			</nav>
-			<table id="customer-table-body" cellspacing="0" summary="The technical specifications of the Apple PowerMac G5 series"> 
+			<table id="customer-table-body" cellspacing="0"> 
 				<thead> 
 					<th scope="col" class="nobg">#</th> 
 					<th scope="col"><a href="#">Customer Name</th> 
