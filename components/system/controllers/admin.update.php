@@ -205,20 +205,161 @@ class cSystemAdminUpdateController extends cController {
 		$backupDirectory = $this->GetSys ( "Request" )->Get ( "BackupDirectory" );
 		$version = $this->GetSys ( "Request" )->Get ( "Version" );
 		
+		$skipBackups = $this->GetSys ( "Request" )->Get ( "SkipBackups" );
+		
 		if ( !$server ) {
 			$session->Set ( "Message", "No Valid Servers Found" );
 			$session->Set ( "Error", true );
 			return ( $this->Display ( $pView, $pData ) );
 		}
 		
-		if ( !is_writable ( $backupDirectory ) ) {
-			$session->Set ( "Message", "Backup Directory Unwritable" );
-			$session->Set ( "Error", true );
-			return ( $this->Display ( $pView, $pData ) );
+		if ( !$skipBackups ) {
+			if ( !is_writable ( $backupDirectory ) ) {
+				$session->Set ( "Message", __( "Backup Directory Unwritable", array ( "directory" => $backupDirectory ) ) );
+				$session->Set ( "Error", true );
+				return ( $this->Display ( $pView, $pData ) );
+			}
+		
+			$subdirectory = date('Y-m-d_h\hi\ms\s');
+			$directory = $backupDirectory . DS . $subdirectory;
+		
+			if (!file_exists ( $directory ) ) {
+				if ( !mkdir ( $directory ) ) {
+					$session->Set ( "Message", __( "Backup Directory Unwritable", array ( "directory" => $backupDirectory ) ) );
+					$session->Set ( "Error", true );
+					return ( $this->Display ( $pView, $pData ) );
+				}
+				chmod ( $directory, 0777 );
+			} 
+		
+			// Step 1: Back up the database.
+			$sqlDataFile = $directory . DS . "data.sql";
+			if ( !$this->_BackupDatabase( $sqlDataFile ) ) {
+				$session->Set ( "Message", __( "Error Creating Data Backup", array ( "filename" => $sqlDataFile ) ) );
+				$session->Set ( "Error", true );
+				return ( $this->Display ( $pView, $pData ) );
+			} else {
+				$resultMessages[] = __( "Created Database Backup", array ( "file" => $subdirectory . DS . "data.sql" ) );
+			}
+			
+			// Step 2: Back up the files
+			$storeDirectory = $directory . DS . "files";
+			if ( !$this->_BackupDirectory( $storeDirectory ) ) {
+				$session->Set ( "Message", __( "Error Creating File Backup", array ( "directory" => $storeDirectory ) ) );
+				$session->Set ( "Error", true );
+				return ( $this->Display ( $pView, $pData ) );
+			} else {
+				$resultMessages[] = __( "Created File Backup", array ( "file" => $subdirectory . DS . "files" . DS ) );
+			}
 		}
 		
-		echo "Success!";
+		print_r ( $resultMessages );
+		
 		return ( true );
+	}
+	
+	private function _BackupDatabase ( $pBackupFile ) {
+		
+		// Adapted from: http://davidwalsh.name/backup-mysql-database-php
+		
+		$prefix = $this->GetSys ( "Config" )->GetConfiguration ( "pre" );
+		$db = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$query = "SHOW TABLES LIKE '$prefix%%'";
+		
+		$handle = $db->Prepare ( $query ) or die ();
+		
+		$handle->Execute ();
+		
+		$tables = array();
+		while ( $data = & $handle->Fetch ( PDO::FETCH_NUM ) ) {
+	  		$tables[] = $data[0];
+		} 
+		
+		$return = null;
+		
+		$return = "SET FOREIGN_KEY_CHECKS = 0;\n\n";
+		
+		foreach ( $tables as $table ) { 
+			
+			// DROP TABLE
+			$return .= "-- Table: $table\n\n";
+			$return .= 'DROP TABLE IF EXISTS `' . $table . '`;' . "\n";
+			
+			// CREATE TABLE
+			$createResult = $db->Prepare('SHOW CREATE TABLE '.$table);
+			$createResult->Execute ();
+			$row2 = $createResult->Fetch ( PDO::FETCH_NUM );
+			$return.= "\n".$row2[1].";\n\n";
+			
+			// Get the number of fields
+			$result = $db->Prepare('SELECT * FROM '.$table);
+			$result->Execute ();
+			$data = $result->Fetch ( PDO::FETCH_ASSOC );
+			$num_fields = count($data);
+			
+			$result = $db->Prepare('SELECT * FROM '.$table);
+			$result->Execute ();
+			
+			
+			for ( $i = 0; $i < $num_fields; $i++ )  { 
+				while ( $row = $result->Fetch ( PDO::FETCH_NUM ) ) { 
+					
+					$return.= 'INSERT INTO '.$table.' VALUES(';
+					
+					for ( $j=0; $j < $num_fields; $j++ ) { 
+						$row[$j] = addslashes ( $row[$j] );
+						$row[$j] = ereg_replace ( "\n", "\\n", $row[$j] );
+						if ( isset ( $row[$j] ) ) { 
+							$return .= '"'.$row[$j].'"' ; 
+						} else { 
+							$return .= '""';
+						} 
+						if ( $j< ( $num_fields-1 ) ) { $return.= ','; } 
+					} 
+					$return.= ");\n";
+				} 
+			} 
+			$return.="\n\n";
+		} 
+		
+  		// Save the file.
+		if ( !$handle = fopen( $pBackupFile, 'w+' ) ) return ( false );
+		if ( !fwrite($handle,$return) ) return ( false );
+		fclose($handle);
+		
+		chmod ( $pBackupFile, 0777 );
+		return ( true );
+	}
+	
+	private function _BackupDirectory ( $pLocation ) {
+		
+		if ( !mkdir ( $pLocation ) ) return ( false );
+		chmod ( $pLocation, 0777 );
+		
+		$source = ASD_PATH;
+		$dest = $pLocation;
+		
+		$backupDirectories = $this->_GetDirectoriesToBackup ( $source );
+		
+		foreach ( $backupDirectories as $d => $directory ) {
+			$source = ASD_PATH . DS . $directory;
+			$dest = $pLocation . DS . $directory;
+			smartCopy($source, $dest, array('folderPermission'=>0777,'filePermission'=>0777));
+		}
+		
+		return ( true );
+	}
+	
+	private function _GetDirectoriesToBackup ( $pLocation ) {
+		
+		$dirs = scandirs ( $pLocation );
+		
+		foreach ( $dirs as $d => $dir ) {
+			if ( preg_match ( '/^_/', $dir ) ) unset ( $dirs[$d] );
+		}
+		
+		return ( $dirs );
 	}
 
 	private function _PrepareMessage ( ) {
@@ -256,4 +397,74 @@ class cSystemAdminUpdateController extends cController {
 		return ( false );
 	}
 	
+}
+
+
+// Adapted from: http://sina.salek.ws/content/unix-smart-recursive-filefolder-copy-function-php
+function smartCopy($source, $dest, $options=array('folderPermission'=>0755,'filePermission'=>0755)) {
+	
+	if ( strstr ( "_backup", $source ) ) return ( false );
+	
+	$result=false;
+ 
+	//For Cross Platform Compatibility
+	if (!isset($options['noTheFirstRun'])) {
+	$source=str_replace('\\','/',$source);
+	$dest=str_replace('\\','/',$dest);
+	$options['noTheFirstRun']=true;
+	}
+	 
+	if (is_file($source)) {
+	if ($dest[strlen($dest)-1]=='/') {
+	if (!file_exists($dest)) {
+	makeAll($dest,$options['folderPermission'],true);
+	}
+	$__dest=$dest."/".basename($source);
+	} else {
+	$__dest=$dest;
+	}
+	$result=copy($source, $__dest);
+	chmod($__dest,$options['filePermission']);
+ 
+	} elseif(is_dir($source)) {
+	if ($dest[strlen($dest)-1]=='/') {
+	if ($source[strlen($source)-1]=='/') {
+	//Copy only contents
+	} else {
+	//Change parent itself and its contents
+	$dest=$dest.basename($source);
+	@mkdir($dest);
+	chmod($dest,$options['filePermission']);
+	}
+	} else {
+	if ($source[strlen($source)-1]=='/') {
+	//Copy parent directory with new name and all its content
+	@mkdir($dest,$options['folderPermission']);
+	chmod($dest,$options['filePermission']);
+	} else {
+	//Copy parent directory with new name and all its content
+	@mkdir($dest,$options['folderPermission']);
+	chmod($dest,$options['filePermission']);
+	}
+	}
+	 
+	$dirHandle=opendir($source);
+	while($file=readdir($dirHandle))
+	{
+	if($file!="." && $file!="..")
+	{
+	$__dest=$dest."/".$file;
+	$__source=$source."/".$file;
+	//echo "$__source ||| $__dest<br />";
+	if ($__source!=$dest) {
+	$result=smartCopy($__source, $__dest, $options);
+	}
+	}
+	}
+	closedir($dirHandle);
+ 
+	} else {
+	$result=false;
+	}
+	return $result;
 }

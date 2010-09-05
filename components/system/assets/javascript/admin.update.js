@@ -28,7 +28,7 @@ jLoader.Admin_system_update.Button.OnClick = function ( pElement, pParent ) {
 			return ( false );
 		}
 		
-		return ( confirm ( __( "Are you sure?  This will update your system to version %version$s from server %server$s.", { "version":version, "server": server } ) ) );
+		return ( confirm ( __( "Are you sure?  This will update your system to version %version$s from server http://%server$s.", { "version":version, "server": server } ) ) );
 	}
 	
 	return ( true );

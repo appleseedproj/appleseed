@@ -27,6 +27,9 @@
 		<label for="BackupDirectory">Backup Directory</label> 
 		<input type="text" name="BackupDirectory" class="BackupDirectory" maxlength="255" value="" /> 
 		
+		<label for="SkipBackups">Skip Backups</label> 
+		<input type="checkbox" name="SkipBackups" class="SkipBackups" > 
+		
 	</fieldset>
 	<button type="submit" id="update-button" name="Task" value="Update">Update</button>
  </form>
