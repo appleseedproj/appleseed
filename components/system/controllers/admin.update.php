@@ -234,7 +234,7 @@ class cSystemAdminUpdateController extends cController {
 		$skipBackups = $this->GetSys ( "Request" )->Get ( "SkipBackups" );
 		
 		if ( !$this->_CheckWritability ( ) ) {
-			$session->Set ( "Message", "Directories Not Writable" );
+			$session->Set ( "Message", "Files Not Writable" );
 			$session->Set ( "Error", true );
 			return ( $this->Display ( $pView, $pData ) );
 		}

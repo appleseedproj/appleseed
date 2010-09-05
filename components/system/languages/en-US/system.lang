@@ -22,3 +22,5 @@ COULD_NOT_UPDATE_FILE="Could not update file: %filename$s"
 SKIPPING_BACKUPS="Skipping backups by user request"
 
 UPDATED_FILE_OR_DIRECTORY="Updated: %filename$s"
+
+FILES_NOT_WRITABLE="Some files are not writable.  You will not be able to continue until this is resolved."
