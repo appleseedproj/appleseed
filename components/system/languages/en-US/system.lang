@@ -31,3 +31,7 @@ SQL_STATEMENT_ERROR="<b>Statement:</b> %statement$s<br /><b>Error:</b> %error$s"
 
 CREATED_DATABASE_BACKUP="Create DB backup: <b>%file$s</b>"
 CREATED_FILE_BACKUP="Create file backups: <b>%file$s</b>"
+
+COULD_NOT_CREATE_DIRECTORY="Could not create directory: %file$s"
+DIRECTORY_ALREADY_EXISTS="Directory already exists: %file$s"
+DIRECTORY_HAS_BEEN_CREATED="Directory created: %file$s"

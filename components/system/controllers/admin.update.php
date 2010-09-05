@@ -484,6 +484,17 @@ class cSystemAdminUpdateController extends cController {
 				$this->_Messages[] = array ( "error" => false, "message" => __( "Updated File Or Directory", array ( "filename" => $file ) ) );
 				
 				fclose($handle);
+			} else if ( $action == 'C' ) {
+				if ( !is_dir ( ASD_PATH . DS . $file ) ) {
+					if ( !rmkdir ( ASD_PATH . DS . $file ) ) {
+						$this->_Messages[] = array ( "error" => true, "message" => __( "Could Not Create Directory", array ( "file" => $file ) ) );
+						continue;
+					} else {
+						$this->_Messages[] = array ( "error" => true, "message" => __( "Directory Has Been Created", array ( "file" => $file ) ) );
+					}
+				} else {
+					$this->_Messages[] = array ( "error" => false, "message" => __( "Directory Already Exists", array ( "file" => $file ) ) );
+				}
 			} else if ( $action == 'D' ) {
 				
 				if ( !rrmdir ( ASD_PATH . DS . $file ) ) {
