@@ -271,7 +271,7 @@ class cSystemAdminUpdateController extends cController {
 				$session->Set ( "Error", true );
 				return ( $this->Display ( $pView, $pData ) );
 			} else {
-				$this->_Messages[] = __( "Created Database Backup", array ( "file" => $subdirectory . DS . "data.sql" ) );
+				$this->_Messages[] = array ( "error" => false, "message" => __( "Created Database Backup", array ( "file" => $subdirectory . DS . "data.sql" ) ) );
 			}
 			
 			// Step 2: Back up the files
@@ -281,10 +281,10 @@ class cSystemAdminUpdateController extends cController {
 				$session->Set ( "Error", true );
 				return ( $this->Display ( $pView, $pData ) );
 			} else {
-				$this->_Messages[] = __( "Created File Backup", array ( "file" => $subdirectory . DS . "files" . DS ) );
+				$this->_Messages[] = array ( "error" => false, "message" => __( "Created File Backup", array ( "file" => $subdirectory . DS . "files" . DS ) ) );
 			}
 		} else {
-			$this->_Messages[] = __("Skipping Backups");
+			$this->_Messages[] = array ( "error" => false, "message" => __("Skipping Backups") );
 		}
 		
 		// Step 3: Update the files.
@@ -309,6 +309,8 @@ class cSystemAdminUpdateController extends cController {
 		    $oddEven = empty($oddEven) || $oddEven == 'odd' ? 'even' : 'odd';
 			
 			$row->class = $oddEven;
+			
+			if ( $message['error'] == true ) $row->class .= " error ";
 			
 			$cellUpdate->innertext = $message;
 			$cellCurrent->innertext = ($m + 1);
@@ -376,7 +378,7 @@ class cSystemAdminUpdateController extends cController {
 					
 					for ( $j=0; $j < $num_fields; $j++ ) { 
 						$row[$j] = addslashes ( $row[$j] );
-						$row[$j] = ereg_replace ( "\n", "\\n", $row[$j] );
+						$row[$j] = str_replace ( "\n", "\\n", $row[$j] );
 						if ( isset ( $row[$j] ) ) { 
 							$return .= '"'.$row[$j].'"' ; 
 						} else { 
@@ -435,13 +437,13 @@ class cSystemAdminUpdateController extends cController {
 		$diff = $this->_Communicate ( $url, array(), true );
 		
 		if ( !$diff ) {
-			$this->_Messages[] = "Error Retrieving File Diff";
+			$this->_Messages[] = array ( "error" => true, "message" => __( "Error Retrieving Diff File" ) );
 			return ( false );
 		}
 		
 		$diffData = explode ( "\n", $diff );
 		if ( count ( $diffData ) == 0 ) {
-			$this->_Messages[] = "Diff Empty No Files Were Updated";
+			$this->_Messages[] = array ( "error" => true, "message" => __( "Diff Empty No Files Were Updated" ) );
 			return ( false );
 		}
 		
@@ -458,7 +460,7 @@ class cSystemAdminUpdateController extends cController {
 			
 			if ( !is_dir ( $oldDirectory ) ) {
 				if ( !rmkdir ( $oldDirectory ) ) {
-					$this->_Messages[] = __( "Could Not Create Directory", array ( "directory" => $oldDirectory ) );
+					$this->_Messages[] = array ( "error" => true, "message" => __( "Diff Empty No Files Were Updated" ) );
 					continue;
 				}
 			}
@@ -467,27 +469,28 @@ class cSystemAdminUpdateController extends cController {
 			
 			if ( $action == 'U' ) {
 				if ( $oldMd5 != $md5 ) {
-					$this->_Messages[] = __( "Checksums Do Not Match", array ( "filename" => $file, "found" => $oldMd5, "expected" => $md5 ) );
+					$this->_Messages[] = array ( "error" => true, "message" => __( "Checksums Do Not Match", array ( "filename" => $file, "found" => $oldMd5, "expected" => $md5 ) ) );
 					continue;
 				}
 				if ( !$handle = fopen( $oldFile, 'w+' ) ) {
-					$this->_Messages[] = __( "Could Not Open File", array ( "filename" => $file ) );
+					$this->_Messages[] = array ( "error" => true, "message" => __( "Could Not Open File", array ( "filename" => $file ) ) );
 					continue;
 				}
-				if ( !fwrite($handle,$fileData) ) {
-					$this->_Messages[] = __( "Could Not Update File", array ( "filename" => $file ) );
-					continue;
-				}
-				$this->_Messages[] = __( "Updated File Or Directory", array ( "filename" => $file ) );
+				if ( !fwrite($handle,$fileData) ) { $this->_Messages[] = array ( "error" => true, "message" => __( "Could Not Update File", array ( "filename" => $file ) ) ); continue; }
+				
+				$this->_Messages[] = array ( "error" => true, "message" => __( "Updated File Or Directory", array ( "filename" => $file ) ) );
+				
 				fclose($handle);
 			} else if ( $action == 'D' ) {
 				
 				if ( !rrmdir ( ASD_PATH . DS . $file ) ) {
-					$this->_Messages[] = __( "Could Not Delete File Or Directory", array ( "filename" => $file ) );
+					
+					$this->_Messages[] = array ( "error" => true, "message" =>  __( "Could Not Delete File Or Directory", array ( "filename" => $file ) ) );
+					
 					continue;
 				}
 				
-				$this->_Messages[] = __( "Deleted File Or Directory", array ( "filename" => $file ) );
+				$this->_Messages[] = array ( "error" => true, "message" =>  __( "Deleted File Or Directory", array ( "filename" => $file ) ) );
 			}
 			
 			/*
