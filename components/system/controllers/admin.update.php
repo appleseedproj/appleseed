@@ -171,16 +171,15 @@ class cSystemAdminUpdateController extends cController {
 		
 		$directories = scandirs ( ASD_PATH );
 		
-		print_r ( $directories ); exit;
-		
 		foreach ( $directories as $d => $directory ) {
 			
-			echo $directory; exit;
-			if ( !is_writable ( $directory ) ) {
+			if ( !is_writable ( ASD_PATH . DS . $directory ) ) {
+				return ( false );
 			}
 			
 		}
 		
+		return ( true );
 	}
 	
 	public function AddServer ( $pView = null, $pData = array ( ) ) {
@@ -231,6 +230,12 @@ class cSystemAdminUpdateController extends cController {
 		$version = $this->GetSys ( "Request" )->Get ( "Version" );
 		
 		$skipBackups = $this->GetSys ( "Request" )->Get ( "SkipBackups" );
+		
+		if ( !$this->_CheckWritability ( ) ) {
+			$session->Set ( "Message", "Directories Not Writable" );
+			$session->Set ( "Error", true );
+			return ( $this->Display ( $pView, $pData ) );
+		}
 		
 		if ( !$server ) {
 			$session->Set ( "Message", "No Valid Servers Found" );
