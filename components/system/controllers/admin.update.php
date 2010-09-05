@@ -169,11 +169,13 @@ class cSystemAdminUpdateController extends cController {
 	
 	private function _CheckWritability ( ) {
 		
-		$directories = scandirs ( ASD_PATH );
+		$files = scandir ( ASD_PATH );
 		
-		foreach ( $directories as $d => $directory ) {
+		foreach ( $files as $f => $file ) {
 			
-			if ( !is_writable ( ASD_PATH . DS . $directory ) ) {
+			if ( preg_match ( "/^\..*/", $file ) ) continue;
+			
+			if ( !is_writable ( ASD_PATH . DS . $file ) ) {
 				return ( false );
 			}
 			
