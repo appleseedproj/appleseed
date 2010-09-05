@@ -480,7 +480,7 @@ class cSystemAdminUpdateController extends cController {
 				fclose($handle);
 			} else if ( $action == 'D' ) {
 				
-				if ( !rrmdir ( $file ) ) {
+				if ( !rrmdir ( ASD_PATH . DS . $file ) ) {
 					$this->_Messages[] = __( "Could Not Delete File Or Directory", array ( "filename" => $file ) );
 					continue;
 				}

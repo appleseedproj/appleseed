@@ -368,9 +368,11 @@ function rrmdir($dir) {
 				}
 			} 
 		} 
-		reset($objects); 
-		rmdir($dir); 
+		reset ( $objects ); 
+		if ( !rmdir ( $dir ) ) return ( false );
 	} 
+	
+	return ( true );
 } 
 
 /*

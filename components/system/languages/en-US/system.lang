@@ -20,3 +20,5 @@ COULD_NOT_OPEN_FILE="Could not open file for writing: %filename$s"
 COULD_NOT_UPDATE_FILE="Could not update file: %filename$s"
 
 SKIPPING_BACKUPS="Skipping backups by user request"
+
+UPDATED_FILE_OR_DIRECTORY="Updated: %filename$s"
