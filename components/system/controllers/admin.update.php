@@ -67,7 +67,7 @@ class cSystemAdminUpdateController extends cController {
 		}
 		
 		if ( !$this->_CheckWritability ( ) ) {
-			$session->Set ( "Message", "Directories Not Writable" );
+			$session->Set ( "Message", "Files Not Writable" );
 			$session->Set ( "Error", true );
 		}
 		
