@@ -56,13 +56,11 @@
 	
     	<div id="appleseed-admin" class="container_16">
 	       	<div id="appleseed-admin-menu" class="container_16">
-	       		<div id="admin-tabs" class="grid_9 push_4">
-	       			<nav>
-	       				<ul>
-	       					<li class="selected"><a href="/example/">Example</a></li>
-		       			</ul>
-		       		</nav>
-		       	</div>
+	       		<nav id="admin-tabs" class="grid_9 push_4">
+	       			<ul>
+	       				<li class="selected"><a href="/example/">Example</a></li>
+		       		</ul>
+		       	</nav>
 		       	<div id="admin-search" class="grid_3 push_4">
 					<input type="text" name="search" placeholder="Search..." class="search local"><input type="submit" name="search" value="" class="search-submit local">
 				</div>
