@@ -36,6 +36,7 @@ class cUserAdminController extends cController {
 				$view = $this->_DisplayTabs ( $pView, $pData );
 			break;
 			default:
+				$view = $this->GetView ( $pView );
 				return ( false );
 			break;
 		}

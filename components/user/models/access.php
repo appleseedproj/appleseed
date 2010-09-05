@@ -1,3 +1,4 @@
+
 <?php
 /**
  * @version      $Id$
@@ -18,9 +19,9 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  User
  */
-class cUserModel extends cModel {
+class cUserAccessModel extends cModel {
 	
-	protected $_Tablename = "userAuthorization";
+	protected $_Tablename = "AccessControl";
 	
 	/**
 	 * Constructor

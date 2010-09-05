@@ -260,7 +260,7 @@ class cModel extends cBase {
 			$internal_field = $internal . "_field";
 			$internal_value = $internal . "_value";
 			
-			$queries[] = ' %' . $internal_field . '$s = ?';
+			$queries[] = '`%' . $internal_field . '$s` = ?';
 			$prepared[] = $this->Get ( $fieldname );
 			
 			$replacements[$internal_field] = $fieldname;

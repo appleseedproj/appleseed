@@ -43,7 +43,7 @@ class cPaginationPaginationController extends cController {
 		
 		$this->List = $this->GetView ( "pagination" );
 		
-		$this->_PreparePagination ( $pData );
+		if ( !$this->_PreparePagination ( $pData ) ) return ( true );
 		
 		$this->List->Display (); 
 		
@@ -68,9 +68,13 @@ class cPaginationPaginationController extends cController {
 		$nextpage = $currentpage + 1;
 		if ( $nextpage > $lastpage) $nextpage = $lastpage;
 		
+		if ( $lastpage == 1 ) return ( false );
+		
 		$pages = array ();
 		
 		$base =$this->GetSys ( "Router")->Get ("Base" );
+		
+		$this->List->Find ( "li[class=page]", 0)->outertext = "";
 		
 		$page = 1; $p = 0;
 		while ( $p < $total ) {
@@ -88,17 +92,15 @@ class cPaginationPaginationController extends cController {
 				$link = $base . "Page," . $page;
 			}
 			if ( $page == $currentpage ) {
-				$outertext .= "<li class=\"selected\"><span><a href=\"$link\">" . $page . "</a></span></li>";
+				$outertext .= "<li class=\"selected\"><a href=\"$link\"><span>" . $page . "</span></a></li>";
 			} else {
-				$outertext .= "<li><span><a href=\"$link\">" . $page . "</a></span></li>";
+				$outertext .= "<li><a href=\"$link\"><span>" . $page . "</span></a></li>";
 			}
 			$p += $step;
 			$page += 1;
 		}
 		
-		$this->List->Find ( "li[class=prev]", 0)->outertext .= $outertext;
-		
-		$this->List->RemoveElement ( "li[class=page]" );
+		$this->List->Find ( "li[class=page]", 0)->outertext .= $outertext;
 		
 		$this->List->Find ( "li[class=first] a", 0)->href = $firstlink;
 		$this->List->Find ( "li[class=prev] a", 0)->href = $prevlink;
@@ -108,8 +110,9 @@ class cPaginationPaginationController extends cController {
 		if ( $currentpage <= 1)
 			$this->List->Find ( "li[class=first]", 0)->innertext =  $this->List->Find ( "li[class=first] a span", 0)->outertext;
 		
-		if ( $currentpage <= $prevpage)
+		if ( $currentpage <= $prevpage) {
 			$this->List->Find ( "li[class=prev]", 0)->innertext =  $this->List->Find ( "li[class=prev] a span", 0)->outertext;
+		}
 		
 		if ( $currentpage >= $nextpage)
 			$this->List->Find ( "li[class=next]", 0)->innertext =  $this->List->Find ( "li[class=next] a span", 0)->outertext;

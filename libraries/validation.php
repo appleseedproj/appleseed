@@ -62,6 +62,7 @@ class cValidation {
 			$fieldNameLower = ltrim ( rtrim ( strtolower ( $v ) ) );
 			$type = $valid['Type'];
 			$null = $valid['Null'];
+			$extra = $valid['Extra'];
 			
 			preg_match ( '/(.*)\((.*)\)/', $type, $info );
 			$type = $info[1];
@@ -78,9 +79,11 @@ class cValidation {
 			$value = $pData[$fieldNameLower];
 			
 			if ( $null == 'NO' ) {
-				if ( ! $this->NotNull ( $value ) ) {
-					$return = false;
-					$this->_Reasons[$v][] = "Cannot Be Null";
+				if ( !preg_match ( "/auto_increment/", $extra ) ) {
+					if ( ! $this->NotNull ( $value ) ) {
+						$return = false;
+						$this->_Reasons[$v][] = "Cannot Be Null";
+					}
 				}
 			}
 			

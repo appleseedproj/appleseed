@@ -1,9 +1,9 @@
-<script type="text/javascript" src="/components/user/assets/javascript/access.js"></script>
+<script type="text/javascript" src="/components/user/assets/javascript/admin.access.js"></script>
 
 <h1>User Access Title</h1>
 <p id='user-access-message'></p>
 
-<form method="post">
+<form id="user-access-list" method="post">
 	<input type="hidden" name="Context" />
 	<nav class="controls"> 
 		<ul> 
@@ -14,9 +14,6 @@
 		</ul> 
 	</nav> 
 	<nav class="pagination-amount">
-		<select>
-			<option value="5">5</option>
-		</select>
 	</nav>	
 	<nav class="select">
 		<span>Select Options</span> <a class="tooltip" tip="Select All Items" href="#">All</a>, <a href="#">None</a>
@@ -60,8 +57,5 @@
 		</ul> 
 	</nav> 
 	<nav class="pagination-amount">
-		<select>
-			<option value="5">5</option>
-		</select>
 	</nav>	
 </form>
