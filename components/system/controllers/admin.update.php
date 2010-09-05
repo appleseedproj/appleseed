@@ -66,6 +66,11 @@ class cSystemAdminUpdateController extends cController {
 			}
 		}
 		
+		if ( !$this->_CheckWritability ( ) ) {
+			$session->Set ( "Message", "Directories Not Writable" );
+			$session->Set ( "Error", true );
+		}
+		
 		if ( count ( $viableServers ) == 0 ) {
 			$session->Set ( "Message", "No Valid Servers Found" );
 			$session->Set ( "Error", true );
@@ -160,6 +165,22 @@ class cSystemAdminUpdateController extends cController {
 		if ( !$pRaw ) $result = json_decode ( $result );
 		
 		return ( $result );
+	}
+	
+	private function _CheckWritability ( ) {
+		
+		$directories = scandirs ( ASD_PATH );
+		
+		print_r ( $directories ); exit;
+		
+		foreach ( $directories as $d => $directory ) {
+			
+			echo $directory; exit;
+			if ( !is_writable ( $directory ) ) {
+			}
+			
+		}
+		
 	}
 	
 	public function AddServer ( $pView = null, $pData = array ( ) ) {
