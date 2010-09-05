@@ -6,4 +6,4 @@ NO_VALID_SERVERS_FOUND="No valid update servers were found.  Add one to continue
 BACKUP_DIRECTORY_UNWRITABLE="Cannot write to backup directory: %directory$s"
 
 ADMIN_SYSTEM_UPDATE_TITLE="System Update"
-ADMIN_SYSTEM_UPDATE_DESCRIPTION="(Warning:  This feature is still experimental.  Use at your own risk)<br /><br /> Welcome to the one-click system update tool for Appleseed. Here you can upgrade your Appleseed server to the latest version with a few simple steps.  Backups of your database and files will be created.  Note that you can only upgrade versions one at a time."
+ADMIN_SYSTEM_UPDATE_DESCRIPTION="Welcome to the one-click system update tool for Appleseed. Here you can upgrade your Appleseed server to the latest version with a few simple steps.  Backups of your database and files will be created.<br /><br /><b>Note:</b><br />- You can only upgrade versions one at a time.<br />- Only code is backed up, others (ie, storage) must be backed up manually."
