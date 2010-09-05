@@ -310,9 +310,9 @@ class cSystemAdminUpdateController extends cController {
 			
 			$row->class = $oddEven;
 			
-			if ( $message['error'] == true ) $row->class .= " error ";
+			if ( $message['error'] == true ) $cellUpdate->class .= " error ";
 			
-			$cellUpdate->innertext = $message;
+			$cellUpdate->innertext = $message['message'];
 			$cellCurrent->innertext = ($m + 1);
 			$tbody->innertext .= $row->outertext;
 		}
@@ -341,7 +341,7 @@ class cSystemAdminUpdateController extends cController {
 		$handle->Execute ();
 		
 		$tables = array();
-		while ( $data = & $handle->Fetch ( PDO::FETCH_NUM ) ) {
+		while ( $data = $handle->Fetch ( PDO::FETCH_NUM ) ) {
 	  		$tables[] = $data[0];
 		} 
 		
