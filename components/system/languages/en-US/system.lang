@@ -24,3 +24,10 @@ SKIPPING_BACKUPS="Skipping backups by user request"
 UPDATED_FILE_OR_DIRECTORY="Updated: %filename$s"
 
 FILES_NOT_WRITABLE="Some files are not writable.  You will not be able to continue until this is resolved."
+
+PROCESSED_SQL_STATEMENTS="Processed %total$s SQL statements (%successful$s successful, %failed$s failed)"
+
+SQL_STATEMENT_ERROR="<b>Statement:</b> %statement$s<br /><b>Error:</b> %error$s"
+
+CREATED_DATABASE_BACKUP="Create DB backup: <b>%file$s</b>"
+CREATED_FILE_BACKUP="Create file backups: <b>%file$s</b>"

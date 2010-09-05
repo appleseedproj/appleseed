@@ -80,3 +80,6 @@
 		#admin-system-update #update-results-body { margin-top:10px; }
 		#admin-system-update #update-results-body td { padding-left:5px; text-align:left; }
 		#admin-system-update #update-results-body tbody tr th { width:20px; }
+
+		#admin-system-update #update-results-body tbody tr td.error { color:#bf4630; }
+		

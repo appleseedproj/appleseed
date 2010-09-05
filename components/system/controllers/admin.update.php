@@ -310,11 +310,14 @@ class cSystemAdminUpdateController extends cController {
 			
 			$row->class = $oddEven;
 			
+			$oldCellUpdateClass = $cellUpdate->class;
 			if ( $message['error'] == true ) $cellUpdate->class .= " error ";
 			
 			$cellUpdate->innertext = $message['message'];
 			$cellCurrent->innertext = ($m + 1);
 			$tbody->innertext .= $row->outertext;
+			
+			$cellUpdate->class = $oldCellUpdateClass;
 		}
 		
 		$session->Set ( "Message", __( "Update Has Completed", array ( "version" => $version ) ) );
@@ -478,7 +481,7 @@ class cSystemAdminUpdateController extends cController {
 				}
 				if ( !fwrite($handle,$fileData) ) { $this->_Messages[] = array ( "error" => true, "message" => __( "Could Not Update File", array ( "filename" => $file ) ) ); continue; }
 				
-				$this->_Messages[] = array ( "error" => true, "message" => __( "Updated File Or Directory", array ( "filename" => $file ) ) );
+				$this->_Messages[] = array ( "error" => false, "message" => __( "Updated File Or Directory", array ( "filename" => $file ) ) );
 				
 				fclose($handle);
 			} else if ( $action == 'D' ) {
@@ -490,7 +493,7 @@ class cSystemAdminUpdateController extends cController {
 					continue;
 				}
 				
-				$this->_Messages[] = array ( "error" => true, "message" =>  __( "Deleted File Or Directory", array ( "filename" => $file ) ) );
+				$this->_Messages[] = array ( "error" => false, "message" =>  __( "Deleted File Or Directory", array ( "filename" => $file ) ) );
 			}
 			
 			/*
@@ -508,7 +511,54 @@ class cSystemAdminUpdateController extends cController {
 	}
 
 	private function _UpdateDatabase ( $pServer, $pVersion ) {
-		return ( true );
+		
+		$prefix = $this->GetSys ( "Config" )->GetConfiguration ( "pre" );
+		
+		$url = $pServer . "/sql/" . $pVersion . ".sql";
+		
+		$sql = $this->_Communicate ( $url, array(), true );
+		
+		if ( !$sql ) {
+			$this->_Messages[] = array ( "error" => true, "message" => __( "Error Retrieving SQL File" ) );
+			return ( false );
+		}
+		
+		$sqlData = explode ( "\n", $sql );
+		if ( count ( $sqlData ) == 0 ) {
+			$this->_Messages[] = array ( "error" => true, "message" => __( "SQL Empty Database Not Updated" ) );
+			return ( false );
+		}
+		
+		$db = $this->GetSys ( "Database" )->Get ( "DB" );
+		
+		$totalCount = 0; $failedCount = 0; $successfulCount = 0;
+		foreach ( $sqlData as $s => $statement ) {
+			if ( !$statement = ltrim ( rtrim ( $statement ) ) ) continue;
+			$totalCount++;
+			
+			$statement = preg_replace ( "/#__/", $prefix, $statement );
+			$handle = $db->Prepare ( $statement );
+		
+			if ( !$handle->Execute () ) {
+				$failedCount++;
+				$error = $handle->errorInfo();
+				$this->_Messages[] = array ( "error" => true, "message" => __( "SQL Statement Error", array ( "error" => $error[2], "statement" => $statement ) ) );
+			} else {
+				$successfulCount++;
+				$error = $handle->errorInfo();
+			}
+		
+		}
+		
+		
+		if ( $totalCount == 0 ) {
+			$this->_Messages[] = array ( "error" => false, "message" => __( "No SQL Statements Found" ) );
+			return ( false );
+		} else {
+			$this->_Messages[] = array ( "error" => false, "message" => __( "Processed SQL Statements", array ( "total" => $totalCount, "successful" => $successfulCount, "failed" => $failedCount ) ) );
+			return ( true );
+		}
+		
 	}
 
 	private function _PrepareMessage ( $pMarkup ) {
