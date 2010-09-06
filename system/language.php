@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cLanguage {
+class cLanguage extends cBase {
 	
 	protected $_Config;
 	
@@ -108,6 +108,10 @@ class cLanguage {
  			if ( !$data = parse_ini_file ( $location ) ) {
  				continue;
  			} 
+ 			
+ 			$eventData['store'] = $store;
+ 			$eventData['data'] = $data;
+ 			$this->GetSys ( "Event" )->Trigger ( "On", "Load", "Language", $eventData );
  		
  			// Put data into the global cache.
  			foreach ( $data as $key => $value ) {

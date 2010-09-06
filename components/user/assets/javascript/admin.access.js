@@ -1,6 +1,6 @@
 jLoader.Initialize( "user-access-edit" );
 
-jLoader.User_access_edit = function ( ) { 
+jLoader.User_access_edit = function ( pElement ) { 
 
 	// Add form validation to the edit form.
 	$("#user-access-edit").validate();
@@ -9,6 +9,5 @@ jLoader.User_access_edit = function ( ) {
 
 jLoader.Initialize( "user-access-list" );
 
-jLoader.User_access_list = function ( ) { 
-
+jLoader.User_access_list = function ( pElement ) { 
 }

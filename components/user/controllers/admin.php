@@ -37,7 +37,6 @@ class cUserAdminController extends cController {
 			break;
 			default:
 				$view = $this->GetView ( $pView );
-				return ( false );
 			break;
 		}
 		

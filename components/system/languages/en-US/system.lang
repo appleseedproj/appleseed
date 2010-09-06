@@ -35,3 +35,5 @@ CREATED_FILE_BACKUP="Create file backups: <b>%file$s</b>"
 COULD_NOT_CREATE_DIRECTORY="Could not create directory: %file$s"
 DIRECTORY_ALREADY_EXISTS="Directory already exists: %file$s"
 DIRECTORY_HAS_BEEN_CREATED="Directory created: %file$s"
+
+ARE_YOU_SURE="Are you sure?  This will update your system to version %version$s from server http://%server$s."

@@ -129,10 +129,10 @@ class cBuffer extends cBase {
 			}
 		} while ( preg_match ( $whilepattern, $processed ) );
 		
-		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Buffer" );
-		
 		$pattern = "/\#\@ head \@\#/";
 		$processed = preg_replace ( $pattern, $this->_Queue['head'], $processed );
+		
+		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Buffer" );
 		
 		$this->_Buffer = $processed;
 		

@@ -24,6 +24,8 @@ _JLoader.prototype.Load = function ( ) {
 
 	for ( e = 0; e < _ElementList.length; e++ ) {
 	
+		var originalElementName = _ElementList[e];
+	
 		if ( _ElementList[e] == "document" ) {
 			var _Element = document;
 		} else {
@@ -36,7 +38,7 @@ _JLoader.prototype.Load = function ( ) {
 		// Constructor
 		Class = _ElementList[e].UCWords ();
 		if ( typeof window['jLoader'][Class] == "function" ) {
-			window['jLoader'][Class] ();
+			window['jLoader'][Class] ( document.getElementById ( originalElementName ) );
 		}
 		
 		// @todo: Find a way to trigger a warning.
@@ -44,7 +46,8 @@ _JLoader.prototype.Load = function ( ) {
 		
 		var elements = _Element.getElementsByTagName ( "*" );
 		
-		var target = _ElementList[e] ;
+		var target = _ElementList[e];
+		
 		for ( e2 = 0; e2 < elements.length; e2++ ) {
 			jLoader.AttachEvents ( target, elements[e2] );
 		} 
