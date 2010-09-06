@@ -37,10 +37,14 @@ function sprintfn ( pText, pData ) {
 	key = pText.toUpperCase();
 	key = key.replace ( / /g, '_' );
 	
+	jskey = 'JS_' + key;
+	
 	text = translationData[key];
 	
 	if (typeof translationData[key] != 'undefined') {
 		text = translationData[key];
+	} else if ( typeof translationData[jskey] != 'undefined' ) {
+		text = translationData[jskey];
 	} else {
 		return ( pText );
 	}
