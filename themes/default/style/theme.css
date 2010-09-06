@@ -153,6 +153,13 @@
 		#system-message a { color:#f1fed5; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -94px; }
 		#system-message a:hover { text-decoration:underline; }
 		
+		/* JQuery : UI : Date Picker */
+		.ui-datepicker { border:1px solid #406300; width:220px; }
+		.ui-datepicker .ui-datepicker-header { float:left; width:100%; color:#fafafa; background-color:#80af1f; padding-top:2px; clear:both; }
+		.ui-datepicker .ui-datepicker-title { float:left; width:100%; text-align:center; font-weight:bold; }
+		.ui-datepicker a.ui-datepicker-prev { width:50%; float:left; text-align:left; padding:0; background:none; }
+		.ui-datepicker a.ui-datepicker-next { width:50%; float:left; text-align:right; padding:0; background:none; }
+		
 		
 		/* Header,Footer */
 		footer#appleseed-footer, header#appleseed-header { width:100%; height:46px; padding:0; margin:0; text-align:center; color:#d9fa9e; border-top:1px solid #406300; border-bottom:1px solid #406300; background-color:#80af1f; }

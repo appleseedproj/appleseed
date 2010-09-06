@@ -5,6 +5,9 @@ jLoader.System_nodes_edit = function ( pElement ) {
 	// Add form validation to the edit form.
 	$("#system-nodes-edit").validate();
 	
+	$("input[name='EndStamp']").datepicker({dateFormat: 'yy-mm-dd 00:00:00'});
+	
+	
 }
 
 jLoader.Initialize( "system-nodes-list" );

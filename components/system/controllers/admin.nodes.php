@@ -256,6 +256,8 @@ class cSystemAdminNodesController extends cController {
 		if ( $this->Model->Get ( 'Callback' ) == 'on' ) $this->Model->Set ( 'Callback', true ); else $this->Model->Set ( 'Admin', false );
 		if ( $this->Model->Get ( 'Inherit' ) == 'on' ) $this->Model->Set ( 'Inherit', true ); else $this->Model->Set ( 'Inherit', false );
 		
+		$this->Model->Set ( 'Stamp', NOW() );
+		
 		$validate = $this->GetSys ( 'Validation' );
 		
 		$fields = $this->Model->Get ( 'Fields' );
