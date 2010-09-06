@@ -164,7 +164,7 @@ class cUserAdminAccessController extends cController {
 		return ( $return );
 	}
 	
-	function Edit ( ) {
+	public function Edit ( ) {
 		
 		$this->Data = $this->GetModel ( "Access" );
 		
@@ -177,7 +177,7 @@ class cUserAdminAccessController extends cController {
 		return ( true );
 	}
 	
-	function Add ( ) {
+	public function Add ( ) {
 		
 		$this->Data = $this->GetModel ( "Access" );
 		
@@ -280,8 +280,37 @@ class cUserAdminAccessController extends cController {
 		return ( true );
 	}
 	
+	function Delete_All ( ) {
+		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
+		
+		if ( !$selected ) {
+			$this->GetSys ( "Session" )->Set ( "Message", "None Selected" );
+			$this->GetSys ( "Session" )->Set ( "Error", TRUE );
+			
+			$this->Go ( "Display" );
+			
+			return ( false );
+		}
+		
+		$criteria['Access_PK'] = $selected;
+		
+		$this->Model= $this->GetModel( "Access" );
+		
+		$this->Model->Delete ( $criteria );
+		
+		$count = count ( $selected );
+		
+		$this->GetSys ( "Session" )->Set ( "Message", __ ("Selected Items Deleted", array ( "count" => $count ) ) );
+		$this->GetSys ( "Session" )->Set ( "Error", TRUE );
+		
+		$this->Go ( "Display" );
+		
+		return ( true );
+	}
 	
-	function _PrepareEditForm ( ) {
+	
+	
+	private function _PrepareEditForm ( ) {
 		
 		$Access_PK = $this->GetSys ( "Request" )->Get ( 'Access_PK', $this->Data->Get ( "Access_PK" ) );
 		
@@ -293,7 +322,7 @@ class cUserAdminAccessController extends cController {
 		
 	}
 	
-	function _PrepareAddForm ( ) {
+	private function _PrepareAddForm ( ) {
 		
 		$this->Form->Find ( "[id=edit-subtitle]", 0)->innertext = "New Access Subtitle";
 		$this->Form->Find ( "form[id=user-access-edit] fieldset p", 0)->innertext = "New Access Description";

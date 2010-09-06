@@ -20,3 +20,5 @@ RECORD_SAVED="Access record #%id$s has been saved."
 RECORD_APPLIED="Changes to access record #%id$s has been applied."
 CANNOT_BE_NULL="This field cannot be null."
 ERRORS_ON_PAGE="Errors occurred while attempting to save."
+
+SELECTED_ITEMS_DELETED="Successfully deleted the selected %count$s item(s)."

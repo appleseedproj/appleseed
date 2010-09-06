@@ -686,8 +686,6 @@ class cExampleExampleController extends cController {
 	function Delete_All ( ) {
 		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
 		
-		$selected = $this->GetSys ( "Request" )->Get ( "Masslist" );
-		
 		if ( !$selected ) {
 			$this->GetSys ( "Session" )->Set ( "Message", "None Selected" );
 			$this->GetSys ( "Session" )->Set ( "Error", TRUE );
