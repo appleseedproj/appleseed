@@ -14,9 +14,6 @@
 				</ul> 
 			</nav> 
 			<nav class="pagination-amount">
-				<select>
-					<option value="5">5</option>
-				</select>
 			</nav>	
 			<nav class="select">
 				<span>Select Options</span> <a class="tooltip" tip="Select All Items" href="#">Select All</a>, <a href="#">Select None</a>
@@ -57,9 +54,6 @@
 				</ul> 
 			</nav> 
 			<nav class="pagination-amount">
-				<select>
-					<option value="5">5</option>
-				</select>
 			</nav>	
 		</form>
 </section>

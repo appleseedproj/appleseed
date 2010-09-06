@@ -132,7 +132,14 @@ class cExampleExampleController extends cController {
 		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
 		
 		$page = $this->GetSys ( "Request" )->Get ( "Page");
-		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
+		$step = $this->GetSys ( "Request" )->Get ( "PaginationStep", 10);
+		
+		if ( $this->GetSys ( "Request" )->Get ( "PaginationStep" ) ) {
+			echo "Restart"; 
+			$page = 1;
+		}
+		
+		echo "Step: ", $step;
 		
 		/*
 		 * @tutorial You can also retrieve saved session data.
@@ -277,6 +284,11 @@ class cExampleExampleController extends cController {
 			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
 		}
 		
+		$pageData = array ( 'total' => $total, 'step' => $step, 'link' => $link );
+		$pageControls =  $this->List->Find ("nav[class=pagination-amount]");
+		foreach ( $pageControls as $p => $pageControl ) {
+			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", "pagination", "amount", $pageData ); 
+		}
 		$this->List->Synchronize();
 		
 		$this->_PrepareMessage();

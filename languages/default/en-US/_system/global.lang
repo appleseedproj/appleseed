@@ -6,6 +6,7 @@ APPLESEED_TAGLINE="Open Source + Distributed"
 APPLESEED_IS_EARLY_BETA="Appleseed is early beta software, expect bugs along the way, send feedback to <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a>, and <a href='http://opensource.appleseedproject.org/donate/'>click here</a> to support the project! </p>"
 
 [common]
+ALL_PAGES="All"
 
 [buttons]
 SELECT_ALL="Select +"

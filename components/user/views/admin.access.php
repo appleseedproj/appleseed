@@ -7,16 +7,16 @@
 	<input type="hidden" name="Context" />
 	<nav class="controls"> 
 		<ul> 
-			<li class="move_up"><button name="task" value="move_up" disabled="disabled">Move Up</button></li> 
-			<li class="move_down"><button name="task" value="move_down" disabled="disabled">Move Down</button></li> 
-			<li class="delete_all"><button name="task" value="delete_all" >Delete +</button></li> 
-			<li class="add_new"><button name="task" value="add" >Add New</button></li> 
+			<li><button class="move-up" name="task" value="move_up" disabled="disabled">Move Up</button></li> 
+			<li><button class="move-down" name="task" value="move_down" disabled="disabled">Move Down</button></li> 
+			<li><button class="delete-all" name="task" value="delete_all" >Delete All</button></li> 
+			<li><button class="add-new" name="task" value="add" >Add New</button></li> 
 		</ul> 
 	</nav> 
 	<nav class="pagination-amount">
 	</nav>	
 	<nav class="select">
-		<span>Select Options</span> <a class="tooltip" tip="Select All Items" href="#">All</a>, <a href="#">None</a>
+		<span>Select Options</span> <a class="select-all" href="#">All</a>, <a class="select-none" href="#">None</a>
 	</nav>
 	<nav class='pagination'>
 	</nav>
@@ -28,7 +28,7 @@
 			<th scope="col"><a href="#">Write</th> 
 			<th scope="col"><a href="#">Admin</th> 
 			<th scope="col"><a href="#">Inheritance</th> 
-			<th><input type="checkbox" /></th> 
+			<th><input class="select-toggle checked" type="checkbox" /></th> 
 		</thead> 
 		<tbody>
 			<tr> 
@@ -38,22 +38,22 @@
 				<td class="Write"></td>
 				<td class="Admin"></td>
 				<td class="Inheritance"></td>
-				<td class="Masslist"><input type="checkbox" /></td>
+				<td class="Masslist"><input class='masslist-checkbox' type="checkbox" /></td>
 			</tr> 
 		</tbody>
 	</table>
 
 	<nav class="select">
-		<span>Select Options</span> <a href="#">All</a>, <a href="#">None</a>
+		<span>Select Options</span> <a class="select-all" href="#">All</a>, <a class="select-none" href="#">None</a>
 	</nav>
 	<nav class='pagination'>
 	</nav>
 	<nav class="controls"> 
 		<ul> 
-			<li class="move_up"><button name="task" value="move_up" disabled="disabled">Move Up</button></li> 
-			<li class="move_down"><button name="task" value="move_down" disabled="disabled">Move Down</button></li> 
-			<li class="delete_all"><button name="task" value="delete_all" >Delete All</button></li> 
-			<li class="add_new"><button name="task" value="add" >Add New</button></li> 
+			<li><button class="move-up" name="task" value="move_up" disabled="disabled">Move Up</button></li> 
+			<li><button class="move-down" name="task" value="move_down" disabled="disabled">Move Down</button></li> 
+			<li><button class="delete-all" name="task" value="delete_all" >Delete All</button></li> 
+			<li><button class="add-new" name="task" value="add" >Add New</button></li> 
 		</ul> 
 	</nav> 
 	<nav class="pagination-amount">

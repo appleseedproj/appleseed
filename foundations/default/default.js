@@ -9,11 +9,24 @@ jLoader.Document = function ( ) {
 	
 }
 
-jLoader.Document.Anchor = function ( ) {
+jLoader.Document.Select = function ( pElement, pParent ) { }
+
+jLoader.Document.Select.OnChange = function ( pElement, pParent ) { 
+
+	if ( pElement.name == 'PaginationStep' ) {
+		var steps = $("[name='PaginationStep']");
+		for ( s = 0; s < steps.length; s++ ) {
+			steps.val ( pElement.value );
+		}
+		pElement.form.submit();
+	}
+	
 }
 
-jLoader.Document.Anchor.OnClick = function ( pElement ) {
-}
+
+jLoader.Document.Anchor = function ( pElement, pParent ) { }
+
+jLoader.Document.Anchor.OnClick = function ( pElement, pParent ) { }
 
 
 function __ ( pText, pData ) {

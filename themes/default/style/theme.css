@@ -39,6 +39,7 @@
 		nav.pagination ol { float:right; clear:both; margin-top:10px; }
 		nav.pagination ol li { list-style-type:none; float:left; }
 		nav.pagination ol li span { border:none; background:none; font-size:80%; font-weight:bold; color:#406300; margin:0 1px; padding:0 1px; }
+		nav.pagination ol li.disabled span { display:none; } 
 		nav.pagination ol li a { border:none; background:none; padding:0; font-weight:bold; color:#406300; }
 		nav.pagination ol li a:hover { text-decoration:none; }
 		nav.pagination ol li a:hover span { background-color:#406300; color:#fafafa; cursor:pointer; }

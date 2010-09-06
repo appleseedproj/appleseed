@@ -128,6 +128,12 @@ class cUserAdminAccessController extends cController {
 			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
 		}
 		
+		$pageData = array ( 'total' => $total, 'step' => $step, 'link' => $link );
+		$pageControls =  $this->List->Find ("nav[class=pagination-amount]");
+		foreach ( $pageControls as $p => $pageControl ) {
+			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", "pagination", "amount", $pageData ); 
+		}
+		
 		$this->List->Synchronize();
 		
 		$this->_PrepareMessage();
@@ -239,10 +245,8 @@ class cUserAdminAccessController extends cController {
 		$data = $this->GetSys ( 'Request' )->Get ();
 		
 		if ( !$validate->Validate ( $fields, $data ) ) {
-			print_r ( $validate->GetReasons( ) ); 
-			exit;
 			return ( false );
-	}
+		}
 		
 		$this->Data->Save();
 		
@@ -303,6 +307,4 @@ class cUserAdminAccessController extends cController {
 		
 		return ( true );
 	}
-	
-
 }

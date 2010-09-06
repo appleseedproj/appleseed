@@ -9,3 +9,8 @@ EDIT_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand a
 NEW_ACCESS_TITLE="Grant Access"
 NEW_ACCESS_SUBTITLE="New"
 NEW_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand access to remote users, although it is not recommended."
+
+
+ARE_YOU_SURE_YOU_WANT_TO_DELETE="Are you sure you want to delete %count$s item(s) permanently?"
+
+NONE_SELECTED="No items were selected."
