@@ -38,7 +38,7 @@ _JLoader.prototype.Load = function ( ) {
 		// Constructor
 		Class = _ElementList[e].UCWords ();
 		if ( typeof window['jLoader'][Class] == "function" ) {
-			if ( document.getElementById ( originalElementName ) ) {
+			if ( ( document.getElementById ( originalElementName ) ) || ( originalElementName == 'document' ) )  {
 				window['jLoader'][Class] ( document.getElementById ( originalElementName ) );
 			}
 		}

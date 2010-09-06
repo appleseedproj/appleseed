@@ -4,7 +4,7 @@ jLoader.Initialize();
 jLoader.Document = function ( ) {
 
 	jTranslations = new Array ();
-
+	
 	$("#form-elements").validate();
 	
 }

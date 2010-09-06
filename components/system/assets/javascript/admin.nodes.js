@@ -12,10 +12,11 @@ jLoader.System_nodes_edit = function ( pElement ) {
 
 jLoader.Initialize( "system-nodes-list" );
 
-jLoader.System_nodes_list = function ( pElement ) {  }
+jLoader.System_nodes_list = function ( pElement ) { }
 jLoader.System_nodes_list.Checkbox = function ( pElement ) {  }
 
 jLoader.System_nodes_list.Checkbox.OnClick = function ( pElement ) { 
+
 
 	$('#system-nodes-message').text ( "" );
 	$('#system-nodes-message').removeClass ( 'error message' );
@@ -40,7 +41,7 @@ jLoader.System_nodes_list.Anchor.OnClick = function ( pElement ) {
 
 	$('#system-nodes-message').text ( "" );
 	$('#system-nodes-message').removeClass ( 'error message' );
-
+	
 	var classNames = pElement.className.split ( ' ' ); 
 	var masslist = $('#system-nodes-list .masslist-checkbox');
 	
