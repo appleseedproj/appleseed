@@ -798,7 +798,7 @@ class cModel extends cBase {
 		 *
 		 */
 		 
-		$data = & $this->_Handle->Fetch ( PDO::FETCH_OBJ );
+		$data = $this->_Handle->Fetch ( PDO::FETCH_OBJ );
 		
 		if ( !$data ) return ( false );
 		

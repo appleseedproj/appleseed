@@ -77,10 +77,11 @@ class cPaginationPaginationController extends cController {
 			return ( false );
 			
 		foreach ( $steps as $s => $step) {
-			if ( $currentStep == $s ) 
+			if ( $currentStep == $step ) {
 				$selected = ' selected="selected" ';
-			else
+			} else {
 				$selected = null;
+			}
 			$this->Amount->Find ( "[name=PaginationStep]", 0)->innertext .= '<option ' . $selected . ' value="' . $step . '">' . $s . "</option>";
 		}
 		
@@ -129,6 +130,7 @@ class cPaginationPaginationController extends cController {
 			
 			if ( $lastpage <= 10 ) {
 				// Show all pages.
+				$visible[] = $page;
 				if ( $page == $currentpage ) {
 					$outertext .= "<li class=\"selected\"><a href=\"$link\"><span>" . $page . "</span></a></li>";
 				} else {
@@ -136,9 +138,10 @@ class cPaginationPaginationController extends cController {
 				}
 			} else {
 				// Truncate the pages list for space.
-				$acceptable = array ( 1, 2, $currentpage - 1, $currentpage, $currentpage + 1, $midpage - 1, $midpage, $midpage + 1, $lastpage, $lastpage - 1 );
+				$acceptable = array ( $currentpage - 1, $currentpage, $currentpage + 1, $midpage - 1, $midpage, $midpage + 1 );
 				
 				if ( in_array ( $page, $acceptable ) ) {
+					$visible[] = $page;
 					if ( $page == $currentpage ) {
 						$outertext .= "<li class=\"selected\"><a href=\"$link\"><span>" . $page . "</span></a></li>";
 					} else {
@@ -157,7 +160,7 @@ class cPaginationPaginationController extends cController {
 		$this->List->Find ( "li[class=next] a", 0)->href = $nextlink;
 		$this->List->Find ( "li[class=last] a", 0)->href = $lastlink;
 		
-		if ( $currentpage <= 1) {
+		if ( ( $currentpage <= 1) or ( in_array ( 1, $visible ) ) ) {
 			$this->List->Find ( "li[class=first]", 0)->innertext =  $this->List->Find ( "li[class=first] a span", 0)->outertext;
 			$this->List->Find ( "li[class=first]", 0)->class = "disabled";
 		}
@@ -172,7 +175,7 @@ class cPaginationPaginationController extends cController {
 			$this->List->Find ( "li[class=next]", 0)->class = "disabled";
 		}
 		
-		if ( $currentpage >= $lastpage) {
+		if ( ( $currentpage >= $lastpage) or ( in_array ( $lastpage, $visible ) ) ) {
 			$this->List->Find ( "li[class=last]", 0)->innertext =  $this->List->Find ( "li[class=last] a span", 0)->outertext;
 			$this->List->Find ( "li[class=last]", 0)->class = "disabled";
 		}

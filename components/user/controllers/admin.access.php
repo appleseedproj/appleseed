@@ -39,24 +39,12 @@ class cUserAdminAccessController extends cController {
 		
 		$this->Data = $this->GetModel ( "Access" );
 		
-		$page = $this->GetSys ( "Request" )->Get ( "Page");
-		$step = $this->GetSys ( "Request" )->Get ( "step", 10);
-		
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
 		$saved = $session->Get();
 		
-		if ( !$page ) {
-			// Get which page was stored, defaulting to page 1
-			$page = $session->Get ( "Page", 1 );
-		} else {
-			// Store the current page for retrieval
-			$session->Set ( "Page", $page );
-		}
-		
-		// Calculate the starting point in the list.
-		$start = ( $page - 1 ) * $step;
+		list ( $start, $step, $page ) = $this->_PageCalc();
 		
 		// Retrieve from the db, using no criteria except for the pagination settings.
 		$this->Data->Retrieve( null, null, array ( "start" => $start, "step" => $step ) );
@@ -144,6 +132,36 @@ class cUserAdminAccessController extends cController {
 		unset ( $this->List );
 		
 		return ( true );
+	}
+	
+	private function _PageCalc ( ) {
+		
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		$page = $this->GetSys ( "Request" )->Get ( "Page");
+		
+		if ( $step = $this->GetSys ( "Request" )->Get ( "PaginationStep" ) ) {
+			$page = 1;
+			$session->Set ( "PaginationStep", $step );
+		} else {
+			$step = $session->Get ( "PaginationStep", 10 );
+		}
+		
+		if ( !$page ) {
+			// Get which page was stored, defaulting to page 1
+			$page = $session->Get ( "Page", 1 );
+		} else {
+			// Store the current page for retrieval
+			$session->Set ( "Page", $page );
+		}
+		
+		// Calculate the starting point in the list.
+		$start = ( $page - 1 ) * $step;
+		
+		$return = array ( $start, $step, $page );
+		
+		return ( $return );
 	}
 	
 	function Edit ( ) {

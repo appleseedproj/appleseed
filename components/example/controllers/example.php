@@ -131,16 +131,6 @@ class cExampleExampleController extends cController {
 		// This query fails because it has nothing to do with our database structure.
 		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
 		
-		$page = $this->GetSys ( "Request" )->Get ( "Page");
-		$step = $this->GetSys ( "Request" )->Get ( "PaginationStep", 10);
-		
-		if ( $this->GetSys ( "Request" )->Get ( "PaginationStep" ) ) {
-			echo "Restart"; 
-			$page = 1;
-		}
-		
-		echo "Step: ", $step;
-		
 		/*
 		 * @tutorial You can also retrieve saved session data.
 		 */
@@ -167,23 +157,7 @@ class cExampleExampleController extends cController {
 		 */
 		$saved = $session->Get();
 		
-		/*
-		 * @tutorial You can use stored session data to do a lot of things.  Here, we skip
-		 * @tutorial to the page in the list that had previously been viewed.  So if the user
-		 * @tutorial leaves the page and comes back, it stores their position.
-		 * 
-		 */
-		 
-		if ( !$page ) {
-			// Get which page was stored, defaulting to page 1
-			$page = $session->Get ( "Page", 1 );
-		} else {
-			// Store the current page for retrieval
-			$session->Set ( "Page", $page );
-		}
-		
-		// Calculate the starting point in the list.
-		$start = ( $page - 1 ) * $step;
+		list ( $start, $step, $page ) = $this->_PageCalc();
 		
 		// Retrieve from the db, using no criteria except for the pagination settings.
 		$this->Customers->Retrieve( null, null, array ( "start" => $start, "step" => $step ) );
@@ -776,5 +750,43 @@ class cExampleExampleController extends cController {
 		
 		return ( true );
 	}
+	
+	private function _PageCalc ( ) {
+		
+		/*
+		 * @tutorial You can use stored session data to do a lot of things.  Here, we skip
+		 * @tutorial to the page in the list that had previously been viewed.  So if the user
+		 * @tutorial leaves the page and comes back, it stores their position.
+		 * 
+		 */
+		 
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		$page = $this->GetSys ( "Request" )->Get ( "Page");
+		
+		if ( $step = $this->GetSys ( "Request" )->Get ( "PaginationStep" ) ) {
+			$page = 1;
+			$session->Set ( "PaginationStep", $step );
+		} else {
+			$step = $session->Get ( "PaginationStep", 10 );
+		}
+		
+		if ( !$page ) {
+			// Get which page was stored, defaulting to page 1
+			$page = $session->Get ( "Page", 1 );
+		} else {
+			// Store the current page for retrieval
+			$session->Set ( "Page", $page );
+		}
+		
+		// Calculate the starting point in the list.
+		$start = ( $page - 1 ) * $step;
+		
+		$return = array ( $start, $step, $page );
+		
+		return ( $return );
+	}
+	
 	
 }
