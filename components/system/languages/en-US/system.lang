@@ -1,3 +1,4 @@
+[admin.update]
 ADD_SERVER_BUTTON="+"
 NOT_A_VALID_UPDATE_SERVER="%server$s is not a valid update server."
 NO_SERVER_WAS_PROVIDED="You must specify a server to add."
@@ -37,3 +38,34 @@ DIRECTORY_ALREADY_EXISTS="Directory already exists: %file$s"
 DIRECTORY_HAS_BEEN_CREATED="Directory created: %file$s"
 
 ARE_YOU_SURE="Are you sure?  This will update your system to version %version$s from server http://%server$s."
+
+[admin.nodes]
+ADD_NEW="+New"
+
+NEVER_EXPIRES="Never"
+
+EDIT_ACCESS_TITLE="Edit Access"
+EDIT_ACCESS_SUBTITLE="Edit"
+EDIT_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand access to remote users, although it is not recommended."
+
+NEW_ACCESS_TITLE="Grant Access"
+NEW_ACCESS_SUBTITLE="New"
+NEW_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand access to remote users, although it is not recommended."
+
+ARE_YOU_SURE_YOU_WANT_TO_DELETE="Are you sure you want to delete %count$s item(s) permanently?"
+
+NONE_SELECTED="No items were selected."
+
+EDIT_CANCELLED="Your changes have been cancelled."
+RECORD_SAVED="Access record #%id$s has been saved."
+RECORD_APPLIED="Changes to access record #%id$s has been applied."
+CANNOT_BE_NULL="This field cannot be null."
+ERRORS_ON_PAGE="Errors occurred while attempting to save."
+
+SELECTED_ITEMS_DELETED="Successfully deleted %count$s selected item(s)."
+
+INHERITANCE=Inherit
+OPTION_NODE_TRUSTED="Trusted"
+OPTION_NODE_BLOCKED="Blocked"
+
+ADD_NEW="+New"

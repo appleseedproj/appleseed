@@ -63,7 +63,6 @@ class cUserAdminAccessController extends cController {
 		$cellAccess_PK = $row->Find( "[class=Access_PK]", 0 );
 		$cellAccount = $row->Find( "[class=Account]", 0 );
 		$cellContactName = $row->Find( "[class=ContactName]", 0 );
-		$cellCountry = $row->Find( "[class=Country]", 0 );
 		$cellRead = $row->Find( "[class=Read]", 0 );
 		$cellWrite = $row->Find( "[class=Write]", 0 );
 		$cellAdmin = $row->Find( "[class=Admin]", 0 );
@@ -86,7 +85,6 @@ class cUserAdminAccessController extends cController {
 			$url = $baseURL . "edit" . DS . $id . DS;
 			
 			$account = $this->Model->Get ( 'Account' );
-			$country = $this->Model->Get ( 'Country' );
 			$read = $this->Model->Get ( 'Read' );
 			$write = $this->Model->Get ( 'Write' );
 			$admin = $this->Model->Get ( 'Admin' );
@@ -97,7 +95,6 @@ class cUserAdminAccessController extends cController {
 			
 			$cellAccess_PK->innertext = $this->List->Link ( $id, $url );
 			$cellAccount->innertext = $this->List->Link ( $account, $url );
-			$cellCountry->innertext = $this->List->Link ( $country, $url );
 			$cellRead->innertext = $this->List->Link ( $YESNO[$read], $url );
 			$cellWrite->innertext = $this->List->Link ( $YESNO[$write], $url );
 			$cellAdmin->innertext = $this->List->Link ( $YESNO[$admin], $url );
