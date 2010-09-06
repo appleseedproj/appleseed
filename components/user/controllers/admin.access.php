@@ -139,7 +139,7 @@ class cUserAdminAccessController extends cController {
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
-		$page = $this->GetSys ( "Request" )->Get ( "Page");
+		$page = (int) $this->GetSys ( "Request" )->Get ( "Page");
 		
 		if ( $step = $this->GetSys ( "Request" )->Get ( "PaginationStep" ) ) {
 			$page = 1;
@@ -150,11 +150,13 @@ class cUserAdminAccessController extends cController {
 		
 		if ( !$page ) {
 			// Get which page was stored, defaulting to page 1
-			$page = $session->Get ( "Page", 1 );
+			$page = (int) $session->Get ( "Page", 1 );
 		} else {
 			// Store the current page for retrieval
 			$session->Set ( "Page", $page );
 		}
+		
+		if ( !$page ) $page = 1;
 		
 		// Calculate the starting point in the list.
 		$start = ( $page - 1 ) * $step;

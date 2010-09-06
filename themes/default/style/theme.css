@@ -60,6 +60,7 @@
 		input[type="submit"], input[type="cancel"], input[type="reset"], input[type="button"]  {  width:auto; margin:0 5px 0 0; }
 		select { float:left; }
 		label em { color:#bf4630; }
+		input:disabled { color:#3a3a3a; }
 		
 		input[type="checkbox"], input[type="radio"] { clear:none; display:inline; margin:5px 0; background-color:#ff00ff; width:auto; float:left; text-align:right; }
 		label.radio, label.checkbox { float:left; clear:none; display:inline; width:auto; margin:5px 15px 5px 5px; }

@@ -7,6 +7,18 @@ jLoader.System_nodes_edit = function ( pElement ) {
 	
 	$("input[name='EndStamp']").datepicker({dateFormat: 'yy-mm-dd 00:00:00'});
 	
+	if ( $("input[name='Never']")[0].checked ) 
+		endstamp =  $("input[name='EndStamp']")[0].disabled = true;
+	
+}
+
+jLoader.System_nodes_edit.Checkbox = function ( pElement ) { }
+jLoader.System_nodes_edit.Checkbox.OnClick = function ( pElement ) { 
+
+	if ( $("input[name='Never']")[0].checked ) 
+		endstamp =  $("input[name='EndStamp']")[0].disabled = true;
+	else
+		endstamp =  $("input[name='EndStamp']")[0].disabled = false;
 	
 }
 
