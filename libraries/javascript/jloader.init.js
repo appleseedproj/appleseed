@@ -38,7 +38,9 @@ _JLoader.prototype.Load = function ( ) {
 		// Constructor
 		Class = _ElementList[e].UCWords ();
 		if ( typeof window['jLoader'][Class] == "function" ) {
-			window['jLoader'][Class] ( document.getElementById ( originalElementName ) );
+			if ( document.getElementById ( originalElementName ) ) {
+				window['jLoader'][Class] ( document.getElementById ( originalElementName ) );
+			}
 		}
 		
 		// @todo: Find a way to trigger a warning.
