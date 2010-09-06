@@ -26,6 +26,8 @@ function __ ( pText, pData ) {
     
     var translationElement = document.getElementById ( translationElementId );
     
+    // @todo:  Load global data first, then overwrite with local data.
+    
     translationData = JSON.parse(translationElement.innerText);
     
 	var text = sprintfn ( pText, pData );

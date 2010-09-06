@@ -63,19 +63,19 @@ class cLanguagesHook extends cHook {
 	public function OnSystemEnd ( $pData = null ) {
 		
 		echo "\n";
-		echo '<div id="appleseed-language" style="display:none; width:1px; height:1px;">' . "\n\n";
+		echo '<dfn id="appleseed-language" style="display:none; width:1px; height:1px;">' . "\n\n";
 
 		foreach ( $this->_Translations as $type => $translations ) {
 			if ( $type == "_system" ) $type = 'document';
-			echo "\t" . '<dfn id="appleseed-language-type-' . $type . '">' . "\n";
+			echo "\t" . '<var id="appleseed-language-type-' . $type . '">' . "\n";
 			foreach ( $translations as $t => $translation ) {
 			
-				echo "\t\t" . '<dfn id="appleseed-language-' . $type . '-' . $t . '">' . $translation . '</dfn>' . "\n\n";
+				echo "\t\t" . '<var id="appleseed-language-' . $type . '-' . $t . '">' . $translation . '</var>' . "\n\n";
 			}
-			echo "\t" . '</dfn>' . "\n";
+			echo "\t" . '</var>' . "\n";
 		}
 		
-		echo "</div>";
+		echo "</dfn>";
 		
 		return ( false );
 	}
