@@ -10,12 +10,7 @@
     <title><?php echo __("Example Component | Appleseed"); ?></title>
 	
 	<!-- Links -->
-	<link rel="stylesheet" href="/themes/default/style/html5reset-1.4.1.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/fonts-min.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/admin.css" /> 
+    <?php $zApp->Theme->UseStyles (); ?>
 	
 	<!-- Javascript --> 
 	<!--[if IE]>
