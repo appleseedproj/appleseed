@@ -14,3 +14,9 @@ NEW_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand ac
 ARE_YOU_SURE_YOU_WANT_TO_DELETE="Are you sure you want to delete %count$s item(s) permanently?"
 
 NONE_SELECTED="No items were selected."
+
+EDIT_CANCELLED="Your changes have been cancelled."
+RECORD_SAVED="Access record #%id$s has been saved."
+RECORD_APPLIED="Changes to access record #%id$s has been applied."
+CANNOT_BE_NULL="This field cannot be null."
+ERRORS_ON_PAGE="Errors occurred while attempting to save."

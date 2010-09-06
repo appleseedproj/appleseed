@@ -234,7 +234,7 @@ class cUserAdminAccessController extends cController {
 			return ( false );
 		}
 		
-		$message = __( "Record Saved", array ( "id" => $this->Data->Get ( "Customer_PK" ) ) ); 
+		$message = __( "Record Saved", array ( "id" => $this->Data->Get ( "Access_PK" ) ) ); 
 		$this->GetSys ( "Session" )->Set ( "Message", $message );
 		
 		$this->Go ( "Display" );
