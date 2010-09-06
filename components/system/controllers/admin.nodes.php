@@ -67,13 +67,11 @@ class cSystemAdminNodesController extends cController {
 		$cellEndStamp = $row->Find( "[class=EndStamp]", 0 );
 		$cellAdmin = $row->Find( "[class=Admin]", 0 );
 		$cellLocation = $row->Find( "[class=Location]", 0 );
-		$cellInheritance = $row->Find( "[class=Inheritance]", 0 );
+		$cellInherit = $row->Find( "[class=Inherit]", 0 );
 		$cellMasslist = $row->Find( "[class=Masslist] input[type=checkbox]", 0 );
 		
 		$YESNO = array ( "0" => "Option No", "1" => "Option Yes" );
 		$TRUST = array ( "10" => "Option Node Trusted", "20" => "Option Node Blocked" );
-		
-		$customerName = $this->Model->Get ( 'ContactFirstName' ) . ' ' . $this->Model->Get ( "ContactLastName" );
 		
 		while ( $this->Model->Fetch() ) {
 			
@@ -91,7 +89,7 @@ class cSystemAdminNodesController extends cController {
 			$source = $this->Model->Get ( 'Source' );
 			$admin = $this->Model->Get ( 'Admin' );
 			$location = $this->Model->Get ( 'Location' );
-			$inheritance = $this->Model->Get ( 'Inheritance' );
+			$inheritance = $this->Model->Get ( 'Inherit' );
 			
 			if ( $endStamp == '0000-00-00 00:00:00' ) $endStamp = __( "Never Expires" );
 			
@@ -139,7 +137,7 @@ class cSystemAdminNodesController extends cController {
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
-		$page = $this->GetSys ( "Request" )->Get ( "Page");
+		$page = (int) $this->GetSys ( "Request" )->Get ( "Page");
 		
 		if ( $step = $this->GetSys ( "Request" )->Get ( "PaginationStep" ) ) {
 			$page = 1;
@@ -150,11 +148,13 @@ class cSystemAdminNodesController extends cController {
 		
 		if ( !$page ) {
 			// Get which page was stored, defaulting to page 1
-			$page = $session->Get ( "Page", 1 );
+			$page = (int) $session->Get ( "Page", 1 );
 		} else {
 			// Store the current page for retrieval
 			$session->Set ( "Page", $page );
 		}
+		
+		if ( !$page ) $page = 1;
 		
 		// Calculate the starting point in the list.
 		$start = ( $page - 1 ) * $step;
@@ -249,13 +249,12 @@ class cSystemAdminNodesController extends cController {
 	 */
 	function _Save ( ) {
 		
-		$this->Model = $this->GetModel ( "tID" );
+		$this->Model = $this->GetModel ( "Nodes" );
 		$this->Model->Synchronize();
 		
-		if ( $this->Model->Get ( 'Trust' ) == 'on' ) $this->Model->Set ( 'Trust', true ); else $this->Model->Set ( 'Trust', false );
-		if ( $this->Model->Get ( 'Write' ) == 'on' ) $this->Model->Set ( 'Write', true ); else $this->Model->Set ( 'Write', false );
-		if ( $this->Model->Get ( 'Admin' ) == 'on' ) $this->Model->Set ( 'Admin', true ); else $this->Model->Set ( 'Admin', false );
-		if ( $this->Model->Get ( 'Inheritance' ) == 'on' ) $this->Model->Set ( 'Inheritance', true ); else $this->Model->Set ( 'Inheritance', false );
+		if ( !$this->Model->Get ( 'Source' ) ) $this->Model->Set ( 'Source', $_SERVER['HTTP_HOST'] );
+		if ( $this->Model->Get ( 'Callback' ) == 'on' ) $this->Model->Set ( 'Callback', true ); else $this->Model->Set ( 'Admin', false );
+		if ( $this->Model->Get ( 'Inherit' ) == 'on' ) $this->Model->Set ( 'Inherit', true ); else $this->Model->Set ( 'Inherit', false );
 		
 		$validate = $this->GetSys ( 'Validation' );
 		
@@ -317,7 +316,12 @@ class cSystemAdminNodesController extends cController {
 		$this->Model->Retrieve ( $tID );
 		
 		$this->Model->Fetch();
+		
+		$never = false;
+		if ( $this->Model->Get ( "EndStamp" ) == '0000-00-00 00:00:00' ) $never = true;
+		
 		$defaults = (array) $this->Model->Get ( "Data" );
+		$defaults = array_merge ( $defaults, array ( "Never" => $never) );
 		$this->Form->Synchronize ( $defaults );
 		
 	}
@@ -326,6 +330,7 @@ class cSystemAdminNodesController extends cController {
 		
 		$this->Form->Find ( "[id=edit-subtitle]", 0)->innertext = "New Node Subtitle";
 		$this->Form->Find ( "form[id=system-nodes-edit] fieldset p", 0)->innertext = "New Node Description";
+		$this->Form->Find ( "[name=Source]", 0)->value = $_SERVER['HTTP_HOST'];
 		
 		return ( true );
 	}
