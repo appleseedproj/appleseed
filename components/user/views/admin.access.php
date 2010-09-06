@@ -27,6 +27,7 @@
 			<th scope="col"><a href="#">Read</th> 
 			<th scope="col"><a href="#">Write</th> 
 			<th scope="col"><a href="#">Admin</th> 
+			<th scope="col"><a href="#">Location</th> 
 			<th scope="col"><a href="#">Inheritance</th> 
 			<th><input class="select-toggle checked" type="checkbox" /></th> 
 		</thead> 
@@ -37,6 +38,7 @@
 				<td class="Read"></td>
 				<td class="Write"></td>
 				<td class="Admin"></td>
+				<td class="Location"></td>
 				<td class="Inheritance"></td>
 				<td class="Masslist"><input class='masslist-checkbox' type="checkbox" /></td>
 			</tr> 
