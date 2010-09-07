@@ -107,7 +107,7 @@ class cSystemAdminUpdateController extends cController {
 		
 		$this->Form->Synchronize( $defaults );
 		
-		$this->_PrepareMessage ( &$this->Form );
+		$this->_PrepareMessage ( $this->Form );
 		
 		$this->Form->Display();
 		
@@ -323,7 +323,7 @@ class cSystemAdminUpdateController extends cController {
 		$session->Set ( "Message", __( "Update Has Completed", array ( "version" => $version ) ) );
 		$session->Set ( "Error", false );
 		
-		$this->_PrepareMessage ( &$this->Results );
+		$this->_PrepareMessage ( $this->Results );
 		
 		$this->Results->Display();
 		
