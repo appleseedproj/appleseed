@@ -1132,10 +1132,10 @@ class cINSTALL {
 							</ul>
 						<h3>New in this release</h3>
 							<ul>
-								<li>Themes (and a new look!)</li>
-								<li>MVC+Plugins Framework</li>
-								<li>Internationalization</li>
-								<li>Stronger Password Encryption</li>
+								<li>One-Click Server Upgrades</li>
+								<li>New Layout</li>
+								<li>Client-Side Internationalization</li>
+								<li>Legacy code refactoring</li>
 								<li>Lots of bug fixes</li>
 							</ul>
 
@@ -1348,10 +1348,10 @@ class cINSTALL {
 							</ul>
 						<h3>New in this release</h3>
 							<ul>
-								<li>Themes (and a new look!)</li>
-								<li>MVC+Plugins Framework</li>
-								<li>Internationalization</li>
-								<li>Stronger Password Encryption</li>
+								<li>One-Click Server Upgrades</li>
+								<li>New Layout</li>
+								<li>Client-Side Internationalization</li>
+								<li>Legacy code refactoring</li>
 								<li>Lots of bug fixes</li>
 							</ul>
 

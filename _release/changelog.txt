@@ -1,5 +1,24 @@
 RELEASE CHANGES
 
+-- 0.7.6 --
+
++ Javascript Framework
+  - Client-Side i18n
++ Protocol
+  - QuickConnect protocol working
++ Documentation
+  - Privacy UI mockups
+  - New layout
++ Framework
+  - Input Purification
++ Components
+  - Debugging Component
+  - Login Component
+  - System Node Control
+  - System Update (One-click server upgrades!)
+  - User Access Component
+  - Header/Footer
+  
 -- 0.7.5 --
 
 + Javascript Framework

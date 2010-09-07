@@ -1,12 +1,14 @@
 Appleseed v0.7.6 Beta (Eleventh Release)
 
---- --, 2010
+Sep 07 2010
 
 New In This Release:
 --------------------
 
-A whole set of architectural changes which will allow for more rapid 
-development in future releases. A new default theme.
+A new layout is being developed, and legacy code is being refactored.
+Client-side i18n allows you to use the same lang file you have on the 
+server.  All the foundational work necessary to move forward with the
+user-facing code has been done.  Now is when things get interesting.
 
 A lot more.  See _release/changelog.txt
 
@@ -51,7 +53,7 @@ Install Instructions
 Upgrade Instructions
 
 (This can be a little tricky, and these steps only work for upgrading
-from 0.7.3)
+from 0.7.5)
 
 1. Make a backup of your web directory and db tables!
 2. Untar the release into your web directory, overwriting existing files
@@ -67,17 +69,8 @@ pre="asd_"
 host="localhost"
 url="http://localhost"
 
-5. Remove the following files and directories:
-
-DEV/
-data/
-attachments/
-frameworks/
-code/
-install.sql
-
-6. Copy htaccess.original to .htaccess
-7. Run the queries in _release/update-0.7.4.sql on your database, replacing "#__" with your prefix.
+5. Copy htaccess.original to .htaccess
+6. Run the queries in _release/update-0.7.6.sql on your database, replacing "#__" with your prefix.
 
 ie, 
 
