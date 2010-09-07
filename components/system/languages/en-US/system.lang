@@ -53,6 +53,7 @@ NEW_NODE_SUBTITLE="New"
 NEW_NODE_DESCRIPTION="Node control allows you to block or trust nodes.  You can also use regular expressions to block a group of nodes."
 
 ARE_YOU_SURE_YOU_WANT_TO_DELETE="Are you sure you want to delete %count$s item(s) permanently?"
+ARE_YOU_SURE_YOU_WANT_TO_CANCEL="Are you sure you want to cancel your changes?"
 
 NONE_SELECTED="No items were selected."
 

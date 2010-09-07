@@ -10,6 +10,6 @@
 	<div><label for='Remember'>Remember Me</label><input id='Remember' type='checkbox' name='Remember' /></div>
 	</fieldset>
 
-	<button type='submit' name='Task' value='Login'>Login</button>    
-	<button type='submit' name='Task' value='Forgot'>Forgot Password</button> 
+	<button name='Task' value='Login'>Login</button>    
+	<button name='Task' value='Forgot'>Forgot Password</button> 
 </form>

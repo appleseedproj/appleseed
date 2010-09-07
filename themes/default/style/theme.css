@@ -131,10 +131,13 @@
 		span.mistranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca; font-style:italic; }
 		
 		/* Buttons */
-		button { padding:3px 5px; }
+		button { padding:3px 6px; font-size:100%; }
+
+		button:hover { -webkit-box-shadow:1px 1px 2px #8a8a8a; cursor:pointer; color:#ffffff; }
 		
 		/* Nav Buttons */
 		nav button{ color:#406300; border:none; background:none; font-weight:bold; }
+		nav button, nav button:hover { -webkit-box-shadow:none; color:#406300; }
 		nav button:hover { text-decoration:underline; cursor:pointer; }
 		nav button:disabled{ color:#c0d895; border:none; background:none; font-weight:bold; }
 		nav button:disabled:hover{ cursor:default; text-decoration:none; }
@@ -155,11 +158,13 @@
 		#system-message a:hover { text-decoration:underline; }
 		
 		/* JQuery : UI : Date Picker */
-		.ui-datepicker { border:1px solid #406300; width:220px; }
+		.ui-datepicker { margin-left:10px; border:1px solid #406300; width:220px; }
+		.ui-datepicker { -moz-box-shadow: 5px 5px 5px #8a8a8a; box-shadow: 5px 5px 5px #8a8a8a; -webkit-box-shadow: 5px 5px 5px #8a8a8a; }
 		.ui-datepicker .ui-datepicker-header { float:left; width:100%; color:#fafafa; background-color:#80af1f; padding-top:2px; clear:both; }
 		.ui-datepicker .ui-datepicker-title { float:left; width:100%; text-align:center; font-weight:bold; }
-		.ui-datepicker a.ui-datepicker-prev { width:50%; float:left; text-align:left; padding:0; background:none; }
-		.ui-datepicker a.ui-datepicker-next { width:50%; float:left; text-align:right; padding:0; background:none; }
+		.ui-datepicker a.ui-datepicker-prev { color:#fafafa; width:49%; margin-left:1%; font-size:90%; float:left; text-align:left; padding:0; background:none; }
+		.ui-datepicker a.ui-datepicker-next { color:#fafafa; width:49%; margin-right:1%; font-size:90%; float:left; text-align:right; padding:0; background:none; }
+		.ui-datepicker a:hover { background-color:#80af1f; text-decoration:none; }
 		
 		
 		/* Header,Footer */

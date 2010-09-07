@@ -19,9 +19,9 @@
 		<input type="checkbox" name="Inheritance" /><label class="checkbox" for="Inheritance">Inherit</label>
 	</fieldset>
 	<p>
-		<input type="submit" name="task" value="Save" />
-		<input type="submit" name="task" value="Apply" />
-		<input type="submit" name="task" class="cancel" value="Cancel" />
+		<button name="task" value="Save">Save</button>
+		<button name="task" value="Apply">Apply</button>
+		<button name="task" class="cancel" value="Cancel">Cancel</button>
 	</p>
 		
 </form>

@@ -22,6 +22,18 @@ jLoader.System_nodes_edit.Checkbox.OnClick = function ( pElement ) {
 	
 }
 
+jLoader.System_nodes_edit.Button = function ( pElement ) { }
+jLoader.System_nodes_edit.Button.OnClick = function ( pElement ) { 
+
+	jTranslations[pElement.id] = "system";
+	
+	if ( pElement.value == "Cancel" ) {
+		return ( confirm ( __( "Are You Sure You Want To Cancel" ) ) );
+	}
+	
+	return ( true );
+}
+
 jLoader.Initialize( "system-nodes-list" );
 
 jLoader.System_nodes_list = function ( pElement ) { }
