@@ -426,7 +426,7 @@ class cLoginLoginController extends cController {
 		}
 		
 		$userProfile = new cModel ( 'userProfile' );
-		$userProfile->Retrieve ( "2" );
+		$userProfile->Retrieve ( $userAuth->Get ( "uID" ) );
 		$userProfile->Fetch();
       
 		$salt = substr(md5(uniqid(rand(), true)), 0, 16);
