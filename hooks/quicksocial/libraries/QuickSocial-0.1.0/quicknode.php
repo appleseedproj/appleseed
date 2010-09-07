@@ -8,7 +8,7 @@
  * @license      GNU Lesser General Public License (LGPL) version 3.0
  */
 
-if ( !class_exists ( "cQuickSocial" ) ) require ( __DIR__ . DIRECTORY_SEPARATOR . 'quicksocial.php' );
+if ( !class_exists ( "cQuickSocial" ) ) require ( dirname(__FILE__) . DIRECTORY_SEPARATOR . 'quicksocial.php' );
 
 /** QuickNode Class
  * 
