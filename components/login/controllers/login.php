@@ -58,6 +58,11 @@ class cLoginLoginController extends cController {
 			$hiddenContext->value = $this->_Context;
 		}
 		
+		
+		if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) 
+			$this->Login->Find ( "[name=Redirect]", 0 )->value = Redirect;
+			
+		
 		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );	
 		$sessionData['Identity'] = $this->GetSys ( 'Session' )->Get( 'Identity' );
 		$this->GetSys ( 'Session' )->Delete ( 'Identity' );
@@ -94,6 +99,11 @@ class cLoginLoginController extends cController {
 		}
 		
 		$data = array ( "username" => $username, "domain" => $domain );
+		
+		if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
+			$data['return'] = 'http://' . $_SERVER['HTTP_HOST'] . base64_decode ( $redirect );
+		}
+			
 		$result = $this->GetSys ( "Event" )->Trigger ( "On", "Login", "Authenticate", $data );
 		
 		if ( $result->error ) {
@@ -159,7 +169,13 @@ class cLoginLoginController extends cController {
 			
 			$this->_SetLogin ( $loginModel->Get ( "uID"), $remember );
 			
-			header('Location: /');
+			if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
+				$redirect = base64_decode ( $redirect );
+				header('Location: ' . $redirect);
+			} else {
+				header('Location: /');
+			}
+			
 			exit;
 		} else {
 			$this->Login = $this->GetView ( "login" );

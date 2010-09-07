@@ -48,6 +48,8 @@ class cSecurityHook extends cHook {
 		$session->Set ( 'Message', __( 'Access Denied' ) );
 		$session->Set ( 'Error', true );
 		
+		$this->GetSys ( 'Request' )->Set ( 'Redirect', base64_encode ( $_SERVER['REQUEST_URI'] ) );
+		
 		$this->GetSys ( 'Foundation' )->Load ( 'common/403.php' );
 		
 		return ( false );
