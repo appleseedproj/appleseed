@@ -56,7 +56,13 @@ class cLanguagesHook extends cHook {
 			}
 		}
 		
-		$this->_Translations[$scope][$component] = json_encode ( $data, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP );
+		// Removed, json options only available in 5.3
+		// $this->_Translations[$scope][$component] = json_encode ( $data, JSON_HEX_TAG|JSON_HEX_APOS|JSON_HEX_QUOT|JSON_HEX_AMP );
+		
+		foreach ( $data as $d => $dat ) {
+			$data[$d] = htmlspecialchars ( $dat );
+		}
+		$this->_Translations[$scope][$component] = json_encode ( $data );
 		
 	}
 	
