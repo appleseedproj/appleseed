@@ -15,7 +15,7 @@
 				<option value="10">Trusted</option>
 				<option value="20">Blocked</option>
 			</select>
-		<label for="EndStamp">End Stamp<em>*</em></label><input class="required" type="text" name="EndStamp" />
+		<label for="EndStamp">End Stamp<em>*</em></label><input type="text" name="EndStamp" />
 		<label>Never Expires</label> 
 		<input type="checkbox" name="Never" />
 		<label for="Share">Share<em>*</em></label>

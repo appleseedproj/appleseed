@@ -4,11 +4,11 @@ ADD_NEW="+New"
 
 EDIT_ACCESS_TITLE="Edit Access"
 EDIT_ACCESS_SUBTITLE="Edit"
-EDIT_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand access to remote users, although it is not recommended."
+EDIT_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grant access to remote users, although it is not recommended."
 
 NEW_ACCESS_TITLE="Grant Access"
 NEW_ACCESS_SUBTITLE="New"
-NEW_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grand access to remote users, although it is not recommended."
+NEW_ACCESS_DESCRIPTION="Set access levels for users here.  You may also grant access to remote users, although it is not recommended."
 
 
 ARE_YOU_SURE_YOU_WANT_TO_DELETE="Are you sure you want to delete %count$s item(s) permanently?"
