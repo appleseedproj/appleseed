@@ -277,13 +277,13 @@
 		#profile-friends ul li { clear:both; list-style-type:none; }
 		#profile-friends ul li img.friends-icon { float:left; clear:none; width:64px; height:64px; margin:10px 5px 0 0; border-bottom:1px solid #406300; }
 		
-		#profile-friends div.friends-info { float:left; width:90%; margin-top:10px; background-color:#ff00ff; }
+		#profile-friends div.friends-info { float:left; width:90%; margin-top:10px; }
 		#profile-friends span { font-size:90%; }
 		#profile-friends span.friends-fullname { float:left; margin-top:0px; width:auto; font-weight:bold; }
 		#profile-friends span.friends-location { float:right; width:30%; text-align:right; font-weight:bold; }
 		#profile-friends p.friends-status { float:left; margin:0; width:80%; min-height:41px; font-style:italic; color:#8a8a8a; }
 		#profile-friends span.friends-mutual-count { float:right; text-align:right; font-style:italic; color:#8a8a8a; }
-		#profile-friends a.friends-identity { float:left; padding:0; background:none; font-size:90%; width:40%; clear:both; background-color:#ff0000;}
+		#profile-friends a.friends-identity { float:left; padding:0; background:none; font-size:90%; width:80%; clear:both; }
 
 		#profile-friends .mutual-friends-link { margin-left:50px; font-size:80%; font-weight:normal; }
 
@@ -292,15 +292,16 @@
 		
 		#profile-friends .friends-editor { float:left; clear:none; display:inline; width:60%; }
 		
-		#profile-friends .friends-circles { font-size:100%; float:left; width:60%; color:#406300; }
-		#profile-friends .friends-circles ul { float:left; margin:4px 0 0 5px; padding:0; border:none; }
-		#profile-friends .friends-circles ul li { float:left; margin:0; border:none; clear:none; }
+		#profile-friends .friends-circles { font-size:100%; margin:0px 0px 0 68px; height:16px; overflow:hidden; float:left; width:90%; color:#f1ffd6; }
+		#profile-friends .friends-circles:hover { height:auto; display:block; }
+		#profile-friends .friends-circles ul { float:left; padding:0; border:none; }
+		#profile-friends .friends-circles ul li { float:left; margin:1px 2px 1px 0; padding:0 0 0 8px; border:none; clear:none; background-color:#80af1f; }
 		#profile-friends .friends-circles ul li { -webkit-border-radius:8px; }
 		#profile-friends .friends-circles ul li span { float:left; clear:none; margin-right:2px; }
-		#profile-friends .friends-circles ul li button { float:left; clear:none; padding:0; margin:2px 8px 0 2px; padding-left:4px; border:none; background:none; border-left:1px solid #406300; font-weight:bold; font-size:80%; }
+		#profile-friends .friends-circles ul li button { float:left; clear:none; padding:0 8px 0 4px; margin:2px 0; border:none; background:none; border-left:1px solid #f1ffd6; color:#f1ffd6; font-weight:bold; font-size:80%; }
 		
-		#profile-friends .friends-circle-add select { font-size:90%; width:auto; float:left; clear:none; }
-		#profile-friends .friend-remove { background-color:#0000ff; width:10%; margin-top:5px; padding:0; margin-left:6px; padding-left:2px; border-left:1px solid #406300; width:auto; float:right; clear:none;}
+		#profile-friends .friends-circle-add select { font-size:90%; width:auto; float:left; margin:0; clear:none; }
+		#profile-friends .friend-remove { width:10%; margin-top:0px; padding:0; margin-left:6px; padding-left:2px; border-left:1px solid #406300; width:auto; float:right; clear:none;}
 		#profile-friends .friend-remove button { background:none; margin:0px 2px 0px 4px; font-weight:bold; color:#406300; border:none; padding:0; font-size:120%; }
 		
 		/* profile-comments */

@@ -162,25 +162,23 @@
 									<span class="friends-mutual-count">36 mutual friends</span>
 									<a href="#" class="friends-identity">flint@appleseedproject.org</a>
 									
-									<div class="friends-editor">
-										<span class="friends-circle-add"><select><option disabled="disabled">Friends Circle &darr;</option></select></span>
-										<span class="friends-circles">
-											<ul>
-												<li><span>Baltimore</span> <button>X</button></li>
-												<li><span>Geeks</span> <button>X</button></li>
-												<li><span>Baltimore</span> <button>X</button></li>
-												<li><span>Geeks</span> <button>X</button></li>
-												<li><span>Baltimore</span> <button>X</button></li>
-												<li><span>Geeks</span> <button>X</button></li>
-												<li><span>Baltimore</span> <button>X</button></li>
-												<li><span>Geeks</span> <button>X</button></li>
-												<li><span>Baltimore</span> <button>X</button></li>
-												<li><span>Geeks</span> <button>X</button></li>
-											</ul>
-										</span>
-										<span class='friend-remove'><button>X</button></span>
-									</div>
+									<span class="friends-circle-add"><select><option disabled="disabled">Friends Circle &darr;</option></select></span>
+									<span class='friend-remove'><button>X</button></span>
 								</div>
+								<span class="friends-circles">
+									<ul>
+										<li><span>Baltimore</span> <button>X</button></li>
+										<li><span>Geeks</span> <button>X</button></li>
+										<li><span>General</span> <button>X</button></li>
+										<li><span>Family</span> <button>X</button></li>
+										<li><span>Not sure?</span> <button>X</button></li>
+										<li><span>Distant Relatives</span> <button>X</button></li>
+										<li><span>Chicago</span> <button>X</button></li>
+										<li><span>Friends</span> <button>X</button></li>
+										<li><span>Weirdos</span> <button>X</button></li>
+										<li><span>Other</span> <button>X</button></li>
+									</ul>
+								</span>
 							</li>
 							<li>
 								<img class="friends-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc4/hs171.snc4/37875_736751926255_18401167_41412055_2880695_s.jpg">
