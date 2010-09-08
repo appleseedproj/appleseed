@@ -38,8 +38,6 @@
 
 	<div class="clear"></div>
 
-	<!-- System Message -->
-	
 	<!-- Header -->
 	<header id="appleseed-header">
  		<?php $zApp->Components->Go ( "header" ); ?>
@@ -57,7 +55,7 @@
 		       		</ul>
 		       	</nav>
 		       	<div id="admin-search" class="grid_3 push_4">
-					<input type="text" name="search" placeholder="Search..." class="search local"><input type="submit" name="search" value="" class="search-submit local">
+					<?php $zApp->Components->Go ( "search", "search", "local" ); ?>
 				</div>
 			</div>
        
