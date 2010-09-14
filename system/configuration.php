@@ -21,6 +21,9 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 class cConfiguration extends cBase {
 	
 	protected $_Data;
+	protected $_Cleared;
+	
+	public $Child;
 
 	/**
 	 * Constructor
@@ -131,7 +134,7 @@ class cConfiguration extends cBase {
 		$config['_path'] = array_reverse ( $this->_path );
 		
 		// Internal list of variables which were cleared and by which configuration
-		if ( count ( $this->_cleared ) > 0 ) $config['_cleared'] = array_reverse ( $this->_cleared );
+		if ( count ( $this->_Cleared ) > 0 ) $config['_cleared'] = array_reverse ( $this->_Cleared );
 		
 		unset ( $final->Directory );
 		unset ( $config['enabled'] );
@@ -169,7 +172,8 @@ class cConfiguration extends cBase {
 	 */
 	private function _Inherit ( $pConfiguration ) {
 		$parent = $pConfiguration;
-		$child = $parent->Child;
+		
+		if ( isset ( $parent->Child ) ) $child = $parent->Child;
 		
 		$clear = isset ( $child->_Data['clear'] ) ? $configurations->_Data['clear'] : false;
 		
@@ -182,7 +186,7 @@ class cConfiguration extends cBase {
 			
 			// Move all parent values to child
 			foreach ( $child->_Data as $key => $value ) {
-				if ( is_array ( $parent->_Data[$key] ) ) {
+				if ( isset ( $parent->_Data[$key] ) && ( is_array ( $parent->_Data[$key] ) ) ) {
 					$parent->_Data[$key] = array_merge ( $parent->_Data[$key], $value );
 				} else {
 					$parent->_Data[$key] = $value;
@@ -219,7 +223,7 @@ class cConfiguration extends cBase {
 			// Special variables which cannot be cleared
 			if ( in_array ( $clear, array ( "inherit", "clear" ) ) ) continue;
 			
-			$this->_cleared[] = $clear . ' [by ' . $pChild->Directory . '] ';
+			$this->_Cleared[] = $clear . ' [by ' . $pChild->Directory . '] ';
 			unset ( $pParent->_Data[$clear] );
 		} 
 		

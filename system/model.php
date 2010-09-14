@@ -442,6 +442,7 @@ class cModel extends cBase {
 			
 			$operand = null;
 			$comparison = null;
+			$comparison_string = null;
 			
 			if ( $this->_IsMasslist ( $criteria ) ) {
 				$directive = '()';

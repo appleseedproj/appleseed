@@ -46,6 +46,25 @@ class cUser extends cComponent {
 		return ( $AuthUser );
 	}
 	
+	public function Focus ( $pData = null ) {
+		
+		if ( isset ( $this->_Cache['Focus'] ) ) {
+			return ( $this->_Cache['Focus'] );
+		}
+		
+		list ( $null, $null, $focusUsername, $null ) = explode ('/', $_SERVER['REQUEST_URI'] );
+		
+		if ( !$focusUsername ) return ( false );
+		
+		$FocusUser = new cUserAuthorization ( );
+		
+		$FocusUser->Focus ( $focusUsername );
+		
+		$this->_Cache['Focus'] = $FocusUser;
+		
+		return ( $FocusUser );
+	}
+	
 	public function AdminMenu ( $pData = null ) {
 		
 		$return = array ();
@@ -133,5 +152,30 @@ class cUserAuthorization extends cBase {
       	
       	return ( true );
 	}
+	
+	public function Focus ( $pUsername ) {
+		
+      	// Load the user account information.
+      	$userModel = new cModel ( "userAuthorization" );
+      	$userModel->Retrieve ( array ( "Username" => $pUsername ) );
+      	$userModel->Fetch();
+      	
+      	if ( !$userModel->Get ( "Username" ) ) return ( false );
+      	
+      	$this->Username = $userModel->Get ( "Username" );
+      	
+      	// Load the user profile information.
+      	$profileModel = new cModel ( "userProfile" );
+      	$profileModel->Retrieve ( array ( "userAuth_uID" => $userModel->Get ( "uID" ) ) );
+      	$profileModel->Fetch();
+      	
+      	$this->Fullname = $profileModel->Get ( "Fullname" );
+      	$this->Domain = $_SERVER['HTTP_HOST'];
+      	
+      	$this->Remote = false;
+      	
+      	return ( true );
+	}
+	
 	
 }

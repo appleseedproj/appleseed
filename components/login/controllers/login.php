@@ -31,6 +31,9 @@ class cLoginLoginController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
+		$referer = $_SERVER['HTTP_REFERER']; 
+		$host = $_SERVER['HTTP_HOST'];
+		
 		$noredirect = $pData['noredirect'];
 		
 		$config = $this->Get ( 'Config' );
@@ -59,8 +62,17 @@ class cLoginLoginController extends cController {
 		}
 		
 		
-		if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) 
-			$this->Login->Find ( "[name=Redirect]", 0 )->value = Redirect;
+		if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
+			$redirect = base64_encode ( $redirect );
+			$this->Login->Find ( "[name=Redirect]", 0 )->value = $redirect; 
+		} else {
+			if ( preg_match ( "/http:\/\/$host/", $referer ) ) {
+				list ( $null, $redirect ) = explode ( $host, $referer );
+				$redirect = base64_encode ( $redirect );
+				$this->Login->Find ( "[name=Redirect]", 0 )->value = $redirect;
+			}
+		
+		}
 			
 		
 		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );	

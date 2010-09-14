@@ -406,7 +406,7 @@ class cQuicksocialHook extends cHook {
 			$this->OnLoginAuthenticate ( $data );
 			exit;
 			
-		} elseif ( ( $bounce = $_REQUEST['_bounce'] ) and ( $_REQUEST['_social'] != "true" ) ) {
+		} elseif ( ( isset ( $_REQUEST['_bounce'] ) ) && ( $bounce = $_REQUEST['_bounce'] ) and ( $_REQUEST['_social'] != "true" ) ) {
 			// @note This is for legacy support, the old system turns all links to POST forms. 
 			// @note We may or may not keep that for the new system.
 			list ( $username, $domain ) = explode ( '@', $bounce, 2 );

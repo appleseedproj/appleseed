@@ -22,6 +22,7 @@ class cRequest {
 	
 	protected $_Request;
 	protected $_Unassigned;
+	protected $_URI;
 	
 	/**
 	 * Constructor

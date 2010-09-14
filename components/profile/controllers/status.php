@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Photos Component
+/** Profile Component Profile Controller
  * 
- * Photos Component Entry Class
+ * Profile Component Profile Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Photos
+ * @subpackage  Profile
  */
-class cPhotos extends cComponent {
+class cProfileStatusController extends cController {
 	
 	/**
 	 * Constructor
@@ -26,16 +26,20 @@ class cPhotos extends cComponent {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
-		parent::__construct();
+		parent::__construct( );
 	}
 	
-	public function AdminMenu ( $pData = null ) {
+	public function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$return = array ();
+		$this->Status = $this->GetView ( $pView ); 
 		
-		$return[] = array ( 'title' =>"Photos", 'class' => "photos", 'link' => "/admin/photos/" );
+		$focus = $this->Talk ( 'User', 'Focus' );
 		
-		return ( $return );
-	} 
+		$this->Status->Find ( '[id=status-name]', 0 )->innertext = $focus->Fullname;
+		
+		$this->Status->Display();
+		
+		return ( true );
+	}
 	
 }
