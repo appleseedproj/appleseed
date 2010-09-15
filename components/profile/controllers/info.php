@@ -35,7 +35,11 @@ class cProfileInfoController extends cController {
 		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		
-		$this->View->Find ( "p", 0 )->innertext = __( "No User Information For", array ( "fullname" => $focus->Fullname ) );
+		if ( $focus->Description ) {
+			$this->View->Find ( "p", 0 )->innertext = $focus->Description;
+		} else {
+			$this->View->Find ( "p", 0 )->innertext = __( "No User Information For", array ( "fullname" => $focus->Fullname ) );
+		}
 		
 		$this->View->Display();
 		

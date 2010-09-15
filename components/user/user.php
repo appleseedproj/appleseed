@@ -171,6 +171,7 @@ class cUserAuthorization extends cBase {
       	
       	$this->uID = $profileModel->Get ( "userAuth_uID" );
       	$this->Fullname = $profileModel->Get ( "Fullname" );
+      	$this->Description = $profileModel->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Remote = false;
