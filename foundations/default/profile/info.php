@@ -7,7 +7,7 @@
 	<meta charset="utf-8" />
 
 	<!-- Title -->
-	<title><?php echo __("Friends"); ?></title>
+	<title><?php echo __("Info"); ?></title>
 	
 	<!-- Links -->
     <?php $zApp->Theme->UseStyles (); ?>
