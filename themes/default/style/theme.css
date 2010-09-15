@@ -240,6 +240,7 @@
 		#summary-information h2 { margin-top:10px; }
 		#summary-information p { margin:0;}
 		#summary-information p, #summary-information h2 { margin-left:10px; }
+		#summary-information ul{ list-style-type:none; }
 		
 		/* profile-status */
 		#status-container { margin-top:40px; height:49px; max-height:150px; overflow:hidden; }

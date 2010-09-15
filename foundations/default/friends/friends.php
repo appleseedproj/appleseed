@@ -75,24 +75,7 @@
 						</ul>
 					</div>
 					<div id="profile-summary">
-						<section id="summary-information">
-							<h1>Michael's Information</h1>
-							
-							<h2>Full name</h2>
-							<p>Michael Chisari</p>
-
-							<h2>Location</h2>
-							<p>Chicago, IL</p>
-
-							<h2>Birthday</h2>
-							<p>September 12</p>
-
-							<h2>Gender</h2>
-							<p>Male</p>
-
-							<h2>Age</h2>
-							<p>30</p>
-						</section>
+					  	<?php $zApp->Components->Go ( "profile", "summary", "summary" ); ?>	
 					</div>
 					<div id="profile-mutual">
 						<section id="mutual-friends">

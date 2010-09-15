@@ -11,3 +11,5 @@ EVENTS_TAB="Events"
 MAIL_TAB="Mail"
 OPTIONS_TAB="Options"
 MORE_PROFILE_TABS="..."
+
+INFORMATION_FOR_USER="%firstname$s's Information"

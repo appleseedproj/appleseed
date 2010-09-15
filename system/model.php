@@ -434,6 +434,9 @@ class cModel extends cBase {
 	 * @var array $pCriteria An array from which to construct the criteria.
 	 */
 	protected function _BuildCriteria ( array $pCriteria ) {
+		
+		$this->_Prepared = array ();
+		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
 		$statements = array ();
