@@ -80,7 +80,7 @@ class cFriendsFriendsController extends cController {
 		$friendCount = $this->Model->CountFriends ( $focus->uID );
 		
 		$this->View->Find ( '[class=profile-friends-owner]', 0 )->innertext = __( "Friends Of User", array ( "fullname" => $focus->Fullname ) );
-		$this->View->Find ( '[class=profile-friends-count] var', 0 )->innertext = $friendCount;
+		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $friendCount ) );
 		
 		$pageData = array ( 'start' => 0, 'step'  => 10, 'total' => 100, 'link' => $link );
 		$pageControl =  $this->View->Find ('nav[class=pagination]', 0);

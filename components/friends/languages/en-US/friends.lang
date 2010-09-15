@@ -2,3 +2,5 @@ FRIENDS_OF_USER="%fullname$s's Friends"
 
 ADD_TO_CIRCLE="Add Circle &darr;"
 REMOVE_FROM_CIRCLE="Remove Circle &darr;"
+
+NUMBER_OF_FRIENDS="%count$s Friends"

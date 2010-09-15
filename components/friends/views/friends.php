@@ -1,13 +1,3 @@
-<nav class='pagination'>
-	<ol>
-		<li class='first'><a href="#"><span>First Page</span></a></li>
-		<li class='prev'><a href="#"><span>Previous Page</span></a></li>
-		<li class='page selected'><a href="#"><span>1</span></a></li>
-		<li class='page'><a href="#"><span>2</span></a></li>
-		<li class='next'><a href="#"><span>Next Page</span></a></li>
-		<li class='last'><a href="#"><span>Last Page</span></a></li>
-	</ol>
-</nav>
 <section id="profile-friends">
 	<div id="profile-friends-tabs" >
 		<nav>
@@ -18,7 +8,6 @@
 				<li><a href="#">Geeks</a></li>
 				<li><a href="#">General</a></li>
 				<li><a href="#">Family</a></li>
-				<li><a href="#">Not Sure</a></li>
 				<li><a href="#">Distant Relatives</a></li>
 				<li><a href="#">Chicago</a></li>
 				<li><a href="#">Friends</a></li>
@@ -31,8 +20,11 @@
 	
 	<h1>
 		<span class='profile-friends-owner'></span>
-		<span class="profile-friends-count additional-info"><var></var> friends</span>
+		<span class="profile-friends-count additional-info"></span>
 	</h1>
+	
+	<nav class='pagination'>
+	</nav>
 	
 	<ul>
 		<li>
