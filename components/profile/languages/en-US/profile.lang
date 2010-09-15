@@ -1,0 +1,13 @@
+
+[tabs]
+NEWS_TAB="News"
+FRIENDS_TAB="Friends"
+WALL_TAB="Wall"
+INFO_TAB="Info"
+JOURNALS_TAB="Journals"
+PHOTOS_TAB="Photos"
+GROUPS_TAB="Groups"
+EVENTS_TAB="Events"
+MAIL_TAB="Mail"
+OPTIONS_TAB="Options"
+MORE_PROFILE_TABS="..."

@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Admin
+ * @subpackage   Photos
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Admin Component Controller
+/** Profile Component Tabs Controller
  * 
- * Admin Component Controller Class
+ * Profile Component Tabs Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Admin
+ * @subpackage  Profile
  */
-class cAdminMenuController extends cController {
+class cProfileTabsController extends cController {
 	
 	/**
 	 * Constructor
@@ -31,31 +31,37 @@ class cAdminMenuController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
+		$focus = $this->Talk ( 'User', 'Focus' );
+		$current = $this->Talk ( 'User', 'Current' );
+		
 		$components = $this->GetSys ( 'Components' );
 		$componentList = $components->Get ( 'Config' )->Get ( 'Components' ); 
 		
-		$this->Menu = $this->GetView ( 'menu' );
+		$this->Tabs = $this->GetView ( 'tabs' );
 		
-		$list = $this->Menu->Find ( '[id=admin-main-menu] ul', 0);
+		$list = $this->Tabs->Find ( 'ul', 0);
 		
-		$row = $this->Menu->Copy ( '[id=admin-main-menu] ul li' )->Find ( 'li', 0 );
+		$row = $this->Tabs->Copy ( 'ul li' )->Find ( 'li', 0 );
+		
+		$more = $this->Tabs->Copy ( 'ul li[class=more]' )->Find ( 'li', 0 );
 		
 		$list->innertext = "";
 		
 		$config = $this->Get ( "Config" );
 		
-		$ordering = explode ( ' ', $config['menu_ordering'] );
+		$ordering = explode ( ' ', $config['tabs_ordering'] );
+		$maxTabs = isset ( $config['maximum_tabs'] ) ? $config['maximum_tabs'] : 10;
 		
 		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
 		
 		foreach ( $componentList as $c => $component ) {
-			if ( !$menuItems = $components->Talk ( $component, 'AdminMenu' ) ) continue;
+			if ( !$tabItems = $components->Talk ( $component, 'AddToProfileTabs' ) ) continue;
 			
-			foreach ( $menuItems as $m => $menu ) {
-				$link = ltrim ( rtrim ( $menu['link'], '/' ), '/' );
+			foreach ( $tabItems as $m => $menu ) {
+				$link = 'profile/' . $focus->Username . '/' . ltrim ( rtrim ( $menu['link'], '/' ), '/' );
 				
-				$row->Find ( 'a span[class=title]', 0 )->innertext = $menu['title'];
-				$row->Find ( 'a', 0 )->href = $menu['link'];
+				$row->Find ( 'a', 0 )->innertext = __( $menu['title'] );
+				$row->Find ( 'a', 0 )->href = '/profile/' . $focus->Username . $menu['link'];
 				$row->class = $menu['class'];
 				
 				$requestPattern = '/^' . addcslashes ($link, '/') . '\/(.*)$/';
@@ -63,10 +69,15 @@ class cAdminMenuController extends cController {
 					$row->class .= " selected";
 				}
 				
+				$id = strtolower ( $menu['id'] );
 				$title = strtolower ( $menu['title'] );
+				$owner = $menu['owner'];
 				
-				$rows[$title] = $row->outertext;
+				if ( $owner ) {
+					if ( ( $focus->Username != $current->Username ) or ( $focus->Domain != $current->Domain ) ) continue;
+				}
 				
+				$rows[$id] = $row->outertext;
 			}
 		}
 		
@@ -83,11 +94,20 @@ class cAdminMenuController extends cController {
 			$final[] = $row;
 		}
 		
+		$tabCount = 0;
 		foreach ( $final as $f=> $finalRow ) {
-			 $list->innertext .= $finalRow;
+			$tabCount++;
+				
+			if ( $tabCount > $maxTabs ) continue;
+				
+			$list->innertext .= $finalRow;
 		}
 		
-		$this->Menu->Display();
+		if ( $tabCount > $maxTabs ) $list->innertext .= $more;
+		
+		$this->Tabs->Reload();
+				
+		$this->Tabs->Display();
 		
 		return ( true );
 	}

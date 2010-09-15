@@ -35,7 +35,11 @@ class cPhotosProfileController extends cController {
 		
 		$src = $this->_GetProfilePhoto ();
 		
-		$this->Photo->Find ( '[id=profile-photo-focus]', 0 )->src = $src;
+		if ( $src ) {
+			$this->Photo->Find ( '[id=profile-photo-focus]', 0 )->src = $src;
+		} else {
+			$this->Photo->Find ( '[id=profile-photo-focus]', 0 )->class .= ' no-profile';
+		}
 		
 		$this->Photo->Display();
 		
@@ -52,7 +56,11 @@ class cPhotosProfileController extends cController {
 		 */
 		
 		$legacy_file = ASD_PATH . "_storage" . DS . "legacy" . DS . "photos" . DS . $focus->Username . DS . "profile.jpg";
-		$legacy_src = "/legacy/photos/" . $focus->Username . "/profile.jpg";
+		if ( !file_exists ( $legacy_file ) ) {
+			return ( false );
+		} else {
+			$legacy_src = "/legacy/photos/" . $focus->Username . "/profile.jpg";
+		}
 		
 		return ( $legacy_src );
 	}

@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Profile
+ * @subpackage   Friends
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Profile Component
+/** Friends Component
  * 
- * Profile Component Entry Class
+ * Friends Component Entry Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Profile
+ * @subpackage  Friends
  */
-class cProfile extends cComponent {
+class cFriends extends cComponent {
 	
 	/**
 	 * Constructor
@@ -29,23 +29,14 @@ class cProfile extends cComponent {
 		parent::__construct();
 	}
 	
-	public function AdminMenu ( $pData = null ) {
-		
-		$return = array ();
-		
-		$return[] = array ( 'title' =>"Profile", 'class' => "profile", 'link' => "/admin/profile/" );
-		
-		return ( $return );
-	} 
-	
 	public function AddToProfileTabs ( $pData = null ) {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'options', 'title' => 'Options Tab', 'link' => '/options/', 'owner' => true );
-		$return[] = array ( 'id' => 'info', 'title' => 'Info Tab', 'link' => '/info/' );
+		$return[] = array ( 'id' => 'friends', 'title' => 'Friends Tab', 'link' => '/friends/' );
 		
 		return ( $return );
 	} 
+	
 	
 }

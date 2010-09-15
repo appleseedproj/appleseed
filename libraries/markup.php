@@ -70,13 +70,21 @@ class cMarkup extends simple_html_dom {
 		return ( $element );
 	}
 	
-	public function Display () {
+	public function Display ( ) {
+		
+		echo $this->Buffer();
+		
+		return ( true );
+	}
+	
+	public function Buffer ( ) {
 		
 		// Add an html element here to have it's innertext modified to use the __ function.
 		$translate = array ( 
 			"label", 
 			"span",
 			"p", 
+			"option", 
 			"button",
 			"legend", 
 			"[placeholder]",
@@ -108,9 +116,7 @@ class cMarkup extends simple_html_dom {
 			}
 		}
 		
-		echo $this->Save();
-		
-		return ( true );
+		return ( $this->Save() );
 		
 	}
 	

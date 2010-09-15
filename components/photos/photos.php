@@ -38,4 +38,12 @@ class cPhotos extends cComponent {
 		return ( $return );
 	} 
 	
+	public function AddToProfileTabs ( $pData = null ) {
+		
+		$return = array ();
+		
+		$return[] = array ( 'id' => 'photos', 'title' => 'Photos Tab', 'link' => '/photos/' );
+		
+		return ( $return );
+	} 
 }

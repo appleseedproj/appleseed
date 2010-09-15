@@ -58,7 +58,7 @@ class cUser extends cComponent {
 		
 		$FocusUser = new cUserAuthorization ( );
 		
-		$FocusUser->Focus ( $focusUsername );
+		if ( !$FocusUser->Focus ( $focusUsername ) ) return ( false );
 		
 		$this->_Cache['Focus'] = $FocusUser;
 		
@@ -169,6 +169,7 @@ class cUserAuthorization extends cBase {
       	$profileModel->Retrieve ( array ( "userAuth_uID" => $userModel->Get ( "uID" ) ) );
       	$profileModel->Fetch();
       	
+      	$this->uID = $profileModel->Get ( "userAuth_uID" );
       	$this->Fullname = $profileModel->Get ( "Fullname" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
