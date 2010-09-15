@@ -68,11 +68,7 @@
 					  	<?php $zApp->Components->Go ( "photos", "profile", "profile" ); ?>
 					</div>
 					<div id="profile-contact">
-						<ul>
-							<li><button type="submit" name="Task" value="Friend">Add as a friend</button></li> 
-							<li><button type="submit" name="Task" value="Message">Send a message</button></li> 
-							<li><button type="submit" name="Task" value="Block">Block this person</button></li> 
-						</ul>
+					  	<?php $zApp->Components->Go ( "profile", "contact", "contact" ); ?>
 					</div>
 					<div id="profile-summary">
 					  	<?php $zApp->Components->Go ( "profile", "summary", "summary" ); ?>	
