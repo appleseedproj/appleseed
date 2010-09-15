@@ -13,3 +13,5 @@ OPTIONS_TAB="Options"
 MORE_PROFILE_TABS="..."
 
 INFORMATION_FOR_USER="%firstname$s's Information"
+
+NO_USER_INFORMATION_FOR="No user information for %fullname$s"
