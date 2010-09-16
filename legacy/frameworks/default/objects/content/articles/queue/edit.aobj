@@ -12,7 +12,7 @@
    <form id='edit' method='POST' action='<?php echo $gTARGET; ?>'>
  
    <p id='submitted'> 
-    <?php echo __("Submitted By", array ( "username" => $gSUBMITTEDUSERNAME, "domain" => $gSUBMITTEDDOMAIN ) );
+    <?php echo __("Submitted By", array ( "username" => $gSUBMITTEDUSERNAME, "domain" => $gSUBMITTEDDOMAIN ) ); ?>
    </p>
 
     <input type='hidden' id='gACTION' name='gACTION' value='SAVE'>
@@ -21,24 +21,24 @@
     <?php $zHTML->Hidden ("tID", $zARTICLES->tID); ?>
  
     <p id='verification'>
-      <?php echo __("Verification");
+      <?php echo __("Verification"); ?>
     </p>
     <?php $zOPTIONS->Menu ("VERIFICATION", $zARTICLES->Verification); ?><br />
 
     <p id='title'> 
-      <?php echo __("Title");
+      <?php echo __("Title"); ?>
     </p>
     <?php $zHTML->TextBox ("TITLE", 64, $zARTICLES->Title); ?><br />
     <?php $zARTICLES->Broadcast ("field", "Title"); ?>
  
     <p id='summary'>
-      <?php echo __("Summary");
+      <?php echo __("Summary"); ?>
     </p>
     <?php $zHTML->TextArea ("SUMMARY", $zARTICLES->Summary); ?><br />
     <?php $zARTICLES->Broadcast ("field", "Summary"); ?>
 
     <p id='full'>
-      <?php echo __("Full Article");
+      <?php echo __("Full Article"); ?>
     </p>
     <?php $zHTML->TextArea ("FULL", $zARTICLES->Full); ?><br />
     <?php $zARTICLES->Broadcast ("field", "Full"); ?>
