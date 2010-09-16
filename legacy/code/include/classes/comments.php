@@ -1,4 +1,5 @@
 <?php
+error_reporting (E_ALL);
   // +-------------------------------------------------------------------+
   // | Appleseed Web Community Management Software                       |
   // | http://appleseed.sourceforge.net                                  |
