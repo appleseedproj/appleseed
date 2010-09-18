@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Journals
  */
-class cJournals extends cComponent {
+class cJournal extends cComponent {
 	
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ class cJournals extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'journals', 'title' => 'Journals Tab', 'link' => '/journals/' );
+		$return[] = array ( 'id' => 'journal', 'title' => 'Journal Tab', 'link' => '/journal/' );
 		
 		return ( $return );
 	} 

@@ -33,7 +33,8 @@ class cRequest {
 		
 		foreach ( $_REQUEST as $key => $value ) {
 			$lowerkey = strtolower ( $key );
-			$this->_Request[$lowerkey] = $_REQUEST[$key];
+			$this->_Raw[$lowerkey] = $_REQUEST[$key];
+			$this->_Request[$lowerkey] = htmlentities ( strip_tags ( $_REQUEST[$key] ) );
 		}
 		
 		$this->_Unassigned = array ();
@@ -76,7 +77,7 @@ class cRequest {
 				if ( strstr ( $match, ',' ) ) {
 					list ( $key, $value ) = explode ( ',', $match, 2 );
 					$key = strtolower ( $key );
-					$this->_Request[$key] = $value;
+					$this->_Request[$key] = strip_tags ( $value );
 				} else {
 					$this->_Unassigned[] = $match;
 					$key = count ( $this->_Unassigned ) - 1;
