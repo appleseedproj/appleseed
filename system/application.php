@@ -145,7 +145,7 @@ class cApplication extends cBase {
 			$url = $this->Config->GetConfiguration ( "url" );
 			
 			if ( !isset ( $url ) ) {
-				$url = 'http://' . $_SERVER['SERVER_NAME'];
+				$url = 'http://' . ASD_DOMAIN;
 			}
 			
 			return ( $url );

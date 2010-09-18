@@ -41,7 +41,7 @@ class cQuickNode extends cQuickSocial {
 		$data = array (
 			"_social" => "true",
 			"_task" => "node.discover",
-			"_source" => $_SERVER['HTTP_HOST'],
+			"_source" => QUICKSOCIAL_DOMAIN,
 			"_token" => $token
 		);
 		

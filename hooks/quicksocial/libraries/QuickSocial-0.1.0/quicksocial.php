@@ -9,6 +9,7 @@
  */
  
  define ( "QUICKSOCIAL_VERSION", "0.1.0" );
+ define ( "QUICKSOCIAL_DOMAIN", $_SERVER['HTTP_HOST'] );
 
 /** QuickSocial Class
  * 
@@ -40,7 +41,7 @@ class cQuickSocial {
 		$token = @call_user_func ( $fCheckRemoteToken, $pUsername, $pTarget );
 		
 		if ( ( !$token ) or ( $token != $pToken ) ) {
-			$source = $_SERVER['HTTP_HOST'];
+			$source = QUICKSOCIAL_DOMAIN;
 			
 			// Do a verification on this token.
 			$data = array (

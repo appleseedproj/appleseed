@@ -33,9 +33,9 @@ class cQuickConnect extends cQuickSocial {
 		$request['_task'] = "connect.check";
 		
 		$request['_username'] = $pUser;
-		$request['_source'] = $_SERVER['HTTP_HOST'];
+		$request['_source'] = QUICKSOCIAL_DOMAIN;
 		
-		$request['_return'] = $pReturnTo ? $pReturnTo : $_SERVER['HTTP_HOST'];
+		$request['_return'] = $pReturnTo ? $pReturnTo : QUICKSOCIAL_DOMAIN;
 		
 		$request['_return'] = base64_encode ( $request['_return'] );
 		
@@ -120,13 +120,13 @@ class cQuickConnect extends cQuickSocial {
 				$request['_return'] = $returnTo;
 				
 				$request['_username'] = $username;
-				$request['_source'] = $_SERVER['HTTP_HOST'];
+				$request['_source'] = QUICKSOCIAL_DOMAIN;
 		
 				$request['_token'] = $token;
 			}
 		} else {
 			$request['_username'] = $username;
-			$request['_source'] = $_SERVER['HTTP_HOST'];
+			$request['_source'] = QUICKSOCIAL_DOMAIN;
 		
 			$request['_success'] = "false";
 			$request['_error'] = "Not Logged In";

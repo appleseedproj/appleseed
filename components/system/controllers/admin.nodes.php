@@ -252,7 +252,7 @@ class cSystemAdminNodesController extends cController {
 		$this->Model = $this->GetModel ( "Nodes" );
 		$this->Model->Synchronize();
 		
-		if ( !$this->Model->Get ( 'Source' ) ) $this->Model->Set ( 'Source', $_SERVER['HTTP_HOST'] );
+		if ( !$this->Model->Get ( 'Source' ) ) $this->Model->Set ( 'Source', ASD_DOMAIN );
 		if ( $this->Model->Get ( 'Callback' ) == 'on' ) $this->Model->Set ( 'Callback', true ); else $this->Model->Set ( 'Admin', false );
 		if ( $this->Model->Get ( 'Inherit' ) == 'on' ) $this->Model->Set ( 'Inherit', true ); else $this->Model->Set ( 'Inherit', false );
 		
@@ -332,7 +332,7 @@ class cSystemAdminNodesController extends cController {
 		
 		$this->Form->Find ( "[id=edit-subtitle]", 0)->innertext = "New Node Subtitle";
 		$this->Form->Find ( "form[id=system-nodes-edit] fieldset p", 0)->innertext = "New Node Description";
-		$this->Form->Find ( "[name=Source]", 0)->value = $_SERVER['HTTP_HOST'];
+		$this->Form->Find ( "[name=Source]", 0)->value = ASD_DOMAIN;
 		
 		return ( true );
 	}

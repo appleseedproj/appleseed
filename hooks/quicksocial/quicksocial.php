@@ -110,7 +110,7 @@ class cQuicksocialHook extends cHook {
 					$this->GetSys ( "Session" )->Set ( "Identity", $verified->username . '@' . $verified->domain );
 					$this->GetSys ( "Session" )->Set ( "Error", true );
 					
-					$redirect = 'http://' . $_SERVER['HTTP_HOST'] . '/login/remote/';
+					$redirect = 'http://' . ASD_DOMAIN . '/login/remote/';
 					header('Location: ' . $redirect);
 				}
 				
@@ -454,7 +454,7 @@ class cQuicksocialHook extends cHook {
 			$return = str_replace ( "&_bounce=" . $bounce, "", $return );
 			$return = str_replace ( "_bounce=" . $bounce, "", $return );
 			
-			$return = $_SERVER['HTTP_HOST'] . $return;
+			$return = ASD_DOMAIN . $return;
 			
 			$data = array ( "username" => $username, "domain" => $domain, "return" => $return );
 			
@@ -466,7 +466,7 @@ class cQuicksocialHook extends cHook {
 			// @note We may or may not keep that for the new system.
 			list ( $username, $domain ) = explode ( '@', $bounce, 2 );
 			
-			$return = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+			$return = ASD_DOMAIN . $_SERVER['REQUEST_URI'];
 			
 			$data = array ( "username" => $username, "domain" => $domain, "return" => $return );
 			

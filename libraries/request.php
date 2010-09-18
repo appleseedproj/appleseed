@@ -34,7 +34,20 @@ class cRequest {
 		foreach ( $_REQUEST as $key => $value ) {
 			$lowerkey = strtolower ( $key );
 			$this->_Raw[$lowerkey] = $_REQUEST[$key];
-			$this->_Request[$lowerkey] = htmlentities ( strip_tags ( $_REQUEST[$key] ) );
+			if ( is_array ( $_REQUEST[$key] ) ) {
+				$requests = $_REQUEST[$key];
+				foreach ( $requests as $r => $request ) {
+					/*
+					 * @todo If we have nested arrays, this will break it.
+					 * @todo On the other hand, why are you using nested arrays in a REQUEST in the first place?
+					 *
+					 */
+					$requests[$r] = htmlentities ( strip_tags ( $request ) );
+				}
+				$this->_Request[$lowerkey] = $requests;
+			} else {
+				$this->_Request[$lowerkey] = htmlentities ( strip_tags ( $_REQUEST[$key] ) );
+			}
 		}
 		
 		$this->_Unassigned = array ();

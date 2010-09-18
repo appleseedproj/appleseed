@@ -65,7 +65,7 @@ class cSecurity extends cComponent {
 		
 		$accessModel = new cModel ( "AccessControl" );
 		
-		$domain = $_SERVER['HTTP_HOST'];
+		$domain = ASD_DOMAIN;
 		$pattern = '/(.*)@' . $domain . '/';
 		
 		if (preg_match ( $pattern, $account ) ) {

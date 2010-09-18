@@ -32,7 +32,7 @@ class cLoginLoginController extends cController {
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$referer = $_SERVER['HTTP_REFERER']; 
-		$host = $_SERVER['HTTP_HOST'];
+		$host = ASD_DOMAIN;
 		
 		$noredirect = $pData['noredirect'];
 		
@@ -113,7 +113,7 @@ class cLoginLoginController extends cController {
 		$data = array ( "username" => $username, "domain" => $domain );
 		
 		if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
-			$data['return'] = 'http://' . $_SERVER['HTTP_HOST'] . base64_decode ( $redirect );
+			$data['return'] = 'http://' . ASD_DOMAIN . base64_decode ( $redirect );
 		}
 			
 		$result = $this->GetSys ( "Event" )->Trigger ( "On", "Login", "Authenticate", $data );
@@ -448,11 +448,11 @@ class cLoginLoginController extends cController {
 		$to = $userProfile->Get ( "Email" ); 
 		$toName = $userProfile->Get ( "Fullname" );
 
-		$subject = __( "Password Reset Subject", array ( "domain" => $_SERVER['HTTP_HOST'] ) );
+		$subject = __( "Password Reset Subject", array ( "domain" => ASD_DOMAIN ) );
 
 		$body = __("Password Reset Body", array ( "fullname" => $toName, "password" => $newpassword ) );
 
-		$from = __("Password Reset From", array ( "domain" => $_SERVER['HTTP_HOST'] ) );
+		$from = __("Password Reset From", array ( "domain" => ASD_DOMAIN ) );
 		$fromName = __( "Password Reset From Name" );
 
 		$headers = "From: $from" . "\r\n" .
