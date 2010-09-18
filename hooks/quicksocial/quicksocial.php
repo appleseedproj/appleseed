@@ -190,9 +190,26 @@ class cQuicksocialHook extends cHook {
 		$width = $pData['width'];
 		$height = $pData['height'];
 		
+		$width = $this->_FindClosestValue ( $width, array ( 32, 64, 128 ) );
+		$height = $width;
+				
+		// Get the filename size identifier.
+		switch ( $width ) {
+			case 128:
+				$size = 'm';
+			break;
+			case 64:
+				$size = 's';
+			break;
+			case 32:
+			default:
+				$size = 't';
+			break;
+		}
+		
 		if ( $domain == ASD_DOMAIN ) {
 			$location = ASD_PATH . '_storage' . DS . 'photos' . DS . $username . DS;
-			$file = $location . 'profile.' . $width . 'x' . $height . '.jpg';
+			$file = $location . 'profile.' . $size . '.jpg';
 			
 			/* 
 			 * @todo Remove this eventually once new photo system is used.
@@ -200,9 +217,6 @@ class cQuicksocialHook extends cHook {
 			 */
 			if ( !file_exists ( $file ) ) {
 				$legacy_file = ASD_PATH . "_storage" . DS . "legacy" . DS . "photos" . DS . $username . DS . "profile.jpg";
-				
-				$width = $this->_FindClosestValue ( $width, array ( 32, 64, 128 ) );
-				$height = $width;
 				
 				if ( file_exists ( $legacy_file ) ) {
 				
@@ -501,9 +515,23 @@ class cQuicksocialHook extends cHook {
 		$width = $this->_FindClosestValue ( $pWidth, array ( 32, 64, 128 ) );
 		$height = $width;
 		
+		// Get the filename size identifier.
+		switch ( $width ) {
+			case 128:
+				$size = 'm';
+			break;
+			case 64:
+				$size = 's';
+			break;
+			case 32:
+			default:
+				$size = 't';
+			break;
+		}
+		
 		// Check for new icons.
 		$location = ASD_PATH . '_storage' . DS . 'photos' . DS . $pUsername . DS;
-		$file = $location . 'profile.' . $width . 'x' . $height . '.jpg';
+		$file = $location . 'profile.' . $size . '.jpg';
 		
 		if ( file_exists ( $file ) ) {
 			$icon = imagecreatefromjpeg ( $file );
