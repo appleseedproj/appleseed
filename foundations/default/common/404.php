@@ -7,7 +7,7 @@
 	<meta charset="utf-8" />
 
 	<!-- Title -->
-	<title><?php echo __("Login | Appleseed"); ?></title>
+	<title><?php echo __("Page Not Found | Appleseed"); ?></title>
 	
 	<!-- Links -->
     <?php $zApp->Theme->UseStyles (); ?>
