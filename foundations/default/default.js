@@ -5,8 +5,23 @@ jLoader.Document = function ( ) {
 
 	jTranslations = new Array ();
 	
+	globalTheme = 'default';
+	
+	jLoader.Document.RewriteBrokenIcons ( );
+	
 	$("#form-elements").validate();
 	
+}
+
+jLoader.Document.RewriteBrokenIcons = function ( ) {
+
+	noIconLocation = '/themes/' + globalTheme + '/images/noicon.gif';
+	
+	$('.usericon').preload({
+	    placeholder:'placeholder.jpg',
+    	notFound:noIconLocation
+	});
+
 }
 
 jLoader.Document.Select = function ( pElement, pParent ) { }

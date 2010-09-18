@@ -33,6 +33,9 @@
    	<!-- Load JQuery::Fields -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.field.min.js"></script>
    	
+   	<!-- Load JQuery::Preload -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.preload-min.js"></script>
+   	
 </head>
 
 <body id="www-website-com">

@@ -30,6 +30,9 @@
    	<!-- Load JQuery::Validation -->
    	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
 	
+   	<!-- Load JQuery::Preload -->
+   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.preload-min.js"></script>
+   	
 </head>
 
 <body id="www-website-com">

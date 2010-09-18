@@ -51,6 +51,7 @@ class cHeaderHeaderController extends cController {
 		
 		//$icon->src = 'http://' . $user->Domain . '/_storage/legacy/photos/' . $user->Username . '/profile.jpg';
 		$data = array ( "username" => $user->Username, "domain" => $user->Domain, "width" => 32, "height" => 32 );
+		$icon->class .= " usericon ";
 		$icon->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
 		
 		$this->Header->Find ( "[id=header-search]", 0)->innertext = $this->GetSys ( "Components" )->Buffer ( "search", "search", "global", "ask" ); 
