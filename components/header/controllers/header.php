@@ -48,14 +48,10 @@ class cHeaderHeaderController extends cController {
 		$link = $this->Header->Find ( "[id=current-user-profile-link]", 0 );
 		
 		$icon = $this->Header->Find ( "[class=current-icon]", 0);
-		$file = ASD_PATH . '_storage/legacy/photos/' . $user->Username . '/profile.jpg';
 		
-		if ( !file_exists ( $file ) ) {
-			$icon->src = '';
-			$icon->class .= ' no-profile';
-		} else {
-			$icon->src = 'http://' . $user->Domain . '/_storage/legacy/photos/' . $user->Username . '/profile.jpg';
-		}
+		//$icon->src = 'http://' . $user->Domain . '/_storage/legacy/photos/' . $user->Username . '/profile.jpg';
+		$data = array ( "username" => $user->Username, "domain" => $user->Domain, "width" => 32, "height" => 32 );
+		$icon->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
 		
 		$this->Header->Find ( "[id=header-search]", 0)->innertext = $this->GetSys ( "Components" )->Buffer ( "search", "search", "global", "ask" ); 
 		

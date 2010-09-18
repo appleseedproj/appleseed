@@ -292,7 +292,7 @@
 		#profile-friends span.friends-mutual-count { float:right; text-align:right; font-style:italic; color:#8a8a8a; }
 		#profile-friends a.friends-identity { float:left; padding:0; background:none; font-size:90%; width:80%; clear:both; }
 
-		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { margin:0; text-align:right; float:right; text-decoration:none; border:none; background:none no-repeat left center; }
+		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { margin:0; text-align:right; float:right; text-decoration:none; border:none; background:none no-repeat left center; cursor:pointer; }
 		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { color:#406300; padding-right:0; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -43px;  }
 		
 		#profile-friends .friends-circle-editor { float:left; width:40%; text-align:right; }

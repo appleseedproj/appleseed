@@ -31,6 +31,7 @@ class cFriendsFriendsController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
+		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		
 		// Focus user was not found
@@ -82,7 +83,7 @@ class cFriendsFriendsController extends cController {
 		$this->View->Find ( '[class=profile-friends-owner]', 0 )->innertext = __( "Friends Of User", array ( "fullname" => $focus->Fullname ) );
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $friendCount ) );
 		
-		$pageData = array ( 'start' => 0, 'step'  => 10, 'total' => 100, 'link' => $link );
+		$pageData = array ( 'start' => 0, 'step'  => 10, 'total' => 10, 'link' => $link );
 		$pageControl =  $this->View->Find ('nav[class=pagination]', 0);
 		$pageControl->innertext = $this->GetSys ( 'Components' )->Buffer ( 'pagination', $pageData ); 
 		

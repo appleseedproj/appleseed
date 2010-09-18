@@ -16,6 +16,8 @@ define ( 'APPLESEED', true );
 define ( 'DS', DIRECTORY_SEPARATOR );
 define ( 'ASD_PATH', $_SERVER['DOCUMENT_ROOT'] . DS);
 
+define ( 'ASD_DOMAIN', $_SERVER['SERVER_NAME']);
+
 require ( ASD_PATH . DS . 'system' . DS . 'base.php' );
 require ( ASD_PATH . 'system' . DS . 'application.php' );
 

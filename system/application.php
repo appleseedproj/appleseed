@@ -379,7 +379,7 @@ function rrmdir($dir) {
  * Adapted from: http://php.net/manual/en/function.rmkdir.php
  * 
  */
-function rmkdir ( $path, $mode = 0755 ) {
+function rmkdir ( $path, $mode = 0777 ) {
 	$path = rtrim ( preg_replace ( array ( "/\\\\/", "/\/{2,}/" ), "/", $path ), "/" );
 	$e = explode ( "/", ltrim ( $path, "/" ) );
 	if ( substr ( $path, 0, 1 ) == "/" ) {

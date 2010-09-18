@@ -126,6 +126,14 @@ class cQuicksocialHook extends cHook {
 				$node->ReplyToDiscover();
 				exit;
 			break;
+			case 'user.icon':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
+				 
+				$user = new cQuickUser ();
+				$user->SetCallback ( "UserIcon", array ( $this, '_UserIcon' ) );
+				$user->ReplyToUserIcon();
+				exit;
+			break;
 			case '':
 			default:
 				exit;
@@ -172,6 +180,53 @@ class cQuicksocialHook extends cHook {
 		
 		$connect->Redirect ( $domain, $username, $method, $returnTo );
 		exit;
+	}
+	
+	public function OnUserIcon ( $pData ) {
+		
+		$domain = $pData['domain'];
+		$username = $pData['username'];
+		
+		$width = $pData['width'];
+		$height = $pData['height'];
+		
+		if ( $domain == ASD_DOMAIN ) {
+			$location = ASD_PATH . '_storage' . DS . 'photos' . DS . $username . DS;
+			$file = $location . 'profile.' . $width . 'x' . $height . '.jpg';
+			
+			/* 
+			 * @todo Remove this eventually once new photo system is used.
+			 * 
+			 */
+			if ( !file_exists ( $file ) ) {
+				$legacy_file = ASD_PATH . "_storage" . DS . "legacy" . DS . "photos" . DS . $username . DS . "profile.jpg";
+				
+				$width = $this->_FindClosestValue ( $width, array ( 32, 64, 128 ) );
+				$height = $width;
+				
+				if ( file_exists ( $legacy_file ) ) {
+				
+					if ( !is_dir ( $location ) ) rmkdir ( $location );
+				
+					if ( is_writable ( $location ) ) {
+						$icon = imagecreatefromjpeg ( $legacy_file );
+						$new_icon = $this->_ResizeAndCrop ( $icon, $width, $height );
+						imagejpeg ( $new_icon, $file );
+						chmod ( $file, 0777 );
+					}
+					
+				}
+			}
+			
+			$url = 'http://' . ASD_DOMAIN . '/_storage' . '/' . 'photos' . '/' . $username . '/';
+			$return = $url . 'profile.' . $width . 'x' . $height . '.jpg';
+		} else {
+			$data = array ( '_social' => 'true', '_task' => 'user.icon', '_request' => $username, '_width' => $width, '_height' => $height );
+		
+			$return = 'http://' . $domain . '/?' . http_build_query ( $data );
+		}
+		
+		return ( $return );
 	}
 	
 	public function _NodeInformation ( $pSource = null, $pVerified = false) {
@@ -421,5 +476,123 @@ class cQuicksocialHook extends cHook {
 		
 		return ( false );
 	}
-}
+	
+	private function _FindClosestValue ( $pNeedle, $pHaystack ) {
+		
+		$diffs = array ();
+		
+		foreach ( $pHaystack as $value) {
+			$diff = $pNeedle - $value;
+			if ( $diff < 0 ) $diff *= -1;
+			
+			$diffs[$value] = $diff;
+		}
+		
+		$value_diff = min ( $diffs );
+		$diffs = array_flip ( $diffs );
+		$value = $diffs[$value_diff];
+		
+		return ( $value );
+	}
+	
+	public function _UserIcon ( $pUsername, $pWidth = 128, $pHeight = 128 ) {
+		
+		// Find closest resolution values
+		$width = $this->_FindClosestValue ( $pWidth, array ( 32, 64, 128 ) );
+		$height = $width;
+		
+		// Check for new icons.
+		$location = ASD_PATH . '_storage' . DS . 'photos' . DS . $pUsername . DS;
+		$file = $location . 'profile.' . $width . 'x' . $height . '.jpg';
+		
+		if ( file_exists ( $file ) ) {
+			$icon = imagecreatefromjpeg ( $file );
+		} else {
+			/* 
+			 * @todo Remove this eventually once new photo system is used.
+			 * 
+			 */
+			$legacy_file = ASD_PATH . "_storage" . DS . "legacy" . DS . "photos" . DS . $pUsername . DS . "profile.jpg";
+			
+			if ( !file_exists ( $legacy_file ) ) return ( false );
+			
+			if ( !is_dir ( $location ) ) rmkdir ( $location );
+			
+			if ( is_writable ( $location ) ) {
+				$icon = imagecreatefromjpeg ( $legacy_file );
+				$new_icon = $this->_ResizeAndCrop ( $icon, $width, $height );
+				$icon = $new_icon;
+				imagejpeg ( $new_icon, $file );
+				chmod ( $file, 0777 );
+			}
+		}
+		
+		// Use the legacy icon
+		
+		header ("Content-type: image/jpeg");
+		
+		imagejpeg ( $icon );
+		
+		imagedestroy ( $icon );
+		
+		return ( true );
+	}
+	
+	private function _ResizeAndCrop ($pResource, $pNewWidth, $pNewHeight ) {
+		
+		$originalWidth = imagesx ( $pResource  );
+		$originalHeight = imagesy ( $pResource  );
+		
+		if ( $originalHeight == $originalWidth ) {
+			// Proportion is the same
+			$newwidth = $pNewWidth; $newheight = $pNewHeight;
+			$startx = 0; $starty = 0;
+			$endx = $pNewWidth; $endy = $pNewHeight;
+		} elseif ( $originalHeight > $originalWidth ) {
+			// Proportion is vertical
+			$newwidth = $pNewWidth;
+			$newheight = ( $pNewWidth / $originalWidth ) * $originalHeight;
+			$newheight = floor ( $newheight );
+			$startx = 0; $starty = floor( ( ( $newheight - $pNewHeight ) / 2 ) );
+			$endy = $pNewWidth; $endy = $newheight - ceil ( ( ( $newheight - $pNewHeight ) / 2 ) );
+		} else {
+			// Proportion is horizontal
+			$newwidth = ( $pNewHeight / $originalHeight ) * $originalWidth;
+			$newwidth = floor ( $newwidth );
+			$newheight = $pNewHeight;
+			$startx = floor ( ( ( $newwidth - $pNewWidth ) / 2 ) );  $starty = 0;
+			$endx = $newwidth - ceil ( ( ( $newwidth - $pNewWidth ) / 2 ) );  $endy = $pNewHeight;
+		} // if
+		
+		/*
+		echo $originalWidth, "<br />";
+		echo $originalHeight, "<br /><br />";
+		echo $pNewWidth, "<br />";
+		echo $pNewHeight, "<br /><br />";
+		echo $newwidth, "<br />";
+		echo $newheight, "<br /><br />";
+		echo $startx, "<br />";
+		echo $starty, "<br />";
+		echo $endx, "<br />";
+		echo $endy, "<br />";
+		exit;
+		*/
+		  
+		$src_img = imagecreatetruecolor ( $originalWidth, $originalHeight );
+		imagecopy( $src_img, $pResource, 0, 0, 0, 0, $originalWidth, $originalHeight );
 
+		$intermediary = imagecreatetruecolor ( $newwidth, $newheight );
+		$result = imagecreatetruecolor ( $pNewWidth, $pNewHeight );
+
+		// Resize image.
+		imagecopyresampled ( $intermediary, $src_img, 0, 0, 0, 0, $newwidth, $newheight, $originalWidth, $originalHeight );
+		
+		// Crop image.
+		imagecopy ( $result, $intermediary, 0, 0, $startx, $starty, $pNewWidth, $pNewHeight );
+
+		imagedestroy ( $intermediary );
+		
+		return ( $result );
+	} // ResizeAndCrop
+    
+}

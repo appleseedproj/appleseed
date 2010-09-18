@@ -104,6 +104,7 @@ Protocol
 	
 			- GET: 	_social=true
 					_task=user.icon
+					_account=<user@domain>
 					_request=<username>
 					_width=<width>
 					_height=<height>
