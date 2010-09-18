@@ -12,6 +12,8 @@
 		<input type="hidden" name="item_name" value="The Appleseed Project">
 		<input type="hidden" name="item_number" value="Open Source Donation">
 		
+		<br/>
+		
 		<select id="donate-amount" name="amount">
 			<option value="100"> $100.00 </option>
 			<option value="50"> $50.00 </option>
