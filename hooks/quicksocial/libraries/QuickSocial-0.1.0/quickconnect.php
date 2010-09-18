@@ -129,7 +129,7 @@ class cQuickConnect extends cQuickSocial {
 			$request['_source'] = QUICKSOCIAL_DOMAIN;
 		
 			$request['_success'] = "false";
-			$request['_error'] = "Not Logged In";
+			$request['_error'] = "Not Logged In To Node";
 		}
 		
 		$redirect = $http . $source . '/?' . http_build_query ( $request );
@@ -156,6 +156,9 @@ class cQuickConnect extends cQuickSocial {
 		if ( $success != "true" ) {
 			$return->username = $username;
 			$return->domain = $source;
+			
+			$return->success = 'false';
+			$return->error = $_GET['_error'];
 			
 			return ( $return );
 		}

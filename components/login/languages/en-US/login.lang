@@ -7,7 +7,7 @@ INVALID_ID="Your remote id is formatted like an email address, &lt;username@doma
 
 INVALID_CALLBACK="A system error occurred: Invalid Callback."
 INVALID_NODE="This is not a valid Appleseed node."
-NOT_LOGGED_IN="You are not logged in to this Appleseed node."
+NOT_LOGGED_IN_TO_NODE="You are not logged in to this Appleseed node."
 
 [password_reset]
 PASSWORD_RESET_FROM="password@%domain$s"

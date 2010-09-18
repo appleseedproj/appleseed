@@ -105,7 +105,7 @@ class cQuicksocialHook extends cHook {
 					exit;
 				} else {
 					
-					$this->GetSys ( "Session" )->Context ( "login.login.2.login" );
+					$this->GetSys ( "Session" )->Context ( "login.login.4.remote" );
 					$this->GetSys ( "Session" )->Set ( "Message", $verified->error );
 					$this->GetSys ( "Session" )->Set ( "Identity", $verified->username . '@' . $verified->domain );
 					$this->GetSys ( "Session" )->Set ( "Error", true );
