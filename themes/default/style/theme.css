@@ -319,6 +319,12 @@
 		#profile-comments { float:left; position:relative; top:-24px; }
 		#profile-comments-two { float:left; position:relative; top:-24px; }
 		
+		/* 404 */
+		#appleseed-404 { float:left; background-color:#f1fed5; min-height:840px; }
+		#appleseed-404-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
+		
+		#appleseed-404-info { float:left; }
+		
 		/* Login */
 		#appleseed-login { float:left; background-color:#f1fed5; min-height:840px; }
 		#appleseed-login-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }

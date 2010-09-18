@@ -41,7 +41,14 @@ jLoader.Document.Select.OnChange = function ( pElement, pParent ) {
 
 jLoader.Document.Anchor = function ( pElement, pParent ) { }
 
-jLoader.Document.Anchor.OnClick = function ( pElement, pParent ) { }
+jLoader.Document.Anchor.OnClick = function ( pElement, pParent ) { 
+
+	if ( pElement.className == 'previous-link' ) {
+		window.history.back(-1);
+		return ( false );
+	}	
+	
+}
 
 
 function __ ( pText, pData ) {

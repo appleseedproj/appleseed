@@ -70,3 +70,6 @@ OPTION_NODE_TRUSTED="Trusted"
 OPTION_NODE_BLOCKED="Blocked"
 
 ADD_NEW="+New"
+
+PAGE_NOT_FOUND_TITLE="The page you requested could not be found."
+PAGE_NOT_FOUND_DESCRIPTION="Check the address to see if you mistyped, or the link may have expired.<br/><br/><a href=\"/\">Home Page</a><br/><a href=\"#\" class=\"previous-link\">Previous Page</a>"

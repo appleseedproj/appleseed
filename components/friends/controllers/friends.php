@@ -34,13 +34,6 @@ class cFriendsFriendsController extends cController {
 		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		
-		// Focus user was not found
-		if ( !$focus ) {
-			// @todo: Find a better way to throw a 404 error.
-			header ( "Location:/" );
-			exit;
-		}
-		
 		$current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
