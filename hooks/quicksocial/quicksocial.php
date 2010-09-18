@@ -233,7 +233,7 @@ class cQuicksocialHook extends cHook {
 			}
 			
 			$url = 'http://' . ASD_DOMAIN . '/_storage' . '/' . 'photos' . '/' . $username . '/';
-			$return = $url . 'profile.' . $width . 'x' . $height . '.jpg';
+			$return = $url . 'profile.' . $size . '.jpg';
 		} else {
 			$data = array ( '_social' => 'true', '_task' => 'user.icon', '_request' => $username, '_width' => $width, '_height' => $height );
 		
