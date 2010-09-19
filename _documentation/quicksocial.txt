@@ -92,17 +92,17 @@ Protocol
 			- GET: 	_social=true
 					_task=user.info
 					_token=<token>
-					_method=<method>
-					_account=<user@domain>				// Who you are looking for
-					_source=<domain>					// Where you are coming from
-					_request=<user@domain>				// Who is asking
+					_method=<method>					# http, https, ws, etc
+					_account=<user@domain>				# Who you are looking for
+					_source=<domain>					# Where you are coming from
+					_request=<user@domain>				# Who is asking
 			- JSON:	success=<true|false>
 					error=<error>
 					fullname=<fullname>
-					online=<true|false>					// User is currently online
-					blocked=<true|false>				// Whether requesting user is blocked
-					status=<status>						// Current user status line
-					friends=<array>						// List of friends
+					online=<true|false>					# User is currently online
+					blocked=<true|false>				# Whether requesting user is blocked
+					status=<status>						# Current user status line
+					friends=<array>						# List of friends
 		- Icon
 	
 			- GET: 	_social=true

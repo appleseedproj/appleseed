@@ -172,7 +172,12 @@ class cUserAuthorization extends cBase {
       	$profileModel->Fetch();
       	
       	$this->uID = $profileModel->Get ( "userAuth_uID" );
-      	$this->Fullname = $profileModel->Get ( "Fullname" );
+      	
+      	if ( $profileModel->Get ( "Alias" ) )
+      		$this->Fullname = $profileModel->Get ( "Alias" );
+      	else
+      		$this->Fullname = $profileModel->Get ( "Fullname" );
+      		
       	$this->Description = $profileModel->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
