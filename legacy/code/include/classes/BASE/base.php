@@ -2666,7 +2666,7 @@
           $gONLINENOW = '';
         } // if
         if ($pDOMAIN != $gSITEDOMAIN) {
-          if (($zAUTHUSER->Domain) and ($pDOMAIN != $zAUTHUSER->Domain)) {
+          if ((!$zAUTHUSER->Anonymous) and ($zAUTHUSER->Domain) and ($pDOMAIN != $zAUTHUSER->Domain)) {
             // Redirect to home domain for remote authentication.
             $target = $zAUTHUSER->Username . '@' . $zAUTHUSER->Domain;
             $location = "/profile/" . $pUSERNAME . "/";
