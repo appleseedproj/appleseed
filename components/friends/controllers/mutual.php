@@ -31,13 +31,13 @@ class cFriendsMutualController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
+		$current = $this->Talk ( 'User', 'Current' );
+		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		
-		// Focus user was not found
-		if ( !$focus ) {
-			// @todo: Find a better way to throw a 404 error.
-			header ( "Location:/" );
-			exit;
+		// If user isn't logged in, or we're viewing our own page, then don't display.
+		if ( ( $focus->Username == $current->Username ) or ( !$current->Username ) ) {
+			return ( true );
 		}
 		
 		$current = $this->Talk ( 'User', 'Current' );
