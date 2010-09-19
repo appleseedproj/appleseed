@@ -116,6 +116,7 @@ class cApplication extends cBase {
 		$this->AddSys ( "HTML",  ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
 		$this->AddSys ( "Purifier",  ASD_PATH . DS . 'libraries' . DS . 'purifier.php' );
 		$this->AddSys ( "Mailer",  ASD_PATH . DS . 'libraries' . DS . 'mailer.php' );
+		$this->AddSys ( "Crypt",  ASD_PATH . DS . 'libraries' . DS . 'crypt.php' );
 		
 		return ( true );
 	}

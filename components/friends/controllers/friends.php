@@ -31,12 +31,34 @@ class cFriendsFriendsController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
-		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		
 		$current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
+		
+		echo "<pre>";
+		if ( $current ) {
+			$currentAccount = $current->Username . '@' . $current->Domain;
+			$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+			$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+			
+			print_r ( $currentInfo );
+			echo "<hr />";
+		}
+		
+		$account = 'frank@30rock.appleseed';
+		$data = array ( "account" => $account, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+		$friendInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+		
+		print_r ( $friendInfo );
+		echo "<hr />";
+		
+		$remoteAccount = 'admin@glee.appleseed';
+		$data = array ( "account" => $remoteAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+		$remoteInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+		
+		print_r ( $remoteInfo ); exit;
 		
 		$this->_PrepFocus();
 		

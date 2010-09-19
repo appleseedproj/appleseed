@@ -73,9 +73,18 @@ class cQuicksocialHook extends cHook {
 				$social->ReplyToVerify();
 				exit;
 			break;
+			case 'verify.remote':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
+				 
+				$social = new cQuickSocial ();
+				$social->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				
+				$social->ReplyToRemoteVerify();
+				exit;
+			break;
 			case 'connect.check':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
-				 
+				
 				$connect = new cQuickConnect ();
 				$connect->SetCallback ( "CheckLogin", array ( $this, '_CheckLogin' ) );
 				$connect->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
@@ -87,7 +96,7 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
 				 
 				$connect = new cQuickConnect ();
-				$connect->SetCallback ( "CreateRemoteToken", array ( $this, '_CreateLocalToken' ) );
+				$connect->SetCallback ( "CreateRemoteToken", array ( $this, '_CreateRemoteToken' ) );
 				$connect->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
 				
 				$verified = $connect->Process();
@@ -131,7 +140,17 @@ class cQuicksocialHook extends cHook {
 				 
 				$user = new cQuickUser ();
 				$user->SetCallback ( "UserIcon", array ( $this, '_UserIcon' ) );
-				$user->ReplyToUserIcon();
+				$user->ReplyToIcon();
+				exit;
+			break;
+			case 'user.info':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
+				 
+				$user = new cQuickUser ();
+				$user->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+				$user->SetCallback ( "UserInfo", array ( $this, '_UserInfo' ) );
+				$user->ReplyToInfo();
 				exit;
 			break;
 			case '':
@@ -243,6 +262,25 @@ class cQuicksocialHook extends cHook {
 		return ( $return );
 	}
 	
+	public function OnUserInfo ( $pData ) {
+		
+		if (!class_exists ( 'cQuickUser' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
+		
+		$user = new cQuickUser ();
+		
+		$domain = $pData['domain'];
+		
+		$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+		
+		$account = $pData['account'];
+		$source = $pData['source'];
+		$request = $pData['request'];
+		
+		$userInfo = $user->Info ( $account, $source, $request );
+		
+		return ( $userInfo );
+	}
+	
 	public function _NodeInformation ( $pSource = null, $pVerified = false) {
 		
 		$return = array ();
@@ -264,7 +302,7 @@ class cQuicksocialHook extends cHook {
 		return ( $return );
 	}
 	
-	public function _CheckLocalToken ( $pUsername, $pTarget, $pToken ) {
+	public function _CheckLocalToken ( $pUsername, $pTarget, $pToken, $pEncrypt = false ) {
 		
 		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				
@@ -273,13 +311,12 @@ class cQuicksocialHook extends cHook {
 		// Verify if the specified token exists in the database.
 		$model = new cModel ("LocalTokens");
 		$model->Structure();
-	
+		
 		$query = '
 			SELECT Token 
 				FROM #__LocalTokens
 				WHERE Username = ?
 				AND Target = ?
-				AND Token = ?
 				AND Stamp > DATE_SUB(NOW(), INTERVAL 24 HOUR)
 		';
 		
@@ -288,7 +325,12 @@ class cQuicksocialHook extends cHook {
 		$model->Fetch();
 		$token = $model->Get ( "Token" );
 		
-		if ( $token ) return ( $token );
+		if ( $pEncrypt ) {
+			$salt = $this->GetSys ( "Crypt" )->Salt ( $pToken );
+			$token = $this->GetSys ( "Crypt" )->Encrypt ( $token, $salt );
+		}
+		
+		if ( $token == $pToken ) return ( true );
 		
 		return ( false );
 	}
@@ -333,7 +375,7 @@ class cQuicksocialHook extends cHook {
 		}
 	}
 	
-	public function _CheckRemoteToken ( $pUsername, $pSource, $pToken ) {
+	public function _CheckRemoteToken ( $pUsername, $pSource, $pEncrypt = false ) {
 		
 		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				
@@ -355,6 +397,8 @@ class cQuicksocialHook extends cHook {
 		
 		$model->Fetch();
 		$token = $model->Get ( "Token" );
+		
+		if ( $pEncrypt ) $token = $this->GetSys ( "Crypt" )->Encrypt ( $token );
 			
 		if ( $token ) return ( $token );
 		
@@ -540,7 +584,7 @@ class cQuicksocialHook extends cHook {
 			 * @todo Remove this eventually once new photo system is used.
 			 * 
 			 */
-			$legacy_file = ASD_PATH . "_storage" . DS . "legacy" . DS . "photos" . DS . $pUsername . DS . "profile.jpg";
+			$legacy_file = ASD_PATH . '_storage' . DS . 'legacy' . DS . 'photos' . DS . $pUsername . DS . 'profile.jpg';
 			
 			if ( !file_exists ( $legacy_file ) ) return ( false );
 			
@@ -557,13 +601,78 @@ class cQuicksocialHook extends cHook {
 		
 		// Use the legacy icon
 		
-		header ("Content-type: image/jpeg");
+		header ('Content-type: image/jpeg');
 		
 		imagejpeg ( $icon );
 		
 		imagedestroy ( $icon );
 		
 		return ( true );
+	}
+	
+	public function _UserInfo ( $pAccount, $pRequest, $pVerified = false ) {
+		
+		$auth = new cModel ('userAuthorization');
+		$auth->Structure();
+		
+		$auth->Retrieve ( array ( 'Username' => $pAccount ) );
+		$auth->Fetch();
+		
+		if ( !$auth->Get ( 'Username' ) ) return ( false );
+		
+		$profile = new cModel ('userProfile');
+		$profile->Structure();
+		
+		$profile->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+		$profile->Fetch();
+		
+		// Get the user's full name or alias
+		if ( $profile->Get ( 'Alias' ) ) {
+			$return['fullname'] = $profile->Get ( 'Alias' );
+		} else {
+			$return['fullname'] = $profile->Get ( 'Fullname' );
+		}
+		
+		// Check whether the user is currently online
+		// @todo: Check if user is allowed to see them online
+		$info = new cModel ('userInformation');
+		$info->Structure();
+		
+		$info->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+		$info->Fetch();
+		
+		$currently = strtotime ('now');
+		$online = strtotime ( $info->Get ( 'OnlineStamp' ) );
+		
+		$difference = $currently - $online;
+      
+		if ($difference < 180) 
+			$return['online'] = 'true';
+		else
+			$return['online'] = 'false';
+		
+		// Get the user's friends list.
+		$friends = new cModel ('friendInformation');
+		$friends->Structure();
+		
+		$friends->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+		$return['friends'] = array ();
+		while ( $friends->Fetch() ) {
+			$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
+		}
+		
+		if ( $pVerified )
+			$return['verified'] = 'true';
+		else
+			$return['verified'] = 'false';
+		
+		// Check if this user is blocked.
+		$return['blocked'] = 'false';
+		
+		// Get this user's status
+		$return['status'] = null;
+		
+		return ( $return );
 	}
 	
 	private function _ResizeAndCrop ($pResource, $pNewWidth, $pNewHeight ) {

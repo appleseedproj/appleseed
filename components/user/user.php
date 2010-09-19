@@ -41,6 +41,8 @@ class cUser extends cComponent {
 		
 		$AuthUser->LoggedIn();
 		
+		if ( !$AuthUser->Username ) return ( false );
+		
 		$this->_Cache['Current'] = $AuthUser;
 		
 		return ( $AuthUser );

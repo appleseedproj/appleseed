@@ -93,7 +93,7 @@ class cQuickConnect extends cQuickSocial {
 			$request['_error'] = "Invalid Callback";
 			
 			$redirect = $http . $source . '/?' . http_build_query ( $request );
-		
+			
 			header('Location: ' . $redirect);
 			exit;
 		}

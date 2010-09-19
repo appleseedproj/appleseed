@@ -171,11 +171,9 @@ class cLoginLoginController extends cController {
 		
 		$loginModel->Fetch();
 		
-		$salt = substr ( $loginModel->Get ( "Pass" ), 0, 16 );
+		$salt = $this->GetSys ( "Crypt" )->Salt ( $loginModel->Get ( "Pass" ) );
 		
-		$sha512 = hash ("sha512", $salt . $password);
-      
-		$newpass = $salt . $sha512;
+		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $password, $salt );
 		
 		if ( $loginModel->Get ( "Pass" ) == $newpass ) {
 			
@@ -323,11 +321,7 @@ class cLoginLoginController extends cController {
 			return ( true );
 		}
 		
-		$salt = substr(md5(uniqid(rand(), true)), 0, 16);
-		
-		$sha512 = hash ('sha512', $salt . $password);
-      
-		$newpass = $salt . $sha512;
+		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $password );
 		
 		$userAuth = new cModel ( 'userAuthorization' );
 		$userProfile = new cModel ( 'userProfile' );
@@ -441,10 +435,8 @@ class cLoginLoginController extends cController {
 		$userProfile->Retrieve ( $userAuth->Get ( "uID" ) );
 		$userProfile->Fetch();
       
-		$salt = substr(md5(uniqid(rand(), true)), 0, 16);
-		$sha512 = hash ("sha512", $salt . $newpassword);
-		$newpass = $salt . $sha512;
-
+		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $newpassword );
+		
 		$to = $userProfile->Get ( "Email" ); 
 		$toName = $userProfile->Get ( "Fullname" );
 

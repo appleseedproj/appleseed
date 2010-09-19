@@ -88,18 +88,19 @@ Protocol
 					_error=<error>
 	
 	QuickUser
-		- Info / ReplyToInfo
+		- UserInfo / ReplyToUserInfo
 			- GET: 	_social=true
 					_task=user.info
 					_token=<token>
 					_method=<method>
-					_account=<user@domain>
-					_source=<domain>
-					_request=<username>
+					_account=<user@domain>				// Who you are looking for
+					_source=<domain>					// Where you are coming from
+					_request=<user@domain>				// Who is asking
 			- JSON:	success=<true|false>
 					error=<error>
 					fullname=<fullname>
 					online=<true|false>
+					friends=<array>
 		- Icon
 	
 			- GET: 	_social=true

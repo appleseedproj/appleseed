@@ -36,7 +36,7 @@ class cQuickSocial {
 		
 		$fCheckRemoteToken = $this->GetCallback ( "CheckRemoteToken" );
 		
-		if ( !is_callable ( $fCheckRemoteToken ) ) $this->_Error ( "Invalid Callback" );
+		if ( !is_callable ( $fCheckRemoteToken ) ) $this->_Error ( "Invalid Callback: CheckRemoteToken" );
 		
 		$token = @call_user_func ( $fCheckRemoteToken, $pUsername, $pTarget );
 		
@@ -68,6 +68,12 @@ class cQuickSocial {
 				return ( $result );
 			}
 			
+		} else if ( $token == $pToken ) {
+			$return = new stdClass(); 
+			$return->success = "true";
+			$return->error = "";
+			
+			return ( $return );
 		} else {
 			return ( false );
 		}
@@ -76,9 +82,31 @@ class cQuickSocial {
 	}
 	
 	/*
-	 * Reply to a verification request.
+	 * Send a remote token verification request.
 	 * 
-	 * @param string $pVerifyToken A callback function to verify token.
+	 */
+	public function RemoteVerify ( $pUsername, $pDomain, $pSource, $pToken ) {
+		
+		$source = $pSource;
+		
+		// Do a verification on this token.
+		$data = array (
+			"_social" => "true",
+			"_task" => "verify.remote",
+			"_token" => $pToken,
+			"_username" => $pUsername,
+			"_source" => $source
+		);
+		
+		$result = $this->_Communicate ( $pDomain, $data );
+		
+		if ( $result->success == "true" ) return ( true );
+		
+		return ( false );
+	}
+	
+	/*
+	 * Reply to a verification request.
 	 * 
 	 */
 	public function ReplyToVerify ( ) {
@@ -94,7 +122,7 @@ class cQuickSocial {
 		
 		$fCheckLocalToken = $this->GetCallback ( "CheckLocalToken" );
 		
-		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( "Invalid Callback" );
+		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( "Invalid Callback: CheckLocalToken" );
 		
 		$verified = @call_user_func ( $fCheckLocalToken, $username, $source, $token );
 		
@@ -109,6 +137,39 @@ class cQuickSocial {
 		exit;
 		
 	}	
+	
+	/*
+	 * Reply to a remote verification request.
+	 * 
+	 */
+	public function ReplyToRemoteVerify ( ) {
+		$social = $_GET['_social'];
+		$task = $_GET['_task'];
+		
+		if ( $social != "true" ) return ( false );
+		if ( $task != "verify.remote" ) return ( false );
+		
+		$source = $_GET['_source'];
+		$username = $_GET['_username'];
+		$token = $_GET['_token'];
+		
+		$fCheckLocalToken = $this->GetCallback ( "CheckLocalToken" );
+		
+		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( "Invalid Callback: CheckLocalToken" );
+		
+		$verified = @call_user_func ( $fCheckLocalToken, $username, $source, $token, true );
+		
+		if ( $verified ) {
+			$data['success'] = "true";
+			$data['error'] = "";
+		} else {
+			$this->_Error ( "Invalid Token" );
+		}
+		
+		echo json_encode ( $data );
+		exit;
+		
+	}
 	
 	protected function _Error ( $pError ) {
 		
