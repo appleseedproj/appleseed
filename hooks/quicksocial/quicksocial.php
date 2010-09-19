@@ -268,15 +268,25 @@ class cQuicksocialHook extends cHook {
 		
 		$user = new cQuickUser ();
 		
-		$domain = $pData['domain'];
-		
-		$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-		
 		$account = $pData['account'];
 		$source = $pData['source'];
 		$request = $pData['request'];
 		
-		$userInfo = $user->Info ( $account, $source, $request );
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
+		
+		if ( ( $source == $accountDomain ) && ( $source == $requestDomain ) ) {
+			
+			// Request user is local, and requesting a local user's info, so retrieve it from db
+			$userInfo = (object) $this->_UserInfo ( $accountUsername, $request, true );
+			
+		} else {
+			
+			// Requesting a remote user's information
+			$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+			$userInfo = $user->Info ( $account, $source, $request );
+			
+		}
 		
 		return ( $userInfo );
 	}

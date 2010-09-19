@@ -64,13 +64,6 @@ class cQuickUser extends cQuickSocial {
 		
 		$token = @call_user_func ( $fCheckRemoteToken, $requestUsername, $requestDomain, $encrypt );
 		
-		echo $pAccount, "<br />";
-		echo $pRequest, "<br />";
-		
-		echo $accountDomain, "<br/>";
-		
-		echo $token, "<br /><br />";
-		
 		$data = array (
 			"_social" => "true",
 			"_task" => "user.info",

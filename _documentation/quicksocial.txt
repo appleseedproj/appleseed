@@ -99,8 +99,10 @@ Protocol
 			- JSON:	success=<true|false>
 					error=<error>
 					fullname=<fullname>
-					online=<true|false>
-					friends=<array>
+					online=<true|false>					// User is currently online
+					blocked=<true|false>				// Whether requesting user is blocked
+					status=<status>						// Current user status line
+					friends=<array>						// List of friends
 		- Icon
 	
 			- GET: 	_social=true
