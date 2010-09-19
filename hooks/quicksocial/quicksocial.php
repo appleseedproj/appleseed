@@ -633,40 +633,38 @@ class cQuicksocialHook extends cHook {
 			$return['fullname'] = $profile->Get ( 'Fullname' );
 		}
 		
-		// Check whether the user is currently online
-		// @todo: Check if user is allowed to see them online
-		$info = new cModel ('userInformation');
-		$info->Structure();
+		// Check whether the user is currently online only if verified
+		if ( $pVerified ) {
+			$info = new cModel ('userInformation');
+			$info->Structure();
 		
-		$info->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
-		$info->Fetch();
+			$info->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+			$info->Fetch();
 		
-		$currently = strtotime ('now');
-		$online = strtotime ( $info->Get ( 'OnlineStamp' ) );
+			$currently = strtotime ('now');
+			$online = strtotime ( $info->Get ( 'OnlineStamp' ) );
 		
-		$difference = $currently - $online;
+			$difference = $currently - $online;
       
-		if ($difference < 180) 
-			$return['online'] = 'true';
-		else
-			$return['online'] = 'false';
-		
-		// Get the user's friends list.
-		$friends = new cModel ('friendInformation');
-		$friends->Structure();
-		
-		$friends->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
-		$return['friends'] = array ();
-		while ( $friends->Fetch() ) {
-			$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
+			if ($difference < 180) 
+				$return['online'] = 'true';
+			else
+				$return['online'] = 'false';
 		}
 		
-		if ( $pVerified )
-			$return['verified'] = 'true';
-		else
-			$return['verified'] = 'false';
+		// Get the user's friends list for verified users only.
+		if ( $pVerified ) {
+			$friends = new cModel ('friendInformation');
+			$friends->Structure();
 		
-		// Check if this user is blocked.
+			$friends->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+			$return['friends'] = array ();
+			while ( $friends->Fetch() ) {
+				$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
+			}
+		}
+		
+		// Check if the requesting user is blocked.
 		$return['blocked'] = 'false';
 		
 		// Get this user's status
