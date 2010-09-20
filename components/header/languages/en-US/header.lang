@@ -3,3 +3,6 @@ YOU_ARE_LOGGED_IN_AS="Currently logged in as <a href=""http://%domain$s/profile/
 LOGGED_IN_AS_ADMINISTRATOR="Administrator logged in as <a href=""http://%domain$s/profile/%username$s"">%username$s@%domain$s</a>"
 
 UNREAD_MESSAGES="Unread messages"
+
+MUTUAL_FRIENDS_COUNT="%count$s Mutual Friends"
+MUTUAL_FRIEND_COUNT="%count$s Mutual Friend"

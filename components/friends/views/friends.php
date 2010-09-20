@@ -28,39 +28,9 @@
 	
 	<ul>
 		<li>
-			<img class="friends-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc3/hs316.snc3/28457_10150199647515293_527500292_13078983_3735516_s.jpg">
+			<img class="friends-icon" src="">
 			<div class="friends-info">
-				<span class="friends-fullname">Charlie Donna</span>
-				<span class="friends-location">Chicago, IL</span>
-				<p class="friends-status">When some people left Avatar, they had feelings of depression and disconnectedness. This was because they  couldn't stand the fact that they didn't live on the paradise world of Pandora... this is how i feel about Toronto  because of Scott Pilgrim vs The World</p>
-				<span class="friends-mutual-count">7 mutual friends</span>
-				<span class="friends-add-friend"><button>Add as a friend</button></span>
-				<a href="#" class="friends-identity">charlesdonna@appleseedproject.org</a>
-			</div>
-		</li>
-		<li>
-			<img class="friends-icon" src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg">
-			<div class="friends-info">
-				<span class="friends-fullname">Flint Arthur</span> 
-				<span class="friends-circle-editor">
-					<select>
-						<option disabled="disabled">Add To Circle</option>
-						<option value="">&nbsp; West Coast</option>
-						<option disabled="disabled">Remove From Circle</option>
-						<option >&nbsp; Baltimore</option>
-					</select>
-				</span>
-				<span class="friends-location">Baltimore, MD</span>
-				<p class="friends-status">Reading Eastern Standard Tribe .epub on the train with Android Lust .mp3, on way to meatspace show. Vinyl boots. Tweeting. #cyberpunk</p>
-				<span class="friends-mutual-count">36 mutual friends</span>
-				<span class="friends-remove-friend"><button>Remove friend</button></span>
-				<a href="#" class="friends-identity">flint@appleseedproject.org</a>
-			</div>
-		</li>
-		<li>
-		<img class="friends-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc4/hs171.snc4/37875_736751926255_18401167_41412055_2880695_s.jpg">
-			<div class="friends-info">
-				<span class="friends-fullname">Adrienne Ruhf</span>
+				<span class="friends-fullname"></span>
 				<span class="friends-circle-editor">
 					<select>
 						<option disabled="disabled">Add To Circle</option>
@@ -71,9 +41,10 @@
 				</span>
 				<span class="friends-location">Chicago, IL</span>
 				<p class="friends-status"></p>
-				<span class="friends-mutual-count">32 mutual friends</span>
+				<span class="friends-mutual-count"></span>
+				<span class="friends-add-friend"><button>Add as a friend</button></span>
 				<span class="friends-remove-friend"><button>Remove friend</button></span>
-				<a href="#" class="friends-identity">adjlaru@appleseedproject.org</a>
+				<a href="" class="friends-identity"></a>
 			</div>
 		</li>
 	</ul>

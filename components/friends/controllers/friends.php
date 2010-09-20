@@ -37,12 +37,6 @@ class cFriendsFriendsController extends cController {
 		
 		$this->View = $this->GetView ( $pView ); 
 		
-		if ( $current ) {
-			$currentAccount = $current->Username . '@' . $current->Domain;
-			$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
-			$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
-		}
-		
 		$this->_PrepFocus();
 		
 		$this->_Prep();
@@ -74,14 +68,55 @@ class cFriendsFriendsController extends cController {
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		
+		if ( $current ) {
+			$currentAccount = $current->Username . '@' . $current->Domain;
+			$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+			$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+		}
+		
+		$currentAccount = $current->Username . '@' . $current->Domain;
+		
 		$this->Model = $this->GetModel();
 		
-		$friendCount = $this->Model->CountFriends ( $focus->uID );
+		$this->Model->Retrieve ( array ( "userAuth_uID" => $focus->uID ) );
+		
+		$friendCount = $this->Model->Get ( "Total" );
 		
 		$this->View->Find ( '[class=profile-friends-owner]', 0 )->innertext = __( "Friends Of User", array ( "fullname" => $focus->Fullname ) );
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $friendCount ) );
 		
-		$pageData = array ( 'start' => 0, 'step'  => 10, 'total' => 10, 'link' => $link );
+		while ( $this->Model->Fetch() ) {
+			$username = $this->Model->Get ( "Username" );
+			$domain = $this->Model->Get ( "Domain" );
+			$account = $username . '@' . $domain;
+			
+			$data = array ( "username" => $username, "domain" => $domain, "width" => 64, "height" => 64 );
+			$this->View->Find ( '[class=friends-icon]', 0 )->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
+			
+			if ( ( $current ) and ( $focus->Username == $current->Username ) and ( $focus->Domain == $current->Domain ) ) {
+				$this->View->Find ( '[class=friends-add-friend]', 0 )->outertext = "";
+			} else {
+				$this->View->Find ( '[class=friends-remove-friend]', 0 )->outertext = "";
+			}
+			
+			$data = array ( "account" => $account, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+			$userInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+			
+			$this->View->Find ( '[class=friends-identity]', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/';
+			$this->View->Find ( '[class=friends-identity]', 0 )->innertext = $username . '@' . $domain;
+			$this->View->Find ( '[class=friends-fullname]', 0 )->innertext = $userInfo->fullname;
+			
+			$mutualFriendsCount = count ( array_intersect ( $currentInfo->friends, $userInfo->friends ) );
+			
+			if ( $mutualFriendsCount == 1 ) {
+				$this->View->Find ( '[class=friends-mutual-count]', 0 )->innertext = __( "Mutual Friend Count", array ( "count" => $mutualFriendsCount ) );
+			} else if ( $mutualFriendsCount > 1 ) {
+				$this->View->Find ( '[class=friends-mutual-count]', 0 )->innertext = __( "Mutual Friends Count", array ( "count" => $mutualFriendsCount ) );
+			}
+			
+		}
+		
+		$pageData = array ( 'start' => 0, 'step'  => 2, 'total' => $friendCount, 'link' => $link );
 		$pageControl =  $this->View->Find ('nav[class=pagination]', 0);
 		$pageControl->innertext = $this->GetSys ( 'Components' )->Buffer ( 'pagination', $pageData ); 
 		
