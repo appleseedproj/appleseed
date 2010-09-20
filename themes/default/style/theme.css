@@ -368,3 +368,8 @@
 		#debug-main h2 { position:relative; top:-14px; float:right; font-weight:normal; font-size:100%; font-style:italic; color:#bf4630; }
 		#debug-queries .debug-queries-query { text-align:left; max-width:300px; }
 		
+		.debug-network-request { display:inline; white-space:nowrap; height:14px; font-style:italic; float:left; text-align:left; width:900px; margin-left:5px; overflow:hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; }
+		.debug-network-request:hover { display:inline; white-space:nowrap; height:14px; font-style:italic; float:left; text-align:left; width:900px; margin-left:5px; overflow:visible; }
+		.debug-network-return { display:inline; font-weight:bold; float:left; text-align:left; clear:both; width:900px; margin-left:5px; overflow:hidden; text-overflow: ellipsis; -o-text-overflow: ellipsis; }
+		.debug-network-id { background-color:#80af1f; color:#fafafa; font-weight:bold; width:20px; }
+		

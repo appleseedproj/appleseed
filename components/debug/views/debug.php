@@ -8,6 +8,7 @@
 				<ul>
 					<li class="ui-tabs-selected" ><a href="#debug-warnings">Warnings</a></li>
 					<li><a href="#debug-queries">SQL Queries</a></li>
+					<li><a href="#debug-network">Network</a></li>
 					<li><a href="#debug-memory">Memory</a></li>
 					<li><a href="#debug-benchmarks">Benchmarks</a></li>
 				</ul>
@@ -34,6 +35,25 @@
 							<td class='debug-warnings-warning'></td>
 							<td class='debug-warnings-file'></td>
 							<td class='debug-warnings-line'></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			
+			<section id="debug-network">
+				<h1>Network</h1>
+				<table>
+					<thead>
+						<th>#</th>
+						<th>Request</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td class='debug-network-id'></td>
+							<td class='debug-network-data'>
+								<span class='debug-network-request'></span>
+								<span class='debug-network-return'></span>
+							</td>
 						</tr>
 					</tbody>
 				</table>

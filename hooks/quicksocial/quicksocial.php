@@ -171,6 +171,7 @@ class cQuicksocialHook extends cHook {
 		
 		$node->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
 		$node->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+		$node->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
 		
 		$node = $node->Discover ( $domain );
 		
@@ -281,14 +282,26 @@ class cQuicksocialHook extends cHook {
 			$userInfo = (object) $this->_UserInfo ( $accountUsername, $request, true );
 			
 		} else {
-			
 			// Requesting a remote user's information
 			$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+			$user->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		
 			$userInfo = $user->Info ( $account, $source, $request );
+			
 			
 		}
 		
 		return ( $userInfo );
+	}
+	
+	public function _LogNetworkRequest ( $pRequest, $pResult ) {
+		
+		$this->GetSys ( "Logs" )->Add ( "Network", $pResult, $pRequest );
+		
+		//$this->GetSys ( "Benchmark" )->MemStart ( $context );
+		//$this->GetSys ( "Benchmark" )->MemStop ( $context );
+		//$this->GetSys ( "Benchmark" )->Start ( $context );
+		//$this->GetSys ( "Benchmark" )->Stop ( $context );
 	}
 	
 	public function _NodeInformation ( $pSource = null, $pVerified = false) {
@@ -313,10 +326,6 @@ class cQuicksocialHook extends cHook {
 	}
 	
 	public function _CheckLocalToken ( $pUsername, $pTarget, $pToken, $pEncrypt = false ) {
-		
-		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
-				
-		$social = new cQuickSocial ();
 		
 		// Verify if the specified token exists in the database.
 		$model = new cModel ("LocalTokens");
@@ -387,10 +396,6 @@ class cQuicksocialHook extends cHook {
 	
 	public function _CheckRemoteToken ( $pUsername, $pSource, $pEncrypt = false ) {
 		
-		if (!class_exists ( 'cQuickSocial' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
-				
-		$social = new cQuickSocial ();
-		
 		// Look for an existing token from the last 24 hours.
 		$model = new cModel ("RemoteTokens");
 		$model->Structure();
@@ -416,6 +421,7 @@ class cQuicksocialHook extends cHook {
 	}
 	
 	public function _CreateRemoteToken ( $pUsername, $pSource, $pToken ) {
+		
 		$model = new cModel ("RemoteTokens");
 		$model->Structure();
 

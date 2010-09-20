@@ -222,6 +222,13 @@ class cQuickSocial {
 		
 		curl_close($curl);
 		
+		// Optionally log the request and result if callback exists.
+		$fLogNetworkRequest = $this->GetCallback ( "LogNetworkRequest" );
+		
+		if ( is_callable ( $fLogNetworkRequest ) ) {
+			@call_user_func ( $fLogNetworkRequest, $url, $curl_response );
+		}
+		
 		// Decode the result
 		$result = json_decode ( $curl_response );
 		

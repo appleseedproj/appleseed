@@ -54,6 +54,9 @@ class cDebugDebugController extends cController {
 		// Benchmarks
 		$this->_PrepareBenchmarks ();
 		
+		// Network
+		$this->_PrepareNetwork ();
+		
 		echo $this->Debug; 
 		
 		return ( false );
@@ -243,6 +246,41 @@ class cDebugDebugController extends cController {
 			$debugBenchmarkTime->innertext = __("Benchmark In Seconds", array ( "seconds" => $seconds ) );
 			
 			$tbody->innertext .= $row->outertext;
+		}
+		
+		return ( true );
+	}
+	
+	private function _PrepareNetwork ( ) {
+		
+		$requests = $this->GetSys ( "Logs" )->GetLogs ( "Network" );
+		
+		$tbody = $this->Debug->Find ( "[id=debug-network] table tbody tr", 0);
+		
+		$row = $this->Debug->Copy ( "[id=debug-network] table tbody tr" )->Find ( "tr", 0 );
+		
+		$tbody->innertext = " ";
+
+		$debugNetworkId = $row->Find( "[class=debug-network-id]", 0 );
+		$debugNetworkRequest = $row->Find( "[class=debug-network-request]", 0 );
+		$debugNetworkReturn = $row->Find( "[class=debug-network-return]", 0 );
+		
+		foreach ( $requests as $l => $log ) {
+		    $oddEven = empty($oddEven) || $oddEven == 'even' ? 'odd' : 'even';
+			
+			$row->class = $oddEven;
+			
+			$return = $log->Value;
+			$request = $log->Context;
+			
+			// $request = preg_replace ( "/(&|\?)_token=(.+?)(&|$)/", '&token=[token]', $request );
+			
+			$debugNetworkId->innertext = $l;
+			$debugNetworkRequest->innertext = urldecode ( $request );
+			$debugNetworkReturn->innertext = $return;
+			
+			$tbody->innertext .= $row->outertext;
+			
 		}
 		
 		return ( true );
