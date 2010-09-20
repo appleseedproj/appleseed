@@ -59,11 +59,13 @@ class cRouter extends cBase {
 		
 		foreach ( $routes as $r => $route ) {
 			$r = ltrim ( rtrim ( $r, '/' ), '/' );
+
+			if ( !$r ) continue;
 			
 			$pattern = '/^' . addcslashes ($r, '/') . '$/';
 
 			if ( preg_match ( $pattern, $request, $routed ) ) {
-				
+
 				$restrictions = $FoundationConfig->GetConfiguration ( "restrictions" );
 				
 				if ( !$this->_CheckRestrictions ( $restrictions ) ) return ( false );

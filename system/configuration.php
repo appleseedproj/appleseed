@@ -399,8 +399,8 @@ class cConfiguration extends cBase {
 
 						// Retrieve the variable name
 						if ( preg_match ( '/^(\S+)\[/', $line, $name ) ) {
-							$name = $name[1];
-							$regexp = $retrieved[1];
+							list ( $name, $null ) = explode ( '[', $line, 2 );
+							$regexp = rtrim ( ltrim ( $retrieved[1], '"' ), '"' );
 							$c = (int)$counter[$name];
 							$expressions[$name][$c] = $regexp;
 							$counter[$name]++;
