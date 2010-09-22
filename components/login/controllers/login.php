@@ -94,7 +94,7 @@ class cLoginLoginController extends cController {
 		
 		list ( $username, $domain ) = explode ( '@', $identity );
 		
-		$this->Login = $this->GetView ( "login" );
+		$this->Login = $this->GetView ( "remote" );
 		
 		if ( ( !$username ) or ( !$domain ) ) {
 			

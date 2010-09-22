@@ -1,7 +1,7 @@
 <h1>Remote Login</h1>
 <p id='remote-login-message'></p>
 
-<form id='userinfo' name='userinfo' action='/login/' method='post'> 
+<form id='userinfo' name='userinfo' action='/login/remote/' method='post'> 
 	<fieldset>
 		<input type='hidden' name='Task' value='remote'> 
 		<input type='hidden' name='Context' value=''> 
