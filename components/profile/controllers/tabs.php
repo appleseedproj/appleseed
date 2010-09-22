@@ -51,9 +51,11 @@ class cProfileTabsController extends cController {
 		
 		$ordering = explode ( ' ', $config['tabs_ordering'] );
 		$maxTabs = isset ( $config['maximum_tabs'] ) ? $config['maximum_tabs'] : 10;
+		$defaultTab = $config['default_tab'];
 		
 		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
 		
+		$useDefault = true;
 		foreach ( $componentList as $c => $component ) {
 			if ( !$tabItems = $components->Talk ( $component, 'AddToProfileTabs' ) ) continue;
 			
@@ -66,6 +68,7 @@ class cProfileTabsController extends cController {
 				
 				$requestPattern = '/^' . addcslashes ($link, '/') . '\/(.*)$/';
 				if ( ( $request == $link ) or ( preg_match ( $requestPattern, $request ) ) ) { 
+					$useDefault = false;
 					$row->class .= " selected";
 				}
 				
@@ -86,20 +89,30 @@ class cProfileTabsController extends cController {
 		foreach ( $ordering as $order ) {
 			$order = strtolower ( $order );
 			if ( !isset ( $rows[$order] ) ) continue;
-			$final[] = $rows[$order];
+			$final[$order] = $rows[$order];
 			unset ( $rows[$order] );
 		}
 		
-		foreach ( $rows as $row ) {
-			$final[] = $row;
+		foreach ( $rows as $r => $row ) {
+			$final[$r] = $row;
 		}
 		
 		$tabCount = 0;
-		foreach ( $final as $f=> $finalRow ) {
+		foreach ( $final as $f => $finalRow ) {
 			$tabCount++;
 				
 			if ( $tabCount > $maxTabs ) continue;
+			
+			// If no tabs could be determined by the request URI, select the specified default tab.
+			if ( ( $useDefault ) and ( $f == $defaultTab ) ) {
+				$finalRowMarkup = new cMarkup();
+				$finalRowMarkup->Load ( $finalRow );
 				
+				$finalRowMarkup->Find ( "li", 0 )->class  .= " selected ";
+				
+				$finalRow = $finalRowMarkup->outertext;
+			}
+			
 			$list->innertext .= $finalRow;
 		}
 		

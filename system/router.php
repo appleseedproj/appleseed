@@ -21,6 +21,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 class cRouter extends cBase {
 	
 	protected $_Route;
+	protected $_Foundation;
 	protected $_Request;
 	protected $_Base;
 
@@ -124,6 +125,8 @@ class cRouter extends cBase {
 				$data = array ( "foundation" => $finalDestination );
 				$modified = $this->GetSys ( "Event" )->Trigger ( "On", "System", "Route", $data );
 				if ( $modified ) $finalDestination = $modified;
+				
+				$this->_Foundation = $finalDestination;
 		
 				$Foundation->Load ( $finalDestination );
 				

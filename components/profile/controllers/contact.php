@@ -34,6 +34,11 @@ class cProfileContactController extends cController {
 		$this->View = $this->GetView ( $pView ); 
 		
 		$focus = $this->Talk ( 'User', 'Focus' );
+		$current = $this->Talk ( 'User', 'Current' );
+		
+		if ( ( $current->Username == $focus->Username ) or ( !$current ) ) {
+			return ( false );
+		}
 		
 		$this->View->Display();
 		
