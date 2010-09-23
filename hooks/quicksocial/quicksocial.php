@@ -683,8 +683,11 @@ class cQuicksocialHook extends cHook {
 		// Check if the requesting user is blocked.
 		$return['blocked'] = 'false';
 		
+		// Get this user's location
+		$return['location'] = "";
+		
 		// Get this user's status
-		$return['status'] = null;
+		$return['status'] = "";
 		
 		return ( $return );
 	}

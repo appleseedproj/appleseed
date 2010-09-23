@@ -39,12 +39,12 @@
 						<option >&nbsp; Baltimore</option>
 					</select>
 				</span>
-				<span class="friends-location">Chicago, IL</span>
-				<p class="friends-status"></p>
-				<span class="friends-mutual-count"></span>
+				<span class="friends-location">Location</span>
+				<p class="friends-status">Status</p>
+				<span class="friends-mutual-count">Mutual Count</span>
 				<span class="friends-add-friend"><button>Add as a friend</button></span>
 				<span class="friends-remove-friend"><button>Remove friend</button></span>
-				<a href="" class="friends-identity"></a>
+				<a href="" class="friends-identity">username@domain</a>
 			</div>
 		</li>
 	</ul>

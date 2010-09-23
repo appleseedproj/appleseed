@@ -296,7 +296,7 @@
 		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { margin:0; text-align:right; float:right; text-decoration:none; border:none; background:none no-repeat left center; cursor:pointer; }
 		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { color:#406300; padding-right:0; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -43px;  }
 		
-		#profile-friends .friends-circle-editor { float:left; width:40%; text-align:right; }
+		#profile-friends .friends-circle-editor { float:left; width:40%; text-align:right; height:12px; }
 		#profile-friends .friends-circle-editor select { float:none; font-size:90%; width:auto; margin:0; clear:none; }
 		
 		#profile-friends-circles-edit { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }

@@ -71,19 +71,51 @@ class cFriendsFriendsController extends cController {
 		return ( true );
 	}
 	
+	private function _PrepAnonymous ( ) {
+		return ( true );
+	}
+	
 	private function _PrepCurrent ( ) {
+		return ( true );
+	}
+	
+	private function _PrepAnonymousRow ( $pRow ) {
+		
+		// Remove "add as friend" 
+		$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
+		
+		// Remove "remove from friends"
+		$pRow->Find ( "[class=friends-remove-friend]", 0 )->innertext = "";
+		
+		// Remove "add circles" dropdown
+		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
+		
+		return ( $pRow );
+	}
+	
+	private function _PrepFocusRow ( $pRow ) {
+		
+		// Remove "add as friend" 
+		$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
+		
+		// Remove "add circles" dropdown
+		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
+		
+		// Remove "Mutual Friends" count
+		$pRow->Find ( "[class=friends-mutual-count]", 0 )->innertext = "";
+		
+		return ( $pRow );
+	}
+	
+	private function _PrepCurrentRow ( $pRow ) {
 		
 		// Remove "add as friend" if already friends
 		// Remove "remove from friends" if not friends
+		
 		// Remove "add circles" dropdown
+		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
 		
-		$circleEditors = $this->View->Find ( "[class=friends-circle-editor]" );
-		
-		foreach ( $circleEditors as $circleEditor ) {
-			$circleEditor->outertext = "";
-		}
-		
-		return ( true );
+		return ( $pRow );
 	}
 	
 	private function _Prep ( ) {
@@ -122,14 +154,12 @@ class cFriendsFriendsController extends cController {
 			$data = array ( "username" => $username, "domain" => $domain, "width" => 64, "height" => 64 );
 			$row->Find ( '[class=friends-icon]', 0 )->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
 			
-			if ( ( $current ) and ( $focus->Username == $current->Username ) and ( $focus->Domain == $current->Domain ) ) {
-				$row->Find ( '[class=friends-add-friend]', 0 )->outertext = "";
-			} else {
-				$row->Find ( '[class=friends-remove-friend]', 0 )->outertext = "";
-			}
-			
 			$data = array ( "account" => $account, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
 			$userInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+			
+			$row->Find ( '[class=friends-location]', 0 )->innertext = $userInfo->location;
+			
+			$row->Find ( '[class=friends-status]', 0 )->innertext = $userInfo->status;
 			
 			$row->Find ( '[class=friends-identity]', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/';
 			$row->Find ( '[class=friends-identity]', 0 )->innertext = $username . '@' . $domain;
@@ -143,6 +173,14 @@ class cFriendsFriendsController extends cController {
 				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = __( "Mutual Friend Count", array ( "count" => $mutualFriendsCount ) );
 			} else if ( $mutualFriendsCount > 1 ) {
 				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = __( "Mutual Friends Count", array ( "count" => $mutualFriendsCount ) );
+			}
+			
+			if ( !$current ) {
+				$row = $this->_PrepAnonymousRow ( $row );
+			} else if ( $current->Account == $focus->Account ) {
+				$row = $this->_PrepFocusRow ( $row );
+			} else {
+				$row = $this->_PrepCurrentRow ( $row );
 			}
 			
 		    $li->innertext .= $row->outertext;
