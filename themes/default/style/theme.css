@@ -287,6 +287,7 @@
 		#profile-friends div.friends-info { float:left; width:630px; margin-top:10px; }
 		#profile-friends span { font-size:90%; }
 		#profile-friends span.friends-fullname { float:left; margin-top:0px; width:40%; font-weight:bold; }
+		#profile-friends span.friends-fullname a { padding:0; background:none; }
 		#profile-friends span.friends-location { float:right; width:auto; width:20%; overflow:hidden; height:14px; text-align:right; font-weight:bold; text-overflow: ellipsis; -o-text-overflow: ellipsis; }
 		#profile-friends p.friends-status { float:left; margin:0; padding:0; width:80%; min-height:41px; font-style:italic; color:#8a8a8a; }
 		#profile-friends span.friends-mutual-count { float:right; text-align:right; font-style:italic; color:#8a8a8a; }

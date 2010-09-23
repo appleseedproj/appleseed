@@ -96,8 +96,11 @@ class cRouter extends cBase {
 				
 				$routedVars = implode ( '\/', $routed );
 				
-				$routedVarsPattern = '/' . $routedVars . '/';
-				$base = '/' . preg_replace ( $routedVarsPattern, '', $request );
+				$base = '/' . $request;
+				foreach ( $routed as $routedVar ) {
+					$routedVarPattern = '/' . $routedVar . '$/';
+					$base = preg_replace ( $routedVarPattern, '', $base );
+				}
 				
 				// Put leading and trailing slashes on the base url
 				$baseFirstChar = $base[0];

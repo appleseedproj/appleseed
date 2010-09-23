@@ -26,11 +26,11 @@
 	<nav class='pagination'>
 	</nav>
 	
-	<ul>
-		<li>
-			<img class="friends-icon" src="">
+	<ul class='friends-list'>
+		<li class='friends-list-item'>
+			<a href="" class="friends-icon-link"><img class="friends-icon" src=""></a>
 			<div class="friends-info">
-				<span class="friends-fullname"></span>
+				<span class="friends-fullname"><a class="friends-fullname-link" href=""></a></span>
 				<span class="friends-circle-editor">
 					<select>
 						<option disabled="disabled">Add To Circle</option>

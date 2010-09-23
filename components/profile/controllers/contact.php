@@ -36,9 +36,12 @@ class cProfileContactController extends cController {
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		
-		if ( ( $current->Username == $focus->Username ) or ( !$current ) ) {
+		// If the user isn't logged in, or we're viewing our own profile, don't display.
+		if ( ( $current->Account == $focus->Account ) or ( !$current ) ) {
 			return ( false );
 		}
+		
+		// If the user is already a friend, don't show the Add Friend button.
 		
 		$this->View->Display();
 		

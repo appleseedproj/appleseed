@@ -136,6 +136,8 @@ class cUserAuthorization extends cBase {
       	
       	$this->Remote = false;
       	
+      	$this->Account = $this->Username . '@' . $this->Domain;
+      	
       	return ( true );
 	}
 	
@@ -151,6 +153,8 @@ class cUserAuthorization extends cBase {
       	$this->Domain = $sessionModel->Get ( "Domain" );
       	$this->Fullname = $sessionModel->Get ( "Fullname" );
       	$this->Remote = true;
+      	
+      	$this->Account = $this->Username . '@' . $this->Domain;
       	
       	return ( true );
 	}
@@ -180,6 +184,8 @@ class cUserAuthorization extends cBase {
       		
       	$this->Description = $profileModel->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
+      	
+      	$this->Account = $this->Username . '@' . $this->Domain;
       	
       	$this->Remote = false;
       	

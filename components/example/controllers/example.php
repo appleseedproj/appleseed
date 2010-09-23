@@ -770,6 +770,7 @@ class cExampleExampleController extends cController {
 			$step = $session->Get ( "PaginationStep", 10 );
 		}
 		
+		
 		if ( !$page ) {
 			// Get which page was stored, defaulting to page 1
 			$page = $session->Get ( "Page", 1 );
