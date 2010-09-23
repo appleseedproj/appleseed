@@ -72,10 +72,20 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _PrepAnonymous ( ) {
+		// Remove "edit circles" link
+		$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
+		
 		return ( true );
 	}
 	
 	private function _PrepCurrent ( ) {
+		
+		$editor = false;
+		
+		if ( $editor ) {
+			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
+		} 
+		
 		return ( true );
 	}
 	
@@ -90,6 +100,9 @@ class cFriendsFriendsController extends cController {
 		// Remove "add circles" dropdown
 		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
 		
+		// Remove "Mutual Friends" count
+		$pRow->Find ( "[class=friends-mutual-count]", 0 )->innertext = "";
+		
 		return ( $pRow );
 	}
 	
@@ -98,8 +111,8 @@ class cFriendsFriendsController extends cController {
 		// Remove "add as friend" 
 		$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
 		
-		// Remove "add circles" dropdown
-		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
+		// Prep "add circles" dropdown
+		// $pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
 		
 		// Remove "Mutual Friends" count
 		$pRow->Find ( "[class=friends-mutual-count]", 0 )->innertext = "";

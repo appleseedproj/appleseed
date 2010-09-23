@@ -34,9 +34,9 @@
 				<span class="friends-circle-editor">
 					<select>
 						<option disabled="disabled">Add To Circle</option>
-						<option value="">&nbsp; West Coast</option>
+						<option value="">&nbsp; Circle A</option>
 						<option disabled="disabled">Remove From Circle</option>
-						<option >&nbsp; Baltimore</option>
+						<option >&nbsp; Circle B</option>
 					</select>
 				</span>
 				<span class="friends-location">Location</span>
