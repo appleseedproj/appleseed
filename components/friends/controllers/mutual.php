@@ -57,6 +57,9 @@ class cFriendsMutualController extends cController {
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		
+		$tabs =  $this->View->Find ('nav[id=profile-friends-tabs]', 0);
+		$tabs->innertext = $this->GetSys ( 'Components' )->Buffer ( 'friends', 'tabs' );
+		
 		$currentAccount = $current->Username . '@' . $current->Domain;
 		$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
 		$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );

@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Friends
  */
-class cFriendsFriendsController extends cController {
+class cFriendsCirclesController extends cController {
 	
 	/**
 	 * Constructor
@@ -35,6 +35,11 @@ class cFriendsFriendsController extends cController {
 		
 		$current = $this->Talk ( 'User', 'Current' );
 		
+		if ( ( $focus->Username != $current->Username ) or ( $focus->Domain != $current->Domain ) ) {
+			// @todo: Find a way to load the 403 foundation.
+			return ( true );
+		}
+			
 		$this->View = $this->GetView ( $pView ); 
 		
 		$this->_Prep();

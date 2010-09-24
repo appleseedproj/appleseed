@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Friends Component Friends Controller
+/** Friends Component Requests Controller
  * 
- * Friends Component Friends Controller Class
+ * Friends Component Requests Controller Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Friends
  */
-class cFriendsFriendsController extends cController {
+class cFriendsRequestsController extends cController {
 	
 	/**
 	 * Constructor
@@ -35,6 +35,11 @@ class cFriendsFriendsController extends cController {
 		
 		$current = $this->Talk ( 'User', 'Current' );
 		
+		if ( ( $focus->Username != $current->Username ) or ( $focus->Domain != $current->Domain ) ) {
+			// @todo: Find a way to load the 403 foundation.
+			return ( true );
+		}
+			
 		$this->View = $this->GetView ( $pView ); 
 		
 		$this->_Prep();
@@ -142,9 +147,6 @@ class cFriendsFriendsController extends cController {
 	private function _Prep ( ) {
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
-		
-		$tabs =  $this->View->Find ('nav[id=profile-friends-tabs]', 0);
-		$tabs->innertext = $this->GetSys ( 'Components' )->Buffer ( 'friends', 'tabs' );
 		
 		if ( $current ) {
 			$currentAccount = $current->Username . '@' . $current->Domain;

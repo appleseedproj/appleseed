@@ -300,21 +300,21 @@
 		#profile-friends .friends-circle-editor { float:left; width:40%; text-align:right; height:12px; }
 		#profile-friends .friends-circle-editor select { float:none; font-size:90%; width:auto; margin:0; clear:none; }
 		
-		#profile-friends-circles-add { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }
-		#profile-friends-circles-add a { padding:0; background:none; }
-		#profile-friends-circles-remove { text-align:right; font-size:70%; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; }
-		#profile-friends-circles-remove a { font-size:90%; font-weight:normal; padding:0; background:none; }
+		.profile-friends-circle-add { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }
+		.profile-friends-circle-add a { padding:0; background:none; }
+		.profile-friends-circle-remove { text-align:right; font-size:70%; min-height:13px; float:right; width:15%; clear:none; }
+		.profile-friends-circle-remove a { font-size:90%; font-weight:normal; padding:0; background:none; }
+		.profile-friends-circle-edit a { margin-left:5px; font-size:90%; font-weight:normal; padding:0; background:none; }
 		
-		#profile-friends-tabs { position:relative; float:left; display:inline; width:85%; margin-bottom:5px; border-bottom:1px solid #c0d895; }
-		#profile-friends-tabs nav { padding-top:3px; }
+		#profile-friends-tabs { position:relative; float:left; display:inline; width:85%; margin-bottom:5px; border-bottom:1px solid #c0d895; padding-top:3px; }
 		#profile-friends-tabs a { padding:0; background:none; color:#406300; }
 		#profile-friends-tabs ul { float:left; position:relative; top:1px; width:100%; margin:0; padding:0; border:none; }
-		#profile-friends-tabs ul li { float:left; clear:none; max-width:50px; height:15px; overflow:hidden; padding:1px 4px 0 4px; margin:0px 1px; font-style:italic; background-color:#c0d895; border:1px solid #c0d895;  border-bottom:none; }
+		#profile-friends-tabs ul li { float:left; clear:none; height:15px; padding:1px 4px 0 4px; margin:0px 1px; font-style:italic; background-color:#c0d895; border:1px solid #c0d895;  border-bottom:none; }
 		#profile-friends-tabs ul li a { color:#406300; }
 		#profile-friends-tabs ul li:nth-child(1)   { margin-left:1px; }
 		#profile-friends-tabs ul li.system { font-style:normal; }
-		#profile-friends-tabs ul li.ui-tabs-selected { background-color:#f1ffd6; }
-		#profile-friends-tabs ul li.ui-tabs-selected a { color:#2a2a2a; }
+		#profile-friends-tabs ul li.selected { background-color:#f1ffd6; }
+		#profile-friends-tabs ul li.selected a { color:#2a2a2a; }
 		#profile-friends-tabs ul li:hover { background-color:#f1ffd6; }
 		#profile-friends-tabs ul li:hover a { color:#2a2a2a; }
 		#profile-friends-tabs ul li a:hover { text-decoration:none; }

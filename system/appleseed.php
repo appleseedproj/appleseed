@@ -31,7 +31,7 @@ $zApp = new cApplication ( );
 
 $zApp->Initialize ( );
 
-$zApp->GetSys ( "Router" )->Route ( );
+$zApp->GetSys ( "Router" )->Route();
 
 echo $zApp->GetSys ( "Buffer" )->Process ();
 
