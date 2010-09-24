@@ -81,6 +81,7 @@ class cMarkup extends simple_html_dom {
 		
 		// Add an html element here to have it's innertext modified to use the __ function.
 		$translate = array ( 
+			"a",
 			"label", 
 			"span",
 			"p", 
@@ -90,7 +91,6 @@ class cMarkup extends simple_html_dom {
 			"[placeholder]",
 			"[title]",
 			"[label]", 
-			"a",
 			"h1", "h2", "h3", "h4", "h5", "h6"
 		);
 		
@@ -99,6 +99,10 @@ class cMarkup extends simple_html_dom {
 			
 			// Loop through each tag and use the cLanguage function on them.
 			foreach ( $elements as $e=> $element ) {
+				
+				// @todo:  Make sure not to remove inner elements that are necessary.
+				// @todo:  This may have something to do with using plaintext instead of innertext.
+				// @todo:  Possible solution is to loop through and check if any of the translate elements are internal.
 				
 				$modified = __( ltrim ( rtrim ( $element->plaintext ) ) );
 				

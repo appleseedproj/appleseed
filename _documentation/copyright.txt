@@ -1,0 +1,7 @@
+Current Copyright holders:
+--------------------------
+NOTE: Copyright is shared by contribution.  All contributors must be in agreement if license is to be changed.
+
+Michael Chisari - michael.chisari@gmail.com
+Stephen Joe Arthur - flintsparc@gmail.com
+Justin Fuhrer - coestar@gmail.com 

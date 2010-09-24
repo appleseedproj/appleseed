@@ -15,3 +15,12 @@ MORE_PROFILE_TABS="..."
 INFORMATION_FOR_USER="%firstname$s's Information"
 
 NO_USER_INFORMATION_FOR="No user information for %fullname$s"
+
+[contact]
+ADD_CONTACT_AS_FRIEND="Add as a friend"
+REMOVE_CONTACT_AS_FRIEND="Remove from friends"
+SEND_MESSAGE_TO_CONTACT="Send a message"
+BLOCK_CONTACT_USER="Block this person"
+
+[mutual-summary]
+SEE_ALL_MUTUAL_FRIENDS="See all"

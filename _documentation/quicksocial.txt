@@ -113,6 +113,12 @@ Protocol
 					_height=<height>
 	
 	QuickFriend
+		- Action										# This is used for redirecting
+			- GET: 	_social=true
+					_task=friend.action
+					_action=<add|remove>
+					_account=<user@domain>
+					_request=<username>
 		- Friend / ReplyToFriend
 			- GET: 	_social=true
 					_task=friend.add

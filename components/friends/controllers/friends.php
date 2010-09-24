@@ -120,13 +120,22 @@ class cFriendsFriendsController extends cController {
 		return ( $pRow );
 	}
 	
-	private function _PrepCurrentRow ( $pRow ) {
-		
-		// Remove "add as friend" if already friends
-		// Remove "remove from friends" if not friends
+	private function _PrepCurrentRow ( $pRow, $pCurrentUserInfo, $pUserInfo ) {
 		
 		// Remove "add circles" dropdown
 		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
+		
+		if ( in_array ( $pCurrentUserInfo->account, $pUserInfo->friends ) ) {
+			// Remove "add as friend" if already friends
+			$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
+		} else if ( $pCurrentUserInfo->account == $pUserInfo->account ) {
+			// Remove both since we're looking at our own account.
+			$pRow->Find ( "[class=friends-remove-friend]", 0 )->innertext = "";
+			$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
+		} else {
+			// Remove "remove from friends" if not friends
+			$pRow->Find ( "[class=friends-remove-friend]", 0 )->innertext = "";
+		}
 		
 		return ( $pRow );
 	}
@@ -139,6 +148,9 @@ class cFriendsFriendsController extends cController {
 			$currentAccount = $current->Username . '@' . $current->Domain;
 			$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
 			$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+			$currentInfo->username = $current->Username;
+			$currentInfo->domain = $current->Domain;
+			$currentInfo->account = $current->Username . '@' . $current->Domain;
 		}
 		
 		$currentAccount = $current->Username . '@' . $current->Domain;
@@ -157,9 +169,14 @@ class cFriendsFriendsController extends cController {
 		
 		$row = $this->View->Copy ( "[class=friends-list]" )->Find ( "li", 0 );
 		
+		$rowOriginal = $row->outertext;
+		
 		$li->innertext = '';
 		
 		while ( $this->Model->Fetch() ) {
+			$row = new cHTML ();
+			$row->Load ( $rowOriginal );
+		
 			$username = $this->Model->Get ( "Username" );
 			$domain = $this->Model->Get ( "Domain" );
 			$account = $username . '@' . $domain;
@@ -167,8 +184,15 @@ class cFriendsFriendsController extends cController {
 			$data = array ( "username" => $username, "domain" => $domain, "width" => 64, "height" => 64 );
 			$row->Find ( '[class=friends-icon]', 0 )->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
 			
+			$data = array ( "username" => $username, "domain" => $domain, "currentUsername" => $current->Username, "currentDomain" => $current->Domain );
+			$row->Find ( "[class=friends-add-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Addlink", $data );
+			$row->Find ( "[class=friends-remove-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Removelink", $data );
+			
 			$data = array ( "account" => $account, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
 			$userInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+			$userInfo->username = $username;
+			$userInfo->domain = $domain;
+			$userInfo->account = $username . '@' . $domain;
 			
 			$row->Find ( '[class=friends-location]', 0 )->innertext = $userInfo->location;
 			
@@ -186,6 +210,8 @@ class cFriendsFriendsController extends cController {
 				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = __( "Mutual Friend Count", array ( "count" => $mutualFriendsCount ) );
 			} else if ( $mutualFriendsCount > 1 ) {
 				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = __( "Mutual Friends Count", array ( "count" => $mutualFriendsCount ) );
+			} else {
+				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = "";
 			}
 			
 			if ( !$current ) {
@@ -193,10 +219,11 @@ class cFriendsFriendsController extends cController {
 			} else if ( $current->Account == $focus->Account ) {
 				$row = $this->_PrepFocusRow ( $row );
 			} else {
-				$row = $this->_PrepCurrentRow ( $row );
+				$row = $this->_PrepCurrentRow ( $row, $currentInfo, $userInfo );
 			}
 			
 		    $li->innertext .= $row->outertext;
+		    unset ( $row );
 		}
 		
 		$link = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';

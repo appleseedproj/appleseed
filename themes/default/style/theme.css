@@ -272,8 +272,9 @@
 		#profile-contact ul li button:hover { text-decoration:underline; cursor:pointer; }
 		
 		/* profile-mutual */
-		#profile-mutual #mutual-friends ul li { list-style-type:none; }
-		#profile-mutual #mutual-friends ul li img { float:left; width:32px; height:32px; margin:5px 5px 0 0; }
+		#profile-mutual #friends-mutual-summary ul li { list-style-type:none; }
+		#profile-mutual #friends-mutual-summary ul li img { float:left; width:32px; height:32px; margin:5px 5px 0 0; }
+		#profile-mutual #friends-mutual-summary a.all-mutual-friends-link { float:right; clear:both;}
 		
 		/* profile-friends */
 		#profile-friends h1 { float:left; width:100%; clear:both; margin-top:10px; }
@@ -287,19 +288,22 @@
 		#profile-friends div.friends-info { float:left; width:630px; margin-top:10px; }
 		#profile-friends span { font-size:90%; }
 		#profile-friends span.friends-fullname { float:left; margin-top:0px; width:40%; font-weight:bold; }
-		#profile-friends span.friends-fullname a { padding:0; background:none; }
+		#profile-friends span.friends-fullname a { padding:0; background:none; color:#2a2a2a; }
+		#profile-friends span.friends-fullname a:hover { text-decoration:none; }
 		#profile-friends span.friends-location { float:right; width:auto; width:20%; overflow:hidden; height:14px; text-align:right; font-weight:bold; text-overflow: ellipsis; -o-text-overflow: ellipsis; }
 		#profile-friends p.friends-status { float:left; margin:0; padding:0; width:80%; min-height:41px; font-style:italic; color:#8a8a8a; }
 		#profile-friends span.friends-mutual-count { float:right; text-align:right; font-style:italic; color:#8a8a8a; }
 		#profile-friends a.friends-identity { float:left; padding:0; background:none; font-size:90%; width:80%; clear:both; }
 
-		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { margin:0; text-align:right; float:right; text-decoration:none; border:none; background:none no-repeat left center; cursor:pointer; }
-		#profile-friends .friends-add-friend button, #profile-friends .friends-remove-friend button { color:#406300; padding-right:0; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -43px;  }
+		#profile-friends .friends-add-friend a, #profile-friends .friends-remove-friend a { text-align:right; float:right; }
 		
 		#profile-friends .friends-circle-editor { float:left; width:40%; text-align:right; height:12px; }
 		#profile-friends .friends-circle-editor select { float:none; font-size:90%; width:auto; margin:0; clear:none; }
 		
-		#profile-friends-circles-edit { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }
+		#profile-friends-circles-add { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }
+		#profile-friends-circles-add a { padding:0; background:none; }
+		#profile-friends-circles-remove { text-align:right; font-size:70%; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; }
+		#profile-friends-circles-remove a { font-size:90%; font-weight:normal; padding:0; background:none; }
 		
 		#profile-friends-tabs { position:relative; float:left; display:inline; width:85%; margin-bottom:5px; border-bottom:1px solid #c0d895; }
 		#profile-friends-tabs nav { padding-top:3px; }
@@ -308,7 +312,7 @@
 		#profile-friends-tabs ul li { float:left; clear:none; max-width:50px; height:15px; overflow:hidden; padding:1px 4px 0 4px; margin:0px 1px; font-style:italic; background-color:#c0d895; border:1px solid #c0d895;  border-bottom:none; }
 		#profile-friends-tabs ul li a { color:#406300; }
 		#profile-friends-tabs ul li:nth-child(1)   { margin-left:1px; }
-		#profile-friends-tabs ul li.ui-tabs-system { font-style:normal; }
+		#profile-friends-tabs ul li.system { font-style:normal; }
 		#profile-friends-tabs ul li.ui-tabs-selected { background-color:#f1ffd6; }
 		#profile-friends-tabs ul li.ui-tabs-selected a { color:#2a2a2a; }
 		#profile-friends-tabs ul li:hover { background-color:#f1ffd6; }

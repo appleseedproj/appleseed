@@ -263,6 +263,36 @@ class cQuicksocialHook extends cHook {
 		return ( $return );
 	}
 	
+	public function CreateFriendAddlink ( $pData ) {
+		
+		$target = $pData['currentDomain'];
+		
+		$request = $pData['currentUsername'];
+		
+		$account = $pData['username'] . '@' . $pData['domain'];
+		
+		$data = array ( '_social' => 'true', '_task' => 'friend.action', '_action' => 'add', '_request' => $request, '_account' => $account );
+		
+		$return = 'http://' . $target . '/?' . http_build_query ( $data );
+		
+		return ( $return );
+	}
+	
+	public function CreateFriendRemovelink ( $pData ) {
+		
+		$target = $pData['currentDomain'];
+		
+		$request = $pData['currentUsername'];
+		
+		$account = $pData['username'] . '@' . $pData['domain'];
+		
+		$data = array ( '_social' => 'true', '_task' => 'friend.action', '_action' => 'remove', '_request' => $request, '_account' => $account );
+		
+		$return = 'http://' . $target . '/?' . http_build_query ( $data );
+		
+		return ( $return );
+	}
+	
 	public function OnUserInfo ( $pData ) {
 		
 		if (!class_exists ( 'cQuickUser' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );

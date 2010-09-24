@@ -4,3 +4,7 @@ ADD_TO_CIRCLE="Add Circle &darr;"
 REMOVE_FROM_CIRCLE="Remove Circle &darr;"
 
 NUMBER_OF_FRIENDS="%count$s Friends"
+
+ADD_A_NEW_CIRCLE="+ Circle"
+REMOVE_THIS_CIRCLE="- Baltimore"
+;REMOVE_THIS_CIRCLE="- %circlename$s"

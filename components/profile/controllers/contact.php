@@ -41,7 +41,39 @@ class cProfileContactController extends cController {
 			return ( false );
 		}
 		
+		if ( $current ) {
+			$currentAccount = $current->Username . '@' . $current->Domain;
+			$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+			$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+			$currentInfo->username = $current->Username;
+			$currentInfo->domain = $current->Domain;
+			$currentInfo->account = $current->Username . '@' . $current->Domain;
+		}
+		
+		$focusAccount = $focus->Username . '@' . $focus->Domain;
+		$data = array ( "account" => $focusAccount, 'source' => ASD_DOMAIN, 'request' => $focusAccount );
+		$focusInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+		$focusInfo->username = $focus->Username;
+		$focusInfo->domain = $focus->Domain;
+		$focusInfo->account = $focus->Username . '@' . $focus->Domain;
+		
 		// If the user is already a friend, don't show the Add Friend button.
+		$data = array ( "username" => $focus->Username, "domain" => $focus->Domain, "currentUsername" => $current->Username, "currentDomain" => $current->Domain );
+		$this->View->Find ( "[class=profile-add-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Addlink", $data );
+		$this->View->Find ( "[class=profile-remove-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Removelink", $data );
+		
+		if ( in_array ( $currentInfo->account, $focusInfo->friends ) ) {
+			// Remove "add as friend" if already friends
+			$this->View->Find ( "[class=profile-add-friend]", 0 )->outertext = "";
+		} else if ( $currentInfo->account == $focusInfo->account ) {
+			// Remove both since we're looking at our own account.
+			$this->View->Find ( "[class=profile-remove-friend]", 0 )->outertext = "";
+			$this->View->Find ( "[class=profile-add-friend]", 0 )->outertext = "";
+		} else {
+			// Remove "remove from friends" if not friends
+			$this->View->Find ( "[class=profile-remove-friend]", 0 )->outertext = "";
+		}
+		
 		
 		$this->View->Display();
 		

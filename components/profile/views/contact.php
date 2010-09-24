@@ -1,5 +1,6 @@
 <ul>
-	<li><button type="submit" name="Task" value="Friend">Add as a friend</button></li> 
-	<li><button type="submit" name="Task" value="Message">Send a message</button></li> 
-	<li><button type="submit" name="Task" value="Block">Block this person</button></li> 
+	<li class="profile-add-friend"><a class="profile-add-friend-link" href="">Add Contact As friend</a></span>
+	<li class="profile-remove-friend"><a class="profile-remove-friend-link" href="">Remove Contact As friend</a></span>
+	<li class="profile-send-message"><a class="profile-send-message-link" href="">Send Message To Contact</a></span>
+	<li class="profile-block-user"><a class="profile-block-user-link" href="">Block Contact User</a></span>
 </ul>
