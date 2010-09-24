@@ -57,16 +57,8 @@ class cFriendsFriendsController extends cController {
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		
-		$editor = false;
-		if ( ( $focus->Username == $current->Username ) and ( $focus->Domain == $current->Domain ) ) {
-			$editor = true;
-		}
-		
-		if ( $editor ) {
-			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
-		} else {
-			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
-		}
+		// Set the "Add Circle" link
+		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
 		
 		return ( true );
 	}
@@ -75,12 +67,18 @@ class cFriendsFriendsController extends cController {
 		// Remove "edit circles" link
 		$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
 		
+		// Remove "Add Circle" link
+		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->innertext = ""; 
+		
 		return ( true );
 	}
 	
 	private function _PrepCurrent ( ) {
 		
 		$editor = false;
+		
+		// Remove "Add Circle" link
+		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->innertext = ""; 
 		
 		if ( $editor ) {
 			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
