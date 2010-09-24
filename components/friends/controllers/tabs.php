@@ -57,9 +57,13 @@ class cFriendsTabsController extends cController {
 		
 		$ul->innertext = "";
 		
+		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
+		
 		// All
 		$row->Find("a", 0)->innertext = "All";
+		$row->Find("a", 0)->href = '/profile/' . $focus->Username . '/friends/';
 		$row->class .= " system ";
+		if ( !$currentCircle ) $row->class .= " selected ";
 		$ul->innertext .= $row->outertext;
 		
 		if ( $current->Account == $focus->Account ) {
@@ -67,15 +71,15 @@ class cFriendsTabsController extends cController {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			$row->Find("a", 0)->innertext = "Requests";
+			$row->Find("a", 0)->href = '/profile/' . $focus->Username . '/friends/requests/';
 			$row->Find("li", 0)->class .= " system system-all";
+			if ( $currentCircle == 'requests' ) $row->Find ( "li", 0 )->class .= " selected ";
 			$ul->innertext .= $row->outertext;
 			
 			// Create a model for Circles.
 			$this->Circles = $this->GetModel ( "Circles" );
 		
 			$circles = $this->Circles->GetCircles ( $focus->Username );
-			
-			$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
 			
 			// No circles were found, so we're done.
 			if ( count ( $circles ) == 0 ) return ( true );
@@ -102,6 +106,7 @@ class cFriendsTabsController extends cController {
 			// Mutual
 			$row->Find("a", 0)->innertext = "Mutual";
 			$row->class .= " system system-requests";
+			if ( $currentCircle == 'mutual' ) $row->Find ( "li", 0 )->class .= " selected ";
 			$ul->innertext .= $row->outertext;
 		} else {
 		}
