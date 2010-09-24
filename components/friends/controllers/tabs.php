@@ -52,23 +52,23 @@ class cFriendsTabsController extends cController {
 		
 		$ul = $this->View->Find ( "[class=friends-tabs-list]", 0);
 		
-		$row = $this->View->Copy ( "[class=friends-tabs-list]" )->Find ( "li", 0 );
-		$rowOriginal = $row->outertext;
+		$rowOriginal = $this->View->Copy ( "[class=friends-tabs-list]" )->Find ( "li", 0 )->outertext;
+		$row = new cHTML();
+		$row->Load ( $rowOriginal );
 		
 		$ul->innertext = "";
 		
 		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
 		
 		// All
-		$row->Find("a", 0)->innertext = "All";
-		$row->Find("a", 0)->href = '/profile/' . $focus->Username . '/friends/';
-		$row->class .= " system ";
-		if ( !$currentCircle ) $row->class .= " selected ";
+		$row->Find ( "a", 0 )->innertext = "All";
+		$row->Find (" a", 0 )->href = '/profile/' . $focus->Username . '/friends/';
+		$row->Find ( "li", 0 )->class .= " system system-all";
+		if ( !$currentCircle ) $row->Find ( "li", 0 )->class .= " selected ";
 		$ul->innertext .= $row->outertext;
 		
 		if ( $current->Account == $focus->Account ) {
 			// Requests
-			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			$row->Find("a", 0)->innertext = "Requests";
 			$row->Find("a", 0)->href = '/profile/' . $focus->Username . '/friends/requests/';
@@ -87,7 +87,6 @@ class cFriendsTabsController extends cController {
 			// Create the Circles tabs
 			
 			foreach ( $circles as $c => $circle ) {
-				$row = new cHTML ();
 				$row->Load ( $rowOriginal );
 			
 				$row->Find("a", 0)->innertext = $circle['name'];
@@ -100,12 +99,13 @@ class cFriendsTabsController extends cController {
 				
 				$ul->innertext .= $row->outertext;
 				
-				unset ( $row );
 			}
 		} else if ( $current ) {
 			// Mutual
-			$row->Find("a", 0)->innertext = "Mutual";
-			$row->class .= " system system-requests";
+			$row->Load ( $rowOriginal );
+			$row->Find ( "a", 0 )->innertext = "Mutual";
+			$row->Find ( "li", 0 )->class .= " system system-requests ";
+			$row->Find ( "a", 0 )->href = '/profile/' . $focus->Username . '/friends/mutual/';
 			if ( $currentCircle == 'mutual' ) $row->Find ( "li", 0 )->class .= " selected ";
 			$ul->innertext .= $row->outertext;
 		} else {
