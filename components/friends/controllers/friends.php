@@ -39,10 +39,26 @@ class cFriendsFriendsController extends cController {
 		
 		$this->_Prep();
 		
+		switch ( $pView ) {
+			case 'mutual':
+				$this->_DisplayMutual();
+			break;
+			case 'circle':
+				$this->_DisplayCircle();
+			break;
+			case 'requests':
+				$this->_DisplayRequests();
+			break;
+			case 'friends':
+			default:
+				$this->_DisplayFriends();
+			break;
+		}
+		
 		if ( !$current ) {
 			$this->_PrepAnonymous();
 		} else if ( $current->Account == $focus->Account ) {
-			$this->_PrepFocus();
+			$this->_PrepEditor();
 		} else {
 			$this->_PrepCurrent();
 		}
@@ -52,13 +68,38 @@ class cFriendsFriendsController extends cController {
 		return ( true );
 	}
 	
-	private function _PrepFocus ( ) {
+	private function _DisplayFriends ( ) {
+	}
+	
+	private function _DisplayMutual ( ) {
+		$this->GetSys ( "Request" )->Set ( "Circle", "mutual" );
+	}
+	
+	private function _DisplayRequests ( ) {
+		$this->GetSys ( "Request" )->Set ( "Circle", "requests" );
+	}
+	
+	private function _DisplayCircle ( ) {
+	}
+	
+	private function _PrepEditor ( ) {
 		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		
 		// Set the "Add Circle" link
-		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
+		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/add/';
+		
+		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
+		
+		// Set the "Edit Circle" link
+		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/' . $currentCircle;
+		
+		// Set the "Remove Circle" link
+		$currentCircleName = ucwords ( $currentCircle );
+		
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = __( "Remove This Circle", array ( "circle" => $currentCircleName ) );
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/remove/' . $currentCircle;
 		
 		return ( true );
 	}
@@ -103,7 +144,7 @@ class cFriendsFriendsController extends cController {
 		return ( $pRow );
 	}
 	
-	private function _PrepFocusRow ( $pRow ) {
+	private function _PrepEditorRow ( $pRow ) {
 		
 		// Remove "add as friend" 
 		$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
@@ -217,7 +258,7 @@ class cFriendsFriendsController extends cController {
 			if ( !$current ) {
 				$row = $this->_PrepAnonymousRow ( $row );
 			} else if ( $current->Account == $focus->Account ) {
-				$row = $this->_PrepFocusRow ( $row );
+				$row = $this->_PrepEditorRow ( $row );
 			} else {
 				$row = $this->_PrepCurrentRow ( $row, $currentInfo, $userInfo );
 			}

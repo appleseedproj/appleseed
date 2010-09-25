@@ -39,6 +39,13 @@ class cFriendsCirclesController extends cController {
 			return ( true );
 		}
 		
+		$this->Add();
+		
+		return ( true );
+	}
+	
+	public function Edit ( $pView = null, $pData = array ( ) ) {
+		
 		// Check if circle exists
 		if ( !$this->_Load() ) {
 			$relocate = '/profile/' . $this->_Focus->Username . '/friends/';
@@ -46,7 +53,7 @@ class cFriendsCirclesController extends cController {
 			return ( true );
 		}
 			
-		$this->View = $this->GetView ( $pView ); 
+		$this->View = $this->GetView ( "circles" ); 
 		
 		$this->_Prep();
 		
@@ -55,23 +62,17 @@ class cFriendsCirclesController extends cController {
 		return ( true );
 	}
 	
-	public function Edit ( $pView = null, $pData = array ( ) ) {
-		return ( $this->Display ( $pView, $pData ) );
-	}
-	
 	public function Add ( $pView = null, $pData = array ( ) ) {
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
-		
-		$this->Circles = $this->GetModel ( "Circles" );
 		
 		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
 			// @todo: Find a way to load the 403 foundation.
 			return ( true );
 		}
 		
-		$this->View = $this->GetView ( $pView ); 
+		$this->View = $this->GetView ( "circles" ); 
 		
 		$this->_Prep();
 		
@@ -85,17 +86,32 @@ class cFriendsCirclesController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
+		
 		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
 			echo __( "Access Denied" );
 			exit;
+		}
+		
+		$id = $this->GetSys ( "Request" )->Get ( "tID" );
+		
+		// Validate the circle name
+		$name = $this->GetSys ( "Request" )->Get ( "Name" );
+		if ( count ( $name ) < 1 ) {
+			$session->Set ( "Message", "Circle Name Cannot Be Null" );
+			$session->Set ( "Error", true );
+			if ( $id ) {
+				return ( $this->Edit() );
+			} else {
+				return ( $this->Add() );
+			}
 		}
 		
 		$this->Circles = $this->GetModel ( "Circles" );
 		
 		$this->Circles->Synchronize();
 		$this->Circles->Protect( "tID" );
-		
-		$id = $this->GetSys ( "Request" )->Get ( "tID" );
 		
 		if ( $id ) {
 			$this->Circles->Save ( array ( "tID" => $id, "userAuth_uID" => $this->_Focus->Id ) );
@@ -164,18 +180,48 @@ class cFriendsCirclesController extends cController {
 	
 	private function _Prep ( ) {
 		
+		$this->Circles = $this->GetModel ( "Circles" );
+		
 		$data = (array) $this->Circles->Get ( "Data" );
 		
 		$this->View->Synchronize ( $data );
 		
-		$this->View->Find ( "[class=friends-circle-form]", 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
+		$this->View->Find ( "[class=friends-circles-form]", 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
 		
 		$context = $this->Get ( "Context" );
 		
 		$this->View->Find ( "[name=Context]", 0 )->value = $context;
 		
-		$this->View->Find ( "[class=friends-circle-title]", 0 )->innertext = $this->Circles->Get ( "Name" );
+		if ( $this->Circles->Get ( "tID" ) ) {
+			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "Edit Circles Header" , array ( "circle" => $this->Circles->Get ( "Name" ) ) );
+		} else {
+			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "New Circles Header" );
+		}
+		
+		$this->_PrepMessage();
 		
 		return ( true );
 	}
+	
+	private function _PrepMessage ( ) {
+		
+		$markup = $this->View;
+		
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		if ( $message =  $session->Get ( "Message" ) ) {
+			$markup->Find ( "[id=example_message]", 0 )->innertext = $message;
+			if ( $error =  $session->Get ( "Error" ) ) {
+				$markup->Find ( "[id=example_message]", 0 )->class = "error";
+			} else {
+				$markup->Find ( "[id=example_message]", 0 )->class = "message";
+			}
+			$session->Delete ( "Message ");
+			$session->Delete ( "Error ");
+		}
+		
+		return ( true );
+	}
+	
 }
