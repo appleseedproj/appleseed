@@ -84,7 +84,10 @@ class cFriendsMutualController extends cController {
 		$focusInfo->domain = $focus->Domain;
 		$focusInfo->account = $focus->Username . '@' . $focus->Domain;
 		
+		// Calculate the mutual friends, randomize them, and limit to 10.
 		$mutualFriends = array_intersect ( $currentInfo->friends, $focusInfo->friends );
+		shuffle ( $mutualFriends );
+		$mutualFriends = array_slice ( $mutualFriends, 0, 10 );
 		
 		if ( count ( $mutualFriends ) < 1 ) return ( false );
 		

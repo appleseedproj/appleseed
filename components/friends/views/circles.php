@@ -2,16 +2,18 @@
 	<nav id="profile-friends-circles-tabs" >
 	</nav>
 	
-	<h1>Circle Title</h1>
+	<h1 class='friends-circle-title'>Circle Title</h1>
 	
 	<nav class='pagination'>
 	</nav>
 	
-	<form id="friends-circles-form" action="">
+	<form class="friends-circle-form" action="" method="post">
+		<input type="hidden" name="Context" value="" /> 
+		<input type="hidden" name="tID" value="" /> 
 		<fieldset> 
 			<legend>Edit Title</legend>
                     
-				<div><label>Edit</label><input class="required" /></div>
+				<div><label>Edit</label><input name="Name" class="required" maxlength="20" /></div>
 			</legend>
 			
 			<p> 

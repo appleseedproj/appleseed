@@ -160,6 +160,11 @@ class cRouter extends cBase {
 		
 		return ( true );
 	}
+	
+	public function Redirect ( $pLocation ) {
+		header ( 'Location:' . $pLocation );
+		exit;
+	}
 
 	/**
 	 * Legacy Routing

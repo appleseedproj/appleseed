@@ -169,6 +169,7 @@ class cUserAuthorization extends cBase {
       	if ( !$userModel->Get ( "Username" ) ) return ( false );
       	
       	$this->Username = $userModel->Get ( "Username" );
+      	$this->Id = $userModel->Get ( "uID" );
       	
       	// Load the user profile information.
       	$profileModel = new cModel ( "userProfile" );

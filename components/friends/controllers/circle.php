@@ -68,16 +68,14 @@ class cFriendsCircleController extends cController {
 		$current = $this->Talk ( 'User', 'Current' );
 		
 		// Set the "Add Circle" link
-		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/new/';
+		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/add/';
 		
-		// Set the "Edit Circle" link
 		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
 		
+		// Set the "Edit Circle" link
 		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/' . $currentCircle;
 		
 		// Set the "Remove Circle" link
-		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
-		
 		$currentCircleName = ucwords ( $currentCircle );
 		
 		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = __( "Remove This Circle", array ( "circle" => $currentCircleName ) );
@@ -125,7 +123,9 @@ class cFriendsCircleController extends cController {
 		
 		$friendCount = $this->Model->Get ( "Total" );
 		
-		$this->View->Find ( '[class=profile-friends-owner]', 0 )->innertext = __( "Friends Of User", array ( "fullname" => $focus->Fullname ) );
+		$currentCircle = str_replace ( '-', ' ', urldecode ( ucwords ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) ) );
+		
+		$this->View->Find ( '[class=profile-friends-owner]', 0 )->innertext = $currentCircle;
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $friendCount ) );
 		
 		$li = $this->View->Find ( "ul[class=friends-list] li", 0);
