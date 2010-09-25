@@ -120,7 +120,11 @@ class cFriendsCirclesController extends cController {
 			$this->Circles->Save ( );
 		}
 		
-		$circle = str_replace ( ' ', '-', strtolower ( $this->Circles->Get ( "Name" ) ) );
+		$circle = $this->Circles->Get ( "Name" );
+		
+		$session->Set ( "Message", __( "Circle Has Been Saved", array ( "circle" => $circle ) ) );
+		
+		$circle = str_replace ( ' ', '-', strtolower ( $circle ) );
 		$relocate = '/profile/' . $this->_Focus->Username . '/friends/' . $circle;
 		$this->GetSys ( "Router" )->Redirect ( $relocate );
 		return ( true );
@@ -211,11 +215,11 @@ class cFriendsCirclesController extends cController {
 		$session->Context ( $this->Get ( "Context" ) );
 		
 		if ( $message =  $session->Get ( "Message" ) ) {
-			$markup->Find ( "[id=example_message]", 0 )->innertext = $message;
+			$markup->Find ( "[id=friends-circles-message]", 0 )->innertext = $message;
 			if ( $error =  $session->Get ( "Error" ) ) {
-				$markup->Find ( "[id=example_message]", 0 )->class = "error";
+				$markup->Find ( "[id=friends-circles-message]", 0 )->class = "error";
 			} else {
-				$markup->Find ( "[id=example_message]", 0 )->class = "message";
+				$markup->Find ( "[id=friends-circles-message]", 0 )->class = "message";
 			}
 			$session->Delete ( "Message ");
 			$session->Delete ( "Error ");

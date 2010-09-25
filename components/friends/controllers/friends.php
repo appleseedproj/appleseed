@@ -272,6 +272,8 @@ class cFriendsFriendsController extends cController {
 		$pageControl =  $this->View->Find ('nav[class=pagination]', 0);
 		$pageControl->innertext = $this->GetSys ( 'Components' )->Buffer ( 'pagination', $pageData ); 
 		
+		$this->_PrepMessage();
+		
 		$this->View->Reload();
 		
 		return ( true );
@@ -293,5 +295,25 @@ class cFriendsFriendsController extends cController {
 		return ( $return );
 	}
 	
+	private function _PrepMessage ( ) {
+		
+		$markup = $this->View;
+		
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		if ( $message =  $session->Get ( "Message" ) ) {
+			$markup->Find ( "[id=friends-message]", 0 )->innertext = $message;
+			if ( $error =  $session->Get ( "Error" ) ) {
+				$markup->Find ( "[id=friends-message]", 0 )->class = "error";
+			} else {
+				$markup->Find ( "[id=friends-message]", 0 )->class = "message";
+			}
+			$session->Delete ( "Message ");
+			$session->Delete ( "Error ");
+		}
+		
+		return ( true );
+	}
 	
 }

@@ -1,7 +1,7 @@
 <section id="profile-friends-circles">
 	
 	<h1 class='friends-circles-title'></h1>
-	<p id='example_message'></p>
+	<p id='friends-circles-message'></p>
 	
 	<form class="friends-circles-form" action="" method="post">
 		<input type="hidden" name="Context" value="" /> 
