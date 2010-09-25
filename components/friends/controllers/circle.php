@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Friends
  */
-class cFriendsCirclesController extends cController {
+class cFriendsCircleController extends cController {
 	
 	/**
 	 * Constructor
@@ -39,21 +39,26 @@ class cFriendsCirclesController extends cController {
 			// @todo: Find a way to load the 403 foundation.
 			return ( true );
 		}
+		
+		// Check if circle exists
+		if ( !$this->_CheckCircle() ) {
+			$relocate = '/profile/' . $focus->Username . '/friends/';
+			header ( 'Location:' . $relocate );
+			return ( true );
+		}
 			
 		$this->View = $this->GetView ( $pView ); 
 		
 		$this->_Prep();
 		
-		if ( !$current ) {
-			$this->_PrepAnonymous();
-		} else if ( $current->Account == $focus->Account ) {
-			$this->_PrepFocus();
-		} else {
-			$this->_PrepCurrent();
-		}
+		$this->_PrepFocus();
 		
 		$this->View->Display();
 		
+		return ( true );
+	}
+	
+	private function _CheckCircle() {
 		return ( true );
 	}
 	
@@ -62,52 +67,23 @@ class cFriendsCirclesController extends cController {
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		
-		$editor = false;
-		if ( ( $focus->Username == $current->Username ) and ( $focus->Domain == $current->Domain ) ) {
-			$editor = true;
-		}
+		// Set the "Add Circle" link
+		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/new/';
 		
-		if ( $editor ) {
-			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
-		} else {
-			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
-		}
+		// Set the "Edit Circle" link
+		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
 		
-		return ( true );
-	}
-	
-	private function _PrepAnonymous ( ) {
-		// Remove "edit circles" link
-		$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
+		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/' . $currentCircle;
+		
+		// Set the "Remove Circle" link
+		$currentCircle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
+		
+		$currentCircleName = ucwords ( $currentCircle );
+		
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = __( "Remove This Circle", array ( "circle" => $currentCircleName ) );
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/remove/' . $currentCircle;
 		
 		return ( true );
-	}
-	
-	private function _PrepCurrent ( ) {
-		
-		$editor = false;
-		
-		if ( $editor ) {
-			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
-		} 
-		
-		return ( true );
-	}
-	
-	private function _PrepAnonymousRow ( $pRow ) {
-		// Remove "add as friend" 
-		$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
-		
-		// Remove "remove from friends"
-		$pRow->Find ( "[class=friends-remove-friend]", 0 )->innertext = "";
-		
-		// Remove "add circles" dropdown
-		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
-		
-		// Remove "Mutual Friends" count
-		$pRow->Find ( "[class=friends-mutual-count]", 0 )->innertext = "";
-		
-		return ( $pRow );
 	}
 	
 	private function _PrepFocusRow ( $pRow ) {
@@ -120,26 +96,6 @@ class cFriendsCirclesController extends cController {
 		
 		// Remove "Mutual Friends" count
 		$pRow->Find ( "[class=friends-mutual-count]", 0 )->innertext = "";
-		
-		return ( $pRow );
-	}
-	
-	private function _PrepCurrentRow ( $pRow, $pCurrentUserInfo, $pUserInfo ) {
-		
-		// Remove "add circles" dropdown
-		$pRow->Find ( "[class=friends-circle-editor]", 0 )->innertext = "";
-		
-		if ( in_array ( $pCurrentUserInfo->account, $pUserInfo->friends ) ) {
-			// Remove "add as friend" if already friends
-			$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
-		} else if ( $pCurrentUserInfo->account == $pUserInfo->account ) {
-			// Remove both since we're looking at our own account.
-			$pRow->Find ( "[class=friends-remove-friend]", 0 )->innertext = "";
-			$pRow->Find ( "[class=friends-add-friend]", 0 )->innertext = "";
-		} else {
-			// Remove "remove from friends" if not friends
-			$pRow->Find ( "[class=friends-remove-friend]", 0 )->innertext = "";
-		}
 		
 		return ( $pRow );
 	}
@@ -221,13 +177,7 @@ class cFriendsCirclesController extends cController {
 				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = "";
 			}
 			
-			if ( !$current ) {
-				$row = $this->_PrepAnonymousRow ( $row );
-			} else if ( $current->Account == $focus->Account ) {
-				$row = $this->_PrepFocusRow ( $row );
-			} else {
-				$row = $this->_PrepCurrentRow ( $row, $currentInfo, $userInfo );
-			}
+			$row = $this->_PrepFocusRow ( $row );
 			
 		    $li->innertext .= $row->outertext;
 		    unset ( $row );

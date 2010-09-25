@@ -6,6 +6,6 @@ REMOVE_FROM_CIRCLE="Remove Circle &darr;"
 NUMBER_OF_FRIENDS="%count$s Friends"
 
 ADD_A_NEW_CIRCLE="+ New Circle"
-REMOVE_THIS_CIRCLE="- Delete %circlename$s"
+REMOVE_THIS_CIRCLE="- Delete %circle$s"
 ;REMOVE_THIS_CIRCLE="- Delete Baltimore"
 EDIT_THIS_CIRCLE="&rarr; Edit Circle"
