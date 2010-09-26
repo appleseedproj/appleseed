@@ -30,7 +30,7 @@ class cLoginInfoController extends cController {
 	}
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
-		parent::Display( $pView, $pData );
+		return ( parent::Display( $pView, $pData ) );
 	}
 
 }

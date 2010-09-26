@@ -20,11 +20,11 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cBuffer extends cBase {
 	
-	private $_Buffer;
+	protected $_Buffer;
 	
-	private $_Queue;
+	protected $_Queue;
 	
-	private $_Count;
+	protected $_Count;
 
 	/**
 	 * Constructor
@@ -115,7 +115,15 @@ class cBuffer extends cBase {
 		
 		$this->GetSys ( "Event" )->Trigger ( "Begin", "System", "Buffer" );
 		
+		// Check if we've been instructed to redirect and process a different foundation.
+		if ( $redirect = $this->GetSys ( "Foundation" )->Get ( "Redirect" ) ) {
+			//unset ( $this->_Buffer );
+			//unset ( $this->_Queue );
+			$this->LoadFoundation ( $redirect );
+		}
+		
 		$processed = $this->_Buffer;
+		
 		$whilepattern = "/\#\@ component(.*) \@\#/";
 		
 		do {
@@ -164,26 +172,21 @@ class cBuffer extends cBase {
 		$this->_Queue[$pContext][$count]->Parameters = $pData;
 		$this->_Queue[$pContext][$count]->Buffer = $pBuffer;
 		
+		return ( true );
 	}
 	
 	/**
 	 * Create a placeholder in the outermost buffer.
 	 *
 	 * @access  public
-	 * @param string $pContext Which context to add to (ie, "component")
-	 * @param array $pData Data for how this component was called
+	 * @param string $pType Which buffer type to add to (ie, "component")
+	 * @param array $pContext Context for how this component was called
 	 */
-	public function PlaceHolder ( $pContext, $pData ) {
+	public function PlaceHolder ( $pType, $pContext ) {
 		
-		foreach ($pData as $d => $data ) {
-			if ( is_array ( $data ) ) { 
-				$pData[$d] = join ( ',', $data );
-			}
-		}
+		$info = '[' . $pContext . ']';
 		
-		$info = '[' . join ('/', $pData ) . ']';
-		
-		$count = $this->_Count[$pContext];
+		$count = $this->_Count[$pType];
 		echo "#@ component$count $info @#\n"; 
 		
 		return ( true );

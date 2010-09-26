@@ -15,6 +15,7 @@ NAME_FIELD_LABEL="Name"
 
 INVALID_CIRCLE_NAME="You cannot use that as a circle name"
 
-CIRCLE_CHANGES_CANCELLED="Changes to '%circle$s' have been cancelled"
+CIRCLE_EDIT_CANCELLED="Changes to '%circle$s' have been cancelled"
+CIRCLE_NEW_CANCELLED="Adding a new circle has been cancelled"
 CIRCLE_HAS_BEEN_SAVED="Circle '%circle$s' has been saved."
 CIRCLE_HAS_BEEN_REMOVED="Circle '%circle$s' has been deleted."

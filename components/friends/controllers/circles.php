@@ -67,12 +67,9 @@ class cFriendsCirclesController extends cController {
 	
 	public function Add ( $pView = null, $pData = array ( ) ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
-		
-		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
-			// @todo: Find a way to load the 403 foundation.
-			return ( true );
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
 		}
 		
 		$this->View = $this->GetView ( "circles" ); 
@@ -82,6 +79,22 @@ class cFriendsCirclesController extends cController {
 		$this->View->Display();
 		
 		return ( true );
+	}
+	
+	private function _CheckAccess ( ) {
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
+			return ( false );
+		}
+		
+		$circle = $this->GetSys ( "Request" )->Get ( "Name" );
+		
+		// We're adding, not editing, so skip the rest.
+		if ( !$circle ) return ( true );
+		
+		$circle = str_replace ( ' ', '-', strtolower ( $circle ) );
 	}
 	
 	public function Save ( $pView = null, $pData = array ( ) ) {
@@ -150,13 +163,18 @@ class cFriendsCirclesController extends cController {
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
+		$id = $this->GetSys ( "Request" )->Get ( "tID" );
+		
 		$this->_Load();
 		
 		$original = $this->GetSys ( "Request" )->Get ( "Original" );
 		$circle = $this->_ToUrl ( $original );
 		
 		$session->Context ( "friends.friends.(\d+).(mutual|friends|requests|circles|circle)" );
-		$session->Set ( "Message", __( "Circle Changes Cancelled", array ( "circle" => $original ) ) );
+		if ( $id )
+			$session->Set ( "Message", __( "Circle Edit Cancelled", array ( "circle" => $original ) ) );
+		else
+			$session->Set ( "Message", __( "Circle New Cancelled" ) );
 		
 		$relocate = '/profile/' . $this->_Focus->Username . '/friends/' . $circle;
 		$this->GetSys ( "Router" )->Redirect ( $relocate );

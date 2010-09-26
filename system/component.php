@@ -93,14 +93,14 @@ class cComponent extends cBase {
 		
 		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
 		
-		$this->Controllers->$controllername->$taskname ( $pView, $pData);
+		$return = $this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		$this->GetSys ( "Event" )->Trigger ( "End", $this->_Component, $pTask ); 
 		
 		// Restore the stored session context (for embedded component calls)
 		$this->GetSys ( "Session" )->Context ( $oldSessionContext );
 		
-		return ( true );
+		return ( $return );
 	}
 	
 	public function AddToInstance ( ) {

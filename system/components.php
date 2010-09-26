@@ -125,9 +125,17 @@ class cComponents extends cBase {
 	 */
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		
-		ob_start ();
+		ob_start();
 		
-		$this->Execute ( $pComponent, $pController, $pView, $pTask, $pData );
+		$context = $this->Execute ( $pComponent, $pController, $pView, $pTask, $pData );
+		
+		$buffer = ob_get_clean();
+		
+		if ( $context ) {
+			$this->GetSys ( "Buffer" )->AddToCount ( "component" );
+			$this->GetSys ( "Buffer" )->Queue ( "component", $context, $buffer );
+			$this->GetSys ( "Buffer" )->PlaceHolder ( "component", $context );
+		}
 		
 		return ( true );
 	}
@@ -216,14 +224,17 @@ class cComponents extends cBase {
 		$this->GetSys ( "Benchmark" )->MemBegin ( $context );
 		$this->GetSys ( "Benchmark" )->Start ( $context );
 		
-		$this->$componentname->Load ( $pController, $pView, $pTask, $pData );
+		$return = $this->$componentname->Load ( $pController, $pView, $pTask, $pData );
 		
 		$this->GetSys ( "Benchmark" )->Stop ( $context );
 		$this->GetSys ( "Benchmark" )->MemEnd ( $context );
 		
 		$this->$componentname->AddToInstance();
-				
-		return ( true );
+		
+		if ( $return ) 
+			return ( $context );
+		else
+			return ( false );
 	}
 	
 	public function Buffer ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {

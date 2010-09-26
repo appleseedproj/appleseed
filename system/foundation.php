@@ -21,6 +21,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 class cFoundation extends cBase {
 	
 	protected $_Config;
+	protected $_Continue;
+	protected $_Redirect = false;
 
 	/**
 	 * Constructor
@@ -32,6 +34,8 @@ class cFoundation extends cBase {
  		// Load foundation configuration.
  		$this->_Config = new cConf ( );
 		$this->_Config->Set ( "Data",  $this->_Config->Load ( "foundations" ) );
+		
+		$this->_Continue = true;
 		
 		return ( true );
 	}
@@ -55,7 +59,7 @@ class cFoundation extends cBase {
 		$context = $contexts[$pRoute];
 		
 		if ( !$context ) {
-			# @TODO: Throw a warning.
+			// @todo: Throw a warning.
  		}
 		
 		// If the context isn't set in the Request data, set it with the specified default.
@@ -75,6 +79,32 @@ class cFoundation extends cBase {
 		
 		echo __("Foundation Not Found", array ( 'route' => $route ) );
 		exit;
+	}
+	
+	/**
+	 * Discards the current foundation, and loads the new one.
+	 *
+	 * @access  public
+	 * @param string $pRoute Which foundation to redirect to.
+	 */
+	public function Redirect ( $pRoute ) {
+		eval ( GLOBALS );
+		
+		$Config = $this->GetSys ( "Config" );
+		$paths = array_reverse ( $Config->GetPath() );
+		
+		foreach ( $paths as $p => $path ) {
+			$route = ltrim ( rtrim ( $pRoute, '/' ), '/' );
+			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
+			if ( is_file ( $filename ) ) {
+				$this->Set ( "Redirect", $filename );
+		
+		
+				return ( true );
+			}
+		}
+		
+		return ( true );
 	}
 
 }
