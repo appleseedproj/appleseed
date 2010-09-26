@@ -5,10 +5,10 @@
 	<span class="profile-friends-circle-add"><a href="#">Add A New Circle</a></span>
 	
 	<h1>
-		<span class='profile-friends-owner'>Friend Requests</span>
-		<span class="profile-friends-circle-edit"></span>
+		<span class='profile-friends-title'></span>
+		<span class="profile-friends-circle-edit"><a href="#"></a></span>
 		<span class="profile-friends-count additional-info"></span>
-		<span class="profile-friends-circle-remove"></span>
+		<span class="profile-friends-circle-remove"><a href="#"></a></span>
 	</h1>
 	
 	<nav class='pagination'>

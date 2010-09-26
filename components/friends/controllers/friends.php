@@ -32,7 +32,6 @@ class cFriendsFriendsController extends cController {
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
@@ -57,6 +56,7 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _DisplayFriends ( ) {
+		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Friends Title", array ( "fullname" => $this->_Focus->Fullname ) );
 		
 		$this->_Prep();
 		
@@ -66,6 +66,8 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _DisplayMutual ( ) {
+		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Mutual Title", array ( "fullname" => $this->_Focus->Fullname ) );
+		
 		$this->GetSys ( "Request" )->Set ( "Circle", "mutual" );
 		
 		$this->_Prep();
@@ -76,6 +78,8 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _DisplayRequests ( ) {
+		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Requests Title", array ( "fullname" => $this->_Focus->Fullname ) );
+		
 		$this->GetSys ( "Request" )->Set ( "Circle", "requests" );
 		
 		$this->_Prep();
@@ -86,14 +90,22 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _DisplayCircle ( ) {
+		
 		$circleName = urldecode ( str_replace ( '-', ' ' , $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
+		
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
+		}
 		
 		$this->Circles = $this->GetModel ( "Circles" );
 		
 		if ( !$this->Circles->Load ( $this->_Focus->Id, $circleName ) ) {
-			echo "404";
+			$this->GetSys ( "Foundation" )->Redirect ( "common/404.php" );
 			return ( false );
 		}
+		
+		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Circle Title", array ( "circle" => $this->Circles->Get ( "Name" ) ) );
 		
 		$this->_Prep();
 		
@@ -101,6 +113,19 @@ class cFriendsFriendsController extends cController {
 		
 		return ( true );
 	}
+	
+	private function _CheckAccess ( ) {
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
+			return ( false );
+		}
+		
+		return ( true );
+	}
+	
 	
 	private function _CircleToUrl ( $pCircle ) {
 		
@@ -144,14 +169,10 @@ class cFriendsFriendsController extends cController {
 	
 	private function _PrepCurrent ( ) {
 		
-		$editor = false;
-		
-		// Remove "Add Circle" link
+		// Remove links
 		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->innertext = ""; 
-		
-		if ( $editor ) {
-			$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/';
-		} 
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = ""; 
+		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->innertext = ""; 
 		
 		return ( true );
 	}
@@ -210,37 +231,30 @@ class cFriendsFriendsController extends cController {
 		
 		if ( !$this->_Current ) {
 			$this->_PrepAnonymous();
-		} else if ( $current->Account == $focus->Account ) {
+		} else if ( $this->_Current->Account == $this->_Focus->Account ) {
 			$this->_PrepEditor();
 		} else {
 			$this->_PrepCurrent();
 		}
 		
-		$focus = $this->Talk ( 'User', 'Focus' );
-		$current = $this->Talk ( 'User', 'Current' );
-		
 		$tabs =  $this->View->Find ('nav[id=profile-friends-tabs]', 0);
 		$tabs->innertext = $this->GetSys ( 'Components' )->Buffer ( 'friends', 'tabs' );
 		
-		if ( $current ) {
-			$currentAccount = $current->Username . '@' . $current->Domain;
-			$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+		if ( $this->_Current ) {
+			$data = array ( "account" => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
 			$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
 			$currentInfo->username = $current->Username;
 			$currentInfo->domain = $current->Domain;
 			$currentInfo->account = $current->Username . '@' . $current->Domain;
 		}
 		
-		$currentAccount = $current->Username . '@' . $current->Domain;
-		
 		$this->Model = $this->GetModel();
 		
 		list ( $start, $step, $page ) = $this->_PageCalc();
-		$this->Model->Retrieve ( array ( "userAuth_uID" => $focus->uID ), null, array ( "start" => $start, "step" => $step ) );
+		$this->Model->Retrieve ( array ( "userAuth_uID" => $this->_Focus->uID ), null, array ( "start" => $start, "step" => $step ) );
 		
 		$friendCount = $this->Model->Get ( "Total" );
 		
-		$this->View->Find ( '[class=profile-friends-owner]', 0 )->innertext = __( "Friends Of User", array ( "fullname" => $focus->Fullname ) );
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $friendCount ) );
 		
 		$li = $this->View->Find ( "ul[class=friends-list] li", 0);
@@ -262,11 +276,11 @@ class cFriendsFriendsController extends cController {
 			$data = array ( "username" => $username, "domain" => $domain, "width" => 64, "height" => 64 );
 			$row->Find ( '[class=friends-icon]', 0 )->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
 			
-			$data = array ( "username" => $username, "domain" => $domain, "currentUsername" => $current->Username, "currentDomain" => $current->Domain );
+			$data = array ( "username" => $username, "domain" => $domain, "currentUsername" => $this->_Current->Username, "currentDomain" => $this->_Current->Domain );
 			$row->Find ( "[class=friends-add-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Addlink", $data );
 			$row->Find ( "[class=friends-remove-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Removelink", $data );
 			
-			$data = array ( "account" => $account, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+			$data = array ( "account" => $account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
 			$userInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
 			$userInfo->username = $username;
 			$userInfo->domain = $domain;
@@ -292,9 +306,9 @@ class cFriendsFriendsController extends cController {
 				$row->Find ( '[class=friends-mutual-count]', 0 )->innertext = "";
 			}
 			
-			if ( !$current ) {
+			if ( !$this->_Current ) {
 				$row = $this->_PrepAnonymousRow ( $row );
-			} else if ( $current->Account == $focus->Account ) {
+			} else if ( $this->_Current->Account == $this->_Focus->Account ) {
 				$row = $this->_PrepEditorRow ( $row );
 			} else {
 				$row = $this->_PrepCurrentRow ( $row, $currentInfo, $userInfo );

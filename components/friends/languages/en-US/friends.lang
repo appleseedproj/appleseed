@@ -1,4 +1,7 @@
-FRIENDS_OF_USER="%fullname$s's Friends"
+FRIENDS_TITLE="%fullname$s's Friends"
+REQUESTS_TITLE="%fullname$s's Requests"
+CIRCLE_TITLE="%circle$s"
+MUTUAL_TITLE="%fullname$s's Mutual Friends"
 
 ADD_TO_CIRCLE="Add Circle &darr;"
 REMOVE_FROM_CIRCLE="Remove Circle &darr;"
