@@ -10,6 +10,7 @@
 		<span class="profile-friends-count additional-info"></span>
 		<span class="profile-friends-circle-remove"><a href="#">Remove This Circle</a></span>
 	</h1>
+	<p id='friends-message'></p>
 	
 	<nav class='pagination'>
 	</nav>

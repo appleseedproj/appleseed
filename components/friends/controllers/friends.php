@@ -31,56 +31,84 @@ class cFriendsFriendsController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		
-		$current = $this->Talk ( 'User', 'Current' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
 		
-		$this->_Prep();
-		
 		switch ( $pView ) {
 			case 'mutual':
-				$this->_DisplayMutual();
+				return ( $this->_DisplayMutual() );
 			break;
 			case 'circle':
-				$this->_DisplayCircle();
+				return ( $this->_DisplayCircle() );
 			break;
 			case 'requests':
-				$this->_DisplayRequests();
+				return ( $this->_DisplayRequests() );
 			break;
 			case 'friends':
 			default:
-				$this->_DisplayFriends();
+				return ( $this->_DisplayFriends() );
 			break;
 		}
 		
-		if ( !$current ) {
-			$this->_PrepAnonymous();
-		} else if ( $current->Account == $focus->Account ) {
-			$this->_PrepEditor();
-		} else {
-			$this->_PrepCurrent();
-		}
+		return ( true );
+	}
+	
+	private function _DisplayFriends ( ) {
+		
+		$this->_Prep();
 		
 		$this->View->Display();
 		
 		return ( true );
 	}
 	
-	private function _DisplayFriends ( ) {
-	}
-	
 	private function _DisplayMutual ( ) {
 		$this->GetSys ( "Request" )->Set ( "Circle", "mutual" );
+		
+		$this->_Prep();
+		
+		$this->View->Display();
+		
+		return ( true );
 	}
 	
 	private function _DisplayRequests ( ) {
 		$this->GetSys ( "Request" )->Set ( "Circle", "requests" );
+		
+		$this->_Prep();
+		
+		$this->View->Display();
+		
+		return ( true );
 	}
 	
 	private function _DisplayCircle ( ) {
+		$circleName = urldecode ( str_replace ( '-', ' ' , $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
+		
+		$this->Circles = $this->GetModel ( "Circles" );
+		
+		if ( !$this->Circles->Load ( $this->_Focus->Id, $circleName ) ) {
+			echo "404";
+			return ( false );
+		}
+		
+		$this->_Prep();
+		
+		$this->View->Display();
+		
+		return ( true );
 	}
+	
+	private function _CircleToUrl ( $pCircle ) {
+		
+		$return = strtolower ( urlencode ( utf8_decode ( str_replace ( ' ', '-', $pCircle ) ) ) );
+		
+		return ( $return );
+	}
+	
 	
 	private function _PrepEditor ( ) {
 		
@@ -96,7 +124,7 @@ class cFriendsFriendsController extends cController {
 		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/edit/' . $currentCircle;
 		
 		// Set the "Remove Circle" link
-		$currentCircleName = ucwords ( $currentCircle );
+		$currentCircleName = ucwords ( str_replace ( '-', ' ', $currentCircle ) );
 		
 		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = __( "Remove This Circle", array ( "circle" => $currentCircleName ) );
 		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->href = '/profile/' . $current->Username . '/friends/circles/remove/' . $currentCircle;
@@ -179,6 +207,15 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _Prep ( ) {
+		
+		if ( !$this->_Current ) {
+			$this->_PrepAnonymous();
+		} else if ( $current->Account == $focus->Account ) {
+			$this->_PrepEditor();
+		} else {
+			$this->_PrepCurrent();
+		}
+		
 		$focus = $this->Talk ( 'User', 'Focus' );
 		$current = $this->Talk ( 'User', 'Current' );
 		

@@ -31,6 +31,40 @@ class cFriendsCirclesModel extends cModel {
 		parent::__construct( $pTables );
 	}
 	
+	public function Load ( $pUserId, $pCircle ) {
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Name" => $pCircle ) );
+		
+		if ( !$this->Fetch() ) return ( false );
+		
+		return ( $this->Get ( "Data" ) );
+	}
+	
+	public function SaveCircle ( $pCircle, $pUserId, $pId = null ) {
+		
+		$this->Protect( "tID" );
+		
+		$this->Set ( "userAuth_uID", $pUserId );
+		$this->Set ( "Name", $pCircle );
+		
+		if ( $pId ) {
+			$this->Save ( array ( "tID" => $pId, "userAuth_uID" => $pUserId ) );
+		} else {
+			$this->Save ( );
+		}
+		
+		return ( true );
+	}
+	
+	public function DeleteCircle ( $pCircle, $pUserId ) {
+		$this->Protect( "tID" );
+		
+		$this->Delete ( array ( "Name" => $pCircle, "userAuth_uID" => $pUserId ) );
+		
+		return ( true );
+	}
+		
+	
 	public function GetCircles ( $pUsername ) {
 		
 		$userAuth = new cModel ( "userAuthorization" );

@@ -767,7 +767,7 @@ class cModel extends cBase {
 		
 		// Quote each value, to prevent injection.
 		foreach ( $pPrepared as $p => $prepare ) {
-			$prepared[$p] = $DBO->quote ( $prepare );
+			$prepared[$p] = $DBO->quote ( utf8_encode ( $prepare ) );
 		}
 		
 		// Replace all the %variable$s references first
@@ -803,6 +803,10 @@ class cModel extends cBase {
 		 */
 		 
 		$data = $this->_Handle->Fetch ( PDO::FETCH_OBJ );
+		
+		foreach ( $data as $d => $dat ) {
+			$data->$d = utf8_decode ( $dat );
+		}
 		
 		if ( !$data ) return ( false );
 		

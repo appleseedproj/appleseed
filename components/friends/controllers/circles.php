@@ -46,6 +46,9 @@ class cFriendsCirclesController extends cController {
 	
 	public function Edit ( $pView = null, $pData = array ( ) ) {
 		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
 		// Check if circle exists
 		if ( !$this->_Load() ) {
 			$relocate = '/profile/' . $this->_Focus->Username . '/friends/';
@@ -96,11 +99,29 @@ class cFriendsCirclesController extends cController {
 		
 		$id = $this->GetSys ( "Request" )->Get ( "tID" );
 		
+		$validate = $this->GetSys ( "Validation" );
+		
 		// Validate the circle name
 		$name = $this->GetSys ( "Request" )->Get ( "Name" );
-		if ( count ( $name ) < 1 ) {
+		
+		if ( !$validate->NotNull ( $name ) ) {
+			// Name is null
 			$session->Set ( "Message", "Circle Name Cannot Be Null" );
 			$session->Set ( "Error", true );
+			$error = true;
+		} else if ( !$validate->Illegal ( $name, '-' ) ) {
+			// Illegal characters
+			$session->Set ( "Message", "Invalid Circle Name" );
+			$session->Set ( "Error", true );
+			$error = true;
+		} else if ( in_array ( strtolower ( $name ), array ( "mutual", "requests", "circles" ) ) ) {
+			// Reserved system names
+			$session->Set ( "Message", "Invalid Circle Name" );
+			$session->Set ( "Error", true );
+			$error = true;
+		}
+		
+		if ( $error ) {
 			if ( $id ) {
 				return ( $this->Edit() );
 			} else {
@@ -109,19 +130,11 @@ class cFriendsCirclesController extends cController {
 		}
 		
 		$this->Circles = $this->GetModel ( "Circles" );
+		$circle = $this->GetSys ( "Request" )->Get ( "Name" );
 		
-		$this->Circles->Synchronize();
-		$this->Circles->Protect( "tID" );
+		$this->Circles->SaveCircle ( $circle, $this->_Focus->Id, $id );
 		
-		if ( $id ) {
-			$this->Circles->Save ( array ( "tID" => $id, "userAuth_uID" => $this->_Focus->Id ) );
-		} else {
-			$this->Circles->Set ( "userAuth_uID", $this->_Focus->Id );
-			$this->Circles->Save ( );
-		}
-		
-		$circle = $this->Circles->Get ( "Name" );
-		
+		$session->Context ( "friends.friends.(\d+).(mutual|friends|requests|circles|circle)" );
 		$session->Set ( "Message", __( "Circle Has Been Saved", array ( "circle" => $circle ) ) );
 		
 		$circle = str_replace ( ' ', '-', strtolower ( $circle ) );
@@ -132,13 +145,42 @@ class cFriendsCirclesController extends cController {
 	
 	public function Cancel ( $pView = null, $pData = array ( ) ) {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		$relocate = '/profile/' . $this->_Focus->Username . '/friends';
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
+		
+		$this->_Load();
+		
+		$original = $this->GetSys ( "Request" )->Get ( "Original" );
+		$circle = $this->_ToUrl ( $original );
+		
+		$session->Context ( "friends.friends.(\d+).(mutual|friends|requests|circles|circle)" );
+		$session->Set ( "Message", __( "Circle Changes Cancelled", array ( "circle" => $original ) ) );
+		
+		$relocate = '/profile/' . $this->_Focus->Username . '/friends/' . $circle;
 		$this->GetSys ( "Router" )->Redirect ( $relocate );
 		return ( true );
 	}
 	
+	private function _ToUrl ( $pCircle ) {
+		
+		$return = strtolower ( utf8_encode ( urlencode ( str_replace ( ' ', '-', $pCircle ) ) ) );
+		
+		return ( $return );
+	}
+	
+	private function _FromUrl ( $pCircle ) {
+		
+		$return = urldecode ( utf8_decode ( str_replace ( '-', ' ', $pCircle ) ) );
+		
+		return ( $return );
+	}
+	
 	public function Remove ( $pView = null, $pData = array ( ) ) {
+		
+		$session = $this->GetSys ( "Session" );
+		$session->Context ( $this->Get ( "Context" ) );
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
@@ -148,14 +190,15 @@ class cFriendsCirclesController extends cController {
 			exit;
 		}
 		
+		$this->_Load();
+		
 		$this->Circles = $this->GetModel ( "Circles" );
+		$circle = $this->_FromUrl ( $this->GetSys ( "Request" )->Get ( "Circle" ) );
 		
-		$this->Circles->Synchronize();
-		$this->Circles->Protect( "tID" );
+		$this->Circles->DeleteCircle ( $circle, $this->_Focus->Id );
 		
-		$circle = urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) );
-		
-		$this->Circles->Delete ( array ( "Name" => $circle, "userAuth_uID" => $this->_Focus->Id ) );
+		$session->Context ( "friends.friends.(\d+).(mutual|friends|requests|circles|circle)" );
+		$session->Set ( "Message", __( "Circle Has Been Removed", array ( "circle" => $circle ) ) );
 		
 		$relocate = '/profile/' . $this->_Focus->Username . '/friends/';
 		$this->GetSys ( "Router" )->Redirect ( $relocate );
@@ -173,7 +216,7 @@ class cFriendsCirclesController extends cController {
 		
 		$currentCircle = str_replace ( '-', ' ', urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) ) );
 		
-		$this->Circles->Retrieve ( array ( "userAuth_uID" => $this->_Focus->Id, "Name" => $currentCircle ) );
+		$this->Circles->Load ( $this->_Focus->Id, $currentCircle );
 		
 		if ( $this->Circles->Get ( "Total" ) == 0 ) return ( false );
 		
@@ -195,6 +238,7 @@ class cFriendsCirclesController extends cController {
 		$context = $this->Get ( "Context" );
 		
 		$this->View->Find ( "[name=Context]", 0 )->value = $context;
+		$this->View->Find ( "[name=Original]", 0 )->value = $this->Circles->Get ( "Name" );
 		
 		if ( $this->Circles->Get ( "tID" ) ) {
 			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "Edit Circles Header" , array ( "circle" => $this->Circles->Get ( "Name" ) ) );

@@ -302,7 +302,7 @@
 		
 		.profile-friends-circle-add { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }
 		.profile-friends-circle-add a { padding:0; background:none; }
-		.profile-friends-circle-remove { text-align:right; font-size:70%; min-height:13px; float:right; width:15%; clear:none; }
+		.profile-friends-circle-remove { text-align:right; font-size:70%; min-height:13px; float:right; width:25%; clear:none; }
 		.profile-friends-circle-remove a { font-size:90%; font-weight:normal; padding:0; background:none; }
 		.profile-friends-circle-edit a { margin-left:5px; font-size:90%; font-weight:normal; padding:0; background:none; }
 		

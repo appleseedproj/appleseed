@@ -244,6 +244,19 @@ class cValidation {
         
         return ( true );
 	}
+	
+	/*
+	 *  Allow only letters, digits, and spaces.
+	 * 
+	 */
+	public function Words ( $pValue ) {
+		
+		if ( preg_match ( '/[^\s0-9a-zA-Z]/', $pValue ) ) {
+			return ( false );
+		}
+		
+		return ( true );
+	}
 
 	public function Length ( $pValue, $pMin, $pMax ) {
 		

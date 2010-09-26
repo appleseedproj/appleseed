@@ -5,6 +5,7 @@
 	
 	<form class="friends-circles-form" action="" method="post">
 		<input type="hidden" name="Context" value="" /> 
+		<input type="hidden" name="Original" value="" /> 
 		<input type="hidden" name="tID" value="" /> 
 		<fieldset> 
 				<div><label>Name Field Label</label><input name="Name" class="required" maxlength="20" /></div>

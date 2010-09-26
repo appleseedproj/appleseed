@@ -30,6 +30,10 @@ class cRequest {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		eval ( GLOBALS );
+		
+		
+		$purifier = $zApp->GetSys ( "Purifier" );
 		
 		foreach ( $_REQUEST as $key => $value ) {
 			$lowerkey = strtolower ( $key );
@@ -42,11 +46,11 @@ class cRequest {
 					 * @todo On the other hand, why are you using nested arrays in a REQUEST in the first place?
 					 *
 					 */
-					$requests[$r] = htmlentities ( strip_tags ( $request ) );
+					$requests[$r] = $purifier->Purify ( $request );
 				}
 				$this->_Request[$lowerkey] = $requests;
 			} else {
-				$this->_Request[$lowerkey] = htmlentities ( strip_tags ( $_REQUEST[$key] ) );
+				$this->_Request[$lowerkey] = $purifier->Purify ( $_REQUEST[$key] );
 			}
 		}
 		
@@ -65,6 +69,8 @@ class cRequest {
 		if ( $pVariable === null ) return ( $this->_Request );
 		
 		if ( !$this->_Request[$variable] ) return ( $pDefault );
+		
+		
 		
 		return ( $this->_Request[$variable] );
 

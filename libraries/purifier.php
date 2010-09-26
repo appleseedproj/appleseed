@@ -30,5 +30,12 @@ class cPurifier {
 	 */
 	public function __construct ( ) {       
 	}
+	
+	public function Purify ( $pString ) {
+		
+		$return = htmLawed ( $pString, array ( "safe" => 1 ) );
+		
+		return ( $return );
+	}
 
 }

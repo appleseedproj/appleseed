@@ -70,7 +70,8 @@ class cSession {
 		foreach ( $_SESSION as $s => $session ) {
 			$pattern = '/' . base64_decode ( $s ) . '/';
 			if ( preg_match ( $pattern, base64_decode ( $this->_Context ) ) ) {
-				$return = $_SESSION[$s][$variable];
+				if ( $_SESSION[$s][$variable] )
+					$return = $_SESSION[$s][$variable];
 			}
 		}
 		
@@ -96,8 +97,6 @@ class cSession {
 		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
 		$_SESSION[$this->_Context][$variable] = $pValue;
-		
-		echo "SET<br />"; print_r ( $_SESSION ); echo "<hr />";
 		
 		return ( true );
 	}

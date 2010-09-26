@@ -7,9 +7,14 @@ NUMBER_OF_FRIENDS="%count$s Friends"
 
 ADD_A_NEW_CIRCLE="+ New Circle"
 REMOVE_THIS_CIRCLE="- Delete %circle$s"
-;REMOVE_THIS_CIRCLE="- Delete Baltimore"
 EDIT_THIS_CIRCLE="&rarr; Edit"
 
 EDIT_CIRCLES_TITLE="Edit"
 NEW_CIRCLES_HEADER="New Circle"
 NAME_FIELD_LABEL="Name"
+
+INVALID_CIRCLE_NAME="You cannot use that as a circle name"
+
+CIRCLE_CHANGES_CANCELLED="Changes to '%circle$s' have been cancelled"
+CIRCLE_HAS_BEEN_SAVED="Circle '%circle$s' has been saved."
+CIRCLE_HAS_BEEN_REMOVED="Circle '%circle$s' has been deleted."

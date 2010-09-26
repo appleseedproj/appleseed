@@ -47,7 +47,8 @@ class cDatabase extends cBase {
 		$mode = $Config->GetConfiguration ('mode');
 		
 		try {  
-			$this->_DB = new AppleseedPDO("mysql:host=$host;dbname=$db", $un, $pw);  
+			$this->_DB = new AppleseedPDO("mysql:host=$host;dbname=$db;charset=UTF-8", $un, $pw, array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8") );
+			mb_internal_encoding( 'UTF-8' );
 		}  
 		catch(PDOException $e) {  
     		die ( $e->getMessage() );
