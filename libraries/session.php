@@ -69,6 +69,13 @@ class cSession {
 		
 		$return = $_SESSION[$this->_Context][$variable];
 		
+		foreach ( $_SESSION as $s => $session ) {
+			$pattern = '/' . $s . '/';
+			if ( preg_match ( $pattern, $this->_Context ) ) {
+				$return = $_SESSION[$s][$variable];
+			}
+		}
+		
 		if ( !$return ) return ( $pDefault );
 		
 		return ( $return );
@@ -110,7 +117,12 @@ class cSession {
 		
 		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
-		unset ( $_SESSION[$this->_Context][$variable] );
+		foreach ( $_SESSION as $s => $session ) {
+			$pattern = '/' . $s . '/';
+			if ( preg_match ( $pattern, $this->_Context ) ) {
+				unset ( $_SESSION[$s][$variable] );
+			}
+		}
 		
 		return ( true );
 	}
