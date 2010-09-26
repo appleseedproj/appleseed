@@ -39,9 +39,9 @@ class cSession {
 	 */
 	public function Context ( $pContext = null ) {
 		
-		if ( !$pContext ) return ( $this->_Context );
+		if ( !$pContext ) return ( base64_decode ( $this->_Context ) );
 		
-		$this->_Context = $pContext;
+		$this->_Context = base64_encode ( $pContext );
 		
 		return ( true );
 	}
@@ -67,11 +67,9 @@ class cSession {
 		
 		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
-		$return = $_SESSION[$this->_Context][$variable];
-		
 		foreach ( $_SESSION as $s => $session ) {
-			$pattern = '/' . $s . '/';
-			if ( preg_match ( $pattern, $this->_Context ) ) {
+			$pattern = '/' . base64_decode ( $s ) . '/';
+			if ( preg_match ( $pattern, base64_decode ( $this->_Context ) ) ) {
 				$return = $_SESSION[$s][$variable];
 			}
 		}
@@ -99,6 +97,8 @@ class cSession {
 		
 		$_SESSION[$this->_Context][$variable] = $pValue;
 		
+		echo "SET<br />"; print_r ( $_SESSION ); echo "<hr />";
+		
 		return ( true );
 	}
 	
@@ -118,8 +118,15 @@ class cSession {
 		$variable = strtolower ( ltrim ( rtrim ( $pVariable ) ) );
 		
 		foreach ( $_SESSION as $s => $session ) {
-			$pattern = '/' . $s . '/';
-			if ( preg_match ( $pattern, $this->_Context ) ) {
+			$pattern = '/' . base64_decode ( $s ) . '/';
+			if ( preg_match ( $pattern, base64_decode ( $this->_Context ) ) ) {
+				$return = $_SESSION[$s][$variable];
+			}
+		}
+		
+		foreach ( $_SESSION as $s => $session ) {
+			$pattern = '/' . base64_decode ( $s ) . '/';
+			if ( preg_match ( $pattern, base64_decode ( $this->_Context ) ) ) {
 				unset ( $_SESSION[$s][$variable] );
 			}
 		}
