@@ -12,7 +12,7 @@ ADD_A_NEW_CIRCLE="+ New Circle"
 REMOVE_THIS_CIRCLE="- Delete %circle$s"
 EDIT_THIS_CIRCLE="&rarr; Edit"
 
-EDIT_CIRCLES_TITLE="Edit"
+EDIT_CIRCLES_HEADER="Edit %circle$s"
 NEW_CIRCLES_HEADER="New Circle"
 NAME_FIELD_LABEL="Name"
 

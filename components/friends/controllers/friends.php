@@ -60,6 +60,9 @@ class cFriendsFriendsController extends cController {
 		
 		$this->_Prep();
 		
+		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->outertext = " ";
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = ""; 
+		
 		$this->View->Display();
 		
 		return ( true );
@@ -83,6 +86,9 @@ class cFriendsFriendsController extends cController {
 		$this->GetSys ( "Request" )->Set ( "Circle", "requests" );
 		
 		$this->_Prep();
+		
+		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->innertext = "";
+		$this->View->Find ( '[class=profile-friends-circle-remove] a', 0)->innertext = ""; 
 		
 		$this->View->Display();
 		
@@ -158,10 +164,9 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _PrepAnonymous ( ) {
-		// Remove "edit circles" link
-		$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
 		
-		// Remove "Add Circle" link
+		// Remove links
+		$this->View->Find ( '[id=profile-friends-circles-edit] a', 0)->outertext = " ";
 		$this->View->Find ( '[class=profile-friends-circle-add] a', 0)->innertext = ""; 
 		
 		return ( true );
