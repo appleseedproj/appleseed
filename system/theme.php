@@ -71,14 +71,15 @@ class cTheme extends cBase {
  			$found = true;
  			
  			foreach ( $files as $f => $file ) {
- 				$file = str_replace ($base . DS, '', $file);
+ 				echo $file, "<br />";
+ 				$file = str_replace ($base . '/', '', $file);
+ 				$file = implode ( '/', explode ( DS, $file ) );
  				$styles[] = $file;
  			}
  		
  		} 
  		
  		return ( $styles );
-		
 	}
 	
 	/**
@@ -108,7 +109,7 @@ class cTheme extends cBase {
 		}
 		
 		$styles = $orderedstyles;
-			
+		
 		$url = $zApp->GetBaseURL () . '/themes/';
 		
 		foreach ( $styles as $s => $style ) {
