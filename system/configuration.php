@@ -427,10 +427,10 @@ class cConfiguration extends cBase {
 					if ( is_array ($value ) ) {
 						foreach ( $value as $k => $v ) {
 							$key = $expressions[$variable][$k];
-							$final[$variable][$key] = $v;
+							$final[$variable][$key] = preg_replace ( '/\\\\\$$/', '$', $v );
 						}
 					} else {
-						$final[$variable] = $value;
+						$final[$variable] = preg_replace ( '/\\\\\$$/', '$', $value );
 					}
 
 				}
