@@ -1,3 +1,4 @@
+<script type="text/javascript" src="/components/friends/assets/javascript/friends.js"></script>
 <section id="profile-friends">
 	<nav id="profile-friends-tabs" >
 	</nav>
@@ -8,7 +9,6 @@
 		<span class='profile-friends-title'></span>
 		<span class="profile-friends-circle-edit"><a href="#"></a></span>
 		<span class="profile-friends-count additional-info"></span>
-		<span class="profile-friends-circle-remove"><a href="#"></a></span>
 	</h1>
 	
 	<nav class='pagination'>
@@ -20,20 +20,24 @@
 			<div class="friends-info">
 				<span class="friends-fullname"><a class="friends-fullname-link" href=""></a></span>
 				<span class="friends-circle-editor">
-					<select>
-						<option disabled="disabled">Add To Circle</option>
-						<option value="">&nbsp; Circle A</option>
-						<option disabled="disabled">Remove From Circle</option>
-						<option >&nbsp; Circle B</option>
-					</select>
+					<form class="friend-circle-edit" method="post">
+						<input type="hidden" name="Task" value="ApplyToCircle">
+						<input type="hidden" name="Friend">
+						<input type="hidden" name="Context">
+						<input type="hidden" name="Current">
+						<select class="friend-circle-edit-list" name="Circle">
+						</select>
+						<button class="friends-circle-edit-save" name="Task" value="Save">Save</button>
+					</form>
 				</span>
 				<span class="friends-location">Location</span>
 				<p class="friends-status">Status</p>
 				<span class="friends-mutual-count">Mutual Count</span>
-				<span class="friends-add-friend"><a class="friends-add-friend-link" href="">Add as a friend</a></span>
-				<span class="friends-remove-friend"><a class="friends-remove-friend-link" href="">Remove friend</a></span>
+				<span class="friends-approve-friend"><a class="friends-approve-friend-link" href="">Approve Friend</a></span>
+				<span class="friends-deny-friend"><a class="friends-deny-friend-link" href="">Deny Friend</a></span>
 				<a href="" class="friends-identity">username@domain</a>
 			</div>
 		</li>
 	</ul>
+	<span class="profile-friends-circle-remove"><a href="#"></a></span>
 </section>

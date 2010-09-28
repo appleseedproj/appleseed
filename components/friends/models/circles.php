@@ -65,22 +65,85 @@ class cFriendsCirclesModel extends cModel {
 	}
 		
 	
-	public function GetCircles ( $pUsername ) {
+	public function Circles ( $pUserId ) {
 		
-		$userAuth = new cModel ( "userAuthorization" );
-		$userAuth->Structure();
-		
-		$userAuth->Retrieve ( array ( "Username" => $pUsername ) );
-		
-		$userAuth->Fetch();
-		
-		$this->Retrieve ( array ( "userAuth_uID" => $userAuth->Get ( "uID" ) ), 'sID ASC' );
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId ), 'sID ASC' );
 		
 		while ( $this->Fetch() ) {
 			$return[] = array ( "id" => $this->Get ( "tID" ), "name" => $this->Get ( "Name" ) );
 		}
 		
 		return ( $return );
+	}
+	
+	public function CirclesByMember ( $pUserId, $pFriend ) {
+		
+		$circles = $this->Circles ( $pUserId );
+		
+		foreach ( $circles as $c => $circle ) {
+			$in[] = $circle['id'];
+		}
+		
+		$inList = implode ( ',', $in );
+		
+		list ( $username, $domain ) = explode ( '@', $pFriend );
+		
+		// Get the friend id
+		$this->Friend = new cModel ( "friendInformation" );
+		$this->Friend->Structure();
+		$this->Friend->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $username, "Domain" => $domain ) );
+		$this->Friend->Fetch();
+		if ( !$friendId = $this->Friend->Get ( "tID" ) ) return ( false );
+		
+		$this->CirclesMap = new cModel ( "friendCirclesList" );
+		$this->CirclesMap->Structure();
+		$this->CirclesMap->Retrieve ( array ( "friendInformation_tID" => $friendId, "friendCircles_tID" => '()' . $inList ) );
+		$return = array ();
+		while ( $this->CirclesMap->Fetch() ) {
+			$this->Retrieve ( array ( "tID" => $this->CirclesMap->Get ( "friendCircles_tID" ) ) );
+			$this->Fetch();
+			$return[] = $this->Get ( "Name" );
+		}
+		
+		return ( $return );
+		
+		$return = array ();
+		
+		return ( $return );
+	}
+	
+	public function SaveFriendToCircle ( $pUserId, $pFriend, $pCircle ) {
+		
+		list ( $username, $domain ) = explode ( '@', $pFriend );
+		
+		// Get the circle id
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Name" => $pCircle ) );
+		$this->Fetch();
+		if ( !$circleId = $this->Get ( "tID" ) ) return ( false );
+		
+		// Get the friend id
+		$this->Friend = new cModel ( "friendInformation" );
+		$this->Friend->Structure();
+		$this->Friend->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $username, "Domain" => $domain ) );
+		$this->Friend->Fetch();
+		if ( !$friendId = $this->Friend->Get ( "tID" ) ) return ( false );
+		
+		// Get the map id
+		$this->CirclesMap = new cModel ( "friendCirclesList" );
+		$this->CirclesMap->Structure();
+		$this->CirclesMap->Retrieve ( array ( "friendInformation_tID" => $friendId, "friendCircles_tID" => $circleId ) );
+		$this->CirclesMap->Fetch();
+		if ( !$mapId = $this->CirclesMap->Get ( "tID" ) ) {
+			// Doesn't exist in map table, so create it.
+			$this->CirclesMap->Set ( "friendInformation_tID", $friendId );
+			$this->CirclesMap->Set ( "friendCircles_tID", $circleId );
+			$this->CirclesMap->Save ();
+		} else {
+			// Exists in map table, so delete it.
+			$this->CirclesMap->Delete ();
+		}
+		
+		return ( true );
 	}
 	
 }

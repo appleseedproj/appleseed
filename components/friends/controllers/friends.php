@@ -36,6 +36,11 @@ class cFriendsFriendsController extends cController {
 		
 		$this->View = $this->GetView ( $pView ); 
 		
+		$this->Model = $this->GetModel();
+		$this->Circles = $this->GetModel ( "Circles" );
+		
+		list ( $this->_PageStart, $this->_PageStep, $this->_Page ) = $this->_PageCalc();
+		
 		switch ( $pView ) {
 			case 'mutual':
 				return ( $this->_DisplayMutual() );
@@ -58,6 +63,12 @@ class cFriendsFriendsController extends cController {
 	private function _DisplayFriends ( ) {
 		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Friends Title", array ( "fullname" => $this->_Focus->Fullname ) );
 		
+		$this->Model->RetrieveFriends ( $this->_Focus->uID, array ( "start" => $this->_PageStart, "step" => $this->_PageStep ) );
+		
+		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $this->Model->Get ( "Total" ) ) );
+		
+		$this->_PageLink = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
+			
 		$this->_Prep();
 		
 		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->outertext = " ";
@@ -69,10 +80,25 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _DisplayMutual ( ) {
+		
+		if ( !$this->_Current ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/404.php" );
+			return ( false );
+		}
+		
 		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Mutual Title", array ( "fullname" => $this->_Focus->Fullname ) );
+		
+		$data = array ( "account" => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
+		$this->_CurrentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
+		
+		$this->Model->RetrieveMutual ( $this->_Focus->uID, $this->_CurrentInfo->friends, array ( "start" => $this->_PageStart, "step" => $this->_PageStep ) );
+		
+		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Mutual Friends", array ( "count" => $this->Model->Get ( "Total" ) ) );
 		
 		$this->GetSys ( "Request" )->Set ( "Circle", "mutual" );
 		
+		$this->_PageLink = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
+			
 		$this->_Prep();
 		
 		$this->View->Display();
@@ -81,10 +107,22 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	private function _DisplayRequests ( ) {
+		
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
+		}
+		
 		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Requests Title", array ( "fullname" => $this->_Focus->Fullname ) );
+		
+		$this->Model->RetrieveRequests ( $this->_Focus->uID, array ( "start" => $this->_PageStart, "step" => $this->_PageStep ) );
+		
+		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friend Requests", array ( "count" => $this->Model->Get ( "Total" ) ) );
 		
 		$this->GetSys ( "Request" )->Set ( "Circle", "requests" );
 		
+		$this->_PageLink = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
+			
 		$this->_Prep();
 		
 		$this->View->Find ( '[class=profile-friends-circle-edit] a', 0)->innertext = "";
@@ -104,16 +142,51 @@ class cFriendsFriendsController extends cController {
 			return ( false );
 		}
 		
-		$this->Circles = $this->GetModel ( "Circles" );
-		
 		if ( !$this->Circles->Load ( $this->_Focus->Id, $circleName ) ) {
 			$this->GetSys ( "Foundation" )->Redirect ( "common/404.php" );
 			return ( false );
 		}
 		
-		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Circle Title", array ( "circle" => $this->Circles->Get ( "Name" ) ) );
+		$this->_ViewingCircle = $this->Circles->Get ( "Name" );
+		
+		$this->Model->RetrieveCircle ( $this->_Focus->uID, $this->Circles->Get ( "tID" ), array ( "start" => $this->_PageStart, "step" => $this->_PageStep ) );
+		
+		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends In Circle", array ( "count" => $this->Model->Get ( "Total" ), "circle" => $this->Circles->Get ( "Name" ) ) );
+		
+		$circleName = $this->Circles->Get ( "Name" );
+		
+		$page = $this->GetSys ( "Request" )->Get ( "Page" );
+		
+		if ( !$page )
+			$this->_PageLink = $this->GetSys ( "Router" )->Get ( "Base" ) . $circleName . '/(.*)';
+		else
+			$this->_PageLink = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
+		
+		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( "Circle Title", array ( "circle" => $circleName ) );
 		
 		$this->_Prep();
+		
+		// Prepare forms.
+		$friendsList = $this->Model->Friends ( $this->_Focus->uID );
+		$friendsInCircle = $this->Model->FriendsInCircle ( $this->_Focus->uID, $this->Circles->Get ( "tID" ) );
+		$friendsOutCircle = array_diff (  $friendsList, $friendsInCircle );
+		
+		if ( count ( $friendsOutCircle ) > 0 ) {
+			$this->View->Find ( '[class=friend-in-circle-list]', 0 )->innertext = '<option disabled="disabled">Add Friend To Circle</option>';
+			foreach ( $friendsOutCircle as $f => $friend ) {
+				$this->View->Find ( '[class=friend-in-circle-list]', 0 )->innertext .= '<option>' . $friend . '</option>';
+			}
+		}
+	
+		if ( count ( $friendsInCircle ) > 0 ) {
+			$this->View->Find ( '[class=friend-in-circle-list]', 0 )->innertext .= '<option disabled="disabled">Remove Friend From Circle</option>';
+			foreach ( $friendsInCircle as $f => $friend ) {
+				$this->View->Find ( '[class=friend-in-circle-list]', 0 )->innertext .= '<option>' . $friend . '</option>';
+			}
+		}
+		
+		$this->View->Find ( '[class=friend-in-circle-edit]', 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
+		$this->View->Find ( '[class=friend-in-circle-edit] [name=Circle]', 0 )->value = $circleName;
 		
 		$this->View->Display();
 		
@@ -209,6 +282,36 @@ class cFriendsFriendsController extends cController {
 		// Remove "Mutual Friends" count
 		$pRow->Find ( "[class=friends-mutual-count]", 0 )->innertext = "";
 		
+		// Prepare Circle Add/Remove
+		$circlesList = $this->Circles->Circles ( $this->_Focus->uID );
+		foreach ( $circlesList as $c => $circ ) {
+			$AllCircles[] = $circ['name'];
+		}
+		
+		$account = $this->Model->Get ( "Username" ) . '@' . $this->Model->Get ( "Domain" );
+		$MemberOfCircles = $this->Circles->CirclesByMember ( $this->_Focus->uID, $account );
+		$NotMemberOfCircles = array_diff (  $AllCircles, $MemberOfCircles );
+		
+		if ( count ( $NotMemberOfCircles ) > 0 ) {
+			$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext = '<option disabled="disabled">Add To Circle</option>';
+			foreach ( $NotMemberOfCircles as $c => $circ ) {
+				$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option>' . $circ . '</option>';
+			}
+		}
+	
+		if ( count ( $MemberOfCircles ) > 0 ) {
+			$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option disabled="disabled">Remove Circle</option>';
+			foreach ( $MemberOfCircles as $c => $circ ) {
+				$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option>' . $circ . '</option>';
+			}
+		}
+		
+		$pRow->Find ( '[class=friend-circle-edit]', 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
+		$pRow->Find ( '[class=friend-circle-edit] [name=Friend]', 0 )->value = $this->Model->Get ( "Username" ) . '@' . $this->Model->Get ( "Domain" );
+		
+		if ( $currentCircle = $circleName = $this->Circles->Get ( "Name" ) ) 
+			$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = $this->_ViewingCircle;
+		
 		return ( $pRow );
 	}
 	
@@ -253,14 +356,7 @@ class cFriendsFriendsController extends cController {
 			$currentInfo->account = $current->Username . '@' . $current->Domain;
 		}
 		
-		$this->Model = $this->GetModel();
-		
-		list ( $start, $step, $page ) = $this->_PageCalc();
-		$this->Model->Retrieve ( array ( "userAuth_uID" => $this->_Focus->uID ), null, array ( "start" => $start, "step" => $step ) );
-		
 		$friendCount = $this->Model->Get ( "Total" );
-		
-		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( "Number Of Friends", array ( "count" => $friendCount ) );
 		
 		$li = $this->View->Find ( "ul[class=friends-list] li", 0);
 		
@@ -323,8 +419,7 @@ class cFriendsFriendsController extends cController {
 		    unset ( $row );
 		}
 		
-		$link = $this->GetSys ( "Router" )->Get ( "Base" ) . '(.*)';
-		$pageData = array ( 'start' => $start, 'step'  => $step, 'total' => $friendCount, 'link' => $link );
+		$pageData = array ( 'start' => $this->_PageStart, 'step'  => $this->_PageStep, 'total' => $friendCount, 'link' => $this->_PageLink );
 		$pageControl =  $this->View->Find ('nav[class=pagination]', 0);
 		$pageControl->innertext = $this->GetSys ( 'Components' )->Buffer ( 'pagination', $pageData ); 
 		

@@ -294,16 +294,21 @@
 		#profile-friends p.friends-status { float:left; margin:0; padding:0; width:80%; min-height:41px; font-style:italic; color:#8a8a8a; }
 		#profile-friends span.friends-mutual-count { float:right; text-align:right; font-style:italic; color:#8a8a8a; }
 		#profile-friends a.friends-identity { float:left; padding:0; background:none; font-size:90%; width:80%; clear:both; }
+		
+		#profile-friends .friends-approve-friend a, #profile-friends .friends-deny-friend a { text-align:right; float:right; margin-left:5px; }
 
 		#profile-friends .friends-add-friend a, #profile-friends .friends-remove-friend a { text-align:right; float:right; }
 		
 		#profile-friends .friends-circle-editor { float:left; width:40%; text-align:right; height:12px; }
 		#profile-friends .friends-circle-editor select { float:none; font-size:90%; width:auto; margin:0; clear:none; }
 		
+		#profile-friends .friend-circle-edit-save { height:13px; padding:0 2px; }
+		
 		.profile-friends-circle-add { text-align:right; min-height:13px; margin-top:7px; float:right; width:15%; clear:none; border-bottom:1px solid #c0d895; }
 		.profile-friends-circle-add a { padding:0; background:none; }
-		.profile-friends-circle-remove { text-align:right; font-size:70%; min-height:13px; float:right; width:25%; clear:none; }
-		.profile-friends-circle-remove a { font-size:90%; font-weight:normal; padding:0; background:none; }
+		.profile-friends-circle-add-friend { text-align:left; min-height:13px; float:left; width:50%; clear:both; padding:0; }
+		.profile-friends-circle-remove { text-align:right; min-height:13px; float:left; width:50%; padding:0; }
+		.profile-friends-circle-remove a { font-weight:normal; padding:0; background:none; }
 		.profile-friends-circle-edit a { margin-left:5px; font-size:90%; font-weight:normal; padding:0; background:none; }
 		
 		#profile-friends-tabs { position:relative; float:left; display:inline; width:85%; margin-bottom:5px; border-bottom:1px solid #c0d895; padding-top:3px; }

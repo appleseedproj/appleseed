@@ -79,7 +79,7 @@ class cFriendsTabsController extends cController {
 			// Create a model for Circles.
 			$this->Circles = $this->GetModel ( "Circles" );
 		
-			$circles = $this->Circles->GetCircles ( $focus->Username );
+			$circles = $this->Circles->Circles ( $focus->uID );
 			
 			// No circles were found, so we're done.
 			if ( count ( $circles ) == 0 ) return ( true );

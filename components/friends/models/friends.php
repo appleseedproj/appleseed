@@ -40,4 +40,105 @@ class cFriendsModel extends cModel {
 		return ( $count );
 	}
 	
+	public function RetrieveMutual ( $pFocusId, $pCurrentFriends, $pLimit = null ) {
+		
+		$table = $this->_Prefix . $this->_Tablename;
+		
+		$prepared[] = $pFocusId;
+		
+		foreach ( $pCurrentFriends as $f => $friend ) {
+			$placeholders[] = '?';
+			$prepared[] = $friend;
+		}
+		
+		$friendsList = implode ( ', ', $placeholders );
+		
+		$query = "
+
+			SELECT SQL_CALC_FOUND_ROWS *, CONCAT_WS ('@', Username, Domain) AS Account
+			FROM `$table`
+			WHERE `userAuth_uID` = ?
+			HAVING Account IN (  $friendsList )
+		";
+		
+		if ( $pLimit ) {
+			$replacements['start'] = (int) $pLimit['start'] ? $pLimit['start'] : 0;
+			$replacements['step'] = (int) $pLimit['step'] ? $pLimit['step'] : 20;
+			
+			$query .= ' LIMIT %start$s, %step$s ';
+			$query = sprintfn ( $query, $replacements );
+		
+		}
+		
+		$this->Query ( $query, $prepared );
+		
+		return ( true );
+	}
+	
+	
+	public function RetrieveCircle ( $pFocusId, $pCircleId, $pLimit = null ) {
+		
+		$friendsTable = $this->_Prefix . $this->_Tablename;
+		$circlesMapTable = $this->_Prefix . 'friendCirclesList';
+		
+		$prepared[] = $pFocusId;
+		$prepared[] = $pCircleId;
+		
+		$query = "
+			SELECT SQL_CALC_FOUND_ROWS *
+			FROM `$friendsTable` AS f, `$circlesMapTable` AS c
+			WHERE f.`userAuth_uID` = ?
+			AND c.`friendCircles_tID` = ?
+			AND c.`friendInformation_tID` = f.`tID`
+		";
+		
+		if ( $pLimit ) {
+			$replacements['start'] = (int) $pLimit['start'] ? $pLimit['start'] : 0;
+			$replacements['step'] = (int) $pLimit['step'] ? $pLimit['step'] : 20;
+			
+			$query .= ' LIMIT %start$s, %step$s ';
+			$query = sprintfn ( $query, $replacements );
+		
+		}
+		
+		$this->Query ( $query, $prepared );
+		
+		return ( true );
+	}
+	
+	public function RetrieveFriends ( $pFocusId, $pLimit = null ) {
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pFocusId, "Verification" => 1 ), null, $pLimit );
+		
+		return ( true );
+	}
+	
+	public function RetrieveRequests ( $pFocusId, $pLimit = null ) {
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pFocusId, "Verification" => 3 ), null, $pLimit );
+		
+		return ( true );
+	}
+	
+	public function Friends ( $pFocusId ) {
+		$this->RetrieveFriends ( $pFocusId );
+		
+		$return = array ();
+		while ( $this->Fetch() ) {
+			$return[] = $this->Get ( 'Username' ) . '@' . $this->Get ( 'Domain' );
+		}
+		
+		return ( $return );
+	}
+	public function FriendsInCircle ( $pFocusId, $pCircleId ) {
+		$this->RetrieveCircle ( $pFocusId, $pCircleId );
+		
+		$return = array ();
+		while ( $this->Fetch() ) {
+			$return[] = $this->Get ( 'Username' ) . '@' . $this->Get ( 'Domain' );
+		}
+		
+		return ( $return );
+	}
+	
 }

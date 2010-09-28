@@ -35,11 +35,40 @@ class cFriendsCirclesController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
-			// @todo: Find a way to load the 403 foundation.
-			return ( true );
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
 		}
 		
 		$this->Add();
+		
+		return ( true );
+	}
+	
+	public function ApplyToCircle ( $pView = null, $pData = array ( ) ) {
+		
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
+		}
+			
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		$this->Model = $this->GetModel ( "Circles" );
+		
+		$friend = $this->GetSys ( "Request" )->Get ( "Friend" );
+		$circle = $this->GetSys ( "Request" )->Get ( "Circle" );
+		$viewing = $this->GetSys ( "Request" )->Get ( "Viewing" );
+		
+		$this->Model->SaveFriendToCircle ( $this->_Focus->uID, $friend, $circle );
+		
+		if ( $viewing ) {
+			$circleLink = $this->_ToUrl ( $viewing );
+		} else {
+			$circleLink = $this->_ToUrl ( $circle );
+		}
+		$redirect = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/friends/' . $circleLink;
+		header ( "Location:" . $redirect );
 		
 		return ( true );
 	}
@@ -50,12 +79,16 @@ class cFriendsCirclesController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		// Check if circle exists
-		if ( !$this->_Load() ) {
-			$relocate = '/profile/' . $this->_Focus->Username . '/friends/';
-			$this->GetSys ( "Router" )->Redirect ( $relocate );
-			return ( true );
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
 		}
 			
+		if ( !$this->_Load() ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/404.php" );
+			return ( false );
+		}
+		
 		$this->View = $this->GetView ( "circles" ); 
 		
 		$this->_Prep();
@@ -89,12 +122,7 @@ class cFriendsCirclesController extends cController {
 			return ( false );
 		}
 		
-		$circle = $this->GetSys ( "Request" )->Get ( "Name" );
-		
-		// We're adding, not editing, so skip the rest.
-		if ( !$circle ) return ( true );
-		
-		$circle = str_replace ( ' ', '-', strtolower ( $circle ) );
+		return ( true );
 	}
 	
 	public function Save ( $pView = null, $pData = array ( ) ) {
@@ -105,9 +133,9 @@ class cFriendsCirclesController extends cController {
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
-		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
-			echo __( "Access Denied" );
-			exit;
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
 		}
 		
 		$id = $this->GetSys ( "Request" )->Get ( "tID" );
@@ -203,9 +231,9 @@ class cFriendsCirclesController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
-			echo __( "Access Denied" );
-			exit;
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
 		}
 		
 		$this->_Load();

@@ -116,6 +116,7 @@ class cModel extends cBase {
 		// >> GREATER THAN
 		// << LESS THAN
 		// () IN
+		// !( IN
 		 
 		*/
 		
@@ -496,6 +497,9 @@ class cModel extends cBase {
 				case '()':
 					$operand = "IN";
 				break;
+				case '!(':
+					$operand = "NOT IN";
+				break;
 			}
 			
 			if ( $operand ) {
@@ -532,7 +536,7 @@ class cModel extends cBase {
 					$statements[] = $comparison_string . $c . ' ' . $operand . ' ';
 				break;
 				case 'IN':
-					$elements = array_keys ( $criteria );
+					$elements = explode ( ',', $criteria );
 					$statements[] = $comparison_string . $c . ' ' . $operand . ' (';
 					foreach ( $elements as $e => $element ) {
 						$in[] = '?';
@@ -686,16 +690,25 @@ class cModel extends cBase {
 		$tbl = $this->_Tablename;
 		$pre = $this->_Prefix;
 		
+		$primarykey_value = $this->Get ( $pk );
+		
 		$table = $this->_Prefix . $this->_Tablename;
 		
 		$sql = 'DELETE FROM %table$s';
 		$replacements['table'] = $table;
 		
+		$sql .= ' WHERE %pk$s = ? ';
+		
 		// Without criteria, we'll find everything in the table.
 		if ( $pCriteria ) {
-			$sql .= ' WHERE %pk$s = ? ';
 			$replacements['pk'] = $pk;
 			$prepared[] = $pCriteria;
+		} else {
+			// We don't want to update everything in the table, too dangerous, so error out.
+			if ( !$primarykey_value ) return ( false );
+			
+			$replacements['pk'] = $pk;
+			$prepared[] = $primarykey_value;
 		}
 		
 		// Replace tablenames, fieldnames, ordering, limits, etc.

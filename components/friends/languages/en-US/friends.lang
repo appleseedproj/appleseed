@@ -7,6 +7,9 @@ ADD_TO_CIRCLE="Add Circle &darr;"
 REMOVE_FROM_CIRCLE="Remove Circle &darr;"
 
 NUMBER_OF_FRIENDS="%count$s Friends"
+NUMBER_OF_MUTUAL_FRIENDS="%count$s Mutual Friends"
+NUMBER_OF_FRIEND_REQUESTS="%count$s Requests"
+NUMBER_OF_FRIENDS_IN_CIRCLE="%count$s friends"
 
 ADD_A_NEW_CIRCLE="+ New Circle"
 REMOVE_THIS_CIRCLE="- Delete %circle$s"
@@ -22,3 +25,6 @@ CIRCLE_EDIT_CANCELLED="Changes to '%circle$s' have been cancelled"
 CIRCLE_NEW_CANCELLED="Adding a new circle has been cancelled"
 CIRCLE_HAS_BEEN_SAVED="Circle '%circle$s' has been saved."
 CIRCLE_HAS_BEEN_REMOVED="Circle '%circle$s' has been deleted."
+
+APPROVE_FRIEND="Approve"
+DENY_FRIEND="Deny"

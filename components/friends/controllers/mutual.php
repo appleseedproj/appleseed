@@ -42,18 +42,17 @@ class cFriendsMutualController extends cController {
 	
 	private function _DisplaySummary ( ) {
 		
-		$current = $this->Talk ( 'User', 'Current' );
-		
-		$focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		
 		// If user isn't logged in, or we're viewing our own page, then don't display.
-		if ( ( $focus->Username == $current->Username ) or ( !$current->Username ) ) {
+		if ( ( $this->_Focus->Account == $this->_Current->Account ) or ( !$this->_Current ) ) {
 			return ( true );
 		}
 		
 		$this->View = $this->GetView ( 'summary' ); 
 		
-		$this->View->Find ( '[class=all-mutual-friends-link]', 0 )->href = 'http://' . $focus->Domain . '/profile/' . $focus->Username . '/friends/mutual/';
+		$this->View->Find ( '[class=all-mutual-friends-link]', 0 )->href = 'http://' . $this->_Focus->Domain . '/profile/' . $this->_Focus->Username . '/friends/mutual/';
 		
 		if ( !$this->_PrepSummary() ) return ( false );
 		
@@ -63,25 +62,21 @@ class cFriendsMutualController extends cController {
 	}
 	
 	private function _PrepSummary ( ) {
-		$focus = $this->Talk ( 'User', 'Focus' );
-		$current = $this->Talk ( 'User', 'Current' );
 		
 		$tabs =  $this->View->Find ('nav[id=profile-friends-tabs]', 0);
 		$tabs->innertext = $this->GetSys ( 'Components' )->Buffer ( 'friends', 'tabs' );
 		
-		$currentAccount = $current->Username . '@' . $current->Domain;
-		$data = array ( "account" => $currentAccount, 'source' => ASD_DOMAIN, 'request' => $currentAccount );
+		$data = array ( "account" => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
 		$currentInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
 		$currentInfo->username = $current->Username;
 		$currentInfo->domain = $current->Domain;
 		$currentInfo->account = $current->Username . '@' . $current->Domain;
 		
-		$focusAccount = $focus->Username . '@' . $focus->Domain;
-		$data = array ( "account" => $focusAccount, 'source' => ASD_DOMAIN, 'request' => $focusAccount );
+		$data = array ( "account" => $this->_Focus->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Focus->Account );
 		$focusInfo = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Info", $data );
-		$focusInfo->username = $focus->Username;
-		$focusInfo->domain = $focus->Domain;
-		$focusInfo->account = $focus->Username . '@' . $focus->Domain;
+		$focusInfo->username = $this->_Focus->Username;
+		$focusInfo->domain = $this->_Focus->Domain;
+		$focusInfo->account = $this->_Focus->Username . '@' . $this->_Focus->Domain;
 		
 		// Calculate the mutual friends, randomize them, and limit to 10.
 		$mutualFriends = array_intersect ( $currentInfo->friends, $focusInfo->friends );

@@ -1,6 +1,13 @@
+
+Copyright is shared by contribution.  All contributors must be in agreement if license is to be changed.
+
+Contributors must agree to the terms of the GNU GPLv2 (see license.txt) before their contributions can be accepted.
+
+Code contributed under a non-compatible license will be rejected for legal reasons.
+
+--------------------------
 Current Copyright holders:
 --------------------------
-NOTE: Copyright is shared by contribution.  All contributors must be in agreement if license is to be changed.
 
 Michael Chisari - michael.chisari@gmail.com
 Stephen Joe Arthur - flintsparc@gmail.com
