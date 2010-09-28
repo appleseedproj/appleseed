@@ -30,3 +30,5 @@ APPROVE_FRIEND="Approve"
 DENY_FRIEND="Deny"
 
 CIRCLE_ALREADY_EXISTS="A circle with this name already exists.  Please choose another name."
+
+JS_CONFIRM_DELETE_CIRCLE="Are you sure you want to delete this circle?"

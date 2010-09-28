@@ -9,6 +9,14 @@ jLoader.Profile_friends = function ( ) {
 jLoader.Profile_friends.Anchor = function ( ) { }
 
 jLoader.Profile_friends.Anchor.OnClick = function ( pElement, pParent ) {
+
+	jTranslations[pElement.id] = "friends";
+	
+	if ( $(pElement).parent().attr('class') == 'profile-friends-circle-remove' ) {
+		return ( confirm ( __("Confirm Delete Circle") ) );
+	}
+	
+	return ( true );
 }
 		
 jLoader.Profile_friends.Form = function ( ) { }
@@ -23,4 +31,3 @@ jLoader.Profile_friends.Select.OnChange = function ( pElement, pParent ) {
 	
 	return ( true );
 }
-

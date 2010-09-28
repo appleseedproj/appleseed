@@ -52,10 +52,16 @@ jLoader.Document.Anchor.OnClick = function ( pElement, pParent ) {
 
 
 function __ ( pText, pData ) {
-
+	
     var parentElement = arguments.callee.caller.arguments[0];
     
     var translation =  jTranslations[parentElement.id];
+    
+    if ( typeof translation == 'undefined' ) {
+    	// @todo Build an error logging system
+    	alert ( "Translation Element Undefined For " + parentElement.id );
+    	return ( false );
+    }
     
     var translationElementId = 'appleseed-language-components-' + translation;
     

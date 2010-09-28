@@ -284,33 +284,40 @@ class cFriendsFriendsController extends cController {
 		
 		// Prepare Circle Add/Remove
 		$circlesList = $this->Circles->Circles ( $this->_Focus->uID );
-		foreach ( $circlesList as $c => $circ ) {
-			$AllCircles[] = $circ['name'];
-		}
 		
-		$account = $this->Model->Get ( "Username" ) . '@' . $this->Model->Get ( "Domain" );
-		$MemberOfCircles = $this->Circles->CirclesByMember ( $this->_Focus->uID, $account );
-		$NotMemberOfCircles = array_diff (  $AllCircles, $MemberOfCircles );
+		if ( count ( $circlesList ) == 0 ) {
+			$pRow->Find ( "[class=friend-circle-edit-list]", 0)->outertext = "";
+		} else {
 		
-		if ( count ( $NotMemberOfCircles ) > 0 ) {
-			$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext = '<option disabled="disabled">Add To Circle</option>';
-			foreach ( $NotMemberOfCircles as $c => $circ ) {
-				$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option>' . $circ . '</option>';
+			foreach ( $circlesList as $c => $circ ) {
+				$AllCircles[] = $circ['name'];
 			}
-		}
-	
-		if ( count ( $MemberOfCircles ) > 0 ) {
-			$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option disabled="disabled">Remove Circle</option>';
-			foreach ( $MemberOfCircles as $c => $circ ) {
-				$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option>' . $circ . '</option>';
+			
+			$account = $this->Model->Get ( "Username" ) . '@' . $this->Model->Get ( "Domain" );
+			$MemberOfCircles = $this->Circles->CirclesByMember ( $this->_Focus->uID, $account );
+			$NotMemberOfCircles = array_diff (  $AllCircles, $MemberOfCircles );
+			
+			if ( count ( $NotMemberOfCircles ) > 0 ) {
+				$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext = '<option disabled="disabled">Add To Circle</option>';
+				foreach ( $NotMemberOfCircles as $c => $circ ) {
+					$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option>' . $circ . '</option>';
+				}
 			}
+		
+			if ( count ( $MemberOfCircles ) > 0 ) {
+				$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option disabled="disabled">Remove Circle</option>';
+				foreach ( $MemberOfCircles as $c => $circ ) {
+					$pRow->Find ( '[class=friend-circle-edit-list]', 0 )->innertext .= '<option>' . $circ . '</option>';
+				}
+			}
+			
+			$pRow->Find ( '[class=friend-circle-edit]', 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
+			$pRow->Find ( '[class=friend-circle-edit] [name=Friend]', 0 )->value = $this->Model->Get ( "Username" ) . '@' . $this->Model->Get ( "Domain" );
+			
+			if ( $currentCircle = $circleName = $this->Circles->Get ( "Name" ) ) 
+				$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = $this->_ViewingCircle;
+		
 		}
-		
-		$pRow->Find ( '[class=friend-circle-edit]', 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
-		$pRow->Find ( '[class=friend-circle-edit] [name=Friend]', 0 )->value = $this->Model->Get ( "Username" ) . '@' . $this->Model->Get ( "Domain" );
-		
-		if ( $currentCircle = $circleName = $this->Circles->Get ( "Name" ) ) 
-			$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = $this->_ViewingCircle;
 		
 		return ( $pRow );
 	}
