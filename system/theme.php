@@ -71,7 +71,6 @@ class cTheme extends cBase {
  			$found = true;
  			
  			foreach ( $files as $f => $file ) {
- 				echo $file, "<br />";
  				$file = str_replace ($base . '/', '', $file);
  				$file = implode ( '/', explode ( DS, $file ) );
  				$styles[] = $file;
