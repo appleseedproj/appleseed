@@ -28,3 +28,5 @@ CIRCLE_HAS_BEEN_REMOVED="Circle '%circle$s' has been deleted."
 
 APPROVE_FRIEND="Approve"
 DENY_FRIEND="Deny"
+
+CIRCLE_ALREADY_EXISTS="A circle with this name already exists.  Please choose another name."

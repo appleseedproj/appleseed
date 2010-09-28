@@ -145,6 +145,14 @@ class cFriendsCirclesController extends cController {
 		// Validate the circle name
 		$name = $this->GetSys ( "Request" )->Get ( "Name" );
 		
+		$this->_Load ( $name );
+		
+		if ( $this->Circles->Get ( "Total" ) > 0 ) {
+			$session->Set ( "Message", "Circle Already Exists" );
+			$session->Set ( "Error", true );
+			$error = true;
+		}
+		
 		if ( !$validate->NotNull ( $name ) ) {
 			// Name is null
 			$session->Set ( "Message", "Circle Name Cannot Be Null" );
@@ -256,11 +264,13 @@ class cFriendsCirclesController extends cController {
 	 * Check to see if the circle exists.
 	 * 
 	 */
-	private function _Load ( ) {
+	private function _Load ( $pName = null ) {
 		
 		$this->Circles = $this->GetModel ( "Circles" );
 		
-		$currentCircle = str_replace ( '-', ' ', urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) ) );
+		if ( !$pName ) $pName = $this->GetSys ( "Request" )->Get ( "Circle" );
+		
+		$currentCircle = str_replace ( '-', ' ', urldecode ( strtolower ( $pName ) ) );
 		
 		$this->Circles->Load ( $this->_Focus->Id, $currentCircle );
 		
