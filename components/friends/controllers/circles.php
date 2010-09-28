@@ -147,7 +147,7 @@ class cFriendsCirclesController extends cController {
 		
 		$this->_Load ( $name );
 		
-		if ( $this->Circles->Get ( "Total" ) > 0 ) {
+		if ( ( $this->Circles->Get ( "Total" ) > 0 ) and ( $this->Circles->Get ( "tID" ) != $id ) ) {
 			$session->Set ( "Message", "Circle Already Exists" );
 			$session->Set ( "Error", true );
 			$error = true;
@@ -268,9 +268,16 @@ class cFriendsCirclesController extends cController {
 		
 		$this->Circles = $this->GetModel ( "Circles" );
 		
-		if ( !$pName ) $pName = $this->GetSys ( "Request" )->Get ( "Circle" );
-		
-		$currentCircle = str_replace ( '-', ' ', urldecode ( strtolower ( $pName ) ) );
+		/*
+		 * @todo This is too convoluted, clean up.
+		 */
+		if ( !$pName ) {
+			$currentCircle = str_replace ( '-', ' ', urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Name" ) ) ) );
+			if ( !$currentCircle ) $currentCircle = str_replace ( '-', ' ', urldecode ( strtolower ( $this->GetSys ( "Request" )->Get ( "Circle" ) ) ) );
+			if ( !$currentCircle ) return ( false );
+		} else {
+			$currentCircle = $pName;
+		}
 		
 		$this->Circles->Load ( $this->_Focus->Id, $currentCircle );
 		
