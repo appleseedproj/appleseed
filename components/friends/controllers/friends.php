@@ -327,6 +327,7 @@ class cFriendsFriendsController extends cController {
 		if ( $this->Model->Get ( 'Verification' ) == 2 ) {
 			$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = 'requests';
 			$pRow->Find ( '[class=friends-approve-friend-link]', 0 )->href = '/profile/' . $this->_Focus->Username . '/friends/approve/' . $this->Model->Get ( 'Username' ) . '@' . $this->Model->Get ( 'Domain' );
+			$pRow->Find ( '[class=friends-deny-friend-link]', 0 )->href = '/profile/' . $this->_Focus->Username . '/friends/remove/' . $this->Model->Get ( 'Username' ) . '@' . $this->Model->Get ( 'Domain' );
 		}
 		
 		
