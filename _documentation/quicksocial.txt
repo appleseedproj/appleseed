@@ -20,9 +20,9 @@ establishment of a relationship can be made.  A few simple rules define the prot
 
 There are three levels of protocol support.  Each level is dependant on the level above it.
 
-1. Social, Node, Connect, User
-2. Friend, Message
-3. Feed, Tag, Search
+0. Social, Node, Connect, User
+1. Friend, Message
+2. Feed, Tag, Search
 
 Optimization
 --------------
