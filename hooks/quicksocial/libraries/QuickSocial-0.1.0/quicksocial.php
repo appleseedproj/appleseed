@@ -219,8 +219,8 @@ class cQuickSocial {
 			CURLOPT_VERBOSE			=> true,
 			CURLOPT_USERAGENT      => "Appleseed QuickSocial API v0.1",
 			CURLOPT_AUTOREFERER    => true,
-			CURLOPT_CONNECTTIMEOUT => 1,
-			CURLOPT_TIMEOUT        => 1,      
+			CURLOPT_CONNECTTIMEOUT => 10,
+			CURLOPT_TIMEOUT        => 20,      
 			CURLOPT_MAXREDIRS      => 10,       
 		);
 	   	curl_setopt_array( $curl, $options );
