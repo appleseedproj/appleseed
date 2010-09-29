@@ -163,7 +163,7 @@ class cFriendsCirclesController extends cController {
 			$session->Set ( "Message", "Invalid Circle Name" );
 			$session->Set ( "Error", true );
 			$error = true;
-		} else if ( in_array ( strtolower ( $name ), array ( "mutual", "requests", "circles" ) ) ) {
+		} else if ( in_array ( strtolower ( $name ), array ( "mutual", "requests", "circles", "add", "remove", "approve" ) ) ) {
 			// Reserved system names
 			$session->Set ( "Message", "Invalid Circle Name" );
 			$session->Set ( "Error", true );

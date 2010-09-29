@@ -16,7 +16,7 @@ establishment of a relationship can be made.  A few simple rules define the prot
 
 0. Users have to remotely login to establish their identity. 
 1. Stored tokens are used to verify identity through callbacks before actions are taken.
-2. Actions (friending, messaging) are taken by the home node.
+2. Actions (friending, messaging) are taken by the home node only.
 
 There are three levels of protocol support.  Each level is dependant on the level above it.
 
@@ -35,13 +35,25 @@ Token and node discovery caching must be handled by the application.
 Protocol
 -------------
 
+-- IMPLEMENTED, ALPHA --
+
 	QuickSocial
-		- Verify / ReplyToVerify
+		- Verify / ReplyToVerify						## Verify a user.
 			- GET: 	_social=true
 					_task=verify
-					_token=<token>
-					_account=<user@domain>
-					_source=<domain>
+					_token=<token>						# Required for verification
+					_account=<user@domain>				# Subject user who is taking the action.
+					_source=<domain>					# Domain source
+			- JSON: success=<true|false>
+					error=<error>
+			- NOTE: If _username is empty, represents a site verification token only.
+	
+		- RemoteVerify / ReplyToRemoteVerify			## Verify a user as a 3rd party node.
+			- GET: 	_social=true
+					_task=verify
+					_token=<token>						# One-Way Encrypted, required for verification
+					_account=<user@domain>				# Subject user who is taking the action.
+					_source=<domain>					# Domain source
 			- JSON: success=<true|false>
 					error=<error>
 			- NOTE: If _username is empty, represents a site verification token only.
@@ -50,8 +62,8 @@ Protocol
 		- Discover / ReplyToDiscover
 			 - GET:	_social=true
 					_task=node.discover
-					_source=<domain>
-					_token=<token>
+					_source=<domain>					# Domain source
+					_token=<token>						# Required for verification
 			- JSON:	success=<true|false>
 					error=<error>
 					methods=<[array]>
@@ -60,15 +72,16 @@ Protocol
 					version=<version>
 			- NOTE:	Source & Token optional
 	
+		[unimplemented]
 		- Callback / ReplyToCallback
 			- GET:	_social=true
 					_task=node.update
-					_token=<token>
-					_method=<method>
-					_source=<domain>
-					_description=<description>
-					_users=<#users>
-					_admin=<user@domain>
+					_method=<method>					# http, https, ws, etc
+					_token=<token>						# Required for verification
+					_source=<domain>					# Domain source
+					_description=<description>			# Brief site description.  Plain text.
+					_users=<#users>						# User count for node.
+					_admin=<user@domain>				# Admin emergency contact email
 			- JSON:	success=<true|false>
 					error=<error>
 	
@@ -76,14 +89,14 @@ Protocol
 		- Redirect / Check / Process
 			- GET:	_social=true
 					_task=connect.check
-					_username=<username>
-					_method=<method>
-					_source=<domain>
+					_username=<username>				# User we are authenticating.
+					_method=<method>					# http, https, ws, etc
+					_source=<domain>					# Domain source, required for token verification
 			- GET:	_social=true
 					_task=connect.return
-					_username=<_username>
-					_source=<_source>
-					_token=<token>
+					_username=<username>				# User we are authenticating.
+					_source=<domain>					# Domain source, required for token verification
+					_token=<token>						# Required for verification
 					_success=<true|false>
 					_error=<error>
 	
@@ -91,11 +104,12 @@ Protocol
 		- UserInfo / ReplyToUserInfo
 			- GET: 	_social=true
 					_task=user.info
-					_token=<token>
+					_token=<token>						# Required for verification
 					_method=<method>					# http, https, ws, etc
-					_account=<user@domain>				# Who you are looking for
-					_source=<domain>					# Where you are coming from
-					_request=<user@domain>				# Who is asking
+					_request=<user@domain>				# Who you are looking for
+					_account=<user@domain>				# Subject user who is taking the action.
+					_request=<user[@domain]>			# User whose info we're requesting.
+					_source=<domain>					# Domain source, required for token verification
 			- JSON:	success=<true|false>
 					error=<error>
 					fullname=<fullname>
@@ -107,49 +121,56 @@ Protocol
 	
 			- GET: 	_social=true
 					_task=user.icon
-					_account=<user@domain>
-					_request=<username>
+					_account=<user@domain>				# Subject user who is taking the action.
+					_request=<user[@domain]>			# User whose icon we're requesting.
 					_width=<width>
 					_height=<height>
+					
+	QuickRedirect										## Used for redirecting requests to user's home node.
+			- GET:	_social=true
+					_task=redirect
+					_action=<friend.add|friend.remove|
+							 messages|messages.compose|
+							 approval|notifications|
+							 profile>
+					_account=<user@domain>				# Subject user who is taking the action.
+					_request=<user@domain>				# A user account associated with the action being taken.
+					_source=<domain>					# Domain source, required for token verification
 	
 	QuickFriend
-		- Action										# This is used for redirecting
-			- GET: 	_social=true
-					_task=friend.action
-					_action=<add|remove>
-					_account=<user@domain>
-					_request=<username>
 		- Friend / ReplyToFriend
 			- GET: 	_social=true
 					_task=friend.add
-					_token=<token>
-					_method=<method>
-					_account=<user@domain>
-					_source=<domain>
-					_friend=<friend>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
+					_account=<user@domain>				# Subject user who is taking the action.
+					_request=<user[@domain]>			# Friend being requested (domain optional).
+					_source=<domain>					# Domain source, required for token verification
 			- JSON:	success=<true|false>
 					error=<error>
 		- Approve / ReplyToApprove
 			- GET: 	_social=true
 					_task=friend.approve
-					_token=<token>
-					_method=<method>
-					_users=<user>
-					_source=<domain>
-					_friend=<friend>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
+					_account=<user@domain>				# Subject user who is taking the action.
+					_request=<user[@domain]>			# Friend being requested (domain optional).
+					_source=<domain>					# Domain source, required for token verification
 			- JSON:	success=<true|false>
 					error=<error>
 		- Remove / ReplyToRemove
 			- GET: 	_social=true
 					_task=friend.remove
-					_token=<token>
-					_method=<method>
-					_account=<user@domain>
-					_source=<domain>
-					_friend=<friend>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
+					_account=<user@domain>				# Subject user who is taking the action.
+					_request=<user[@domain]>			# Friend being requested (domain optional).
+					_source=<domain>					# Domain source, required for token verification
 			- JSON:	success=<true|false>
 					error=<error>
 	
+-- FUTURE IMPLEMENTATION --
+
 	QuickMessage
 		- Notify / ReplyToNotify
 			- GET: 	_social=true
@@ -157,7 +178,7 @@ Protocol
 					_account=<user@domain>
 					_source=<domain>
 					_recipient=<recipient>
-					_token=<token>
+					_token=<token>						# Required for verification
 					_subject=<subject>
 					_fullname=<fullname>
 					_identifier=<identifier>
@@ -167,8 +188,8 @@ Protocol
 		- Retrieve / ReplyToRetrieve
 			- GET: 	_social=true
 					_task=message.retrieve
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_subject=<subject>
@@ -182,8 +203,8 @@ Protocol
 		- Push / ReplyToPush
 			- GET: 	_social=true
 					_task=feed.push
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_recipient=<username>
@@ -202,8 +223,8 @@ Protocol
 		- Pull / ReplyToPull
 			- GET: 	_social=true
 					_task=feed.pull
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_requested=<username>
@@ -228,8 +249,8 @@ Protocol
 		- Report / ReplyToReport
 			- GET: 	_social=true
 					_task=feed.report
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_actionOwner=<user@domain>
 					_action=<action>
@@ -248,8 +269,8 @@ Protocol
 	QuickNotification
 			- GET: 	_social=true
 					_task=notification.feed
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 			- JSON	success=<true|false>
@@ -268,8 +289,8 @@ Protocol
 						stamp=<datetime>
 			- GET: 	_social=true
 					_task=notification.read
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_stamp=<stamp>
@@ -280,8 +301,8 @@ Protocol
 		- Tag / ReplyToTag
 			- GET: 	_social=true
 					_task=tag.add
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_tagged=<username>
@@ -293,8 +314,8 @@ Protocol
 		- Approve / ReplyToApprove
 			- GET: 	_social=true
 					_task=tag.approve
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_tagged=<username>
@@ -304,8 +325,8 @@ Protocol
 		- Remove / ReplyToRemove
 			- GET: 	_social=true
 					_task=tag.remove
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_tagged=<username>
@@ -317,8 +338,8 @@ Protocol
 		- Search / ReplyToSearch
 			- GET: 	_social=true
 					_task=search.keyword
-					_token=<token>
-					_method=<method>
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
 					_keywords=<keywords>

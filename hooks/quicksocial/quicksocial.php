@@ -135,6 +135,14 @@ class cQuicksocialHook extends cHook {
 				$node->ReplyToDiscover();
 				exit;
 			break;
+			case 'redirect':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickredirect.php' );
+				
+				$redirect = new cQuickRedirect ();
+				$redirect->SetCallback ( "Redirect", array ( $this, '_Redirect' ) );
+				$redirect->Redirect();
+				exit;
+			break;
 			case 'user.icon':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
 				 
@@ -151,6 +159,26 @@ class cQuicksocialHook extends cHook {
 				$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
 				$user->SetCallback ( "UserInfo", array ( $this, '_UserInfo' ) );
 				$user->ReplyToInfo();
+				exit;
+			break;
+			case 'friend.add':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
+				
+				$friend = new cQuickFriend ();
+				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+				$friend->SetCallback ( "FriendAdd", array ( $this, '_FriendAdd' ) );
+				$friend->ReplyToFriend();
+				exit;
+			break;
+			case 'friend.approve':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
+				
+				$friend = new cQuickFriend ();
+				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+				$friend->SetCallback ( "FriendApprove", array ( $this, '_FriendApprove' ) );
+				$friend->ReplyToApproveFriend();
 				exit;
 			break;
 			case '':
@@ -263,32 +291,102 @@ class cQuicksocialHook extends cHook {
 		return ( $return );
 	}
 	
+	public function OnFriendAdd ( $pData ) {
+		
+		if (!class_exists ( 'cQuickFriend' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
+		
+		$friend = new cQuickFriend ();
+		
+		$friend->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+		$friend->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		
+		$account = $pData['account'];
+		$request = $pData['request'];
+		
+		$result = $friend->Friend ( $account, $request );
+		
+		return ( $result );
+	}
+	
+	public function OnFriendApprove ( $pData ) {
+		
+		if (!class_exists ( 'cQuickFriend' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
+		
+		$friend = new cQuickFriend ();
+		
+		$friend->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+		$friend->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		
+		$account = $pData['account'];
+		$request = $pData['request'];
+		
+		$result = $friend->ApproveFriend ( $account, $request );
+		
+		return ( $result );
+	}
+	
+	public function CreateMessagesSendlink ( $pData ) {
+		
+		$request = $pData['request'];
+		$account = $pData['account'];
+		
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
+		
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
+		
+		$source = QUICKSOCIAL_DOMAIN;
+		
+		if ( $source == $accountDomain ) {
+			//$return = 'http://' . $source . '/profile/' . $requestUsername . '/messages/' . $request;
+			$return = '/profile/' . $accountUsername . '/messages/?gACTION=SEND_MESSAGE&gRECIPIENTNAME=' . $requestUsername . '&gRECIPIENTDOMAIN=' . $requestDomain;
+		} else {
+			$data = array ( '_social' => 'true', '_task' => 'redirect', '_action' => 'messages.compose', '_account' => $account, '_request' => $request, '_source' => $source );
+		
+			$return = 'http://' . $accountDomain . '/?' . http_build_query ( $data );
+		}
+		
+		return ( $return );
+	}
+	
 	public function CreateFriendAddlink ( $pData ) {
 		
-		$target = $pData['currentDomain'];
+		$request = $pData['request'];
+		$account = $pData['account'];
 		
-		$request = $pData['currentUsername'];
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		$account = $pData['username'] . '@' . $pData['domain'];
+		$source = QUICKSOCIAL_DOMAIN;
 		
-		$data = array ( '_social' => 'true', '_task' => 'friend.action', '_action' => 'add', '_request' => $request, '_account' => $account );
+		if ( $source == $accountDomain ) {
+			$return = 'http://' . $source . '/profile/' . $requestUsername . '/friends/request/' . $request;
+		} else {
+			$data = array ( '_social' => 'true', '_task' => 'redirect', '_action' => 'friend.add', '_account' => $account, '_request' => $request, '_source' => $source );
 		
-		$return = 'http://' . $target . '/?' . http_build_query ( $data );
+			$return = 'http://' . $accountDomain . '/?' . http_build_query ( $data );
+		}
 		
 		return ( $return );
 	}
 	
 	public function CreateFriendRemovelink ( $pData ) {
 		
-		$target = $pData['currentDomain'];
+		$request = $pData['request'];
+		$account = $pData['account'];
 		
-		$request = $pData['currentUsername'];
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
 		
-		$account = $pData['username'] . '@' . $pData['domain'];
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		$data = array ( '_social' => 'true', '_task' => 'friend.action', '_action' => 'remove', '_request' => $request, '_account' => $account );
+		$source = QUICKSOCIAL_DOMAIN;
 		
-		$return = 'http://' . $target . '/?' . http_build_query ( $data );
+		if ( $source == $accountDomain ) {
+			$return = 'http://' . $source . '/profile/' . $accountUsername . '/friends/remove/' . $request;
+		} else {
+			$data = array ( '_social' => 'true', '_task' => 'redirect', '_action' => 'friend.remove', '_account' => $account, '_request' => $request, '_source' => $source );
+		
+			$return = 'http://' . $accountDomain . '/?' . http_build_query ( $data );
+		}
 		
 		return ( $return );
 	}
@@ -309,7 +407,7 @@ class cQuicksocialHook extends cHook {
 		if ( ( $source == $accountDomain ) && ( $source == $requestDomain ) ) {
 			
 			// Request user is local, and requesting a local user's info, so retrieve it from db
-			$userInfo = (object) $this->_UserInfo ( $accountUsername, $request, true );
+			$userInfo = (object) $this->_UserInfo ( $requestUsername, $request, true );
 			
 		} else {
 			// Requesting a remote user's information
@@ -703,7 +801,7 @@ class cQuicksocialHook extends cHook {
 			$friends = new cModel ('friendInformation');
 			$friends->Structure();
 		
-			$friends->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+			$friends->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ), 'Verification' => '1' ) );
 			$return['friends'] = array ();
 			while ( $friends->Fetch() ) {
 				$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
@@ -748,19 +846,7 @@ class cQuicksocialHook extends cHook {
 			$endx = $newwidth - ceil ( ( ( $newwidth - $pNewWidth ) / 2 ) );  $endy = $pNewHeight;
 		} // if
 		
-		/*
-		echo $originalWidth, "<br />";
-		echo $originalHeight, "<br /><br />";
-		echo $pNewWidth, "<br />";
-		echo $pNewHeight, "<br /><br />";
-		echo $newwidth, "<br />";
-		echo $newheight, "<br /><br />";
-		echo $startx, "<br />";
-		echo $starty, "<br />";
-		echo $endx, "<br />";
-		echo $endy, "<br />";
-		exit;
-		*/
+		/* echo $originalWidth, "<br />"; echo $originalHeight, "<br /><br />"; echo $pNewWidth, "<br />"; echo $pNewHeight, "<br /><br />"; echo $newwidth, "<br />"; echo $newheight, "<br /><br />"; echo $startx, "<br />"; echo $starty, "<br />"; echo $endx, "<br />"; echo $endy, "<br />"; exit; */
 		  
 		$src_img = imagecreatetruecolor ( $originalWidth, $originalHeight );
 		imagecopy( $src_img, $pResource, 0, 0, 0, 0, $originalWidth, $originalHeight );
@@ -778,5 +864,114 @@ class cQuicksocialHook extends cHook {
 		
 		return ( $result );
 	} // ResizeAndCrop
+	
+	public function _Redirect ( $pAction, $pAccount, $pRequest = null, $pSource = null ) {
+		
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
+		
+		switch ( $pAction ) {
+			case 'friend.add':
+				$redirect = '/profile/' . $accountUsername . '/friends/add/' . $pRequest;
+			break;
+			case 'friend.remove':
+				$redirect = '/profile/' . $accountUsername . '/friends/remove/' . $pRequest;
+			break;
+			case 'messages.compose':
+				// New
+				// $redirect = '/profile/' . $focus . '/messages/compose/' . $pRequest;
+				
+				// Legacy
+				$redirect = '/profile/' . $accountUsername . '/messages/?gACTION=SEND_MESSAGE&gRECIPIENTNAME=' . $requestUsername . '&gRECIPIENTDOMAIN=' . $requestDomain;
+			break;
+			case 'messages':
+			break;
+			case 'approval':
+			break;
+			case 'notifications':
+			break;
+			case 'profile':
+			break;
+			default:
+				$redirect = '/';
+			break;
+		}
+		
+		header ( "Location:" . $redirect );
+		exit;
+	}
+	
+	public function _FriendAdd ( $pAccount, $pRequest ) {
+		
+		$userModel = new cModel ( "userAuthorization" );
+		$userModel->Structure();
+		
+		$friendModel = new cModel ( "friendInformation" );
+		$friendModel->Structure();
+		
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
+		
+		$userModel->Retrieve ( array ( "Username" => $requestUsername ) );
+		$userModel->Fetch();
+		
+		$requestUsername_uID = $userModel->Get ( "uID" );
+		
+		if ( !$requestUsername_uID ) return ( false );
+		
+		$friendModel->Retrieve ( array ( "userAuth_uID" => $requestUsername_uID, "Username" => $accountUsername, "Domain" => $accountDomain ) );
+		
+		if ( $friendModel->Get ( "Total" ) == 0 ) {
+			// No record found, so create one.
+			$friendModel->Protect ( "tID" );
+			$friendModel->Set ( "userAuth_uID", $requestUsername_uID );
+			$friendModel->Set ( "Username", $accountUsername );
+			$friendModel->Set ( "Domain", $accountDomain );
+			$friendModel->Set ( "Verification", 2 );
+			$friendModel->Set ( "Stamp", NOW() );
+			$friendModel->Save();
+			
+			return ( true );
+		} else {
+			// Record already exists, so just return true;
+			return ( true );
+		}
+	}
     
+	public function _FriendApprove ( $pAccount, $pRequest ) {
+		
+		$userModel = new cModel ( "userAuthorization" );
+		$userModel->Structure();
+		
+		$friendModel = new cModel ( "friendInformation" );
+		$friendModel->Structure();
+		
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
+		
+		$userModel->Retrieve ( array ( "Username" => $requestUsername ) );
+		$userModel->Fetch();
+		
+		$requestUsername_uID = $userModel->Get ( "uID" );
+		
+		if ( !$requestUsername_uID ) return ( false );
+		
+		$friendModel->Retrieve ( array ( "userAuth_uID" => $requestUsername_uID, "Username" => $accountUsername, "Domain" => $accountDomain, "Verification" => '()' . '1,3' ) );
+		
+		if ( $friendModel->Get ( "Total" ) > 0 ) {
+			// Record found, so approve it.
+			$friendModel->Fetch();
+			$friendModel->Set ( "userAuth_uID", $requestUsername_uID );
+			$friendModel->Set ( "Username", $accountUsername );
+			$friendModel->Set ( "Domain", $accountDomain );
+			$friendModel->Set ( "Verification", 1 );
+			$friendModel->Set ( "Stamp", NOW() );
+			$friendModel->Save();
+			
+			return ( true );
+		} else {
+			// Record already exists, so just return true;
+			return ( false );
+		}
+	}
 }

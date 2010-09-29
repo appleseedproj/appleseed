@@ -58,9 +58,13 @@ class cProfileContactController extends cController {
 		$focusInfo->account = $focus->Username . '@' . $focus->Domain;
 		
 		// If the user is already a friend, don't show the Add Friend button.
-		$data = array ( "username" => $focus->Username, "domain" => $focus->Domain, "currentUsername" => $current->Username, "currentDomain" => $current->Domain );
+		$data = array ( "account" => $current->Account, "request" => $focus->Account );
 		$this->View->Find ( "[class=profile-add-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Addlink", $data );
 		$this->View->Find ( "[class=profile-remove-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Removelink", $data );
+		
+		$this->View->Find ( "[class=profile-send-message-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Messages", "Sendlink", $data );
+		
+		$this->View->Find ( "[class=profile-block-user-link]", 0 )->href = null;
 		
 		if ( in_array ( $currentInfo->account, $focusInfo->friends ) ) {
 			// Remove "add as friend" if already friends

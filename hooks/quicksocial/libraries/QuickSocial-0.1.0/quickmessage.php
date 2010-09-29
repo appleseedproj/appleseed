@@ -23,6 +23,7 @@ class cQuickMessage extends cQuickSocial {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		parent::__construct();
 	}
 
 }

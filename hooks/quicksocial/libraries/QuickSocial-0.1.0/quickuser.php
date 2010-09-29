@@ -25,6 +25,7 @@ class cQuickUser extends cQuickSocial {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		parent::__construct();
 	}
 	
 	public function Icon ( ) {
@@ -36,11 +37,11 @@ class cQuickUser extends cQuickSocial {
 		
 		if ( !is_callable ( $fUserIcon ) ) $this->_Error ( "Invalid Callback: UserIcon" );
 		
-		$account = $_GET['_account'];
-		$request = $_GET['_request'];
+		$account = $this->_GET['_account'];
+		$request = $this->_GET['_request'];
 		
-		$width = $_GET['_width'];
-		$height = $_GET['_height'];
+		$width = $this->_GET['_width'];
+		$height = $this->_GET['_height'];
 		
 		@call_user_func ( $fUserIcon, $request, $width, $height );
 		
@@ -73,27 +74,27 @@ class cQuickUser extends cQuickSocial {
 			"_token" => $token
 		);
 		
-		$result = $this->_Communicate ( $accountDomain, $data );
+		$result = $this->_Communicate ( $requestDomain, $data );
 		
 		return ( $result );
 	}
 	
 	public function ReplyToInfo ( ) {
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
 		
 		if ( $social != "true" ) return ( false );
 		if ( $task != "user.info" ) return ( false );
 		
-		$request = $_GET['_request'];
-		$account = $_GET['_account'];
-		$source = $_GET['_source'];
-		$token = $_GET['_token'];
+		$request = $this->_GET['_request'];
+		$account = $this->_GET['_account'];
+		$source = $this->_GET['_source'];
+		$token = $this->_GET['_token'];
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		if ( ($accountDomain) and ( $accountDomain != QUICKSOCIAL_DOMAIN ) ) $this->_Error ( "Unknown User" );
+		if ( ($requestDomain) and ( $requestDomain != QUICKSOCIAL_DOMAIN ) ) $this->_Error ( "Unknown User" );
 		
 		$fCheckLocalToken = $this->GetCallBack ( "CheckLocalToken" );
 		
@@ -125,7 +126,7 @@ class cQuickUser extends cQuickSocial {
 		
 		if ( !is_callable ( $fUserInfo ) ) $this->_Error ( "Invalid Callback: UserInfo" );
 		
-		$data = @call_user_func ( $fUserInfo, $accountUsername, $request, $verified );
+		$data = @call_user_func ( $fUserInfo, $requestUsername, $account, $verified );
 		
 		if ( !$data ) $this->_Error ( "Unknown User" );
 		

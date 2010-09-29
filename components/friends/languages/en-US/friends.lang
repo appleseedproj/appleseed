@@ -32,3 +32,11 @@ DENY_FRIEND="Deny"
 CIRCLE_ALREADY_EXISTS="A circle with this name already exists.  Please choose another name."
 
 JS_CONFIRM_DELETE_CIRCLE="Are you sure you want to delete this circle?"
+
+PENDING_REQUEST_ALREADY_EXISTS="%fullname$s (%account$s) has already been sent a friend request."
+COULD_NOT_SEND_REQUEST="Error sending friend request to %fullname$s (%account$s).  Please try again."
+COULD_NOT_APPROVE_REQUEST="Error approving friend request from %fullname$s (%account$s).  Please try again."
+FRIEND_REQUEST_SENT="A friend request has been sent to %fullname$s (%account$s)."
+FRIEND_REQUEST_APPROVED="You are now friends with %fullname$s (%account$s)."
+
+NO_FRIEND_REQUEST_FOUND="A friend request from %fullname$s (%account$s) was not found."

@@ -25,6 +25,7 @@ class cQuickConnect extends cQuickSocial {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		parent::__construct();
 	}
 	
 	public function Redirect ( $pTarget, $pUser, $pMethod = "http", $pReturnTo = null) {
@@ -59,18 +60,18 @@ class cQuickConnect extends cQuickSocial {
 	
 	public function Check ( ) {
 		
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
 		
 		if ( $social != "true" ) return ( false );
 		if ( $task != "connect.check" ) return ( false );
 		
-		$source = $_GET['_source'];
-		$username = $_GET['_username'];
+		$source = $this->_GET['_source'];
+		$username = $this->_GET['_username'];
 		
-		$method = $_GET['_method'];
+		$method = $this->_GET['_method'];
 		
-		$returnTo = isset ( $_GET['_return'] ) ? $_GET['_return'] : $source;
+		$returnTo = isset ( $this->_GET['_return'] ) ? $this->_GET['_return'] : $source;
 		
 		switch ( $method ) {
 			case 'https':
@@ -141,30 +142,30 @@ class cQuickConnect extends cQuickSocial {
 	
 	public function Process ( ) {
 		
-		$success = $_GET['_success'];
-		$error = $_GET['_error'];
+		$success = $this->_GET['_success'];
+		$error = $this->_GET['_error'];
 		$return = new stdClass ();
 		
 		$return->success = $success;
 		$return->error = $error;
 		
-		$source = $_GET['_source'];
-		$username = $_GET['_username'];
+		$source = $this->_GET['_source'];
+		$username = $this->_GET['_username'];
 		
-		$returnTo = $_GET['_return'];
+		$returnTo = $this->_GET['_return'];
 		
 		if ( $success != "true" ) {
 			$return->username = $username;
 			$return->domain = $source;
 			
 			$return->success = 'false';
-			$return->error = $_GET['_error'];
+			$return->error = $this->_GET['_error'];
 			
 			return ( $return );
 		}
 					
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
 		
 		$fCreateRemoteToken = $this->GetCallBack ( "CreateRemoteToken" );
 		
@@ -173,7 +174,7 @@ class cQuickConnect extends cQuickSocial {
 		if ( $social != "true" ) return ( false );
 		if ( $task != "connect.return" ) return ( false );
 		
-		$token = $_GET['_token'];
+		$token = $this->_GET['_token'];
 		
 		$verification = $this->Verify( $username, $source, $token );
 		

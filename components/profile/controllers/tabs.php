@@ -53,7 +53,7 @@ class cProfileTabsController extends cController {
 		$maxTabs = isset ( $config['maximum_tabs'] ) ? $config['maximum_tabs'] : 10;
 		$defaultTab = $config['default_tab'];
 		
-		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
+		$request = strtolower ( ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' ) );
 		
 		$useDefault = true;
 		foreach ( $componentList as $c => $component ) {

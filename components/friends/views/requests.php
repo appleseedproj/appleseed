@@ -10,6 +10,7 @@
 		<span class="profile-friends-circle-edit"><a href="#"></a></span>
 		<span class="profile-friends-count additional-info"></span>
 	</h1>
+	<p id='friends-message'></p>
 	
 	<nav class='pagination'>
 	</nav>
@@ -25,6 +26,7 @@
 						<input type="hidden" name="Friend">
 						<input type="hidden" name="Context">
 						<input type="hidden" name="Current">
+						<input type="hidden" name="Viewing">
 						<select class="friend-circle-edit-list" name="Circle">
 						</select>
 						<button class="friends-circle-edit-save" name="Task" value="Save">Save</button>

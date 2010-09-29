@@ -49,7 +49,7 @@ class cRouter extends cBase {
 		
 		$routes = $FoundationConfig->GetConfiguration ( "routes" );
 		
-		$request = ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' );
+		$request = strtolower ( ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' ) );
 		
 		list ( $admin, $null ) = explode ( '/', $request, 2);
 		
@@ -59,7 +59,7 @@ class cRouter extends cBase {
 		}
 		
 		foreach ( $routes as $r => $route ) {
-			$r = ltrim ( rtrim ( $r, '/' ), '/' );
+			$r = strtolower ( ltrim ( rtrim ( $r, '/' ), '/' ) );
 
 			if ( !$r ) continue;
 			

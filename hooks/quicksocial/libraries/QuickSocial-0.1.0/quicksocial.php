@@ -26,6 +26,14 @@ class cQuickSocial {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		
+		// @todo Further sanitizing of data may be necessary.
+		foreach ( $_GET as $g => $get ) {
+			$this->_GET[$g] = strip_tags ( $get );
+		}
+		foreach ( $_POST as $p => $post ) {
+			$this->_POST[$p] = strip_tags ( $post );
+		}
 	}
 	
 	/*
@@ -110,15 +118,15 @@ class cQuickSocial {
 	 * 
 	 */
 	public function ReplyToVerify ( ) {
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
 		
 		if ( $social != "true" ) return ( false );
 		if ( $task != "verify" ) return ( false );
 		
-		$source = $_GET['_source'];
-		$username = $_GET['_username'];
-		$token = $_GET['_token'];
+		$source = $this->_GET['_source'];
+		$username = $this->_GET['_username'];
+		$token = $this->_GET['_token'];
 		
 		$fCheckLocalToken = $this->GetCallback ( "CheckLocalToken" );
 		
@@ -143,15 +151,15 @@ class cQuickSocial {
 	 * 
 	 */
 	public function ReplyToRemoteVerify ( ) {
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
 		
 		if ( $social != "true" ) return ( false );
 		if ( $task != "verify.remote" ) return ( false );
 		
-		$source = $_GET['_source'];
-		$username = $_GET['_username'];
-		$token = $_GET['_token'];
+		$source = $this->_GET['_source'];
+		$username = $this->_GET['_username'];
+		$token = $this->_GET['_token'];
 		
 		$fCheckLocalToken = $this->GetCallback ( "CheckLocalToken" );
 		
@@ -263,4 +271,5 @@ class cQuickSocial {
 		
 		return ( $callback );
 	}
+	
 }

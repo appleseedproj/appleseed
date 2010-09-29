@@ -88,6 +88,7 @@ class cFriendsModel extends cModel {
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM `$friendsTable` AS f, `$circlesMapTable` AS c
 			WHERE f.`userAuth_uID` = ?
+			AND f.`Verification` = 1 
 			AND c.`friendCircles_tID` = ?
 			AND c.`friendInformation_tID` = f.`tID`
 		";
@@ -115,7 +116,7 @@ class cFriendsModel extends cModel {
 	
 	public function RetrieveRequests ( $pFocusId, $pLimit = null ) {
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pFocusId, "Verification" => 3 ), null, $pLimit );
+		$this->Retrieve ( array ( "userAuth_uID" => $pFocusId, "Verification" => 2 ), null, $pLimit );
 		
 		return ( true );
 	}
@@ -139,6 +140,57 @@ class cFriendsModel extends cModel {
 		}
 		
 		return ( $return );
+	}
+	
+	public function CheckPending ( $pUserId, $pFriend ) {
+		
+		list ( $friendUsername, $friendDomain ) = split ( '@', $pFriend );
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain, "Verification" => 3 ) );	
+		
+		if ( $this->Get ( "Total" ) > 0 ) return ( true );
+		
+		return ( false );
+	}
+	
+	public function CheckRequest ( $pUserId, $pFriend ) {
+		
+		list ( $friendUsername, $friendDomain ) = split ( '@', $pFriend );
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain, "Verification" => 2 ) );	
+		
+		if ( $this->Get ( "Total" ) > 0 ) return ( true );
+		
+		return ( false );
+	}
+	
+	public function SavePending ( $pUserId, $pFriend ) {
+		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
+		$this->Protect ( "tID" );
+		$this->Set ( "userAuth_uID", $pUserId );
+		$this->Set ( "Username", $friendUsername );
+		$this->Set ( "Domain", $friendDomain );
+		$this->Set ( "Verification", 3 );
+		$this->Set ( "Stamp", NOW() );
+		$this->Save();
+		
+		return ( true );
+	}
+	
+	public function SaveApproved ( $pUserId, $pFriend ) {
+		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain ) );
+		$this->Fetch();
+		
+		$this->Set ( "userAuth_uID", $pUserId );
+		$this->Set ( "Username", $friendUsername );
+		$this->Set ( "Domain", $friendDomain );
+		$this->Set ( "Verification", 1 );
+		$this->Set ( "Stamp", NOW() );
+		$this->Save();
+		
+		return ( true );
 	}
 	
 }

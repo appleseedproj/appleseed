@@ -25,6 +25,7 @@ class cQuickNode extends cQuickSocial {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		parent::__construct();
 	}
 	
 	public function Discover ( $pTarget ) {
@@ -51,14 +52,14 @@ class cQuickNode extends cQuickSocial {
 	}
 	
 	public function ReplyToDiscover ( ) {
-		$social = $_GET['_social'];
-		$task = $_GET['_task'];
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
 		
 		if ( $social != "true" ) return ( false );
 		if ( $task != "node.discover" ) return ( false );
 		
-		$source = $_GET['_source'];
-		$token = $_GET['_token'];
+		$source = $this->_GET['_source'];
+		$token = $this->_GET['_token'];
 		
 		$verified = false;
 		if ( ( $source ) && ( $token ) ) {

@@ -283,8 +283,11 @@
 
     case "":
       // Grab user's default page from database.
-      $zOLDAPPLE->SetContext ("user.summary");
-      $zOLDAPPLE->IncludeFile ('legacy/code/user/summary.php', INCLUDE_SECURITY_NONE);
+      // $zOLDAPPLE->SetContext ("user.summary");
+      // $zOLDAPPLE->IncludeFile ('legacy/code/user/summary.php', INCLUDE_SECURITY_NONE);
+      
+      // Redirect to new framework profile location
+      header ( "Location:/profile/" . $username . '/' );
     break;
 
     default:
