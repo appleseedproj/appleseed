@@ -38,5 +38,6 @@ COULD_NOT_SEND_REQUEST="Error sending friend request to %fullname$s (%account$s)
 COULD_NOT_APPROVE_REQUEST="Error approving friend request from %fullname$s (%account$s).  Please try again."
 FRIEND_REQUEST_SENT="A friend request has been sent to %fullname$s (%account$s)."
 FRIEND_REQUEST_APPROVED="You are now friends with %fullname$s (%account$s)."
+FRIEND_REMOVED="%fullname$s (%account$s) has been removed from your friends list."
 
 NO_FRIEND_REQUEST_FOUND="A friend request from %fullname$s (%account$s) was not found."

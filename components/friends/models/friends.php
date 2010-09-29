@@ -177,6 +177,17 @@ class cFriendsModel extends cModel {
 		return ( true );
 	}
 	
+	public function RemoveFriend ( $pUserId, $pFriend ) {
+		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
+		
+		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain ) );
+		$this->Fetch();
+		
+		$this->Delete();
+		
+		return ( true );
+	}
+	
 	public function SaveApproved ( $pUserId, $pFriend ) {
 		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
 		

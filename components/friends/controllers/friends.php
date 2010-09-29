@@ -321,13 +321,14 @@ class cFriendsFriendsController extends cController {
 			if ( $currentCircle = $circleName = $this->Circles->Get ( 'Name' ) ) 
 				$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = $this->_ViewingCircle;
 				
-			// Let the circles editor know that we're looking at requests.
-			if ( $this->Model->Get ( 'Verification' ) == 2 ) {
-				$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = 'requests';
-				$pRow->Find ( '[class=friends-approve-friend-link]', 0 )->href = '/profile/' . $this->_Focus->Username . '/friends/approve/' . $this->Model->Get ( 'Username' ) . '@' . $this->Model->Get ( 'Domain' );
-			}
-		
 		}
+		
+		// For requests only
+		if ( $this->Model->Get ( 'Verification' ) == 2 ) {
+			$pRow->Find ( '[class=friend-circle-edit] [name=Viewing]', 0 )->value = 'requests';
+			$pRow->Find ( '[class=friends-approve-friend-link]', 0 )->href = '/profile/' . $this->_Focus->Username . '/friends/approve/' . $this->Model->Get ( 'Username' ) . '@' . $this->Model->Get ( 'Domain' );
+		}
+		
 		
 		return ( $pRow );
 	}
@@ -532,6 +533,29 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	public function Remove ( ) {
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		$model = $this->GetModel();
+		
+		$session = $this->GetSys ( "Session" );
+		$request = $this->GetSys ( 'Request' )->Get ( 'Request' );
+		
+		$data = array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $request );
+		$this->_RequestInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		
+		// 1. Delete the current record.
+		$model->RemoveFriend ( $this->_Focus->uID, $request );
+		
+		// 2. Send out the request
+		$data = array ( 'account' => $this->_Current->Account, 'request' => $request );
+		$result = $this->GetSys ( 'Event' )->Trigger ( 'On', 'Friend', 'Remove', $data );
+		
+		// 3. Redirect to friends.
+		$session->Context ( 'friends.friends.(\d+).(mutual|friends|requests|circles|circle)' );
+		$session->Set ( "Message", __( "Friend Removed", array ( 'account' => $request, 'fullname' => $this->_RequestInfo->fullname ) ) );
+		$redirect = '/profile/' . $this->_Focus->Username . '/friends';
+		header ( 'Location:' . $redirect );
 		
 		return ( true );
 	}

@@ -101,7 +101,7 @@ class cQuickFriend extends cQuickSocial {
 		exit;
 	}
 
-	public function ApproveFriend ( $pAccount, $pRequest ) {
+	public function Approve ( $pAccount, $pRequest ) {
 		
 		list ( $pAccountUsername, $pAccountDomain ) = explode ( '@', $pAccount );
 		list ( $pRequestUsername, $pRequestDomain ) = explode ( '@', $pRequest );
@@ -132,7 +132,7 @@ class cQuickFriend extends cQuickSocial {
 		return ( $result );
 	}
 	
-	public function ReplyToApproveFriend ( ) {
+	public function ReplyToApprove ( ) {
 		
 		$social = $this->_GET['_social'];
 		$task = $this->_GET['_task'];
@@ -174,4 +174,76 @@ class cQuickFriend extends cQuickSocial {
 		exit;
 	}
 
+	public function Remove ( $pAccount, $pRequest ) {
+		
+		list ( $pAccountUsername, $pAccountDomain ) = explode ( '@', $pAccount );
+		list ( $pRequestUsername, $pRequestDomain ) = explode ( '@', $pRequest );
+		
+		$fCreateLocalToken = $this->GetCallBack ( "CreateLocalToken" );
+		
+		if ( !is_callable ( $fCreateLocalToken ) ) {
+		    trigger_error("Invalid Callback: CreateLocalToken", E_USER_WARNING);
+			return ( false );
+		}
+		
+		$token = @call_user_func ( $fCreateLocalToken, $pAccountUsername, $pRequestDomain );
+		
+		$method = 'http';
+		
+		$data = array (
+			"_social" => "true",
+			"_task" => "friend.remove",
+			"_token" => $token,
+			"_method" => $method,
+			"_account" => $pAccount,
+			"_request" => $pRequest,
+			"_source" => QUICKSOCIAL_DOMAIN
+		);
+		
+		$result = $this->_Communicate ( $pRequestDomain, $data );
+		
+		return ( $result );
+	}
+	
+	public function ReplyToRemove ( ) {
+		
+		$social = $this->_GET['_social'];
+		$task = $this->_GET['_task'];
+		
+		if ( $social != "true" ) return ( false );
+		if ( $task != "friend.remove" ) return ( false );
+		
+		$fFriendRemove = $this->GetCallBack ( "FriendRemove" );
+		
+		if ( !is_callable ( $fFriendRemove ) ) {
+		    trigger_error("Invalid Callback: FriendRemove", E_USER_WARNING);
+			return ( false );
+		}
+		
+		$token = $this->_GET['_token'];
+		
+		$account = $this->_GET['_account'];
+		$request = $this->_GET['_request'];
+		$source = $this->_GET['_source'];
+		
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
+		
+		$verification = $this->Verify( $accountUsername, $source, $token );
+		
+		if ( $verification->success == 'true' ) {
+			$result = @call_user_func ( $fFriendRemove, $account, $request );
+			if ( !$result ) {
+				$this->_Error ( "Unable To Remove" );
+			} else {
+				$data['success'] = "true";
+				$data['error'] = "";
+			}
+		} else {
+			$this->_Error ( "Invalid Token" );
+		}
+		
+		echo json_encode ( $data );
+		exit;
+	}
 }

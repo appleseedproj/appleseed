@@ -178,7 +178,17 @@ class cQuicksocialHook extends cHook {
 				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
 				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
 				$friend->SetCallback ( "FriendApprove", array ( $this, '_FriendApprove' ) );
-				$friend->ReplyToApproveFriend();
+				$friend->ReplyToApprove();
+				exit;
+			break;
+			case 'friend.remove':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
+				
+				$friend = new cQuickFriend ();
+				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+				$friend->SetCallback ( "FriendRemove", array ( $this, '_FriendRemove' ) );
+				$friend->ReplyToRemove();
 				exit;
 			break;
 			case '':
@@ -308,6 +318,23 @@ class cQuicksocialHook extends cHook {
 		return ( $result );
 	}
 	
+	public function OnFriendRemove ( $pData ) {
+		
+		if (!class_exists ( 'cQuickFriend' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
+		
+		$friend = new cQuickFriend ();
+		
+		$friend->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+		$friend->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		
+		$account = $pData['account'];
+		$request = $pData['request'];
+		
+		$result = $friend->Remove ( $account, $request );
+		
+		return ( $result );
+	}
+	
 	public function OnFriendApprove ( $pData ) {
 		
 		if (!class_exists ( 'cQuickFriend' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
@@ -320,7 +347,7 @@ class cQuicksocialHook extends cHook {
 		$account = $pData['account'];
 		$request = $pData['request'];
 		
-		$result = $friend->ApproveFriend ( $account, $request );
+		$result = $friend->Approve ( $account, $request );
 		
 		return ( $result );
 	}
@@ -359,7 +386,7 @@ class cQuicksocialHook extends cHook {
 		$source = QUICKSOCIAL_DOMAIN;
 		
 		if ( $source == $accountDomain ) {
-			$return = 'http://' . $source . '/profile/' . $requestUsername . '/friends/request/' . $request;
+			$return = 'http://' . $source . '/profile/' . $accountUsername . '/friends/add/' . $request;
 		} else {
 			$data = array ( '_social' => 'true', '_task' => 'redirect', '_action' => 'friend.add', '_account' => $account, '_request' => $request, '_source' => $source );
 		
@@ -970,8 +997,40 @@ class cQuicksocialHook extends cHook {
 			
 			return ( true );
 		} else {
-			// Record already exists, so just return true;
+			// Record doesn't exist, so return false;
 			return ( false );
+		}
+	}
+	
+	public function _FriendRemove ( $pAccount, $pRequest ) {
+		
+		$userModel = new cModel ( "userAuthorization" );
+		$userModel->Structure();
+		
+		$friendModel = new cModel ( "friendInformation" );
+		$friendModel->Structure();
+		
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
+		
+		$userModel->Retrieve ( array ( "Username" => $requestUsername ) );
+		$userModel->Fetch();
+		
+		$requestUsername_uID = $userModel->Get ( "uID" );
+		
+		if ( !$requestUsername_uID ) return ( false );
+		
+		$friendModel->Retrieve ( array ( "userAuth_uID" => $requestUsername_uID, "Username" => $accountUsername, "Domain" => $accountDomain ) );
+		
+		if ( $friendModel->Get ( "Total" ) > 0 ) {
+			// Record found, so approve it.
+			$friendModel->Fetch();
+			$friendModel->Delete();
+			
+			return ( true );
+		} else {
+			// Record doesn't exist, so just return true;
+			return ( true );
 		}
 	}
 }
