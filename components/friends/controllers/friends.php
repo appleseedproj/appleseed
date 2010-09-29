@@ -487,8 +487,11 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	public function Add ( ) {
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$model = $this->GetModel();
 		
@@ -534,8 +537,11 @@ class cFriendsFriendsController extends cController {
 	}
 	
 	public function Remove ( ) {
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$model = $this->GetModel();
 		
@@ -563,8 +569,10 @@ class cFriendsFriendsController extends cController {
 	
 	public function Approve ( ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$model = $this->GetModel();
 		
