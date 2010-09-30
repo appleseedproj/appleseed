@@ -567,6 +567,11 @@ class cFriendsFriendsController extends cController {
 		return ( true );
 	}
 	
+	/*
+	 * Approve a friend request
+	 * 
+	 * @access public
+	 */
 	public function Approve ( ) {
 		
 		if ( !$this->_CheckAccess ( ) ) {
