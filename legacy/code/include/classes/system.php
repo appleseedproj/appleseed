@@ -30,7 +30,7 @@
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
   // | Extension of the Appleseed BASE API                               |
-  // | VERSION:      0.7.3                                               |
+  // | VERSION:      0.7.7                                               |
   // | DESCRIPTION:  Extends the System class definitions.               |
   // +-------------------------------------------------------------------+
 

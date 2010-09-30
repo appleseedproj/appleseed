@@ -1,21 +1,19 @@
-Appleseed v0.7.6 Beta (Eleventh Release)
+Appleseed v0.7.7 Beta (Twelfth Release)
 
-Sep 07 2010
+Sep 30 2010
 
 New In This Release:
 --------------------
 
-A new layout is being developed, and legacy code is being refactored.
-Client-side i18n allows you to use the same lang file you have on the 
-server.  All the foundational work necessary to move forward with the
-user-facing code has been done.  Now is when things get interesting.
+Friends and circle management have been moved from legacy to the new framework.
+UTF8 input support.
 
-A lot more.  See _release/changelog.txt
+See _release/changelog.txt
 
 --------------------
 About Appleseed:
 
-This is the eleventh release of the Appleseed code base.  Appleseed is 
+This is the twelfth release of the Appleseed code base.  Appleseed is 
 social networking software, similar to Friendster or Myspace.  
 
 Appleseed is distributed social networking, which connects friends on 
@@ -53,12 +51,11 @@ Install Instructions
 Upgrade Instructions
 
 (This can be a little tricky, and these steps only work for upgrading
-from 0.7.5)
+from 0.7.6)
 
 1. Make a backup of your web directory and db tables!
 2. Untar the release into your web directory, overwriting existing files
-3. Move photos/ to _legacy/storage/photos/
-4. Create the file configurations/local/local.conf with your site settings in this format:
+3. Create the file configurations/local/local.conf with your site settings in this format:
 
 inherit="default"
 enabled="true"

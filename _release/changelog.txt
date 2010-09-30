@@ -1,5 +1,11 @@
 RELEASE CHANGES
 
+-- 0.7.7 --
+
+Refactored Friends and Circle Management
+    - QuickFriend protocol working
+UTF-8 Input Support
+
 -- 0.7.6 --
 
 + Javascript Framework

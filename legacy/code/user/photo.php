@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.3                                               |
+  // | VERSION:      0.7.7                                               |
   // | DESCRIPTION:  Displays a single photo requested from a photoset.  |
   // | WRAPPED BY:   /code/user/photos.php                               |
   // +-------------------------------------------------------------------+

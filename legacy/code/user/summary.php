@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.3                                               |
+  // | VERSION:      0.7.7                                               |
   // | DESCRIPTION:  Displays summary section of user profile page.      |
   // | WRAPPED BY:   /code/user/main.php                                 |
   // +-------------------------------------------------------------------+
