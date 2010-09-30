@@ -1,11 +1,24 @@
-<section id="appleseed-donate">
-
+<section id="appleseed-indiegogo">
 	<h1>Support Appleseed!</h1>
 	
+	<h2>Fundraising Drive!</h2>
+	
 	<p>As a volunteer open source project, Appleseed depends on your support.</p>
-	<p>Help us push towards 1.0 by making a small donation to the project!</p>
+	<p>Help us push towards 1.0 by making a small donation to the project on <a href="http://www.indiegogo.com/Open-Source-Social-Networking">Indiegogo.com</a>!</p>
 	
+	<p>Donate through Indiegogo, and have your donation counted towards our goal!</p>
 	
+	<br />
+	
+	<iframe src="http://www.indiegogo.com/project/widget/10001?a=17789" width="210px" height="400px" frameborder="1" scrolling="no"></iframe>
+</section>
+
+<section id="appleseed-donate">
+
+	<h2>Paypal</h2>
+	
+	<p>You can also donate directly using paypal (although it doesn't show in our fundraising totals).</p>
+
 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 		<input type="hidden" name="business" value="donate@appleseedproject.org">
 		<input type="hidden" name="cmd" value="_donations">
@@ -28,14 +41,3 @@
 	</form> 
 	
 </section>
-
-<!--
-<section id="appleseed-indiegogo">
-	<h1>Fundraising Drive!</h1>
-	
-	<p>We're also on <a href="http://www.indiegogo.com/The-Appleseed-Project">Indiegogo.com</a>, looking to raise money for the project until December 1, 2010.</p>
-	<p>Donate through Indiegogo, and have your donation counted towards our goal!</p>
-	
-	<iframe src="http://www.indiegogo.com/project/widget/4462?a=17789" width="220px" height="390px" frameborder="1" scrolling="no"></iframe>
-</section>
--->

@@ -358,6 +358,7 @@
 		
 		/* appleseed-donate */
 		#appleseed-donate input, #appleseed-donate select { width:auto; margin-right:5px; }
+		#appleseed-indiegogo h2 { padding-top:10px; }
 		
 		/* appleseed-debug */
 		#appleseed-debug { margin-top:10px; }

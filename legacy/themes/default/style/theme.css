@@ -205,3 +205,6 @@ span.untranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-
 
 span.mistranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#ff4444; font-style:italic; }
 span.mistranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca; font-style:italic; }
+
+#userinfo { float:left; background-color:#c0d895; padding:0px 8px 5px 8px; margin-bottom:10px; }
+#userinfo { -moz-border-radius:6px; border-radius:6px; -webkit-border-radius:6px; }
