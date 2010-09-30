@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.6                                               |
+  // | VERSION:      0.7.7                                               |
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
   
@@ -60,9 +60,11 @@
   $gDOMAIN = ($_POST['gDOMAIN']) ? $_POST['gDOMAIN'] : $gDOMAIN;
   $gDOMAIN = ($gDOMAIN) ? $gDOMAIN : 'http://' . $_SERVER['HTTP_HOST'];
   $gUPGRADE = $_POST['gUPGRADE'];
-  $gADMINUSER = ($_POST['gADMINUSER']) ? $_POST['gADMINUSER'] : 'Admin';
+  $gADMINUSER = ($_POST['gADMINUSER']) ? $_POST['gADMINUSER'] : 'admin';
   $gADMINPASS = ($_POST['gADMINPASS']);
   $gADMINPASSCONFIRM = ($_POST['gADMINPASSCONFIRM']);
+  
+  $gADMINUSER = strtolower ( $gADMINUSER );
   
   $gSTAMP = '_' . date ('mdy_His', strtotime ('now'));
   
@@ -99,7 +101,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-  <title>Appleseed 0.7.6 Install Script</title>
+  <title>Appleseed 0.7.7 Install Script</title>
 </head>
 
 <style type="text/css" media="screen">
@@ -1074,7 +1076,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS, $gUPGRADE;
     
-    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.6', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.7', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
@@ -1132,11 +1134,10 @@ class cINSTALL {
 							</ul>
 						<h3>New in this release</h3>
 							<ul>
-								<li>One-Click Server Upgrades</li>
-								<li>New Layout</li>
-								<li>Client-Side Internationalization</li>
-								<li>Legacy code refactoring</li>
-								<li>Lots of bug fixes</li>
+								<li>UTF-8 Input Support</li>
+								<li>Refined friends/circles UI</li>
+								<li>Internal features and refactoring</li>
+								<li>More bug fixes</li>
 							</ul>
 
 						<h3>Appleseed Project Homepage</h3>
@@ -1144,11 +1145,14 @@ class cINSTALL {
 						&rarr; <a href="http://opensource.appleseedproject.org">opensource.appleseedproject.org</a>
 
 					</section>
-				</div>
+					<section id="appleseed-indiegogo"> <h1>Support Appleseed!</h1> 	<b>Fundraising Drive!</b> 	<p>As a volunteer open source project, Appleseed depends on your support.</p> <p>Help us push towards 1.0 by making a small donation to the project on <a href="http://www.indiegogo.com/Open-Source-Social-Networking">Indiegogo.com</a>!</p> 	<p>Donate through Indiegogo, and have your donation counted towards our goal!</p> 	<br /> 	<iframe src="http://www.indiegogo.com/project/widget/10001?a=17789" width="210px" height="400px" frameborder="1" scrolling="no"></iframe> </section>
+					<section id="appleseed-donate"> <h2>Paypal</h2> <p>You can also donate directly using paypal (although it doesn't show in our fundraising totals).</p> 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> <input type="hidden" name="business" value="donate@appleseedproject.org"> <input type="hidden" name="cmd" value="_donations"> <input type="hidden" name="item_name" value="The Appleseed Project"> <input type="hidden" name="item_number" value="Open Source Donation"> 		<br/> 		<select id="donate-amount" name="amount"> <option value="100"> $100.00 </option> <option value="50"> $50.00 </option> <option value="25"> $25.00 </option> <option value="10"> $10.00 </option> <option value="5" selected="selected"> $5.00 </option> </select> 		<input type="hidden" name="currency_code" value="USD"> <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" alt="PayPal - The safer, easier way to pay online"> <img alt="" border="0" width="1" height="1" src="https://www.paypal.com/en_US/i/scr/pixel.gif" > </form>  </section>				
+		</div>
+					
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.6</h1>
+            <h1>Appleseed Install v0.7.7</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
@@ -1360,11 +1364,13 @@ class cINSTALL {
 						&rarr; <a href="http://opensource.appleseedproject.org">opensource.appleseedproject.org</a>
 
 					</section>
+					<section id="appleseed-indiegogo"> <h1>Support Appleseed!</h1> 	<b>Fundraising Drive!</b> 	<p>As a volunteer open source project, Appleseed depends on your support.</p> <p>Help us push towards 1.0 by making a small donation to the project on <a href="http://www.indiegogo.com/Open-Source-Social-Networking">Indiegogo.com</a>!</p> 	<p>Donate through Indiegogo, and have your donation counted towards our goal!</p> 	<br /> 	<iframe src="http://www.indiegogo.com/project/widget/10001?a=17789" width="210px" height="400px" frameborder="1" scrolling="no"></iframe> </section>
+					<section id="appleseed-donate"> <h2>Paypal</h2> <p>You can also donate directly using paypal (although it doesn't show in our fundraising totals).</p> 	<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> <input type="hidden" name="business" value="donate@appleseedproject.org"> <input type="hidden" name="cmd" value="_donations"> <input type="hidden" name="item_name" value="The Appleseed Project"> <input type="hidden" name="item_number" value="Open Source Donation"> 		<br/> 		<select id="donate-amount" name="amount"> <option value="100"> $100.00 </option> <option value="50"> $50.00 </option> <option value="25"> $25.00 </option> <option value="10"> $10.00 </option> <option value="5" selected="selected"> $5.00 </option> </select> 		<input type="hidden" name="currency_code" value="USD"> <input type="image" name="submit" border="0" src="https://www.paypal.com/en_US/i/btn/btn_donate_SM.gif" alt="PayPal - The safer, easier way to pay online"> <img alt="" border="0" width="1" height="1" src="https://www.paypal.com/en_US/i/scr/pixel.gif" > </form>  </section>				
 				</div>
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.6</h1>
+            <h1>Appleseed Install v0.7.7</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
