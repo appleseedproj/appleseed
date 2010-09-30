@@ -19,7 +19,7 @@
     <?php echo $bINVITEBOX; ?>
 
     <!-- ## latestphotos obj -->
-    <?php <!-- echo $bLATESTNODES; --> ?>
+    <?php // echo $bLATESTNODES; ?>
 
     &nbsp;
    </div>
