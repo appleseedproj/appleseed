@@ -18,7 +18,6 @@ DROP TABLE IF EXISTS `%PREFIX%friendInformation`;
 DROP TABLE IF EXISTS `%PREFIX%groupContent`;
 DROP TABLE IF EXISTS `%PREFIX%groupInformation`;
 DROP TABLE IF EXISTS `%PREFIX%groupMembers`;
-DROP TABLE IF EXISTS `%PREFIX%journalPost`;
 DROP TABLE IF EXISTS `%PREFIX%journalPrivacy`;
 DROP TABLE IF EXISTS `%PREFIX%messageAttachments`;
 DROP TABLE IF EXISTS `%PREFIX%messageInformation`;
@@ -39,7 +38,6 @@ DROP TABLE IF EXISTS `%PREFIX%tagInformation`;
 DROP TABLE IF EXISTS `%PREFIX%tagList`;
 DROP TABLE IF EXISTS `%PREFIX%userAccess`;
 DROP TABLE IF EXISTS `%PREFIX%userAnswers`;
-DROP TABLE IF EXISTS `%PREFIX%userAuthorization`;
 DROP TABLE IF EXISTS `%PREFIX%userBlocks`;
 DROP TABLE IF EXISTS `%PREFIX%userGroups`;
 DROP TABLE IF EXISTS `%PREFIX%userIcons`;
@@ -51,6 +49,8 @@ DROP TABLE IF EXISTS `%PREFIX%userProfile`;
 DROP TABLE IF EXISTS `%PREFIX%userQuestions`;
 DROP TABLE IF EXISTS `%PREFIX%userSessions`;
 DROP TABLE IF EXISTS `%PREFIX%userSettings`;
+DROP TABLE IF EXISTS `%PREFIX%journalPost`;
+DROP TABLE IF EXISTS `%PREFIX%userAuthorization`;
 
 
 CREATE TABLE `%PREFIX%userAuthorization` ( `uID` int(10) unsigned zerofill NOT NULL AUTO_INCREMENT, `Username` varchar(32) NOT NULL DEFAULT '', `Pass` varchar(144) DEFAULT NULL, `Verification` int(1) DEFAULT NULL, `Standing` int(1) DEFAULT NULL, PRIMARY KEY (`uID`), UNIQUE KEY `%PREFIX%userAuthorization_index` (`Username`)) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8; 
