@@ -1,11 +1,6 @@
 alter table `#__AccessControl` convert to character set utf8 collate utf8_general_ci;
 alter table `#__ExampleCustomers` convert to character set utf8 collate utf8_general_ci;
 alter table `#__ExampleEmployees` convert to character set utf8 collate utf8_general_ci;
-alter table `#__ExampleOffices` convert to character set utf8 collate utf8_general_ci;
-alter table `#__ExampleOrderDetails` convert to character set utf8 collate utf8_general_ci;
-alter table `#__ExampleOrders` convert to character set utf8 collate utf8_general_ci;
-alter table `#__ExamplePayments` convert to character set utf8 collate utf8_general_ci;
-alter table `#__ExampleProducts` convert to character set utf8 collate utf8_general_ci;
 alter table `#__LocalTokens` convert to character set utf8 collate utf8_general_ci;
 alter table `#__NodeDiscovery` convert to character set utf8 collate utf8_general_ci;
 alter table `#__RemoteTokens` convert to character set utf8 collate utf8_general_ci;
@@ -41,7 +36,6 @@ alter table `#__systemLogs` convert to character set utf8 collate utf8_general_c
 alter table `#__systemMaintenance` convert to character set utf8 collate utf8_general_ci;
 alter table `#__systemNodes` convert to character set utf8 collate utf8_general_ci;
 alter table `#__systemOptions` convert to character set utf8 collate utf8_general_ci;
-alter table `#__systemStrings` convert to character set utf8 collate utf8_general_ci;
 alter table `#__systemTooltips` convert to character set utf8 collate utf8_general_ci;
 alter table `#__tagInformation` convert to character set utf8 collate utf8_general_ci;
 alter table `#__tagList` convert to character set utf8 collate utf8_general_ci;
