@@ -105,7 +105,7 @@ class cFriendsTabsController extends cController {
 			$row->Load ( $rowOriginal );
 			$row->Find ( "a", 0 )->innertext = "Mutual";
 			$row->Find ( "li", 0 )->class .= " system system-requests ";
-			$row->Find ( "a", 0 )->href = '/profile/' . $focus->Username . '/friends/mutual/';
+			$row->Find ( "a", 0 )->href = 'http://' . ASD_DOMAIN . '/profile/' . $focus->Username . '/friends/mutual/';
 			if ( $currentCircle == 'mutual' ) $row->Find ( "li", 0 )->class .= " selected ";
 			$ul->innertext .= $row->outertext;
 		} else {
