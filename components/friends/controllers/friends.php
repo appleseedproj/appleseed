@@ -395,6 +395,7 @@ class cFriendsFriendsController extends cController {
 			
 			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
 			$row->Find ( '[class=friends-icon]', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
+			$row->Find ( '[class=friends-icon]', 0)->class .= " usericon";
 			
 			$data = array ( 'account' => $this->_Current->Account, 'request' => $request, );
 			$row->Find ( '[class=friends-add-friend-link]', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'Friend', 'Addlink', $data );
