@@ -2,7 +2,7 @@
 [tabs]
 NEWS_TAB="News"
 FRIENDS_TAB="Friends"
-WALL_TAB="Wall"
+PAGE_TAB="Page"
 INFO_TAB="Info"
 JOURNAL_TAB="Journal"
 PHOTOS_TAB="Photos"

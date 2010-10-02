@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Wall Component
+/** Page Component
  * 
- * Wall Component Entry Class
+ * Page Component Entry Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Wall
+ * @subpackage  Page
  */
-class cWall extends cComponent {
+class cPage extends cComponent {
 	
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ class cWall extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'wall', 'title' => 'Wall Tab', 'link' => '/wall/' );
+		$return[] = array ( 'id' => 'page', 'title' => 'Page Tab', 'link' => '/page/' );
 		
 		return ( $return );
 	} 
