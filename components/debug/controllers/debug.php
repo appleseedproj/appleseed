@@ -277,7 +277,7 @@ class cDebugDebugController extends cController {
 			
 			$debugNetworkId->innertext = $l;
 			$debugNetworkRequest->innertext = urldecode ( $request );
-			$debugNetworkReturn->innertext = $return;
+			$debugNetworkReturn->innertext = strip_tags ( $return );
 			
 			$tbody->innertext .= $row->outertext;
 			
