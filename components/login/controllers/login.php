@@ -75,7 +75,7 @@ class cLoginLoginController extends cController {
 		}
 			
 		
-		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );	
+		$this->GetSys ( 'Session' )->Context ( "login.login.(.*)." . $pView );	
 		$sessionData['Identity'] = $this->GetSys ( 'Session' )->Get( 'Identity' );
 		$this->GetSys ( 'Session' )->Delete ( 'Identity' );
 		
@@ -139,7 +139,7 @@ class cLoginLoginController extends cController {
 		
 		$id = $pScope . "-login-message";
 		
-		$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );	
+		$this->GetSys ( "Session" )->Context ( "login.login.(.*)." . $pScope );
 		$message = $this->GetSys ( "Session" )->Get ( "Message" );
 		$error = $this->GetSys ( "Session" )->Get ( "Error" );
 		
@@ -199,7 +199,7 @@ class cLoginLoginController extends cController {
 			
 			$this->Login->Display();
 			
-			return ( false );
+			return ( true );
 		}
 	}
 	
@@ -207,6 +207,7 @@ class cLoginLoginController extends cController {
 		// Set the context for all of the forms.
 		$hiddenContexts = $this->Login->Find( "input[name=Context]" );
 		foreach ( $hiddenContexts as $hiddenContext ) {
+			// @todo Find a better way to find and modify contexts
 			$hiddenContext->value = $this->_Context;
 		}
 	}
@@ -254,7 +255,7 @@ class cLoginLoginController extends cController {
 	function Join ( ) {
 		
 		$session = $this->GetSys ( "Session" );
-		$session->Context ( $this->Get ( "Context" ) );
+		$session->Context ( "login.login.(.*).join" );
 		
 		$config = $this->Get ( "Config" );
 		$invites = $config['invites'];
@@ -410,7 +411,7 @@ class cLoginLoginController extends cController {
 		
 		if ( !$username ) {
 			
-			$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );
+			$this->GetSys ( "Session" )->Context ( "login.login.(.*).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", "Invalid Username" );
 			$this->GetSys ( "Session" )->Set ( "Error", 1 );
 			
@@ -425,7 +426,7 @@ class cLoginLoginController extends cController {
 		
 		$userAuth->Retrieve ( array ( "Username" => $username ) );
 		if (! $userAuth->Fetch() ) {
-			$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );
+			$this->GetSys ( "Session" )->Context ( "login.login.(.*).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", __( "Username Not Found", array ( "username" => $username ) ) );
 			$this->GetSys ( "Session" )->Set ( "Error", 1 );
 			return ( $this->Display ( $pView, $pData ) );
@@ -453,14 +454,14 @@ class cLoginLoginController extends cController {
 
 		if ( !$this->Mailer->Send ( $from, $fromName, $to, $toName, $subject, $body ) ) {
 			// Couldn't send out the message, so error without resetting the pw.
-			$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );
+			$this->GetSys ( "Session" )->Context ( "login.login.(.*).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", "Error Sending Message" );
 			$this->GetSys ( "Session" )->Set ( "Error", 1 );
 		} else { 
 			// Reset the pw.
 			$userAuth->Set ( "Pass", $newpass );
 			$userAuth->Save();
-			$this->GetSys ( "Session" )->Context ( $this->Get ( "Context" ) );
+			$this->GetSys ( "Session" )->Context ( "login.login.(.*).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", __( "Password Has Been Reset", array ( "email" => $to ) ) );
 			$this->GetSys ( "Session" )->Set ( "Error", 0 );
 		}
