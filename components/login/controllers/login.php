@@ -36,6 +36,10 @@ class cLoginLoginController extends cController {
 		
 		$noredirect = $pData['noredirect'];
 		
+		if ( $this->_Current = $this->Talk ( 'User', 'Current' ) ) {
+			return ( false );
+		}
+		
 		$config = $this->Get ( 'Config' );
 		$invites = $config['invites'];
 		
@@ -58,6 +62,10 @@ class cLoginLoginController extends cController {
 		// Set the context for all of the forms.
 		$hiddenContexts = $this->Login->Find( "input[name=Context]" );
 		foreach ( $hiddenContexts as $hiddenContext ) {
+			// @note This is for the login component on the frontpage
+			// @todo Find a better way to find and modify contexts
+			if ( $this->_Context == 'login.login.1.login') $this->_Context = 'login.login.(.*).login';
+			if ( $this->_Context == 'login.login.2.remote') $this->_Context = 'login.login.(.*).remote';
 			$hiddenContext->value = $this->_Context;
 		}
 		

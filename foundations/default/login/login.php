@@ -66,17 +66,11 @@
 		  	
 				</div>
 				<div id="appleseed-login-content" class="grid_12 omega">
-					<section id="login-local">
-						<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
-					</section>
+					<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
  
-					<section id="login-remote">
-						<?php $zApp->Components->Go ( "login", "login", "remote" ); ?>
-					</section>
+					<?php $zApp->Components->Go ( "login", "login", "remote" ); ?>
 
-					<section id="login-join">
-						<?php $zApp->Components->Go ( "login", "login", "join" ); ?>
-					</section>
+					<?php $zApp->Components->Go ( "login", "login", "join" ); ?>
 				</div>
 			</div>
 		</div>

@@ -57,9 +57,9 @@
        
 			<div id="appleseed-frontpage-main" class="grid_16">
 				<div id="appleseed-frontpage-info" class="grid_4 alpha">
-					<section id="frontpage-login">
-						<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
-					</section>
+					<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
+					
+					<?php $zApp->Components->Go ( "login", "login", "remote" ); ?>
         
 		 			<?php $zApp->Components->Go ( "appleseed", "appleseed", "donate" ); ?>
 		  	
