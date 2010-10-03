@@ -11,26 +11,30 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Articles Component Controller
+/** Articles Component Circles Model
  * 
- * Articles Component Controller Class
+ * Articles Component Circles Model Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Articles
  */
-class cArticlesArticlesController extends cController {
+class cArticlesModel extends cModel {
+	
+	protected $_Tablename = "contentArticles";
 	
 	/**
 	 * Constructor
 	 *
 	 * @access  public
 	 */
-	public function __construct ( ) {       
-		parent::__construct( );
+	public function __construct ( $pTables = null ) {       
+		parent::__construct( $pTables );
 	}
 	
-	function Display ( $pView = null, $pData = array ( ) ) {
-		return ( parent::Display( $pView, $pData ) );
+	public function GetArticles() {
+		
+		$this->Retrieve ( array ( "Verification" => 1 ) );
+		
 	}
-
+	
 }

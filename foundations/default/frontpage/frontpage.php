@@ -66,7 +66,7 @@
 				</div>
 				<div id="appleseed-frontpage-content" class="grid_12 omega">
 					<section id="frontpage-content">
-						<?php $zApp->Components->Go ( "articles", "articles", "articles" ); ?>
+						<?php $zApp->Components->Go ( "articles", "summaries", "summaries" ); ?>
 					</section>
 				</div>
 			</div>
