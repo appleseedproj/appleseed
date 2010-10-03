@@ -1,2 +1,2 @@
-<h1>Newswire Title</h1>
+<h1>Article Summaries Title</h1>
 
