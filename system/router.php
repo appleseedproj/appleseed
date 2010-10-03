@@ -61,7 +61,7 @@ class cRouter extends cBase {
 		foreach ( $routes as $r => $route ) {
 			$r = strtolower ( ltrim ( rtrim ( $r, '/' ), '/' ) );
 
-			if ( !$r ) continue;
+			if ( (!$route) and (!$r) ) continue;
 			
 			$pattern = '/^' . addcslashes ($r, '/') . '$/';
 

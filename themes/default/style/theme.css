@@ -336,6 +336,16 @@
 		#appleseed-404-info { float:left; }
 		
 		/* Login */
+		#appleseed-frontpage { float:left; background-color:#f1fed5; min-height:840px; }
+		#appleseed-frontpage-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
+		
+		#appleseed-frontpage-info { float:left; }
+		
+		#appleseed-frontpage-info #frontpage-login fieldset { width:198px; }
+		#appleseed-frontpage-info #frontpage-login input { width:95px; margin-left:10px; }
+		#appleseed-frontpage-info #frontpage-login label { width:75px; padding:0; }
+		
+		/* Login */
 		#appleseed-login { float:left; background-color:#f1fed5; min-height:840px; }
 		#appleseed-login-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
 		
