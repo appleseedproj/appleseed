@@ -175,7 +175,8 @@ class cComponent extends cBase {
 		$class = 'c' . $componentname . $controllername . 'Controller';
 		
 		if ( !is_file ( $filename ) ) {
-			echo __("Controller Not Found", array ( 'name' => $pController ) );
+			$error = __("Controller Not Found", array ( 'name' => $pController ) );
+			trigger_error  ($error, E_USER_WARNING );
 			return ( false );
 		}
 		
