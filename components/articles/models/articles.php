@@ -31,10 +31,18 @@ class cArticlesModel extends cModel {
 		parent::__construct( $pTables );
 	}
 	
-	public function GetArticles() {
+	public function RetrieveArticles( $pLimit = null ) {
 		
-		$this->Retrieve ( array ( "Verification" => 1 ) );
+		$this->Retrieve ( array ( "Verification" => 1 ), "Stamp DESC", $pLimit );
 		
+		return ( true );
+	}
+	
+	public function RetrieveQueued() {
+		
+		$this->Retrieve ( array ( "Verification" => 0 ) );
+		
+		return ( true );
 	}
 	
 }

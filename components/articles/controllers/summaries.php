@@ -46,8 +46,36 @@ class cArticlesSummariesController extends cController {
 		
 		list ( $this->_PageStart, $this->_PageStep, $this->_Page ) = $this->_PageCalc();
 		
-		$this->Model->GetArticles();
+		$this->Model->RetrieveArticles ( array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
 		
+		$link = '/articles/(.*)';
+		
+		$pageData = array ( 'start' => $this->_PageStart, 'step'  => $this->_PageStep, 'total' => $this->Model->Get ( "Total" ), 'link' => $link );
+		$pageControls =  $this->View->Find ("nav[class=pagination]");
+		foreach ( $pageControls as $p => $pageControl ) {
+			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
+		}
+		
+		$li = $this->View->Find ( 'ul[class=article-list] li', 0);
+		
+		$row = $this->View->Copy ( '[class=article-list]' )->Find ( 'li', 0 );
+		
+		$rowOriginal = $row->outertext;
+		
+		$li->innertext = '';
+		
+		while ( $this->Model->Fetch() ) {
+			$row = new cHTML ();
+			$row->Load ( $rowOriginal );
+			
+			$row->Find ( "[class=title]", 0 )->innertext = $this->Model->Get ( "Title" );
+			$row->Find ( "[class=summary]", 0 )->innertext = str_replace ( "\n", "<br />", $this->Model->Get ( "Summary" ) );
+			
+		    $li->innertext .= $row->outertext;
+		    unset ( $row );
+		}
+		
+		return ( true );
 	}
 	
 	private function _PageCalc ( ) {
