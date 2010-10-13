@@ -24,3 +24,5 @@ BLOCK_CONTACT_USER="Block this person"
 
 [mutual-summary]
 SEE_ALL_MUTUAL_FRIENDS="See all"
+
+CLEAR_STATUS=clear

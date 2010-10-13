@@ -81,7 +81,7 @@
 					</div>
 				</div>
 				<div id="appleseed-profile-content" class="grid_12 omega">
-					<?php $zApp->Components->Go ( "profile", "page", "page" ); ?>
+					<?php $zApp->Components->Go ( "page", "page", "page" ); ?>
 				</div>
 			</div>
 		</div>

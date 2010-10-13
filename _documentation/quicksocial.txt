@@ -243,6 +243,7 @@ Protocol
 						context=<context>
 						contextLink=<contextlink>
 						comment=<comment>
+						icon=<icon>
 						description=<description>
 						stamp=<datetime>
 	

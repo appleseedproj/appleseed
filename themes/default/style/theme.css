@@ -244,10 +244,12 @@
 		
 		/* profile-status */
 		#status-container { margin-top:40px; height:49px; max-height:150px; overflow:hidden; }
-		#status-container #status-name { font-size:110%; font-weight:bold; }
-		#status-container #status-current { font-size:90%; color:#2a2a2a; margin-left:5px;  }
-		#status-container abbr { font-size:80%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
-		#status-container .edit { padding:0; background:none; font-size:80%; font-style:italic; border:none; cursor:auto; }
+		#status-container .name { font-size:120%; font-weight:bold; }
+		#status-container .current { font-size:90%; font-weight:bold; color:#5a5a5a; margin-left:5px;  }
+		#status-container .stamp { font-size:70%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
+		#status-container form { width:auto; display:inline; clear:none; padding:0; margin:0; }
+		#status-container .clear-status-action { visibility:visible; display:inline; padding:0; background:none; font-size:80%; font-style:italic; border:none; cursor:auto; color:#406300; }
+		#status-container .clear-status-action:hover { cursor:pointer } 
 		
 		/* profile-tabs */
 		#profile-tabs { float:left; position:relative; }
@@ -328,6 +330,33 @@
 		/* profile-comments */
 		#profile-comments { float:left; position:relative; top:-24px; }
 		#profile-comments-two { float:left; position:relative; top:-24px; }
+		
+		/* profile-page */
+		#profile-page .post { float:left; width:98%; padding:1%; margin-bottom:20px; border:1px solid #c0d895; }
+		#profile-page .post .comments { width:590px; height:20px; padding:5px; }
+		#profile-page .post .submit { float:right; }
+		
+		#profile-page .list .item { float:left; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; }
+		#profile-page .list a { float:left; background:none; padding:0; display:inline; }
+		#profile-page .list .item .owner-icon-link { float:left; display:inline; }
+		#profile-page .list .item .owner-icon { width:64px; height:64px; }
+		#profile-page .list .item .comment { float:left; display:inline; clear:none; width:78%; padding:0; margin:0 5px; }
+		#profile-page .list .item .owner-link { margin-right:5px; font-weight:bold; }
+		#profile-page .list .item .delete { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; }
+		#profile-page .stamp { float:left; clear:left; color:#8a8a8a; margin-left:36px; font-style:italic; border:none; margin-right:5px; cursor:auto; }
+		#profile-page .actions { float:left; clear:none; margin-top:1px; font-size:90%; }
+		#profile-page .actions a { float:left; padding-right:5px; }
+		#profile-page .actions a:before { content:"\B7 \ "; }
+		
+		#profile-page .privacy { clear:both; float:left; }
+		#profile-page .privacy h2 { clear:both; float:left; margin-right:10px; }
+		#profile-page .privacy ul { list-style-type:none; clear:none; float:left; }
+		#profile-page .privacy ul li { clear:none; float:left; margin-right:10px; }
+		#profile-page .privacy label { clear:none; float:left; font-size:100%; margin:0; padding:0; width:auto; }
+		#profile-page .privacy .everybody { font-style:italic; }
+		#profile-page .privacy .nobody { font-style:italic; }
+		#profile-page .privacy .friends { font-style:italic; }
+		#profile-page .privacy input[type="checkbox"] { margin-top:1px; margin-right:5px; }
 		
 		/* 404 */
 		#appleseed-404 { float:left; background-color:#f1fed5; min-height:840px; }
