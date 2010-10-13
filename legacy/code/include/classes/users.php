@@ -522,12 +522,13 @@
       global $gUSERTHEME, $gDEFAULTTHEME;
       global $gTHEMELOCATION;
       global $gUSERTABSLOCATION, $gUSERTABS;
+      $gDEFAULTTHEME = 'default';
 
       $this->userSettings->Save ("DefaultTheme", $gDEFAULTTHEME);
 
       global $gUSERTHEME;
-      $gUSERTHEME = $gDEFAULTTHEME;
-      $gTHEMELOCATION = "legacy/themes/$gUSERTHEME";
+      $gUSERTHEME = 'default';
+      $gTHEMELOCATION = "legacy/themes/$gUSERTHEME/";
       $gUSERTABSLOCATION = $gTHEMELOCATION . $gUSERTABS;
 
       if (!$this->userSettings->Error) {

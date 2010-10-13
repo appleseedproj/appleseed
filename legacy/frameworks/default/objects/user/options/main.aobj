@@ -110,20 +110,6 @@
   </fieldset>
 
   <fieldset>
-  	<legend><a name="custom" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("Custom Settings"); ?></a></legend>
-
-      <table>
-        <tbody>
-          <tr>
-            <th> <label for="defaulttheme"><?php echo __("Default Theme"); ?></label> </th>
-            <td> <?php $zHTML->Menu ("DEFAULTTHEME", $gTHEMELIST, NULL, $zFOCUSUSER->userSettings->SettingsCache['DefaultTheme']); ?> </td>
-          </tr>
-        </tbody>
-      </table>
-
-  </fieldset>
-
-  <fieldset>
     <legend><a name="profile" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("Profile Photo"); ?></a></legend>
 
       <table>
