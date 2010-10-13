@@ -349,7 +349,7 @@
 		#profile-page .actions a:before { content:"\B7 \ "; }
 		
 		#profile-page .privacy { clear:both; float:left; }
-		#profile-page .privacy h2 { clear:both; float:left; margin-right:10px; }
+		#profile-page .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
 		#profile-page .privacy ul { list-style-type:none; clear:none; float:left; }
 		#profile-page .privacy ul li { clear:none; float:left; margin-right:10px; }
 		#profile-page .privacy label { clear:none; float:left; font-size:100%; margin:0; padding:0; width:auto; }
