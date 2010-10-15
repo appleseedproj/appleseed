@@ -165,7 +165,6 @@
       $zFOCUSUSER->SaveQuestions ();
       $zFOCUSUSER->SaveGeneral ();
       $zFOCUSUSER->SaveIcons ();
-      // NOTE: Not working for SAVE_ALL.
       $zFOCUSUSER->SaveConfig ();
       $zFOCUSUSER->SaveEmails();
       $zICON->Message = NULL;

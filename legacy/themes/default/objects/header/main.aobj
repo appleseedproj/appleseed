@@ -1,5 +1,5 @@
   <div id="sys_message" class="container_12"> 
-   	<p> <?php echo __("Appleseed is early beta"); ?> </p>
+   	<p> <?php echo __("Appleseed Legacy Mode Notice"); ?> </p>
   </div>
  		
    <header class="container_12"> 
