@@ -192,4 +192,8 @@ class cComponent extends cBase {
 		return ( true );
 	}
 	
+	public function Talk ( $pComponent, $pRequest, $pData = null ) {
+		return ( $this->GetSys ( "Components" )->Talk ( $pComponent, $pRequest, $pData ) );
+	}
+	
 }
