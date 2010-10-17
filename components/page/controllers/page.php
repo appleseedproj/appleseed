@@ -38,7 +38,8 @@ class cPagePageController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		if ( !$this->_Current ) {
-			$this->View->Find ( "[class=post]", 0 )->outertext = "";
+			$this->View->Find ( '.post', 0 )->outertext = "";
+			$this->_Prep();
 		} else {
 			$this->_Prep();
 		}
@@ -89,13 +90,24 @@ class cPagePageController extends cController {
 	
 	public function Share ( $pView = null, $pData = array ( ) ) {
 		
+		$this->Model = $this->GetModel (); 
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		$Owner = $this->_Current->Account;
 		$Comments = $this->GetSys ( "Request" )->Get ( "Comment" );
 		$Privacy = $this->GetSys ( "Request" )->Get ( "Privacy" );
-		echo "<pre>";
-		print_r ( $_REQUEST ); 
-		print_r ( $Privacy ); 
 		
-		return ( true );
+		$Current = false;
+		
+		if ( $this->_Focus->Account == $this->_Current->Account ) $Current = true;
+		
+		$this->Model->Post ( $Comments, $Privacy, $this->_Focus->Id, $Owner, $Current );
+		
+		$redirect = '/profile/' . $this->_Focus->Username . '/page/';
+		header ( 'Location:' . $redirect );
+		exit;
 	}
 	
 }

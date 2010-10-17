@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cPageModel extends cModel {
 	
-	protected $_Tablename = "PagePosts";
+	protected $_Tablename = 'PagePosts';
 	
 	/**
 	 * Constructor
@@ -33,20 +33,30 @@ class cPageModel extends cModel {
 	
 	public function RetrieveCurrent ( $pUserId ) {
 		
-		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
+		$criteria = array ( 'User_FK' => $pUserId, 'Current' => 1 );
 		$this->Retrieve ( $criteria );
 		
 		return ( true );
 	}
 	
 	public function ClearCurrent ( $pUserId ) {
-		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
+		$table = $this->_Prefix . $this->_Tablename;
+		$query = 'UPDATE `' . $table . '` SET `Current` = ? WHERE `User_FK` = ?';
+		
+		$prepared[] = '0'; 
+		$prepared[] = $pUserId;
+		
+		$this->Query ( $query, $prepared );
+		
+		return ( true );
+		
+		$criteria = array ( 'User_FK' => $pUserId, 'Current' => 1 );
 		$this->Retrieve ( $criteria );
 		
-		if ( $this->Get ( " Total" ) == 0 ) return ( true );
+		if ( $this->Get ( 'Total' ) == 0 ) return ( true );
 		
 		$this->Fetch();
-		$this->Set ( "Current", 0 );
+		$this->Set ( 'Current', 0 );
 		
 		$this->Save();
 		
@@ -55,9 +65,30 @@ class cPageModel extends cModel {
 	
 	public function RetrievePagePosts ( $pUserId ) {
 		
-		$criteria = array ( "User_FK" => $pUserId );
-		$this->Retrieve ( $criteria );
+		$criteria = array ( 'User_FK' => $pUserId );
+		$this->Retrieve ( $criteria, 'Stamp DESC' );
 		
 		return ( true );
 	}
+	
+	public function Post ( $pComment, $pPrivacy, $pUser, $pOwner, $pCurrent = false ) {
+		$this->Protect ( 'Post_PK', null );
+		$this->Set ( 'User_FK', $pUser );
+		$this->Set ( 'Action', 'posted' );
+		$this->Set ( 'ActionOwner', $pOwner );
+		$this->Set ( 'Comment', $pComment );
+		$this->Set ( 'Stamp', NOW() );
+		
+		if ( $pCurrent ) {
+			$this->Set ( 'Current', (int)true );
+			$this->ClearCurrent ( $pUser );
+		} else {
+			$this->Set ( 'Current', '0' );
+		}
+		
+		$this->Save();
+		
+		return ( true );
+	}
+	
 }
