@@ -218,20 +218,25 @@ class cModel extends cBase {
 		
 		$primarykey_value = $this->Get ( $pk );
 		
-		$replacements["pk"] = $pk;
-		$replacements["criteria"] = $primarykey_value;
-		$replacements["table"] = $table;
+		if ( $primarykey_value ) {
 		
-		$prepared = array ();
+			$replacements["pk"] = $pk;
+			$replacements["criteria"] = $primarykey_value;
+			$replacements["table"] = $table;
 		
-		// Check for an existing record.
-		$sql = 'SELECT * FROM %table$s WHERE %pk$s = \'%criteria$s\' ';
+			$prepared = array ();
 		
-		$sql = sprintfn ( $sql, $replacements );
+			// Check for an existing record.
+			$sql = 'SELECT * FROM %table$s WHERE %pk$s = \'%criteria$s\' ';
 		
-		$this->Query ( $sql, $prepared );
+			$sql = sprintfn ( $sql, $replacements );
 		
-		$resultCount = $this->Get ( "Rows" );
+			$this->Query ( $sql, $prepared );
+		
+			$resultCount = $this->Get ( "Rows" );
+		} else {
+			$resultCount = 0;
+		}
 		
 		$usePrimary = false;
 		if ( isset ( $primarykey_value ) ) $usePrimary = true;
@@ -353,11 +358,11 @@ class cModel extends cBase {
 			
 		}
 		
-		$sql .= ' ( ' . implode ( ", ", $values ) . ' ) ';
+		$sql .= ' ( ' . implode ( ', ', $values ) . ' ) ';
 		
 		$sql = sprintfn ( $sql, $replacements );
 		
-		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
+		$DBO = $this->GetSys ( 'Database' )->Get ( 'DB' );
 		
 		$this->Query ( $sql, $prepared );
 		
@@ -786,10 +791,22 @@ class cModel extends cBase {
 		// Replace all the %variable$s references first
 		$query = sprintfn ( $query, $prepared );
 		
-		// Now replace all ? placeholders
+		if (strstr ( $query, 'INSERT' ) ) {
+			echo '<pre>';
+			echo "Query: ", $query;
+			echo "</pre>";
+		}
+		
+		// Now replace all ? placeholders with a unique identifier
 		$pcount= 0;
 		while ( preg_match ( '/\?/', $query ) ) {
-			$query = preg_replace ( '/\?/', $prepared[$pcount++], $query, 1);
+			$query = preg_replace ( '/\?/', '@@##AA@@##' , $query, 1);
+		}
+		
+		// Now replace all unique placeholders with the value.
+		$pcount = 0;
+		while ( preg_match ( '/@@##AA@@##/', $query ) ) {
+			$query = preg_replace ( '/@@##AA@@##/', $prepared[$pcount++], $query, 1);
 		}
 		
 		preg_match ( '/\:(\w+)/', $query, $results); 
