@@ -791,12 +791,6 @@ class cModel extends cBase {
 		// Replace all the %variable$s references first
 		$query = sprintfn ( $query, $prepared );
 		
-		if (strstr ( $query, 'INSERT' ) ) {
-			echo '<pre>';
-			echo "Query: ", $query;
-			echo "</pre>";
-		}
-		
 		// Now replace all ? placeholders with a unique identifier
 		$pcount= 0;
 		while ( preg_match ( '/\?/', $query ) ) {
