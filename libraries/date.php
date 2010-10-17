@@ -57,8 +57,12 @@ class cDate {
 		
 		if ( $seconds < 60 ) {
 			$formatted = __( "Time In Seconds Ago", array ( "seconds" => $seconds ) );
+		} else if ( $minutes == 1 ) {
+			$formatted = __( "Time In Minute Ago", array ( "minutes" => $minutes  ) );
 		} else if ( $minutes < 60 ) {
 			$formatted = __( "Time In Minutes Ago", array ( "minutes" => $minutes  ) );
+		} else if ( $hours == 1 ) {
+			$formatted = __( "Time In Hour Ago", array ( "hours" => $hours  ) );
 		} else if ( $hours < 24 ) {
 			$formatted = __( "Time In Hours Ago", array ( "hours" => $hours  ) );
 		} else if ( $days < 365 ) {

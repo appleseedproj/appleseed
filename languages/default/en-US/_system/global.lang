@@ -11,7 +11,9 @@ ALL_PAGES="All"
 
 [time]
 TIME_IN_SECONDS_AGO="%seconds$s seconds ago"
+TIME_IN_MINUTE_AGO="%minutes$s minute ago"
 TIME_IN_MINUTES_AGO="%minutes$s minutes ago"
+TIME_IN_HOUR_AGO="%hours$s hour ago"
 TIME_IN_HOURS_AGO="%hours$s hours ago"
 TIME_FULL_AM="%day$s/%month$s/%year$s %minute$s:%second$sam"
 TIME_FULL_PM="%day$s/%month$s/%year$s %minute$s:%second$spm"
