@@ -33,14 +33,14 @@ class cProfilePageModel extends cModel {
 	
 	public function RetrieveCurrent ( $pUserId ) {
 		
-		$criteria = array ( "Owner_FK" => $pUserId, "Current" => 1 );
+		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
 		$this->Retrieve ( $criteria );
 		
 		return ( true );
 	}
 	
 	public function ClearCurrent ( $pUserId ) {
-		$criteria = array ( "Owner_FK" => $pUserId, "Current" => 1 );
+		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
 		$this->Retrieve ( $criteria );
 		
 		if ( $this->Get ( " Total" ) == 0 ) return ( true );
