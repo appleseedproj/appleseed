@@ -31,12 +31,30 @@ class cFriends extends cComponent {
 	
 	public function AddToProfileTabs ( $pData = null ) {
 		
-		$return = array ();
+		$return = array();
 		
 		$return[] = array ( 'id' => 'friends', 'title' => 'Friends Tab', 'link' => '/friends/' );
 		
 		return ( $return );
 	} 
+	
+	public function Circles ( $pData = null ) {
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		include_once ( ASD_PATH . '/components/friends/models/circles.php');
+		$this->_Model = new cFriendsCirclesModel();
+		
+		$return = array();
+		$circles = $this->_Model->Circles ( $this->_Focus->Id );
+		
+		foreach ( $circles as $c => $circle ) {  
+			$return[] = $circle['name'];
+		}
+		
+		return ( $return );
+	}
 	
 	
 }
