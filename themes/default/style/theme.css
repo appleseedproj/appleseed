@@ -333,7 +333,8 @@
 		
 		/* profile-page */
 		#profile-page .post { float:left; width:98%; padding:1%; margin-bottom:20px; border:1px solid #c0d895; }
-		#profile-page .post .comments { width:590px; height:20px; padding:5px; }
+		#profile-page .post .comment { width:590px; height:14px; padding:5px; }
+		#profile-page .post .comment:focus { width:590px; height:28px; padding:5px; }
 		#profile-page .post .submit { float:right; }
 		
 		#profile-page .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; }

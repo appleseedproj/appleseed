@@ -3,7 +3,7 @@
 	<form method="post" class="post">
 		<input type="hidden" name="Task" value="Share">
 		<input type="hidden" name="Context" value="">
-		<textarea placeholder="What Is On Your Mind" class="comments" name="Comment"></textarea>
+		<textarea placeholder="What Is On Your Mind" class="comment" name="Comment"></textarea>
 		<button class="submit">Submit Post</button>
 		<section class="privacy">
 		</section>
