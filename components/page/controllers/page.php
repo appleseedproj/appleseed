@@ -32,6 +32,7 @@ class cPagePageController extends cController {
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->View = $this->GetView ( $pView ); 
+		$this->Model = $this->GetModel (); 
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
@@ -49,18 +50,52 @@ class cPagePageController extends cController {
 	
 	private function _Prep ( ) {
 		
+		$this->Model->RetrievePagePosts ( $this->_Focus->Id );
 		$this->View->Find ( "[name=Context]", 0 )->value = $this->Get ( "Context" );
 		
+		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
+		$privacyControls =  $this->View->Find ('.privacy', 0);
+		$privacyControls->innertext = $this->GetSys ( "Components" )->Buffer ( "privacy", $pageData ); 
+			
+		$li = $this->View->Find ( '.list .item', 0);
+		
+		$row = $this->View->Copy ( '.list' )->Find ( '.item', 0 );
+		
+		$rowOriginal = $row->outertext;
+		
+		$li->innertext = '';
+		
+		while ( $this->Model->Fetch() ) {
+			$row = new cHTML ();
+			$row->Load ( $rowOriginal );
+			
+			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( "Date" )->Format ( $this->Model->Get ( "Stamp" ) );
+			$row->Find ( '.content', 0 )->innertext = $this->Model->Get ( "Comment" );
+			$row->Find ( '.owner-link', 0 )->rel = $this->Model->Get ( "ActionOwner" );
+			$row->Find ( '.owner-link', 0 )->innertext = $this->Model->Get ( "ActionOwner" );
+			
+			list ( $username, $domain ) = explode ( '@', $this->Model->Get ( "ActionOwner" ) );
+			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
+			$row->Find ( '.owner-icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
+			
+		    $li->innertext .= $row->outertext;
+		    unset ( $row );
+		}
+		
+		$this->View->Reload();
+		
+		return ( true );
 	}
 	
 	public function Share ( $pView = null, $pData = array ( ) ) {
 		
 		$Comments = $this->GetSys ( "Request" )->Get ( "Comment" );
 		$Privacy = $this->GetSys ( "Request" )->Get ( "Privacy" );
+		echo "<pre>";
+		print_r ( $_REQUEST ); 
 		print_r ( $Privacy ); 
 		
 		return ( true );
 	}
 	
 }
-

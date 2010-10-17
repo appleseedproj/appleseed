@@ -336,7 +336,7 @@
 		#profile-page .post .comments { width:590px; height:20px; padding:5px; }
 		#profile-page .post .submit { float:right; }
 		
-		#profile-page .list .item { float:left; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; }
+		#profile-page .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; }
 		#profile-page .list a { float:left; background:none; padding:0; display:inline; }
 		#profile-page .list .item .owner-icon-link { float:left; display:inline; }
 		#profile-page .list .item .owner-icon { width:64px; height:64px; }
@@ -348,7 +348,7 @@
 		#profile-page .actions a { float:left; padding-right:5px; }
 		#profile-page .actions a:before { content:"\B7 \ "; }
 		
-		#profile-page .privacy { clear:both; float:left; }
+		#profile-page .privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
 		#profile-page .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
 		#profile-page .privacy ul { list-style-type:none; clear:none; float:left; }
 		#profile-page .privacy ul li { clear:none; float:left; margin-right:10px; }

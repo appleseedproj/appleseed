@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Page
  */
-class cPagePageModel extends cModel {
+class cPageModel extends cModel {
 	
 	protected $_Tablename = "PagePosts";
 	
@@ -33,14 +33,14 @@ class cPagePageModel extends cModel {
 	
 	public function RetrieveCurrent ( $pUserId ) {
 		
-		$criteria = array ( "Owner_FK" => $pUserId, "Current" => 1 );
+		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
 		$this->Retrieve ( $criteria );
 		
 		return ( true );
 	}
 	
 	public function ClearCurrent ( $pUserId ) {
-		$criteria = array ( "Owner_FK" => $pUserId, "Current" => 1 );
+		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
 		$this->Retrieve ( $criteria );
 		
 		if ( $this->Get ( " Total" ) == 0 ) return ( true );
@@ -53,4 +53,11 @@ class cPagePageModel extends cModel {
 		return ( true );
 	}
 	
+	public function RetrievePagePosts ( $pUserId ) {
+		
+		$criteria = array ( "User_FK" => $pUserId );
+		$this->Retrieve ( $criteria );
+		
+		return ( true );
+	}
 }
