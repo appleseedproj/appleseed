@@ -65,8 +65,24 @@ class cPageModel extends cModel {
 	
 	public function RetrievePagePosts ( $pUserId ) {
 		
-		$criteria = array ( 'User_FK' => $pUserId );
-		$this->Retrieve ( $criteria, 'Stamp DESC' );
+		$Posts = $this->_Prefix . $this->_Tablename;
+		$Refs = $this->_Prefix . 'PageReferences';
+		
+		$query = "
+			select SQL_CALC_FOUND_ROWS Refs.Stamp, Posts.* 
+				from 
+					`$Refs` as Refs, `$Posts` as Posts 
+				where 
+					Refs.Identifier = Posts.Identifier
+				and
+					Posts.User_FK = ?
+				order by
+					Refs.Stamp DESC
+		";
+		
+		$prepared[] = $pUserId;
+		
+		$this->Query ( $query, $prepared );
 		
 		return ( true );
 	}

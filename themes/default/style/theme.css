@@ -337,14 +337,15 @@
 		#profile-page .post .content:focus { width:590px; height:28px; padding:5px; }
 		#profile-page .post .submit { float:right; }
 		
-		#profile-page .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; }
+		#profile-page .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; width:100%; }
 		#profile-page .list a { float:left; background:none; padding:0; display:inline; }
 		#profile-page .list .item .owner-icon-link { float:left; display:inline; }
 		#profile-page .list .item .owner-icon { width:64px; height:64px; }
-		#profile-page .list .item .comment { float:left; display:inline; clear:none; width:78%; padding:0; margin:0 5px; }
+		#profile-page .list .item .info { float:left; width:78%; padding:0; margin:0 5px; }
+		#profile-page .list .item .content { float:left; display:inline; clear:none; width:100%; padding:0; margin:0; min-height:52px; }
 		#profile-page .list .item .owner-link { margin-right:5px; font-weight:bold; }
 		#profile-page .list .item .delete { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; }
-		#profile-page .stamp { float:left; clear:left; color:#8a8a8a; margin-left:36px; font-style:italic; border:none; margin-right:5px; cursor:auto; }
+		#profile-page .stamp { float:left; color:#8a8a8a; font-style:italic; border:none; margin-right:5px; cursor:auto; text-align:left; font-size:90%; }
 		#profile-page .actions { float:left; clear:none; margin-top:1px; font-size:90%; }
 		#profile-page .actions a { float:left; padding-right:5px; }
 		#profile-page .actions a:before { content:"\B7 \ "; }

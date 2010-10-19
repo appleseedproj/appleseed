@@ -628,7 +628,7 @@ class cModel extends cBase {
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
 		$result = $DBO->query('SELECT FOUND_ROWS()'); 
-		$rowCount = (int) $result->fetchColumn(); 
+		if ( $result ) $rowCount = (int) $result->fetchColumn(); 
 		
 		$this->_Total = $rowCount;
 		$this->_Rows = $this->_Handle->rowCount();

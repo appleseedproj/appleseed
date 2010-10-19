@@ -38,7 +38,7 @@ class cPagePageController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		if ( !$this->_Current ) {
-			$this->View->Find ( '.post', 0 )->outertext = "";
+			$this->View->Find ( '.post', 0 )->outertext = '';
 			$this->_Prep();
 		} else {
 			$this->_Prep();
@@ -52,11 +52,11 @@ class cPagePageController extends cController {
 	private function _Prep ( ) {
 		
 		$this->Model->RetrievePagePosts ( $this->_Focus->Id );
-		$this->View->Find ( "[name=Context]", 0 )->value = $this->Get ( "Context" );
+		$this->View->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 		
 		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$privacyControls =  $this->View->Find ('.privacy', 0);
-		$privacyControls->innertext = $this->GetSys ( "Components" )->Buffer ( "privacy", $pageData ); 
+		$privacyControls->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $pageData ); 
 			
 		$li = $this->View->Find ( '.list .item', 0);
 		
@@ -66,16 +66,20 @@ class cPagePageController extends cController {
 		
 		$li->innertext = '';
 		
+		$Editor = false;
+		if ( $this->_CheckEditor() ) $Editor = true;
+		
 		while ( $this->Model->Fetch() ) {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
-			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( "Date" )->Format ( $this->Model->Get ( "Stamp" ) );
-			$row->Find ( '.content', 0 )->innertext = $this->Model->Get ( "Comment" );
-			$row->Find ( '.owner-link', 0 )->rel = $this->Model->Get ( "ActionOwner" );
-			$row->Find ( '.owner-link', 0 )->innertext = $this->Model->Get ( "ActionOwner" );
+			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->Model->Get ( 'Stamp' ) );
+			$row->Find ( '.content', 0 )->innertext = $this->Model->Get ( 'Content' );
+			$row->Find ( '.owner-link', 0 )->rel = $this->Model->Get ( 'Owner' );
+			$row->Find ( '.owner-link', 0 )->innertext = $this->Model->Get ( 'Owner' );
+			if ( !$Editor ) $row->Find ( '.delete', 0 )->innertext = '';
 			
-			list ( $username, $domain ) = explode ( '@', $this->Model->Get ( "ActionOwner" ) );
+			list ( $username, $domain ) = explode ( '@', $this->Model->Get ( 'Owner' ) );
 			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
 			$row->Find ( '.owner-icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
 			
@@ -101,8 +105,8 @@ class cPagePageController extends cController {
 		}
 		
 		$Owner = $this->_Current->Account;
-		$Content = $this->GetSys ( "Request" )->Get ( "Content" );
-		$Privacy = $this->GetSys ( "Request" )->Get ( "Privacy" );
+		$Content = $this->GetSys ( 'Request' )->Get ( 'Content' );
+		$Privacy = $this->GetSys ( 'Request' )->Get ( 'Privacy' );
 		
 		$Current = false;
 		if ( $this->_Focus->Account == $this->_Current->Account ) $Current = true;
@@ -112,6 +116,15 @@ class cPagePageController extends cController {
 		$redirect = '/profile/' . $this->_Focus->Username . '/page/';
 		header ( 'Location:' . $redirect );
 		exit;
+	}
+	
+	public function _CheckEditor () {
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( $this->_Focus->Account == $this->_Current->Account ) return ( true );
+		
+		return ( false );
 	}
 	
 }
