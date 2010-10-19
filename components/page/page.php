@@ -53,5 +53,31 @@ class cPage extends cComponent {
 		return ( false );
 	}
 	
+	public function Status ( $pData = null ) {
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		include ( ASD_PATH . 'components/page/models/page.php' );
+		$Page = new cPageModel ();
+		
+		include ( ASD_PATH . 'components/page/models/references.php' );
+		$References = new cPageReferencesModel ();
+		
+		$Page->RetrieveCurrent( $this->_Focus->Id );
+		if ( $Page->Get ( "Total" ) == 0 ) return ( false );
+		
+		$Page->Fetch();
+		
+		$References->Retrieve ( array ( "Identifier" => $Page->Get ( "Identifier" ) ) );
+		if ( $References->Get ( "Total" ) == 0 ) return ( false );
+		
+		$References->Fetch();
+		
+		$return = array();
+		
+		$return['Content'] = $Page->Get ( 'Content' );
+		$return['Stamp'] = $References->Get ( 'Stamp' );
+		
+		return ( $return );
+	}
 	
 }

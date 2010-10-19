@@ -34,14 +34,13 @@ class cProfileStatusController extends cController {
 		$this->Status = $this->GetView ( $pView ); 
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		$this->Model = $this->GetModel ( "Page" );
-		$this->Model->RetrieveCurrent( $this->_Focus->uID );
+		$Status = $this->Talk ( 'Page', 'Status' );
 		
-		if ( $this->Model->Get ( "Total" ) > 0 ) {
-			$this->Model->Fetch();
-			$this->Status->Find ( '[class=current]', 0 )->innertext = $this->Model->Get ( "Content" );
-			$this->Status->Find ( '[class=stamp]', 0 )->innertext = $this->GetSys ( "Date" )->Format ( $this->Model->Get ( "Stamp" ) );
+		if ( $Status ) {
+			$this->Status->Find ( '[class=current]', 0 )->innertext = $Status['Content'];
+			$this->Status->Find ( '[class=stamp]', 0 )->innertext = $this->GetSys ( "Date" )->Format ( $Status['Stamp'] );
 			$this->Status->Find ( '[name=Context]', 0 )->value = $this->Get ( "Context" );
 			$this->Status->Find ( '[name=Task]', 0 )->value = "Clear";
 			$this->Status->Find ( '[class=clear-status]', 0 )->action = $this->GetSys ( "Router" )->Get ( "Request" );
@@ -49,6 +48,10 @@ class cProfileStatusController extends cController {
 			$this->Status->Find ( '[class=clear-status]', 0 )->outertext = "";
 			$this->Status->Find ( '[class=stamp]', 0 )->outertext = "";
 			$this->Status->Find ( '[class=current]', 0 )->outertext = "";
+		}
+		
+		if ( $this->_Focus->Account != $this->_Current->Account ) {
+			$this->Status->Find ( '[class=clear-status]', 0 )->outertext = "";
 		}
 		
 		$this->Status->Find ( '[class=name]', 0 )->innertext = $this->_Focus->Fullname;
@@ -67,8 +70,7 @@ class cProfileStatusController extends cController {
 			return ( false );
 		}
 		
-		$this->Model = $this->GetModel ( "Page" );
-		$this->Model->ClearCurrent( $this->_Focus->uID );
+		$Cleared = $this->Talk ( 'Page', 'ClearStatus' );
 		
 		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
 		header ( 'Location:' . $redirect );
