@@ -15,7 +15,7 @@ require ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'Swift-4.0.6' . D
 
 /** Crypt Class
  * 
- * Encryptiong class.
+ * Encryption class.
  * 
  * @package     Appleseed.Framework
  * @subpackage  Library
@@ -30,6 +30,32 @@ class cCrypt {
 	public function __construct ( ) {       
 	}
 	
+	/**
+	 * Create a random identifier string.
+	 *
+	 * @access  public
+	 */
+	public function Identifier ( $pLength = 64 ) {
+		
+		$length = (int) $pLength;
+		
+		$id = str_shuffle ( md5 ( microtime() ) );
+		
+		while ( strlen ( $id ) < $length ) {
+			$id .= str_shuffle ( md5 ( microtime() ) );
+		}
+		
+		$return = substr($id, 0, $length);
+		
+		return ( $return );
+	}
+	
+	/**
+	 * Encrypt a string using an optional salt.
+	 *
+	 * @access  public
+	 * @param string $pSalt An optional salt to use
+	 */
 	public function Encrypt ( $pString, $pSalt = false ) {
 		
 		if ( !$pSalt ) $pSalt = $this->Salt ();
@@ -41,11 +67,17 @@ class cCrypt {
 		return ( $encrypted );
 	}
 	
+	/**
+	 * Generate a salt for encryption.
+	 *
+	 * @access public
+	 * @param string $pString A string to turn into a salt.
+	 */
 	public function Salt ( $pString = null ) {
 		if ( $pString ) {
 			$salt = substr ( $pString, 0, 16 );
 		} else {
-			$salt = substr(md5(uniqid(rand(), true)), 0, 16);
+			$salt = substr ( md5 ( uniqid ( rand(), true ) ), 0, 16 );
 		}
 		
 		return ( $salt );
