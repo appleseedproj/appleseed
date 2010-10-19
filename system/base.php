@@ -58,6 +58,20 @@ class cBase {
 		return ( true );
 	}
 	
+	/**
+	 * Destroy a private variable
+	 *
+	 * @access  public
+	 */
+	public function Destroy ( $pVariable ) {
+		
+		$variable = '_' . ltrim ( rtrim ( $pVariable ) );
+		
+		unset ( $this->$variable );
+		
+		return ( true );
+	}
+	
 	public function AddSys ( $pVariable, $pLocation ) {
 		
 		$variable = ltrim ( rtrim ( $pVariable ) );
@@ -91,6 +105,32 @@ class cBase {
 		}
 		
 		return ( $zApp->$variable );
+	}
+	
+	public function CreateUniqueIdentifier ( $pLength = 32 ) {
+		
+		$length = (int) $pLength;
+		
+		$components = $this->GetSys ( 'Components' );
+		$componentList = $components->Get ( 'Config' )->Get ( 'Components' ); 
+		
+		$unique = false;
+		while ( !$unique ) {
+			$id = $this->GetSys ( 'Crypt' )->Identifier ( $length );
+		
+			$exists = false;
+			foreach ( $componentList as $c => $component ) {
+				$data = array ( 'Identifier' => $id );
+				if ( $check = $components->Talk ( $component, 'IdentifierExists', $data ) ) {
+					// Existing record has been found, break the loop, and generate another.
+					$exists = true;
+					break;
+				}
+			}
+			if ( !$exists ) break;
+		}
+		
+		return ( $id );
 	}
 	
 }
