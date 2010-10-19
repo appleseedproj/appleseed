@@ -50,11 +50,10 @@ class cFriends extends cComponent {
 		$circles = $this->_Model->Circles ( $this->_Focus->Id );
 		
 		foreach ( $circles as $c => $circle ) {  
-			$return[] = $circle['name'];
+			$id = $circle['id'];
+			$return[$id] = $circle['name'];
 		}
 		
 		return ( $return );
 	}
-	
-	
 }

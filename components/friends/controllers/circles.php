@@ -328,8 +328,8 @@ class cFriendsCirclesController extends cController {
 			} else {
 				$markup->Find ( "[id=friends-circles-message]", 0 )->class = "message";
 			}
-			$session->Delete ( "Message ");
-			$session->Delete ( "Error ");
+			$session->Destroy ( "Message ");
+			$session->Destroy ( "Error ");
 		}
 		
 		return ( true );

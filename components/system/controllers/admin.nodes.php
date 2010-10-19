@@ -355,8 +355,8 @@ class cSystemAdminNodesController extends cController {
 			} else {
 				$markup->Find ( "[id=system-nodes-message]", 0 )->class = "message";
 			}
-			$this->GetSys ( "Session" )->Delete ( "Message ");
-			$this->GetSys ( "Session" )->Delete ( "Error ");
+			$this->GetSys ( "Session" )->Destroy ( "Message ");
+			$this->GetSys ( "Session" )->Destroy ( "Error ");
 		}
 		
 		return ( true );

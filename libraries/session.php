@@ -102,12 +102,12 @@ class cSession {
 	}
 	
 	/**
-	 * Delete a session variable
+	 * Destroy a session variable
 	 * 
 	 * @access  public
 	 * @param string $pVariable Which session variable to delete
 	 */
-	public function Delete ( $pVariable ) {
+	public function Destroy ( $pVariable ) {
 		
 		if ( !isset ( $this->_Context ) ) {
 			# @TODO: Throw a warning

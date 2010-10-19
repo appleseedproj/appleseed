@@ -584,8 +584,8 @@ class cSystemAdminUpdateController extends cController {
 			} else {
 				$pMarkup->Find ( "[id=update-message]", 0 )->class = "message";
 			}
-			$session->Delete ( "Message ");
-			$session->Delete ( "Error ");
+			$session->Destroy ( "Message ");
+			$session->Destroy ( "Error ");
 		}
 		
 		return ( true );

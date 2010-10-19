@@ -85,7 +85,7 @@ class cLoginLoginController extends cController {
 		
 		$this->GetSys ( 'Session' )->Context ( "login.login.(.*)." . $pView );	
 		$sessionData['Identity'] = $this->GetSys ( 'Session' )->Get( 'Identity' );
-		$this->GetSys ( 'Session' )->Delete ( 'Identity' );
+		$this->GetSys ( 'Session' )->Destroy ( 'Identity' );
 		
 		$defaults = array_merge ( array ( "Remember" => "checked" ), $sessionData );
 			
@@ -158,8 +158,8 @@ class cLoginLoginController extends cController {
 			else
 				$this->Login->Find ( "[id=$id]", 0)->class = "message";
 			
-			$this->GetSys ( "Session" )->Delete ( "Message" );
-			$this->GetSys ( "Session" )->Delete ( "Error" );
+			$this->GetSys ( "Session" )->Destroy ( "Message" );
+			$this->GetSys ( "Session" )->Destroy ( "Error" );
 		}
 		
 		return ( true );

@@ -150,7 +150,7 @@ class cExampleExampleController extends cController {
 		/*
 		 * @tutorial Retrieve an array of all the session variables in the current context.
 		 * 
-		 * @tutorial You can "Set", "Get", "Delete" single session variables.
+		 * @tutorial You can "Set", "Get", "Destroy" single session variables.
 		 * @tutorial And you can also "Save" an array of data, 
 		 * @tutorial or "Clear" all session data in the current context.
 		 * 
@@ -724,8 +724,8 @@ class cExampleExampleController extends cController {
 			} else {
 				$markup->Find ( "[id=example_message]", 0 )->class = "message";
 			}
-			$this->GetSys ( "Session" )->Delete ( "Message ");
-			$this->GetSys ( "Session" )->Delete ( "Error ");
+			$this->GetSys ( "Session" )->Destroy ( "Message ");
+			$this->GetSys ( "Session" )->Destroy ( "Error ");
 		}
 		
 		return ( true );
