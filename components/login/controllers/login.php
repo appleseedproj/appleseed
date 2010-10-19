@@ -36,10 +36,6 @@ class cLoginLoginController extends cController {
 		
 		$noredirect = $pData['noredirect'];
 		
-		if ( $this->_Current = $this->Talk ( 'User', 'Current' ) ) {
-			return ( false );
-		}
-		
 		$config = $this->Get ( 'Config' );
 		$invites = $config['invites'];
 		
