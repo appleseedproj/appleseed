@@ -38,5 +38,20 @@ class cPage extends cComponent {
 		return ( $return );
 	} 
 	
+	public function IdentifierExists ( $pData = null ) {
+		
+		$Identifier = $pData['Identifier'];
+		
+		$Model = new cModel ( 'PageReferences' );
+		
+		$Model->Retrieve ( array ( 'Identifier' => $Identifier ) );
+		
+		if ( $Model->Get ( 'Total' ) > 0 ) {
+			return ( true );
+		}
+		
+		return ( false );
+	}
+	
 	
 }

@@ -71,22 +71,33 @@ class cPageModel extends cModel {
 		return ( true );
 	}
 	
-	public function Post ( $pComment, $pPrivacy, $pUser, $pOwner, $pCurrent = false ) {
+	public function Post ( $pComment, $pPrivacy, $pUserId, $pOwner, $pCurrent = false ) {
+		
+		$Identifier = $this->CreateUniqueIdentifier();
+		
+		$privacyData = array ( 'Privacy' => $pPrivacy, 'Type' => 'Post', 'Identifier' => $Identifier );
+		$this->GetSys ( 'Components' )->Talk ( 'Privacy', 'Store', $privacyData );
+		
 		$this->Protect ( 'Post_PK', null );
-		$this->Set ( 'User_FK', $pUser );
-		$this->Set ( 'Action', 'posted' );
-		$this->Set ( 'ActionOwner', $pOwner );
-		$this->Set ( 'Comment', $pComment );
-		$this->Set ( 'Stamp', NOW() );
+		$this->Set ( 'User_FK', $pUserId );
+		$this->Set ( 'Owner', $pOwner );
+		$this->Set ( 'Identifier', $Identifier );
+		$this->Set ( 'Content', $pComment );
 		
 		if ( $pCurrent ) {
 			$this->Set ( 'Current', (int)true );
-			$this->ClearCurrent ( $pUser );
+			$this->ClearCurrent ( $pUserId );
 		} else {
 			$this->Set ( 'Current', '0' );
 		}
 		
 		$this->Save();
+		
+		include_once ( ASD_PATH . '/components/page/models/references.php' );
+		
+		$Reference = new cPageReferencesModel ();
+		
+		$Reference->Create ( 'Post', $Identifier, $pUserId );
 		
 		return ( true );
 	}

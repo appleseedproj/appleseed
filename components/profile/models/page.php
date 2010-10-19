@@ -36,6 +36,8 @@ class cProfilePageModel extends cModel {
 		$criteria = array ( "User_FK" => $pUserId, "Current" => 1 );
 		$this->Retrieve ( $criteria );
 		
+		if ( $this->Get ( "Total" ) == 0 ) return ( false );
+		
 		return ( true );
 	}
 	

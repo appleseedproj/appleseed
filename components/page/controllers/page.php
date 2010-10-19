@@ -95,15 +95,19 @@ class cPagePageController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
+		if ( !$this->_Current ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
+		
 		$Owner = $this->_Current->Account;
-		$Comments = $this->GetSys ( "Request" )->Get ( "Comment" );
+		$Content = $this->GetSys ( "Request" )->Get ( "Content" );
 		$Privacy = $this->GetSys ( "Request" )->Get ( "Privacy" );
 		
 		$Current = false;
-		
 		if ( $this->_Focus->Account == $this->_Current->Account ) $Current = true;
 		
-		$this->Model->Post ( $Comments, $Privacy, $this->_Focus->Id, $Owner, $Current );
+		$this->Model->Post ( $Content, $Privacy, $this->_Focus->Id, $Owner, $Current );
 		
 		$redirect = '/profile/' . $this->_Focus->Username . '/page/';
 		header ( 'Location:' . $redirect );
