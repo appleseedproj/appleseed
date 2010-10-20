@@ -6,6 +6,6 @@ create table `#__PrivacySettings` ( `Setting_PK` int(11) NOT NULL AUTO_INCREMENT
 
 alter table `#__friendCircles` add Private BOOL;
 
-alter table `#__friendCircles` add Private BOOL;
+alter table `#__friendCircles` add Protected BOOL;
 
-alter table `#__friendCircles` add Private BOOL;
+alter table `#__friendCircles` add Shared BOOL;
