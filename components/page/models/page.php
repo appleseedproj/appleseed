@@ -50,15 +50,18 @@ class cPageModel extends cModel {
 		
 		return ( true );
 		
-		$criteria = array ( 'User_FK' => $pUserId, 'Current' => 1 );
-		$this->Retrieve ( $criteria );
+	}
+	
+	function Remove ( $pIdentifier, $pUserId ) {
 		
-		if ( $this->Get ( 'Total' ) == 0 ) return ( true );
+		// Remove the Page Post 
+		// Note:  Eventually, we'll have to determine which Type of post we're deleting.
+		$this->Delete ( array ( 'Identifier' => $pIdentifier, 'User_FK' => $pUserId ) );
 		
-		$this->Fetch();
-		$this->Set ( 'Current', 0 );
-		
-		$this->Save();
+		// Remove the page reference.
+		include_once ( ASD_PATH . '/components/page/models/references.php' );
+		$Reference = new cPageReferencesModel ();
+		$Reference->Delete ( array ( 'Identifier' => $pIdentifier, 'User_FK' => $pUserId ) );
 		
 		return ( true );
 	}

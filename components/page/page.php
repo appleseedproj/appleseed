@@ -80,4 +80,16 @@ class cPage extends cComponent {
 		return ( $return );
 	}
 	
+	public function ClearStatus ( $pData = null ) {
+		
+		$user = $pData['UserId'];
+		
+		include ( ASD_PATH . 'components/page/models/page.php' );
+		$Page = new cPageModel ();
+		
+		$Page->ClearCurrent ( $user );
+		
+		return ( true );
+	}
+	
 }

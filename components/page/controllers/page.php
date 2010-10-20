@@ -37,7 +37,14 @@ class cPagePageController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
+		$friends = $this->Talk ( 'Friends', 'Friends' );
+		
 		if ( !$this->_Current ) {
+			$this->View->Find ( '.post', 0 )->outertext = '';
+			$this->_Prep();
+		} else if ( $this->_Current->Account == $this->_Focus->Account ) { 
+			$this->_Prep();
+		} else if ( !in_array ( $this->_Current->Account, $friends ) ) {
 			$this->View->Find ( '.post', 0 )->outertext = '';
 			$this->_Prep();
 		} else {
@@ -83,6 +90,11 @@ class cPagePageController extends cController {
 			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
 			$row->Find ( '.owner-icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
 			
+			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
+			$row->Find ( '[name=Identifier]', 0 )->value = $this->Model->Get ( 'Identifier' );
+			
+			$row->Find ( '.delete', 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
+			
 		    $li->innertext .= $row->outertext;
 		    unset ( $row );
 		}
@@ -113,7 +125,7 @@ class cPagePageController extends cController {
 		
 		$this->Model->Post ( $Content, $Privacy, $this->_Focus->Id, $Owner, $Current );
 		
-		$redirect = '/profile/' . $this->_Focus->Username . '/page/';
+		$redirect = $this->GetSys ( "Router" )->Get ( "Base" );
 		header ( 'Location:' . $redirect );
 		exit;
 	}
@@ -125,6 +137,27 @@ class cPagePageController extends cController {
 		if ( $this->_Focus->Account == $this->_Current->Account ) return ( true );
 		
 		return ( false );
+	}
+	
+	public function Remove ( $pData = null ) {
+		
+		if ( !$this->_CheckEditor () ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
+		$UserId = $this->_Focus->Id;
+		
+		$this->Model = $this->GetModel (); 
+		
+		$this->Model->Remove ( $Identifier, $this->_Focus->Id );
+		
+		$redirect = $this->GetSys ( "Router" )->Get ( "Base" );
+		header ( 'Location:' . $redirect );
+		exit;
 	}
 	
 }
