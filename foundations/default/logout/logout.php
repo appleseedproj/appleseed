@@ -1,3 +1,4 @@
+<?php $zApp->Components->Go ( "login", "logout", "logout", "logout" ); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,6 +21,6 @@
 
 <body id="www-website-com">
 
-	<?php $zApp->Components->Go ( "login", "logout", "logout", "logout" ); ?>
+	<?php $zApp->Components->Go ( "login", "logout", "click", "click" ); ?>
 
 </html>

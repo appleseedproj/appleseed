@@ -81,10 +81,13 @@ class cLoginHook extends cHook {
 		}
 		
 		// Delete the cookies.
-		setcookie ("gLOGINSESSION", "", time() - 3600);
-		setcookie ("gREMOTELOGINSESSION", "", time() - 3600);
+		setcookie ("gLOGINSESSION", "", time() - 3600, "/");
+		setcookie ("gREMOTELOGINSESSION", "", time() - 3600, "/");
 		
-		return ( false );
+      	$loginSession = isset($_COOKIE["gLOGINSESSION"]) ?  $_COOKIE["gLOGINSESSION"] : "";
+      	$remoteLoginSession = isset($_COOKIE["gREMOTELOGINSESSION"]) ?  $_COOKIE["gREMOTELOGINSESSION"] : "";
+      	
+		return ( true );
 	}
 	
 }

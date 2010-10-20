@@ -71,7 +71,9 @@ class cLoginLoginController extends cController {
 		}
 		
 		
-		if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
+		if ( $noredirect ) {
+			$this->Login->Find ( "[name=Redirect]", 0 )->value = '';
+		} else if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
 			$redirect = base64_encode ( $redirect );
 			$this->Login->Find ( "[name=Redirect]", 0 )->value = $redirect; 
 		} else {
@@ -80,7 +82,6 @@ class cLoginLoginController extends cController {
 				$redirect = base64_encode ( $redirect );
 				$this->Login->Find ( "[name=Redirect]", 0 )->value = $redirect;
 			}
-		
 		}
 			
 		

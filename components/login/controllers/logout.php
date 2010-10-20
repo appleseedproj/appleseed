@@ -34,6 +34,10 @@ class cLoginLogoutController extends cController {
 		// Trigger the logout event
 		$return = $this->GetSys ( "Event" )->Trigger ( "On", "Login", "Logout" );
 		
+		return ( true );
+	}
+	
+	function Click ( $pView = null, $pData = array ( ) ) {
 		return ( parent::Display ( $pView, $pData ) );
 	}
 	
