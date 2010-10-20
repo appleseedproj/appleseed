@@ -31,6 +31,11 @@ class cLoginLoginController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		$Force = $pData['force'];
+		
+		if ( ( !$Force ) && ( $this->_Current ) ) return ( true );
+		
 		$referer = $_SERVER['HTTP_REFERER']; 
 		$host = ASD_DOMAIN;
 		

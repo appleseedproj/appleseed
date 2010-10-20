@@ -71,11 +71,11 @@
 				</div>
 				<div id="appleseed-login-content" class="grid_12 omega">
 					<section id="login-local">
-						<?php $zApp->Components->Go ( "login", "login", "login" ); ?>
+						<?php $zApp->Components->Go ( "login", "login", "login", array ( 'force' => true ) ); ?>
 					</section>
  
 					<section id="login-remote">
-						<?php $zApp->Components->Go ( "login", "login", "remote" ); ?>
+						<?php $zApp->Components->Go ( "login", "login", "remote", array ( 'force' => true ) ); ?>
 					</section>
 				</div>
 			</div>
