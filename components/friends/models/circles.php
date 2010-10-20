@@ -44,6 +44,20 @@ class cFriendsCirclesModel extends cModel {
 		
 		$this->Protect( "tID" );
 		
+		$Sharing = $this->GetSys ( "Request" )->Get ( "Sharing" );
+		
+		$this->Set ( 'Private', (int)false );
+		$this->Set ( 'Protected', (int)false );
+		$this->Set ( 'Shared', (int)false );
+		
+		if ( $Sharing == 'protected' ) {
+			$this->Set ( 'Protected', (int)true );
+		} else if ( $Sharing == 'shared' ) {
+			$this->Set ( 'Shared', (int)true );
+		} else {
+			$this->Set ( 'Private', (int)true );
+		}
+		
 		$this->Set ( "userAuth_uID", $pUserId );
 		$this->Set ( "Name", $pCircle );
 		
@@ -70,7 +84,7 @@ class cFriendsCirclesModel extends cModel {
 		$this->Retrieve ( array ( "userAuth_uID" => $pUserId ), 'sID ASC' );
 		
 		while ( $this->Fetch() ) {
-			$return[] = array ( "id" => $this->Get ( "tID" ), "name" => $this->Get ( "Name" ) );
+			$return[] = array ( 'id' => $this->Get ( 'tID' ), 'name' => $this->Get ( 'Name' ), 'private' => $this->Get ( 'Private' ), 'protected' => $this->Get ( 'Protected' ), 'shared' => $this->Get ( 'Shared' ) );
 		}
 		
 		return ( $return );
@@ -89,7 +103,7 @@ class cFriendsCirclesModel extends cModel {
 		list ( $username, $domain ) = explode ( '@', $pFriend );
 		
 		// Get the friend id
-		$this->Friend = new cModel ( "friendInformation" );
+		$this->Friend = new cModel ( 'friendInformation' );
 		$this->Friend->Structure();
 		$this->Friend->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $username, "Domain" => $domain ) );
 		$this->Friend->Fetch();
@@ -104,10 +118,6 @@ class cFriendsCirclesModel extends cModel {
 			$this->Fetch();
 			$return[] = $this->Get ( "Name" );
 		}
-		
-		return ( $return );
-		
-		$return = array ();
 		
 		return ( $return );
 	}

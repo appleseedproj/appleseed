@@ -6,6 +6,10 @@ MUTUAL_TITLE="%fullname$s's Mutual Friends"
 ADD_TO_CIRCLE="Add Circle &darr;"
 REMOVE_FROM_CIRCLE="Remove Circle &darr;"
 
+PRIVATE_CIRCLE_LABEL="Private"
+PROTECTED_CIRCLE_LABEL="Protected"
+SHARED_CIRCLE_LABEL="Shared"
+
 NUMBER_OF_FRIENDS="%count$s Friends"
 NUMBER_OF_MUTUAL_FRIENDS="%count$s Mutual Friends"
 NUMBER_OF_FRIEND_REQUESTS="%count$s Requests"

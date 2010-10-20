@@ -49,11 +49,43 @@ class cFriends extends cComponent {
 		$return = array();
 		$circles = $this->_Model->Circles ( $this->_Focus->Id );
 		
-		foreach ( $circles as $c => $circle ) {  
-			$id = $circle['id'];
-			$return[$id] = $circle['name'];
+		$circleMembership = $this->_Model->CirclesByMember ( $this->_Focus->Id, $this->_Current->Account );
+		
+		if ( $this->_Focus->Account == $this->_Current->Account ) {
+			foreach ( $circles as $c => $circle ) {  
+				$id = $circle['id'];
+				$return[$id] = $circle['name'];
+			}
+		} else {
+			foreach ( $circles as $c => $circle ) {  
+				if ( in_array ( $circle['name'], $circleMembership ) ) {
+					if ( ( $circle['protected'] ) || ( $circle['shared'] ) ) {
+						$id = $circle['id'];
+						$return[$id] = $circle['name'];
+					}
+				}
+			}
 		}
 		
 		return ( $return );
+	}
+	
+	public function Friends ( $pData = null ) {
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		include_once ( ASD_PATH . '/components/friends/models/friends.php');
+		$this->_Model = new cFriendsModel();
+		
+		$return = array();
+		$this->_Model->RetrieveFriends ( $this->_Focus->Id );
+		
+		while ( $this->_Model->Fetch() ) {
+			$return[] = $this->_Model->Get ( 'Username' ) . '@' . $this->_Model->Get ( 'Domain' );
+		}
+		
+		return ( $return );
+		
 	}
 }

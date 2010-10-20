@@ -8,8 +8,12 @@
 		<input type="hidden" name="Original" value="" /> 
 		<input type="hidden" name="tID" value="" /> 
 		<fieldset> 
-				<div><label>Name Field Label</label><input name="Name" class="required" maxlength="20" /></div>
-			</legend>
+			<div>
+				<label>Name Field Label</label><input name="Name" class="required" maxlength="20" /></div>
+				<label>Sharing</label>
+				<input type="radio" name="Sharing" id="sharing-private" value="private" /><label class="radio" for="radio3">Private Circle Label</label> 
+				<input type="radio" name="Sharing" id="sharing-protected" value="protected" /><label class="radio" for="radio3">Protected Circle Label</label> 
+				<input type="radio" name="Sharing" id="sharing-shared" value="shared" /><label class="radio" for="radio3">Shared Circle Label</label> 
 			
 			<p> 
 				<input type="submit" name="Task" value="Save" /> 
