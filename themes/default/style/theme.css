@@ -61,6 +61,11 @@
 		label em { color:#bf4630; }
 		input:disabled { color:#3a3a3a; }
 		
+		button { padding:1px 5px; font-size:100%; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		button:hover { cursor:pointer; }
+		button:active, button:focus { background:-webkit-gradient(linear,0% 100%,0% 0%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(bottom,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		button:disabled { color:rgba(0,0,0,0.4); text-shadow:1px 1px 0px rgba(255,255,255,0.5); background:rgba(220,220,220,1); }
+		
 		input[type="checkbox"], input[type="radio"] { clear:none; display:inline; margin:5px 0; width:auto; float:left; text-align:right; }
 		label.radio, label.checkbox { float:left; clear:none; display:inline; width:auto; margin:5px 15px 5px 5px; }
 		
@@ -129,9 +134,6 @@
 		span.mistranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#ff4444; font-style:italic; }
 		span.mistranslatedp { margin:0 0 0 0; padding:0px 4px; color:#2a2afa; background-color:#facaca; font-style:italic; }
 		
-		/* Buttons */
-		button { padding:3px 6px; font-size:100%; }
-
 		/* Nav Buttons */
 		nav button{ color:#406300; border:none; background:none; font-weight:bold; }
 		nav button, nav button:hover { -webkit-box-shadow:none; color:#406300; }
@@ -248,8 +250,6 @@
 		#status-container .current { font-size:90%; font-weight:bold; color:#5a5a5a; margin-left:5px;  }
 		#status-container .stamp { font-size:70%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
 		#status-container form { width:auto; display:inline; clear:none; padding:0; margin:0; }
-		#status-container .clear-status-action { visibility:visible; display:inline; padding:0; background:none; font-size:80%; font-style:italic; border:none; cursor:auto; color:#406300; }
-		#status-container .clear-status-action:hover { cursor:pointer } 
 		
 		/* profile-tabs */
 		#profile-tabs { float:left; position:relative; }
@@ -342,7 +342,7 @@
 		#profile-page .list .item .owner-icon-link { float:left; display:inline; }
 		#profile-page .list .item .owner-icon { width:64px; height:64px; }
 		#profile-page .list .item .info { float:left; width:78%; padding:0; margin:0 5px; }
-		#profile-page .list .item .content { float:left; display:inline; clear:none; width:100%; padding:0; margin:0; min-height:52px; }
+		#profile-page .list .item .content-full { float:left; display:inline; clear:none; width:100%; padding:0; margin:0; min-height:52px; }
 		#profile-page .list .item .owner-link { margin-right:5px; font-weight:bold; }
 		#profile-page .list .item .delete { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; }
 		#profile-page .stamp { float:left; color:#8a8a8a; font-style:italic; border:none; margin-right:5px; cursor:auto; text-align:left; font-size:90%; }
