@@ -70,7 +70,7 @@ class cProfileStatusController extends cController {
 			return ( false );
 		}
 		
-		$Cleared = $this->Talk ( 'Page', 'ClearStatus' );
+		$Cleared = $this->Talk ( 'Page', 'ClearStatus', array ( 'UserId' => $this->_Focus->Id ) );
 		
 		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
 		header ( 'Location:' . $redirect );
