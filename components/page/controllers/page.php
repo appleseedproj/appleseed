@@ -20,6 +20,8 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cPagePageController extends cController {
 	
+	var $Type = array();
+	
 	/**
 	 * Constructor
 	 *
@@ -32,7 +34,7 @@ class cPagePageController extends cController {
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->View = $this->GetView ( $pView ); 
-		$this->Model = $this->GetModel (); 
+		$this->References = $this->GetModel ( 'References' ); 
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
@@ -58,7 +60,7 @@ class cPagePageController extends cController {
 	
 	private function _Prep ( ) {
 		
-		$this->Model->RetrievePagePosts ( $this->_Focus->Id );
+		$this->References->RetrieveReferences ( $this->_Focus->Id );
 		$this->View->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 		
 		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
@@ -76,22 +78,27 @@ class cPagePageController extends cController {
 		$Editor = false;
 		if ( $this->_CheckEditor() ) $Editor = true;
 		
-		while ( $this->Model->Fetch() ) {
+		while ( $this->References->Fetch() ) {
+			$Type = $this->References->Get ( 'Type' );
+			$Identifier = $this->References->Get ( 'Identifier' );
+			
+			if (!$Item = $this->_ReferenceByType ( $Type, $Identifier ) ) continue;
+			
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
-			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->Model->Get ( 'Stamp' ) );
-			$row->Find ( '.content', 0 )->innertext = $this->Model->Get ( 'Content' );
-			$row->Find ( '.owner-link', 0 )->rel = $this->Model->Get ( 'Owner' );
-			$row->Find ( '.owner-link', 0 )->innertext = $this->Model->Get ( 'Owner' );
+			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->References->Get ( 'Stamp' ) );
+			$row->Find ( '.content', 0 )->innertext = $Item['Comment'];
+			$row->Find ( '.owner-link', 0 )->rel = $Item['Owner'];
+			$row->Find ( '.owner-link', 0 )->innertext = $Item['Owner'];
 			if ( !$Editor ) $row->Find ( '.delete', 0 )->innertext = '';
 			
-			list ( $username, $domain ) = explode ( '@', $this->Model->Get ( 'Owner' ) );
+			list ( $username, $domain ) = explode ( '@', $Item['Owner'] );
 			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
 			$row->Find ( '.owner-icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
 			
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
-			$row->Find ( '[name=Identifier]', 0 )->value = $this->Model->Get ( 'Identifier' );
+			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
 			$row->Find ( '.delete', 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
 			
@@ -158,6 +165,34 @@ class cPagePageController extends cController {
 		$redirect = $this->GetSys ( "Router" )->Get ( "Base" );
 		header ( 'Location:' . $redirect );
 		exit;
+	}
+	
+	private function _ReferenceByType ( $pType, $pIdentifier ) {
+		if ( !$this->Types ) $this->Types = $this->_ReferenceTypes ( );
+		
+		$pType = strtolower ( $pType );
+		
+		$pointer = $this->Types[$pType];
+		$data = array ( 'Identifier' => $pIdentifier, 'Account' => $this->_Current->Account );
+		$return = $this->GetSys ( 'Components' )->Talk ( $pointer->Component, $pointer->Function, $data );
+		
+		return ( $return );
+	}
+	
+	private function _ReferenceTypes ( ) {
+		
+		$components = $this->GetSys ( 'Components' );
+		$componentList = $components->Get ( 'Config' )->Get ( 'Components' ); 
+		
+		foreach ( $componentList as $c => $component ) {
+			if ( !$types = $components->Talk ( $component, 'RegisterPageType' ) ) continue;
+			if ( !is_array ( $types ) ) continue;
+			$this->Types = array_merge ( (array)$this->Types, $types );
+		}
+		
+		$this->Types = array_change_key_case ( $this->Types, CASE_LOWER );
+		
+		return ( $this->Types );
 	}
 	
 }

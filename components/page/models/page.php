@@ -90,6 +90,19 @@ class cPageModel extends cModel {
 		return ( true );
 	}
 	
+	public function RetrievePost ( $pUserId, $pIdentifier ) {
+		
+		$criteria = array ('User_FK' => $pUserId, 'Identifier' => $pIdentifier );
+		
+		$this->Retrieve ( $criteria );
+		
+		if ( $this->Get ( "Total" ) == 0) return ( false );
+		
+		$this->Fetch();
+		
+		return ( $this->Get ( "Data" ) );
+	}
+	
 	public function Post ( $pComment, $pPrivacy, $pUserId, $pOwner, $pCurrent = false ) {
 		
 		$Identifier = $this->CreateUniqueIdentifier();

@@ -86,6 +86,5 @@ class cFriends extends cComponent {
 		}
 		
 		return ( $return );
-		
 	}
 }

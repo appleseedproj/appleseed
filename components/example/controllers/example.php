@@ -129,7 +129,7 @@ class cExampleExampleController extends cController {
 		 */
 		 
 		// This query fails because it has nothing to do with our database structure.
-		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step", 100 ) );
+		$this->Customers->Retrieve ( $criteria, "fifth DESC", array ( "start" => 1500, "step" => 100 ) );
 		
 		/*
 		 * @tutorial You can also retrieve saved session data.

@@ -60,4 +60,38 @@ class cPrivacyModel extends cModel {
 		return ( true );
 	}
 	
+	public function RetrieveItem ( $pUserId, $pType, $pIdentifier ) {
+		
+		$criteria = array ( 'User_FK' => $pUserId, 'Type' => $pType, 'Identifier' => $pIdentifier );
+		
+		$this->Retrieve ( $criteria );
+		
+		if ( $this->Get ( 'Total' ) == 0 ) return ( false );
+		
+		while ( $this->Fetch() ) {
+			$data[] = $this->Get ( "Data" );
+		}
+		
+		$return = new stdClass();
+		
+		if ( count ( $data ) > 1 ) {
+			// Return the circle data
+			$return->Circles = array();
+			$return->Friends = true;
+			$return->Everybody = false;
+		} else if ( $data[0]['Friends'] ) {
+			$return->Circles = array();
+			$return->Friends = true;
+			$return->Everybody = false;
+		} else if ( $data[0]['Everybody'] ) {
+			$return->Circles = array();
+			$return->Friends = false;
+			$return->Everybody = true;
+		} else {
+			return ( false );
+		}
+		
+		return ( $return );
+	}
+	
 }

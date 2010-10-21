@@ -45,7 +45,7 @@ class cPrivacy extends cComponent {
 		unset ( $Privacy['everybody'] );
 		unset ( $Privacy['friends'] );
 		
-		include ( ASD_PATH . 'components/privacy/models/privacy.php' );
+		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );
 		$Model = new cPrivacyModel();
 		
 		if ( count ( $Privacy ) > 0 ) {
@@ -70,4 +70,19 @@ class cPrivacy extends cComponent {
 		return ( true );
 	}
 	
+	public function Check ( $pData = null ) {
+		
+		$Identifier = $pData['Identifier'];
+		$Type = $pData['Type'];
+		$Circles = $this->Talk ( 'Friends', 'Circles' );
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );
+		$Model = new cPrivacyModel();
+		
+		if ( !$Privacy = $Model->RetrieveItem ( $this->_Focus->Id, $Type, $Identifier ) ) return ( false );
+		
+		return ( $Privacy );
+	}
 }
