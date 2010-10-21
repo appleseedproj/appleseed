@@ -112,7 +112,7 @@ class cPage extends cComponent {
 		$Account = $pData['Account'];
 		
 		// Check the privacy settings on this item.
-		$Privacy = $this->Talk ( 'Privacy', 'Check', array ( 'Type' => 'Post', 'Identifier' => $Identifier ) );
+		$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Type' => 'Post', 'Identifier' => $Identifier ) );
 		
 		// Load the Post data
 		include_once ( ASD_PATH . 'components/page/models/page.php' );
@@ -123,8 +123,10 @@ class cPage extends cComponent {
 		$return['Owner'] = $Post['Owner'];
 		$return['Comment'] = $Post['Content'];
 		
-		// If false, then assume the highest level of privacy.
-		if ( !$Privacy ) {
+		// If true, then return the post.
+		if ( $Access ) {
+			return ( $return );
+		} else {
 			// If the person viewing is the owner, grant access.
 			if ( $this->_Current->Account == $Post['Owner'] ) {
 				return ( $return );
@@ -133,15 +135,9 @@ class cPage extends cComponent {
 			} else {
 				return ( false );
 			}
-		} else if ( $Privacy->Circles ) {
-		} else if ( $Privacy->Friends ) {
-		} else if ( $Privacy->Everybody ) {
-			return ( $return );
-		} else {
-			return ( false );
 		}
 		
-		return ( $return );
+		return ( false );
 	}
 	
 }

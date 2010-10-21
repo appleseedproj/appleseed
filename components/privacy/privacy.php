@@ -75,14 +75,26 @@ class cPrivacy extends cComponent {
 		$Identifier = $pData['Identifier'];
 		$Type = $pData['Type'];
 		$Circles = $this->Talk ( 'Friends', 'Circles' );
+		$Friends = $this->Talk ( 'Friends', 'Friends' );
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );
 		$Model = new cPrivacyModel();
 		
 		if ( !$Privacy = $Model->RetrieveItem ( $this->_Focus->Id, $Type, $Identifier ) ) return ( false );
 		
-		return ( $Privacy );
+		if ( $Privacy->Circles ) {
+			foreach ( $Privacy->Circles as $circle ) {
+				if ( array_key_exists ( $circle, $Circles ) ) return ( true );
+			}
+		} else if ( $Privacy->Friends == true ) {
+			if ( in_array ( $this->_Current->Account, $Friends ) ) return ( true );
+		} else if ( $Privacy->Everybody == true ) {
+			return ( true );
+		}
+		
+		return ( false );
 	}
 }

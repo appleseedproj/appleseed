@@ -70,14 +70,16 @@ class cPrivacyModel extends cModel {
 		
 		while ( $this->Fetch() ) {
 			$data[] = $this->Get ( "Data" );
+			$circle = $this->Get ( "Circle_FK" );
+			if ( $circle ) $circles[] = $circle;
 		}
 		
 		$return = new stdClass();
 		
-		if ( count ( $data ) > 1 ) {
+		if ( count ( $circles ) > 0 ) {
 			// Return the circle data
-			$return->Circles = array();
-			$return->Friends = true;
+			$return->Circles = $circles;
+			$return->Friends = false;
 			$return->Everybody = false;
 		} else if ( $data[0]['Friends'] ) {
 			$return->Circles = array();

@@ -93,18 +93,6 @@ class cFriendsCirclesController extends cController {
 		
 		$this->_Prep();
 		
-		$Private = $this->Circles->Get ( "Private" );
-		$Protected = $this->Circles->Get ( "Protected" );
-		$Shared = $this->Circles->Get ( "Shared" );
-		
-		if ( $Protected ) {
-			$this->View->Find ( '#sharing-protected', 0 )->checked = "checked";
-		} else if ( $Shared ) {
-			$this->View->Find ( '#sharing-shared', 0 )->checked = "checked";
-		} else {
-			$this->View->Find ( '#sharing-private', 0 )->checked = "checked";
-		}
-		
 		$this->View->Display();
 		
 		return ( true );
@@ -319,6 +307,18 @@ class cFriendsCirclesController extends cController {
 			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "Edit Circles Header" , array ( "circle" => $this->Circles->Get ( "Name" ) ) );
 		} else {
 			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "New Circles Header" );
+		}
+		
+		$Private = $this->Circles->Get ( "Private" );
+		$Protected = $this->Circles->Get ( "Protected" );
+		$Shared = $this->Circles->Get ( "Shared" );
+		
+		if ( $Protected ) {
+			$this->View->Find ( '#sharing-protected', 0 )->checked = "checked";
+		} else if ( $Shared ) {
+			$this->View->Find ( '#sharing-shared', 0 )->checked = "checked";
+		} else {
+			$this->View->Find ( '#sharing-private', 0 )->checked = "checked";
 		}
 		
 		$this->_PrepMessage();

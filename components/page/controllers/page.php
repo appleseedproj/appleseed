@@ -132,7 +132,7 @@ class cPagePageController extends cController {
 		
 		$this->Model->Post ( $Content, $Privacy, $this->_Focus->Id, $Owner, $Current );
 		
-		$redirect = $this->GetSys ( "Router" )->Get ( "Base" );
+		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
 		header ( 'Location:' . $redirect );
 		exit;
 	}
