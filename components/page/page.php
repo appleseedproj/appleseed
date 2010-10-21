@@ -55,6 +55,7 @@ class cPage extends cComponent {
 	
 	public function Status ( $pData = null ) {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		include ( ASD_PATH . 'components/page/models/page.php' );
 		$Page = new cPageModel ();
@@ -74,10 +75,24 @@ class cPage extends cComponent {
 		
 		$return = array();
 		
+		$Identifier = $References->Get ( 'Identifier' );
+		$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Type' => 'Post', 'Identifier' => $Identifier ) );
+		
 		$return['Content'] = $Page->Get ( 'Content' );
 		$return['Stamp'] = $References->Get ( 'Stamp' );
 		
-		return ( $return );
+		if ( $Access ) {
+			return ( $return );
+		} else {
+			// If the person viewing is the focus user, grant access
+			if ( $this->_Focus->Account == $this->_Current->Account ) {
+				return ( $return );
+			} else {
+				return ( false );
+			}
+		}
+		
+		return ( false );
 	}
 	
 	public function ClearStatus ( $pData = null ) {
