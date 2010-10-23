@@ -278,6 +278,14 @@
 		#profile-mutual #friends-mutual-summary ul li img { float:left; width:32px; height:32px; margin:5px 5px 0 0; }
 		#profile-mutual #friends-mutual-summary a.all-mutual-friends-link { float:right; clear:both;}
 		
+		/* user-invites */
+		#user-invites { float:left; width:100%; padding:0; margin:0; margin-bottom:10px; }
+		#user-invites .invite-count em { padding:0 2px; font-style:normal; font-weight:bold; font-size:130%; color:#bf4630; }
+		#user-invites .invite-count { padding-bottom:5px; }
+		#user-invites .email { float:left; padding:1px 3px; width:160px; }
+		#user-invites .invite { float:right; margin-top:4px; }
+		#user-invites .invite-count a { float:none; display:inline;  clear:none; background:none; padding-left:0; }
+		
 		/* profile-friends */
 		#profile-friends h1 { float:left; width:100%; clear:both; margin-top:10px; }
 		#profile-friends ul { float:left; border-bottom:1px solid #c0d895; padding-bottom:10px; margin-bottom:10px; }
