@@ -188,10 +188,11 @@ class cUserAuthorization extends cBase {
       	
       	$this->Account = $this->Username . '@' . $this->Domain;
       	
+      	$this->Email = $profileModel->Get ( 'Email' );
+      	
       	$this->Remote = false;
       	
       	return ( true );
 	}
-	
 	
 }

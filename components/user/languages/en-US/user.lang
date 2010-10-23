@@ -24,3 +24,9 @@ ERRORS_ON_PAGE="Errors occurred while attempting to save."
 SELECTED_ITEMS_DELETED="Successfully deleted %count$s selected item(s)."
 
 INHERITANCE=Inherit
+
+[invites]
+YOU_HAVE_INVITES="You have <em>%count$s</em> invites remaining. Enter a friends email address to send them an invite!"
+INVITE_BUTTON="Invite";
+ENTER_AN_EMAIL="Enter an email address"
+INVITE_HAS_BEEN_SENT="Invite sent to <a href="mailto:%email$s">%email$s</a>.<br />  You have <em>%count$s</em> invites remaining!"
