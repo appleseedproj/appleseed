@@ -13,9 +13,9 @@
 	
 	<ul class="list">
 		<li class="item">
-			<a class="owner-icon-link" href="http://lost.appleseed/profile/abed/"><img class="owner-icon" src="http://community.appleseed/?_social=true&_task=user.icon&_request=abed&_width=64&_height=64"></a>
+			<a class="owner-icon-link" href=""><img class="owner-icon" src=""></a>
 			<span class="info">
-				<p class="content-full"><a class="owner-link" rel="abed@community.appleseed">abed@community.appleseed</a><span class="content"></span></p>
+				<p class="content-full"><a class="owner-link" rel=""></a><span class="content"></span></p>
 				<abbr class="stamp">4 minutes ago</abbr>
 				<span class="actions">
 					<a class='add-comment'>Add Comment</a>

@@ -97,6 +97,11 @@ class cPagePageController extends cController {
 			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
 			$row->Find ( '.owner-icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
 			
+			$data = array ( 'account' => $Item['Owner'], 'source' => ASD_DOMAIN );
+			$OwnerLink = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
+			$row->Find ( '.owner-link', 0 )->href = $OwnerLink;
+			$row->Find ( '.owner-icon-link', 0 )->href = $OwnerLink;
+			
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
