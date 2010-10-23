@@ -44,9 +44,10 @@ class cPageReferencesModel extends cModel {
 		return ( true );
 	}
 	
-	public function RetrieveReferences ( $pUserId, $pStart = 0, $pLimit = 100 ) {
+	public function RetrieveReferences ( $pUserId, $pIdentifier = null, $pStart = 0, $pLimit = 100 ) {
 		
 		$criteria = array ( 'User_FK' => $pUserId );
+		if ( $pIdentifier ) $criteria['Identifier'] = $pIdentifier;
 		$this->Retrieve ( $criteria, 'Stamp DESC', array ( 'start' => $pStart, 'step' => $pLimit ) );
 		
 		return ( true );

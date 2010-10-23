@@ -50,6 +50,7 @@ class cPagePageController extends cController {
 			$this->View->Find ( '.post', 0 )->outertext = '';
 			$this->_Prep();
 		} else {
+			$this->View->Find ( '.post', 0 )->action = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/page/';
 			$this->_Prep();
 		}
 		
@@ -60,7 +61,9 @@ class cPagePageController extends cController {
 	
 	private function _Prep ( ) {
 		
-		$this->References->RetrieveReferences ( $this->_Focus->Id );
+		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
+		
+		$this->References->RetrieveReferences ( $this->_Focus->Id, $Identifier );
 		$this->View->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 		
 		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
@@ -88,7 +91,7 @@ class cPagePageController extends cController {
 			$row->Load ( $rowOriginal );
 			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->References->Get ( 'Stamp' ) );
-			$row->Find ( '.content', 0 )->innertext = $Item['Comment'];
+			$row->Find ( '.content', 0 )->innertext = str_replace ( "\n", "<br />", $Item['Comment'] );
 			$row->Find ( '.owner-link', 0 )->rel = $Item['Owner'];
 			$row->Find ( '.owner-link', 0 )->innertext = $Item['Owner'];
 			if ( !$Editor ) $row->Find ( '.delete', 0 )->innertext = '';
@@ -142,7 +145,7 @@ class cPagePageController extends cController {
 			$this->_Email ( $Content, $Identifier );
 		}
 		
-		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
+		$redirect = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/page/';
 		header ( 'Location:' . $redirect );
 		exit;
 	}
@@ -195,7 +198,7 @@ class cPagePageController extends cController {
 		
 		$this->Model->Remove ( $Identifier, $this->_Focus->Id );
 		
-		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
+		$redirect = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/page/';
 		header ( 'Location:' . $redirect );
 		exit;
 	}

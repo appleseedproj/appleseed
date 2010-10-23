@@ -41,7 +41,8 @@ class cPostal extends cComponent {
 		$MailSubject = $pData['MailSubject'];
 		$Byline = $pData['Byline'];
 		$Subject = $pData['Subject'];
-		$Body = $pData['Body'];
+		$Body = str_replace ( "\n", "<br />", $pData['Body'] );
+		
 		$LinkDescription = $pData['LinkDescription'];
 		$Link = $pData['Link'];
 		$Stamp = $this->GetSys ( 'Date' )->Format ( NOW(), true );
@@ -67,6 +68,7 @@ class cPostal extends cComponent {
 		$View->Find ( '.link-description', 0 )->innertext = $LinkDescription;
 		$View->Find ( '.link', 0 )->src = $Link;
 		$View->Find ( '.link', 0 )->innertext = $Link;
+		$View->Find ( '.link', 0 )->href = $Link;
 		
 		$from = "no-reply@" . ASD_DOMAIN;
 		$fromName = "Appleseed";
