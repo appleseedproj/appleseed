@@ -411,11 +411,12 @@ class cFriendsFriendsController extends cController {
 			
 			$row->Find ( '[class=friends-status]', 0 )->innertext = $userInfo->status;
 			
-			$row->Find ( '[class=friends-identity]', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/';
+			$data = array ( 'account' => $userInfo->account );
+			$row->Find ( '[class=friends-identity]', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
 			$row->Find ( '[class=friends-identity]', 0 )->innertext = $username . '@' . $domain;
 			$row->Find ( '[class=friends-fullname-link]', 0 )->innertext = $userInfo->fullname;
-			$row->Find ( '[class=friends-fullname-link]', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/';
-			$row->Find ( '[class=friends-icon-link]', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/';
+			$row->Find ( '[class=friends-fullname-link]', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
+			$row->Find ( '[class=friends-icon-link]', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
 			
 			$mutualFriendsCount = count ( array_intersect ( $currentInfo->friends, $userInfo->friends ) );
 			
