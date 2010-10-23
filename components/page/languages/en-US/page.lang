@@ -3,3 +3,9 @@ ADD_COMMENT="Comment"
 DELETE_POST="Remove"
 
 WHAT_IS_ON_YOUR_MIND="What's on your mind?"
+
+[notifications]
+SOMEONE_POSTED_ON_YOUR_PAGE="%fullname$s posted on your page."
+POSTED_ON_YOUR_PAGE="posted on your page."
+SOMEONE_SAID="%firstname$s said:"
+CLICK_HERE="Click here to view post:"

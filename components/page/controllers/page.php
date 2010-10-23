@@ -100,8 +100,6 @@ class cPagePageController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
-			$row->Find ( '.delete', 0 )->action = $this->GetSys ( "Router" )->Get ( "Base" );
-			
 		    $li->innertext .= $row->outertext;
 		    unset ( $row );
 		}
@@ -132,10 +130,40 @@ class cPagePageController extends cController {
 		
 		$this->Model->Post ( $Content, $Privacy, $this->_Focus->Id, $Owner, $Current );
 		
+		$Identifier = $this->Model->Get ( 'Identifier' );
+		
+		// Don't send an email if we're posting on our own page.
+		if ( $this->_Current->Account != $this->_Focus->Account ) {
+			$this->_Email ( $Content, $Identifier );
+		}
+		
 		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
 		header ( 'Location:' . $redirect );
 		exit;
 	}
+	
+	private function _Email ( $pContent, $pIdentifier) {
+		$data = array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
+		$CurrentInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		$SenderFullname = $CurrentInfo->fullname;
+		$SenderNameParts = explode ( ' ', $CurrentInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		$SenderAccount = $this->_Current->Account;
+		
+		$RecipientEmail = $this->_Focus->Email;
+		$MailSubject = __( "Someone Posted On Your Page", array ( "fullname" => $SenderFullname ) );
+		$Byline = __( "Posted On Your Page" );
+		$Subject = __( "Someone Said", array ( "firstname" => $SenderFirstName ) );
+		$Body = $pContent;
+		$LinkDescription = __( "Click Here" );
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/page/' . $pIdentifier;
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $SenderAccount, 'RecipientEmail' => $RecipientEmail, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$this->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
 	
 	public function _CheckEditor () {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
@@ -162,7 +190,7 @@ class cPagePageController extends cController {
 		
 		$this->Model->Remove ( $Identifier, $this->_Focus->Id );
 		
-		$redirect = $this->GetSys ( "Router" )->Get ( "Base" );
+		$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
 		header ( 'Location:' . $redirect );
 		exit;
 	}
