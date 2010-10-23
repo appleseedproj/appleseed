@@ -70,6 +70,9 @@
 					<div id="profile-photo">
 					  	<?php $zApp->Components->Go ( "photos", "profile", "profile" ); ?>
 					</div>
+					<div id="profile-invites">
+					  	<?php $zApp->Components->Go ( "user", "invites", "invites" ); ?>	 
+					</div>
 					<div id="profile-contact">
 					  	<?php $zApp->Components->Go ( "profile", "contact", "contact" ); ?>
 					</div>
