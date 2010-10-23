@@ -1,7 +1,5 @@
 <?php
 /**
- * @version      $Id$
- * @package      Appleseed.Framework
  * @subpackage   Library
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
@@ -45,7 +43,9 @@ class cMailer {
 		// specify the To argument
 		->setTo(array($pTo => $pToName))
 		// build the body part of the message
-		->setBody($pBody);
+		->setBody($pBody)
+		// set the content type
+		->setContentType("text/html");
 		
 		// send the email message
 		if ($mailer->send($message))
