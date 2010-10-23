@@ -418,6 +418,25 @@ class cQuicksocialHook extends cHook {
 		return ( $return );
 	}
 	
+	public function CreateUserLink ( $pData ) {
+		
+		$account = $pData['account'];
+		
+		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
+		
+		$source = QUICKSOCIAL_DOMAIN;
+		
+		if ( $source == $accountDomain ) {
+			$return = 'http://' . $source . '/profile/' . $accountUsername;
+		} else {
+			$data = array ( '_social' => 'true', '_task' => 'redirect', '_action' => 'profile', '_account' => $account, '_source' => $source );
+		
+			$return = 'http://' . $accountDomain . '/?' . http_build_query ( $data );
+		}
+		
+		return ( $return );
+	}
+	
 	public function OnUserInfo ( $pData ) {
 		
 		if (!class_exists ( 'cQuickUser' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
@@ -918,6 +937,7 @@ class cQuicksocialHook extends cHook {
 			case 'notifications':
 			break;
 			case 'profile':
+				$redirect = '/profile/' . $accountUsername . '/';
 			break;
 			default:
 				$redirect = '/';
