@@ -54,11 +54,14 @@ class cUserInvitesController extends cController {
 	
 	public function Invite ( $pView = null, $pData = array ( ) ) {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		$this->Model = $this->GetModel ( 'Invites' );
 		
 		$Email = $this->GetSys ( 'Request' )->Get ( 'Email' );
 		$Count = $this->Model->CountInvites( $this->_Focus->Id );
+		
+		$Invite = 'a0s9d8fa09s8dg09a8sdg098asdg';
 		
 		$this->View = $this->GetView ( $pView );
 		
@@ -67,7 +70,33 @@ class cUserInvitesController extends cController {
 		
 		$this->View->Display();
 		
+		$this->_Email ( $Email, $Invite );
+		
 		return ( true );
 	}
+	
+	private function _Email ( $pAddress, $pInvite ) {
+		$data = array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
+		$CurrentInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		$SenderFullname = $CurrentInfo->fullname;
+		$SenderNameParts = explode ( ' ', $CurrentInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		$SenderAccount = $this->_Current->Account;
+		
+		$RecipientEmail = $pAddress;
+		$MailSubject = __( "Someone Sent An Invite", array ( "fullname" => $SenderFullname ) );
+		$Byline = __( "Sent An Invite" );
+		$Subject = __( "You Are Invited", array ( 'domain' => ASD_DOMAIN ) );
+		$Link = 'http://' . ASD_DOMAIN . '/join/' . $pInvite;
+		$Body = __( "Invite Description", array ( 'fullname' => $fullname, 'domain' => ASD_DOMAIN, 'firstname' => $senderFirstname, 'link' => $Link ) );
+		$LinkDescription = __( "Click Here", array ( 'domain' => ASD_DOMAIN ) );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $SenderAccount, 'RecipientEmail' => $RecipientEmail, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$this->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
 	
 }

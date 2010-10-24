@@ -30,3 +30,29 @@ YOU_HAVE_INVITES="You have <em>%count$s</em> invites remaining. Enter a friends 
 INVITE_BUTTON="Invite";
 ENTER_AN_EMAIL="Enter an email address"
 INVITE_HAS_BEEN_SENT="Invite sent to <a href="mailto:%email$s">%email$s</a>.<br />  You have <em>%count$s</em> invites remaining!"
+
+SOMEONE_SENT_AN_INVITE="%fullname$s invited you to join Appleseed"
+SENT_AN_INVITE="invited you to join Appleseed"
+CLICK_HERE="Click here to join %domain$s"
+YOU_ARE_INVITED="You have been invited to join %domain$s"
+
+INVITE_DESCRIPTION="Congratulations!
+
+You have been invited by %fullname$s to open a free account at <a href='%domain$s'>%domain$s</a>.
+
+To accept this invitation and set up an account, click this link:
+
+ %link$s
+
+Once your account has been created, %firstname$s will be notified in order to add you to their friend list!
+
+Appleseed is a new open source social networking software that is currently in development.  Features include: Strong privacy, journals, photo albums, messaging, and groups all in a fully distributed social network.  
+
+For more information on Appleseed, go to <a href='http://opensource.appleseedproject.org'>opensource.appleseedproject.org</a>.
+
+Appleseed is still in early beta, and many features are still not available. But if you set up an account, you'll be able to help us fix bugs and add features.
+
+Thank You,
+The Appleseed Project
+"
+

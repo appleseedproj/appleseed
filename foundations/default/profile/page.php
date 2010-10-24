@@ -76,6 +76,9 @@
 					<div id="profile-summary">
 					  	<?php $zApp->Components->Go ( "profile", "summary", "summary" ); ?>	
 					</div>
+					<div id="profile-invites">
+					  	<?php $zApp->Components->Go ( "user", "invites", "invites" ); ?>	 
+					</div>
 					<div id="profile-mutual">
 					  	<?php $zApp->Components->Go ( "friends", "mutual", "summary" ); ?>	 
 					</div>
