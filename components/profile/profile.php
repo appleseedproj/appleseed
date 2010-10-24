@@ -31,6 +31,8 @@ class cProfile extends cComponent {
 	
 	public function AdminMenu ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array ();
 		
 		$return[] = array ( 'title' =>"Profile", 'class' => "profile", 'link' => "/admin/profile/" );
@@ -39,6 +41,8 @@ class cProfile extends cComponent {
 	} 
 	
 	public function AddToProfileTabs ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$return = array ();
 		

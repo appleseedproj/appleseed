@@ -30,6 +30,9 @@ class cPrivacy extends cComponent {
 	}
 	
 	function Store ( $pData ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$Privacy = $pData['Privacy'];
 		$Identifier = $pData['Identifier'];
 		$Type = $pData['Type'];
@@ -71,6 +74,8 @@ class cPrivacy extends cComponent {
 	}
 	
 	public function Check ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$Identifier = $pData['Identifier'];
 		$Type = $pData['Type'];

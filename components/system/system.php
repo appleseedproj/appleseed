@@ -31,6 +31,8 @@ class cSystem extends cComponent {
 	
 	public function AdminMenu ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array ();
 		
 		$return[] = array ( 'title' =>"System", 'class' => "system", 'link' => "/admin/system/" );

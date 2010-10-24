@@ -31,6 +31,8 @@ class cPhotos extends cComponent {
 	
 	public function AdminMenu ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array ();
 		
 		$return[] = array ( 'title' =>"Photos", 'class' => "photos", 'link' => "/admin/photos/" );
@@ -39,6 +41,8 @@ class cPhotos extends cComponent {
 	} 
 	
 	public function AddToProfileTabs ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$return = array ();
 		

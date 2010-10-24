@@ -22,11 +22,11 @@
 					<a class='like'>Like</a>
 				</span>
 			</span>
-			<form class="delete" method="post">
+			<form class="remove" method="post">
 				<input type="hidden" name="Task" value="Remove" />
 				<input type="hidden" name="Context" />
 				<input type="hidden" name="Identifier" />
-				<button class="delete-post">Delete Post</button>
+				<button class="remove-post">Remove Post</button>
 			</form>
 		</li>
 	</ul>

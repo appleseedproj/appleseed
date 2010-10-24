@@ -33,6 +33,8 @@ class cUser extends cComponent {
 	
 	public function Current ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		if ( isset ( $this->_Cache['Current'] ) ) {
 			return ( $this->_Cache['Current'] );
 		}
@@ -49,6 +51,8 @@ class cUser extends cComponent {
 	}
 	
 	public function Focus ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		if ( isset ( $this->_Cache['Focus'] ) ) {
 			return ( $this->_Cache['Focus'] );
@@ -68,6 +72,8 @@ class cUser extends cComponent {
 	}
 	
 	public function AdminMenu ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$return = array ();
 		

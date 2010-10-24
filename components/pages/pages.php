@@ -31,6 +31,8 @@ class cPages extends cComponent {
 	
 	public function AdminMenu ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array ();
 		
 		$return[] = array ( 'title' =>"Pages", 'class' => "pages", 'link' => "/admin/pages/" );

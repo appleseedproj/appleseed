@@ -31,6 +31,8 @@ class cConfig extends cComponent {
 	
 	public function AdminMenu ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array ();
 		
 		$return[] = array ( 'title' =>"Configuration", 'class' => "config", 'link' => "/admin/config/" );

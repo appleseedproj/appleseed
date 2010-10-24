@@ -31,6 +31,8 @@ class cFriends extends cComponent {
 	
 	public function AddToProfileTabs ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array();
 		
 		$return[] = array ( 'id' => 'friends', 'title' => 'Friends Tab', 'link' => '/friends/' );
@@ -39,6 +41,8 @@ class cFriends extends cComponent {
 	} 
 	
 	public function Circles ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
@@ -71,6 +75,8 @@ class cFriends extends cComponent {
 	}
 	
 	public function Friends ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );

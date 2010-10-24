@@ -31,6 +31,8 @@ class cPostal extends cComponent {
 	
 	public function Send ( $pData = array ( ) ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		include_once ( ASD_PATH . 'components/postal/controllers/postal.php' );
 		$Controller = new cPostalPostalController();
 		

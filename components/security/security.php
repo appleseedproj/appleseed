@@ -33,6 +33,8 @@ class cSecurity extends cComponent {
 	
 	public function Access ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$account = $pData['account'];
 		$context = $pData['context'];
 		

@@ -31,7 +31,10 @@ class cExample extends cComponent {
 	}
 	
 	public function GetResponse ( $pData = null ) {
-		return ( "Success!" );
+		$return = array();
+		$return[] = 'This is a response from the Example component.';
+		
+		return ( $return );
 	}
 	
 }

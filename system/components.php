@@ -257,6 +257,8 @@ class cComponents extends cBase {
 		
 		$methods = get_class_methods ( $this->$component );
 		
+		$this->$component->Set ( 'Source', 'Component' );
+		
 		if ( !$methods ) return ( false );
 		
 		if ( in_array ( $function, $methods) ) {

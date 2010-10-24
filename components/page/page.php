@@ -31,6 +31,8 @@ class cPage extends cComponent {
 	
 	public function AddToProfileTabs ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$return = array ();
 		
 		$return[] = array ( 'id' => 'page', 'title' => 'Page Tab', 'link' => '/page/' );
@@ -39,6 +41,8 @@ class cPage extends cComponent {
 	} 
 	
 	public function IdentifierExists ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$Identifier = $pData['Identifier'];
 		
@@ -54,6 +58,9 @@ class cPage extends cComponent {
 	}
 	
 	public function Status ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
@@ -97,6 +104,8 @@ class cPage extends cComponent {
 	
 	public function ClearStatus ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$user = $pData['UserId'];
 		
 		include ( ASD_PATH . 'components/page/models/page.php' );
@@ -109,6 +118,8 @@ class cPage extends cComponent {
 	
 	public function RegisterPageType ( $pData = null ) {
 		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
 		$post = new stdClass();
 		$post->Component = $this->Get ( 'Component' );
 		$post->Function = 'GetPost';
@@ -119,6 +130,8 @@ class cPage extends cComponent {
 	}
 	
 	public function GetPost ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );

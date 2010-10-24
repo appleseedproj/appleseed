@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Newsfeed
+ * @subpackage   Janitor
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Newsfeed Component
+/** Janitor Component Controller
  * 
- * Newsfeed Component Entry Class
+ * Janitor Component Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Newsfeed
+ * @subpackage  Janitor
  */
-class cNewsfeed extends cComponent {
+class cJanitorController extends cController {
 	
 	/**
 	 * Constructor
@@ -26,19 +26,11 @@ class cNewsfeed extends cComponent {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
-		parent::__construct();
+		parent::__construct( );
 	}
 	
-	public function AddToProfileTabs ( $pData = null ) {
-		
-		if ( $this->_Source != 'Component' ) return ( false );
-		
-		$return = array ();
-		
-		$return[] = array ( 'id' => 'newsfeed', 'title' => 'News Tab', 'link' => '/news/', 'owner' => true );
-		
-		return ( $return );
-	} 
-	
-	
+	function Display ( $pView = null, $pData = array ( ) ) {
+		return ( parent::Display( $pView, $pData ) );
+	}
+
 }
