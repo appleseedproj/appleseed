@@ -435,16 +435,18 @@
 		.article-list .summary { margin:10px 0; list-style-type:none; float:left; clear:both; width:100%; }
 		.article-list .summary img { float:left; margin: 0px 5px 5px 0; }
 		.article-list .icon { width:64px; height:64px; }
-		.article-list .summary h2 { font-size:110%; color:#2a2a2a; }
+		.article-list .summary h2 { font-size:150%; color:#2a2a2a; }
 		.article-list .summary h3 { font-weight:normal; color:#2a2a2a; }
 		.article-list .summary p { font-size:100%; margin:0; padding:0; }
 		
 		.article-list img { max-width:680px; }
 		.article-list .summary a { padding:0; background:none; }
 		.article-list .stamp { font-size:90%; }
-		.article-list .summary .content { float:left; clear:both; width:96%; background-color:#c0d895; border-radius:10px; padding:2%; -moz-box-shadow:0px 0px 3px rgba(0,0,0,0.8); -webkit-box-shadow:0px 0px 4px rgba(0,0,0,0.8); }
+		.article-list .summary .content { float:left; clear:both; width:96%; border:1px solid #c0d895; border-radius:5px; padding:2%; }
 		
-		.article-list .readmore { float:left; text-align:right; margin-bottom:10px; border-bottom:1px solid #2a2a2a; width:100%; }
+		.article-list .actions { float:left; width:100%; text-align:right; margin-bottom:10px; border-bottom:1px solid #80af1f; width:100%; font-size:90%; }
+		.article-list .actions .readmore { float:right; }
+		.article-list .actions .comments { margin-right:5px; padding-right:5px; border-right:1px solid #c0d895; }
 		
 		/* appleseed-debug */
 		#appleseed-debug { margin-top:10px; }

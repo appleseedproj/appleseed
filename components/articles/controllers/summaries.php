@@ -84,6 +84,9 @@ class cArticlesSummariesController extends cController {
 			$row->Find ( '.fullname', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
 			$row->Find ( '.fullname', 0 )->innertext = $username . '@' . $domain;
 			
+			$row->Find ( '.comments', 0 )->href = '/article/' . $this->Model->Get ( 'tID' ) . '#comments';
+			$row->Find ( '.readmore', 0 )->href = '/article/' . $this->Model->Get ( 'tID' );
+			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->Model->Get ( 'Stamp' ), true );
 			
 		    $li->innertext .= $row->outertext;
