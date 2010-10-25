@@ -22,7 +22,7 @@ Your password has been reset.  Your new password is:
 Thank You,
 The Appleseed Project"
 
-PASSWORD_HAS_BEEN_RESET="Your password has been reset.  A new password has been sent to %email$s"
+PASSWORD_HAS_BEEN_RESET="A new password for '%username$s' has been sent to the email address associated with this account."
 USERNAME_NOT_FOUND="User %username$s was not found in our database"
 INVALID_USERNAME="Enter your username to reset your password"
 

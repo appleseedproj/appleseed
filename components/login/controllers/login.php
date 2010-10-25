@@ -472,7 +472,7 @@ class cLoginLoginController extends cController {
 			$userAuth->Set ( "Pass", $newpass );
 			$userAuth->Save();
 			$this->GetSys ( "Session" )->Context ( "login.login.(\d+).login" );
-			$this->GetSys ( "Session" )->Set ( "Message", __( "Password Has Been Reset", array ( "email" => $to ) ) );
+			$this->GetSys ( "Session" )->Set ( "Message", __( "Password Has Been Reset", array ( "username" => $username ) ) );
 			$this->GetSys ( "Session" )->Set ( "Error", 0 );
 		}
 

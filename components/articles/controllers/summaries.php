@@ -68,8 +68,23 @@ class cArticlesSummariesController extends cController {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
-			$row->Find ( "[class=title]", 0 )->innertext = $this->Model->Get ( "Title" );
-			$row->Find ( "[class=summary]", 0 )->innertext = str_replace ( "\n", "<br />", $this->Model->Get ( "Summary" ) );
+			$row->Find ( '.title', 0 )->innertext = $this->Model->Get ( "Title" );
+			$row->Find ( '.content', 0 )->innertext = str_replace ( "\n", "<br />", $this->Model->Get ( "Summary" ) );
+			
+			$username = $this->Model->Get ( 'Submitted_Username');
+			$domain = $this->Model->Get ( 'Submitted_Domain');
+			
+			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
+			$row->Find ( '.icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
+			
+			$data = array ( 'account' => $username . '@' . $domain, 'source' => ASD_DOMAIN );
+			$row->Find ( '.submitted', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
+			
+			$data = array ( 'account' => $username . '@' . $domain, 'source' => ASD_DOMAIN );
+			$row->Find ( '.fullname', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
+			$row->Find ( '.fullname', 0 )->innertext = $username . '@' . $domain;
+			
+			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->Model->Get ( 'Stamp' ), true );
 			
 		    $li->innertext .= $row->outertext;
 		    unset ( $row );
