@@ -361,7 +361,7 @@ class cQuicksocialHook extends cHook {
 		
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		$source = QUICKSOCIAL_DOMAIN;
+		$source = ASD_DOMAIN;
 		
 		if ( $source == $accountDomain ) {
 			//$return = 'http://' . $source . '/profile/' . $requestUsername . '/messages/' . $request;
@@ -383,7 +383,7 @@ class cQuicksocialHook extends cHook {
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		$source = QUICKSOCIAL_DOMAIN;
+		$source = ASD_DOMAIN;
 		
 		if ( $source == $accountDomain ) {
 			$return = 'http://' . $source . '/profile/' . $accountUsername . '/friends/add/' . $request;
@@ -405,7 +405,7 @@ class cQuicksocialHook extends cHook {
 		
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		$source = QUICKSOCIAL_DOMAIN;
+		$source = ASD_DOMAIN;
 		
 		if ( $source == $accountDomain ) {
 			$return = 'http://' . $source . '/profile/' . $accountUsername . '/friends/remove/' . $request;
@@ -424,7 +424,7 @@ class cQuicksocialHook extends cHook {
 		
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		
-		$source = QUICKSOCIAL_DOMAIN;
+		$source = ASD_DOMAIN;
 		
 		if ( $source == $accountDomain ) {
 			$return = 'http://' . $source . '/profile/' . $accountUsername;
