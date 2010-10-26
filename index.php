@@ -1,10 +1,10 @@
 <?php
   // +-------------------------------------------------------------------+
   // | Appleseed Web Community Management Software                       |
-  // | http://appleseed.sourceforge.net                                  |
+  // | http://opensource.appleseedproject.org                            |
   // +-------------------------------------------------------------------+
   // | FILE: index.php                               CREATED: 04-12-2007 + 
-  // | LOCATION: /                                  MODIFIED: 09-30-2010 +
+  // | LOCATION: /                                  MODIFIED: 10-25-2010 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2010 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.7                                               |
+  // | VERSION:      0.7.8                                               |
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
   
@@ -75,6 +75,9 @@
   $INSTALL->CheckPHPVersion ();
   $INSTALL->CheckSHA ();
   $INSTALL->CheckPDO ();
+  $INSTALL->CheckJSON ();
+  $INSTALL->CheckGD ();
+  $INSTALL->CheckCURL ();
   $INSTALL->CheckMysqlClientVersion ();
   $INSTALL->CheckRegisterGlobals ();
   $INSTALL->CheckStorageDirectory ();
@@ -101,7 +104,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-  <title>Appleseed 0.7.7 Install Script</title>
+  <title>Appleseed 0.7.8 Install Script</title>
 </head>
 
 <style type="text/css" media="screen">
@@ -485,6 +488,51 @@ class cINSTALL {
     
     return (TRUE);
   } // CheckSHA
+  
+  function CheckGD () {
+    global $Error, $ErrorMark;
+
+		if (!function_exists("imagejpeg")) {
+      $Error['gd_available'] = TRUE;
+      $ErrorMark['gd_available'] = "<span class='no'>N</span>";
+			return (false);
+		}
+		
+    $Error[''] = FALSE;
+    $ErrorMark['gd_available'] = "<span class='yes'>Y</span>";
+		
+    return (TRUE);
+  }
+  
+  function CheckCURL () {
+    global $Error, $ErrorMark;
+
+		if (!function_exists("curl_init")) {
+      $Error['curl_available'] = TRUE;
+      $ErrorMark['curl_available'] = "<span class='no'>N</span>";
+			return (false);
+		}
+		
+    $Error[''] = FALSE;
+    $ErrorMark['curl_available'] = "<span class='yes'>Y</span>";
+		
+    return (TRUE);
+  }
+  
+  function CheckJSON () {
+    global $Error, $ErrorMark;
+
+		if (!function_exists("json_decode")) {
+      $Error['json_available'] = TRUE;
+      $ErrorMark['json_available'] = "<span class='no'>N</span>";
+			return (false);
+		}
+		
+    $Error[''] = FALSE;
+    $ErrorMark['json_available'] = "<span class='yes'>Y</span>";
+		
+    return (TRUE);
+  }
   
   function CheckPDO () {
     global $Error, $ErrorMark;
@@ -982,6 +1030,22 @@ class cINSTALL {
     return (TRUE);
   } // UpdateAdminUserPass
   
+  function UpdateAdminEmail ($pADMINUSER, $pADMINEMAIL) {
+    global $gDATABASE, $gPREFIX;
+    global $MysqlLink;
+
+	$tablename = $gPREFIX . 'userProfile';
+
+	$reset_query = "UPDATE %s SET Email = '%s' WHERE userAuth_uID = 1";
+
+	$sql = sprintf ( $reset_query, $tablename, $pADMINEMAIL );
+
+    mysql_select_db ($gDATABASE);
+    mysql_query ($sql);
+    
+    return (TRUE);
+  } // UpdateAdminEmail
+  
   function CreateTables () {
   } // CreateTables
   
@@ -1076,10 +1140,11 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS, $gUPGRADE;
     
-    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.7', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.8', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
+    if (!$this->UpdateAdminEmail ($gADMINUSER, $gADMINEMAIL)) return (FALSE);
     
     return (TRUE);
   } // ProcessPost
@@ -1134,9 +1199,9 @@ class cINSTALL {
 							</ul>
 						<h3>New in this release</h3>
 							<ul>
-								<li>UTF-8 Input Support</li>
-								<li>Refined friends/circles UI</li>
-								<li>Internal features and refactoring</li>
+								<li>"Page" posts/status updates</li>
+								<li>New email notifications</li>
+								<li>New frontpage layout</li>
 								<li>More bug fixes</li>
 							</ul>
 
@@ -1152,7 +1217,7 @@ class cINSTALL {
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.7</h1>
+            <h1>Appleseed Install v0.7.8</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
@@ -1190,6 +1255,21 @@ class cINSTALL {
 										<tr>
                 			<th><span class='label'>PHP version 5.2 or higher? (Running <?php echo phpversion(); ?>)</span></th>
                 			<td><?php echo $ErrorMark['php_version']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>JSON support enabled</span></th>
+                			<td><?php echo $ErrorMark['json_available']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>GD support enabled</span></th>
+                			<td><?php echo $ErrorMark['gd_available']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Curl support enabled</span></th>
+                			<td><?php echo $ErrorMark['curl_available']; ?></td>
 										</tr>
       
 										<tr>
@@ -1284,6 +1364,11 @@ class cINSTALL {
 										</tr>
    
 									  <tr>
+                			<th><label for='gADMINEMAIL'>Default Admin Email:</label></th>
+                			<td><input type='text' name='gADMINEMAIL' value='<?php echo $gADMINEMAIL; ?>' /></td>
+										</tr>
+   
+									  <tr>
                 			<th><label for='gADMINPASS'>Default Admin Password:</label></th>
                 			<td><input type='password' maxlength=20 id='adminPass' class='gADMINPASS' name='gADMINPASS' value='<?php echo $gADMINPASS; ?>' /></td>
 										</tr>
@@ -1370,7 +1455,7 @@ class cINSTALL {
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.7</h1>
+            <h1>Appleseed Install v0.7.8</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
@@ -1407,6 +1492,21 @@ class cINSTALL {
 										<tr>
                 			<th><span class='label'>PHP version 5.2 or higher? (Running <?php echo phpversion(); ?>)</span></th>
                 			<td><?php echo $ErrorMark['php_version']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>JSON support enabled</span></th>
+                			<td><?php echo $ErrorMark['json_available']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>GD support enabled</span></th>
+                			<td><?php echo $ErrorMark['gd_available']; ?></td>
+										</tr>
+      
+										<tr>
+                			<th><span class='label'>Curl support enabled</span></th>
+                			<td><?php echo $ErrorMark['curl_available']; ?></td>
 										</tr>
       
 										<tr>
