@@ -70,7 +70,14 @@ class cUserInvitesController extends cController {
 		
 		$this->View->Display();
 		
-		$this->_Email ( $Email, $Invite );
+		if ( strstr ( $Email, ',' ) ) {
+			$Emails = explode ( ',', $Email );
+			foreach ( $Emails as $e => $Email ) {
+				$this->_Email ( $Email, $Invite );
+			}
+		} else {
+			$this->_Email ( $Email, $Invite );
+		}
 		
 		return ( true );
 	}

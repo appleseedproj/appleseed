@@ -1393,7 +1393,10 @@
         'Reply-To: ' . $from . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
         
-      mail ($email, $subject, $body, $headers);
+      //mail ($email, $subject, $body, $headers);
+      
+      $this->_Email ( $email, $gRECIPIENT, $sender );
+      
       
       $this->XML->Load ("legacy/code/include/data/xml/message_notify.xml");
       $return = $this->XML->Data;
@@ -1401,6 +1404,33 @@
       return ($return);
     } // MessageNotify
     
+	private function _Email ( $pAddress, $pRecipient, $pSender ) {
+		global $zApp;
+		
+		$data = array ( 'account' => $pSender, 'source' => ASD_DOMAIN, 'request' => $pSender );
+		$CurrentInfo = $zApp->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		$SenderFullname = $CurrentInfo->fullname;
+		$SenderNameParts = explode ( ' ', $CurrentInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		list ( $RecipientUsername, $RecipientDomain ) = explode ( '@', $pRecipient );
+		
+		$SenderAccount = $pSender;
+		
+		$RecipientEmail = $pAddress;
+		$MailSubject = __( "Legacy Someone Sent A Message", array ( "fullname" => $SenderFullname ) );
+		$Byline = __( "Legacy Sent A Message" );
+		$Subject = __( "Legacy Sent A Message Subject", array ( 'firstname' => $SenderFirstName, 'domain' => ASD_DOMAIN ) );
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $RecipientUsername . '/messages/';
+		$Body = __( "Legacy Message Description", array ( 'fullname' => $SenderFullname, 'domain' => ASD_DOMAIN, 'firstname' => $senderFirstname, 'link' => $Link ) );
+		$LinkDescription = __( "Legacy Click Here" );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $SenderAccount, 'RecipientEmail' => $RecipientEmail, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$zApp->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
     function Blocked ($pUSERNAME, $pDOMAIN) {
     	
       // domain.com              = blocks domain.com and all subdomains.

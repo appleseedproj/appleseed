@@ -33,7 +33,7 @@ class cMail extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'mail', 'title' => 'Mail Tab', 'link' => '/mail/', 'owner' => true );
+		$return[] = array ( 'id' => 'mail', 'title' => 'Mail Tab', 'link' => '/messages/', 'owner' => true );
 		
 		return ( $return );
 	} 

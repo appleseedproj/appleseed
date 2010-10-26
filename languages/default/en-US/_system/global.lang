@@ -107,6 +107,20 @@ You have a new message from %sender$s
 Click here to read your messages:
 %url$s"
 
+[legacymessages]
+LEGACY_SOMEONE_SENT_A_MESSAGE="%fullname$s sent you a message"
+LEGACY_SENT_A_MESSAGE="sent a message"
+LEGACY_SENT_A_MESSAGE_SUBJECT="%firstname$s sent you a message on %domain$s"
+LEGACY_CLICK_HERE="Click here to read your messages:"
+LEGACY_MESSAGE_DESCRIPTION="
+You have a new message from %fullname$s.
+
+Log in to your %domain$s account or click here to read your messages:
+%link$s
+
+"
+
+
 [friend]
 FRIEND_SENDER="""Friend Request"" <friends@%domain$s>"
 
