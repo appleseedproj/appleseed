@@ -245,7 +245,7 @@
 		#summary-information ul{ list-style-type:none; }
 		
 		/* profile-status */
-		#status-container { margin-top:40px; height:49px; max-height:150px; overflow:hidden; }
+		#status-container { float:left; margin-top:40px; height:49px; max-height:150px; overflow:hidden; }
 		#status-container .name { font-size:120%; font-weight:bold; }
 		#status-container .current { font-size:90%; font-weight:bold; color:#5a5a5a; margin-left:5px;  }
 		#status-container .stamp { font-size:70%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }

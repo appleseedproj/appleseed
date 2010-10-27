@@ -451,18 +451,7 @@ class cLoginLoginController extends cController {
 		$to = $userProfile->Get ( "Email" ); 
 		$toName = $userProfile->Get ( "Fullname" );
 
-		$subject = __( "Password Reset Subject", array ( "domain" => ASD_DOMAIN ) );
-
-		$body = __("Password Reset Body", array ( "fullname" => $toName, "password" => $newpassword ) );
-
-		$from = __("Password Reset From", array ( "domain" => ASD_DOMAIN ) );
-		$fromName = __( "Password Reset From Name" );
-
-		$headers = "From: $from" . "\r\n" .
-                 "Reply-To: $from" . "\r\n" .
-                 "X-Mailer: PHP/" . phpversion();
-
-		if ( !$this->Mailer->Send ( $from, $fromName, $to, $toName, $subject, $body ) ) {
+		if ( !$this->ForgotEmail( $to, $username, $newpassword ) ) {
 			// Couldn't send out the message, so error without resetting the pw.
 			$this->GetSys ( "Session" )->Context ( "login.login.(\d+).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", "Error Sending Message" );
@@ -478,6 +467,36 @@ class cLoginLoginController extends cController {
 
 		return ( $this->Display ( $pView, $pData ) );
 	}
+	
+	private function ForgotEmail ( $pEmail, $pUsername, $pPassword ) {
+		$Email = $pEmail;
+		$Sender = $pUsername . '@' . ASD_DOMAIN;
+		
+		$from = __("Password Reset From", array ( "domain" => ASD_DOMAIN ) );
+		$fromName = __( "Password Reset From Name" );
+
+		
+		$data = array ( 'request' => $Sender, 'source' => ASD_DOMAIN, 'account' => $Sender );
+		$SenderInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		
+		$SenderFullname = $SenderInfo->fullname;
+		$SenderNameParts = explode ( ' ', $SenderInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		$MailSubject = __( "Password Reset Subject", array ( "domain" => ASD_DOMAIN ) );
+		$Byline = "";
+		$Subject = __( "Password Reset Subject", array ( "domain" => ASD_DOMAIN ) );
+		
+		$LinkDescription = __( 'Password Reset Click Here' );
+		$Link = 'http://' . ASD_DOMAIN . '/login/';
+		$Body = __("Password Reset Body", array ( "firstname" => $SenderFirstName, "password" => $pPassword ) );
+
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $Sender, 'RecipientEmail' => $Email, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$this->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
 
     // Generate a password.
     // Originally from bestcodingpractices.com

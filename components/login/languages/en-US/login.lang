@@ -10,17 +10,16 @@ INVALID_NODE="This is not a valid Appleseed node."
 NOT_LOGGED_IN_TO_NODE="You are not logged in to this Appleseed node."
 
 [password_reset]
+PASSWORD_RESET_CLICK_HERE="Click here to login:"
 PASSWORD_RESET_FROM="password@%domain$s"
 PASSWORD_RESET_FROM_NAME="Password Reset"
 PASSWORD_RESET_SUBJECT="Your new password for %domain$s"
-PASSWORD_RESET_BODY="Hello, %fullname$s
+PASSWORD_RESET_BODY="%firstname$s,
 
 Your password has been reset.  Your new password is:
 
-%password$s
-
-Thank You,
-The Appleseed Project"
+<b>%password$s</b>
+"
 
 PASSWORD_HAS_BEEN_RESET="A new password for '%username$s' has been sent to the email address associated with this account."
 USERNAME_NOT_FOUND="User %username$s was not found in our database"
