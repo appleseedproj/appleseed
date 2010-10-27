@@ -90,6 +90,9 @@ class cFoundation extends cBase {
 	public function Redirect ( $pRoute ) {
 		eval ( GLOBALS );
 		
+		// Reset the Context in the request data, to avoid confusion forms that user Synchronize.
+		$this->GetSys ( 'Request' )->Set ( 'Context', null );
+		
 		$Config = $this->GetSys ( "Config" );
 		$paths = array_reverse ( $Config->GetPath() );
 		
