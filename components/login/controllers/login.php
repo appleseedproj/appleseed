@@ -90,7 +90,7 @@ class cLoginLoginController extends cController {
 		$this->GetSys ( 'Session' )->Destroy ( 'Identity' );
 		
 		$defaults = array_merge ( array ( "Remember" => "checked" ), $sessionData );
-			
+
 		$this->Login->Synchronize( $defaults );
 			
 		$this->Login->Display();
