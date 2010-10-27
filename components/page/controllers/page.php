@@ -94,7 +94,7 @@ class cPagePageController extends cController {
 			$row->Find ( '.content', 0 )->innertext = str_replace ( "\n", "<br />", $Item['Comment'] );
 			$row->Find ( '.owner-link', 0 )->rel = $Item['Owner'];
 			$row->Find ( '.owner-link', 0 )->innertext = $Item['Owner'];
-			if ( !$Editor ) $row->Find ( '.delete', 0 )->innertext = '';
+			if ( !$Editor ) $row->Find ( '.remove', 0 )->innertext = '';
 			
 			list ( $username, $domain ) = explode ( '@', $Item['Owner'] );
 			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
