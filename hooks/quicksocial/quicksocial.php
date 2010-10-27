@@ -109,7 +109,7 @@ class cQuicksocialHook extends cHook {
 					
 					$this->_SetRemoteSession( $username, $domain );
 					
-					header ('Location:$returnTo');
+					header ('Location:' . $returnTo);
 		
 					exit;
 				} else {
