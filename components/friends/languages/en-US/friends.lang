@@ -45,3 +45,25 @@ FRIEND_REQUEST_APPROVED="You are now friends with %fullname$s (%account$s)."
 FRIEND_REMOVED="%fullname$s (%account$s) has been removed from your friends list."
 
 NO_FRIEND_REQUEST_FOUND="A friend request from %fullname$s (%account$s) was not found."
+
+
+[notifications]
+CLICK_HERE_FOR_REQUESTS="Click here to view your friend requests:"
+SOMEONE_SENT_A_FRIEND_REQUEST="%fullname$s sent you a friend request"
+SENT_A_FRIEND_REQUEST="sent a friend request"
+SENT_A_FRIEND_REQUEST_SUBJECT="%firstname$s wants to be friends."
+SENT_A_FRIEND_REQUEST_DESCRIPTION="If you would like to be friends with %fullname$s, log in to <a href='%domain$s'>%domain$s</a> to approve the request and add them to your friends list.
+
+Or click here to view your friend requests:
+%link$s
+"
+
+CLICK_HERE_FOR_FRIENDS="Click here to view your friends:"
+SOMEONE_APPROVED_A_FRIEND_REQUEST="%fullname$s approved your friend request"
+APPROVED_A_FRIEND_REQUEST="is now your friend"
+APPROVED_A_FRIEND_REQUEST_SUBJECT="%firstname$s is now on your friends list"
+APPROVED_A_FRIEND_REQUEST_DESCRIPTION="You are now friends with %fullname$s, log in to <a href='%domain$s'>%domain$s</a> to view your friend list.
+
+Or click here:
+%link$s
+"

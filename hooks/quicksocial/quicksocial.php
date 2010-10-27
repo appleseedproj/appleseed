@@ -1032,7 +1032,7 @@ class cQuicksocialHook extends cHook {
 			$friendModel->Set ( 'Domain', $accountDomain );
 			$friendModel->Set ( 'Verification', 1 );
 			$friendModel->Set ( 'Stamp', NOW() );
-			//$friendModel->Save();
+			$friendModel->Save();
 			
 			return ( true );
 		} else {

@@ -538,6 +538,62 @@ class cFriendsFriendsController extends cController {
 		return ( true );
 	}
 	
+	public function NotifyAdd ( $pView = null, $pData = array ( ) ) {
+		$Email = $pData['Email'];
+		$Sender = $pData['Sender'];
+		$Recipient = $pData['Recipient'];
+		
+		$data = array ( 'request' => $Sender, 'source' => ASD_DOMAIN, 'account' => $Recipient );
+		$SenderInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		
+		$SenderFullname = $SenderInfo->fullname;
+		$SenderNameParts = explode ( ' ', $SenderInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		list ( $RecipientUsername, $RecipientDomain ) = explode ( '@', $Recipient );
+		
+		$MailSubject = __( 'Someone Sent A Friend Request', array ( 'fullname' => $SenderFullname ) );
+		$Byline = __( 'Sent A Friend Request' );
+		$Subject = __( 'Sent A Friend Request Subject', array ( 'firstname' => $SenderFirstName ) );
+		
+		$LinkDescription = __( 'Click Here For Requests' );
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $RecipientUsername . '/friends/requests/';
+		$Body = __( 'Sent A Friend Request Description', array ( 'fullname' => $SenderFullname, 'domain' => 'http://' . ASD_DOMAIN, 'link' => $Link ) );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $Sender, 'RecipientEmail' => $Email, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$this->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
+	public function NotifyApprove ( $pView = null, $pData = array ( ) ) {
+		$Email = $pData['Email'];
+		$Sender = $pData['Sender'];
+		$Recipient = $pData['Recipient'];
+		
+		$data = array ( 'request' => $Sender, 'source' => ASD_DOMAIN, 'account' => $Recipient );
+		$SenderInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		
+		$SenderFullname = $SenderInfo->fullname;
+		$SenderNameParts = explode ( ' ', $SenderInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		list ( $RecipientUsername, $RecipientDomain ) = explode ( '@', $Recipient );
+		
+		$MailSubject = __( 'Someone Approved A Friend Request', array ( 'fullname' => $SenderFullname ) );
+		$Byline = __( 'Approved A Friend Request' );
+		$Subject = __( 'Approved A Friend Request Subject', array ( 'firstname' => $SenderFirstName ) );
+		
+		$LinkDescription = __( 'Click Here For Friends' );
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $RecipientUsername . '/friends/';
+		$Body = __( 'Approved A Friend Request Description', array ( 'fullname' => $SenderFullname, 'domain' => 'http://' . ASD_DOMAIN, 'link' => $Link ) );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $Sender, 'RecipientEmail' => $Email, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$this->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
 	public function Remove ( ) {
 		
 		if ( !$this->_CheckAccess ( ) ) {
@@ -623,6 +679,11 @@ class cFriendsFriendsController extends cController {
 		$redirect = '/profile/' . $this->_Focus->Username . '/friends';
 		header ( 'Location:' . $redirect );
 		
+		return ( true );
+	}
+	
+	public function TestLanguage ( $pView = null, $pData = array ( ) ) {
+		echo $this->GetSys ( 'Date' )->Format ( NOW() );
 		return ( true );
 	}
 	

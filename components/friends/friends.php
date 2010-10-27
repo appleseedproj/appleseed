@@ -93,4 +93,21 @@ class cFriends extends cComponent {
 		
 		return ( $return );
 	}
+	
+	public function NotifyAdd ( $pData = null ) {
+		$this->Load ( 'Friends', null, 'NotifyAdd', $pData );
+		
+		return ( true );
+	}
+	
+	public function NotifyApprove ( $pData = null ) {
+		$this->Load ( 'Friends', null, 'NotifyApprove', $pData );
+		
+		return ( true );
+	}
+	
+	public function TestLanguage ( $pData = null ) {
+		$this->Load ( 'Friends', null, 'TestLanguage', $pData );
+	}
+	
 }
