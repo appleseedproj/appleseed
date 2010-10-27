@@ -4,7 +4,7 @@
   // | http://appleseed.sourceforge.net                                  |
   // +-------------------------------------------------------------------+
   // | FILE: 0.7.3.php                               CREATED: 04-24-2007 + 
-  // | LOCATION: /legacy/code/include/classes/asd/   MODIFIED: 04-20-2008 +
+  // | LOCATION: /legacy/code/include/classes/asd/   MODIFIED:10-26-2010 +
   // +-------------------------------------------------------------------+
   // | Copyright (c) 2004-2008 Appleseed Project                         |
   // +-------------------------------------------------------------------+
@@ -1395,7 +1395,7 @@
         
       //mail ($email, $subject, $body, $headers);
       
-      $this->_Email ( $email, $gRECIPIENT, $sender );
+      $this->_Email ( $email, $gRECIPIENT, $sender, $gSUBJECT );
       
       
       $this->XML->Load ("legacy/code/include/data/xml/message_notify.xml");
@@ -1404,7 +1404,7 @@
       return ($return);
     } // MessageNotify
     
-	private function _Email ( $pAddress, $pRecipient, $pSender ) {
+	private function _Email ( $pAddress, $pRecipient, $pSender, $pSubject ) {
 		global $zApp;
 		
 		$data = array ( 'account' => $pSender, 'source' => ASD_DOMAIN, 'request' => $pSender );
@@ -1420,7 +1420,7 @@
 		$RecipientEmail = $pAddress;
 		$MailSubject = __( "Legacy Someone Sent A Message", array ( "fullname" => $SenderFullname ) );
 		$Byline = __( "Legacy Sent A Message" );
-		$Subject = __( "Legacy Sent A Message Subject", array ( 'firstname' => $SenderFirstName, 'domain' => ASD_DOMAIN ) );
+		$Subject = $pSubject;
 		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $RecipientUsername . '/messages/';
 		$Body = __( "Legacy Message Description", array ( 'fullname' => $SenderFullname, 'domain' => ASD_DOMAIN, 'firstname' => $senderFirstname, 'link' => $Link ) );
 		$LinkDescription = __( "Legacy Click Here" );
