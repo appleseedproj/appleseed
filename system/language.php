@@ -171,7 +171,6 @@ class cLanguage extends cBase {
         }
         
         return ( $return );
-        
  	}
  	
  	function Restore ( $pStore ) {
