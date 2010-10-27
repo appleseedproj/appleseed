@@ -15,8 +15,8 @@
 			<p class="content"> 
 			</p> 
 			<nav class="actions"> 
-				<a class="comments" href="">0 Comments</a> 
-				<a class="readmore" href="">Read More</a> 
+				<a class="comments">0 Comments</a> 
+				<a class="readmore">Read More</a> 
 			</nav> 
 		</article> 
 	</li> 
