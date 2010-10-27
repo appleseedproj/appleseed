@@ -4,7 +4,7 @@ APPLESEED_TAGLINE="Open Source + Distributed"
 
 [beta]
 APPLESEED_IS_EARLY_BETA="Appleseed is early beta software, expect bugs along the way, send feedback to <a href='mailto:feedback@appleseedproject.org'>feedback@appleseedproject.org</a>, and <a href='http://opensource.appleseedproject.org/donate/'>click here</a> to support the project! </p>"
-APPLESEED_LEGACY_MODE_NOTICE="You are viewing Appleseed in <i>legacy</i> mode. Expect this area to be updated soon. <a href='http://opensource.appleseedproject.org/donate/'>Click here</a> to support the project! </p>"
+APPLESEED_LEGACY_MODE_NOTICE="You are viewing Appleseed in <em>legacy mode</em>. Expect this area to be updated soon. <a href='http://opensource.appleseedproject.org/donate/'>Click here</a> to support the project! </p>"
 
 [common]
 ALL_PAGES="All"

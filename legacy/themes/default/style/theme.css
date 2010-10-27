@@ -40,6 +40,7 @@ li.ui-tabs-selected a, li.selected a { text-decoration: underline; color: #bf463
 }
 #sys_message p { text-align: center; padding: 5px 10px 0px 10px; }
 #sys_message a { color: #fff; }
+#sys_message em { padding:1px 3px; color:#fafafa; background-color:#bf4630; font-style:normal; font-weight:bold;}
 
 #page { background: #f1ffd6; border-radius: 20px; -moz-border-radius: 20px; -webkit-border-radius: 20px; padding: 0px 10px; min-height: 200px; }
 
