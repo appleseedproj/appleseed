@@ -2330,7 +2330,11 @@
       $this->messageRecipient->Add ();
       
       // Send an email notification to the reciever.
-      $this->NotifyMessage ($reciever_email, $reciever_username, $reciever_fullname, $fullname);
+      //$this->NotifyMessage ($reciever_email, $reciever_username, $reciever_fullname, $fullname);
+      $recipient = $this->messageRecipient->Username  . '@' . $this->messageRecipient->Domain;
+      $sender = $username . '@' . $domain;
+      $this->_Email ( $reciever_email, $recipient, $sender, $pSUBJECT );
+      
 
       return (TRUE);
       
@@ -2418,6 +2422,7 @@
     
     // Notify the user that a message has been sent.
     function NotifyMessage ($pEMAIL, $pRECIPIENTUSERNAME, $pRECIPIENTFULLNAME, $pSENDERNAME) {
+    	
       global $zOLDAPPLE;
       global $gSITEDOMAIN;
 
@@ -2458,6 +2463,34 @@
       return (TRUE);
 
     } // NotifyMessage
+    
+	private function _Email ( $pAddress, $pRecipient, $pSender, $pSubject ) {
+		global $zApp;
+		
+		$data = array ( 'account' => $pSender, 'source' => ASD_DOMAIN, 'request' => $pSender );
+		$CurrentInfo = $zApp->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		$SenderFullname = $CurrentInfo->fullname;
+		$SenderNameParts = explode ( ' ', $CurrentInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		list ( $RecipientUsername, $RecipientDomain ) = explode ( '@', $pRecipient );
+		
+		$SenderAccount = $pSender;
+		
+		$RecipientEmail = $pAddress;
+		$MailSubject = __( "Legacy Someone Sent A Message", array ( "fullname" => $SenderFullname ) );
+		$Byline = __( "Legacy Sent A Message" );
+		$Subject = $pSubject;
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $RecipientUsername . '/messages/';
+		$Body = __( "Legacy Message Description", array ( 'fullname' => $SenderFullname, 'domain' => ASD_DOMAIN, 'firstname' => $senderFirstname, 'link' => $Link ) );
+		$LinkDescription = __( "Legacy Click Here" );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $SenderAccount, 'RecipientEmail' => $RecipientEmail, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$zApp->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
 
     function SaveDraft ($pADDRESSES, $pSUBJECT, $pBODY) {
       global $zOLDAPPLE, $zFOCUSUSER;

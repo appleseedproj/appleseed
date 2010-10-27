@@ -1393,10 +1393,7 @@
         'Reply-To: ' . $from . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
         
-      //mail ($email, $subject, $body, $headers);
-      
       $this->_Email ( $email, $gRECIPIENT, $sender, $gSUBJECT );
-      
       
       $this->XML->Load ("legacy/code/include/data/xml/message_notify.xml");
       $return = $this->XML->Data;
