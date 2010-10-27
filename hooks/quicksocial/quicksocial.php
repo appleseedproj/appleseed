@@ -37,38 +37,38 @@ class cQuicksocialHook extends cHook {
 		$cache = $pData['cache'] ? isset ( $pData['cache'] ) : true;
 		
 		if ( $cache ) {
-			$model = new cModel ( "NodeDiscovery");
+			$model = new cModel ( 'NodeDiscovery');
 		}
 		
 		$node = new cQuickNode ();
 		
 		$domain = $pData['domain'];
 		
-		$node->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
-		$node->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+		$node->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+		$node->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
 		
 		$node = $node->Discover ( $domain );
 		
 		return ( $node );
 	}
 	
-	public function BeginSystemInitialize ( $pData = null ) {
+	public function EndSystemInitialize ( $pData = null ) {
 		
 		// Bounce if requested.
 		$this->_Bounce ( );
 		
-		$social = $this->GetSys ( "Request" )->Get ( "_social" );
+		$social = $this->GetSys ( 'Request' )->Get ( '_social' );
 		
-		if ( $social != "true" ) return ( false );
+		if ( $social != 'true' ) return ( false );
 		
-		$task = $this->GetSys ( "Request" )->Get ( "_task" );
+		$task = $this->GetSys ( 'Request' )->Get ( '_task' );
 		
 		switch ( $task ) {
 			case 'verify':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				 
 				$social = new cQuickSocial ();
-				$social->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$social->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
 				
 				$social->ReplyToVerify();
 				exit;
@@ -77,7 +77,7 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
 				 
 				$social = new cQuickSocial ();
-				$social->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
+				$social->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
 				
 				$social->ReplyToRemoteVerify();
 				exit;
@@ -86,8 +86,8 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
 				
 				$connect = new cQuickConnect ();
-				$connect->SetCallback ( "CheckLogin", array ( $this, '_CheckLogin' ) );
-				$connect->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
+				$connect->SetCallback ( 'CheckLogin', array ( $this, '_CheckLogin' ) );
+				$connect->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
 				
 				$connect->Check();
 				exit;
@@ -96,28 +96,28 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickconnect.php' );
 				 
 				$connect = new cQuickConnect ();
-				$connect->SetCallback ( "CreateRemoteToken", array ( $this, '_CreateRemoteToken' ) );
-				$connect->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
+				$connect->SetCallback ( 'CreateRemoteToken', array ( $this, '_CreateRemoteToken' ) );
+				$connect->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
 				
 				$verified = $connect->Process();
 				
-				if ( $verified->success == "true" ) {
+				if ( $verified->success == 'true' ) {
 					$username = $verified->username;
 					$domain = $verified->domain;
 					$returnTo = $verified->returnTo;
-					if ( !strstr ( $returnTo, "://" ) ) $returnTo = "http://" . $returnTo;
+					if ( !strstr ( $returnTo, '://' ) ) $returnTo = 'http://' . $returnTo;
 					
 					$this->_SetRemoteSession( $username, $domain );
 					
-					header ("Location:$returnTo");
+					header ('Location:$returnTo');
 		
 					exit;
 				} else {
 					
-					$this->GetSys ( "Session" )->Context ( "login.login.4.remote" );
-					$this->GetSys ( "Session" )->Set ( "Message", $verified->error );
-					$this->GetSys ( "Session" )->Set ( "Identity", $verified->username . '@' . $verified->domain );
-					$this->GetSys ( "Session" )->Set ( "Error", true );
+					$this->GetSys ( 'Session' )->Context ( 'login.login.4.remote' );
+					$this->GetSys ( 'Session' )->Set ( 'Message', $verified->error );
+					$this->GetSys ( 'Session' )->Set ( 'Identity', $verified->username . '@' . $verified->domain );
+					$this->GetSys ( 'Session' )->Set ( 'Error', true );
 					
 					$redirect = 'http://' . ASD_DOMAIN . '/login/remote/';
 					header('Location: ' . $redirect);
@@ -129,9 +129,9 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
 				 
 				$node = new cQuickNode ();
-				$node->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-				$node->SetCallback ( "CreateRemoteToken", array ( $this, '_CreateRemoteToken' ) );
-				$node->SetCallback ( "NodeInformation", array ( $this, '_NodeInformation' ) );
+				$node->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$node->SetCallback ( 'CreateRemoteToken', array ( $this, '_CreateRemoteToken' ) );
+				$node->SetCallback ( 'NodeInformation', array ( $this, '_NodeInformation' ) );
 				$node->ReplyToDiscover();
 				exit;
 			break;
@@ -139,7 +139,7 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickredirect.php' );
 				
 				$redirect = new cQuickRedirect ();
-				$redirect->SetCallback ( "Redirect", array ( $this, '_Redirect' ) );
+				$redirect->SetCallback ( 'Redirect', array ( $this, '_Redirect' ) );
 				$redirect->Redirect();
 				exit;
 			break;
@@ -147,7 +147,7 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
 				 
 				$user = new cQuickUser ();
-				$user->SetCallback ( "UserIcon", array ( $this, '_UserIcon' ) );
+				$user->SetCallback ( 'UserIcon', array ( $this, '_UserIcon' ) );
 				$user->ReplyToIcon();
 				exit;
 			break;
@@ -155,9 +155,9 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickuser.php' );
 				 
 				$user = new cQuickUser ();
-				$user->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
-				$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-				$user->SetCallback ( "UserInfo", array ( $this, '_UserInfo' ) );
+				$user->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+				$user->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$user->SetCallback ( 'UserInfo', array ( $this, '_UserInfo' ) );
 				$user->ReplyToInfo();
 				exit;
 			break;
@@ -165,9 +165,9 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
 				
 				$friend = new cQuickFriend ();
-				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
-				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-				$friend->SetCallback ( "FriendAdd", array ( $this, '_FriendAdd' ) );
+				$friend->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+				$friend->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$friend->SetCallback ( 'FriendAdd', array ( $this, '_FriendAdd' ) );
 				$friend->ReplyToFriend();
 				exit;
 			break;
@@ -175,9 +175,9 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
 				
 				$friend = new cQuickFriend ();
-				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
-				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-				$friend->SetCallback ( "FriendApprove", array ( $this, '_FriendApprove' ) );
+				$friend->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+				$friend->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$friend->SetCallback ( 'FriendApprove', array ( $this, '_FriendApprove' ) );
 				$friend->ReplyToApprove();
 				exit;
 			break;
@@ -185,9 +185,9 @@ class cQuicksocialHook extends cHook {
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfriend.php' );
 				
 				$friend = new cQuickFriend ();
-				$friend->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
-				$friend->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-				$friend->SetCallback ( "FriendRemove", array ( $this, '_FriendRemove' ) );
+				$friend->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+				$friend->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$friend->SetCallback ( 'FriendRemove', array ( $this, '_FriendRemove' ) );
 				$friend->ReplyToRemove();
 				exit;
 			break;
@@ -207,18 +207,18 @@ class cQuicksocialHook extends cHook {
 		
 		$domain = $pData['domain'];
 		
-		$node->SetCallback ( "CheckLocalToken", array ( $this, '_CheckLocalToken' ) );
-		$node->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
-		$node->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		$node->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+		$node->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
+		$node->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
 		
 		$node = $node->Discover ( $domain );
 		
-		if ( $node->success != "true" ) {
+		if ( $node->success != 'true' ) {
 			$return = new stdClass();
 			if ( $node->error ) {
 				$return->error = $node->error;
 			} else {
-				$return->error = "Invalid Node";
+				$return->error = 'Invalid Node';
 			}
 			
 			return ( $return );
@@ -232,7 +232,7 @@ class cQuicksocialHook extends cHook {
 		$domain = $pData['domain'];
 		
 		// @todo Use HTTP for now, but allow for other methods later.
-		$method = "http";
+		$method = 'http';
 		
 		$returnTo = $pData['return'];
 		
@@ -274,7 +274,7 @@ class cQuicksocialHook extends cHook {
 			 * 
 			 */
 			if ( !file_exists ( $file ) ) {
-				$legacy_file = ASD_PATH . "_storage" . DS . "legacy" . DS . "photos" . DS . $username . DS . "profile.jpg";
+				$legacy_file = ASD_PATH . '_storage' . DS . 'legacy' . DS . 'photos' . DS . $username . DS . 'profile.jpg';
 				
 				if ( file_exists ( $legacy_file ) ) {
 				
@@ -307,8 +307,8 @@ class cQuicksocialHook extends cHook {
 		
 		$friend = new cQuickFriend ();
 		
-		$friend->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
-		$friend->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		$friend->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
+		$friend->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
 		
 		$account = $pData['account'];
 		$request = $pData['request'];
@@ -324,8 +324,8 @@ class cQuicksocialHook extends cHook {
 		
 		$friend = new cQuickFriend ();
 		
-		$friend->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
-		$friend->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		$friend->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
+		$friend->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
 		
 		$account = $pData['account'];
 		$request = $pData['request'];
@@ -341,8 +341,8 @@ class cQuicksocialHook extends cHook {
 		
 		$friend = new cQuickFriend ();
 		
-		$friend->SetCallback ( "CreateLocalToken", array ( $this, '_CreateLocalToken' ) );
-		$friend->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+		$friend->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
+		$friend->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
 		
 		$account = $pData['account'];
 		$request = $pData['request'];
@@ -457,8 +457,8 @@ class cQuicksocialHook extends cHook {
 			
 		} else {
 			// Requesting a remote user's information
-			$user->SetCallback ( "CheckRemoteToken", array ( $this, '_CheckRemoteToken' ) );
-			$user->SetCallback ( "LogNetworkRequest", array ( $this, '_LogNetworkRequest' ) );
+			$user->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+			$user->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
 		
 			$userInfo = $user->Info ( $account, $source, $request );
 			
@@ -470,19 +470,19 @@ class cQuicksocialHook extends cHook {
 	
 	public function _LogNetworkRequest ( $pRequest, $pResult ) {
 		
-		$this->GetSys ( "Logs" )->Add ( "Network", $pResult, $pRequest );
+		$this->GetSys ( 'Logs' )->Add ( 'Network', $pResult, $pRequest );
 		
-		//$this->GetSys ( "Benchmark" )->MemStart ( $context );
-		//$this->GetSys ( "Benchmark" )->MemStop ( $context );
-		//$this->GetSys ( "Benchmark" )->Start ( $context );
-		//$this->GetSys ( "Benchmark" )->Stop ( $context );
+		//$this->GetSys ( 'Benchmark' )->MemStart ( $context );
+		//$this->GetSys ( 'Benchmark' )->MemStop ( $context );
+		//$this->GetSys ( 'Benchmark' )->Start ( $context );
+		//$this->GetSys ( 'Benchmark' )->Stop ( $context );
 	}
 	
 	public function _NodeInformation ( $pSource = null, $pVerified = false) {
 		
 		$return = array ();
 		
-		$return['methods'] = array ( "http" );
+		$return['methods'] = array ( 'http' );
 		
 		$return['tasks'] = array (
 			'node.discover',
@@ -502,7 +502,7 @@ class cQuicksocialHook extends cHook {
 	public function _CheckLocalToken ( $pUsername, $pTarget, $pToken, $pEncrypt = false ) {
 		
 		// Verify if the specified token exists in the database.
-		$model = new cModel ("LocalTokens");
+		$model = new cModel ('LocalTokens');
 		$model->Structure();
 		
 		$query = '
@@ -516,11 +516,11 @@ class cQuicksocialHook extends cHook {
 		$model->Query ( $query, array ( $pUsername, $pTarget, $pToken ) );
 		
 		$model->Fetch();
-		$token = $model->Get ( "Token" );
+		$token = $model->Get ( 'Token' );
 		
 		if ( $pEncrypt ) {
-			$salt = $this->GetSys ( "Crypt" )->Salt ( $pToken );
-			$token = $this->GetSys ( "Crypt" )->Encrypt ( $token, $salt );
+			$salt = $this->GetSys ( 'Crypt' )->Salt ( $pToken );
+			$token = $this->GetSys ( 'Crypt' )->Encrypt ( $token, $salt );
 		}
 		
 		if ( $token == $pToken ) return ( true );
@@ -531,7 +531,7 @@ class cQuicksocialHook extends cHook {
 	public function _CreateLocalToken ( $pUsername, $pTarget ) {
 	
 		// Look for an existing token from the last 24 hours.
-		$model = new cModel ("LocalTokens");
+		$model = new cModel ('LocalTokens');
 		$model->Structure();
 	
 		$query = '
@@ -545,7 +545,7 @@ class cQuicksocialHook extends cHook {
 		$model->Query ( $query, array ( $pUsername, $pTarget ) );
 		
 		$model->Fetch();
-		$token = $model->Get ( "Token" );
+		$token = $model->Get ( 'Token' );
 		
 		if ( $token ) {
 			// Return the found token.
@@ -557,10 +557,10 @@ class cQuicksocialHook extends cHook {
 			$social = new cQuickSocial ();
 			$token = $social->Token();
 			
-       		$model->Set ( "Username", $pUsername );
-       		$model->Set ( "Target", $pTarget );
-       		$model->Set ( "Token", $token );
-       		$model->Set ( "Stamp", NOW() );
+       		$model->Set ( 'Username', $pUsername );
+       		$model->Set ( 'Target', $pTarget );
+       		$model->Set ( 'Token', $token );
+       		$model->Set ( 'Stamp', NOW() );
        		
        		$model->Save();
        		
@@ -571,7 +571,7 @@ class cQuicksocialHook extends cHook {
 	public function _CheckRemoteToken ( $pUsername, $pSource, $pEncrypt = false ) {
 		
 		// Look for an existing token from the last 24 hours.
-		$model = new cModel ("RemoteTokens");
+		$model = new cModel ('RemoteTokens');
 		$model->Structure();
 	
 		$query = '
@@ -585,9 +585,9 @@ class cQuicksocialHook extends cHook {
 		$model->Query ( $query, array ( $pUsername, $pSource ) );
 		
 		$model->Fetch();
-		$token = $model->Get ( "Token" );
+		$token = $model->Get ( 'Token' );
 		
-		if ( $pEncrypt ) $token = $this->GetSys ( "Crypt" )->Encrypt ( $token );
+		if ( $pEncrypt ) $token = $this->GetSys ( 'Crypt' )->Encrypt ( $token );
 			
 		if ( $token ) return ( $token );
 		
@@ -596,7 +596,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _CreateRemoteToken ( $pUsername, $pSource, $pToken ) {
 		
-		$model = new cModel ("RemoteTokens");
+		$model = new cModel ('RemoteTokens');
 		$model->Structure();
 
 		// Delete old tokens
@@ -610,12 +610,12 @@ class cQuicksocialHook extends cHook {
 		$model->Query ( $query, array ( $pUsername, $pSource ) );
 		
 		// Store the verified token
-		$model->Set ( "Username", $pUsername );
-		$model->Set ( "Source", $pSource );
-		$model->Set ( "Token", $pToken );
-		$model->Set ( "Address", $_SERVER['REMOTE_ADDR'] );
-		$model->Set ( "Host", $_SERVER['REMOTE_HOST'] );
-		$model->Set ( "Stamp", NOW() );
+		$model->Set ( 'Username', $pUsername );
+		$model->Set ( 'Source', $pSource );
+		$model->Set ( 'Token', $pToken );
+		$model->Set ( 'Address', $_SERVER['REMOTE_ADDR'] );
+		$model->Set ( 'Host', $_SERVER['REMOTE_HOST'] );
+		$model->Set ( 'Stamp', NOW() );
 		
 		$model->Save();
 		
@@ -627,22 +627,22 @@ class cQuicksocialHook extends cHook {
 		
 		$cookie = $_COOKIE['gLOGINSESSION'];
 		
-		$session = new cModel ( "userSessions" );
+		$session = new cModel ( 'userSessions' );
 		
 		// Get the session by the identifier
-		$criteria = array ( "Identifier" => $cookie );
+		$criteria = array ( 'Identifier' => $cookie );
 		$session->Retrieve ( $criteria );
 		$session->Fetch();
-		$uID = $session->get ( "userAuth_uID" );
+		$uID = $session->get ( 'userAuth_uID' );
 		
 		if ( !$uID ) return ( false );
 		
-		$authorization = new cModel ( "userAuthorization" );
+		$authorization = new cModel ( 'userAuthorization' );
 		
-		$criteria = array ( "uID" => $uID );
+		$criteria = array ( 'uID' => $uID );
 		$authorization->Retrieve ( $criteria );
 		$authorization->Fetch();
-		$Username = strtolower ( $authorization->get ( "Username" ) );
+		$Username = strtolower ( $authorization->get ( 'Username' ) );
 		$pUsername = strtolower ( $pUsername );
 		
 		if ( $Username == $pUsername ) return ( true );
@@ -652,10 +652,10 @@ class cQuicksocialHook extends cHook {
 	
 	private function _SetRemoteSession( $pUsername, $pDomain ) {
 		
-		$sessionModel = new cModel ( "authSessions" );
+		$sessionModel = new cModel ( 'authSessions' );
 		
 		// Delete current session id's.
-		$criteria = array ( "Username" => $pUsername, "Domain" => $pDomain );
+		$criteria = array ( 'Username' => $pUsername, 'Domain' => $pDomain );
 		
 		$sessionModel->Delete ( $criteria );
 		
@@ -663,25 +663,25 @@ class cQuicksocialHook extends cHook {
         $identifier = md5(uniqid(rand(), true));
         
 		// Set the session database information.
-		$sessionModel->Set ( "Username", $pUsername );
-		$sessionModel->Set ( "Domain", $pDomain );
-		$sessionModel->Set ( "Identifier", $identifier );
-		$sessionModel->Set ( "Stamp", NOW() );
-		$sessionModel->Set ( "Address", $_SERVER['REMOTE_ADDR'] );
-		$sessionModel->Set ( "Host", $_SERVER['REMOTE_HOST'] );
-		$sessionModel->Set ( "Fullname", "Bob Barker" );
+		$sessionModel->Set ( 'Username', $pUsername );
+		$sessionModel->Set ( 'Domain', $pDomain );
+		$sessionModel->Set ( 'Identifier', $identifier );
+		$sessionModel->Set ( 'Stamp', NOW() );
+		$sessionModel->Set ( 'Address', $_SERVER['REMOTE_ADDR'] );
+		$sessionModel->Set ( 'Host', $_SERVER['REMOTE_HOST'] );
+		$sessionModel->Set ( 'Fullname', '' );
 		
 		$sessionModel->Save ();
 		
 		// Set the cookie
-      	if ( !setcookie ("gREMOTELOGINSESSION", $identifier, time()+60*60*24*30, '/') ) {
+      	if ( !setcookie ('gREMOTELOGINSESSION', $identifier, time()+60*60*24*30, '/') ) {
       		// @todo Set error that we couldn't set the cookie.
       		
       		return ( false );
       	};
 		
 		// Update the userInformation table
-		$infoModel = new cModel ( "userInformation" );
+		$infoModel = new cModel ( 'userInformation' );
 		
 		return ( true );
 	}
@@ -696,27 +696,27 @@ class cQuicksocialHook extends cHook {
 			list ( $bounce, $null ) = explode ( '&', $bounceRequest, 2 );
 			list ( $username, $domain ) = explode ( '@', $bounce, 2 );
 			
-			$return = $_SERVER["REQUEST_URI"];
+			$return = $_SERVER['REQUEST_URI'];
 			
-			$return = str_replace ( "?_bounce=" . $bounce, "", $return );
-			$return = str_replace ( "&_bounce=" . $bounce, "", $return );
-			$return = str_replace ( "_bounce=" . $bounce, "", $return );
+			$return = str_replace ( '?_bounce=' . $bounce, '', $return );
+			$return = str_replace ( '&_bounce=' . $bounce, '', $return );
+			$return = str_replace ( '_bounce=' . $bounce, '', $return );
 			
 			$return = ASD_DOMAIN . $return;
 			
-			$data = array ( "username" => $username, "domain" => $domain, "return" => $return );
+			$data = array ( 'username' => $username, 'domain' => $domain, 'return' => $return );
 			
 			$this->OnLoginAuthenticate ( $data );
 			exit;
 			
-		} elseif ( ( isset ( $_REQUEST['_bounce'] ) ) && ( $bounce = $_REQUEST['_bounce'] ) and ( $_REQUEST['_social'] != "true" ) ) {
+		} elseif ( ( isset ( $_REQUEST['_bounce'] ) ) && ( $bounce = $_REQUEST['_bounce'] ) and ( $_REQUEST['_social'] != 'true' ) ) {
 			// @note This is for legacy support, the old system turns all links to POST forms. 
 			// @note We may or may not keep that for the new system.
 			list ( $username, $domain ) = explode ( '@', $bounce, 2 );
 			
 			$return = ASD_DOMAIN . $_SERVER['REQUEST_URI'];
 			
-			$data = array ( "username" => $username, "domain" => $domain, "return" => $return );
+			$data = array ( 'username' => $username, 'domain' => $domain, 'return' => $return );
 			
 			$this->OnLoginAuthenticate ( $data );
 			exit;
@@ -858,10 +858,10 @@ class cQuicksocialHook extends cHook {
 		$return['blocked'] = 'false';
 		
 		// Get this user's location
-		$return['location'] = "";
+		$return['location'] = '';
 		
 		// Get this user's status
-		$return['status'] = "";
+		$return['status'] = '';
 		
 		return ( $return );
 	}
@@ -892,7 +892,7 @@ class cQuicksocialHook extends cHook {
 			$endx = $newwidth - ceil ( ( ( $newwidth - $pNewWidth ) / 2 ) );  $endy = $pNewHeight;
 		} // if
 		
-		/* echo $originalWidth, "<br />"; echo $originalHeight, "<br /><br />"; echo $pNewWidth, "<br />"; echo $pNewHeight, "<br /><br />"; echo $newwidth, "<br />"; echo $newheight, "<br /><br />"; echo $startx, "<br />"; echo $starty, "<br />"; echo $endx, "<br />"; echo $endy, "<br />"; exit; */
+		/* echo $originalWidth, '<br />'; echo $originalHeight, '<br /><br />'; echo $pNewWidth, '<br />'; echo $pNewHeight, '<br /><br />'; echo $newwidth, '<br />'; echo $newheight, '<br /><br />'; echo $startx, '<br />'; echo $starty, '<br />'; echo $endx, '<br />'; echo $endy, '<br />'; exit; */
 		  
 		$src_img = imagecreatetruecolor ( $originalWidth, $originalHeight );
 		imagecopy( $src_img, $pResource, 0, 0, 0, 0, $originalWidth, $originalHeight );
@@ -944,38 +944,47 @@ class cQuicksocialHook extends cHook {
 			break;
 		}
 		
-		header ( "Location:" . $redirect );
+		header ( 'Location:' . $redirect );
 		exit;
 	}
 	
 	public function _FriendAdd ( $pAccount, $pRequest ) {
 		
-		$userModel = new cModel ( "userAuthorization" );
+		$userModel = new cModel ( 'userAuthorization' );
 		$userModel->Structure();
 		
-		$friendModel = new cModel ( "friendInformation" );
+		$profileModel = new cModel ( 'userProfile' );
+		$profileModel->Structure();
+		
+		$friendModel = new cModel ( 'friendInformation' );
 		$friendModel->Structure();
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
 		
-		$userModel->Retrieve ( array ( "Username" => $requestUsername ) );
+		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );
 		$userModel->Fetch();
 		
-		$requestUsername_uID = $userModel->Get ( "uID" );
+		$requestUsername_uID = $userModel->Get ( 'uID' );
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
-		$friendModel->Retrieve ( array ( "userAuth_uID" => $requestUsername_uID, "Username" => $accountUsername, "Domain" => $accountDomain ) );
+		$friendModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
 		
-		if ( $friendModel->Get ( "Total" ) == 0 ) {
+		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
+		$profileModel->Fetch();
+		
+		$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
+		$this->GetSys ( 'Components' )->Talk ( 'Friends', 'NotifyAdd', $data );
+		
+		if ( $friendModel->Get ( 'Total' ) == 0 ) {
 			// No record found, so create one.
-			$friendModel->Protect ( "tID" );
-			$friendModel->Set ( "userAuth_uID", $requestUsername_uID );
-			$friendModel->Set ( "Username", $accountUsername );
-			$friendModel->Set ( "Domain", $accountDomain );
-			$friendModel->Set ( "Verification", 2 );
-			$friendModel->Set ( "Stamp", NOW() );
+			$friendModel->Protect ( 'tID' );
+			$friendModel->Set ( 'userAuth_uID', $requestUsername_uID );
+			$friendModel->Set ( 'Username', $accountUsername );
+			$friendModel->Set ( 'Domain', $accountDomain );
+			$friendModel->Set ( 'Verification', 2 );
+			$friendModel->Set ( 'Stamp', NOW() );
 			$friendModel->Save();
 			
 			return ( true );
@@ -984,36 +993,46 @@ class cQuicksocialHook extends cHook {
 			return ( true );
 		}
 	}
-    
+	
 	public function _FriendApprove ( $pAccount, $pRequest ) {
 		
-		$userModel = new cModel ( "userAuthorization" );
+		$userModel = new cModel ( 'userAuthorization' );
 		$userModel->Structure();
 		
-		$friendModel = new cModel ( "friendInformation" );
+		$friendModel = new cModel ( 'friendInformation' );
 		$friendModel->Structure();
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
 		
-		$userModel->Retrieve ( array ( "Username" => $requestUsername ) );
+		$profileModel = new cModel ( 'userProfile' );
+		$profileModel->Structure();
+		
+		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );
 		$userModel->Fetch();
 		
-		$requestUsername_uID = $userModel->Get ( "uID" );
+		$requestUsername_uID = $userModel->Get ( 'uID' );
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
-		$friendModel->Retrieve ( array ( "userAuth_uID" => $requestUsername_uID, "Username" => $accountUsername, "Domain" => $accountDomain, "Verification" => '()' . '1,3' ) );
+		$friendModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain, 'Verification' => '()' . '1,3' ) );
 		
-		if ( $friendModel->Get ( "Total" ) > 0 ) {
+		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
+		$profileModel->Fetch();
+		
+		$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
+		$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
+		$this->GetSys ( 'Components' )->Talk ( 'Friends', 'NotifyApprove', $data );
+		
+		if ( $friendModel->Get ( 'Total' ) > 0 ) {
 			// Record found, so approve it.
 			$friendModel->Fetch();
-			$friendModel->Set ( "userAuth_uID", $requestUsername_uID );
-			$friendModel->Set ( "Username", $accountUsername );
-			$friendModel->Set ( "Domain", $accountDomain );
-			$friendModel->Set ( "Verification", 1 );
-			$friendModel->Set ( "Stamp", NOW() );
-			$friendModel->Save();
+			$friendModel->Set ( 'userAuth_uID', $requestUsername_uID );
+			$friendModel->Set ( 'Username', $accountUsername );
+			$friendModel->Set ( 'Domain', $accountDomain );
+			$friendModel->Set ( 'Verification', 1 );
+			$friendModel->Set ( 'Stamp', NOW() );
+			//$friendModel->Save();
 			
 			return ( true );
 		} else {
@@ -1024,25 +1043,25 @@ class cQuicksocialHook extends cHook {
 	
 	public function _FriendRemove ( $pAccount, $pRequest ) {
 		
-		$userModel = new cModel ( "userAuthorization" );
+		$userModel = new cModel ( 'userAuthorization' );
 		$userModel->Structure();
 		
-		$friendModel = new cModel ( "friendInformation" );
+		$friendModel = new cModel ( 'friendInformation' );
 		$friendModel->Structure();
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
 		
-		$userModel->Retrieve ( array ( "Username" => $requestUsername ) );
+		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );
 		$userModel->Fetch();
 		
-		$requestUsername_uID = $userModel->Get ( "uID" );
+		$requestUsername_uID = $userModel->Get ( 'uID' );
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
-		$friendModel->Retrieve ( array ( "userAuth_uID" => $requestUsername_uID, "Username" => $accountUsername, "Domain" => $accountDomain ) );
+		$friendModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
 		
-		if ( $friendModel->Get ( "Total" ) > 0 ) {
+		if ( $friendModel->Get ( 'Total' ) > 0 ) {
 			// Record found, so approve it.
 			$friendModel->Fetch();
 			$friendModel->Delete();
