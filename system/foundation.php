@@ -93,6 +93,9 @@ class cFoundation extends cBase {
 		// Reset the Context in the request data, to avoid confusion forms that user Synchronize.
 		$this->GetSys ( 'Request' )->Set ( 'Context', null );
 		
+		$request = 'http://' . ASD_DOMAIN . $this->GetSys ( 'Router' )->Get ( 'Request' );
+		$this->GetSys ( 'Request' )->Set ( 'Redirect', base64_encode ( $request ) );
+		
 		$Config = $this->GetSys ( "Config" );
 		$paths = array_reverse ( $Config->GetPath() );
 		
@@ -101,7 +104,6 @@ class cFoundation extends cBase {
 			$filename = $zApp->GetPath () . DS . 'foundations' . DS . $path . DS . $route;
 			if ( is_file ( $filename ) ) {
 				$this->Set ( "Redirect", $filename );
-		
 		
 				return ( true );
 			}
