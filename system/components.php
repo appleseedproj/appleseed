@@ -217,10 +217,6 @@ class cComponents extends cBase {
 		if ( $pTask ) $parameters['task'] = $pTask;
 		if ( $pData ) $parameters['data'] = $pData;
 		
-		$component_lang = 'components' . DS . strtolower ( $componentname ) . '.lang';
-		
-		$store = $this->GetSys ( "Language" )->Load ( $component_lang );
-		
 		$this->GetSys ( "Benchmark" )->MemBegin ( $context );
 		$this->GetSys ( "Benchmark" )->Start ( $context );
 		

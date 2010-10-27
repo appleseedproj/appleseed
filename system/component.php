@@ -56,10 +56,14 @@ class cComponent extends cBase {
 		eval ( GLOBALS );
 		
 		// If no controller is specified, use the default.
-		if ( !$pController ) $pController = $this->Component;
+		if ( !$pController ) $pController = $this->_Component;
 		
 		// Switch to aliased controller if using the default
 		if ( strtolower ( $pController ) == strtolower ( $this->_Alias ) ) $pController = strtolower ( $this->_Component );
+		
+		// Load the language file for this component.
+		$component_lang = 'components' . DS . strtolower ( $this->_Component ) . '.lang';
+		$this->GetSys ( "Language" )->Load ( $component_lang );
 		
 		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
 		

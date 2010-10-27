@@ -33,7 +33,7 @@ class cLanguage extends cBase {
 		
  		// Load language configuration.
  		$this->_Config = new cConf ();
-		$this->_Config->Set ( "Data",  $this->_Config->Load ( "languages" ) );
+		$this->_Config->Set ( 'Data',  $this->_Config->Load ( 'languages' ) );
 		
 		return ( true );
 	}
@@ -44,13 +44,13 @@ class cLanguage extends cBase {
  	 * @param string Which language file to load.
  	 * @return bool True on success, false on error.
  	 */
- 	function Load ( $pContextFile, $pLanguage = "en-US" ) {
+ 	function Load ( $pContextFile, $pLanguage = 'en-US' ) {
  		eval(GLOBALS);
  		
  		// Get the list of language packs installed.
 		$paths = $zApp->Language->_Config->GetPath ();
 		
-		// Find out which type of language file we're loading ( "_system", "hooks", "components" )
+		// Find out which type of language file we're loading ( '_system', 'hooks', 'components' )
 		list ( $type, $filename ) = explode ( '/', $pContextFile );
 		
 		// Skip if we're looking for the internal system language files.
@@ -89,7 +89,7 @@ class cLanguage extends cBase {
  		 * Store the current language set for restoration once we're done.
  		 * 
  		 * This can get a little complicated.  But this way, if you have two hooks or components right next to each other 
- 		 * that use the same phrase (ie, "Upload A Photo"), the language file for one hook or component doesn't stay in 
+ 		 * that use the same phrase (ie, 'Upload A Photo'), the language file for one hook or component doesn't stay in 
  		 * memory for when the next hook/component loads.
  		 * 
  		 * If you load a hook or component within a hook or component, however, the child will inherit the parent's language.
@@ -111,7 +111,7 @@ class cLanguage extends cBase {
  			
  			$eventData['store'] = $store;
  			$eventData['data'] = $data;
- 			$this->GetSys ( "Event" )->Trigger ( "On", "Load", "Language", $eventData );
+ 			$this->GetSys ( 'Event' )->Trigger ( 'On', 'Load', 'Language', $eventData );
  		
  			// Put data into the global cache.
  			foreach ( $data as $key => $value ) {
@@ -132,7 +132,7 @@ class cLanguage extends cBase {
  	static function _ ( $pString, $pParams = null ) {
  		eval(GLOBALS);
  		
- 		$debug = $zApp->Config->GetConfiguration ( "debug" );
+ 		$debug = $zApp->Config->GetConfiguration ( 'debug' );
 
         $key = str_replace ( ' ', '_', $pString );
         $key = strtoupper ( $key );
@@ -146,11 +146,11 @@ class cLanguage extends cBase {
         } else {
  		    $return = $pString;
  		    
- 		    if ( $debug == "true" ) {
+ 		    if ( $debug == 'true' ) {
  		    	$return = '<span class="untranslated">' . $return . '</span>';
  		    	if ( $pParams ) {
- 		    		$parameters = join ( " | ", array_keys ( $pParams ) );
- 		    		$return .= '<span class="untranslatedp">' . $parameters . '</span>';
+ 		    		$parameters = join ( ' | ', array_keys ( $pParams ) );
+ 		    		$return .= '<span class="untranslated">' . $parameters . '</span>';
  		    	}
  		    }
  		    
