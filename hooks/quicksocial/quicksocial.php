@@ -287,11 +287,14 @@ class cQuicksocialHook extends cHook {
 						chmod ( $file, 0777 );
 					}
 					
+				} else {
+					// @todo Replace this with the current theme.
+					$url = 'http://' . ASD_DOMAIN . '/themes/default/images/noicon.gif';
 				}
 			}
 			
-			$url = 'http://' . ASD_DOMAIN . '/_storage' . '/' . 'photos' . '/' . $username . '/';
-			$return = $url . 'profile.' . $size . '.jpg';
+			if (!$url ) $url = 'http://' . ASD_DOMAIN . '/_storage' . '/' . 'photos' . '/' . $username . '/' . 'profile.' . $size . '.jpg';;
+			$return = $url;
 		} else {
 			$data = array ( '_social' => 'true', '_task' => 'user.icon', '_request' => $username, '_width' => $width, '_height' => $height );
 		
@@ -776,16 +779,28 @@ class cQuicksocialHook extends cHook {
 			 */
 			$legacy_file = ASD_PATH . '_storage' . DS . 'legacy' . DS . 'photos' . DS . $pUsername . DS . 'profile.jpg';
 			
-			if ( !file_exists ( $legacy_file ) ) return ( false );
+			if ( !file_exists ( $legacy_file ) ) {
+				header ('Content-type: image/gif');
+				$icon = imagecreatefromgif ( ASD_PATH . 'themes/default/images/noicon.gif' );
+				imagegif ( $icon ) or die ( "Couldn't" );
+				imagedestroy ( $icon );
+				return ( true );
+			} else {
+				if ( !is_dir ( $location ) ) rmkdir ( $location );
 			
-			if ( !is_dir ( $location ) ) rmkdir ( $location );
-			
-			if ( is_writable ( $location ) ) {
-				$icon = imagecreatefromjpeg ( $legacy_file );
-				$new_icon = $this->_ResizeAndCrop ( $icon, $width, $height );
-				$icon = $new_icon;
-				imagejpeg ( $new_icon, $file );
-				chmod ( $file, 0777 );
+				if ( is_writable ( $location ) ) {
+					$icon = imagecreatefromjpeg ( $legacy_file );
+					$new_icon = $this->_ResizeAndCrop ( $icon, $width, $height );
+					$icon = $new_icon;
+					imagejpeg ( $new_icon, $file );
+					chmod ( $file, 0777 );
+				} else {
+					header ('Content-type: image/gif');
+					$icon = imagecreatefromgif ( ASD_PATH . 'themes/default/images/noicon.gif' );
+					imagegif ( $icon );
+					imagedestroy ( $icon );
+					return ( true );
+				}
 			}
 		}
 		
