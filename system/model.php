@@ -116,7 +116,7 @@ class cModel extends cBase {
 		// >> GREATER THAN
 		// << LESS THAN
 		// () IN
-		// !( IN
+		// !( NOT IN
 		 
 		*/
 		
@@ -124,6 +124,10 @@ class cModel extends cBase {
 			return ( $this->_SaveWhere ( $pCriteria ) );
 		else 
 			return ( $this->_Save ( $pCriteria ) );
+	}
+	
+	public function Create ( ) {
+		return ( $this->_SaveNew ( true ) );
 	}
 	
 	/**
