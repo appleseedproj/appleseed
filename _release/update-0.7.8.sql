@@ -9,3 +9,7 @@ alter table `#__friendCircles` add Private BOOL;
 alter table `#__friendCircles` add Protected BOOL;
 
 alter table `#__friendCircles` add Shared BOOL;
+
+alter table `#__friendInformation` drop Alias;
+
+alter table `#__friendInformation` drop sID;
