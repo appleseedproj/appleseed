@@ -29,7 +29,7 @@ INHERITANCE=Inherit
 YOU_HAVE_INVITES="You have <em>%count$s</em> invites remaining. Enter a friends email address to send them an invite!"
 INVITE_BUTTON="Invite";
 ENTER_AN_EMAIL="Enter an email address"
-INVITE_HAS_BEEN_SENT="Invite sent to <a href="mailto:%email$s">%email$s</a>.<br />  You have <em>%count$s</em> invites remaining!"
+INVITE_HAS_BEEN_SENT="Invite sent to <a href='mailto:%email$s'>%email$s</a>.<br />  You have <em>%count$s</em> invites remaining!"
 
 SOMEONE_SENT_AN_INVITE="%fullname$s invited you to join Appleseed"
 SENT_AN_INVITE="invited you to join Appleseed"
