@@ -269,6 +269,7 @@ class cLoginLoginController extends cController {
 		
 		$config = $this->Get ( "Config" );
 		$invites = $config['invites'];
+		$default_invites = $config['default_invites'];
 		
 		$fullname = ltrim ( rtrim ( $this->GetSys ( "Request" )->Get ( "Fullname" ) ) );
 		$username = strtolower ( ltrim ( rtrim ($this->GetSys ( "Request" )->Get ( "Username" ) ) ) );
@@ -322,8 +323,8 @@ class cLoginLoginController extends cController {
 		}
 			
 		if ( $error ) {
-			if ( !$this->Login = $this->GetView ( "login" ) ) return ( false );
-		
+			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
+			
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
 			$this->Login->Synchronize();
@@ -344,7 +345,7 @@ class cLoginLoginController extends cController {
 		if ( $userAuth->Get ( "Total" ) > 0 ) {
 			$session->Set ( "Message", "Username Is Taken" );
 			$session->Set ( "Error", 1 );
-			if ( !$this->Login = $this->GetView ( "login" ) ) return ( false );
+			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
 		
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
@@ -361,7 +362,7 @@ class cLoginLoginController extends cController {
 		if ( $userProfile->Get ( "Total" ) > 0 ) {
 			$session->Set ( "Message", "Email address in use" );
 			$session->Set ( "Error", 1 );
-			if ( !$this->Login = $this->GetView ( "login" ) ) return ( false );
+			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
 		
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
@@ -379,7 +380,7 @@ class cLoginLoginController extends cController {
 		if ( !$userAuth->Save() ) {
 			$session->Set ( "Message", "An error occurred" );
 			$session->Set ( "Error", 1 );
-			if ( !$this->Login = $this->GetView ( "login" ) ) return ( false );
+			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
 		
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
@@ -396,7 +397,7 @@ class cLoginLoginController extends cController {
 		$userProfile->Save();
 		
 		if ( !$this->Login = $this->GetView ( 'success' ) ) return ( false );
-			
+		
 		$session->Set ( 'Message', 'Your Account Has Been Created' );
 		$session->Set ( 'Error', 0 );
 		
@@ -405,12 +406,74 @@ class cLoginLoginController extends cController {
 			$userInvites->Set ( "Active", "0" );
 			$userInvites->Set ( "Stamp", NOW() );
 			$userInvites->Save( array ( "Recipient" => $email, "Value" => $invite ) );
+			
+			// Create a friend relationship 
+			$sender = $userProfile->Get ( 'userAuth_uID' );
+			$recipient = $userInvites->Get ( 'userAuth_uID' );
+			$data = array ( 'first' => $sender, 'second' => $recipient);
+			$this->Talk ( 'Friends', 'CreateRelationship', $data );
+			
+			// Notify the inviting user.
+			$this->_EmailAccepted ( $sender, $recipient );
+			
+			if ( (int) $default_invites > 0 ) {
+				$data = array ( 'UserId' => $sender, 'Count' => $default_invites );
+				$this->Talk ( 'User', 'AddInvites', $data );
+			}
 		}
 		
-		$this->_PrepareMessages ( 'local' );
+		$this->_PrepareMessages ( 'success' );
 		$this->Login->Synchronize();
 		
 		$this->Login->Display();
+		
+		return ( true );
+	}
+	
+	function _EmailAccepted ( $pSenderId, $pRecipientId ) {
+		
+		// @todo Move retrieval of local user info into Talk function
+		$userAuth = new cModel ( 'userAuthorization' );
+		$userAuth->Structure();
+		
+		$userAuth->Retrieve ( array ( 'uID' => $pSenderId ) );
+		$userAuth->Fetch();
+		
+		$Sender = $userAuth->Get ( 'Username' ) . '@' . ASD_DOMAIN;
+		
+		$userAuth->Retrieve ( array ( 'uID' => $pRecipientId ) );
+		$userAuth->Fetch();
+		
+		$Recipient = $userAuth->Get ( 'Username' ) . '@' . ASD_DOMAIN;
+		
+		$userProfile = new cModel ( 'userProfile' );
+		$userProfile->Structure();
+		
+		$userProfile->Retrieve ( array ( 'userAuth_uID' => $pRecipientId ) );
+		$userProfile->Fetch();
+		
+		$Email = $userProfile->Get ( 'Email' );
+		$Recipient = $userAuth->Get ( 'Username' ) . '@' . ASD_DOMAIN;
+		
+		$data = array ( 'request' => $Sender, 'source' => ASD_DOMAIN, 'account' => $Recipient );
+		$SenderInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		
+		$SenderFullname = $SenderInfo->fullname;
+		$SenderNameParts = explode ( ' ', $SenderInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		list ( $RecipientUsername, $RecipientDomain ) = explode ( '@', $Recipient );
+		
+		$MailSubject = __( 'Someone Accepted An Invite', array ( 'fullname' => $SenderFullname ) );
+		$Byline = __( 'Accepted An Invite' );
+		$Subject = __( 'Accepted An Invite Subject', array ( 'firstname' => $SenderFirstName ) );
+		
+		$LinkDescription = __( 'Click Here For Friends' );
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $RecipientUsername . '/friends/';
+		$Body = __( 'Accepted An Invite Description', array ( 'fullname' => $SenderFullname, 'domain' => 'http://' . ASD_DOMAIN, 'link' => $Link ) );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $Sender, 'RecipientEmail' => $Email, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		$this->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
 		
 		return ( true );
 	}

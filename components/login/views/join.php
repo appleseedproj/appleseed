@@ -12,7 +12,7 @@
 			<input type='hidden' name='Context' value=''> 
  
 			<div><label for='Fullname'>Full Name</label><input type='text' name='Fullname' class="required" value="" /></div>
-			<div><label for='Username'>Username</label><input  type='text' name='Username' class="required" minlength="8" value="" /></div>
+			<div><label for='Username'>Username</label><input  type='text' name='Username' class="required" minlength="3" value="" /></div>
 			<div><label for='Email'>Email   </label><input type='text' name='Email' class="required email" value="" /></div>
 			<div><label for='Password'>Password</label><input  type='password' name='Pass' class="required" minlength="6" value="" /></div>
 			<div><label for='Confirm'>Confirm Password</label><input  type='password' name='Confirm' class="required" minlength="6" value="" /></div>

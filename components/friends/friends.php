@@ -110,4 +110,8 @@ class cFriends extends cComponent {
 		$this->Load ( 'Friends', null, 'TestLanguage', $pData );
 	}
 	
+	public function CreateRelationship ( $pData = null ) {
+		$this->Load ( 'Friends', null, 'CreateRelationship', $pData );
+	}
+	
 }

@@ -29,3 +29,14 @@ INVALID_USERNAME="Enter your username to reset your password"
 YOUR_ACCOUNT_HAS_BEEN_CREATED="Your new account has been created!  Log in to to start setting up your profile."
 USERNAME_IS_TAKEN="That username is already taken. Please choose another."
 EMAIL_ADDRESS_IN_USE="That email address is already associated with an account.  Did you forget your password?"
+
+[accepted_invite]
+CLICK_HERE_FOR_FRIENDS="Click here to view your friends:"
+SOMEONE_ACCEPTED_AN_INVITE="%fullname$s accepted your invitation"
+ACCEPTED_AN_INVITE="accepted your invitation"
+ACCEPTED_AN_INVITE_SUBJECT="%firstname$s accepted your invite and is now on your friends list"
+ACCEPTED_AN_INVITE_DESCRIPTION="%fullname$s has accepted your invitation and has been automatically added as a friend, log in to <a href='%domain$s'>%domain$s</a> to view your friend list.
+
+Or click here:
+%link$s
+"

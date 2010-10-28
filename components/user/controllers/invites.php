@@ -61,25 +61,58 @@ class cUserInvitesController extends cController {
 		$Email = $this->GetSys ( 'Request' )->Get ( 'Email' );
 		$Count = $this->Model->CountInvites( $this->_Focus->Id );
 		
-		$Invite = 'a0s9d8fa09s8dg09a8sdg098asdg';
-		
 		$this->View = $this->GetView ( $pView );
 		
 		$this->View->Find ( '.invite-count', 0 )->innertext = __( 'Invite Has Been Sent', array ( 'count' => $Count, 'email' => $Email ) );
 		$this->View->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 		
-		$this->View->Display();
-		
 		if ( strstr ( $Email, ',' ) ) {
 			$Emails = explode ( ',', $Email );
 			foreach ( $Emails as $e => $Email ) {
-				$this->_Email ( $Email, $Invite );
+				if ( $Invite = $this->_Invite ( $Email ) ) {
+					$this->_Email ( $Email, $Invite );
+				}
 			}
 		} else {
-			$this->_Email ( $Email, $Invite );
+			if ( $Invite = $this->_Invite ( $Email ) ) {
+				$this->_Email ( $Email, $Invite );
+			}
 		}
 		
+		$this->View->Display();
+		
 		return ( true );
+	}
+	
+	private function _Invite ( $pAddress ) {
+		
+		$Validate = $this->GetSys ( "Validation" );
+		if ( !$Validate->Email ( $pAddress ) ) {
+			// Throw an error.
+			return ( false );
+		}
+		
+		// User with that email is already a member of this site.
+		if ( $this->Model->Active ( $pAddress ) ) {
+			// Throw an error.
+			
+			// Return the existing Invite
+			return ( false );
+		}
+		
+		if ( $Invite = $this->Model->Invited ( $pAddress, $this->_Focus->Id ) ) {
+			// Throw an error.
+			
+			// Return the existing Invite
+			return ( $Invite );
+		}
+		
+		if ( !$Invite = $this->Model->InviteCode ( $pAddress, $this->_Focus->Id ) ) {
+			// Throw an error.
+			return ( false );
+		}
+		
+		return ( $Invite );
 	}
 	
 	private function _Email ( $pAddress, $pInvite ) {
@@ -105,5 +138,16 @@ class cUserInvitesController extends cController {
 		return ( true );
 	} 
 	
-	
+	public function AddInvites ( $pView = null, $pData = array ( ) ) {
+		
+		$UserId = $pData['UserId'];
+		$Count = $pData['Count'];
+		
+		$this->Model = $this->GetModel ( 'Invites' );
+		
+		$this->Model->AddInvites ( $UserId, $Count );
+		
+		return ( true );
+		
+	}
 }

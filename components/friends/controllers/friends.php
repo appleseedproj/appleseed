@@ -687,4 +687,12 @@ class cFriendsFriendsController extends cController {
 		return ( true );
 	}
 	
+	public function CreateRelationship ( $pView = null, $pData = array ( ) ) {
+		$this->Model = $this->GetModel();
+		$first = $pData['first'];
+		$second = $pData['second'];
+		$this->Model->CreateRelationship ( $first, $second );
+		return ( true );
+	}
+	
 }

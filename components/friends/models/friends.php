@@ -204,4 +204,38 @@ class cFriendsModel extends cModel {
 		return ( true );
 	}
 	
+	public function CreateRelationship ( $pFirst, $pSecond ) {
+		
+		$userAuth = new cModel ( 'userAuthorization' );
+		
+		$userAuth->Retrieve ( array ( 'uID' => $pFirst ) );
+		$userAuth->Fetch();
+		$firstUsername = $userAuth->Get ( 'Username' );
+		
+		$userAuth->Retrieve ( array ( 'uID' => $pSecond ) );
+		$userAuth->Fetch();
+		$secondUsername = $userAuth->Get ( 'Username' );
+		
+		// Create first record
+		$this->Set ( 'userAuth_uID', $pFirst );
+		$this->Set ( 'Username', $secondUsername );
+		$this->Set ( 'Domain', ASD_DOMAIN );
+		$this->Set ( 'Verification', 1 );
+		$this->Set ( 'Stamp', NOW() );
+		
+		$this->Save();
+		
+		// Create second record
+		$this->Set ( 'tID', NULL );
+		$this->Set ( 'userAuth_uID', $pSecond );
+		$this->Set ( 'Username', $firstUsername );
+		$this->Set ( 'Domain', ASD_DOMAIN );
+		$this->Set ( 'Verification', 1 );
+		$this->Set ( 'Stamp', NOW() );
+		
+		$this->Save();
+		
+		return ( true );
+	}
+	
 }
