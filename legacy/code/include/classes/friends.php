@@ -44,9 +44,9 @@
     function cFRIENDINFORMATION ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
-      $this->TableName = $gTABLEPREFIX . 'friendInformation';
-      $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->TableName = $gTABLEPREFIX . 'FriendInformation';
+      $this->Friend_PK = '';
+      $this->Owner_FK = '';
       $this->sID = '';
       $this->Username = '';
       $this->Domain = '';
@@ -55,8 +55,8 @@
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
-      $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->PrimaryKey = 'Friend_PK';
+      $this->ForeignKey = 'Owner_FK';
       $this->Cascade = NULL;
       $this->InformationCache = array ();
  
@@ -65,7 +65,7 @@
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
-        'tID'            => array ('max'        => '',
+        'Friend_PK'            => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -74,7 +74,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Owner_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -632,7 +632,7 @@
                "$friendCirclesList, $friendCircles WHERE " .
                "$friendCirclesList.friendCircles_tID = $friendCircles.tID AND " .
                "      $friendCirclesList.friendInformation_tID = " .
-               "      $friendInfo.tID AND " .
+               "      $friendInfo.Friend_PK AND " .
                "      $friendInfo.userAuth_uID = " . $zFOCUSUSER->uID . 
                " ORDER BY $friendCircles.sID, $friendInfo.sID";
   

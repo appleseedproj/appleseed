@@ -67,7 +67,7 @@
       $userAuth = $gTABLEPREFIX . "userAuthorization";
       $friendCircles = $gTABLEPREFIX . "friendCircles";
       $friendCirclesList = $gTABLEPREFIX . "friendCirclesList";
-      $friendInfo = $gTABLEPREFIX . "friendInformation";
+      $friendInfo = $gTABLEPREFIX . "FriendInformation";
 
       if ($$pKEYUSER->Anonymous) {
         // Anonymous user
@@ -90,7 +90,7 @@
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL .
                  "         AND      $friendCircles.tID = $friendCirclesList.friendCircles_tID " .
                  "         AND      $friendInfo.Username = '" . $$pKEYUSER->Username . "'" .
-                 "         AND      $friendInfo.tID = $friendCirclesList.friendInformation_tID";
+                 "         AND      $friendInfo.Friend_PK = $friendCirclesList.friendInformation_tID";
 
       } // if
 
@@ -112,7 +112,7 @@
                  "         OR       " . $ptable . ".friendCircles_sID = " . USER_EVERYONE . ") " .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL .
                  "         AND      $friendCircles.tID = $friendCirclesList.friendCircles_tID " .
-                 "         AND      $friendInfo.tID = $friendCirclesList.friendInformation_tID";
+                 "         AND      $friendInfo.Friend_PK = $friendCirclesList.friendInformation_tID";
         // Select privacy settings.
         $this->Query ($query);
         $this->FetchArray ();

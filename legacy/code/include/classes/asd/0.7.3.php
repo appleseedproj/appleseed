@@ -371,9 +371,8 @@
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
+      $friendInfo = $this->TablePrefix . "FriendInformation";
       
-      $friendInfo = $this->TablePrefix . "friendInformation";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
       
@@ -437,14 +436,13 @@
       // Insert the friend record.
       $sql_statement = "
          INSERT INTO $friendInfo
-         (userAuth_uID, sID, Username, Domain, Verification, Stamp)
+         (userAuth_uID, Username, Domain, Verification, Created)
          VALUES
-         (%s, %s, '%s', '%s', 2, NOW())
+         (%s, '%s', '%s', 2, NOW())
       ";
       
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($uID),
-                                mysql_real_escape_string ($sID),
                                 mysql_real_escape_string ($this->ReturnUsername),
                                 mysql_real_escape_string ($gDOMAIN)
                                 );
@@ -647,11 +645,10 @@
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
+      $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Delete the friend record.
       
-      $friendInfo = $this->TablePrefix . "friendInformation";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
       
@@ -721,11 +718,10 @@
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
+      $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Delete the friend record.
       
-      $friendInfo = $this->TablePrefix . "friendInformation";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
       
@@ -796,11 +792,10 @@
       
       
       $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
+      $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Delete the friend record.
       
-      $friendInfo = $this->TablePrefix . "friendInformation";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
       
@@ -869,11 +864,10 @@
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
+      $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Update the friend record.
       
-      $friendInfo = $this->TablePrefix . "friendInformation";
       $userProfile = $this->TablePrefix . "userProfile";
       $userAuth = $this->TablePrefix . "userAuthorization";
       
@@ -944,7 +938,7 @@
       } // if
       
       $userAuth = $this->TablePrefix . "userAuthorization";
-      $friendInfo = $this->TablePrefix . "friendInformation";
+      $friendInfo = $this->TablePrefix . "FriendInformation";
       
       $sql_statement = "
         SELECT $friendInfo.Verification AS Verification

@@ -403,13 +403,13 @@
     
           global $gEDITTARGET, $gEDITPOST;
           $gEDITTARGET = "http://" . $gSITEDOMAIN . "/profile/" . $zFOCUSUSER->Username . "/friends/";
-          $gEDITPOST   = 'gACTION=EDIT&gtID=' . $zFRIENDS->tID;
+          $gEDITPOST   = 'gACTION=EDIT&gtID=' . $zFRIENDS->Friend_PK;
     
           $gCHECKED = FALSE;
           // Select 
           if ($gACTION == 'SELECT_ALL') $gCHECKED = TRUE;
 
-          $zFRIENDS->friendCirclesList->Select ("friendInformation_tID", $zFRIENDS->tID);
+          $zFRIENDS->friendCirclesList->Select ("friendInformation_tID", $zFRIENDS->Friend_PK);
           if ($zFRIENDS->friendCirclesList->CountResult () == 0) {
             $gCIRCLESLISTING = OUTPUT_NBSP;
           } else {

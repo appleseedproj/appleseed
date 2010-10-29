@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cFriendsModel extends cModel {
 	
-	protected $_Tablename = "friendInformation";
+	protected $_Tablename = "FriendInformation";
 	
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ class cFriendsModel extends cModel {
 	
 	public function CountFriends ( $pUserId ) {
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Verification" => 1 ) );
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Verification" => 1 ) );
 		
 		$count = $this->Get ( "Total" );
 		
@@ -57,7 +57,7 @@ class cFriendsModel extends cModel {
 
 			SELECT SQL_CALC_FOUND_ROWS *, CONCAT_WS ('@', Username, Domain) AS Account
 			FROM `$table`
-			WHERE `userAuth_uID` = ?
+			WHERE `Owner_FK` = ?
 			HAVING Account IN (  $friendsList )
 		";
 		
@@ -87,10 +87,10 @@ class cFriendsModel extends cModel {
 		$query = "
 			SELECT SQL_CALC_FOUND_ROWS *
 			FROM `$friendsTable` AS f, `$circlesMapTable` AS c
-			WHERE f.`userAuth_uID` = ?
+			WHERE f.`Owner_FK` = ?
 			AND f.`Verification` = 1 
 			AND c.`friendCircles_tID` = ?
-			AND c.`friendInformation_tID` = f.`tID`
+			AND c.`friendInformation_tID` = f.`Friend_PK`
 		";
 		
 		if ( $pLimit ) {
@@ -109,14 +109,14 @@ class cFriendsModel extends cModel {
 	
 	public function RetrieveFriends ( $pFocusId, $pLimit = null ) {
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pFocusId, "Verification" => 1 ), null, $pLimit );
+		$this->Retrieve ( array ( "Owner_FK" => $pFocusId, "Verification" => 1 ), null, $pLimit );
 		
 		return ( true );
 	}
 	
 	public function RetrieveRequests ( $pFocusId, $pLimit = null ) {
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pFocusId, "Verification" => 2 ), null, $pLimit );
+		$this->Retrieve ( array ( "Owner_FK" => $pFocusId, "Verification" => 2 ), null, $pLimit );
 		
 		return ( true );
 	}
@@ -146,7 +146,7 @@ class cFriendsModel extends cModel {
 		
 		list ( $friendUsername, $friendDomain ) = split ( '@', $pFriend );
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain, "Verification" => 3 ) );	
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain, "Verification" => 3 ) );	
 		
 		if ( $this->Get ( "Total" ) > 0 ) return ( true );
 		
@@ -157,7 +157,7 @@ class cFriendsModel extends cModel {
 		
 		list ( $friendUsername, $friendDomain ) = split ( '@', $pFriend );
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain, "Verification" => 2 ) );	
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain, "Verification" => 2 ) );	
 		
 		if ( $this->Get ( "Total" ) > 0 ) return ( true );
 		
@@ -166,12 +166,13 @@ class cFriendsModel extends cModel {
 	
 	public function SavePending ( $pUserId, $pFriend ) {
 		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
-		$this->Protect ( "tID" );
-		$this->Set ( "userAuth_uID", $pUserId );
+		$this->Protect ( "Friend_PK" );
+		$this->Set ( "Owner_FK", $pUserId );
 		$this->Set ( "Username", $friendUsername );
 		$this->Set ( "Domain", $friendDomain );
 		$this->Set ( "Verification", 3 );
-		$this->Set ( "Stamp", NOW() );
+		$this->Set ( "Created", NOW() );
+		$this->Set ( "Updated", NOW() );
 		$this->Save();
 		
 		return ( true );
@@ -180,7 +181,7 @@ class cFriendsModel extends cModel {
 	public function RemoveFriend ( $pUserId, $pFriend ) {
 		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain ) );
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain ) );
 		$this->Fetch();
 		
 		$this->Delete();
@@ -191,14 +192,15 @@ class cFriendsModel extends cModel {
 	public function SaveApproved ( $pUserId, $pFriend ) {
 		list ( $friendUsername, $friendDomain ) = explode ( '@', $pFriend );
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain ) );
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Username" => $friendUsername, "Domain" => $friendDomain ) );
 		$this->Fetch();
 		
-		$this->Set ( "userAuth_uID", $pUserId );
+		$this->Set ( "Owner_FK", $pUserId );
 		$this->Set ( "Username", $friendUsername );
 		$this->Set ( "Domain", $friendDomain );
 		$this->Set ( "Verification", 1 );
-		$this->Set ( "Stamp", NOW() );
+		$this->Set ( "Created", NOW() );
+		$this->Set ( "Updated", NOW() );
 		$this->Save();
 		
 		return ( true );
@@ -217,21 +219,23 @@ class cFriendsModel extends cModel {
 		$secondUsername = $userAuth->Get ( 'Username' );
 		
 		// Create first record
-		$this->Set ( 'userAuth_uID', $pFirst );
+		$this->Set ( 'Owner_FK', $pFirst );
 		$this->Set ( 'Username', $secondUsername );
 		$this->Set ( 'Domain', ASD_DOMAIN );
 		$this->Set ( 'Verification', 1 );
-		$this->Set ( 'Stamp', NOW() );
+		$this->Set ( "Created", NOW() );
+		$this->Set ( "Updated", NOW() );
 		
 		$this->Save();
 		
 		// Create second record
-		$this->Set ( 'tID', NULL );
-		$this->Set ( 'userAuth_uID', $pSecond );
+		$this->Set ( 'Friend_PK', NULL );
+		$this->Set ( 'Owner_FK', $pSecond );
 		$this->Set ( 'Username', $firstUsername );
 		$this->Set ( 'Domain', ASD_DOMAIN );
 		$this->Set ( 'Verification', 1 );
-		$this->Set ( 'Stamp', NOW() );
+		$this->Set ( "Created", NOW() );
+		$this->Set ( "Updated", NOW() );
 		
 		$this->Save();
 		

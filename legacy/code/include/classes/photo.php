@@ -184,7 +184,7 @@
       $photoPrivacy = $gTABLEPREFIX . "photoPrivacy";
       $friendCircles = $gTABLEPREFIX . "friendCircles";
       $friendCirclesList = $gTABLEPREFIX . "friendCirclesList";
-      $friendInfo = $gTABLEPREFIX . "friendInformation";
+      $friendInfo = $gTABLEPREFIX . "FriendInformation";
       
       if ($zAUTHUSER->Anonymous) {
         $sql_statement = "

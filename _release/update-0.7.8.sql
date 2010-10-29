@@ -10,6 +10,16 @@ alter table `#__friendCircles` add Protected BOOL;
 
 alter table `#__friendCircles` add Shared BOOL;
 
-alter table `#__friendInformation` drop Alias;
+alter table `#__friendInformation` rename `#__FriendInformation`;
 
-alter table `#__friendInformation` drop sID;
+alter table `#__FriendInformation` change `tID` `Friend_PK` int(10) unsigned NOT NULL AUTO_INCREMENT;
+
+alter table `#__FriendInformation` change `userAuth_uID` `Owner_FK` INT(10) unsigned not null;
+
+alter table `#__FriendInformation` change `Stamp` `Created` DATETIME;
+
+alter table `#__FriendInformation` add `Updated` DATETIME;
+
+alter table `#__FriendInformation` drop `Alias`;
+
+alter table `#__FriendInformation` drop `sID`;

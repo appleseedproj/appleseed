@@ -103,11 +103,11 @@ class cFriendsCirclesModel extends cModel {
 		list ( $username, $domain ) = explode ( '@', $pFriend );
 		
 		// Get the friend id
-		$this->Friend = new cModel ( 'friendInformation' );
+		$this->Friend = new cModel ( 'FriendInformation' );
 		$this->Friend->Structure();
 		$this->Friend->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $username, "Domain" => $domain ) );
 		$this->Friend->Fetch();
-		if ( !$friendId = $this->Friend->Get ( "tID" ) ) return ( false );
+		if ( !$friendId = $this->Friend->Get ( "Friend_PK" ) ) return ( false );
 		
 		$this->CirclesMap = new cModel ( "friendCirclesList" );
 		$this->CirclesMap->Structure();
@@ -132,11 +132,11 @@ class cFriendsCirclesModel extends cModel {
 		if ( !$circleId = $this->Get ( "tID" ) ) return ( false );
 		
 		// Get the friend id
-		$this->Friend = new cModel ( "friendInformation" );
+		$this->Friend = new cModel ( "FriendInformation" );
 		$this->Friend->Structure();
 		$this->Friend->Retrieve ( array ( "userAuth_uID" => $pUserId, "Username" => $username, "Domain" => $domain ) );
 		$this->Friend->Fetch();
-		if ( !$friendId = $this->Friend->Get ( "tID" ) ) return ( false );
+		if ( !$friendId = $this->Friend->Get ( "Friend_PK" ) ) return ( false );
 		
 		// Get the map id
 		$this->CirclesMap = new cModel ( "friendCirclesList" );

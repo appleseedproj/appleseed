@@ -859,10 +859,10 @@ class cQuicksocialHook extends cHook {
 		
 		// Get the user's friends list for verified users only.
 		if ( $pVerified ) {
-			$friends = new cModel ('friendInformation');
+			$friends = new cModel ('FriendInformation');
 			$friends->Structure();
 		
-			$friends->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ), 'Verification' => '1' ) );
+			$friends->Retrieve ( array ( 'Owner_PK' => $auth->Get ( 'uID' ), 'Verification' => '1' ) );
 			$return['friends'] = array ();
 			while ( $friends->Fetch() ) {
 				$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
@@ -971,7 +971,7 @@ class cQuicksocialHook extends cHook {
 		$profileModel = new cModel ( 'userProfile' );
 		$profileModel->Structure();
 		
-		$friendModel = new cModel ( 'friendInformation' );
+		$friendModel = new cModel ( 'FriendInformation' );
 		$friendModel->Structure();
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
@@ -984,7 +984,7 @@ class cQuicksocialHook extends cHook {
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
-		$friendModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
+		$friendModel->Retrieve ( array ( 'Owner_FK' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
 		
 		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
 		$profileModel->Fetch();
@@ -994,12 +994,13 @@ class cQuicksocialHook extends cHook {
 		
 		if ( $friendModel->Get ( 'Total' ) == 0 ) {
 			// No record found, so create one.
-			$friendModel->Protect ( 'tID' );
-			$friendModel->Set ( 'userAuth_uID', $requestUsername_uID );
+			$friendModel->Protect ( 'Friend_PK' );
+			$friendModel->Set ( 'Owner_FK', $requestUsername_uID );
 			$friendModel->Set ( 'Username', $accountUsername );
 			$friendModel->Set ( 'Domain', $accountDomain );
 			$friendModel->Set ( 'Verification', 2 );
-			$friendModel->Set ( 'Stamp', NOW() );
+			$friendModel->Set ( 'Created', NOW() );
+			$friendModel->Set ( 'Updated', NOW() );
 			$friendModel->Save();
 			
 			return ( true );
@@ -1014,7 +1015,7 @@ class cQuicksocialHook extends cHook {
 		$userModel = new cModel ( 'userAuthorization' );
 		$userModel->Structure();
 		
-		$friendModel = new cModel ( 'friendInformation' );
+		$friendModel = new cModel ( 'FriendInformation' );
 		$friendModel->Structure();
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
@@ -1030,7 +1031,7 @@ class cQuicksocialHook extends cHook {
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
-		$friendModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain, 'Verification' => '()' . '1,3' ) );
+		$friendModel->Retrieve ( array ( 'Owner_FK' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain, 'Verification' => '()' . '1,3' ) );
 		
 		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
 		$profileModel->Fetch();
@@ -1042,11 +1043,12 @@ class cQuicksocialHook extends cHook {
 		if ( $friendModel->Get ( 'Total' ) > 0 ) {
 			// Record found, so approve it.
 			$friendModel->Fetch();
-			$friendModel->Set ( 'userAuth_uID', $requestUsername_uID );
+			$friendModel->Set ( 'Owner_FK', $requestUsername_uID );
 			$friendModel->Set ( 'Username', $accountUsername );
 			$friendModel->Set ( 'Domain', $accountDomain );
 			$friendModel->Set ( 'Verification', 1 );
-			$friendModel->Set ( 'Stamp', NOW() );
+			$friendModel->Set ( 'Created', NOW() );
+			$friendModel->Set ( 'Updated', NOW() );
 			$friendModel->Save();
 			
 			return ( true );
@@ -1061,7 +1063,7 @@ class cQuicksocialHook extends cHook {
 		$userModel = new cModel ( 'userAuthorization' );
 		$userModel->Structure();
 		
-		$friendModel = new cModel ( 'friendInformation' );
+		$friendModel = new cModel ( 'FriendInformation' );
 		$friendModel->Structure();
 		
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
@@ -1074,7 +1076,7 @@ class cQuicksocialHook extends cHook {
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
-		$friendModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
+		$friendModel->Retrieve ( array ( 'Owner_FK' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
 		
 		if ( $friendModel->Get ( 'Total' ) > 0 ) {
 			// Record found, so approve it.
