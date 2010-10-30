@@ -376,15 +376,17 @@
 		#profile-newsfeed .list .item .actionowner-icon-link { float:left; display:inline; }
 		#profile-newsfeed .list .item .actionowner-icon { width:64px; height:64px; }
 		#profile-newsfeed .list .item .info { float:left; width:78%; padding:0; margin:0 5px; }
-		#profile-newsfeed .list .item .comment-full { float:left; display:inline; clear:none; width:100%; padding:0; margin:0; min-height:46px; }
+		#profile-newsfeed .list .item .content { float:left; display:block; clear:both; padding:0; margin:0; width:100%; min-height:47px; }
+		#profile-newsfeed .list .item .sentence { float:left; display:inline; clear:none; padding:0 5px 10px 0; margin:0; font-style:italic; font-size:90%; width:100%; color:#8a8a8a; }
+		#profile-newsfeed .list .item .sentence a { float:none; clear:none; margin-right:0px; font-weight:bold; font-style:normal; }
+		#profile-newsfeed .list .item .comment { float:left; display:inline; clear:none; padding:0; margin:0; }
 		#profile-newsfeed .list .item .actionowner-link { margin-right:5px; font-weight:bold; }
 		#profile-newsfeed .list .item .remove { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:0.6;}
 		#profile-newsfeed .list .item .remove:hover { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:1;}
-		#profile-newsfeed .stamp { float:left; color:#8a8a8a; font-style:italic; border:none; margin-top:6px; margin-right:5px; cursor:auto; text-align:left; font-size:90%; }
 		#profile-newsfeed .actions { float:left; clear:none; margin-top:6px; font-size:90%; }
+		#profile-newsfeed .actions .stamp { float:left; color:#8a8a8a; font-style:italic; border:none; margin-right:5px; cursor:auto; text-align:left; }
 		#profile-newsfeed .actions a { float:left; padding-right:5px; }
 		#profile-newsfeed .actions a:before { content:"\B7 \ "; }
-		
 		
 		/* 404 */
 		#appleseed-404 { float:left; background-color:#f1fed5; min-height:840px; }
