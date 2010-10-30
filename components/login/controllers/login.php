@@ -408,13 +408,13 @@ class cLoginLoginController extends cController {
 			$userInvites->Save( array ( "Recipient" => $email, "Value" => $invite ) );
 			
 			// Create a friend relationship 
-			$sender = $userProfile->Get ( 'userAuth_uID' );
-			$recipient = $userInvites->Get ( 'userAuth_uID' );
-			$data = array ( 'first' => $sender, 'second' => $recipient);
+			$sender = $userInvites->Get ( 'userAuth_uID' );
+			$recipient = $userProfile->Get ( 'userAuth_uID' );
+			$data = array ( 'sender' => $sender, 'recipient' => $recipient);
 			$this->Talk ( 'Friends', 'CreateRelationship', $data );
 			
 			// Notify the inviting user.
-			$this->_EmailAccepted ( $sender, $recipient );
+			$this->_EmailAccepted ( $recipient, $sender );
 			
 			if ( (int) $default_invites > 0 ) {
 				$data = array ( 'UserId' => $sender, 'Count' => $default_invites );

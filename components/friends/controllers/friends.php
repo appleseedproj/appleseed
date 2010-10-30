@@ -694,9 +694,19 @@ class cFriendsFriendsController extends cController {
 	
 	public function CreateRelationship ( $pView = null, $pData = array ( ) ) {
 		$this->Model = $this->GetModel();
-		$first = $pData['first'];
-		$second = $pData['second'];
-		$this->Model->CreateRelationship ( $first, $second );
+		$sender = $pData['sender'];
+		$recipient = $pData['recipient'];
+		
+		$this->Model->CreateRelationship ( $sender, $recipient );
+		
+		$senderInfo = $this->Talk ('User', 'Account', array ( 'Id' => $sender ) );
+		$recipientInfo = $this->Talk ('User', 'Account', array ( 'Id' => $recipient ) );
+		
+		// Add to newsfeed.
+		$friends = $this->Talk ( 'Friends', 'Friends', array ( 'Target' => $sender ) );
+		$notifyData = array ( 'OwnerId' => $sender, 'Friends' => $friends, 'ActionOwner' => $senderInfo->Account, 'Action' => 'friended', 'SubjectOwner' => $recipientInfo->Account, 'Context' => 'friends' );
+		$this->Talk ( 'Newsfeed', 'Notify', $notifyData );
+		
 		return ( true );
 	}
 	

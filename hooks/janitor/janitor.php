@@ -30,6 +30,35 @@ class cJanitorHook extends cHook {
 	}
 	
 	public function EndPageShare ( $pData = null ) {
+		$this->_Janitorial();
+	    return ( true );
+	}
+	
+	public function EndLoginJoin ( $pData ) {
+		$this->_Janitorial();
+		return ( true );
+	}
+	
+	public function EndFriendsApprove ( $pData ) {
+		$this->_Janitorial();
+		return ( true );
+	}
+	
+	public function EndSystemInitialize ( $pData ) {
+		$social = $this->GetSys ( 'Request' )->Get ( '_social' );
+		
+		if ( $social != 'true' ) return ( false );
+		
+		$task = $this->GetSys ( 'Request' )->Get ( '_task' );
+		
+		if ( $task != 'friend.approve' ) return ( false );
+		
+		$this->_Janitorial();
+		
+		return ( true );
+	}
+	
+	private function _Janitorial ( ) {
 		// create both cURL resources
 		$ch1 = curl_init();
 
@@ -46,4 +75,5 @@ class cJanitorHook extends cHook {
 	    
 	    return ( true );
 	}
+	
 }
