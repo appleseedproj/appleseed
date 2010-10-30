@@ -40,14 +40,14 @@ class cNewsfeedOutgoingModel extends cModel {
 		$this->Set ( 'ActionOwner', $pActionOwner );
 		$this->Set ( 'ActionLink', $pActionLink );
 		$this->Set ( 'SubjectOwner', $pSubjectOwner );
-		$this->Set ( 'Context', $pContextLink );
+		$this->Set ( 'Context', $pContext );
 		$this->Set ( 'ContextOwner', $pContextOwner );
 		$this->Set ( 'ContextLink', $pContextLink );
 		$this->Set ( 'Icon', $pIcon );
 		$this->Set ( 'Comment', $pComment );
 		$this->Set ( 'Description', $pDescription );
 		$this->Set ( 'Identifier', $pIdentifier );
-		$this->Set ( 'Current', NOW() );
+		$this->Set ( 'Created', NOW() );
 		$this->Set ( 'Updated', NOW() );
 		
 		$this->Create();

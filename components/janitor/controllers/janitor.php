@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Components
  * @subpackage  Janitor
  */
-class cJanitorController extends cController {
+class cJanitorJanitorController extends cController {
 	
 	/**
 	 * Constructor
@@ -30,7 +30,12 @@ class cJanitorController extends cController {
 	}
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
-		return ( parent::Display( $pView, $pData ) );
+		
+        ignore_user_abort(true);
+		
+		$this->Talk ( 'Newsfeed', 'ProcessQueue' );
+		
+		return ( true );
 	}
 
 }

@@ -71,6 +71,20 @@ class cUser extends cComponent {
 		return ( $FocusUser );
 	}
 	
+	public function Account ( $pData = null ) {
+		$Id = $pData['Id'];
+		$Username = $pData['Username'];
+		
+		$RequestedUser = new cUserAuthorization ( );
+		
+		if ( $Id ) 
+			$RequestedUser->Load ( (int)$Id );
+		else
+			$RequestedUser->Load ( $Username );
+		
+		return ( $RequestedUser );
+	}
+	
 	public function AdminMenu ( $pData = null ) {
 		
 		if ( $this->_Source != 'Component' ) return ( false );
@@ -174,6 +188,47 @@ class cUserAuthorization extends cBase {
       	// Load the user account information.
       	$userModel = new cModel ( "userAuthorization" );
       	$userModel->Retrieve ( array ( "Username" => $pUsername ) );
+      	$userModel->Fetch();
+      	
+      	if ( !$userModel->Get ( "Username" ) ) return ( false );
+      	
+      	$this->Username = $userModel->Get ( "Username" );
+      	$this->Id = $userModel->Get ( "uID" );
+      	
+      	// Load the user profile information.
+      	$profileModel = new cModel ( "userProfile" );
+      	$profileModel->Retrieve ( array ( "userAuth_uID" => $userModel->Get ( "uID" ) ) );
+      	$profileModel->Fetch();
+      	
+      	$this->uID = $profileModel->Get ( "userAuth_uID" );
+      	
+      	if ( $profileModel->Get ( "Alias" ) )
+      		$this->Fullname = $profileModel->Get ( "Alias" );
+      	else
+      		$this->Fullname = $profileModel->Get ( "Fullname" );
+      		
+      	$this->Description = $profileModel->Get ( "Description" );
+      	$this->Domain = $_SERVER['HTTP_HOST'];
+      	
+      	$this->Account = $this->Username . '@' . $this->Domain;
+      	
+      	$this->Email = $profileModel->Get ( 'Email' );
+      	
+      	$this->Remote = false;
+      	
+      	return ( true );
+	}
+	
+	public function Load ( $pUser ) {
+		
+      	$userModel = new cModel ( "userAuthorization" );
+      	$userModel->Structure();
+      	
+      	if ( is_int ( $pUser ) ) {
+      		$userModel->Retrieve ( array ( 'uID' => $pUser ) );
+      	} else {
+      		$userModel->Retrieve ( array ( 'Username' => $pUser ) );
+      	}
       	$userModel->Fetch();
       	
       	if ( !$userModel->Get ( "Username" ) ) return ( false );

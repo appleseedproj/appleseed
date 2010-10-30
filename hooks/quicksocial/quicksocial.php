@@ -1,6 +1,6 @@
 <?php
 /**
- * @version      $Id$
+ * @version      $pId$p
  * @package      Appleseed.Framework
  * @subpackage   System
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
@@ -189,6 +189,16 @@ class cQuicksocialHook extends cHook {
 				$friend->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
 				$friend->SetCallback ( 'FriendRemove', array ( $this, '_FriendRemove' ) );
 				$friend->ReplyToRemove();
+				exit;
+			break;
+			case 'feed.synchronize':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfeed.php' );
+				
+				$notify = new cQuickFeed ();
+				$notify->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
+				$notify->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$notify->SetCallback ( 'FeedSynchronize', array ( $this, '_FeedSynchronize' ) );
+				$notify->ReplyToSynchronize();
 				exit;
 			break;
 			case '':
@@ -1088,5 +1098,66 @@ class cQuicksocialHook extends cHook {
 			// Record doesn't exist, so just return true;
 			return ( true );
 		}
+	}
+	
+	public function OnFeedSynchronize ( $pData = array ( ) ) {
+		
+		if (!class_exists ( 'cQuickFeed' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quickfeed.php' );
+		
+		$feed = new cQuickFeed ();
+		
+		$feed->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
+		$feed->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
+		
+		$Account = $pData['Account'];
+		$Recipient = $pData['Recipient'];
+		$Action = $pData['Action'];
+		$ActionOwner = $pData['ActionOwner'];
+		$ActionLink = $pData['ActionLink'];
+		$SubjectOwner = $pData['SubjectOwner'];
+		$Context = $pData['Context'];
+		$ContextOwner = $pData['ContextOwner'];
+		$ContextLink = $pData['ContextLink'];
+		$Icon = $pData['Icon'];
+		$Comment = $pData['Comment'];
+		$Description = $pData['Description'];
+		$Identifier = $pData['Identifier'];
+		$Created = $pData['Created'];
+		$Updated = $pData['Updated'];
+		
+		list ( $username, $domain ) = explode ( '@', $Recipient );
+			
+		$result = $feed->Synchronize ( $domain, $Account, $Recipient, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
+		
+		if ( $result->success == 'true' ) return ( true );
+		
+		return ( false );
+	}
+	
+	public function _FeedSynchronize ( $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated, $pUpdated ) {
+		
+		list ( $recipientUsername, $null ) = explode ( '@', $pRecipient );
+		
+		$RecipientAccount = $this->GetSys ( 'Components' )->Talk ( 'User', 'Account', array ( 'Username' => $recipientUsername ) );
+		
+		$OwnerId = $RecipientAccount->Id;
+		$data['OwnerId'] = $RecipientAccount->Id;
+		$data['Action'] = $pAction;
+		$data['ActionOwner'] = $pActionOwner;
+		$data['ActionLink'] = $pActionLink;
+		$data['SubjectOwner'] = $pSubjectOwner;
+		$data['Context'] = $pContext;
+		$data['ContextOwner'] = $pContextOwner;
+		$data['ContextLink'] = $pContextLink;
+		$data['Icon'] = $pIcon;
+		$data['Comment'] = $pComment;
+		$data['Description'] = $pDescription;
+		$data['Identifier'] = $pIdentifier;
+		$data['Created'] = $pCreated;
+		$data['Updated'] = $pUpdated;
+		
+		$result = $this->GetSys ( 'Components' )->Talk ( 'Newsfeed', 'AddToIncoming', $data );
+		
+		return ( $result );
 	}
 }

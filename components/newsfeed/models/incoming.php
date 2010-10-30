@@ -31,25 +31,42 @@ class cNewsfeedIncomingModel extends cModel {
 		parent::__construct( $pTables );
 	}
 	
-	public function Queue ( $pOwnerId, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier ) {
-	
-		$this->Protect ( 'Incoming_PK', null );
+	public function Queue ( $pOwnerId, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated = null, $pUpdated = null ) {
+		
+		$this->Retrieve ( array ( 'Owner_FK' => $pOwnerId, 'Identifier' => $pIdentifier ) );
+		if ( $this->Get ( 'Total' ) > 0 ) {
+			$this->Fetch();
+		} else {
+			$this->Set ( 'Incoming_PK', null );
+		}
+		
+		$this->Protect ( 'Incoming_PK' );
 		$this->Set ( 'Owner_FK', $pOwnerId );
 		$this->Set ( 'Action', $pAction );
 		$this->Set ( 'ActionOwner', $pActionOwner );
 		$this->Set ( 'ActionLink', $pActionLink );
 		$this->Set ( 'SubjectOwner', $pSubjectOwner );
-		$this->Set ( 'Context', $pContextLink );
+		$this->Set ( 'Context', $pContext );
 		$this->Set ( 'ContextOwner', $pContextOwner );
 		$this->Set ( 'ContextLink', $pContextLink );
 		$this->Set ( 'Icon', $pIcon );
 		$this->Set ( 'Comment', $pComment );
 		$this->Set ( 'Description', $pDescription );
 		$this->Set ( 'Identifier', $pIdentifier );
-		$this->Set ( 'Current', NOW() );
-		$this->Set ( 'Updated', NOW() );
 		
-		$this->Create();
+		if ( $pCreated ) 
+			$this->Set ( 'Created', $pCreated );
+		else
+			$this->Set ( 'Created', NOW() );
+		
+		if ( $pUpdated ) 
+			$this->Set ( 'Updated', $pUpdated );
+		else
+			$this->Set ( 'Updated', NOW() );
+		
+		$this->Save();
+		
+		if ( $this->Get ( 'Error' ) ) return ( false );
 		
 		return ( true );
 	}

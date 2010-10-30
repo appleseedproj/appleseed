@@ -202,7 +202,7 @@ Protocol
 	QuickFeed
 		- Synchronize / ReplyToSynchronize
 			- GET: 	_social=true
-					_task=feed.push
+					_task=feed.synchronize
 					_token=<token>						# Required for verification
 					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>

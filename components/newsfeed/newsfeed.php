@@ -44,4 +44,11 @@ class cNewsfeed extends cComponent {
 		$this->Load ( 'Newsfeed', null, 'Notify', $pData );
 	}
 	
+	public function ProcessQueue ( $pData = null ) {
+		$this->Load ( 'Newsfeed', null, 'ProcessQueue', $pData );
+	}
+	
+	public function AddToIncoming ( $pData = null ) {
+		return ( $this->Load ( 'Newsfeed', null, 'AddToIncoming', $pData ) );
+	}
 }

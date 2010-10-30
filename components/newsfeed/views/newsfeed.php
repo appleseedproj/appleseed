@@ -7,9 +7,11 @@
 		<li class="item">
 			<a class="actionowner-icon-link" href=""><img class="actionowner-icon" src=""></a>
 			<span class="info">
-				<p class="comment-full"><a class="actionowner-link" rel=""></a><span class="comment"></span></p>
-				<abbr class="stamp">4 minutes ago</abbr>
+				<span class="content">
+					<span class="sentence"></span><span class="comment"></span>
+				</span>
 				<span class="actions">
+					<abbr class="stamp">4 minutes ago</abbr>
 					<a class='add-comment'>Add Comment</a>
 					<a class='like'>Like</a>
 				</span>
