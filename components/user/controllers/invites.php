@@ -56,6 +56,12 @@ class cUserInvitesController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
+		if ( $this->_Focus->Account != $this->_Current->Account ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
+		}
+		
+		$this->Model = $this->GetModel ( 'Incoming' );
 		$this->Model = $this->GetModel ( 'Invites' );
 		
 		$Email = $this->GetSys ( 'Request' )->Get ( 'Email' );

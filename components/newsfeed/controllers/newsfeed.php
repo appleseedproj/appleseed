@@ -34,6 +34,11 @@ class cNewsfeedNewsfeedController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		
+		if ( $this->_Focus->Account != $this->_Current->Account ) {
+			$this->GetSys ( "Foundation" )->Redirect ( "common/403.php" );
+			return ( false );
+		}
+		
 		$this->Model = $this->GetModel ( 'Incoming' );
 		
 		$this->View = $this->GetView ( $pView );
