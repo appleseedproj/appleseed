@@ -63,7 +63,7 @@ class cComponent extends cBase {
 		
 		// Load the language file for this component.
 		$component_lang = 'components' . DS . strtolower ( $this->_Component ) . '.lang';
-		$this->GetSys ( "Language" )->Load ( $component_lang );
+		$languageStore = $this->GetSys ( "Language" )->Load ( $component_lang );
 		
 		$controller = ltrim ( rtrim ( strtolower ( $pController ) ) );
 		
@@ -105,6 +105,9 @@ class cComponent extends cBase {
 		
 		// Restore the stored session context (for embedded component calls)
 		$this->GetSys ( "Session" )->Context ( $oldSessionContext );
+		
+		// Restore the language information
+		$this->GetSys ( "Language" )->Restore ( $languageStore );
 		
 		return ( $return );
 	}
