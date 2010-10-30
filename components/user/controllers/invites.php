@@ -61,7 +61,6 @@ class cUserInvitesController extends cController {
 			return ( false );
 		}
 		
-		$this->Model = $this->GetModel ( 'Incoming' );
 		$this->Model = $this->GetModel ( 'Invites' );
 		
 		$Email = $this->GetSys ( 'Request' )->Get ( 'Email' );
