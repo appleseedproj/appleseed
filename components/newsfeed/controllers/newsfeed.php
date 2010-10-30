@@ -60,7 +60,7 @@ class cNewsfeedNewsfeedController extends cController {
 		
 		$rowOriginal = $row->outertext;
 		
-		$li->innertext = '';
+		$li->outertext = '';
 		
 		if ( $this->Model->Get ( 'Total' ) == 0 ) $li->outertext = '';
 		
@@ -82,6 +82,15 @@ class cNewsfeedNewsfeedController extends cController {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
+			switch ( $Context ) {
+				case 'page':
+					$row->Find ( '.item', 0 )->class .= ' page';
+				break;
+				case 'friends':
+					$row->Find ( '.item', 0 )->class .= ' friends';
+				break;
+			}
+			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
 			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $this->Model->Get ( 'Comment' ) );
 			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
@@ -102,7 +111,7 @@ class cNewsfeedNewsfeedController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
-		    $li->innertext .= $row->outertext;
+		    $li->outertext .= $row->outertext;
 		    unset ( $row );
 		}
 		
@@ -126,25 +135,39 @@ class cNewsfeedNewsfeedController extends cController {
 			
 			list ( $ActionOwnerUsername, $ActionOwnerDomain ) = explode ( '@', $ActionOwner );
 			list ( $ContextOwnerUsername, $ContextOwnerDomain ) = explode ( '@', $ContextOwner );
+			list ( $SubjectOwnerUsername, $SubjectOwnerDomain ) = explode ( '@', $SubjectOwner );
 			
+			// @todo Create a function to parse out a proper link.
+			$ActionOwnerLink = 'http://' . $ActionOwnerDomain . '/profile/' . $ActionOwnerUsername;
+			$ContextOwnerLink = 'http://' . $ContextOwnerDomain . '/profile/' . $ContextOwnerUsername;
+			$SubjectOwnerLink = 'http://' . $SubjectOwnerDomain . '/profile/' . $SubjectOwnerUsername;
+			$actionowner = '<a href="' . $ActionOwnerLink . '">' . $ActionOwner . '</a>';
+			$contextowner = '<a href="' . $ContextOwnerLink . '">' . $ContextOwner . '</a>';
+			$subjectowner = '<a href="' . $SubjectOwnerLink . '">' . $SubjectOwner . '</a>';
+					
 			switch ( $Context ) {
 				case 'page':
-					// @todo Create a function to parse out a proper link.
-					$ActionOwnerLink = 'http://' . $ActionOwnerDomain . '/profile/' . $ActionOwnerUsername;
-					$ContextOwnerLink = 'http://' . $ContextOwnerDomain . '/profile/' . $ContextOwnerUsername;
-					$actionowner = '<a href="' . $ActionOwnerLink . '">' . $ActionOwner . '</a>';
-					$contextowner = '<a href="' . $ContextOwnerLink . '">' . $ContextOwner . '</a>';
-					
 					if ( ( $ActionOwner == $this->_Focus->Account ) && ( $ActionOwner == $ContextOwner ) ) {
-						$return = __( "You Updated Your Status", array ( 'actionowner' => $actionowner ) );
+						$return = __( 'You Updated Your Status', array ( 'actionowner' => $actionowner ) );
 					} else if ( ( $ContextOwner == $this->_Focus->Account ) && ( $ActionOwner != $ContextOwner ) ) {
-						$return = __( "Someone Posted On Your Page", array ( 'actionowner' => $actionowner ) );
+						$return = __( 'Someone Posted On Your Page', array ( 'actionowner' => $actionowner ) );
 					} else if ( ( $ActionOwner == $this->_Focus->Account ) && ( $ActionOwner != $ContextOwner ) ) {
-						$return = __( "You Posted On A Page", array ( 'contextowner' => $contextowner ) );
+						$return = __( 'You Posted On A Page', array ( 'contextowner' => $contextowner ) );
 					} else if ( $ContextOwner == $ActionOwner ) {
-						$return = __( "Someone Updated Their Status", array ( 'actionowner' => $actionowner ) );
+						$return = __( 'Someone Updated Their Status', array ( 'actionowner' => $actionowner ) );
 					} else {
-						$return = __( "Someone Posted On A Page", array ( 'actionowner' => $actionowner, 'contextowner' => $contextowner ) );
+						$return = __( 'Someone Posted On A Page', array ( 'actionowner' => $actionowner, 'contextowner' => $contextowner ) );
+					}
+				break;
+				case 'friends':
+					if ( ( $ActionOwner == $this->_Focus->Account ) ) {
+						$friend = $subjectowner;
+						$return = __( 'You Are Now Friends With', array ( 'friend' => $friend ) );
+					} else if ( ( $SubjectOwner == $this->_Focus->Account ) ) {
+						$friend = $actionowner;
+						$return = __( 'You Are Now Friends With', array ( 'friend' => $friend ) );
+					} else {
+						$return = __( 'Someone Is Now Friends With', array ( 'actionowner' => $actionowner, 'subjectowner' => $subjectowner ) );
 					}
 				break;
 			}

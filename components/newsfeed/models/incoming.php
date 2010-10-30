@@ -33,9 +33,13 @@ class cNewsfeedIncomingModel extends cModel {
 	
 	public function Queue ( $pOwnerId, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated = null, $pUpdated = null ) {
 		
-		$this->Retrieve ( array ( 'Owner_FK' => $pOwnerId, 'Identifier' => $pIdentifier ) );
-		if ( $this->Get ( 'Total' ) > 0 ) {
-			$this->Fetch();
+		if ( $pIdentifier ) {
+			$this->Retrieve ( array ( 'Owner_FK' => $pOwnerId, 'Identifier' => $pIdentifier ) );
+			if ( $this->Get ( 'Total' ) > 0 ) {
+				$this->Fetch();
+			} else {
+				$this->Set ( 'Incoming_PK', null );
+			}
 		} else {
 			$this->Set ( 'Incoming_PK', null );
 		}

@@ -82,16 +82,20 @@ class cFriends extends cComponent {
 	
 	public function Friends ( $pData = null ) {
 		
+		$Target = $pData['Target'];
+		
 		if ( $this->_Source != 'Component' ) return ( false );
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
+		if ( !$Target ) $Target = $this->_Focus->Id;
+		
 		include_once ( ASD_PATH . '/components/friends/models/friends.php');
 		$this->_Model = new cFriendsModel();
 		
 		$return = array();
-		$this->_Model->RetrieveFriends ( $this->_Focus->Id );
+		$this->_Model->RetrieveFriends ( $Target );
 		
 		while ( $this->_Model->Fetch() ) {
 			$return[] = $this->_Model->Get ( 'Username' ) . '@' . $this->_Model->Get ( 'Domain' );

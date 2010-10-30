@@ -1046,10 +1046,6 @@ class cQuicksocialHook extends cHook {
 		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
 		$profileModel->Fetch();
 		
-		$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
-		$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
-		$this->GetSys ( 'Components' )->Talk ( 'Friends', 'NotifyApprove', $data );
-		
 		if ( $friendModel->Get ( 'Total' ) > 0 ) {
 			// Record found, so approve it.
 			$friendModel->Fetch();
@@ -1061,6 +1057,15 @@ class cQuicksocialHook extends cHook {
 			$friendModel->Set ( 'Updated', NOW() );
 			$friendModel->Save();
 			
+			$request = $requestUsername . '@' . ASD_DOMAIN;
+			$friends = $this->GetSys ( 'Components' )->Talk ( 'Friends', 'Friends', array ( 'Target' => $requestUsername_uID ) );
+			
+			$notifyData = array ( 'OwnerId' => $userModel->Get ( 'uID' ), 'Friends' => $friends, 'ActionOwner' => $pRequest, 'Action' => 'friended', 'SubjectOwner' => $pAccount, 'Context' => 'friends' );
+			$this->GetSys ( 'Components' )->Talk ( 'Newsfeed', 'Notify', $notifyData );
+			
+			$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
+			$this->GetSys ( 'Components' )->Talk ( 'Friends', 'NotifyApprove', $data );
+		
 			return ( true );
 		} else {
 			// Record doesn't exist, so return false;

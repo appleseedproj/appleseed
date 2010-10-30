@@ -673,6 +673,11 @@ class cFriendsFriendsController extends cController {
 		// 3. Update the flag in the database.
 		$model->SaveApproved ( $this->_Focus->uID, $request );
 		
+		// 4. Add to newsfeed.
+		$friends = $this->Talk ( 'Friends', 'Friends' );
+		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Focus->Account, 'Action' => 'friended', 'SubjectOwner' => $request, 'Context' => 'friends' );
+		$this->Talk ( 'Newsfeed', 'Notify', $notifyData );
+		
 		// 4. Redirect to friends.
 		$session->Context ( 'friends.friends.(\d+).(mutual|friends|requests|circles|circle)' );
 		$session->Set ( "Message", __( "Friend Request Approved", array ( 'account' => $request, 'fullname' => $this->_RequestInfo->fullname ) ) );

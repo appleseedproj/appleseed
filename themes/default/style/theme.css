@@ -388,6 +388,10 @@
 		#profile-newsfeed .actions a { float:left; padding-right:5px; }
 		#profile-newsfeed .actions a:before { content:"\B7 \ "; }
 		
+		#profile-newsfeed .list .item.friends .actionowner-icon { width:32px; height:32px; }
+		#profile-newsfeed .list .item.friends .actions { display:none; }
+		#profile-newsfeed .list .item.friends .content { height:auto; min-height:0; }
+		
 		/* 404 */
 		#appleseed-404 { float:left; background-color:#f1fed5; min-height:840px; }
 		#appleseed-404-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }
