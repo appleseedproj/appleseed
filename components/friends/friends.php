@@ -44,18 +44,24 @@ class cFriends extends cComponent {
 		
 		if ( $this->_Source != 'Component' ) return ( false );
 		
+		$Requesting = $pData['Requesting'];
+		$Target = $pData['Target'];
+		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( !$Requesting ) $Requesting = $this->_Current->Account;
+		if ( !$Target ) $Target = $this->_Focus->Id;
 		
 		include_once ( ASD_PATH . '/components/friends/models/circles.php');
 		$this->_Model = new cFriendsCirclesModel();
 		
 		$return = array();
-		$circles = $this->_Model->Circles ( $this->_Focus->Id );
+		$circles = $this->_Model->Circles ( $Target );
 		
-		$circleMembership = $this->_Model->CirclesByMember ( $this->_Focus->Id, $this->_Current->Account );
+		$circleMembership = $this->_Model->CirclesByMember ( $Target, $Requesting );
 		
-		if ( $this->_Focus->Account == $this->_Current->Account ) {
+		if ( $this->_Focus->Account == $Requesting ) {
 			foreach ( $circles as $c => $circle ) {  
 				$id = $circle['id'];
 				$return[$id] = $circle['name'];

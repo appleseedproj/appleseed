@@ -1,13 +1,13 @@
-<script type="text/javascript" src="/components/page/assets/javascript/page.js"></script>
-<section id="profile-page">
+<script type="text/javascript" src="/components/newsfeed/assets/javascript/newsfeed.js"></script>
+<section id="profile-newsfeed">
 
-	<p class="page-message"></p>
+	<p class="newsfeed-message"></p>
 	
 	<ul class="list">
 		<li class="item">
-			<a class="owner-icon-link" href=""><img class="owner-icon" src=""></a>
+			<a class="actionowner-icon-link" href=""><img class="actionowner-icon" src=""></a>
 			<span class="info">
-				<p class="content-full"><a class="owner-link" rel=""></a><span class="content"></span></p>
+				<p class="comment-full"><a class="actionowner-link" rel=""></a><span class="comment"></span></p>
 				<abbr class="stamp">4 minutes ago</abbr>
 				<span class="actions">
 					<a class='add-comment'>Add Comment</a>

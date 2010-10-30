@@ -200,7 +200,7 @@ Protocol
 					body=<body>
 	
 	QuickFeed
-		- Push / ReplyToPush
+		- Synchronize / ReplyToSynchronize
 			- GET: 	_social=true
 					_task=feed.push
 					_token=<token>						# Required for verification
@@ -215,26 +215,15 @@ Protocol
 					_contextOwner=<user@domain>
 					_context=<context>
 					_contextLink=<contextlink>
+					_icon=<icon>
 					_comment=<comment>
+					_identifier=<identifier>
 					_description=<description>
-					_stamp=<datetime>
+					_updated=<datetime>
+					_created=<datetime>
 			- JSON:	success=<true|false>
 					error=<error>
-		- Pull / ReplyToPull
-			- GET: 	_social=true
-					_task=feed.pull
-					_token=<token>						# Required for verification
-					_method=<method>					# http, https, ws, etc
-					_account=<user@domain>
-					_source=<domain>
-					_requested=<username>
-					_begin=<datetime>
-					_end=<datetime>
-					_start=<start>
-					_limit=<limit>
-			- JSON:	success=<true|false>
-					error=<error>
-					data=<array>
+					incoming=<array>
 						actionOwner=<user@domain>
 						action=<action>
 						actionLink=<actionlink>
@@ -242,11 +231,12 @@ Protocol
 						contextOwner=<user@domain>
 						context=<context>
 						contextLink=<contextlink>
-						comment=<comment>
 						icon=<icon>
+						comment=<comment>
+						identifier=<identifier>
 						description=<description>
 						stamp=<datetime>
-	
+		
 		- Report / ReplyToReport
 			- GET: 	_social=true
 					_task=feed.report

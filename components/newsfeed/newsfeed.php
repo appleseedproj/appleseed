@@ -40,5 +40,8 @@ class cNewsfeed extends cComponent {
 		return ( $return );
 	} 
 	
+	public function Notify ( $pData = null ) {
+		$this->Load ( 'Newsfeed', null, 'Notify', $pData );
+	}
 	
 }

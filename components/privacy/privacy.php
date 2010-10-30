@@ -77,25 +77,31 @@ class cPrivacy extends cComponent {
 		
 		if ( $this->_Source != 'Component' ) return ( false );
 		
-		$Identifier = $pData['Identifier'];
-		$Type = $pData['Type'];
-		$Circles = $this->Talk ( 'Friends', 'Circles' );
-		$Friends = $this->Talk ( 'Friends', 'Friends' );
+		$Requesting = $pData['Requesting'];
+		$Target = $pData['Target'];
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
+		if ( !$Requesting ) $Requesting = $this->_Current->Account;
+		if ( !$Target ) $Target = $this->_Focus->Id;
+		
+		$Identifier = $pData['Identifier'];
+		$Type = $pData['Type'];
+		$Circles = $this->Talk ( 'Friends', 'Circles', array ( 'Requesting' => $Requesting ) );
+		$Friends = $this->Talk ( 'Friends', 'Friends' );
+		
 		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );
 		$Model = new cPrivacyModel();
 		
-		if ( !$Privacy = $Model->RetrieveItem ( $this->_Focus->Id, $Type, $Identifier ) ) return ( false );
+		if ( !$Privacy = $Model->RetrieveItem ( $Target, $Type, $Identifier ) ) return ( false );
 		
 		if ( $Privacy->Circles ) {
 			foreach ( $Privacy->Circles as $circle ) {
 				if ( array_key_exists ( $circle, $Circles ) ) return ( true );
 			}
 		} else if ( $Privacy->Friends == true ) {
-			if ( in_array ( $this->_Current->Account, $Friends ) ) return ( true );
+			if ( in_array ( $Requesting, $Friends ) ) return ( true );
 		} else if ( $Privacy->Everybody == true ) {
 			return ( true );
 		}

@@ -172,7 +172,6 @@ class cFriendsModel extends cModel {
 		$this->Set ( "Domain", $friendDomain );
 		$this->Set ( "Verification", 3 );
 		$this->Set ( "Created", NOW() );
-		$this->Set ( "Updated", NOW() );
 		$this->Save();
 		
 		return ( true );
@@ -200,7 +199,6 @@ class cFriendsModel extends cModel {
 		$this->Set ( "Domain", $friendDomain );
 		$this->Set ( "Verification", 1 );
 		$this->Set ( "Created", NOW() );
-		$this->Set ( "Updated", NOW() );
 		$this->Save();
 		
 		return ( true );
@@ -224,7 +222,6 @@ class cFriendsModel extends cModel {
 		$this->Set ( 'Domain', ASD_DOMAIN );
 		$this->Set ( 'Verification', 1 );
 		$this->Set ( "Created", NOW() );
-		$this->Set ( "Updated", NOW() );
 		
 		$this->Save();
 		
@@ -235,7 +232,6 @@ class cFriendsModel extends cModel {
 		$this->Set ( 'Domain', ASD_DOMAIN );
 		$this->Set ( 'Verification', 1 );
 		$this->Set ( "Created", NOW() );
-		$this->Set ( "Updated", NOW() );
 		
 		$this->Save();
 		
