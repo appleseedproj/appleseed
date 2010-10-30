@@ -119,12 +119,17 @@ class cNewsfeedNewsfeedController extends cController {
 			$Updated = $sentenceData['Updated'] = $Update = $this->Model->Get ( 'Updated' );
 			$Created = $sentenceData['Created'] = $Created = $this->Model->Get ( 'Created' );
 			
+			list ( $ActionOwnerUsername, $ActionOwnerDomain ) = explode ( '@', $ActionOwner );
+			list ( $ContextOwnerUsername, $ContextOwnerDomain ) = explode ( '@', $ContextOwner );
+			
 			switch ( $Context ) {
 				case 'page':
-					$actionowner = "<a href=\"be.com\">" . $ActionOwner . "</a>";
-					$contextowner = "<a href=\"be.com\">" . $ContextOwner . "</a>";
-					//$actionowner = "<a href=\"be.com\">" . "Cerie Xerox" . "</a>";
-					//$contextowner = "<a href=\"be.com\">" . "Liz Lemon" . "</a>";
+					// @todo Create a function to parse out a proper link.
+					$ActionOwnerLink = 'http://' . $ActionOwnerDomain . '/profile/' . $ActionOwnerUsername;
+					$ContextOwnerLink = 'http://' . $ContextOwnerDomain . '/profile/' . $ContextOwnerUsername;
+					$actionowner = '<a href="' . $ActionOwnerLink . '">' . $ActionOwner . '</a>';
+					$contextowner = '<a href="' . $ContextOwnerLink . '">' . $ContextOwner . '</a>';
+					
 					if ( ( $ActionOwner == $this->_Focus->Account ) && ( $ActionOwner == $ContextOwner ) ) {
 						$return = __( "You Updated Your Status", array ( 'actionowner' => $actionowner ) );
 					} else if ( ( $ContextOwner == $this->_Focus->Account ) && ( $ActionOwner != $ContextOwner ) ) {

@@ -48,6 +48,18 @@ class cProfileHook extends cHook {
 			}
 		}
 		
+		if ( $currentFoundation == 'profile/landing.php' ) {
+			$focus = $this->GetSys ( 'Components' )->Talk ( 'User', 'Focus' );
+			$current = $this->GetSys ( 'Components' )->Talk ( 'User', 'Current' );
+			if ( $focus->Account == $current->Account ) {
+				$url = 'http://' . ASD_DOMAIN . '/profile/' . $focus->Username . '/news/';
+				header ( 'Location:' . $url );
+				exit;
+			} else {
+				return ( 'profile/page.php' );
+			}
+		}
+		
 		return ( false );
 	}
 	
