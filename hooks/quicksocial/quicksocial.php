@@ -872,7 +872,7 @@ class cQuicksocialHook extends cHook {
 			$friends = new cModel ('FriendInformation');
 			$friends->Structure();
 		
-			$friends->Retrieve ( array ( 'Owner_PK' => $auth->Get ( 'uID' ), 'Verification' => '1' ) );
+			$friends->Retrieve ( array ( 'Owner_FK' => $auth->Get ( 'uID' ), 'Verification' => '1' ) );
 			$return['friends'] = array ();
 			while ( $friends->Fetch() ) {
 				$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
