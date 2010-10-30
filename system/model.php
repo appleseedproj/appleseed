@@ -747,6 +747,12 @@ class cModel extends cBase {
 		
 		$this->_Handle->Execute ();
 		
+		$this->_Error = false;
+		if ( $errorCode = $this->_Handle->errorCode() ) {
+			$this->_Error = $errorCode;
+			$this->_ErrorCodes[] = $errorCode;
+		}
+		
 		$this->_Query = $this->_Handle->queryString;
 		
 		$this->_CountResults();
