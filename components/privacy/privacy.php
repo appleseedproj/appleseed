@@ -101,8 +101,13 @@ class cPrivacy extends cComponent {
 				if ( array_key_exists ( $circle, $Circles ) ) return ( true );
 			}
 		} else if ( $Privacy->Friends == true ) {
+			// If we're logged in, and viewing our own profile, grant access.
+			if ( ( $this->_Current ) && ( $this->_Current->Account == $this->_Focus->Account ) ) return ( true );
+			
+			// If we're on the friends list, grant access.
 			if ( in_array ( $Requesting, $Friends ) ) return ( true );
 		} else if ( $Privacy->Everybody == true ) {
+			// Grant access for everybody.
 			return ( true );
 		}
 		
