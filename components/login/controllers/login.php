@@ -417,7 +417,7 @@ class cLoginLoginController extends cController {
 			$this->_EmailAccepted ( $recipient, $sender );
 			
 			if ( (int) $default_invites > 0 ) {
-				$data = array ( 'UserId' => $sender, 'Count' => $default_invites );
+				$data = array ( 'UserId' => $recipient, 'Count' => $default_invites );
 				$this->Talk ( 'User', 'AddInvites', $data );
 			}
 		}
