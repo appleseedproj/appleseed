@@ -560,6 +560,37 @@
 
       return (TRUE);
     } // SaveEmails
+    
+    function ChangePassword () {
+    	global $zApp;
+    	
+    	global $gTABLEPREFIX;
+    	
+    	global $gPASSWORD, $gCONFIRMPASSWORD;
+    	
+    	if ( !$gPASSWORD ) {
+    		return ( FALSE );
+    	}
+    	
+        $userAuth = $gTABLEPREFIX . 'userAuthorization';
+      
+        $salt = substr(md5(uniqid(rand(), true)), 0, 16);
+        $sha512 = hash ("sha512", $salt . $gPASSWORD);
+        $newpass = $salt . $sha512;
+
+        $reset_query = "UPDATE %s SET " .
+                       "Pass = '%s' WHERE " .
+                       "uID = '%s'";
+                     
+        $reset_query = sprintf ($reset_query, $userAuth, $newpass, $this->uID);
+      
+        $this->Query ($reset_query);
+
+		$gPASSWORD = null;
+		$gCONFIRMPASSWORD = null;
+		
+    	return ( TRUE );
+    }
 
     function DeleteIcon () {
       global $gSECTION, $gOPTIONGENERAL, $gSECTIONDEFAULT;

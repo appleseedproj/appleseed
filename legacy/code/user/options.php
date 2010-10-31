@@ -152,7 +152,8 @@
     break;
 
     case 'SAVE_ALL':
-
+      global $gCONFIRMPASSWORD;
+      
       // Check if admin user has proper access.
       if ( ($zAUTHUSER->uID != $gFOCUSUSERID) and
            ($zLOCALUSER->userAccess->w == FALSE) ) {
@@ -160,6 +161,18 @@
         $zLOCALUSER->Error = -1;
         break;
       } // if
+      
+      if ( ( $gPASSWORD ) && ( $gPASSWORD != $gCONFIRMPASSWORD ) ) {
+	        $zLOCALUSER->Error = -1;
+	        $zLOCALUSER->Message = __("Passwords Do Not Match");
+	        break;
+      }
+      
+      if ( ( $gPASSWORD ) && ( strlen ( $gPASSWORD ) < 8 ) ) {
+	        $zLOCALUSER->Error = -1;
+	        $zLOCALUSER->Message = __("Password Is Too Small", array ( 'minimum' => 8 ) );
+	        break;
+      }
 
       $zFOCUSUSER->SavePhoto ();
       $zFOCUSUSER->SaveQuestions ();
@@ -167,6 +180,7 @@
       $zFOCUSUSER->SaveIcons ();
       $zFOCUSUSER->SaveConfig ();
       $zFOCUSUSER->SaveEmails();
+      $zFOCUSUSER->ChangePassword();
       $zICON->Message = NULL;
       $zPHOTO->Message = NULL;
       $zFOCUSUSER->Message = __("All options saved");

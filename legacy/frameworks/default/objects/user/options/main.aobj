@@ -77,6 +77,26 @@
     </table>
 
   </fieldset>
+  
+  <fieldset>
+    <legend><a name="profile" href='/profile/<?php echo $gFOCUSUSERNAME ?>/options/#top'><?php echo __("Change Password"); ?></a></legend>
+    <p><?php echo __("Leave blank to keep your current password"); ?></p>
+
+    <table>
+      <tbody>
+        <tr>
+          <th> <label for="zipcode"><?php echo __("Password"); ?></label> </th>
+          <td> <?php $zHTML->TextBox ("PASSWORD", 64, NULL, TRUE); ?> </td>
+        </tr>
+        <tr>
+          <th> <label for="zipcode"><?php echo __("Confirm Password"); ?></label> </th>
+          <td> <?php $zHTML->TextBox ("CONFIRMPASSWORD", 64, NULL, TRUE); ?> </td>
+        </tr>
+        <tr><th></th><td> <?php $zFOCUSUSER->userProfile->Broadcast ("field", "Pass"); ?> </td></tr>
+      </tbody>
+    </table>
+
+  </fieldset>
 
 <?php /* ?>
   <fieldset>

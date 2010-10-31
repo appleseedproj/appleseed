@@ -188,6 +188,8 @@ INVALID_IMAGE_ERROR="The file you uploaded is not a valid image file.  Try again
 WRONG_IMAGE_TYPE_ERROR="The image you uploaded is not a GIF, JPEG, or PNG file.  Try again."
 WRONG_IMAGE_SIZE_ERROR="The image you uploaded is bigger than %maxwidth$sx%maxheight$s.  Try again."
 CANNOT_SAVE_ERROR="Could not save this image.  If problem persists, contact the administrator."
+PASSWORD_IS_TOO_SMALL="Password must be at least %minimum$s characters."
+PASSWORDS_DO_NOT_MATCH="Passwords do not match."
 
 [user.options]
 CONFIGURE_YOUR_SETTINGS="Here you can change all of your settings for this site. Click on a label below to open up that section of options. You can use basic HTML for your profile questions and description. More information is available in the FAQ."
