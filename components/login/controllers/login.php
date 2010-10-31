@@ -493,7 +493,7 @@ class cLoginLoginController extends cController {
 		
 		$this->Mailer = $this->GetSys ( "Mailer" );
 		
-		$newpassword = $this->_GeneratePassword ('##XX#XX!');
+		$newpassword = $this->_GeneratePassword ('##XX##XX#XX!');
       
 		$userAuth = new cModel ( 'userAuthorization' );
 		
