@@ -21,7 +21,7 @@
   </span> <!-- .privacy -->
 
   <span class='photocount'>
-    <?php <?php echo __("Photo Count", array ( "count" => $gPHOTOCOUNT ) ); ?>
+    <?php echo __("Photo Count", array ( "count" => $gPHOTOCOUNT ) ); ?>
   </span> <!-- .photocount -->
 
  </li> <!-- #[alternate] -->
