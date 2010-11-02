@@ -25,6 +25,8 @@ class cModel extends cBase {
 	protected $_Fields;
 	protected $_Protected;
 	
+	protected $_Within = false;
+	
 	protected $_PrimaryKey;
 	protected $_ForeignKeys;
 	
@@ -445,7 +447,7 @@ class cModel extends cBase {
 	 */
 	protected function _BuildCriteria ( array $pCriteria ) {
 		
-		$this->_Prepared = array ();
+		if ( !$this->_Within ) $this->_Prepared = array ();
 		
 		$DBO = $this->GetSys ( "Database" )->Get ( "DB" );
 		
@@ -465,7 +467,10 @@ class cModel extends cBase {
 				
 				if ( $compare == '||' ) $comparison = 'OR';
 				if ( count ( $statements ) == 0 ) $comparison = null;
-				list ( $inner_statement, $null ) = $this->_BuildCriteria ( $criteria ); 
+				$this->_Within = true;
+				list ( $inner_statement, $prepared ) = $this->_BuildCriteria ( $criteria ); 
+				$this->_Within = false;
+				
 				$statements[] = $comparison . ' (' . $inner_statement . ')';
 				continue;
 			} else {
@@ -795,7 +800,7 @@ class cModel extends cBase {
 		
 		// Quote each value, to prevent injection.
 		foreach ( $pPrepared as $p => $prepare ) {
-			$prepared[$p] = $DBO->quote ( utf8_encode ( $prepare ) );
+			$prepared[$p] = str_replace ( '%', '%%', $DBO->quote ( utf8_encode ( $prepare ) ) );
 		}
 		
 		// Replace all the %variable$s references first
@@ -810,7 +815,7 @@ class cModel extends cBase {
 		// Now replace all unique placeholders with the value.
 		$pcount = 0;
 		while ( preg_match ( '/@@##AA@@##/', $query ) ) {
-			$query = preg_replace ( '/@@##AA@@##/', $prepared[$pcount++], $query, 1);
+			$query = preg_replace ( '/@@##AA@@##/', preg_quote ( $prepared[$pcount++] ), $query, 1);
 		}
 		
 		preg_match ( '/\:(\w+)/', $query, $results); 
