@@ -6,3 +6,5 @@ YOU_POSTED_ON_A_PAGE="You posted on %contextowner$s's page."
 
 YOU_ARE_NOW_FRIENDS_WITH="You are now friends with %friend$s."
 SOMEONE_IS_NOW_FRIENDS_WITH="%actionowner$s is now friends with %subjectowner$s."
+
+ADD_COMMENT="Comment"
