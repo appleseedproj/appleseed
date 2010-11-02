@@ -36,5 +36,16 @@ jLoader.Page_share.Checkbox.OnClick = function ( pElement, pParent ) {
 		}
 	}
 	
+	elements = $("#page-share .privacy-list .item" );
+	
+	checked = false;
+	for ( e = 0; e < elements.length; e++ ) {
+		if ( $(':checkbox', elements[e] ).attr('checked' ) ) checked = true;
+	}
+	
+	if ( !checked ) {
+		$('#page-share .nobody input').attr ( 'checked', true );
+	}
+	
 	return ( true );
 }
