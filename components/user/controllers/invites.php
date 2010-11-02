@@ -91,6 +91,8 @@ class cUserInvitesController extends cController {
 	
 	private function _Invite ( $pAddress ) {
 		
+		$pAddress = trim ( $pAddress );
+		
 		$Validate = $this->GetSys ( "Validation" );
 		if ( !$Validate->Email ( $pAddress ) ) {
 			// Throw an error.
