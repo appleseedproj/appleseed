@@ -371,7 +371,7 @@
 		#profile-page .actions a:before { content:"\B7 \ "; }
 		
 		/* profile-newsfeed */
-		#profile-newsfeed .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; width:100%; }
+		#profile-newsfeed .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:15px; margin-bottom:15px; width:100%; }
 		#profile-newsfeed .list a { float:left; background:none; padding:0; display:inline; }
 		#profile-newsfeed .list .item .actionowner-icon-link { float:left; display:inline; }
 		#profile-newsfeed .list .item .actionowner-icon { width:64px; height:64px; }
