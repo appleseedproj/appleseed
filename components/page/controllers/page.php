@@ -58,7 +58,7 @@ class cPagePageController extends cController {
 		
 		$rowOriginal = $row->outertext;
 		
-		$li->innertext = '';
+		$li->outertext = '';
 		
 		if ( $this->References->Get ( 'Total' ) == 0 ) $li->outertext = '';
 		
@@ -94,7 +94,7 @@ class cPagePageController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
-		    $li->innertext .= $row->outertext;
+		    $li->outertext .= $row->outertext;
 		    unset ( $row );
 		}
 		

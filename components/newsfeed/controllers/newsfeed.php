@@ -62,8 +62,6 @@ class cNewsfeedNewsfeedController extends cController {
 		
 		$li->outertext = '';
 		
-		if ( $this->Model->Get ( 'Total' ) == 0 ) $li->outertext = '';
-		
 		while ( $this->Model->Fetch() ) {
 			$sentenceData['ActionOwner'] = $ActionOwner = $this->Model->Get ( 'ActionOwner' );
 			$sentenceData['Action'] = $Action = $this->Model->Get ( 'Action' );
