@@ -92,7 +92,8 @@ class cNewsfeedNewsfeedController extends cController {
 			}
 			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
-			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $this->Model->Get ( 'Comment' ) );
+			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
+			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $Comment );
 			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
 			$row->Find ( '.actionowner-link', 0 )->innertext = $ActionOwner;
 			$row->Find ( '.remove', 0 )->innertext = '';

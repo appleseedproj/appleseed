@@ -71,6 +71,8 @@ class cPagePageController extends cController {
 			
 			if (!$Item = $this->_ReferenceByType ( $Type, $Identifier ) ) continue;
 			
+			$Item['Comment'] = $this->GetSys ( 'Render' )->LiveLinks ( $Item['Comment'] );
+			
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
