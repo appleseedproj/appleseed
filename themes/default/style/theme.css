@@ -379,7 +379,8 @@
 		#profile-newsfeed .list .item .content { float:left; display:block; clear:both; padding:0; margin:0; width:100%; min-height:47px; }
 		#profile-newsfeed .list .item .sentence { float:left; display:inline; clear:none; padding:0 5px 10px 0; margin:0; font-style:italic; font-size:90%; width:100%; color:#8a8a8a; }
 		#profile-newsfeed .list .item .sentence a { float:none; clear:none; margin-right:0px; font-weight:bold; font-style:normal; }
-		#profile-newsfeed .list .item .comment { float:left; display:inline; clear:none; padding:0; margin:0; }
+		#profile-newsfeed .list .item .comment { float:left; display:inline; clear:none; padding:0; margin:0; width:100%; }
+		#profile-newsfeed .list .item .comment a { float:none; display:inline; clear:none; padding:0; margin:0; }
 		#profile-newsfeed .list .item .actionowner-link { margin-right:5px; font-weight:bold; }
 		#profile-newsfeed .list .item .remove { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:0.6;}
 		#profile-newsfeed .list .item .remove:hover { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:1;}
