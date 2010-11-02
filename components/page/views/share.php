@@ -1,4 +1,6 @@
-<section class="page-share">
+<script type="text/javascript" src="/components/page/assets/javascript/share.js"></script>
+
+<section id="page-share">
 	<form method="post" class="post">
 		<input type="hidden" name="Task" value="Share">
 		<input type="hidden" name="Context" value="">

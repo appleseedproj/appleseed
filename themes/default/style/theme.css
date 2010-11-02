@@ -340,20 +340,20 @@
 		#profile-comments-two { float:left; position:relative; top:-24px; }
 		
 		/* page-share */
-		.page-share .post { float:left; width:98%; padding:1%; margin-bottom:20px; border:1px solid #c0d895; }
-		.page-share .post .content { width:590px; height:14px; padding:5px; }
-		.page-share .post .content:focus { width:590px; height:28px; padding:5px; }
-		.page-share .post .submit { float:right; }
+		#page-share .post { float:left; width:98%; padding:1%; margin-bottom:20px; border:1px solid #c0d895; }
+		#page-share .post .content { width:590px; height:14px; padding:5px; }
+		#page-share .post .content:focus { width:590px; height:28px; padding:5px; }
+		#page-share .post .submit { float:right; }
 		
-		.page-share .privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
-		.page-share .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
-		.page-share .privacy ul { list-style-type:none; clear:none; float:left; }
-		.page-share .privacy ul li { clear:none; float:left; margin-right:10px; }
-		.page-share .privacy label { clear:none; float:left; font-size:100%; margin:0; padding:0; width:auto; }
-		.page-share .privacy .everybody { font-style:italic; }
-		.page-share .privacy .nobody { font-style:italic; }
-		.page-share .privacy .friends { font-style:italic; }
-		.page-share .privacy input[type="checkbox"] { margin-top:1px; margin-right:5px; }
+		#page-share .privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
+		#page-share .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
+		#page-share .privacy ul { list-style-type:none; clear:none; float:left; }
+		#page-share .privacy ul li { clear:none; float:left; margin-right:10px; }
+		#page-share .privacy label { clear:none; float:left; font-size:100%; margin:0; padding:0; width:auto; }
+		#page-share .privacy .everybody { font-style:italic; }
+		#page-share .privacy .nobody { font-style:italic; }
+		#page-share .privacy .friends { font-style:italic; }
+		#page-share .privacy input[type="checkbox"] { margin-top:1px; margin-right:5px; }
 		
 		/* profile-page */
 		#profile-page .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:5px; margin-bottom:5px; width:100%; }
