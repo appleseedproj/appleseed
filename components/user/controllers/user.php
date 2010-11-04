@@ -35,19 +35,19 @@ class cUserUserController extends cController {
 		
 		$this->View = $this->GetView ( 'userlink' );
 		
-		$account = $pData['account'];
+		$request = $pData['request'];
 		
-		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
+		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
 		
-		if ( $accountDomain == ASD_DOMAIN ) {
-			$info = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', array ( 'account' => $account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account ) );
+		if ( $requestDomain == ASD_DOMAIN ) {
+			$info = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $request ) );
 			$this->View->Find ( '.userlink', 0 )->innertext = $info->fullname;
 		} else {
 			$this->View->Find ( '.userlink', 0 )->innertext = $account;
 		}
 		
 		$this->View->Find ( '.userlink', 0 )->rel = $account;
-		$this->View->Find ( '.userlink', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', array ( 'account' => $account, 'source' => ASD_DOMAIN ) );
+		$this->View->Find ( '.userlink', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', array ( 'account' => $request, 'source' => ASD_DOMAIN ) );
 		
 		$return = $this->View->Buffer();
 		

@@ -136,11 +136,11 @@ class cNewsfeedNewsfeedController extends cController {
 			list ( $ContextOwnerUsername, $ContextOwnerDomain ) = explode ( '@', $ContextOwner );
 			list ( $SubjectOwnerUsername, $SubjectOwnerDomain ) = explode ( '@', $SubjectOwner );
 			
-			$actionownerData = $this->Talk ( 'User', 'Link', array ( 'account' => $ActionOwner ) );
+			$actionownerData = $this->Talk ( 'User', 'Link', array ( 'request' => $ActionOwner ) );
 			$actionowner = $actionownerData['link'];
-			$contextownerData = $this->Talk ( 'User', 'Link', array ( 'account' => $ContextOwner ) );
+			$contextownerData = $this->Talk ( 'User', 'Link', array ( 'request' => $ContextOwner ) );
 			$contextowner = $contextownerData['link'];
-			$subjectownerData = $this->Talk ( 'User', 'Link', array ( 'account' => $SubjectOwner ) );
+			$subjectownerData = $this->Talk ( 'User', 'Link', array ( 'request' => $SubjectOwner ) );
 			$subjectowner = $subjectownerData['link'];
 			
 			switch ( $Context ) {
