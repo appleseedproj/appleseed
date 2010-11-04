@@ -43,11 +43,11 @@ class cUserUserController extends cController {
 			$info = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $request ) );
 			$this->View->Find ( '.userlink', 0 )->innertext = $info->fullname;
 		} else {
-			$this->View->Find ( '.userlink', 0 )->innertext = $account;
+			$this->View->Find ( '.userlink', 0 )->innertext = $request;
 		}
 		
-		$this->View->Find ( '.userlink', 0 )->rel = $account;
 		$this->View->Find ( '.userlink', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', array ( 'account' => $request, 'source' => ASD_DOMAIN ) );
+		$this->View->Find ( '.userlink', 0 )->rel = $request;
 		
 		$return = $this->View->Buffer();
 		
