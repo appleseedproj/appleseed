@@ -100,6 +100,11 @@ class cUser extends cComponent {
 		$this->Load ( 'Invites', null, 'AddInvites', $pData );
 	}
 	
+	public function Link ( $pData = null ) {
+		$return['link'] = $this->Load ( 'User', null, 'CreateUserLink', $pData );
+		return ( $return );
+	}
+	
 }
 
 /** User Authorization Class

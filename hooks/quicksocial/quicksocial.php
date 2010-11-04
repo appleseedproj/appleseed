@@ -460,6 +460,8 @@ class cQuicksocialHook extends cHook {
 		$source = $pData['source'];
 		$request = $pData['request'];
 		
+		if ( !$request ) return ( false );
+		
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $account );
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $request );
 		

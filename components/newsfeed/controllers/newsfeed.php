@@ -136,14 +136,13 @@ class cNewsfeedNewsfeedController extends cController {
 			list ( $ContextOwnerUsername, $ContextOwnerDomain ) = explode ( '@', $ContextOwner );
 			list ( $SubjectOwnerUsername, $SubjectOwnerDomain ) = explode ( '@', $SubjectOwner );
 			
-			// @todo Create a function to parse out a proper link.
-			$ActionOwnerLink = 'http://' . $ActionOwnerDomain . '/profile/' . $ActionOwnerUsername;
-			$ContextOwnerLink = 'http://' . $ContextOwnerDomain . '/profile/' . $ContextOwnerUsername;
-			$SubjectOwnerLink = 'http://' . $SubjectOwnerDomain . '/profile/' . $SubjectOwnerUsername;
-			$actionowner = '<a href="' . $ActionOwnerLink . '">' . $ActionOwner . '</a>';
-			$contextowner = '<a href="' . $ContextOwnerLink . '">' . $ContextOwner . '</a>';
-			$subjectowner = '<a href="' . $SubjectOwnerLink . '">' . $SubjectOwner . '</a>';
-					
+			$actionownerData = $this->Talk ( 'User', 'Link', array ( 'account' => $ActionOwner ) );
+			$actionowner = $actionownerData['link'];
+			$contextownerData = $this->Talk ( 'User', 'Link', array ( 'account' => $ContextOwner ) );
+			$contextowner = $contextownerData['link'];
+			$subjectownerData = $this->Talk ( 'User', 'Link', array ( 'account' => $SubjectOwner ) );
+			$subjectowner = $subjectownerData['link'];
+			
 			switch ( $Context ) {
 				case 'page':
 					if ( ( $ActionOwner == $this->_Focus->Account ) && ( $ActionOwner == $ContextOwner ) ) {
