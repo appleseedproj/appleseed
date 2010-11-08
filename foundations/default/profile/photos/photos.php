@@ -7,7 +7,7 @@
 	<meta charset="utf-8" />
 
 	<!-- Title -->
-	<title><?php echo __("Info"); ?></title>
+	<title><?php echo __("Photos"); ?></title>
 	
 	<!-- Links -->
     <?php $zApp->Theme->UseStyles (); ?>
@@ -72,7 +72,7 @@
 					</div>
 				</div>
 				<div id="appleseed-profile-content" class="grid_12 omega">
-					<?php $zApp->Components->Go ( "photos", "sets", "sets" ); ?>
+					<?php $zApp->Components->Go ( "photos", "photos", "photos" ); ?>
 				</div>
 			</div>
 		</div>
