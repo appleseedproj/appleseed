@@ -33,3 +33,7 @@ create table `#__Janitor` ( `Updated` datetime DEFAULT NULL ) ENGINE=MyISAM DEFA
 insert into `#__Janitor` ( `Updated` ) values ( NOW() );
 
 create table `#__NetworkCache` ( `Request` varchar(512) DEFAULT NULL, `Response` text, `Created` datetime DEFAULT NULL ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+create table `#__PhotoSets` ( `Set_PK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Name` char(128) DEFAULT NULL, `Directory` char(128) DEFAULT NULL, `Description` text, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Set_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+create table `#__Photos` ( `Photo_PK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Filename` char(128) DEFAULT NULL, `Description` text, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Photo_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
