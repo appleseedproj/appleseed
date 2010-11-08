@@ -1,0 +1,3 @@
+BACK_TO_PROFILE="&laquo; %userlink$s"
+BACK_TO_PHOTOSETS="&laquo; %userlink$s's Albums"
+BACK_TO_PHOTOSET="&laquo; %photosetlink$s"
