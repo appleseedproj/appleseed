@@ -267,6 +267,11 @@
 		/* profile-search */
 		#profile-search { float:left; position:relative; top:8px; text-align:right; }
 		
+		/* profile-photo */
+		#profile-photos  { }
+		#photos-navigation { float:left; font-weight:bold; position:relative; top:-18px; }
+		#photos-navigation a { background:none; padding:0; }
+		
 		/* profile-contact */
 		#profile-contact ul li { font-size:90%; list-style-type:none; margin:5px 0 5px 10px; padding:2px; }
 		#profile-contact ul li button { text-decoration:none; border:none; background:none no-repeat left center; }
