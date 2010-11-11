@@ -588,6 +588,13 @@ class cINSTALL {
   	
   	$return = mysql_get_client_info ();
   	
+  	// Required for development versions of mysql
+  	if ( strstr ( $return, 'mysqlnd' ) ) {
+  		list ( $info, $null ) = explode ( '-dev', $return );
+  		list ( $null, $info ) = explode ( 'mysqlnd ', $info );
+  		$return = $info;
+  	}
+  	
     return ($return);
   } // GetMysqlClientVersion
   
