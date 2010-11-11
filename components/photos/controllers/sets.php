@@ -31,11 +31,22 @@ class cPhotosSetsController extends cController {
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$this->Sets = $this->GetView ( $pView ); 
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		
-		$this->Sets->Display();
+		$this->View = $this->GetView ( $pView ); 
+		
+		$this->Model = $this->GetModel ( 'Sets' );
+		
+		$this->Model->Load ( $this->_Focus->Id );
+		
+		$this->_Prep();
+		
+		$this->View->Display();
 		
 		return ( true );
+	}
+	
+	private function _Prep ( ) {
 	}
 	
 }
