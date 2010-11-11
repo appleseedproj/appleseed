@@ -1,4 +1,4 @@
-Appleseed v0.7.7 Beta (Twelfth Release)
+Appleseed v0.7.8 Beta (Thirteenth Release)
 
 Nov 11 2010
 
