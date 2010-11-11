@@ -1,10 +1,33 @@
 RELEASE CHANGES
 
+-- 0.7.8 --
+
++ Refactored privacy controls
++ Page status updates
++ Federated newsfeeds
++ Change password function
++ Lighttpd rewrite rules
++ Default # of invites
++ Date formatting/translation
++ "Janitor" component for system maintenance
++ "Postal" component for email notifications
+
++ Bug fixes
+  - Login fails after logging out.
+  - Options breaks after saving
+  - Forgot Password Security Bug (hide email)
+  - Broken image links for icons
+  - Network data screws up page if html present
+  - Error reporting on remote logins	
+  - Check for function support in install script + initialize (json, curl, gd, mysql)
+  - Invite view of User component.
+  - Inserting content with $ in it into db
+
 -- 0.7.7 --
 
-Refactored Friends and Circle Management
++ Refactored Friends and Circle Management
     - QuickFriend protocol working
-UTF-8 Input Support
++ UTF-8 Input Support
 
 -- 0.7.6 --
 
