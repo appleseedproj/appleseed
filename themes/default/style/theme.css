@@ -267,10 +267,15 @@
 		/* profile-search */
 		#profile-search { float:left; position:relative; top:8px; text-align:right; }
 		
-		/* profile-photo */
+		/* profile-photos */
 		#profile-photos  { }
+		
 		#photos-navigation { float:left; font-weight:bold; position:relative; top:-18px; }
 		#photos-navigation a { background:none; padding:0; }
+		
+		#profile-photos .photosets a { background:none; padding:0; }
+		#profile-photos .photosets .item { list-style-type:none; }
+		#profile-photos .photosets .item .cover { float:left; width:160px; height:160px; border:1px; }
 		
 		/* profile-contact */
 		#profile-contact ul li { font-size:90%; list-style-type:none; margin:5px 0 5px 10px; padding:2px; }
