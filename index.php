@@ -61,10 +61,12 @@
   $gDOMAIN = ($gDOMAIN) ? $gDOMAIN : 'http://' . $_SERVER['HTTP_HOST'];
   $gUPGRADE = $_POST['gUPGRADE'];
   $gADMINUSER = ($_POST['gADMINUSER']) ? $_POST['gADMINUSER'] : 'admin';
+  $gADMINEMAIL = ($_POST['gADMINEMAIL']) ? $_POST['gADMINEMAIL'] : 'admin';
   $gADMINPASS = ($_POST['gADMINPASS']);
   $gADMINPASSCONFIRM = ($_POST['gADMINPASSCONFIRM']);
   
   $gADMINUSER = strtolower ( $gADMINUSER );
+  $gADMINEMAIL = strtolower ( $gADMINEMAIL );
   
   $gSTAMP = '_' . date ('mdy_His', strtotime ('now'));
   
@@ -1046,7 +1048,7 @@ class cINSTALL {
 	$reset_query = "UPDATE %s SET Email = '%s' WHERE userAuth_uID = 1";
 
 	$sql = sprintf ( $reset_query, $tablename, $pADMINEMAIL );
-
+	
     mysql_select_db ($gDATABASE);
     mysql_query ($sql);
     
@@ -1145,7 +1147,7 @@ class cINSTALL {
     if (!$this->ValidateForm()) return (FALSE);
     
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
-    global $gADMINUSER, $gADMINPASS, $gUPGRADE;
+    global $gADMINUSER, $gADMINPASS, $gADMINEMAIL, $gUPGRADE;
     
     if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.8', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
