@@ -57,6 +57,7 @@
 		label.error { float:left; width:auto; margin:5px 0; margin-left:41%; color:#bf4630; font-style:italic; font-size:90%; padding:0; clear:both; text-align:right; }
 		fieldset div select { padding:1px;}
 		textarea,input,select {  float:left; font-size:100%; width:200px; margin:4px 0 5px 0; color:#2a2a2a; }
+		textarea, input[type="text"] { border:1px solid #8a8a8a; }
 		input[type="submit"], input[type="cancel"], input[type="reset"], input[type="button"]  {  width:auto; margin:0 5px 0 0; }
 		label em { color:#bf4630; }
 		input:disabled { color:#3a3a3a; }
@@ -351,9 +352,10 @@
 		
 		/* page-share */
 		#page-share .post { float:left; width:98%; padding:1%; margin-bottom:20px; border:1px solid #c0d895; }
-		#page-share .post .content { width:590px; height:14px; padding:5px; }
-		#page-share .post .content:focus { width:590px; height:28px; padding:5px; }
-		#page-share .post .submit { float:right; }
+		#page-share .post textarea { width:590px; height:14px; padding:5px; }
+		#page-share .post textarea:focus { width:590px; height:28px; padding:5px; }
+		#page-share .post .link { width:590px; height:14px; padding:5px; }
+		#page-share .post .submit { float:right; margin-top:5px; }
 		
 		#page-share .privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
 		#page-share .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
@@ -364,6 +366,27 @@
 		#page-share .privacy .nobody { font-style:italic; }
 		#page-share .privacy .friends { font-style:italic; }
 		#page-share .privacy input[type="checkbox"] { margin-top:1px; margin-right:5px; }
+		
+		#page-share .share-tabs { float:left; clear:both; width:100%; }
+		#page-share .share-tabs li { position:relative; top:4px; list-style-type:none; float:left; clear:none; margin-right:5px; padding:0px 5px 0 4px; border:1px solid #f1ffd6; border-bottom:none; }
+		#page-share .share-tabs .ui-tabs-selected { border:1px solid #c0d895; border-bottom:none; }
+		#page-share .share-tabs .ui-tabs-selected a { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -45px; }
+		#page-share .share-tabs a { clear:none; font-size:90%; }
+		
+		#page-share .loading { float:left; clear:both; width:100%; display:none; }
+		
+		#page-share .attach { float:left; clear:both; width:100%; display:none; }
+		#page-share .attach .thumb { list-style-type:none; }
+		#page-share .attach .thumbnail { float:left; height:64px; width:64px; background-color:#c0d895; display:none; }
+		#page-share .attach .selected { display:block; }
+		#page-share .attach .info { float:left; clear:none; width:78%; min-height:62px; margin:0; margin-left:5px; }
+		#page-share .attach .title { float:left; clear:both; font-weight:bold; background:none; margin:0; border:none; width:100%; }
+		#page-share .attach .description { clear:both; float:left; background:none; border:none; width:100%; min-height:44px; padding:0; margin:4px 0 0 0; }
+		#page-share .attach .description:focus { clear:both; float:left; background:none; border:none; width:500px; min-height:44px; padding:0; margin:4px 0 0 0; }
+		
+		#page-share .attach .thumbs-scroll { clear:both; float:left; margin-top:2px; }
+		#page-share .attach .thumbs-scroll span { float:left; clear:none; padding:1px 5px; font-size:100%; margin:2px 26px 0 0; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		#page-share .attach .thumbs-scroll span:hover { cursor:pointer; }
 		
 		/* profile-page */
 		#profile-page .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:10px; margin-bottom:20px; width:100%; }
