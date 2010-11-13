@@ -21,8 +21,8 @@
 				</ul>
 				<input type="hidden" name="LinkThumb" />
 				<span class="info">
-					<input name="LinkTitle" type="text" class="title" value="This is a title" />
-					<textarea name="LinkDescription" class="description" />Driven by Lisa Jackson, the EPA continues to take historic steps forward in leading America toward a cleaner and more sustainable future, including the recent release of industrial emissions guidelines, a first for the country. But resounding victories for the GOP in last week's elections have broug</textarea>
+					<input name="LinkTitle" type="text" class="title" value="" />
+					<textarea name="LinkDescription" class="description" /></textarea>
 				</span>
 				<span class="thumbs-scroll">
 					<button name="scroll-previous" class="scroll-previous">Previous Thumbnail</button>

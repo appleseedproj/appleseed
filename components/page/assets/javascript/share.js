@@ -60,6 +60,19 @@ jLoader.Page_share.Textarea.OnKeyUp = function ( pElement, pParent ) {
 	jLoader.Page_share.Textarea.CheckForLink ( pElement, pParent );
 }
 jLoader.Page_share.Textarea.OnKeyDown = function ( pElement, pParent ) { 
+	
+	element = $(pElement);
+	
+	if ( element.hasClass ( 'description' ) ) {
+		element.keypress(function(e) {
+  	  		if ( (e.which == 13) ) {
+    			element.blur();
+    		} else {
+    			return ( true );
+    		}
+    	});
+	}
+
 	jLoader.Page_share.Textarea.CheckForLink ( pElement, pParent );
 }
 jLoader.Page_share.Textarea.OnChange = function ( pElement, pParent ) { 
@@ -83,7 +96,17 @@ jLoader.Page_share.Text.OnFocus = function ( pElement, pParent ) {
 	return ( true );
 }
 
-jLoader.Page_share.Text.OnBlur = function ( pElement, pParent ) { 
+jLoader.Page_share.Text.OnKeyDown = function ( pElement, pParent ) { 
+	element = $(pElement);
+	
+    element.keypress(function(e) {
+    	if (e.which == 13) {
+    		element.blur();
+    	}
+    });
+}
+
+jLoader.Page_share.Text.OnBlur = function ( pElement, pParent ) {
 	
 	element = $(pElement);
 	
@@ -104,8 +127,12 @@ jLoader.Page_share.Text.OnBlur = function ( pElement, pParent ) {
 	    
 	    var jsonUrl = "/api/page/scrape?url=" + element.val();
 	    $.getJSON(jsonUrl, function(data) {
-	    	$('#page-share .attach .title').val( data.title );
-	    	$('#page-share .attach .description').val( data.description );
+	    	
+	    	// Necessary for converting html entities on input elements.
+	    	var title = $('<div />').html(data.title).text();
+	    	$('#page-share .attach .title').val ( title );
+	    	
+	    	$('#page-share .attach .description').html ( data.description );
 	    	
 	    	if ( typeof item == 'undefined' ) item = $('#page-share .attach .thumb').clone();
     		$('#page-share .attach .thumbs').empty();
