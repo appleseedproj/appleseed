@@ -1,2 +1,1 @@
-<?php $zApp->Components->Go ( "interface" ); ?>
-
+<?php $zApp->Components->Go ( "interface" ); ?> 

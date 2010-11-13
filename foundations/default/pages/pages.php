@@ -83,3 +83,5 @@
         
 </body>
 </html>
+
+<?php $zApp->Components->Go ( "system", "system", null, "data" ); ?>
