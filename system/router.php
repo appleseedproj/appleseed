@@ -51,6 +51,11 @@ class cRouter extends cBase {
 		
 		$request = strtolower ( ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' ) );
 		
+		// If GET data is in the request, then remove it.
+		if ( strstr ( $request, '?' ) ) {
+			list ( $request, $null ) = explode ( '?', $request );
+		}
+		
 		list ( $admin, $null ) = explode ( '/', $request, 2);
 		
 		if ( $admin == "admin" ) {
