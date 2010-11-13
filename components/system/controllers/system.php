@@ -48,5 +48,12 @@ class cSystemSystemController extends cController {
 		parent::Display( $pView, $pData );
 		return ( true );
 	}
+	
+	function Data ( $pView = null, $pData = array ( ) ) {
+		
+		$this->GetSys ( 'Event' )->Trigger ( 'Display', 'Language', 'Data' );
+		
+		return ( true );
+	}
 
 }

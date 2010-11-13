@@ -72,6 +72,19 @@ class cPageShareController extends cController {
 		$Content = $this->GetSys ( 'Request' )->Get ( 'Content' );
 		$Privacy = $this->GetSys ( 'Request' )->Get ( 'Privacy' );
 		
+		$Action = 'posted';
+		$Type = 'Post';
+		
+		$Link = $this->GetSys ( 'Request' )->Get ( 'Link' );
+		$LinkThumb = $this->GetSys ( 'Request' )->Get ( 'LinkThumb' );
+		$LinkTitle = $this->GetSys ( 'Request' )->Get ( 'LinkTitle' );
+		$LinkDescription = $this->GetSys ( 'Request' )->Get ( 'LinkDescription' );
+		
+		if ( $Link ) {
+			$Action = 'posted a link';
+			$Type = 'Link';
+		}
+		
 		$friends = $this->Talk ( 'Friends', 'Friends' );
 		
 		$Current = false;
@@ -83,11 +96,11 @@ class cPageShareController extends cController {
 		
 		foreach ( $friends as $f => $friend ) {
 			if ( $friend == $this->_Current->Account ) continue;
-			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => 'Post', 'Identifier' => $Identifier ) );
+			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => $Type, 'Identifier' => $Identifier ) );
 			if ( !$Access ) unset ( $friends[$f] );
 		}
 		
-		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Current->Account, 'Action' => 'posted', 'ContextOwner' => $this->_Focus->Account, 'Context' => 'page', 'Comment' => $Content, 'Identifier' => $Identifier );
+		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Current->Account, 'Action' => $Action, 'ContextOwner' => $this->_Focus->Account, 'Context' => 'page', 'Comment' => $Content, 'Identifier' => $Identifier );
 		$this->Talk ( 'Newsfeed', 'Notify', $notifyData );
 		
 		// Don't send an email if we're posting on our own page.

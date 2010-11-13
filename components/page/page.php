@@ -168,4 +168,121 @@ class cPage extends cComponent {
 		return ( false );
 	}
 	
+	public function Scrape ( $pData = null ) {
+		
+		$return = array ();
+		
+		$url = $pData['url'];
+		
+		$components = parse_url ( $url );
+		
+		$host = $components['host'];
+		if ( !$host ) {
+			$host = 'http';
+			$url = 'http://' . $url;
+		}
+		
+		$scheme = $components['scheme'];
+		
+		$directory = md5 ( $url );
+		
+		$buffer = $this->GetSys ( 'Communication' )->Retrieve ( $url );
+		
+		$this->GetSys ( 'HTML' )->Load ( $buffer );
+		
+		// Look for og: metadata
+		$title = $this->GetSys ('HTML' )->Find ( 'meta[property=og:title]', 0 )->content;
+		$image = $this->GetSys ('HTML' )->Find ( 'meta[property=og:image]', 0 )->content;
+		
+		if ( $image ) $return['images'][] = $this->_Thumbnail ( $image, md5($image), $directory );
+		
+		if ( !$title ) $title = $this->GetSys ( 'HTML' )->Find ( 'title', 0 )->plaintext;
+		
+		$paragraphs = $this->GetSys ( 'HTML' )->Find ( 'p' );
+		foreach ( $paragraphs as $p => $paragraph ) {
+			if ( strlen ( $paragraph->plaintext ) > 100 ) {
+				$description = $paragraph->plaintext;
+				break;
+			}
+		}
+		
+		$return['source'] = $url;	
+		$return['title'] = $title;	
+		$return['description'] = ltrim ( substr ( $description, 0, 512 ) );
+		
+		$images = $this->GetSys ( 'HTML' )->Find ( 'img' );
+		
+		foreach ( $images as $i => $img ) {
+			
+			// Check if src begins with a / and is an absolute url
+			$src = $img->src;
+			
+			// Skip theme and template images
+			if ( strstr ( $src, '/themes/' ) ) continue;
+			if ( strstr ( $src, '/template/' ) ) continue;
+			
+			// Only load the first 5 images
+			
+			if ( substr ( $src, 0, 1 ) == '/' ) {
+				$imgLocation = $scheme . '://' . $host . $src;
+			} else if ( substr ( $src, 0, 4 ) == 'http' ) {
+				$imgLocation = $src;
+			} else {
+				$imgLocation = $url . '/' . $src;
+			}
+			
+			$filename = md5 ( $src );
+			
+			$thumbLocation = $this->_Thumbnail ( $imgLocation, $filename, $directory );
+			
+			if ( $thumbLocation ) $return['images'][] = $thumbLocation;
+			
+		}
+		
+		return ( $return );
+	}
+	
+	private function _Thumbnail ( $pLocation, $pFilename, $pDirectory ) {
+		
+		$location = "/_storage/components/page/thumbnails/" . $pDirectory . "/" . $pFilename;
+		
+ 		$exists = $this->GetSys ( 'Storage' )->Exists ( 'page', 'thumbnails', $pDirectory, $pFilename, $overwrite = false );
+ 		
+ 		if ( $exists ) {
+ 			$im = imagecreatefromjpeg ( ASD_PATH . $location );
+ 				
+			$x = imagesx ( $im ); $y = imagesy ( $im );
+			if ( $x < 64 || $y < 64 ) return ( false );
+				
+ 			return ( $location );
+ 		}
+ 		
+		$imgBuffer = $this->GetSys ( 'Communication' )->Retrieve ( $pLocation );
+		
+	 	$im = imagecreatefromstring($imgBuffer);
+	 	
+	 	$x = imagesx ( $im );
+	 	$y = imagesy ( $im );
+	 	
+	 	if ( $x < 64 || $y < 64 ) {
+	 		// Resize down to 1px as a placeholder, so we don't keep retrieving the remote file.
+	 		$resized = $this->GetSys ( 'Image' )->ResizeAndCrop ( $im, 1, 1 );
+ 			$saved = $this->GetSys ( 'Storage' )->SaveImage ( $resized, 'page', 'thumbnails', $pDirectory, $pFilename, $overwrite = false );
+ 		
+ 			return ( false );
+	 	}
+	 	
+		// Create the local thumbnail.
+	 	$resized = $this->GetSys ( 'Image' )->ResizeAndCrop ( $im, 64, 64 );
+ 		$saved = $this->GetSys ( 'Storage' )->SaveImage ( $resized, 'page', 'thumbnails', $pDirectory, $pFilename, $overwrite = false );
+ 		
+ 		imagedestroy ( $im );
+ 		imagedestroy ( $resized );
+ 			
+ 		if ( $saved )
+ 			return ( $location );
+ 		else
+ 			return ( false );
+	}
+	
 }

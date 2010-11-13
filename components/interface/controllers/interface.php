@@ -33,6 +33,8 @@ class cInterfaceInterfaceController extends cController {
 		$Method = $this->GetSys ( 'Request' )->Get ( 'Method' );
 		$Component = ucwords ( $this->GetSys ( 'Request' )->Get ( 'Component' ) );
 		
+		$Data = $this->GetSys ( 'Request' )->Get ();
+		
 		$Components = $this->GetSys ( 'Components' );
 		$ComponentsList = $Components->Get ( 'Config' )->Get ( 'Components' );
 		
@@ -48,8 +50,6 @@ class cInterfaceInterfaceController extends cController {
 		// Set the source
 		$Components->$Component->Set ( 'Source', 'Client' );
 		
-		$Data = $this->GetSys ( 'Request' )->Get ();
-		
 		unset ( $Data['method'] );
 		unset ( $Data['component'] );
 		
@@ -59,6 +59,7 @@ class cInterfaceInterfaceController extends cController {
 			return ( $this->_Error ( "Invalid Return" ) );
 		}
 		
+		header('Content-type: application/json');
 		echo json_encode ( $result );
 		
 		return ( true );
