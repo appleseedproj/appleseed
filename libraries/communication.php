@@ -32,10 +32,11 @@ class cCommunication {
 	 	
 	 	$pLocation = str_replace ( ' ', '%20', $pLocation );
 	 	
-		$curl_handle=curl_init();
-		curl_setopt($curl_handle,CURLOPT_URL, $pLocation);
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
-		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+		$curl_handle = curl_init();
+		curl_setopt ( $curl_handle, CURLOPT_URL, $pLocation);
+		curl_setopt ( $curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
+		curl_setopt ( $curl_handle, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ( $curl_handle, CURLOPT_FOLLOWLOCATION, true);
 		
 		$buffer = curl_exec($curl_handle);
 		
