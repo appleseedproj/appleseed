@@ -66,7 +66,7 @@ class cLanguagesHook extends cHook {
 		
 	}
 	
-	public function OnSystemEnd ( $pData = null ) {
+	public function DisplayLanguageData ( $pData = null ) {
 		
 		echo "\n";
 		echo '<dfn id="appleseed-language" style="display:none; width:1px; height:1px;">' . "\n\n";
@@ -86,4 +86,4 @@ class cLanguagesHook extends cHook {
 		return ( false );
 	}
 	
-}
+} 
