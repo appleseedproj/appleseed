@@ -184,7 +184,7 @@ class cPage extends cComponent {
 		
 		$scheme = $components['scheme'];
 		
-		$directory = md5 ( $url );
+		$directory = md5 ( rtrim ($url, '/' ) );
 		
 		$buffer = $this->GetSys ( 'Communication' )->Retrieve ( $url );
 		
