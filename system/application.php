@@ -111,6 +111,9 @@ class cApplication extends cBase {
 		
 		// Dynamically loaded library classes.	
 		$this->AddSys ( "Session",  ASD_PATH . DS . 'libraries' . DS . 'session.php' );
+		$this->AddSys ( "Communication",  ASD_PATH . DS . 'libraries' . DS . 'communication.php' );
+		$this->AddSys ( "Image",  ASD_PATH . DS . 'libraries' . DS . 'image.php' );
+		$this->AddSys ( "Storage",  ASD_PATH . DS . 'libraries' . DS . 'storage.php' );
 		$this->AddSys ( "Validation",  ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
 		$this->AddSys ( "Request",  ASD_PATH . DS . 'libraries' . DS . 'request.php' );
 		$this->AddSys ( "HTML",  ASD_PATH . DS . 'libraries' . DS . 'markup.php' );

@@ -20,12 +20,27 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cCommunication {
 
-        /**
-         * Constructor
-         *
-         * @access  public
-         */
-        public function __construct ( ) {       
-        }
-
+	 /**
+	  * Constructor
+	  *
+	  * @access  public
+	  */
+	 public function __construct ( ) {       
+	 }
+	 
+	 public function Retrieve ( $pLocation ) {
+	 	
+	 	$pLocation = str_replace ( ' ', '%20', $pLocation );
+	 	
+		$curl_handle=curl_init();
+		curl_setopt($curl_handle,CURLOPT_URL, $pLocation);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+		
+		$buffer = curl_exec($curl_handle);
+		
+		curl_close($curl_handle);
+		
+		return ( $buffer );
+	}
 }

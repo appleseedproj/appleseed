@@ -32,7 +32,6 @@ class cRequest {
 	public function __construct ( ) {       
 		eval ( GLOBALS );
 		
-		
 		$purifier = $zApp->GetSys ( "Purifier" );
 		
 		foreach ( $_REQUEST as $key => $value ) {
