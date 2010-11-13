@@ -292,7 +292,7 @@ class cQuicksocialHook extends cHook {
 				
 					if ( is_writable ( $location ) ) {
 						$icon = imagecreatefromjpeg ( $legacy_file );
-						$new_icon = $this->_ResizeAndCrop ( $icon, $width, $height );
+						$new_icon = $this->GetSys ( 'Image' )->ResizeAndCrop ( $icon, $width, $height );
 						imagejpeg ( $new_icon, $file );
 						chmod ( $file, 0777 );
 					}
@@ -802,7 +802,7 @@ class cQuicksocialHook extends cHook {
 			
 				if ( is_writable ( $location ) ) {
 					$icon = imagecreatefromjpeg ( $legacy_file );
-					$new_icon = $this->_ResizeAndCrop ( $icon, $width, $height );
+					$new_icon = $this->GetSys ( 'Image' )->ResizeAndCrop ( $icon, $width, $height );
 					$icon = $new_icon;
 					imagejpeg ( $new_icon, $file );
 					chmod ( $file, 0777 );
@@ -892,51 +892,6 @@ class cQuicksocialHook extends cHook {
 		
 		return ( $return );
 	}
-	
-	private function _ResizeAndCrop ($pResource, $pNewWidth, $pNewHeight ) {
-		
-		$originalWidth = imagesx ( $pResource  );
-		$originalHeight = imagesy ( $pResource  );
-		
-		if ( $originalHeight == $originalWidth ) {
-			// Proportion is the same
-			$newwidth = $pNewWidth; $newheight = $pNewHeight;
-			$startx = 0; $starty = 0;
-			$endx = $pNewWidth; $endy = $pNewHeight;
-		} elseif ( $originalHeight > $originalWidth ) {
-			// Proportion is vertical
-			$newwidth = $pNewWidth;
-			$newheight = ( $pNewWidth / $originalWidth ) * $originalHeight;
-			$newheight = floor ( $newheight );
-			$startx = 0; $starty = floor( ( ( $newheight - $pNewHeight ) / 2 ) );
-			$endy = $pNewWidth; $endy = $newheight - ceil ( ( ( $newheight - $pNewHeight ) / 2 ) );
-		} else {
-			// Proportion is horizontal
-			$newwidth = ( $pNewHeight / $originalHeight ) * $originalWidth;
-			$newwidth = floor ( $newwidth );
-			$newheight = $pNewHeight;
-			$startx = floor ( ( ( $newwidth - $pNewWidth ) / 2 ) );  $starty = 0;
-			$endx = $newwidth - ceil ( ( ( $newwidth - $pNewWidth ) / 2 ) );  $endy = $pNewHeight;
-		} // if
-		
-		/* echo $originalWidth, '<br />'; echo $originalHeight, '<br /><br />'; echo $pNewWidth, '<br />'; echo $pNewHeight, '<br /><br />'; echo $newwidth, '<br />'; echo $newheight, '<br /><br />'; echo $startx, '<br />'; echo $starty, '<br />'; echo $endx, '<br />'; echo $endy, '<br />'; exit; */
-		  
-		$src_img = imagecreatetruecolor ( $originalWidth, $originalHeight );
-		imagecopy( $src_img, $pResource, 0, 0, 0, 0, $originalWidth, $originalHeight );
-
-		$intermediary = imagecreatetruecolor ( $newwidth, $newheight );
-		$result = imagecreatetruecolor ( $pNewWidth, $pNewHeight );
-
-		// Resize image.
-		imagecopyresampled ( $intermediary, $src_img, 0, 0, 0, 0, $newwidth, $newheight, $originalWidth, $originalHeight );
-		
-		// Crop image.
-		imagecopy ( $result, $intermediary, 0, 0, $startx, $starty, $pNewWidth, $pNewHeight );
-
-		imagedestroy ( $intermediary );
-		
-		return ( $result );
-	} // ResizeAndCrop
 	
 	public function _Redirect ( $pAction, $pAccount, $pRequest = null, $pSource = null ) {
 		
