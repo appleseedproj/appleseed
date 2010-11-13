@@ -25,8 +25,8 @@
 					<textarea name="LinkDescription" class="description" />Driven by Lisa Jackson, the EPA continues to take historic steps forward in leading America toward a cleaner and more sustainable future, including the recent release of industrial emissions guidelines, a first for the country. But resounding victories for the GOP in last week's elections have broug</textarea>
 				</span>
 				<span class="thumbs-scroll">
-					<span name="scroll-previous" class="scroll-previous">Previous Thumbnail</span>
-					<span name="scroll-next" class="scroll-next">Next Thumbnail</span>
+					<button name="scroll-previous" class="scroll-previous">Previous Thumbnail</button>
+					<button name="scroll-next" class="scroll-next">Next Thumbnail</button>
 				</span>
 			</div>
 			<textarea placeholder="Enter Link Content" class="link-content" name="LinkContent"></textarea>
