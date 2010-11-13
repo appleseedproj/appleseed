@@ -12,9 +12,9 @@ jLoader.Page_share = function ( ) {
     });
 }
 
-jLoader.Page_share.Span = function ( ) { }
+jLoader.Page_share.Button = function ( ) { }
 
-jLoader.Page_share.Span.OnClick = function ( pElement, pParent ) { 
+jLoader.Page_share.Button.OnClick = function ( pElement, pParent ) { 
 	
 	element = $(pElement);
 	parent = element.parent();
@@ -39,7 +39,7 @@ jLoader.Page_share.Span.OnClick = function ( pElement, pParent ) {
 		$('#page-share input[name=LinkThumb]').val ( current.attr ('src') );
 	}
 	
-	return ( true );
+	return ( false );
 }
 
 jLoader.Page_share.Textarea = function ( ) { }
@@ -47,7 +47,7 @@ jLoader.Page_share.Textarea.CheckForLink = function ( pElement, pParent ) {
 	
 	element = $(pElement);
 	
-	if ( element.val().toString().search( new RegExp( /^http/i ) ) == 0 ) {
+	if ( element.val().toString().search( new RegExp( /^http:\/\//i ) ) == 0 ) {
 		$('#page-share').tabs('select', 1);
 		$('#page-share .link').val ( element.val() );
 		element.val("");
