@@ -21,8 +21,8 @@
 				</ul>
 				<input type="hidden" name="LinkThumb" />
 				<span class="info">
-					<input name="LinkTitle" type="text" class="title" value="" />
-					<textarea name="LinkDescription" class="description" /></textarea>
+					<input placeholder="Enter A Link Title" name="LinkTitle" type="text" class="title" value="" />
+					<textarea placeholder="Enter A Link Description" name="LinkDescription" class="description" /></textarea>
 				</span>
 				<span class="thumbs-scroll">
 					<button name="scroll-previous" class="scroll-previous">Previous Thumbnail</button>

@@ -17,3 +17,5 @@ NEXT_THUMBNAIL="&raquo;"
 
 ENTER_A_LINK_URL="http://"
 ENTER_LINK_CONTENT="Comment on this link..."
+ENTER_A_LINK_TITLE="Title..."
+ENTER_A_LINK_DESCRIPTION="Description..."
