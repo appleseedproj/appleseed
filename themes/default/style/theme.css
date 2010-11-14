@@ -380,9 +380,10 @@
 		#page-share .attach .thumbnail { float:left; height:64px; width:64px; background-color:#c0d895; display:none; }
 		#page-share .attach .selected { display:block; }
 		#page-share .attach .info { float:left; clear:none; width:78%; min-height:62px; margin:0; margin-left:5px; }
-		#page-share .attach .title { float:left; clear:both; font-weight:bold; background:none; margin:0; border:none; width:100%; }
-		#page-share .attach .description { clear:both; float:left; background:none; border:none; width:100%; min-height:44px; padding:0; margin:4px 0 0 0; }
-		#page-share .attach .description:focus { width:100%; padding:0; margin:4px 0 0 0; }
+		#page-share .attach .title { float:left; clear:both; font-weight:bold; background:none; margin:0; width:100%; border:1px solid #f1ffa6; }
+		#page-share .attach .description { clear:both; float:left; background:none; border:1px solid #f1ffa6; width:100%; min-height:44px; padding:0; margin:4px 0 0 0; }
+		#page-share .attach .description:focus { width:100%; padding:0; margin:4px 0 0 0; border:1px solid #c0d895; outline:none; }
+		#page-share .attach .title:focus { border:1px solid #c0d895; outline:none; }
 		
 		#page-share .attach .thumbs-scroll { clear:both; float:left; margin-top:2px; }
 		#page-share .attach .thumbs-scroll button { float:left; clear:none; padding:1px 5px; font-size:100%; margin:2px 26px 0 0; }
