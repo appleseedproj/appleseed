@@ -58,12 +58,14 @@ jLoader.Page_share.Textarea.CheckForLink = function ( pElement, pParent ) {
 	
 	element = $(pElement);
 	
-	if ( element.val().toString().search( new RegExp( /^http:\/\//i ) ) == 0 ) {
-		$('#page-share').tabs('select', 1);
-		$('#page-share .link').val ( element.val() );
-		element.val("");
-		$('#page-share .link').blur();
-		$('#page-share .link-content').focus();
+	if ( element.hasClass ( 'content' ) ) {
+		if ( element.val().toString().search( new RegExp( /^http:\/\//i ) ) == 0 ) {
+			$('#page-share').tabs('select', 1);
+			$('#page-share .link').val ( element.val() );
+			element.val("");
+			$('#page-share .link').blur();
+			$('#page-share .link-content').focus();
+		}
 	}
 	
 }
