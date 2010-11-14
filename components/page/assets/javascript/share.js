@@ -10,6 +10,17 @@ jLoader.Page_share = function ( ) {
         return false;
       }
     });
+    
+    // Capture a paste event, and load
+    $("#page-share .link").bind('paste', function(e) {
+    	pElement = $("#page-share .link").get(0);
+    	currentLink = undefined;
+    	setTimeout(function() {
+    		jLoader.Page_share.Text.OnBlur( pElement );
+    		currentLink = $(pElement).val();
+        }, 0);
+    });
+    
 }
 
 jLoader.Page_share.Button = function ( ) { }
@@ -57,6 +68,7 @@ jLoader.Page_share.Textarea.CheckForLink = function ( pElement, pParent ) {
 	
 }
 jLoader.Page_share.Textarea.OnKeyUp = function ( pElement, pParent ) { 
+	
 	jLoader.Page_share.Textarea.CheckForLink ( pElement, pParent );
 }
 jLoader.Page_share.Textarea.OnKeyDown = function ( pElement, pParent ) { 
@@ -127,6 +139,11 @@ jLoader.Page_share.Text.OnBlur = function ( pElement, pParent ) {
 	    
 	    var jsonUrl = "/api/page/scrape?url=" + element.val();
 	    $.getJSON(jsonUrl, function(data) {
+	    	
+	    	if ( ( !data.title ) && ( !data.description ) ) {
+	    		$('#page-share .loading').hide();
+	    		return ( false );
+	    	}
 	    	
 	    	// Necessary for converting html entities on input elements.
 	    	var title = $('<div />').html(data.title).text();

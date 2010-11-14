@@ -382,7 +382,7 @@
 		#page-share .attach .info { float:left; clear:none; width:78%; min-height:62px; margin:0; margin-left:5px; }
 		#page-share .attach .title { float:left; clear:both; font-weight:bold; background:none; margin:0; border:none; width:100%; }
 		#page-share .attach .description { clear:both; float:left; background:none; border:none; width:100%; min-height:44px; padding:0; margin:4px 0 0 0; }
-		#page-share .attach .description:focus { clear:both; float:left; background:none; border:none; width:500px; min-height:44px; padding:0; margin:4px 0 0 0; }
+		#page-share .attach .description:focus { width:100%; padding:0; margin:4px 0 0 0; }
 		
 		#page-share .attach .thumbs-scroll { clear:both; float:left; margin-top:2px; }
 		#page-share .attach .thumbs-scroll button { float:left; clear:none; padding:1px 5px; font-size:100%; margin:2px 26px 0 0; }
