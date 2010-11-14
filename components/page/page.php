@@ -201,7 +201,7 @@ class cPage extends cComponent {
 		$paragraphs = $this->GetSys ( 'HTML' )->Find ( 'p' );
 		foreach ( $paragraphs as $p => $paragraph ) {
 			if ( strlen ( $paragraph->plaintext ) > 100 ) {
-				$description = $paragraph->plaintext;
+				$description = str_replace ( "\n", " ", $paragraph->plaintext );
 				break;
 			}
 		}
