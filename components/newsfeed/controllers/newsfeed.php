@@ -56,6 +56,11 @@ class cNewsfeedNewsfeedController extends cController {
 		
 		$friendsInCircle = $this->Talk ( 'Friends', 'FriendsInCircle', array ( 'Circle' => $Circle ) );
 		
+		if ( ( $Circle ) and ( !$friendsInCircle ) ) {
+			$this->View->Find ( '.list .item', 0)->outertext = '';
+			return ( false );
+		}
+		
 		$this->Model->Incoming ( $this->_Focus->Id, $friendsInCircle );
 		
 		$li = $this->View->Find ( '.list .item', 0);
