@@ -1,4 +1,3 @@
-
 		/*
 			#406300 - dark green
 			#80af1f - green
@@ -373,7 +372,7 @@
 		#page-share .share-tabs .ui-tabs-selected a { background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -45px; }
 		#page-share .share-tabs a { clear:none; font-size:90%; }
 		
-		#page-share .loading { float:left; clear:both; width:100%; display:none; }
+		#page-share .loading { float:left; clear:both; display:none; text-indent: -100em; overflow: hidden; background: url(/themes/default/images/throbber.gif) no-repeat; height:16px; width:100%; }
 		
 		#page-share .attach { float:left; clear:both; width:100%; display:none; }
 		#page-share .attach .thumb { list-style-type:none; }
