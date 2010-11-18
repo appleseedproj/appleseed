@@ -74,8 +74,8 @@ class cNewsfeedMenuController extends cController {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			$row->Find ( '.link', 0 )->innertext = $circle;
-			$row->Find ( '.link', 0 )->href = '/profile/' . $this->_Current->Username . '/news/' . $circle;
-			if ( $Current == $circle ) $row->Find ( '.item', 0 )->class .= ' selected ';
+			$row->Find ( '.link', 0 )->href = '/profile/' . $this->_Current->Username . '/news/' . urlencode ( str_replace ( ' ', '-', $circle ) );
+			if ( $Current == strtolower ( $circle ) ) $row->Find ( '.item', 0 )->class .= ' selected ';
 		    $li->innertext .= $row->outertext;
 		    unset ( $row );
 		}
