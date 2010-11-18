@@ -425,6 +425,12 @@
 		#profile-newsfeed .list .item.friends .actions { display:none; }
 		#profile-newsfeed .list .item.friends .content { height:auto; min-height:0; }
 		
+		#newsfeed-menu { position:relative; top:100px; }
+		#newsfeed-menu li { list-style-type:none; padding:3px; padding-left:20px; }
+		#newsfeed-menu li.selected { list-style-type:none; background-color:#c0d895; color:#406300; }
+		#newsfeed-menu li a { background:none; padding:0; }
+		#newsfeed-menu .add { background:none; padding:0; float:right; margin-top:20px; font-size:90%; }
+		
 		/* 404 */
 		#appleseed-404 { float:left; background-color:#f1fed5; min-height:840px; }
 		#appleseed-404-menu { height:80px; background-color:#c0d895; border-bottom:1px solid #80af1f; }

@@ -67,21 +67,7 @@
        
 			<div id="appleseed-profile-main" class="grid_16">
 				<div id="appleseed-profile-info" class="grid_4 alpha">
-					<div id="profile-photo">
-					  	<?php $zApp->Components->Go ( "photos", "profile", "profile" ); ?>
-					</div>
-					<div id="profile-contact">
-					  	<?php $zApp->Components->Go ( "profile", "contact", "contact" ); ?>
-					</div>
-					<div id="profile-summary">
-					  	<?php $zApp->Components->Go ( "profile", "summary", "summary" ); ?>	
-					</div>
-					<div id="profile-invites">
-					  	<?php $zApp->Components->Go ( "user", "invites", "invites" ); ?>	 
-					</div>
-					<div id="profile-mutual">
-					  	<?php $zApp->Components->Go ( "friends", "mutual", "summary" ); ?>	 
-					</div>
+					<?php $zApp->Components->Go ( "newsfeed", "menu", "menu" ); ?>	 
 				</div>
 				<div id="appleseed-profile-content" class="grid_12 omega">
 					<?php $zApp->Components->Go ( "page", "share" ); ?>

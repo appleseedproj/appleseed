@@ -104,6 +104,40 @@ class cFriends extends cComponent {
 		return ( $return );
 	}
 	
+	public function FriendsInCircle ( $pData = null ) {
+		
+		$Target = $pData['Target'];
+		$Circle = $pData['Circle'];
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( !$Target ) $Target = $this->_Focus->Id;
+		if ( !$Circle ) return ( false );
+		
+		include_once ( ASD_PATH . '/components/friends/models/circles.php');
+		$this->Circles = new cFriendsCirclesModel();
+		
+		if ( !$this->Circles->Load ( $this->_Focus->Id, $Circle ) ) {
+			return ( false );
+		}
+		
+		include_once ( ASD_PATH . '/components/friends/models/friends.php');
+		$this->_Model = new cFriendsModel();
+		
+		$return = array();
+		$this->_Model->RetrieveFriends ( $Target );
+		$this->_Model->RetrieveCircle ( $Target, $this->Circles->Get ( 'tID' ) );
+		
+		while ( $this->_Model->Fetch() ) {
+			$return[] = $this->_Model->Get ( 'Username' ) . '@' . $this->_Model->Get ( 'Domain' );
+		}
+		
+		return ( $return );
+	}
+	
 	public function NotifyAdd ( $pData = null ) {
 		$this->Load ( 'Friends', null, 'NotifyAdd', $pData );
 		

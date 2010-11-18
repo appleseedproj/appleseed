@@ -75,9 +75,13 @@ class cNewsfeedIncomingModel extends cModel {
 		return ( true );
 	}
 	
-	public function Incoming ( $pOwnerId, $pStart = 0, $pStep = 50 ) {
+	public function Incoming ( $pOwnerId, $pFriends = null, $pStart = 0, $pStep = 50 ) {
 		
-		$this->Retrieve ( array ( 'Owner_FK' => $pOwnerId ), 'Updated DESC', array ( "start" => $pStart, "step" => $pStep ) );
+		if ( $pFriends ) {
+			$this->Retrieve ( array ( 'Owner_FK' => $pOwnerId, 'ActionOwner' => '()' . join ( ',', $pFriends ) ), 'Updated DESC', array ( "start" => $pStart, "step" => $pStep ) );
+		} else {
+			$this->Retrieve ( array ( 'Owner_FK' => $pOwnerId ), 'Updated DESC', array ( "start" => $pStart, "step" => $pStep ) );
+		}
 		
 		return ( true );
 	}

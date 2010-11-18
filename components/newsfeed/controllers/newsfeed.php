@@ -52,7 +52,11 @@ class cNewsfeedNewsfeedController extends cController {
 	
 	private function _Prep ( ) {
 		
-		$this->Model->Incoming ( $this->_Focus->Id );
+		$Circle = urldecode ( str_replace ( '-', ' ' , $this->GetSys ( 'Request' )->Get ( 'Circle' ) ) );
+		
+		$friendsInCircle = $this->Talk ( 'Friends', 'FriendsInCircle', array ( 'Circle' => $Circle ) );
+		
+		$this->Model->Incoming ( $this->_Focus->Id, $friendsInCircle );
 		
 		$li = $this->View->Find ( '.list .item', 0);
 		

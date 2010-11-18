@@ -8,3 +8,8 @@ YOU_ARE_NOW_FRIENDS_WITH="You are now friends with %friend$s."
 SOMEONE_IS_NOW_FRIENDS_WITH="%actionowner$s is now friends with %subjectowner$s."
 
 ADD_COMMENT="Comment"
+
+NEWSFEED_FILTER_TITLE="Newsfeed Filter"
+
+ALL_FRIENDS_FILTER="All friends"
+ADD_A_CIRCLE="+ New Circle"
