@@ -64,18 +64,18 @@ class cPage extends cComponent {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		include ( ASD_PATH . 'components/page/models/page.php' );
-		$Page = new cPageModel ();
+		include ( ASD_PATH . 'components/page/models/post.php' );
+		$Posts = new cPagePostModel ();
 		
 		include ( ASD_PATH . 'components/page/models/references.php' );
 		$References = new cPageReferencesModel ();
 		
-		$Page->RetrieveCurrent( $this->_Focus->Id );
-		if ( $Page->Get ( "Total" ) == 0 ) return ( false );
+		$Posts->RetrieveCurrent( $this->_Focus->Id );
+		if ( $Posts->Get ( "Total" ) == 0 ) return ( false );
 		
-		$Page->Fetch();
+		$Posts->Fetch();
 		
-		$References->Retrieve ( array ( "Identifier" => $Page->Get ( "Identifier" ) ) );
+		$References->Retrieve ( array ( "Identifier" => $Posts->Get ( "Identifier" ) ) );
 		if ( $References->Get ( "Total" ) == 0 ) return ( false );
 		
 		$References->Fetch();
@@ -85,7 +85,7 @@ class cPage extends cComponent {
 		$Identifier = $References->Get ( 'Identifier' );
 		$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Type' => 'Post', 'Identifier' => $Identifier ) );
 		
-		$return['Content'] = $Page->Get ( 'Content' );
+		$return['Content'] = $Posts->Get ( 'Content' );
 		$return['Stamp'] = $References->Get ( 'Stamp' );
 		
 		if ( $Access ) {
@@ -108,10 +108,10 @@ class cPage extends cComponent {
 		
 		$user = $pData['UserId'];
 		
-		include ( ASD_PATH . 'components/page/models/page.php' );
-		$Page = new cPageModel ();
+		include ( ASD_PATH . 'components/page/models/post.php' );
+		$Posts = new cPagePostsModel ();
 		
-		$Page->ClearCurrent ( $user );
+		$Posts->ClearCurrent ( $user );
 		
 		return ( true );
 	}
@@ -143,8 +143,8 @@ class cPage extends cComponent {
 		$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Type' => 'Post', 'Identifier' => $Identifier ) );
 		
 		// Load the Post data
-		include_once ( ASD_PATH . 'components/page/models/page.php' );
-		$Model = new cPageModel();
+		include_once ( ASD_PATH . 'components/page/models/post.php' );
+		$Model = new cPagePostModel();
 		
 		$Post = $Model->RetrievePost ( $this->_Focus->Id, $Identifier );
 		

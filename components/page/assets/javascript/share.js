@@ -25,7 +25,7 @@ jLoader.Page_share = function ( ) {
 
 jLoader.Page_share.Button = function ( ) { }
 
-jLoader.Page_share.Button.OnClick = function ( pElement, pParent ) { 
+jLoader.Page_share.Button.OnClick = function ( pElement, pParent ) {
 	
 	element = $(pElement);
 	parent = element.parent();
@@ -48,9 +48,11 @@ jLoader.Page_share.Button.OnClick = function ( pElement, pParent ) {
 	   	var current = $('#page-share .attach .selected');
 		
 		$('#page-share input[name=LinkThumb]').val ( current.attr ('src') );
+		
+		return ( false );
 	}
 	
-	return ( false );
+	return ( true );
 }
 
 jLoader.Page_share.Textarea = function ( ) { }
@@ -170,6 +172,11 @@ jLoader.Page_share.Text.OnBlur = function ( pElement, pParent ) {
 	    	
 	    	$('#page-share .loading').hide();
 	    	$('#page-share .attach').show();
+	    	
+	    	var current = $('#page-share .attach .selected');
+	    	
+	    	$('#page-share input[name=LinkThumb]').val ( current.attr ('src') );
+	    	
 	    });
 	}
 }

@@ -350,11 +350,14 @@
 		#profile-comments-two { float:left; position:relative; top:-24px; }
 		
 		/* page-share */
-		#page-share .post { float:left; width:98%; padding:1%; margin-bottom:20px; border:1px solid #c0d895; }
+		#page-share .post, #page-share .post-link { float:left; width:98%; padding:1%; margin-top:4px; margin-bottom:20px; border:1px solid #c0d895; }
 		#page-share .post textarea { width:590px; height:14px; padding:5px; }
 		#page-share .post textarea:focus { width:590px; height:28px; padding:5px; }
-		#page-share .post .link { width:590px; height:14px; padding:5px; }
-		#page-share .post .submit { float:right; margin-top:5px; }
+		
+		#page-share .post-link textarea { width:590px; height:14px; padding:5px; }
+		#page-share .post-link textarea:focus { width:590px; height:28px; padding:5px; }
+		#page-share .post-link .link { width:590px; height:14px; padding:5px; }
+		#page-share .submit { float:right; margin-top:5px; }
 		
 		#page-share .privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
 		#page-share .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }

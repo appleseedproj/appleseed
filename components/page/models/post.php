@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   ProfilePage
+ * @subpackage   Page
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Page Component Page Model
+/** Page Component Post Model
  * 
- * Page Component Page Model Class
+ * Page Component Post Model Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Page
  */
-class cPageModel extends cModel {
+class cPagePostModel extends cModel {
 	
 	protected $_Tablename = 'PagePosts';
 	
@@ -55,8 +55,7 @@ class cPageModel extends cModel {
 	function Remove ( $pIdentifier, $pUserId ) {
 		
 		// Remove the Page Post 
-		// Note:  Eventually, we'll have to determine which Type of post we're deleting.
-		$this->Delete ( array ( 'Identifier' => $pIdentifier, 'User_FK' => $pUserId ) );
+		$this->Delete ( array ( 'Identifier' => $pIdentifier, 'User_FK' => $pUserId, 'Type' => 'Link' ) );
 		
 		// Remove the page reference.
 		include_once ( ASD_PATH . '/components/page/models/references.php' );

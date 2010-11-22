@@ -1,4 +1,3 @@
-<script type="text/javascript" src="/components/newsfeed/assets/javascript/newsfeed.js"></script>
 <section id="profile-newsfeed">
 
 	<p class="newsfeed-message"></p>
