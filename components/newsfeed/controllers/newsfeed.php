@@ -79,6 +79,7 @@ class cNewsfeedNewsfeedController extends cController {
 			$sentenceData['Context'] = $Context = $this->Model->Get ( 'Context' );
 			$sentenceData['ContextOwner'] = $ContextOwner = $this->Model->Get ( 'ContextOwner' );
 			$sentenceData['ContextLink'] = $ContextLink = $this->Model->Get ( 'ContextLink' );
+			$sentenceData['Title'] = $Title = $this->Model->Get ( 'Title' );
 			$sentenceData['Icon'] = $Icon = $this->Model->Get ( 'Icon' );
 			$sentenceData['Comment'] = $Comment = $this->Model->Get ( 'Comment' );
 			$sentenceData['Description'] = $Description = $this->Model->Get ( 'Description' );
@@ -134,6 +135,7 @@ class cNewsfeedNewsfeedController extends cController {
 			$Context = $sentenceData['Context'] = $Context = $this->Model->Get ( 'Context' );
 			$ContextOwner = $sentenceData['ContextOwner'] = $ContextOwner = $this->Model->Get ( 'ContextOwner' );
 			$ContextLink = $sentenceData['ContextLink'] = $ContextLink = $this->Model->Get ( 'ContextLink' );
+			$Title = $sentenceData['Title'] = $Icon = $this->Model->Get ( 'Title' );
 			$Icon = $sentenceData['Icon'] = $Icon = $this->Model->Get ( 'Icon' );
 			$Comment = $sentenceData['Comment'] = $Comment = $this->Model->Get ( 'Comment' );
 			$Description = $sentenceData['Description'] = $Description = $this->Model->Get ( 'Description' );
@@ -192,6 +194,7 @@ class cNewsfeedNewsfeedController extends cController {
 		$Context = $pData['Context'];
 		$ContextOwner = $pData['ContextOwner'];
 		$ContextLink = $pData['ContextLink'];
+		$Title = $pData['Title'];
 		$Icon = $pData['Icon'];
 		$Comment = $pData['Comment'];
 		$Description = $pData['Description'];
@@ -202,17 +205,17 @@ class cNewsfeedNewsfeedController extends cController {
 		$Incoming = $this->GetModel ( 'Incoming' );
 		$Outgoing = $this->GetModel ( 'Outgoing' );
 		
-		$Incoming->Queue ( $OwnerId, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier );
+		$Incoming->Queue ( $OwnerId, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Title, $Icon, $Comment, $Description, $Identifier );
 		
 		foreach ( $Friends as $f => $friend ) {
 			list ( $username, $domain ) = explode ( '@', $friend );
 			if ( $domain == ASD_DOMAIN ) {
 				// Process a local request
 				$Recipient = $this->Talk ( 'User', 'Account', array ( 'Username' => $username ) );
-				$Incoming->Queue ( $Recipient->Id, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier );
+				$Incoming->Queue ( $Recipient->Id, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Title, $Icon, $Comment, $Description, $Identifier );
 			} else {
 				// Add remote requests to the outgoing queue.
-				$Outgoing->Queue ( $OwnerId, $friend, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier );
+				$Outgoing->Queue ( $OwnerId, $friend, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Title, $Icon, $Comment, $Description, $Identifier );
 			}
 		}
 		
@@ -229,6 +232,7 @@ class cNewsfeedNewsfeedController extends cController {
 		$Context = $pData['Context'];
 		$ContextOwner = $pData['ContextOwner'];
 		$ContextLink = $pData['ContextLink'];
+		$Title = $pData['Title'];
 		$Icon = $pData['Icon'];
 		$Comment = $pData['Comment'];
 		$Description = $pData['Description'];
@@ -238,7 +242,7 @@ class cNewsfeedNewsfeedController extends cController {
 		
 		$Incoming = $this->GetModel ( 'Incoming' );
 		
-		$Incoming->Queue ( $OwnerId, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
+		$Incoming->Queue ( $OwnerId, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Title, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
 		
 		return ( true );
 	}
@@ -261,6 +265,7 @@ class cNewsfeedNewsfeedController extends cController {
 			$Context = $data['Context'] = $this->Outgoing->Get ( 'Context' );
 			$ContextOwner = $data['ContextOwner'] = $this->Outgoing->Get ( 'ContextOwner' );
 			$ContextLink = $data['ContextLink'] = $this->Outgoing->Get ( 'ContextLink' );
+			$Title = $data['Title'] = $this->Outgoing->Get ( 'Title' );
 			$Icon = $data['Icon'] = $this->Outgoing->Get ( 'Icon' );
 			$Comment = $data['Comment'] = $this->Outgoing->Get ( 'Comment' );
 			$Description = $data['Description'] = $this->Outgoing->Get ( 'Description' );

@@ -124,7 +124,11 @@ class cPage extends cComponent {
 		$post->Component = $this->Get ( 'Component' );
 		$post->Function = 'GetPost';
 		
-		$return = array ( 'Post' => $post );
+		$link = new stdClass();
+		$link->Component = $this->Get ( 'Component' );
+		$link->Function = 'GetLink';
+		
+		$return = array ( 'Post' => $post, 'Link' => $link );
 		
 		return ( $return );
 	}
@@ -157,6 +161,45 @@ class cPage extends cComponent {
 		} else {
 			// If the person viewing is the owner, grant access.
 			if ( $this->_Current->Account == $Post['Owner'] ) {
+				return ( $return );
+			} else if ( $this->_Focus->Account == $this->_Current->Account ) {
+				return ( $return );
+			} else {
+				return ( false );
+			}
+		}
+		
+		return ( false );
+	}
+	
+	public function GetLink ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		$Identifier = $pData['Identifier'];
+		$Account = $pData['Account'];
+		
+		// Check the privacy settings on this item.
+		$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Type' => 'Link', 'Identifier' => $Identifier ) );
+		
+		// Load the Post data
+		include_once ( ASD_PATH . 'components/page/models/link.php' );
+		$Model = new cPageLinkModel();
+		
+		$Link = $Model->RetrieveLink ( $this->_Focus->Id, $Identifier );
+		
+		$return['Owner'] = $Link['Owner'];
+		$return['Comment'] = $Link['Content'];
+		
+		// If true, then return the post.
+		if ( $Access ) {
+			return ( $return );
+		} else {
+			// If the person viewing is the owner, grant access.
+			if ( $this->_Current->Account == $Link['Owner'] ) {
 				return ( $return );
 			} else if ( $this->_Focus->Account == $this->_Current->Account ) {
 				return ( $return );

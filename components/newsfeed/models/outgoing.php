@@ -31,7 +31,7 @@ class cNewsfeedOutgoingModel extends cModel {
 		parent::__construct( $pTables );
 	}
 	
-	public function Queue ( $pOwnerId, $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier ) {
+	public function Queue ( $pOwnerId, $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pTitle, $pIcon, $pComment, $pDescription, $pIdentifier ) {
 	
 		$this->Protect ( 'Outgoing_PK', null );
 		$this->Set ( 'Owner_FK', $pOwnerId );
@@ -43,6 +43,7 @@ class cNewsfeedOutgoingModel extends cModel {
 		$this->Set ( 'Context', $pContext );
 		$this->Set ( 'ContextOwner', $pContextOwner );
 		$this->Set ( 'ContextLink', $pContextLink );
+		$this->Set ( 'Title', $pTitle );
 		$this->Set ( 'Icon', $pIcon );
 		$this->Set ( 'Comment', $pComment );
 		$this->Set ( 'Description', $pDescription );

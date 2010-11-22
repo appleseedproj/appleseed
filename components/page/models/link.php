@@ -88,7 +88,7 @@ class cPageLinkModel extends cModel {
 		return ( true );
 	}
 	
-	public function RetrievePost ( $pUserId, $pIdentifier ) {
+	public function RetrieveLink ( $pUserId, $pIdentifier ) {
 		
 		$criteria = array ('User_FK' => $pUserId, 'Identifier' => $pIdentifier );
 		
@@ -108,7 +108,7 @@ class cPageLinkModel extends cModel {
 		$privacyData = array ( 'Privacy' => $pPrivacy, 'Type' => 'Link', 'Identifier' => $Identifier );
 		$this->GetSys ( 'Components' )->Talk ( 'Privacy', 'Store', $privacyData );
 		
-		$this->Protect ( 'Post_PK', null );
+		$this->Protect ( 'Link_PK', null );
 		$this->Set ( 'User_FK', $pUserId );
 		$this->Set ( 'Owner', $pOwner );
 		$this->Set ( 'Identifier', $Identifier );
@@ -131,7 +131,7 @@ class cPageLinkModel extends cModel {
 		
 		$Reference = new cPageReferencesModel ();
 		
-		$Reference->Create ( 'Post', $Identifier, $pUserId );
+		$Reference->Create ( 'Link', $Identifier, $pUserId );
 		
 		return ( true );
 	}

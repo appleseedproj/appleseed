@@ -150,7 +150,7 @@ class cPageShareController extends cController {
 			if ( !$Access ) unset ( $friends[$f] );
 		}
 		
-		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Current->Account, 'Action' => $Action, 'ContextOwner' => $this->_Focus->Account, 'Context' => 'page', 'Comment' => $Content, 'Identifier' => $Identifier );
+		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Current->Account, 'Action' => $Action, 'ActionLink' => $Link, 'ContextOwner' => $this->_Focus->Account, 'Context' => 'page', 'Comment' => $Content, 'Title' => $LinkTitle, 'Icon' => $LinkThumb, 'Description' => $LinkDescription, 'Identifier' => $Identifier );
 		$this->Talk ( 'Newsfeed', 'Notify', $notifyData );
 		
 		// Don't send an email if we're posting on our own page.
