@@ -29,7 +29,7 @@ class cQuickFeed extends cQuickSocial {
 	}
 	
 		
-	public function Synchronize ( $pRequestDomain, $pAccount, $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated, $pUpdated ) {
+	public function Synchronize ( $pRequestDomain, $pAccount, $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pTitle, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated, $pUpdated ) {
 		
 		$fCreateLocalToken = $this->GetCallBack ( 'CreateLocalToken' );
 		
@@ -59,6 +59,7 @@ class cQuickFeed extends cQuickSocial {
 			'_contextOwner' => $pContextOwner,
 			'_context' => $pContext,
 			'_contextLink' => $pContextLink,
+			'_title' => $pTitle,
 			'_icon' => $pIcon,
 			'_comment' => $pComment,
 			'_description' => $pDescription,
@@ -98,6 +99,7 @@ class cQuickFeed extends cQuickSocial {
 		$Context = $this->_GET['_context'];
 		$ContextOwner = $this->_GET['_contextOwner'];
 		$ContextLink = $this->_GET['_contextLink'];
+		$Title = $this->_GET['_title'];
 		$Icon = $this->_GET['_icon'];
 		$Comment = $this->_GET['_comment'];
 		$Description = $this->_GET['_description'];
@@ -112,7 +114,7 @@ class cQuickFeed extends cQuickSocial {
 		$verification = $this->Verify( $accountUsername, $source, $token );
 		
 		if ( $verification->success == 'true' ) {
-			$result = @call_user_func ( $fFeedSynchronize, $Recipient, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
+			$result = @call_user_func ( $fFeedSynchronize, $Recipient, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Title, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
 			
 			if ( !$result ) {
 				$this->_Error ( "Unable To Synchronize" );

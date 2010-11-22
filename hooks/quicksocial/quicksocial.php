@@ -1080,6 +1080,7 @@ class cQuicksocialHook extends cHook {
 		$Context = $pData['Context'];
 		$ContextOwner = $pData['ContextOwner'];
 		$ContextLink = $pData['ContextLink'];
+		$Title = $pData['Title'];
 		$Icon = $pData['Icon'];
 		$Comment = $pData['Comment'];
 		$Description = $pData['Description'];
@@ -1089,14 +1090,14 @@ class cQuicksocialHook extends cHook {
 		
 		list ( $username, $domain ) = explode ( '@', $Recipient );
 			
-		$result = $feed->Synchronize ( $domain, $Account, $Recipient, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
+		$result = $feed->Synchronize ( $domain, $Account, $Recipient, $Action, $ActionOwner, $ActionLink, $SubjectOwner, $Context, $ContextOwner, $ContextLink, $Title, $Icon, $Comment, $Description, $Identifier, $Created, $Updated );
 		
 		if ( $result->success == 'true' ) return ( true );
 		
 		return ( false );
 	}
 	
-	public function _FeedSynchronize ( $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated, $pUpdated ) {
+	public function _FeedSynchronize ( $pRecipient, $pAction, $pActionOwner, $pActionLink, $pSubjectOwner, $pContext, $pContextOwner, $pContextLink, $pTitle, $pIcon, $pComment, $pDescription, $pIdentifier, $pCreated, $pUpdated ) {
 		
 		list ( $recipientUsername, $null ) = explode ( '@', $pRecipient );
 		
@@ -1111,6 +1112,7 @@ class cQuicksocialHook extends cHook {
 		$data['Context'] = $pContext;
 		$data['ContextOwner'] = $pContextOwner;
 		$data['ContextLink'] = $pContextLink;
+		$data['Title'] = $pTitle;
 		$data['Icon'] = $pIcon;
 		$data['Comment'] = $pComment;
 		$data['Description'] = $pDescription;
