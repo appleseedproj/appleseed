@@ -169,6 +169,46 @@ Protocol
 			- JSON:	success=<true|false>
 					error=<error>
 	
+	QuickFeed
+		- Synchronize / ReplyToSynchronize
+			- GET: 	_social=true
+					_task=feed.synchronize
+					_token=<token>						# Required for verification
+					_method=<method>					# http, https, ws, etc
+					_account=<user@domain>
+					_source=<domain>
+					_recipient=<username>
+					_actionOwner=<user@domain>
+					_action=<action>
+					_actionLink=<actionlink>
+					_subjectOwner=<user@domain>
+					_contextOwner=<user@domain>
+					_context=<context>
+					_contextLink=<contextlink>
+					_title=<title>
+					_icon=<icon>
+					_comment=<comment>
+					_identifier=<identifier>
+					_description=<description>
+					_updated=<datetime>
+					_created=<datetime>
+			- JSON:	success=<true|false>
+					error=<error>
+					incoming=<array>
+						actionOwner=<user@domain>
+						action=<action>
+						actionLink=<actionlink>
+						subjectOwner=<user@domain>
+						contextOwner=<user@domain>
+						context=<context>
+						contextLink=<contextlink>
+						title=<title>
+						icon=<icon>
+						comment=<comment>
+						identifier=<identifier>
+						description=<description>
+						stamp=<datetime>
+		
 -- FUTURE IMPLEMENTATION --
 
 	QuickMessage
@@ -200,43 +240,6 @@ Protocol
 					body=<body>
 	
 	QuickFeed
-		- Synchronize / ReplyToSynchronize
-			- GET: 	_social=true
-					_task=feed.synchronize
-					_token=<token>						# Required for verification
-					_method=<method>					# http, https, ws, etc
-					_account=<user@domain>
-					_source=<domain>
-					_recipient=<username>
-					_actionOwner=<user@domain>
-					_action=<action>
-					_actionLink=<actionlink>
-					_subjectOwner=<user@domain>
-					_contextOwner=<user@domain>
-					_context=<context>
-					_contextLink=<contextlink>
-					_icon=<icon>
-					_comment=<comment>
-					_identifier=<identifier>
-					_description=<description>
-					_updated=<datetime>
-					_created=<datetime>
-			- JSON:	success=<true|false>
-					error=<error>
-					incoming=<array>
-						actionOwner=<user@domain>
-						action=<action>
-						actionLink=<actionlink>
-						subjectOwner=<user@domain>
-						contextOwner=<user@domain>
-						context=<context>
-						contextLink=<contextlink>
-						icon=<icon>
-						comment=<comment>
-						identifier=<identifier>
-						description=<description>
-						stamp=<datetime>
-		
 		- Report / ReplyToReport
 			- GET: 	_social=true
 					_task=feed.report
