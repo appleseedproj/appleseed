@@ -10,6 +10,22 @@ POSTED_ON_YOUR_PAGE="posted on your page."
 SOMEONE_SAID="%firstname$s said:"
 CLICK_HERE="Click here to view post:"
 
+SOMEONE_POSTED_A_LINK_ON_YOUR_PAGE="%fullname$s posted a link to your page."
+POSTED_A_LINK_ON_YOUR_PAGE="posted a link to your page."
+SOMEONE_POSTED_A_LINK="%firstname$s posted:"
+CLICK_HERE="Click here to view post:"
+
+; NOTE:  Move this layout to a view in Postal.
+POSTED_A_LINK_BODY="
+&quot;%comment$s&quot;
+
+<b><a href=\"%link$s\">%title$s</a></b>
+<a href=\"%link$s\">%link$s</a>
+
+<i>%description$s</i>
+"
+
+
 LINK_LOADING_MESSAGE="Loading *"
 
 PREVIOUS_THUMBNAIL="&laquo;"

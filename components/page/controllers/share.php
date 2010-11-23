@@ -78,12 +78,10 @@ class cPageShareController extends cController {
 		
 		switch ( $Type ) {
 			case 'Link':
-				$Action = 'posted a link';
 				$this->_ShareLink();
 			break;
 			case 'Post':
 			default:
-				$Action = 'posted';
 				$this->_SharePost();
 			break;
 		}
@@ -93,6 +91,8 @@ class cPageShareController extends cController {
 	
 	private function _SharePost ( ) {
 		
+		$Action = 'posted';
+				
 		$this->Model = $this->GetModel ( "Post" ); 
 		
 		$Owner = $this->_Current->Account;
@@ -110,7 +110,7 @@ class cPageShareController extends cController {
 		
 		foreach ( $friends as $f => $friend ) {
 			if ( $friend == $this->_Current->Account ) continue;
-			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => $Type, 'Identifier' => $Identifier ) );
+			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => 'Post', 'Identifier' => $Identifier ) );
 			if ( !$Access ) unset ( $friends[$f] );
 		}
 		
@@ -127,6 +127,8 @@ class cPageShareController extends cController {
 	
 	private function _ShareLink ( ) {
 		
+		$Action = 'posted a link';
+		
 		$this->Model = $this->GetModel ( "Link" ); 
 		
 		$Link = $this->GetSys ( 'Request' )->Get ( 'Link' );
@@ -134,30 +136,30 @@ class cPageShareController extends cController {
 		$LinkTitle = $this->GetSys ( 'Request' )->Get ( 'LinkTitle' );
 		$LinkDescription = $this->GetSys ( 'Request' )->Get ( 'LinkDescription' );
 		
+		$Comment = $this->GetSys ( 'Request' )->Get ( 'LinkContent' );
+		
 		$Owner = $this->_Current->Account;
-		$Content = $this->GetSys ( 'Request' )->Get ( 'Content' );
 		$Privacy = $this->GetSys ( 'Request' )->Get ( 'Privacy' );
 		
 		$friends = $this->Talk ( 'Friends', 'Friends' );
 		
-		$this->Model->Link ( $Content, $Privacy, $this->_Focus->Id, $Owner, $Link, $LinkTitle, $LinkDescription, $LinkThumb );
+		$this->Model->Link ( $Comment, $Privacy, $this->_Focus->Id, $Owner, $Link, $LinkTitle, $LinkDescription, $LinkThumb );
 		
 		$Identifier = $this->Model->Get ( 'Identifier' );
 		
 		foreach ( $friends as $f => $friend ) {
 			if ( $friend == $this->_Current->Account ) continue;
-			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => $Type, 'Identifier' => $Identifier ) );
+			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => 'Link', 'Identifier' => $Identifier ) );
 			if ( !$Access ) unset ( $friends[$f] );
 		}
 		
-		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Current->Account, 'Action' => $Action, 'ActionLink' => $Link, 'ContextOwner' => $this->_Focus->Account, 'Context' => 'page', 'Comment' => $Content, 'Title' => $LinkTitle, 'Icon' => $LinkThumb, 'Description' => $LinkDescription, 'Identifier' => $Identifier );
+		$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Current->Account, 'Action' => $Action, 'ActionLink' => $Link, 'ContextOwner' => $this->_Focus->Account, 'Context' => 'page', 'Comment' => $Comment, 'Title' => $LinkTitle, 'Icon' => $LinkThumb, 'Description' => $LinkDescription, 'Identifier' => $Identifier );
 		$this->Talk ( 'Newsfeed', 'Notify', $notifyData );
 		
 		// Don't send an email if we're posting on our own page.
 		if ( $this->_Current->Account != $this->_Focus->Account ) {
-			$this->_EmailLink ( $Content, $Identifier );
+			$this->_EmailLink ( $Comment, $Link, $LinkTitle, $LinkDescription, $Identifier );
 		}
-		
 		
 		return ( true );
 	}
@@ -176,6 +178,30 @@ class cPageShareController extends cController {
 		$Byline = __( "Posted On Your Page" );
 		$Subject = __( "Someone Said", array ( "firstname" => $SenderFirstName ) );
 		$Body = $pContent;
+		$LinkDescription = __( "Click Here" );
+		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/page/' . $pIdentifier;
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $SenderAccount, 'RecipientEmail' => $RecipientEmail, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		
+		$this->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
+	private function _EmailLink ( $pComment, $pLink, $pLinkTitle, $pLinkDescription, $pIdentifier ) {
+		$data = array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
+		$CurrentInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		$SenderFullname = $CurrentInfo->fullname;
+		$SenderNameParts = explode ( ' ', $CurrentInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		$SenderAccount = $this->_Current->Account;
+		
+		$RecipientEmail = $this->_Focus->Email;
+		$MailSubject = __( "Someone Posted A Link On Your Page", array ( "fullname" => $SenderFullname ) );
+		$Byline = __( "Posted A Link On Your Page" );
+		$Subject = __( "Someone Posted A Link", array ( "firstname" => $SenderFirstName ) );
+		$Body = __( "Posted A Link Body", array ( "comment" => $pComment, "link" => $pLink, "title" => $pLinkTitle, "description" => $pLinkDescription  ) );
 		$LinkDescription = __( "Click Here" );
 		$Link = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/page/' . $pIdentifier;
 		

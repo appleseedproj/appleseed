@@ -397,13 +397,23 @@
 		#profile-page .list .item .owner-icon { width:64px; height:64px; }
 		#profile-page .list .item .info { float:left; width:78%; padding:0; margin:0 5px; }
 		#profile-page .list .item .content-full { float:left; display:inline; clear:none; width:100%; padding:0; margin:0; min-height:46px; }
-		#profile-page .list .item .owner-link { margin-right:5px; font-weight:bold; }
+		#profile-page .list .item .content-full .userlink { margin-right:5px; font-weight:bold; }
 		#profile-page .list .item .remove { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:0.6;}
 		#profile-page .list .item .remove:hover { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:1;}
 		#profile-page .stamp { float:left; color:#8a8a8a; font-style:italic; border:none; margin-top:6px; margin-right:5px; cursor:auto; text-align:left; font-size:90%; }
 		#profile-page .actions { float:left; clear:none; margin-top:6px; font-size:90%; }
 		#profile-page .actions a { float:left; padding-right:5px; }
 		#profile-page .actions a:before { content:"\B7 \ "; }
+		
+		#profile-page .list .item.link .info-link { clear:both; color:#406300; font-size:80%; }
+		#profile-page .list .item.link .info  { float:left; width:78%; }
+		#profile-page .list .item.link .info .data { float:left; margin-top:5px; width:100%; }
+		#profile-page .list .item.link .info .thumb-link { float:left; margin-right:5px; }
+		#profile-page .list .item.link .info .thumb { margin-right:5px; -webkit-box-shadow:3px 3px 5px #406300; }
+		#profile-page .list .item.link .info .desc { float:left; width:85%; padding:0; margin:0; }
+		#profile-page .list .item.link .info .desc .description { clear:both; float:left; margin:5px 0 0 0; padding:0; color:#8a8a8a; }
+		
+		#profile-page .list .item.link .content-full { width:100%; text-align:left; height:auto; min-height:0; }
 		
 		/* profile-newsfeed */
 		#profile-newsfeed .list .item { float:left; clear:both; font-size:110%; list-style-type:none; border-bottom:1px solid #c0d895; padding-bottom:10px; margin-bottom:20px; width:100%; }
@@ -427,6 +437,18 @@
 		#profile-newsfeed .list .item.friends .actionowner-icon { width:32px; height:32px; }
 		#profile-newsfeed .list .item.friends .actions { display:none; }
 		#profile-newsfeed .list .item.friends .content { height:auto; min-height:0; }
+		
+		#profile-newsfeed .list .item.link .info-link { clear:both; color:#406300; font-size:80%; }
+		#profile-newsfeed .list .item.link .info  { float:left; width:78%; }
+		#profile-newsfeed .list .item.link .info .data { float:left; margin-top:5px; width:100%; }
+		#profile-newsfeed .list .item.link .info .thumb-link { float:left; margin-right:5px; }
+		#profile-newsfeed .list .item.link .info .thumb { margin-right:5px; -webkit-box-shadow:3px 3px 5px #406300; }
+		#profile-newsfeed .list .item.link .info .desc { float:left; width:85%; padding:0; margin:0; }
+		#profile-newsfeed .list .item.link .info .desc .description { clear:both; float:left; margin:5px 0 0 0; padding:0; color:#8a8a8a; }
+		
+		#profile-newsfeed .list .item.link .content { width:100%; text-align:left; height:auto; min-height:0; }
+		#profile-newsfeed .list .item.link .content .sentence { clear:none; float:left; display:inline; width:auto; }
+		#profile-newsfeed .list .item.link .content .comment { clear:none; float:left; display:inline; width:auto; }
 		
 		#newsfeed-menu { position:relative; top:100px; }
 		#newsfeed-menu li { list-style-type:none; padding:3px; padding-left:20px; }

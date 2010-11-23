@@ -72,6 +72,43 @@ class cNewsfeedNewsfeedController extends cController {
 		$li->outertext = '';
 		
 		while ( $this->Model->Fetch() ) {
+			$row = new cHTML ();
+			$row->Load ( $rowOriginal );
+			
+			$Action = $this->Model->Get ( 'Action' );
+			$Context = $this->Model->Get ( 'Context' );
+			
+			switch ( $Context ) {
+				case 'page':
+					$row->Find ( '.item', 0 )->class .= ' page';
+				break;
+				case 'friends':
+					$row->Find ( '.item', 0 )->class .= ' friends';
+				break;
+			}
+			
+			switch ( strtolower ($Action) ) {
+				case 'posted a link':
+					$row->Find ( '.item', 0 )->class .= ' link';
+					$row->Find ( '.item', 0 )->innertext = $this->_PrepLink ( );
+				break;
+				
+				default:
+				case 'posted':
+					$row->Find ( '.item', 0 )->class .= ' post';
+					$row->Find ( '.item', 0 )->innertext = $this->_PrepPost ( );
+				break;
+			}
+			
+		    $li->outertext .= $row->outertext;
+		    unset ( $row );
+		}
+		
+		$this->View->Reload();
+	}
+	
+	private function _PrepPost ( ) {
+		
 			$sentenceData['ActionOwner'] = $ActionOwner = $this->Model->Get ( 'ActionOwner' );
 			$sentenceData['Action'] = $Action = $this->Model->Get ( 'Action' );
 			$sentenceData['ActionLink'] = $ActionLink = $this->Model->Get ( 'ActionLink' );
@@ -87,23 +124,14 @@ class cNewsfeedNewsfeedController extends cController {
 			$sentenceData['Updated'] = $Updated = $this->Model->Get ( 'Updated' );
 			$sentenceData['Created'] = $Created = $this->Model->Get ( 'Created' );
 			
-			$row = new cHTML ();
-			$row->Load ( $rowOriginal );
-			
-			switch ( $Context ) {
-				case 'page':
-					$row->Find ( '.item', 0 )->class .= ' page';
-				break;
-				case 'friends':
-					$row->Find ( '.item', 0 )->class .= ' friends';
-				break;
-			}
+			$row = $this->GetView ( 'newsfeed.link' );
 			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
 			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
 			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $Comment );
 			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
 			$row->Find ( '.actionowner-link', 0 )->innertext = $ActionOwner;
+			
 			$row->Find ( '.remove', 0 )->innertext = '';
 			
 			list ( $username, $domain ) = explode ( '@', $ActionOwner );
@@ -120,11 +148,73 @@ class cNewsfeedNewsfeedController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
-		    $li->outertext .= $row->outertext;
-		    unset ( $row );
-		}
-		
-		$this->View->Reload();
+			return ( $row->outertext );
+	}
+	
+	private function _PrepLink ( ) {
+			$sentenceData['ActionOwner'] = $ActionOwner = $this->Model->Get ( 'ActionOwner' );
+			$sentenceData['Action'] = $Action = $this->Model->Get ( 'Action' );
+			$sentenceData['ActionLink'] = $ActionLink = $this->Model->Get ( 'ActionLink' );
+			$sentenceData['SubjectOwner'] = $SubjectOwner = $this->Model->Get ( 'SubjectOwner' );
+			$sentenceData['Context'] = $Context = $this->Model->Get ( 'Context' );
+			$sentenceData['ContextOwner'] = $ContextOwner = $this->Model->Get ( 'ContextOwner' );
+			$sentenceData['ContextLink'] = $ContextLink = $this->Model->Get ( 'ContextLink' );
+			$sentenceData['Title'] = $Title = $this->Model->Get ( 'Title' );
+			$sentenceData['Icon'] = $Icon = $this->Model->Get ( 'Icon' );
+			$sentenceData['Comment'] = $Comment = $this->Model->Get ( 'Comment' );
+			$sentenceData['Description'] = $Description = $this->Model->Get ( 'Description' );
+			$sentenceData['Identifier'] = $Identifier = $this->Model->Get ( 'Identifier' );
+			$sentenceData['Updated'] = $Updated = $this->Model->Get ( 'Updated' );
+			$sentenceData['Created'] = $Created = $this->Model->Get ( 'Created' );
+			
+			$row = $this->GetView ( 'newsfeed.link' );
+			
+			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
+			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
+			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $Comment );
+			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
+			$row->Find ( '.actionowner-link', 0 )->innertext = $ActionOwner;
+			
+			list ( $contextUsername, $contextDomain ) = explode ( '@', $ContextOwner );
+			if ( $Icon ) 
+				$row->Find ( '.thumb', 0 )->src = 'http://' . $contextDomain . $Icon;
+			else
+				$row->Find ( '.thumb', 0 )->outertext = "";
+			
+			if ( $Description ) 
+				$row->Find ( '.description', 0 )->innertext = $Description;
+			else
+				$row->Find ( '.description', 0 )->outertext = "";
+			
+			if ( $Title ) 
+				$row->Find ( '.title', 0 )->innertext = $Title;
+			else
+				$row->Find ( '.title', 0 )->outertext = "";
+			
+			if ( $ActionLink ) {
+				$row->Find ( '.info-link', 0 )->href = $ActionLink;
+				$row->Find ( '.info-link', 0 )->innertext = $ActionLink;
+				$row->Find ( '.title-link', 0 )->href = $ActionLink;
+				$row->Find ( '.thumb-link', 0 )->href = $ActionLink;
+			}
+			
+			$row->Find ( '.remove', 0 )->innertext = '';
+			
+			list ( $username, $domain ) = explode ( '@', $ActionOwner );
+			$data = array ( 'username' => $username, 'domain' => $domain, 'width' => 64, 'height' => 64 );
+			$row->Find ( '.actionowner-icon', 0 )->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
+			
+			$row->Find ( '.sentence', 0 )->innertext = $this->_Sentence ( $sentenceData );
+			
+			$data = array ( 'account' => $ActionOwner, 'source' => ASD_DOMAIN );
+			$OwnerLink = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
+			$row->Find ( '.actionowner-link', 0 )->href = $OwnerLink;
+			$row->Find ( '.actionowner-icon-link', 0 )->href = $OwnerLink;
+			
+			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
+			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
+			
+			return ( $row->outertext );
 	}
 	
 	private function _Sentence ( $pData ) {

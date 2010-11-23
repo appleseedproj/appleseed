@@ -55,7 +55,7 @@ class cPagePostModel extends cModel {
 	function Remove ( $pIdentifier, $pUserId ) {
 		
 		// Remove the Page Post 
-		$this->Delete ( array ( 'Identifier' => $pIdentifier, 'User_FK' => $pUserId, 'Type' => 'Link' ) );
+		$this->Delete ( array ( 'Identifier' => $pIdentifier, 'User_FK' => $pUserId ) );
 		
 		// Remove the page reference.
 		include_once ( ASD_PATH . '/components/page/models/references.php' );

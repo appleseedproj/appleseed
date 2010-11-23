@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Wall
+ * @subpackage   Page
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -193,6 +193,10 @@ class cPage extends cComponent {
 		
 		$return['Owner'] = $Link['Owner'];
 		$return['Comment'] = $Link['Content'];
+		$return['Link'] = $Link['Link'];
+		$return['Title'] = $Link['Title'];
+		$return['Description'] = $Link['Description'];
+		$return['Thumb'] = $Link['Thumb'];
 		
 		// If true, then return the post.
 		if ( $Access ) {
