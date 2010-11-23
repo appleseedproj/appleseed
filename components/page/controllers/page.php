@@ -116,9 +116,15 @@ class cPagePageController extends cController {
 		$ownerData = $this->Talk ( 'User', 'Link', array ( 'request' => $this->_Item['Owner'] ) );
 		$owner = $ownerData['link'];
 		
+		$Link = $this->_Item['Link'];
 		$Icon = $this->_Item['Thumb'];
 		$Title = $this->_Item['Title'];
 		$Description = $this->_Item['Description'];
+		
+		$row->Find ( '.thumb-link', 0 )->href = $Link;
+		$row->Find ( '.title-link', 0 )->href = $Link;
+		$row->Find ( '.info-link', 0 )->href = $Link;
+		$row->Find ( '.info-link', 0 )->innertext = $Link;
 		
 			if ( $Icon ) 
 				$row->Find ( '.thumb', 0 )->src = $Icon;
