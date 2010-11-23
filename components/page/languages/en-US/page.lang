@@ -19,8 +19,8 @@ CLICK_HERE="Click here to view post:"
 POSTED_A_LINK_BODY="
 &quot;%comment$s&quot;
 
-<b><a href=\"%link$s\">%title$s</a></b>
-<a href=\"%link$s\">%link$s</a>
+<b><a href='%link$s'>%title$s</a></b>
+<a href='%link$s'>%link$s</a>
 
 <i>%description$s</i>
 "
