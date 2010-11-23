@@ -29,7 +29,7 @@ class cDebugHook extends cHook {
 		parent::__construct();
 	}
 	
-	public function OnSystemEnd ( $pData = null ) {
+	public function DisplayDebugData ( $pData = null ) {
 		
 		$this->GetSys ( "Components" )->Execute ( "debug" );
         

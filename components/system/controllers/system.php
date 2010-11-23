@@ -53,6 +53,8 @@ class cSystemSystemController extends cController {
 		
 		$this->GetSys ( 'Event' )->Trigger ( 'Display', 'Language', 'Data' );
 		
+		$this->GetSys ( 'Event' )->Trigger ( 'Display', 'Debug', 'Data' );
+		
 		return ( true );
 	}
 
