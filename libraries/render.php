@@ -11,6 +11,8 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
+require ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'Textile-2.2' . DS . 'classTextile.php' );
+
 /** Render Class
  * 
  * Handles basic markup rendering 
@@ -18,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Framework
  * @subpackage  Library
  */
-class cRender {
+class cRender extends Textile {
 	
 	/**
 	 * Constructor
@@ -26,14 +28,26 @@ class cRender {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		parent::__construct();
 	}
 
 	public function LiveLinks ( $pString ) {
-		$pString = eregi_replace('(((f|ht){1}tp://)[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a target="_blank" href="\\1">\\1</a>', $pString); 
-		$pString = eregi_replace('([[:space:]()[{}])(www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '\\1<a target="_blank" href="http://\\2">\\2</a>', $pString); 
-		$pString = eregi_replace('([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $pString); 
+		$pString = eregi_replace(' (((f|ht){1}tp://)[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a target="_blank" href="\\1">\\1</a>', $pString); 
+		$pString = eregi_replace(' ([[:space:]()[{}])(www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '\\1<a target="_blank" href="http://\\2">\\2</a>', $pString); 
+		$pString = eregi_replace(' ([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $pString); 
 		
 		return ( $pString );
+	}
+	
+	public function Format ( $pString ) {
+		
+		$return = ltrim ( rtrim ( $this->TextileThis ( $pString ) ) );
+		
+		// Remove superfluous <p> tags that TextileThis adds.
+		$return = preg_replace ( "/<\/p>$/", "", $return );
+		$return = preg_replace ( "/^<p>/", "", $return );
+		
+		return ( $return );
 	}
 	
 }

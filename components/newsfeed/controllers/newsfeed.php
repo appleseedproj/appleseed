@@ -127,7 +127,11 @@ class cNewsfeedNewsfeedController extends cController {
 			$row = $this->GetView ( 'newsfeed.link' );
 			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
-			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
+			
+			$Comment = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( 'Comment' ) );
+			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $Comment );
+			
+			
 			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $Comment );
 			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
 			$row->Find ( '.actionowner-link', 0 )->innertext = $ActionOwner;
@@ -170,7 +174,11 @@ class cNewsfeedNewsfeedController extends cController {
 			$row = $this->GetView ( 'newsfeed.link' );
 			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
-			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
+			//$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
+			
+			$Comment = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( 'Comment' ) );
+			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $Comment );
+			
 			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $Comment );
 			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
 			$row->Find ( '.actionowner-link', 0 )->innertext = $ActionOwner;

@@ -39,7 +39,9 @@ class cProfileStatusController extends cController {
 		$Status = $this->Talk ( 'Page', 'Status' );
 		
 		if ( $Status ) {
-			$this->Status->Find ( '[class=current]', 0 )->innertext = $Status['Content'];
+			$Content = $this->GetSys ( 'Render' )->Format ( $Status['Content'] );
+			$Content = $this->GetSys ( 'Render' )->LiveLinks ( $Content );
+			$this->Status->Find ( '[class=current]', 0 )->innertext = $Content;
 			$this->Status->Find ( '[class=stamp]', 0 )->innertext = $this->GetSys ( "Date" )->Format ( $Status['Stamp'] );
 			$this->Status->Find ( '[name=Context]', 0 )->value = $this->Get ( "Context" );
 			$this->Status->Find ( '[name=Task]', 0 )->value = "Clear";

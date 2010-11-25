@@ -122,6 +122,16 @@ class cPageShareController extends cController {
 			$this->_EmailPost ( $Content, $Identifier );
 		}
 		
+		// If we're updating our status, do a redirect to refresh the page.
+		if ( $this->_Current->Account == $this->_Focus->Account ) {
+			// Trigger the EndPageShare event
+			$this->GetSys ( 'Event' )->Trigger ( 'End', 'Page', 'Share' );
+			
+			// Redirect
+			$redirect = $this->GetSys ( "Router" )->Get ( "Request" );
+			header ( 'Location:' . $redirect );
+			exit;
+		}
 		return ( true );
 	}
 	

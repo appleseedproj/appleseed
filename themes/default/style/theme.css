@@ -246,8 +246,10 @@
 		
 		/* profile-status */
 		#status-container { float:left; margin-top:40px; height:49px; max-height:150px; overflow:hidden; }
-		#status-container .name { font-size:120%; font-weight:bold; }
-		#status-container .current { font-size:90%; font-weight:bold; color:#5a5a5a; margin-left:5px;  }
+		#status-container .name { float:left; font-size:120%; font-weight:bold; }
+		#status-container .current { font-size:90%; font-weight:bold; color:#5a5a5a; margin-left:5px; }
+		#status-container .current img { float:left; clear:none; max-height:50px; max-width:50px; display:inline; margin:0 2px; }
+		#status-container .current a { padding:0; background:none; }
 		#status-container .stamp { font-size:70%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
 		#status-container form { width:auto; display:inline; clear:none; padding:0; margin:0; }
 		
@@ -398,6 +400,7 @@
 		#profile-page .list .item .info { float:left; width:78%; padding:0; margin:0 5px; }
 		#profile-page .list .item .content-full { float:left; display:inline; clear:none; width:100%; padding:0; margin:0; min-height:46px; }
 		#profile-page .list .item .content-full .userlink { margin-right:5px; font-weight:bold; }
+		#profile-page .list .item .content-full img { float:left; clear:both; max-width:400px; border:1px solid #8a8a8a; padding:2px; margin:3px; }
 		#profile-page .list .item .remove { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:0.6;}
 		#profile-page .list .item .remove:hover { float:right; display:inline; clear:none; width:auto; padding:0; margin:0; opacity:1;}
 		#profile-page .stamp { float:left; color:#8a8a8a; font-style:italic; border:none; margin-top:6px; margin-right:5px; cursor:auto; text-align:left; font-size:90%; }
@@ -422,6 +425,7 @@
 		#profile-newsfeed .list .item .actionowner-icon { width:64px; height:64px; }
 		#profile-newsfeed .list .item .info { float:left; width:78%; padding:0; margin:0 5px; }
 		#profile-newsfeed .list .item .content { float:left; display:block; clear:both; padding:0; margin:0; width:100%; min-height:47px; }
+		#profile-newsfeed .list .item .content img { float:left; clear:both; max-width:400px; border:1px solid #8a8a8a; padding:2px; margin:3px; }
 		#profile-newsfeed .list .item .sentence { float:left; display:inline; clear:none; padding:0 5px 10px 0; margin:0; font-style:italic; font-size:90%; width:100%; color:#8a8a8a; }
 		#profile-newsfeed .list .item .sentence a { float:none; clear:none; margin-right:0px; font-weight:bold; font-style:normal; }
 		#profile-newsfeed .list .item .comment { float:left; display:inline; clear:none; padding:0; margin:0; width:100%; }
