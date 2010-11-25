@@ -28,6 +28,7 @@ class cLogs extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		date_default_timezone_set ( 'UTC' );
 	}
 	
 	public function GetLogs ( $pContext ) {
