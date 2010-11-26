@@ -56,7 +56,7 @@
 		label.error { float:left; width:auto; margin:5px 0; margin-left:41%; color:#bf4630; font-style:italic; font-size:90%; padding:0; clear:both; text-align:right; }
 		fieldset div select { padding:1px;}
 		textarea,input,select {  float:left; font-size:100%; width:200px; margin:4px 0 5px 0; color:#2a2a2a; }
-		textarea, input[type="text"] { border:1px solid #8a8a8a; }
+		textarea, input[type="text"], input[type="password"] { border:1px solid #8a8a8a; }
 		input[type="submit"], input[type="cancel"], input[type="reset"], input[type="button"]  {  width:auto; margin:0 5px 0 0; }
 		label em { color:#bf4630; }
 		input:disabled { color:#3a3a3a; }
