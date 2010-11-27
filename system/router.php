@@ -89,7 +89,9 @@ class cRouter extends cBase {
 						$value_pattern = '/\$' . ($p+1) . '/';
 						$value = preg_replace ( $value_pattern, $matches[$p+1], $value );
 						
-						$zApp->GetSys ( "Request" )->Set ( $key, $value );
+						// If the key isn't being set by a form, then pull from the routed variables.
+						if ( !$zApp->GetSys ( 'Request' )->Get ( $key ) )
+							$zApp->GetSys ( "Request" )->Set ( $key, $value );
 					}
 					
 				} else {
