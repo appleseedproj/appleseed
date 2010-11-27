@@ -90,7 +90,7 @@ class cJournalEntryController extends cController {
 	
 	private function _PrepAdd ( ) {
 		
-		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/save/';
+		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/add';
 		
 		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$privacyControls =  $this->View->Find ('.privacy');
@@ -113,7 +113,7 @@ class cJournalEntryController extends cController {
 		
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		
-		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/' . $Identifier;
+		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/edit/' . $Identifier;
 		
 		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$privacyControls =  $this->View->Find ('.privacy');
@@ -159,7 +159,11 @@ class cJournalEntryController extends cController {
 		
 		$Entry = $this->GetSys ( 'Request' )->Get ( 'Entry' );
 		
-		$location = '/profile/' . $this->_Focus->Username . '/journal/' . $Entry;
+		if ( $Entry ) {
+			$location = '/profile/' . $this->_Focus->Username . '/journal/' . $Entry;
+		} else {
+			$location = '/profile/' . $this->_Focus->Username . '/journal/';
+		}
 		
 		header ( 'Location: ' . $location );
 		exit;
