@@ -200,7 +200,7 @@ class cComponents extends cBase {
 		if ( $rtask = $this->GetSys ( "Request" )->Get ('Task') ) {
 			if ( $usecontext = $this->GetSys ( "Request" )->Get ( "Context" ) ) {
 				if ( !preg_match ( '/' . $usecontext . '/', $context ) ) {
-					$pTask = "display";
+					if ( !$pTask ) $pTask = "display";
 				} else {
 					$pTask = $rtask;
 				}
