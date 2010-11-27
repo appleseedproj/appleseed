@@ -40,12 +40,25 @@ class cRender extends Textile {
 	}
 	
 	public function Format ( $pString ) {
+		eval ( GLOBALS );
 		
 		$return = ltrim ( rtrim ( $this->TextileThis ( $pString ) ) );
 		
 		// Remove superfluous <p> tags that TextileThis adds.
 		$return = preg_replace ( "/<\/p>$/", "", $return );
 		$return = preg_replace ( "/^<p>/", "", $return );
+		
+		// Add target=__new to all links
+		$HTML = $zApp->GetSys ( 'HTML' );
+		$HTML->Load ( $return );
+		
+		$anchors = $HTML->Find ( 'a' );
+		
+		foreach ( $anchors as $a => $anchor ) {
+			$anchor->target = "__new";
+		}
+		
+		$return = $HTML->outertext;
 		
 		return ( $return );
 	}
