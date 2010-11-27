@@ -35,7 +35,7 @@
    	
 </head>
 
-<body id="www-website-com">
+<body id="appleseed">
 
 	<!-- System Message -->
 	<?php $zApp->Components->Go ( "system" ); ?>

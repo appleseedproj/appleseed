@@ -40,7 +40,7 @@
    	
 </head>
 
-<body id="www-website-com">
+<body id="appleseed">
 	
   	<?php $zApp->Components->Go ( "system" ); ?>
 

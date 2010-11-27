@@ -23,7 +23,7 @@
 	
 </head>
 
-<body id="www-website-com">
+<body id="appleseed">
 
 	<!-- System Message -->
 	<div id="system-message"> 
