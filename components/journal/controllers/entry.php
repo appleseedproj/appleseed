@@ -111,7 +111,9 @@ class cJournalEntryController extends cController {
 	
 	private function _PrepEdit ( ) {
 		
-		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/save/';
+		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
+		
+		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/' . $Identifier;
 		
 		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$privacyControls =  $this->View->Find ('.privacy');
@@ -145,6 +147,19 @@ class cJournalEntryController extends cController {
 		$Identifier = $this->Model->Store ( $this->_Focus->Id, $Identifier, $Title, $Body );
 		
 		$location = '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
+		
+		header ( 'Location: ' . $location );
+		exit;
+	}
+	
+	public function Cancel ( ) {
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		$Entry = $this->GetSys ( 'Request' )->Get ( 'Entry' );
+		
+		$location = '/profile/' . $this->_Focus->Username . '/journal/' . $Entry;
 		
 		header ( 'Location: ' . $location );
 		exit;
