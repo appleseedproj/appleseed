@@ -476,7 +476,7 @@
 		
 		
 		/* Journal Entry */
-		#profile-journal-entry .body { float:left; clear:both; font-size:100%; width:590px; margin-top:10px; margin-left:50px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal-entry .body { float:left; clear:both; font-size:100%; width:590px; margin:10px 50px; border:1px solid #c0d895; padding:5px; }
 		#profile-journal-entry .body img { max-width:590px; }
 		#profile-journal-entry .body a { margin:0; padding:0; background:none; }
 		
