@@ -66,4 +66,10 @@ class cJournalModel extends cModel {
 		return ( $this->Get ( 'Identifier' ) );
 	}
 	
+	public function Entries ( $pUserId, $pLimit ) {
+		
+		$this->Retrieve ( array ( 'Owner_FK' => $pUserId ) );
+		
+	}
+	
 }
