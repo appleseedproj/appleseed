@@ -1,0 +1,14 @@
+TITLE_LABEL="Title"
+BODY_LABEL="Body"
+EDIT_JOURNAL_ENTRY="Edit"
+ADD_JOURNAL_ENTRY="New"
+JOURNAL_ENTRY_TITLE="Journal Entry"
+
+PREVIEW_TITLE="Live Preview"
+
+TEXTILE_MARKUP_INFORMATION="Use <a href='http://en.wikipedia.org/wiki/Textile_(markup_language)' target='__new'>Textile Markup</a> to add links, images, italics and other markup to your entry."
+
+NO_PREVIEW_YET="No preview is available.  Enter text to see a live preview of your journal entry."
+
+
+PERMALINK="Permalink: "

@@ -55,7 +55,7 @@
 		label { float:left;width:35%; margin:6px 5% 5px 5px; font-size:90%; padding:0; clear:both; text-align:right; }
 		label.error { float:left; width:auto; margin:5px 0; margin-left:41%; color:#bf4630; font-style:italic; font-size:90%; padding:0; clear:both; text-align:right; }
 		fieldset div select { padding:1px;}
-		textarea,input,select {  float:left; font-size:100%; width:200px; margin:4px 0 5px 0; color:#2a2a2a; }
+		textarea,input,select {  float:left; font-size:100%; width:194px; margin:4px 0 5px 0; padding:3px; color:#2a2a2a; }
 		textarea, input[type="text"], input[type="password"] { border:1px solid #8a8a8a; }
 		input[type="submit"], input[type="cancel"], input[type="reset"], input[type="button"]  {  width:auto; margin:0 5px 0 0; }
 		label em { color:#bf4630; }
@@ -232,6 +232,18 @@
 		
 		#appleseed-profile-info { float:left; position:relative; top:-100px;  }
 		
+		/* Privacy Controls */
+		
+		.privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
+		.privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
+		.privacy ul { list-style-type:none; clear:none; float:left; }
+		.privacy ul li { clear:none; float:left; margin-right:10px; }
+		.privacy label { clear:none; float:left; font-size:100%; margin:0; padding:0; width:auto; }
+		.privacy .everybody { font-style:italic; }
+		.privacy .nobody { font-style:italic; }
+		.privacy .friends { font-style:italic; }
+		.privacy input[type="checkbox"] { margin-top:1px; margin-right:5px; }
+		
 		/* profile-info */
 		#profile-photo { min-height:112px; }
 		#profile-photo img { max-width:220px; margin-top:20px; border-bottom:1px solid #80af1f; }
@@ -353,23 +365,13 @@
 		
 		/* page-share */
 		#page-share .post, #page-share .post-link { float:left; width:98%; padding:1%; margin-top:4px; margin-bottom:20px; border:1px solid #c0d895; }
-		#page-share .post textarea { width:590px; height:14px; padding:5px; }
-		#page-share .post textarea:focus { width:590px; height:28px; padding:5px; }
+		#page-share .post textarea { width:590px; height:14px; }
+		#page-share .post textarea:focus { width:594px; height:28px; }
 		
-		#page-share .post-link textarea { width:590px; height:14px; padding:5px; }
-		#page-share .post-link textarea:focus { width:590px; height:28px; padding:5px; }
-		#page-share .post-link .link { width:590px; height:14px; padding:5px; }
+		#page-share .post-link textarea { width:594px; height:14px; }
+		#page-share .post-link textarea:focus { width:594px; height:28px; }
+		#page-share .post-link .link { width:594px; height:14px; }
 		#page-share .submit { float:right; margin-top:5px; }
-		
-		#page-share .privacy { clear:both; float:left; padding:0; padding-top:2px; margin:0; }
-		#page-share .privacy h2 { clear:both; float:left; margin-right:10px; color:#bf4630; }
-		#page-share .privacy ul { list-style-type:none; clear:none; float:left; }
-		#page-share .privacy ul li { clear:none; float:left; margin-right:10px; }
-		#page-share .privacy label { clear:none; float:left; font-size:100%; margin:0; padding:0; width:auto; }
-		#page-share .privacy .everybody { font-style:italic; }
-		#page-share .privacy .nobody { font-style:italic; }
-		#page-share .privacy .friends { font-style:italic; }
-		#page-share .privacy input[type="checkbox"] { margin-top:1px; margin-right:5px; }
 		
 		#page-share .share-tabs { float:left; clear:both; width:100%; }
 		#page-share .share-tabs li { position:relative; top:4px; list-style-type:none; float:left; clear:none; margin-right:5px; padding:0px 5px 0 4px; border:1px solid #f1ffd6; border-bottom:none; }
@@ -453,6 +455,24 @@
 		#profile-newsfeed .list .item.link .content { width:100%; text-align:left; height:auto; min-height:0; }
 		#profile-newsfeed .list .item.link .content .sentence { clear:none; float:left; display:inline; width:auto; }
 		#profile-newsfeed .list .item.link .content .comment { clear:none; float:left; display:inline; width:auto; }
+		
+		/* Journal Add/Edit */
+		#profile-journal-edit label { width:100px; }
+		#profile-journal-edit input[type="text"] { width:496px; }
+		#profile-journal-edit textarea { width:496px; height:150px; }
+		#profile-journal-edit .privacy label { width:auto; }
+		#profile-journal-edit .preview { font-size:100%; width:590px; margin-left:50px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal-edit img { max-width:590px; }
+		#profile-journal-edit .remove { float:right; clear:both; margin-top:5px; }
+		#profile-journal-edit fieldset { clear:both; }
+		#profile-journal-edit .preview-url { font-weight:normal; color:#8a8a8a; font-style:italic; font-size:90%; }
+		#profile-journal-edit .preview p { margin:0; padding:0; }
+		#profile-journal-edit .preview a { margin:0; padding:0; background:none; }
+		#profile-journal-edit form .journal-markup-info { margin:10px 10px 10px 128px; padding:10px; }
+		
+		#profile-journal-entry .body img { max-width:700px; }
+		#profile-journal-entry .permalink { color:#8a8a8a; font-style:italic; }
+		#profile-journal-entry .permalink a { color:#8a8a8a; background:none; padding:0; }
 		
 		#newsfeed-menu { clear:both; }
 		#newsfeed-menu li { list-style-type:none; padding:3px; padding-left:20px; }
