@@ -461,7 +461,7 @@
 		#profile-journal-edit input[type="text"] { width:496px; }
 		#profile-journal-edit textarea { width:496px; height:150px; }
 		#profile-journal-edit .privacy label { width:auto; }
-		#profile-journal-edit .preview { font-size:100%; width:590px; margin-left:50px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal-edit .preview { float:left; clear:both; font-size:100%; width:590px; margin-left:50px; border:1px solid #c0d895; padding:5px; }
 		#profile-journal-edit img { max-width:590px; }
 		#profile-journal-edit .remove { float:right; clear:both; margin-top:5px; }
 		#profile-journal-edit fieldset { clear:both; }
@@ -476,11 +476,21 @@
 		
 		
 		/* Journal Entry */
-		#profile-journal-entry .body img { max-width:700px; }
+		#profile-journal-entry .body { float:left; clear:both; font-size:100%; width:590px; margin-top:10px; margin-left:50px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal-entry .body img { max-width:590px; }
 		#profile-journal-entry .body a { margin:0; padding:0; background:none; }
+		
+		#profile-journal-edit .preview h1, #profile-journal-entry .body h1 { color:#2a2a2a; font-size:160%; border:none; clear:both; float:left; margin-bottom:5px; }
+		#profile-journal-edit .preview h2, #profile-journal-entry .body h2 { color:#2a2a2a; font-size:150%; border:none; clear:both; float:left; margin-bottom:5px; }
+		#profile-journal-edit .preview h3, #profile-journal-entry .body h3 { color:#2a2a2a; font-size:140%; border:none; clear:both; float:left; margin-bottom:5px; }
+		#profile-journal-edit .preview h4, #profile-journal-entry .body h4 { color:#2a2a2a; font-size:130%; border:none; clear:both; float:left; margin-bottom:5px; }
+		#profile-journal-edit .preview h5, #profile-journal-entry .body h5 { color:#2a2a2a; font-size:120%; border:none; clear:both; float:left; margin-bottom:5px; }
+		#profile-journal-edit .preview h6, #profile-journal-entry .body h6 { color:#2a2a2a; font-size:110%; border:none; clear:both; float:left; margin-bottom:5px; }
+		
 		#profile-journal-entry .permalink { margin-top:5px; color:#8a8a8a; font-style:italic; }
 		#profile-journal-entry .permalink a { color:#8a8a8a; background:none; padding:0; }
 		#profile-journal-entry .edit { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		#profile-journal-edit form .journal-markup-info { margin:10px 10px 10px 128px; padding:10px; }
 		
 		/* Journal Entries */
 		

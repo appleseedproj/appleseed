@@ -157,10 +157,10 @@ class cJournalEntryController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		$Entry = $this->GetSys ( 'Request' )->Get ( 'Entry' );
+		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		
-		if ( $Entry ) {
-			$location = '/profile/' . $this->_Focus->Username . '/journal/' . $Entry;
+		if ( $Identifier ) {
+			$location = '/profile/' . $this->_Focus->Username . '/journal/' . $Identifier;
 		} else {
 			$location = '/profile/' . $this->_Focus->Username . '/journal/';
 		}
