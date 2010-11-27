@@ -47,6 +47,8 @@ class cJournalEntryController extends cController {
 		$this->View->Find ( '.permalink-link', 0 )->innertext = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
 		$this->View->Find ( '.body', 0 )->innertext = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( 'Body' ) );
 		
+		$this->View->Find ( '.edit', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/edit/' . $this->Model->Get ( 'Identifier' );
+		
 		$this->View->Display();
 		
 		return ( true );
@@ -59,14 +61,34 @@ class cJournalEntryController extends cController {
 		
 		$this->View = $this->GetView ( 'edit' );
 		
-		$this->_Prep();
+		$this->_PrepAdd();
 		
 		$this->View->Display();
 		
 		return ( true );
 	}
 	
-	private function _Prep ( ) {
+	public function Edit ( $pView = null, $pData = array ( ) ) {
+		
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
+		
+		$this->View = $this->GetView ( 'edit' );
+		
+		$this->Model = $this->GetModel ();
+		
+		$this->Model->Load ( $this->_Focus->Id, $Identifier );
+		
+		$this->_PrepEdit();
+		
+		$this->View->Display();
+		
+		return ( true );
+	}
+	
+	private function _PrepAdd ( ) {
 		
 		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/save/';
 		
@@ -82,6 +104,30 @@ class cJournalEntryController extends cController {
 			$context->value = $this->Get ( 'Context' );
 		}
 		
+		$this->View->Find ( '.remove', 0 )->outertext= "";
+		
+		return ( true );
+	}
+	
+	private function _PrepEdit ( ) {
+		
+		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/save/';
+		
+		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
+		$privacyControls =  $this->View->Find ('.privacy');
+		
+		foreach ( $privacyControls as $c => $control ) {
+			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $pageData ); 
+		}
+		
+		$Contexts =  $this->View->Find ( '[name=Context]' );
+		foreach ( $Contexts as $c => $context ) {
+			$context->value = $this->Get ( 'Context' );
+		}
+		
+		$this->View->Find ( '[name=Title]', 0 )->value = $this->Model->Get ( 'Title' );
+		$this->View->Find ( '[name=Body]', 0 )->innertext = $this->Model->Get ( 'Body' );
+		
 		return ( true );
 	}
 	
@@ -96,9 +142,12 @@ class cJournalEntryController extends cController {
 		$Title = $this->GetSys ( 'Request' )->Get ( 'Title' );
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		
-		$this->Model->Store ( $this->_Focus->Id, $Identifier, $Title, $Body );
+		$Identifier = $this->Model->Store ( $this->_Focus->Id, $Identifier, $Title, $Body );
 		
-		return ( true );
+		$location = '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
+		
+		header ( 'Location: ' . $location );
+		exit;
 	}
 	
 }

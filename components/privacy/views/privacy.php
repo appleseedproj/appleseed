@@ -1,3 +1,5 @@
+<script type="text/javascript" src="/components/privacy/assets/javascript/privacy.js"></script>
+
 <h2 class="privacy-message">Who can see this?</h2>
 <ul class="privacy-list">
 	<li class="item everybody"><input name="Privacy[everybody]" type="checkbox"><label for="privacy[]">Everybody Has Access</label></li>

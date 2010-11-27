@@ -10,5 +10,6 @@ TEXTILE_MARKUP_INFORMATION="Use <a href='http://en.wikipedia.org/wiki/Textile_(m
 
 NO_PREVIEW_YET="No preview is available.  Enter text to see a live preview of your journal entry."
 
-
 PERMALINK="Permalink: "
+
+REMOVE="Delete"

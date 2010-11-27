@@ -5,7 +5,7 @@
 	
 	<form method="post" class="journal" name="journal">
 		<input type="hidden" name="Context" value="">
-		<button type="submit" class="remove" name="Task" value="Remove" />Remove</button>
+		<a class="remove">Remove</a>
 		<fieldset> 
 			<legend class="add-edit" >Add Journal Entry</legend>
                

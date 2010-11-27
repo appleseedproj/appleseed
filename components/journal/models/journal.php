@@ -37,7 +37,7 @@ class cJournalModel extends cModel {
 		
 		$criteria = array ( 'Owner_FK' => $pUserId, array ( 'Identifier' => $pEntry, '||Title' => $url ) );
 		
-		$this->Retrieve ( $criteria );
+		$this->Retrieve ( $criteria, 'Created DESC' );
 		
 		if ( $this->Get ( 'Total' ) == 0 ) return ( false );
 		

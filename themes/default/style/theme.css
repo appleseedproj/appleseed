@@ -470,9 +470,22 @@
 		#profile-journal-edit .preview a { margin:0; padding:0; background:none; }
 		#profile-journal-edit form .journal-markup-info { margin:10px 10px 10px 128px; padding:10px; }
 		
+		#profile-journal-edit .privacy { margin:0 0 10px 0; }
+		#profile-journal-edit .remove { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		#profile-journal-edit .remove:hover { text-decoration:none; }
+		
+		
+		/* Journal Entry */
 		#profile-journal-entry .body img { max-width:700px; }
-		#profile-journal-entry .permalink { color:#8a8a8a; font-style:italic; }
+		#profile-journal-entry .body a { margin:0; padding:0; background:none; }
+		#profile-journal-entry .permalink { margin-top:5px; color:#8a8a8a; font-style:italic; }
 		#profile-journal-entry .permalink a { color:#8a8a8a; background:none; padding:0; }
+		#profile-journal-entry .edit { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		
+		/* Journal Entries */
+		
+		#profile-journal-entries .rss { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		#profile-journal-entries .rss:hover { text-decoration:none; }
 		
 		#newsfeed-menu { clear:both; }
 		#newsfeed-menu li { list-style-type:none; padding:3px; padding-left:20px; }
