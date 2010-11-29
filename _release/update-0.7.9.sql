@@ -6,6 +6,8 @@ alter table `#__NotificationsIncoming` add Title char(255);
 drop table `#__journalPrivacy`;
 drop table `#__journalPost`;
 
-create table `#__JournalEntries` ( `Entry_FK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Title` char(200) DEFAULT NULL, `Body` text, `Identifier` char(32) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Entry_FK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+create table `#__JournalEntries` ( `Entry_PK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Title` char(200) DEFAULT NULL, `Body` text, `Identifier` char(32) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Entry_FK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 drop table `#__contentArticles`;
+
+create table `#__SearchIndexes` ( `Index_PK` int(11) NOT NULL AUTO_INCREMENT, `Context` char(16) DEFAULT NULL, `Context_FK` int(11) DEFAULT NULL, `Keywords` char(200) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Index_FK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
