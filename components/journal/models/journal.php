@@ -50,6 +50,13 @@ class cJournalModel extends cModel {
 		
 		if ( !$pIdentifier ) {
 			$pIdentifier = $this->CreateUniqueIdentifier();
+		} else {
+			$this->Retrieve ( array ( 'Owner_FK' => $pUserId, 'Identifier' => $pIdentifier ) );
+			if ( $this->Get ( 'Total' ) > 0 ) {
+				$this->Fetch();
+			} else {
+				$this->Set ( 'Created', NOW() );
+			}
 		}
 		
 		if ( !$pUserId ) return ( false );
@@ -58,7 +65,6 @@ class cJournalModel extends cModel {
 		$this->Set ( 'Identifier', $pIdentifier );
 		$this->Set ( 'Title', $pTitle );
 		$this->Set ( 'Body', $pBody );
-		$this->Set ( 'Created', NOW() );
 		$this->Set ( 'Updated', NOW() );
 		
 		$this->Save();

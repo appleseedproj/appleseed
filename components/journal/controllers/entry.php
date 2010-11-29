@@ -148,6 +148,14 @@ class cJournalEntryController extends cController {
 		
 		$location = '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
 		
+		$id = $this->Model->Get ( 'Entry_PK' );
+		$context = 'journal';
+		
+		// First 200 characters of the text, without formatting.
+		$text = substr ( strip_tags ( $this->GetSys ( 'Render' )->Format ( $Body ) ), 0, 200 );
+		
+		$this->Talk ( 'Search', 'Index', array ( 'text' => $text, 'context' => $context, 'id' => $id ) );
+		
 		header ( 'Location: ' . $location );
 		exit;
 	}
