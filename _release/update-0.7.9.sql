@@ -12,4 +12,6 @@ drop table `#__contentArticles`;
 
 create table `#__SearchIndexes` ( `Index_PK` int(11) NOT NULL AUTO_INCREMENT, `Context` char(16) DEFAULT NULL, `Context_FK` int(11) DEFAULT NULL, `Keywords` TEXT DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Index_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-create table `#__NetworkNodes` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Domain` char(128) DEFAULT NULL, `Trust` enum('blocked','discovered','trusted') DEFAULT 'discovered', `Source` char(128) DEFAULT NULL, `Access` enum('public','trusted','private') DEFAULT 'private', `Inherit` tinyint(1) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Node_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+create table `#__NetworkNodes` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Domain` char(128) DEFAULT NULL, `Trust` enum('blocked','discovered','trusted') DEFAULT 'discovered', `Source` char(128) DEFAULT NULL, `Access` enum('public','trusted','private') DEFAULT 'private', `Inherit` tinyint(1) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, `Methods` char(100) DEFAULT NULL, `Version` char(8) DEFAULT NULL,  PRIMARY KEY (`Node_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
