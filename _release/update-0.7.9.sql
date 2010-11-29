@@ -10,4 +10,4 @@ create table `#__JournalEntries` ( `Entry_PK` int(11) NOT NULL AUTO_INCREMENT, `
 
 drop table `#__contentArticles`;
 
-create table `#__SearchIndexes` ( `Index_PK` int(11) NOT NULL AUTO_INCREMENT, `Context` char(16) DEFAULT NULL, `Context_FK` int(11) DEFAULT NULL, `Keywords` char(200) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Index_FK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+create table `#__SearchIndexes` ( `Index_PK` int(11) NOT NULL AUTO_INCREMENT, `Context` char(16) DEFAULT NULL, `Context_FK` int(11) DEFAULT NULL, `Keywords` char(200) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Index_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
