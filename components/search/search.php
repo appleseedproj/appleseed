@@ -31,4 +31,11 @@ class cSearch extends cComponent {
 		parent::__construct();
 	}
 	
+	public function Index ( $pData = null ) {
+		
+		$return = $this->Load ( 'Search', null, 'Index', $pData );
+		
+		return ( $return );
+	}
+	
 }
