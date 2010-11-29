@@ -153,6 +153,8 @@ class cJournalEntryController extends cController {
 		
 		// First 200 characters of the text, without formatting.
 		$text = substr ( strip_tags ( $this->GetSys ( 'Render' )->Format ( $Body ) ), 0, 200 );
+		// Title, without formatting.
+		$text .= ' ' . strip_tags ( $Title );
 		
 		$this->Talk ( 'Search', 'Index', array ( 'text' => $text, 'context' => $context, 'id' => $id ) );
 		
