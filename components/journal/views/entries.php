@@ -1,8 +1,6 @@
 <nav class="pagination">
 </nav>
 
-<h1>Article Summaries Title</h1>
-
 <ul class="article-list">
 	<li class="summary"> 
 		<article> 

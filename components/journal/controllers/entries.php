@@ -51,7 +51,7 @@ class cJournalEntriesController extends cController {
 		
 		$this->Model->Entries ( $this->_Focus->Id, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
 		
-		$link = '/articles/(.*)';
+		$link = '/profile/' . $this->_Focus->Username . '/journal/(.*)';
 		
 		$pageData = array ( 'start' => $this->_PageStart, 'step'  => $this->_PageStep, 'total' => $this->Model->Get ( "Total" ), 'link' => $link );
 		$pageControls =  $this->View->Find ("nav[class=pagination]");

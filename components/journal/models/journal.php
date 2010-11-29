@@ -74,7 +74,7 @@ class cJournalModel extends cModel {
 	
 	public function Entries ( $pUserId, $pLimit ) {
 		
-		$this->Retrieve ( array ( 'Owner_FK' => $pUserId ) );
+		$this->Retrieve ( array ( 'Owner_FK' => $pUserId ), 'Created DESC', $pLimit );
 		
 	}
 	
