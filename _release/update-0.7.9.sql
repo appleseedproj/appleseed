@@ -14,4 +14,9 @@ create table `#__SearchIndexes` ( `Index_PK` int(11) NOT NULL AUTO_INCREMENT, `C
 
 create table `#__NetworkNodes` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Description` char(200) DEFAULT NULL, `Domain` char(128) DEFAULT NULL, `Trust` enum('blocked','discovered','trusted') DEFAULT 'discovered', `Source` char(128) DEFAULT NULL, `Access` enum('public','trusted','private') DEFAULT 'private', `Inherit` tinyint(1) DEFAULT NULL, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, `Methods` char(100) DEFAULT NULL, `Version` char(8) DEFAULT NULL, `Status` tinyint(1) DEFAULT NULL, PRIMARY KEY (`Node_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+alter table `#__NotificationsOutgoing` add `Feedback` MEDIUMINT default 0;
+alter table `#__NotificationsOutgoing` add `Comments` MEDIUMINT default 0;
+alter table `#__NotificationsIncoming` add `Feedback` MEDIUMINT default 0;
+alter table `#__NotificationsIncoming` add `Comments` MEDIUMINT default 0;
+
 insert into `#__NetworkNodes` values (1,'Official beta test site for the Appleseed Project: The first open source, fully decentralized social networking software.','appleseedproject.org','trusted','','public',1,NOW(),NOW(),'http','QS/0.1.1',1);
