@@ -33,7 +33,7 @@ class cEvents extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'events', 'title' => 'Events Tab', 'link' => '/events/' );
+		//$return[] = array ( 'id' => 'events', 'title' => 'Events Tab', 'link' => '/events/' );
 		
 		return ( $return );
 	} 

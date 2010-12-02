@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Profile Component Contact Controller
+/** Profile Component Block Controller
  * 
- * Profile Component Contact Controller Class
+ * Profile Component Block Controller Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Profile
  */
-class cProfileContactController extends cController {
+class cProfileBlockController extends cController {
 	
 	/**
 	 * Constructor
@@ -64,6 +64,9 @@ class cProfileContactController extends cController {
 		
 		$this->View->Find ( "[class=profile-send-message-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Messages", "Sendlink", $data );
 		
+		$this->View->Find ( "[class=profile-block-user-link]", 0 )->href = null;
+		
+		$this->View->Find ( '.profile-block-user-link', 0 )->innertext = __ ( 'Block Contact User', array ( 'fullname' => $focus->Fullname ) );
 		list ( $firstname, $lastname ) = explode ( ' ', $focus->Fullname );
 		$this->View->Find ( '.profile-ping-user-link', 0 )->innertext = __ ( 'Ping Contact User', array ( 'firstname' => $firstname ) );
 		$this->View->Find ( '.profile-send-message-link', 0 )->innertext = __ ( 'Send Message To Contact', array ( 'firstname' => $firstname ) );

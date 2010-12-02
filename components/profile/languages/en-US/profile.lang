@@ -19,8 +19,9 @@ NO_USER_INFORMATION_FOR="No user information for %fullname$s"
 [contact]
 ADD_CONTACT_AS_FRIEND="Add as a friend"
 REMOVE_CONTACT_AS_FRIEND="Remove from friends"
-SEND_MESSAGE_TO_CONTACT="Send a message"
-BLOCK_CONTACT_USER="Block this person"
+SEND_MESSAGE_TO_CONTACT="Send %firstname$s a message"
+BLOCK_CONTACT_USER="Block %fullname$s"
+PING_CONTACT_USER="Ping %firstname$s"
 
 [mutual-summary]
 SEE_ALL_MUTUAL_FRIENDS="See all"

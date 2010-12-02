@@ -302,6 +302,12 @@
 		#profile-mutual #friends-mutual-summary ul li img { float:left; width:32px; height:32px; margin:5px 5px 0 0; }
 		#profile-mutual #friends-mutual-summary a.all-mutual-friends-link { float:right; clear:both;}
 		
+		/* profile-block */
+		#profile-block ul li { float:left; clear:both; font-size:90%; list-style-type:none; margin:105px 0 5px 10px; padding:2px; }
+		#profile-block ul li button { text-decoration:none; border:none; background:none no-repeat left center; }
+		#profile-block ul li button { color:#406300; padding-left:8px; background-image:url('/themes/default/images/appleseed-icons.png'); background-position: -120px -43px; }
+		#profile-block ul li button:hover { text-decoration:underline; cursor:pointer; }
+		
 		/* user-invites */
 		#user-invites { float:left; width:100%; padding:0; margin:0; margin-bottom:10px; }
 		#user-invites .invite-count em { padding:0 2px; font-style:normal; font-weight:bold; font-size:130%; color:#bf4630; }

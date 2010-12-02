@@ -33,7 +33,7 @@ class cGroups extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'groups', 'title' => 'Groups Tab', 'link' => '/groups/' );
+		// $return[] = array ( 'id' => 'groups', 'title' => 'Groups Tab', 'link' => '/groups/' );
 		
 		return ( $return );
 	} 
