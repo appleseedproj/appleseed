@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Profile Component Block Controller
+/** Profile Component Reject Controller
  * 
- * Profile Component Block Controller Class
+ * Profile Component Reject Controller Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Profile
  */
-class cProfileBlockController extends cController {
+class cProfileRejectController extends cController {
 	
 	/**
 	 * Constructor
@@ -57,9 +57,8 @@ class cProfileBlockController extends cController {
 		$focusInfo->domain = $focus->Domain;
 		$focusInfo->account = $focus->Username . '@' . $focus->Domain;
 		
-		// If the user is already a friend, don't show the Add Friend button.
+		// If the user is already a friend, show the Remove Friend button.
 		$data = array ( "account" => $current->Account, "request" => $focus->Account );
-		$this->View->Find ( "[class=profile-add-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Addlink", $data );
 		$this->View->Find ( "[class=profile-remove-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Removelink", $data );
 		
 		$this->View->Find ( "[class=profile-send-message-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Messages", "Sendlink", $data );
@@ -72,11 +71,8 @@ class cProfileBlockController extends cController {
 		$this->View->Find ( '.profile-send-message-link', 0 )->innertext = __ ( 'Send Message To Contact', array ( 'firstname' => $firstname ) );
 		
 		if ( in_array ( $currentInfo->account, $focusInfo->friends ) ) {
-			// Remove "add as friend" if already friends
-			$this->View->Find ( "[class=profile-add-friend]", 0 )->outertext = "";
 		} else if ( $currentInfo->account == $focusInfo->account ) {
-			// Remove both since we're looking at our own account.
-			$this->View->Find ( "[class=profile-remove-friend]", 0 )->outertext = "";
+			// Remove since we're looking at our own account.
 			$this->View->Find ( "[class=profile-add-friend]", 0 )->outertext = "";
 		} else {
 			// Remove "remove from friends" if not friends

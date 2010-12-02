@@ -60,7 +60,6 @@ class cProfileContactController extends cController {
 		// If the user is already a friend, don't show the Add Friend button.
 		$data = array ( "account" => $current->Account, "request" => $focus->Account );
 		$this->View->Find ( "[class=profile-add-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Addlink", $data );
-		$this->View->Find ( "[class=profile-remove-friend-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Friend", "Removelink", $data );
 		
 		$this->View->Find ( "[class=profile-send-message-link]", 0 )->href = $this->GetSys ( "Event" )->Trigger ( "Create", "Messages", "Sendlink", $data );
 		

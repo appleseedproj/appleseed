@@ -82,6 +82,9 @@
 					<div id="profile-mutual">
 					  	<?php $zApp->Components->Go ( "friends", "mutual", "summary" ); ?>	 
 					</div>
+					<div id="profile-reject">
+					  	<?php $zApp->Components->Go ( "profile", "reject", "reject" ); ?>
+					</div>
 				</div>
 				<div id="appleseed-profile-content" class="grid_12 omega">
 					<?php $zApp->Components->Go ( "journal", "entries", "entries" ); ?>
