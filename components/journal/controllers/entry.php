@@ -34,7 +34,7 @@ class cJournalEntryController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		$Entry = $this->GetSys ( 'Request' )->Get ( 'Entry' );
+		$Entry = urldecode ( $this->GetSys ( 'Request' )->Get ( 'Entry' ) );
 		
 		$this->View = $this->GetView ( 'entry' );
 		
