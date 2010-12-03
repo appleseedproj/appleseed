@@ -1,5 +1,6 @@
 <section id="profile-journal">
 	<a class="add">Add New</a>
+	<a class="rss">RSS Feed</a>
 
 	<nav class="pagination">
 	</nav>

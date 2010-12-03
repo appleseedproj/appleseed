@@ -64,6 +64,7 @@ class cJournalEntriesController extends cController {
 		$row = $this->View->Copy ( '[class=journal-entries]' )->Find ( 'li', 0 );
 		
 		$this->View->Find ( '.add', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/add/';
+		$this->View->Find ( '.rss', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/rss/';
 		
 		$rowOriginal = $row->outertext;
 		
@@ -73,9 +74,13 @@ class cJournalEntriesController extends cController {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
+			$url = strtolower ( str_replace ( ' ', '-', $this->Model->Get ( 'Title' ) ) );
+			
+			$summary = $this->_Summary ( $this->Model->Get ( 'Body' ) );
+			
 			$row->Find ( '.title-link', 0 )->innertext = $this->Model->Get ( "Title" );
 			$row->Find ( '.title-link', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/' . $url;
-			$row->Find ( '.body', 0 )->innertext = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( "Body" ) );
+			$row->Find ( '.body', 0 )->innertext = $summary;
 			
 			$username = $this->Model->Get ( 'Submitted_Username');
 			$domain = $this->Model->Get ( 'Submitted_Domain');
@@ -90,7 +95,6 @@ class cJournalEntriesController extends cController {
 			$row->Find ( '.fullname', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
 			$row->Find ( '.fullname', 0 )->innertext = $username . '@' . $domain;
 			
-			$url = strtolower ( str_replace ( ' ', '-', $this->Model->Get ( 'Title' ) ) );
 			$row->Find ( '.readmore', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/' . $url;
 			
 			$row->Find ( '.created', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->Model->Get ( 'Created' ), true );
@@ -101,6 +105,50 @@ class cJournalEntriesController extends cController {
 		
 		return ( true );
 	}
+	
+	private function _Summary ( $pBody ) {
+		
+		if ( preg_match ( "/---(.+?)---/is", $pBody, $matches ) ) {
+			$pBody = $matches[1];
+		}
+		
+		$summary = $this->GetSys ( 'Render' )->Format ( $pBody );
+		
+		return ( $summary );
+		
+		/*
+		 * This code will automatically reduce the summary to 500 characters
+		 * 
+		 * Possibly use this for Descriptions for newsfeeds, but not for summaries?
+		 * 
+		 */
+		
+		$stripped = strip_tags ( $this->GetSys ( 'Render' )->Format ( $pBody ) );
+		
+		$end = strlen ( $stripped );
+		if ( strlen ( $stripped ) < 500 ) {
+			// Return the whole article back.
+			return ( $this->GetSys ( 'Render' )->Format ( $pBody ) );
+		} else {
+			$end = 500;
+		}
+		
+		$start = $end - 5;
+		if ( $start < 0 ) $start = 0;
+		
+		$split = substr_replace ( $stripped, '##%%&&@@', $start, 5 );
+		
+		list ( $summary, $null ) = explode ( '##%%&&@@', $split );
+		
+		//$summary = $summary . $split;
+		
+		if ( strlen ( $stripped ) > strlen ( $summary ) ) $summary .= '...';
+		
+		$summary = $this->GetSys ( 'Render' )->Format ( $summary );
+		
+		return ( $summary );
+	}
+			
 	
 	private function _PageCalc ( ) {
 		

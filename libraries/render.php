@@ -42,6 +42,9 @@ class cRender extends Textile {
 	public function Format ( $pString ) {
 		eval ( GLOBALS );
 		
+		// Remove first summary marker pair
+		$pString = preg_replace ( "/---(.+?)---/is", "$1", $pString, 1 );
+		
 		$return = ltrim ( rtrim ( $this->TextileThis ( $pString ) ) );
 		
 		// Add target=__new to all links
