@@ -37,19 +37,24 @@ class cPrivacy extends cComponent {
 		$Identifier = $pData['Identifier'];
 		$Type = $pData['Type'];
 		
-		// Nobody was selected, so disregard any other settings.
-		if ( (bool) $Privacy['nobody'] == true ) return ( true );
-		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );
+		$Model = new cPrivacyModel();
+		
+		// Delete all current privacy settings for this user+type+identifier
+		$Model->Delete ( array ( 'User_FK' => $this->_Focus->Id, 'Identifier' => $Identifier, 'Type' => $Type ) );
+		
+		// Nobody was selected, so disregard any other settings.
+		if ( (bool) $Privacy['nobody'] == true ) {
+			return ( true );
+		}
 		
 		$Everybody = (bool) $Privacy['everybody'];
 		$Friends = (bool) $Privacy['friends'];
 		
 		unset ( $Privacy['everybody'] );
 		unset ( $Privacy['friends'] );
-		
-		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );
-		$Model = new cPrivacyModel();
 		
 		if ( count ( $Privacy ) > 0 ) {
 			// One or more circles was selected, so preference them.

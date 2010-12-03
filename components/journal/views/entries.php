@@ -7,7 +7,7 @@
 	<ul class="journal-entries">
 		<li class="summary"> 
 			<article> 
-				<h2> <span class="title"></span> <abbr class="created"></abbr> </h2>
+				<h2> <span class="title"><a class="title-link"></a></span> <abbr class="created"></abbr> </h2>
 				<div class="body"></div> 
 				<nav class="actions"> 
 					<a class="comments">0 Comments</a> 

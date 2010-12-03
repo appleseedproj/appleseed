@@ -115,11 +115,11 @@ class cJournalEntryController extends cController {
 		
 		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/edit/' . $Identifier;
 		
-		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
+		$privacyData = array ( 'Type' => 'journal', 'Identifier'  => $Identifier );
 		$privacyControls =  $this->View->Find ('.privacy');
 		
 		foreach ( $privacyControls as $c => $control ) {
-			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $pageData ); 
+			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $privacyData ); 
 		}
 		
 		$Contexts =  $this->View->Find ( '[name=Context]' );
@@ -149,8 +149,12 @@ class cJournalEntryController extends cController {
 		$Body = $this->GetSys ( 'Request' )->Get ( 'Body' );
 		$Title = $this->GetSys ( 'Request' )->Get ( 'Title' );
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
+		$Privacy = $this->GetSys ( 'Request' )->Get ( 'Privacy' );
 		
 		$Identifier = $this->Model->Store ( $this->_Focus->Id, $Identifier, $Title, $Body );
+		
+		$privacyData = array ( 'Privacy' => $Privacy, 'Type' => 'Journal', 'Identifier' => $Identifier );
+		$this->GetSys ( 'Components' )->Talk ( 'Privacy', 'Store', $privacyData );
 		
 		$location = '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
 		

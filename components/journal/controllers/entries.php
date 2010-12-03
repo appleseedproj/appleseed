@@ -73,7 +73,8 @@ class cJournalEntriesController extends cController {
 			$row = new cHTML ();
 			$row->Load ( $rowOriginal );
 			
-			$row->Find ( '.title', 0 )->innertext = $this->Model->Get ( "Title" );
+			$row->Find ( '.title-link', 0 )->innertext = $this->Model->Get ( "Title" );
+			$row->Find ( '.title-link', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/' . $url;
 			$row->Find ( '.body', 0 )->innertext = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( "Body" ) );
 			
 			$username = $this->Model->Get ( 'Submitted_Username');
