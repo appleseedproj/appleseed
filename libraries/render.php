@@ -44,10 +44,6 @@ class cRender extends Textile {
 		
 		$return = ltrim ( rtrim ( $this->TextileThis ( $pString ) ) );
 		
-		// Remove superfluous <p> tags that TextileThis adds.
-		$return = preg_replace ( "/<\/p>$/", "", $return );
-		$return = preg_replace ( "/^<p>/", "", $return );
-		
 		// Add target=__new to all links
 		$HTML = $zApp->GetSys ( 'HTML' );
 		$HTML->Load ( $return );
