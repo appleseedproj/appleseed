@@ -469,12 +469,12 @@
 		#profile-journal-edit input[type="text"] { width:496px; }
 		#profile-journal-edit textarea { width:496px; height:150px; }
 		#profile-journal-edit .privacy label { width:auto; }
-		#profile-journal-edit .preview { float:left; clear:both; font-size:100%; width:590px; margin-left:50px; border:1px solid #c0d895; padding:5px; }
-		#profile-journal-edit img { max-width:590px; }
+		#profile-journal-edit .preview { float:left; clear:both; font-size:100%; width:670px; margin:5px 10px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal-edit img { max-width:670px; }
 		#profile-journal-edit .remove { float:right; clear:both; margin-top:5px; }
 		#profile-journal-edit fieldset { clear:both; }
 		#profile-journal-edit .preview-url { font-weight:normal; color:#8a8a8a; font-style:italic; font-size:90%; }
-		#profile-journal-edit .preview p { margin:0; padding:0; }
+		#profile-journal-edit .preview p { float:left; clear:both; }
 		#profile-journal-edit .preview a { margin:0; padding:0; background:none; }
 		#profile-journal-edit form .journal-markup-info { margin:10px 10px 10px 128px; padding:10px; }
 		
@@ -484,7 +484,7 @@
 		
 		
 		/* Journal Entry */
-		#profile-journal-entry .body { float:left; clear:both; font-size:100%; width:590px; margin:10px 50px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal-entry .body { float:left; clear:both; font-size:100%; width:670px; margin:10px 10px; border:1px solid #c0d895; padding:5px; }
 		#profile-journal-entry .body img { max-width:590px; }
 		#profile-journal-entry .body a { margin:0; padding:0; background:none; }
 		
@@ -501,9 +501,31 @@
 		#profile-journal-edit form .journal-markup-info { margin:10px 10px 10px 128px; padding:10px; }
 		
 		/* Journal Entries */
+		#profile-journal .add { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
 		
-		#profile-journal-entries .rss { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
-		#profile-journal-entries .rss:hover { text-decoration:none; }
+		#profile-journal .journal-entries .rss { font-size:80%; float:right; padding:1px 5px; -moz-border-radius:5px; -webkit-border-radius:5px; -moz-box-shadow:0px 0px 2px rgba(0,0,0,0.4); -webkit-box-shadow:0px 0px 2px rgba(0,0,0,0.4); color:rgba(0,0,0,0.9); text-shadow:1px 1px 0px rgba(255,255,255,0.8); border:1px solid rgba(0,0,0,0.5); 	background:-webkit-gradient(linear,0% 0%,0% 100%,from(rgba(255,255,255,1)),to(rgba(185,185,185,1))); background:-moz-linear-gradient(top,rgba(255,255,255,1),rgba(185,185,185,1)); }
+		#profile-journal .journal-entries .rss:hover { text-decoration:none; }
+		
+		#profile-journal .journal-entries .summary { margin:10px 0; list-style-type:none; float:left; clear:both; width:100%; }
+		#profile-journal .journal-entries .summary img { float:left; margin: 0px 5px 5px 0; }
+		#profile-journal .journal-entries .icon { width:64px; height:64px; }
+		#profile-journal .journal-entries .summary h2 { background-color:#c0d895; padding:3px 5px;}
+		#profile-journal .journal-entries .summary .title { font-size:130%; color:#2a2a2a; background-color:#c0d895; padding:3px 5px;}
+		#profile-journal .journal-entries .summary .created { float:right; font-size:90%; font-style:italic; font-weight:normal; color:#8a8a8a; padding-bottom:0 0 5px 3px; border-bottom:1px solid #c0d895; margin:2px 0 5px 0; }
+		
+		#profile-journal .journal-entries .summary .body { float:left; clear:both; font-size:100%; width:670px; margin:5px 10px 5px 10px; border:1px solid #c0d895; padding:5px; }
+		#profile-journal .journal-entries .summary p.body p { float:left; clear:both; }
+		
+		#profile-journal .journal-entries img { max-width:680px; }
+		#profile-journal .journal-entries .summary a { padding:0; background:none; }
+		#profile-journal .journal-entries .stamp { font-size:90%; }
+		#profile-journal .journal-entries .summary .content { float:left; clear:both; width:96%; border:1px solid #c0d895; border-radius:5px; padding:2%; }
+		
+		#profile-journal .journal-entries .actions { float:left; width:100%; text-align:right; margin-bottom:10px; border-bottom:1px solid #80af1f; width:100%; font-size:90%; }
+		#profile-journal .journal-entries .actions .readmore { float:right; }
+		#profile-journal .journal-entries .actions .comments { margin-right:5px; padding-right:5px; border-right:1px solid #c0d895; }
+		
+		/* Newsfeed */
 		
 		#newsfeed-menu { clear:both; }
 		#newsfeed-menu li { list-style-type:none; padding:3px; padding-left:20px; }
@@ -572,23 +594,6 @@
 		#frontpage-content { float:left; margin-bottom:10px; }
 		#frontpage-content nav.pagination { float:right; position:relative; clear:none; padding:0; margin:0; }
 		#frontpage-content nav.pagination ol { float:left; clear:none; padding:0; margin:0; }
-		
-		/* articles */
-		.article-list .summary { margin:10px 0; list-style-type:none; float:left; clear:both; width:100%; }
-		.article-list .summary img { float:left; margin: 0px 5px 5px 0; }
-		.article-list .icon { width:64px; height:64px; }
-		.article-list .summary h2 { font-size:150%; color:#2a2a2a; }
-		.article-list .summary h3 { font-weight:normal; color:#2a2a2a; }
-		.article-list .summary p { font-size:100%; margin:0; padding:0; }
-		
-		.article-list img { max-width:680px; }
-		.article-list .summary a { padding:0; background:none; }
-		.article-list .stamp { font-size:90%; }
-		.article-list .summary .content { float:left; clear:both; width:96%; border:1px solid #c0d895; border-radius:5px; padding:2%; }
-		
-		.article-list .actions { float:left; width:100%; text-align:right; margin-bottom:10px; border-bottom:1px solid #80af1f; width:100%; font-size:90%; }
-		.article-list .actions .readmore { float:right; }
-		.article-list .actions .comments { margin-right:5px; padding-right:5px; border-right:1px solid #c0d895; }
 		
 		/* appleseed-debug */
 		#appleseed-debug { margin-top:10px; }

@@ -59,9 +59,11 @@ class cJournalEntriesController extends cController {
 			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", $pageData ); 
 		}
 		
-		$li = $this->View->Find ( 'ul[class=article-list] li', 0);
+		$li = $this->View->Find ( 'ul[class=journal-entries] li', 0);
 		
-		$row = $this->View->Copy ( '[class=article-list]' )->Find ( 'li', 0 );
+		$row = $this->View->Copy ( '[class=journal-entries]' )->Find ( 'li', 0 );
+		
+		$this->View->Find ( '.add', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/add/';
 		
 		$rowOriginal = $row->outertext;
 		
@@ -87,8 +89,6 @@ class cJournalEntriesController extends cController {
 			$row->Find ( '.fullname', 0 )->href = $this->GetSys ( 'Event' )->Trigger ( 'Create', 'User', 'Link', $data );
 			$row->Find ( '.fullname', 0 )->innertext = $username . '@' . $domain;
 			
-			// Temporarily removed 
-			//$row->Find ( '.comments', 0 )->href = '/article/' . $this->Model->Get ( 'tID' ) . '#comments';
 			$url = strtolower ( str_replace ( ' ', '-', $this->Model->Get ( 'Title' ) ) );
 			$row->Find ( '.readmore', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/' . $url;
 			

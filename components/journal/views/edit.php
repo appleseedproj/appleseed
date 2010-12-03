@@ -25,6 +25,6 @@
 	<div class="journal-preview">
 		<h1 class="preview-title">Preview Title</h1>
 		<h2 class="preview-url">Preview Url</h2>
-		<p class="preview">No Preview Yet</p>
+		<div class="preview">No Preview Yet</div>
 	</div>
 </section>

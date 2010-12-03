@@ -1,21 +1,22 @@
-<nav class="pagination">
-</nav>
+<section id="profile-journal">
+	<a class="add">Add New</a>
 
-<ul class="article-list">
-	<li class="summary"> 
-		<article> 
-			<h2 class="title"></h2> 
-    
-			<abbr class="created"></abbr> 
-			<p class="body"> 
-			</p> 
-			<nav class="actions"> 
-				<a class="comments">0 Comments</a> 
-				<a class="readmore">Read More</a> 
-			</nav> 
-		</article> 
-	</li> 
-</ul>
+	<nav class="pagination">
+	</nav>
 
-<nav class="pagination">
-</nav>
+	<ul class="journal-entries">
+		<li class="summary"> 
+			<article> 
+				<h2> <span class="title"></span> <abbr class="created"></abbr> </h2>
+				<div class="body"></div> 
+				<nav class="actions"> 
+					<a class="comments">0 Comments</a> 
+					<a class="readmore">Read More</a> 
+				</nav> 
+			</article> 
+		</li> 
+	</ul>
+
+	<nav class="pagination">
+	</nav>
+</section>

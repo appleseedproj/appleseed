@@ -83,8 +83,8 @@ class cJournalEntryController extends cController {
 		
 		$this->_PrepEdit();
 		
-		$this->View->Display();
-		
+	 	$this->View->Display();
+	 	
 		return ( true );
 	}
 	
@@ -125,6 +125,12 @@ class cJournalEntryController extends cController {
 		$Contexts =  $this->View->Find ( '[name=Context]' );
 		foreach ( $Contexts as $c => $context ) {
 			$context->value = $this->Get ( 'Context' );
+		}
+		
+		if ( $Identifier ) {
+			$this->View->Find ( '.preview-title', 0 )->innertext = $this->Model->Get ( 'Title' );
+			$this->View->Find ( '.preview-url', 0 )->innertext = str_replace ( ' ', '-', strtolower ( $this->Model->Get ( 'Title' ) ) ) ;
+			$this->View->Find ( '.preview', 0 )->innertext = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( 'Body' ) );
 		}
 		
 		$this->View->Find ( '[name=Title]', 0 )->value = $this->Model->Get ( 'Title' );
