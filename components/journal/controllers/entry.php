@@ -34,22 +34,36 @@ class cJournalEntryController extends cController {
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
-		$Entry = urldecode ( $this->GetSys ( 'Request' )->Get ( 'Entry' ) );
-		
 		$this->View = $this->GetView ( 'entry' );
 		
 		$this->Model = $this->GetModel();
 		
-		$this->Model->Load ( $this->_Focus->Id, $Entry );
+		$this->_Prep ( );
+		
+		$this->View->Display();
+		
+		return ( true );
+	}
+	
+	private function _Prep ( ) {
+		
+		$Entry = urldecode ( $this->GetSys ( 'Request' )->Get ( 'Entry' ) );
+		
+		if ( !$this->Model->Load ( $this->_Focus->Id, $Entry ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/404.php' );
+			return ( false );
+		}
 		
 		$this->View->Find ( '.title', 0 )->innertext = $this->Model->Get ( 'Title' );
 		$this->View->Find ( '.permalink-link', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
 		$this->View->Find ( '.permalink-link', 0 )->innertext = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );
 		$this->View->Find ( '.body', 0 )->innertext = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( 'Body' ) );
 		
-		$this->View->Find ( '.edit', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/edit/' . $this->Model->Get ( 'Identifier' );
-		
-		$this->View->Display();
+		if ( $this->_Current->Account == $this->_Focus->Account ) {
+			$this->View->Find ( '.edit', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/edit/' . $this->Model->Get ( 'Identifier' );
+		} else {
+			$this->View->Find ( '.edit', 0 )->outertext = ""; 
+		}
 		
 		return ( true );
 	}

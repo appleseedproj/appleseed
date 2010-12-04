@@ -63,7 +63,12 @@ class cJournalEntriesController extends cController {
 		
 		$row = $this->View->Copy ( '[class=journal-entries]' )->Find ( 'li', 0 );
 		
-		$this->View->Find ( '.add', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/add/';
+		if ( $this->_Current->Account == $this->_Focus->Account ) {
+			$this->View->Find ( '.add', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/add/';
+		} else { 
+			$this->View->Find ( '.add', 0 )->outertext = "";
+		}
+		
 		$this->View->Find ( '.rss', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/rss/';
 		
 		$rowOriginal = $row->outertext;
