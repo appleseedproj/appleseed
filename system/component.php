@@ -99,6 +99,10 @@ class cComponent extends cBase {
 		
 		$this->GetSys ( "Event" )->Trigger ( "Begin", $this->_Component, $pTask ); 
 		
+		if ( !method_exists ( $this->Controllers->$controllername, $taskname ) ) {
+			// @TODO: Throw a warning
+			return ( false );
+		}
 		$return = $this->Controllers->$controllername->$taskname ( $pView, $pData);
 		
 		$this->GetSys ( "Event" )->Trigger ( "End", $this->_Component, $pTask ); 
