@@ -49,7 +49,19 @@ class cJournalEntriesController extends cController {
 		
 		list ( $this->_PageStart, $this->_PageStep, $this->_Page ) = $this->_PageCalc();
 		
-		$this->Model->Entries ( $this->_Focus->Id, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
+		if ( $this->_Current->Account == $this->_Focus->Account ) {
+			$this->View->Find ( '.add', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/add/';
+		} else { 
+			$this->View->Find ( '.add', 0 )->outertext = "";
+		}
+		
+		$this->View->Find ( '.rss', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/rss/';
+		
+		// If we don't find any entries, remove the template row, and return false
+		if ( !$this->Model->Entries ( $this->_Focus->Id, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) ) ) {
+			$this->View->Find ( '.journal-entries', 0 )->outertext = "";
+			return ( false );
+		}
 		
 		$link = '/profile/' . $this->_Focus->Username . '/journal/(.*)';
 		
@@ -62,14 +74,6 @@ class cJournalEntriesController extends cController {
 		$li = $this->View->Find ( 'ul[class=journal-entries] li', 0);
 		
 		$row = $this->View->Copy ( '[class=journal-entries]' )->Find ( 'li', 0 );
-		
-		if ( $this->_Current->Account == $this->_Focus->Account ) {
-			$this->View->Find ( '.add', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/add/';
-		} else { 
-			$this->View->Find ( '.add', 0 )->outertext = "";
-		}
-		
-		$this->View->Find ( '.rss', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/rss/';
 		
 		$rowOriginal = $row->outertext;
 		
