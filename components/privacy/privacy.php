@@ -93,7 +93,7 @@ class cPrivacy extends cComponent {
 		
 		$Identifier = $pData['Identifier'];
 		$Type = $pData['Type'];
-		$Circles = $this->Talk ( 'Friends', 'Circles', array ( 'Requesting' => $Requesting ) );
+		$Circles = $this->Talk ( 'Friends', 'Circles', array ( 'Requesting' => $Requesting, 'All' => true ) );
 		$Friends = $this->Talk ( 'Friends', 'Friends' );
 		
 		include_once ( ASD_PATH . 'components/privacy/models/privacy.php' );

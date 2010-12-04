@@ -27,3 +27,7 @@ PING_CONTACT_USER="Ping %firstname$s"
 SEE_ALL_MUTUAL_FRIENDS="See all"
 
 CLEAR_STATUS=clear
+
+[denied]
+CONTENT_IS_UNAVAILABLE="This content is unavailable"
+PAGE_REQUESTED_CANNOT_BE_DISPLAYED="The page you requested is unavailable.  This may be temporary, the link may have expired, or you may not have permission to view this page."

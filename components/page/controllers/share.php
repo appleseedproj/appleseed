@@ -45,11 +45,10 @@ class cPageShareController extends cController {
 		
 		$this->View = $this->GetView ( 'share' );
 		
-		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
 		$privacyControls =  $this->View->Find ('.privacy');
 		
 		foreach ( $privacyControls as $c => $control ) {
-			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $pageData ); 
+			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy' ); 
 		}
 		
 		$Contexts =  $this->View->Find ( '[name=Context]' );

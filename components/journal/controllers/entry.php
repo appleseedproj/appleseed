@@ -38,6 +38,27 @@ class cJournalEntryController extends cController {
 		
 		$this->Model = $this->GetModel();
 		
+		$Entry = urldecode ( $this->GetSys ( 'Request' )->Get ( 'Entry' ) );
+		
+		if ( !$this->Model->Load ( $this->_Focus->Id, $Entry ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/404.php' );
+			return ( false );
+		}
+		
+		$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $this->_Current->Account, 'Type' => 'Journal', 'Identifier' => $this->Model->Get ( 'Identifier' ) ) );
+		
+		if ( ( !$Access ) && ( $this->_Current->Account != $this->_Focus->Account ) ) {
+			if ( !$this->_Current->Account ) {
+				$this->GetSys ( 'Session' )->Context ( 'login.login.(\d)+.login' );
+				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Login To See This Page' ) );
+				$this->GetSys ( 'Session' )->Set ( 'Error', true );
+				$this->GetSys ( 'Foundation' )->Redirect ( 'login/login.php' );
+			} else {
+				$this->GetSys ( 'Foundation' )->Redirect ( 'common/denied.php' );
+			}
+			return ( false );
+		}
+		
 		$this->_Prep ( );
 		
 		$this->View->Display();
@@ -46,13 +67,6 @@ class cJournalEntryController extends cController {
 	}
 	
 	private function _Prep ( ) {
-		
-		$Entry = urldecode ( $this->GetSys ( 'Request' )->Get ( 'Entry' ) );
-		
-		if ( !$this->Model->Load ( $this->_Focus->Id, $Entry ) ) {
-			$this->GetSys ( 'Foundation' )->Redirect ( 'common/404.php' );
-			return ( false );
-		}
 		
 		$this->View->Find ( '.title', 0 )->innertext = $this->Model->Get ( 'Title' );
 		$this->View->Find ( '.permalink-link', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/' . $this->Model->Get ( 'Identifier' );

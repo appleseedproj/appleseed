@@ -47,6 +47,9 @@ class cFriends extends cComponent {
 		$Requesting = $pData['Requesting'];
 		$Target = $pData['Target'];
 		
+		// The All parameter states to return all circles regardless of sharing.
+		$All = $pData['All'] ? $pData['All'] : false;
+		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
@@ -69,7 +72,7 @@ class cFriends extends cComponent {
 		} else {
 			foreach ( $circles as $c => $circle ) {  
 				if ( in_array ( $circle['name'], $circleMembership ) ) {
-					if ( ( $circle['protected'] ) || ( $circle['shared'] ) ) {
+					if ( ( $circle['protected'] ) || ( $circle['shared'] ) || ( $All ) ) {
 						$id = $circle['id'];
 						$return[$id] = $circle['name'];
 					}

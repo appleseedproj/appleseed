@@ -17,3 +17,5 @@ REMOVE="Delete"
 ADD_NEW="New"
 RSS_FEED="RSS"
 BACK_TO_ENTRIES="&larr; journal entries"
+
+LOGIN_TO_SEE_THIS_PAGE="You must log in to see this page."
