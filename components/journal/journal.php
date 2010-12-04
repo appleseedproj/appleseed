@@ -38,5 +38,21 @@ class cJournal extends cComponent {
 		return ( $return );
 	} 
 	
+	public function IdentifierExists ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$Identifier = $pData['Identifier'];
+		
+		$Model = new cModel ( 'JournalEntries' );
+		
+		$Model->Retrieve ( array ( 'Identifier' => $Identifier ) );
+		
+		if ( $Model->Get ( 'Total' ) > 0 ) {
+			return ( true );
+		}
+		
+		return ( false );
+	}
 	
 }
