@@ -65,6 +65,8 @@ class cJournalEntryController extends cController {
 			$this->View->Find ( '.edit', 0 )->outertext = ""; 
 		}
 		
+		$this->View->Find ( '.back', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/';
+		
 		return ( true );
 	}
 	
