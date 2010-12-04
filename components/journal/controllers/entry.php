@@ -56,8 +56,10 @@ class cJournalEntryController extends cController {
 	
 	public function Add ( $pView = null, $pData = array ( ) ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$this->View = $this->GetView ( 'edit' );
 		
@@ -70,8 +72,10 @@ class cJournalEntryController extends cController {
 	
 	public function Edit ( $pView = null, $pData = array ( ) ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		
@@ -141,8 +145,10 @@ class cJournalEntryController extends cController {
 	
 	public function Save ( ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		$this->_Current = $this->Talk ( 'User', 'Current' );
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$this->Model = $this->GetModel ();
 		
@@ -172,10 +178,24 @@ class cJournalEntryController extends cController {
 		exit;
 	}
 	
-	public function Cancel ( ) {
+	private function _CheckAccess ( ) {
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
+		
+		if ( ( $this->_Focus->Username != $this->_Current->Username ) or ( $this->_Focus->Domain != $this->_Current->Domain ) ) {
+			return ( false );
+		}
+		
+		return ( true );
+	}
+	
+	public function Cancel ( ) {
+		
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
 		
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		
