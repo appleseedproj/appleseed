@@ -81,6 +81,8 @@ class cJournalEntryController extends cController {
 		
 		$this->View->Find ( '.back', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/';
 		
+		$this->_PrepMessage();
+		
 		return ( true );
 	}
 	
@@ -140,6 +142,8 @@ class cJournalEntryController extends cController {
 		
 		$this->View->Find ( '.remove', 0 )->outertext= "";
 		
+		$this->_PrepMessage();
+		
 		return ( true );
 	}
 	
@@ -169,6 +173,8 @@ class cJournalEntryController extends cController {
 		
 		$this->View->Find ( '[name=Title]', 0 )->value = $this->Model->Get ( 'Title' );
 		$this->View->Find ( '[name=Body]', 0 )->innertext = $this->Model->Get ( 'Body' );
+		
+		$this->_PrepMessage();
 		
 		return ( true );
 	}
@@ -204,6 +210,9 @@ class cJournalEntryController extends cController {
 		
 		$this->Talk ( 'Search', 'Index', array ( 'text' => $text, 'context' => $context, 'id' => $id ) );
 		
+		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );
+		$this->GetSys ( 'Session' )->Set ( 'Message', __ ( 'Item Saved' ) );
+		
 		header ( 'Location: ' . $location );
 		exit;
 	}
@@ -235,8 +244,33 @@ class cJournalEntryController extends cController {
 			$location = '/profile/' . $this->_Focus->Username . '/journal/';
 		}
 		
+		$this->GetSys ( 'Session' )->Context ( 'entries.journal.(\d+).entries' );
+		$this->GetSys ( 'Session' )->Set ( 'Message', __ ( 'Edit Cancelled' ) );
+		
 		header ( 'Location: ' . $location );
 		exit;
 	}
+	
+	private function _PrepMessage ( ) {
+		
+		$markup = $this->View;
+		
+		$session = $this->GetSys ( 'Session' );
+		$session->Context ( $this->Get ( 'Context' ) );
+		
+		if ( $message =  $session->Get ( 'Message' ) ) {
+			$markup->Find ( '.entry-message', 0 )->innertext = $message;
+			if ( $error =  $session->Get ( 'Error' ) ) {
+				$markup->Find ( '.entry-message', 0 )->class .= ' error ';
+			} else {
+				$markup->Find ( '.entry-message', 0 )->class .= ' message ';
+			}
+			$session->Destroy ( 'Message');
+			$session->Destroy ( 'Error ');
+		}
+		
+		return ( true );
+	}
+
 	
 }

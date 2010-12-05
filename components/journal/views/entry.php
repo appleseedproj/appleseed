@@ -1,6 +1,7 @@
 <script type="text/javascript" src="/components/journal/assets/javascript/edit.js"></script>
 
 <section id="profile-journal-entry"> 
+	<p class="entry-message"></p>
 	<a class="back">Back To Entries</a>
 	<a class="edit">Edit</a>
 	<h1 class="title"></h1>

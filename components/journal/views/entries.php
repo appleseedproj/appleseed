@@ -1,4 +1,5 @@
 <section id="profile-journal">
+	<p class="entries-message"></p>
 	<a class="add">Add New</a>
 	<a class="rss">RSS Feed</a>
 

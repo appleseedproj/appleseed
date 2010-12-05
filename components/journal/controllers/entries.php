@@ -112,6 +112,8 @@ class cJournalEntriesController extends cController {
 		    unset ( $row );
 		}
 		
+		$this->_PrepMessage();
+		
 		return ( true );
 	}
 	
@@ -175,5 +177,25 @@ class cJournalEntriesController extends cController {
 		return ( $return );
 	}
 	
+	private function _PrepMessage ( ) {
+		
+		$markup = $this->View;
+		
+		$session = $this->GetSys ( 'Session' );
+		$session->Context ( $this->Get ( 'Context' ) );
+		
+		if ( $message =  $session->Get ( 'Message' ) ) {
+			$markup->Find ( '.entries-message', 0 )->innertext = $message;
+			if ( $error =  $session->Get ( 'Error' ) ) {
+				$markup->Find ( '.entries-message', 0 )->class .= ' error ';
+			} else {
+				$markup->Find ( '.entries-message', 0 )->class .= ' message ';
+			}
+			$session->Destroy ( 'Message');
+			$session->Destroy ( 'Error ');
+		}
+		
+		return ( true );
+	}
 
 }

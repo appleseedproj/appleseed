@@ -55,4 +55,4 @@ class cJournal extends cComponent {
 		return ( false );
 	}
 	
-}
+} 
