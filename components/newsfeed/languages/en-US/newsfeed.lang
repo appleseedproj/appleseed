@@ -13,3 +13,7 @@ NEWSFEED_FILTER_TITLE="Newsfeed Filter"
 
 ALL_FRIENDS_FILTER="All friends"
 ADD_A_CIRCLE="+ New Circle"
+
+
+YOU_POSTED_A_JOURNAL="%actionowner$s"
+SOMEONE_POSTED_A_JOURNAL="%actionowner$s"

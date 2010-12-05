@@ -193,6 +193,9 @@ class cJournalEntryController extends cController {
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		$Privacy = $this->GetSys ( 'Request' )->Get ( 'Privacy' );
 		
+		$New = false;
+		if ( !$Identifier ) $New = true;
+		
 		$Identifier = $this->Model->Store ( $this->_Focus->Id, $Identifier, $Title, $Body );
 		
 		$privacyData = array ( 'Privacy' => $Privacy, 'Type' => 'Journal', 'Identifier' => $Identifier );
@@ -209,6 +212,29 @@ class cJournalEntryController extends cController {
 		$text .= ' ' . strip_tags ( $Title );
 		
 		$this->Talk ( 'Search', 'Index', array ( 'text' => $text, 'context' => $context, 'id' => $id ) );
+		
+		// Send out notifications
+		$friends = $this->Talk ( 'Friends', 'Friends' );
+		
+		foreach ( $friends as $f => $friend ) {
+			if ( $friend == $this->_Current->Account ) continue;
+			$Access = $this->Talk ( 'Privacy', 'Check', array ( 'Requesting' => $friend, 'Type' => 'Journal', 'Identifier' => $Identifier ) );
+			if ( !$Access ) unset ( $friends[$f] );
+		}
+		
+		if ( $New ) {
+			// Send a notification
+			if ( preg_match ( "/---(.+?)---/is", $Body, $matches ) ) {
+				$Body = $matches[1];
+			}
+		
+			$Excerpt = substr ( strip_tags ( $this->GetSys ( 'Render' )->Format ( $Body ) ), 0, 200 );
+			$Link = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/journal/' . str_replace ( ' ', '-', strtolower ( $this->Model->Get ( 'Title' ) ) ) ;
+			$notifyData = array ( 'OwnerId' => $this->_Focus->Id, 'Friends' => $friends, 'ActionOwner' => $this->_Focus->Account, 'Action' => 'posted a journal', 'ActionLink' => $Link, 'ContextOwner' => $this->_Focus->Account, 'Context' => 'journal', 'Title' => $Title, 'Description' => $Excerpt, 'Identifier' => $Identifier );
+			$this->Talk ( 'Newsfeed', 'Notify', $notifyData );
+		
+		}
+		
 		
 		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );
 		$this->GetSys ( 'Session' )->Set ( 'Message', __ ( 'Item Saved' ) );

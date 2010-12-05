@@ -48,15 +48,18 @@ class cJournalModel extends cModel {
 	
 	public function Store ( $pUserId, $pIdentifier, $pTitle, $pBody ) {
 		
+		$New = false;
 		if ( !$pIdentifier ) {
 			$pIdentifier = $this->CreateUniqueIdentifier();
 			$this->Set ( 'Created', NOW() );
+			$New = true;
 		} else {
 			$this->Retrieve ( array ( 'Owner_FK' => $pUserId, 'Identifier' => $pIdentifier ) );
 			if ( $this->Get ( 'Total' ) > 0 ) {
 				$this->Fetch();
 			} else {
 				$this->Set ( 'Created', NOW() );
+				$New = true;
 			}
 		}
 		
