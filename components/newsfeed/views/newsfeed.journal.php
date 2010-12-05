@@ -6,8 +6,8 @@
 	<span class="data">
 		<a class="thumb-link"><img class="thumb" /></a>
 		<span class="desc">
-			<a target="__new" class="title-link"><h3 class="title"></h3></a>
-			<a target="__new" class="info-link"></a>
+			<a class="title-link"><h3 class="title"></h3></a>
+			<a class="info-link"></a>
 			<p class="description"></p>
 		</span>
 	</span>
