@@ -12,6 +12,7 @@
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
 require ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'SimpleHTMLDom-1.11' . DS . 'simple_html_dom.php' );
+require ( ASD_PATH . DS . 'libraries' . DS . 'external' . DS . 'RSS2Writer-2.1' . DS . 'RSS2Writer.php' );
 
 /** Markup Class
  * 
@@ -332,5 +333,39 @@ class cRSS extends cXML {
 	function __construct() {       
 		parent::__construct();
 	}
+	
+	function Create ( $pTitle, $pDescription, $pUrl ) {
+		
+		$this->_Feed = new RSS2Writer( $pTitle, $pDescription, $pUrl, 4, true );
+		
+		return ( true );
+	}
+	
+	function Category ( $pCategory ) {
+		
+		return ( $this->_Feed->addCategory ( $pCategory ) );
+	}
 
+	function Element ( $pElement, $pValue ) {
+		
+		return ( $this->_Feed->addElement ( $pElement, $pValue ) );
+	}
+	
+	function Open ( $pTitle, $pDescription, $pUrl, $pGuid = null ) {
+		
+		if ( !$pGuid ) $pGuid = $pUrl;
+		
+		return ( $this->_Feed->addItem ( $pTitle, $pDescription, $pUrl, true ) );
+	}
+	
+	function Close ( ) {
+		
+		return ( $this->_Feed->closeItem ( ) );
+	}
+	
+	function Output ( ) {
+		
+		return ( $this->_Feed->getXML() );
+	}
+	
 }

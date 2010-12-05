@@ -143,4 +143,36 @@ class cJournalModel extends cModel {
 		return ( true );
 	}
 	
+	/*
+	 * Retrieve entries which are available to everybody (for RSS feeds )
+	 * 
+	 */
+	public function Everybody ( $pUserId, $pLimit ) {
+		eval ( GLOBALS );
+		
+		// $this->Retrieve ( array ( 'Owner_FK' => $pUserId ), 'Created DESC', $pLimit );
+		
+		$start = $pLimit['start'] ? $pLimit['start'] : 0;
+		$limit = $pLimit['limit'] ? $pLimit['limit'] : 10;
+		
+		$this->Privacy = new cModel('PrivacySettings');
+		
+		// We're not logged in, so search for Everybody
+		$criteria = array ( 'User_FK' => $pUserId, 'Everybody' => true );
+			
+		$this->Privacy->Retrieve ( $criteria );
+		
+		// No identifiers were found, which means no entries were found.
+		if ( $this->Privacy->Get ( 'Total' ) == 0 ) return ( false );
+		
+		while ( $this->Privacy->Fetch() ) {
+			$Identifiers[] = $this->Privacy->Get ( 'Identifier' );
+		}
+		
+		$this->Retrieve ( array ( 'Owner_FK' => $pUserId, 'Identifier' => '()' . implode ( ',', $Identifiers ) ), 'Created DESC', $pLimit );
+		
+		return ( true );
+	}
+	
+	
 }

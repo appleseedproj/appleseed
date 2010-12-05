@@ -22,3 +22,5 @@ LOGIN_TO_SEE_THIS_PAGE="You must log in to see this page."
 
 EDIT_CANCELLED="Your changes have been cancelled"
 ITEM_SAVED="Your journal entry has been saved"
+
+RSS_FEED_TITLE="%fullname$s's Journal on %domain$s"

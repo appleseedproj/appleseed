@@ -197,5 +197,8 @@ class cJournalEntriesController extends cController {
 		
 		return ( true );
 	}
+	
+	public function RSS ( ) {
+	}
 
 }
