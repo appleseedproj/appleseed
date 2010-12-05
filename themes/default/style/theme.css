@@ -552,11 +552,11 @@
 		#appleseed-frontpage-info { float:left; }
 		
 		#appleseed-frontpage-info #login-local fieldset { width:198px; }
-		#appleseed-frontpage-info #login-local input { width:95px; margin-left:10px; }
+		#appleseed-frontpage-info #login-local input { width:95px; margin-left:10px; padding:0; }
 		#appleseed-frontpage-info #login-local label { width:75px; padding:0; }
 		
 		#appleseed-frontpage-info #login-remote fieldset { width:198px; }
-		#appleseed-frontpage-info #login-remote input { width:95px; margin-left:10px; }
+		#appleseed-frontpage-info #login-remote input { width:95px; margin-left:10px; padding:0; }
 		#appleseed-frontpage-info #login-remote label { width:75px; padding:0; }
 		
 		/* Login */
