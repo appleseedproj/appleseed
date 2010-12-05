@@ -1,3 +1,4 @@
+<a class="actionowner-icon-link" href=""><img class="actionowner-icon" src=""></a>
 <span class="info">
 	<span class="content">
 		<span class="sentence"></span>
