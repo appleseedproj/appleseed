@@ -246,7 +246,7 @@ class cNewsfeedNewsfeedController extends cController {
 			$sentenceData['Updated'] = $Updated = $this->Model->Get ( 'Updated' );
 			$sentenceData['Created'] = $Created = $this->Model->Get ( 'Created' );
 			
-			$row = $this->GetView ( 'newsfeed.link' );
+			$row = $this->GetView ( 'newsfeed.journal' );
 			
 			$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $Updated );
 			//$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $this->Model->Get ( 'Comment' ) );
