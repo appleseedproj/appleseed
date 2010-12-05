@@ -4,7 +4,7 @@
 		<span class="comment"></span>
 	</span>
 	<span class="data">
-		<a target="__new" class="thumb-link"><img class="thumb" /></a>
+		<a class="thumb-link"><img class="thumb" /></a>
 		<span class="desc">
 			<a target="__new" class="title-link"><h3 class="title"></h3></a>
 			<a target="__new" class="info-link"></a>
