@@ -34,7 +34,7 @@ class cJanitorHook extends cHook {
 	    return ( true );
 	}
 	
-	public function EndLoginJoin ( $pData ) {
+	public function EndJournalSave ( $pData ) {
 		$this->_Janitorial();
 		return ( true );
 	}

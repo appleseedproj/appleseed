@@ -239,6 +239,9 @@ class cJournalEntryController extends cController {
 		$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );
 		$this->GetSys ( 'Session' )->Set ( 'Message', __ ( 'Item Saved' ) );
 		
+		// Trigger the EndPageShare event
+		$this->GetSys ( 'Event' )->Trigger ( 'End', 'Journal', 'Save' );
+		
 		header ( 'Location: ' . $location );
 		exit;
 	}
