@@ -258,12 +258,12 @@
 		
 		/* profile-status */
 		#status-container { float:left; margin-top:40px; height:49px; max-height:150px; overflow:hidden; }
-		#status-container .name { float:left; font-size:120%; font-weight:bold; }
-		#status-container .current { font-size:90%; font-weight:bold; color:#5a5a5a; margin-left:5px; }
-		#status-container .current img { float:left; clear:none; max-height:50px; max-width:50px; display:inline; margin:0 2px; }
+		#status-container .name { float:left; clear:none; font-size:120%; font-weight:bold; }
+		#status-container .current { float:left; clear:none; font-size:100%; font-weight:bold; color:#5a5a5a; margin:4px 5px; }
+		#status-container .current img { clear:none; max-height:50px; max-width:50px; display:inline; margin:0 2px; }
 		#status-container .current a { padding:0; background:none; }
-		#status-container .stamp { font-size:70%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
-		#status-container form { width:auto; display:inline; clear:none; padding:0; margin:0; }
+		#status-container .stamp { float:left; display:inline; clear:none; font-size:70%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; margin-top:7px; margin-right:5px; }
+		#status-container form { float:left; clear:none; width:auto; display:inline; clear:none; padding:0; margin:0; }
 		
 		/* profile-tabs */
 		#profile-tabs { float:left; position:relative; }
