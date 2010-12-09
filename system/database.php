@@ -62,6 +62,7 @@ class cDatabase extends cBase {
 	}
 	
 	public function GetFieldInformation ( $pTablename ) {
+		eval ( GLOBALS );
 		
 		$prefix = $this->GetSys ( "Config" )->GetConfiguration ( "pre" );
 		
@@ -69,9 +70,10 @@ class cDatabase extends cBase {
 		
 		if ( !$result = $this->_DB->query ( "DESC $table" ) ) {
 			
-			echo __( "Table Does Not Exist", array ( "name" => $table ) );
-			exit;
+			$warning = __( "Table Does Not Exist", array ( "name" => $table ) );
+			$zApp->GetSys ( "Logs" )->Add ( $warning, "Warnings" );
 			
+			return ( false );
 		}
 		
 		$fieldinfo = $result->fetchAll ( PDO::FETCH_ASSOC );
