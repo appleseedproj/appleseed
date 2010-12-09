@@ -1,0 +1,6 @@
+[check-schema-version]
+TABLE_DOES_NOT_EXIST="Table '%tablename$s' does not exist.  Check in /_releases/ for update scripts and make sure you have updated to the latest database schema."
+
+SCHEMA_VERSION_INFORMATION_UNAVAILABLE="No schema version information was found.  Check in /_releases/ for update scripts and make sure you have updated to the latest schema version."
+
+INCORRECT_SCHEMA_VERSION="Your database schema (version %current$s) is out of date.  Run <b>/_releases/update-%version$s.sql</b> to update your Appleseed node." 
