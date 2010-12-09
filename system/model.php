@@ -27,6 +27,8 @@ class cModel extends cBase {
 	
 	protected $_Within = false;
 	
+	protected $_Exists = false;
+	
 	protected $_PrimaryKey;
 	protected $_ForeignKeys;
 	
@@ -59,11 +61,14 @@ class cModel extends cBase {
 		$this->_Tablename = $tablename;
 		
 		// Pull the table structure into the class.
-		$this->Structure ();
+		if ( $this->Structure () )
+			$this->_Exists = true;
 		
 		$this->_Protected = array ();
 		
 		parent::__construct();
+		
+		return ( true );
 	}
 	
 	public function Structure ( $pTablename = null) {
@@ -72,7 +77,7 @@ class cModel extends cBase {
 		
 		if ( !$pTablename ) $pTablename = $this->_Tablename;
 		
-		$fieldinfo = $Database->GetFieldInformation ( $pTablename );
+		if ( !$fieldinfo = $Database->GetFieldInformation ( $pTablename ) ) return ( false );
 		
 		foreach ( $fieldinfo as $f => $field ) {
 			$fieldname = $field['Field'];
