@@ -23,6 +23,6 @@ create table `#__NetworkNodes` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Des
 
 insert into `#__NetworkNodes` values (1,'Official beta test site for the Appleseed Project: The first open source, fully decentralized social networking software.','appleseedproject.org','trusted','','public',1,NOW(),NOW(),'http','QS/0.1.1',1);
 
-create table `#__SchemaVersions` ( `Schema_PK` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `Version` char(16) DEFAULT NULL, `Script` char(64) DEFAULT NULL, `Notes` text, PRIMARY KEY (`Schema_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+create table `#__SchemaVersions` ( `Schema_PK` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `Version` char(16) DEFAULT NULL, `Notes` text, PRIMARY KEY (`Schema_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-insert into `#__SchemaVersions` ( `Version`, `Script`, `Notes` ) values ( '0.7.9', '_release/update-0.7.9.sql', '+PageLinks +NotificationsOutgoing.Title +NotificationsIncoming.Title -journalPrivacy -journalPost +JournalEntries -contentArticles +SearchIndexes +NotificationsOutgoing.Feedback +NotificationsOutgoing.Comments +NotificationsIncoming.Feedback +NotificationsIncoming.Comments +FriendPing +NetworkNodes >NetworkNodes.Domain="appleseedproject.org" +SchemaVersions >SchemaVersions.Version="0.7.9" ' );
+insert into `#__SchemaVersions` ( `Version`, `Notes` ) values ( '0.7.9', '+PageLinks +NotificationsOutgoing.Title +NotificationsIncoming.Title -journalPrivacy -journalPost +JournalEntries -contentArticles +SearchIndexes +NotificationsOutgoing.Feedback +NotificationsOutgoing.Comments +NotificationsIncoming.Feedback +NotificationsIncoming.Comments +FriendPing +NetworkNodes >NetworkNodes.Domain="appleseedproject.org" +SchemaVersions >SchemaVersions.Version="0.7.9" ' );
