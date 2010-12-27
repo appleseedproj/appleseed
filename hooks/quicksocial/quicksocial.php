@@ -125,6 +125,17 @@ class cQuicksocialHook extends cHook {
 				
 				exit;
 			break;
+			case 'node.synchronize':
+				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+				 
+				$node = new cQuickNode ();
+				$node->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
+				$node->SetCallback ( 'LoadNodeNetwork', array ( $this, '_LoadNodeNetwork' ) );
+				$node->SetCallback ( 'NodeInformation', array ( $this, '_NodeInformation' ) );
+				$node->SetCallback ( 'StoreNodeNetwork', array ( $this, '_StoreNodeNetwork' ) );
+				$node->ReplyToSynchronize();
+				exit;
+			break;
 			case 'node.discover':
 				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
 				 
@@ -495,21 +506,13 @@ class cQuicksocialHook extends cHook {
 	
 	public function _NodeInformation ( $pSource = null, $pVerified = false) {
 		
+		$description = __ ( $this->GetSys ( 'Config' )->GetConfiguration ( 'node_description' ), array ( 'domain' => ASD_DOMAIN ) );
+		$methods = $this->GetSys ( 'Config' )->GetConfiguration ( 'node_methods' );
+		
 		$return = array ();
 		
-		$return['methods'] = array ( 'http' );
-		
-		$return['tasks'] = array (
-			'node.discover',
-			'verify',
-			'connect.return',
-			'connect.check'
-		);
-		
-		$return['trusted'] = array ( );
-		
-		if ( $pVerified ) {
-		}
+		$return['methods'] = $methods;
+		$return['description'] = $description;
 		
 		return ( $return );
 	}
@@ -1123,5 +1126,222 @@ class cQuicksocialHook extends cHook {
 		$result = $this->GetSys ( 'Components' )->Talk ( 'Newsfeed', 'AddToIncoming', $data );
 		
 		return ( $result );
+	}
+	
+	public function UpdateNodeNetwork ( ) {
+		
+		require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
+				 
+		$quickNode = new cQuickNode ();
+		$quickNode->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
+		$quickNode->SetCallback ( 'LoadNodeNetwork', array ( $this, '_LoadNodeNetwork' ) );
+		$quickNode->SetCallback ( 'NodeInformation', array ( $this, '_NodeInformation' ) );
+		$quickNode->SetCallback ( 'StoreNodeNetwork', array ( $this, '_StoreNodeNetwork' ) );
+				
+		// 0. Pull site info
+		$node_description = __ ( $this->GetSys ( 'Config' )->GetConfiguration ( 'node_description' ), array ( 'domain' => ASD_DOMAIN ) ); 
+		$node_methods = $this->GetSys ( 'Config' )->GetConfiguration ( 'node_methods' ); 
+		
+		list ( $trusted, $discovered, $blocked ) = $this->_LoadNodeNetwork ( );
+		$nodes = array_unique ( array_merge ( $trusted, $discovered, $blocked ) );
+		
+		// 2. Loop through all nodes.
+		foreach ( $nodes as $n => $node ) {
+		
+			// 3. Contact nodes and recieve node list back.
+			$quickNode->Synchronize( $node, $node_description, $node_methods );
+			
+			// 4. If inherit flag is set, inherit trust values.
+		}
+			
+		// 5. Remove already known nodes.
+		
+		// 6. Loop through new nodes for verification and extended information.
+		
+			// 7. Contact nodes and ignore node list (handled on next pass through).
+			
+		// 8. Save new nodes.
+		
+		// 9. Delete nodes which haven't been contacted in 7 days.
+		
+		return ( true );
+	}
+	
+	public function _LoadNodeNetwork ( ) {
+		
+		// Cache the values so we don't keep loading this.
+		if ( isset ( $this->_CachedNodeNetwork ) ) {
+			return ( $this->_CachedNodeNetwork );
+		}
+		
+		// Load a list of known nodes.
+		$nodes = new cModel ( 'NetworkNodes');
+		
+		$nodes->Retrieve ();
+		
+		if ( $nodes->Get ( 'Total' ) == 0 ) return ( false );
+		
+		$trusted = array ( ); $discovered = array ( ); $blocked = array ( );
+		
+		// Separate into a list of trusted, blocked or discovered
+		while ( $nodes->Fetch() ) {
+			if ( $nodes->Get ( 'Trust' ) == 'trusted' ) {
+				$trusted[] = $nodes->Get ( 'Domain' );
+			} else if ( $nodes->Get ( 'Trust' ) == 'discovered' ) {
+				$discovered[] = $nodes->Get ( 'Domain' );
+			} else {
+				$blocked[] = $nodes->Get ( 'Domain' );
+			}
+			$nodeList[] = $nodes->Get('Data');
+		}
+		
+		$this->_CachedNodeNetwork = array ( $trusted, $discovered, $blocked );
+		$this->_CachedNodeInformation = $nodeList;
+		
+		return ( array ( $trusted, $discovered, $blocked ) );
+	}
+	
+	public function _StoreNodeNetwork ( $pSource, $pMethods, $pDescription, $pVersion, $pTrusted = array ( ), $pDiscovered = array ( ), $pBlocked = array ( ) ) {
+		
+		if ( !$pTrusted ) $pTrusted = array ( );
+		if ( !$pDiscovered ) $pDiscovered = array ( );
+		if ( !$pBlocked ) $pBlocked = array ( );
+		
+		$nodes = $this->_CachedNodeInformation;
+		
+		$inherit = false;
+		
+		$All = array_unique ( array_merge ( $pTrusted, $pDiscovered, $pBlocked ) );
+		
+		$NodeNetwork = array_merge ( $this->_CachedNodeNetwork[0], $this->_CachedNodeNetwork[1], $this->_CachedNodeNetwork[2] );
+		
+		$model = new cModel ( 'NetworkNodes' );
+		
+		// Update the recieved information
+		if ( in_array ( $pSource, $NodeNetwork ) ) {
+			$model->Retrieve ( array ( 'Domain' => $pSource ) );
+			$model->Fetch();
+			$model->Set ( 'Description', $pDescription );
+			$model->Set ( 'Methods', $pMethods );
+			$model->Set ( 'Version', $pVersion );
+			$model->Set ( 'Updated', NOW() );
+			$model->Set ( 'Contacted', NOW() );
+			$model->Set ( 'Status', true );
+			$model->Save();
+		} else {
+			$model->Destroy ( 'Node_PK' );
+			$model->Set ( 'Description', $pDescription );
+			$model->Set ( 'Domain', $pSource );
+			$model->Set ( 'Source', $pSource );
+			$model->Set ( 'Methods', $pMethods );
+			$model->Set ( 'Inherit', false );
+			$model->Set ( 'Trust', 'discovered' );
+			$model->Set ( 'Access', 'public' );
+			$model->Set ( 'Created', NOW() );
+			$model->Set ( 'Updated', NOW() );
+			$model->Set ( 'Contacted', NOW() );
+			$model->Set ( 'Version', $pVersion );
+			$model->Set ( 'Status', true );
+			$model->Save();
+		}
+		
+		
+		foreach ( $nodes as $n => $node ) {
+			// Check if we are inheriting this source's values.
+			if ( $node['Domain'] == $pSource ) {
+				if ( $node['Inherit'] == true ) $inherit = true;
+			}
+			if ( ( in_array ( $node['Domain'], $pTrusted ) ) or
+			     ( in_array ( $node['Domain'], $pDiscovered ) ) or 
+			     ( in_array ( $node['Domain'], $pBlocked ) ) ) {
+				$update[$node['Node_PK']] = $node['Domain'];
+			}
+			if ( !in_array ( $node['Domain'], $All ) ) {
+				$insert[] = $node['Domain'];
+			}
+		}
+		
+		// Add the trusted nodes.
+		foreach ( $pTrusted as $t => $trusted ) {
+			if ( $trusted == QUICKSOCIAL_DOMAIN ) continue;
+			// Update the recieved information
+			if ( !in_array ( $trusted, $NodeNetwork ) ) {
+				$model->Destroy ( 'Node_PK' );
+				$model->Set ( 'Description', null );
+				$model->Set ( 'Domain', $trusted );
+				$model->Set ( 'Source', $pSource );
+				$model->Set ( 'Methods', null );
+				$model->Set ( 'Inherit', false );
+				if ( $inherit ) {
+					$model->Set ( 'Trust', 'trusted' );
+				} else {
+					$model->Set ( 'Trust', 'discovered' );
+				}
+				$model->Set ( 'Access', 'public' );
+				$model->Set ( 'Created', NOW() );
+				$model->Set ( 'Updated', NOW() );
+				$model->Set ( 'Contacted', NOW() );
+				$model->Set ( 'Version', null );
+				$model->Set ( 'Status', true );
+				$model->Save();
+			}
+		
+		}
+		
+		// Add the discovered nodes.
+		foreach ( $pDiscovered as $d => $discovered ) {
+			if ( $discovered == QUICKSOCIAL_DOMAIN ) continue;
+			// Update the recieved information
+			if ( !in_array ( $discovered, $NodeNetwork ) ) {
+				$model->Destroy ( 'Node_PK' );
+				$model->Set ( 'Description', null );
+				$model->Set ( 'Domain', $discovered );
+				$model->Set ( 'Source', $pSource );
+				$model->Set ( 'Methods', null );
+				$model->Set ( 'Inherit', false );
+				$model->Set ( 'Trust', 'discovered' );
+				$model->Set ( 'Access', 'public' );
+				$model->Set ( 'Created', NOW() );
+				$model->Set ( 'Updated', NOW() );
+				$model->Set ( 'Contacted', NOW() );
+				$model->Set ( 'Version', null );
+				$model->Set ( 'Status', true );
+				$model->Save();
+			}
+		
+		}
+		
+		// Only add the blocked nodes if we're inheriting.
+		if ( $inherit ) {
+			// Add the blocked nodes.
+			foreach ( $pBlocked as $b => $blocked ) {
+				if ( $blocked == QUICKSOCIAL_DOMAIN ) continue;
+				// Update the recieved information
+				if ( in_array ( $blocked, $NodeNetwork ) ) {
+					$model->Retrieve ( array ( 'Domain' => $blocked ) );
+					$model->Fetch();
+					$model->Set ( 'Trust', 'blocked' );
+					$model->Save();
+				} else {
+					$model->Destroy ( 'Node_PK' );
+					$model->Set ( 'Description', null );
+					$model->Set ( 'Domain', $blocked );
+					$model->Set ( 'Source', $pSource );
+					$model->Set ( 'Methods', null );
+					$model->Set ( 'Inherit', false );
+					$model->Set ( 'Trust', 'blocked' );
+					$model->Set ( 'Access', 'public' );
+					$model->Set ( 'Created', NOW() );
+					$model->Set ( 'Updated', NOW() );
+					$model->Set ( 'Contacted', NOW() );
+					$model->Set ( 'Version', null );
+					$model->Set ( 'Status', true );
+					$model->Save();
+				}
+		
+			}
+		}
+		
+		return ( true );
 	}
 }

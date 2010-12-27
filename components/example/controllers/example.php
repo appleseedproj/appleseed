@@ -44,8 +44,6 @@ class cExampleExampleController extends cController {
 	 */
 	public function Display ( $pView = null, $pData = null ) {
 		
-		// $this->GetSys ( 'Event' )->Trigger ( "System", "Node", "Discovery", array ( "domain" => "carnivale.appleseed" ) );
-		
 		/*
 		 * @tutorial This triggers an event, which loads the appropriate hooks.
 		 * @tutorial This shorthand automatically determines the current component and method.

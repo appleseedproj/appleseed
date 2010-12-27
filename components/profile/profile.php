@@ -52,4 +52,15 @@ class cProfile extends cComponent {
 		return ( $return );
 	} 
 	
+	public function RegisterOptionsArea ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$return = array ();
+		
+		$return[] = array ( 'title' =>'Profile', 'class' => 'profile', 'link' => '/profile/(.*)/options/profile/' );
+		
+		return ( $return );
+	}
+	
 }

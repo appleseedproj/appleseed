@@ -88,5 +88,16 @@ class cPostal extends cComponent {
 		return ( true );
 	}
 	
+	public function RegisterOptionsArea ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$return = array ();
+		
+		$return[] = array ( 'title' =>'Notifications', 'class' => 'notifications', 'link' => '/profile/(.*)/options/notifications/' );
+		
+		return ( $return );
+	}
+	
 }
 

@@ -71,11 +71,20 @@ Protocol
 					trusted=<[array]>
 					version=<version>
 			- NOTE:	Source & Token optional
+			
+		- Synchronize / ReplyToSynchronize
+			- GET:	_social=true
+					_task=node.synchronize
+					_source=<domain>					# Domain source
+					_token=<token>						# Required for verification
+					_trusted=<[array]>	
+					_discovered=<[array]>
+					_blocked=<[array]>
 	
 		[unimplemented]
 		- Callback / ReplyToCallback
 			- GET:	_social=true
-					_task=node.update
+					_task=node.callback
 					_method=<method>					# http, https, ws, etc
 					_token=<token>						# Required for verification
 					_source=<domain>					# Domain source

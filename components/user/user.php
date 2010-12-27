@@ -105,6 +105,17 @@ class cUser extends cComponent {
 		return ( $return );
 	}
 	
+	public function RegisterOptionsArea ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$return = array ();
+		
+		$return[] = array ( 'title' =>'Account', 'class' => 'account', 'link' => '/profile/(.*)/options/account/' );
+		
+		return ( $return );
+	}
+	
 }
 
 /** User Authorization Class

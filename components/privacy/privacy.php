@@ -115,4 +115,16 @@ class cPrivacy extends cComponent {
 		
 		return ( false );
 	}
+	
+	public function RegisterOptionsArea ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$return = array ();
+		
+		$return[] = array ( 'title' =>'Privacy', 'class' => 'privacy', 'link' => '/profile/(.*)/options/privacy/' );
+		
+		return ( $return );
+	}
+	
 }

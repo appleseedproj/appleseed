@@ -2,7 +2,7 @@
 /**
  * @version      $Id$
  * @package      Appleseed.Components
- * @subpackage   Janitor
+ * @subpackage   Options
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
  * @license      GNU General Public License version 2.0 (See LICENSE.txt)
@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Janitor Component Controller
+/** Options Component Controller
  * 
- * Janitor Component Controller Class
+ * Options Info Component Controller Class
  * 
  * @package     Appleseed.Components
- * @subpackage  Janitor
+ * @subpackage  Options
  */
-class cJanitorJanitorController extends cController {
+class cOptionsInfoController extends cController {
 	
 	/**
 	 * Constructor
@@ -30,14 +30,7 @@ class cJanitorJanitorController extends cController {
 	}
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
-		
-        ignore_user_abort(true);
-		
-		$this->Talk ( 'Newsfeed', 'ProcessQueue' );
-		
-		$this->GetSys ( 'Event' )->Trigger ( 'Update', 'Node', 'Network' );
-		
-		return ( true );
+		return ( parent::Display( $pView, $pData ) );
 	}
 
 }

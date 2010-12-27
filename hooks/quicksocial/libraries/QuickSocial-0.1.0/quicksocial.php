@@ -8,8 +8,8 @@
  * @license      GNU Lesser General Public License (LGPL) version 3.0
  */
  
- define ( "QUICKSOCIAL_VERSION", "0.1.0" );
- define ( "QUICKSOCIAL_DOMAIN", $_SERVER['HTTP_HOST'] );
+ define ( 'QUICKSOCIAL_VERSION', 'QS/0.1.1' );
+ define ( 'QUICKSOCIAL_DOMAIN', $_SERVER['HTTP_HOST'] );
 
 /** QuickSocial Class
  * 
@@ -29,10 +29,22 @@ class cQuickSocial {
 		
 		// @todo Further sanitizing of data may be necessary.
 		foreach ( $_GET as $g => $get ) {
-			$this->_GET[$g] = strip_tags ( $get );
+			if ( is_array ( $get ) ) {
+				foreach ( $get as $gg => $gget ) {
+					$this->_GET[$g][$gg] = strip_tags ( $gget );
+				}
+			} else {
+				$this->_GET[$g] = strip_tags ( $get );
+			}
 		}
 		foreach ( $_POST as $p => $post ) {
-			$this->_POST[$p] = strip_tags ( $post );
+			if ( is_array ( $post ) ) {
+				foreach ( $post as $pp => $ppost ) {
+					$this->_POST[$p][$pp] = strip_tags ( $ppost );
+				}
+			} else {
+				$this->_POST[$p] = strip_tags ( $post );
+			}
 		}
 	}
 	
@@ -42,9 +54,9 @@ class cQuickSocial {
 	 */
 	public function Verify ( $pUsername, $pTarget, $pToken ) {
 		
-		$fCheckRemoteToken = $this->GetCallback ( "CheckRemoteToken" );
+		$fCheckRemoteToken = $this->GetCallback ( 'CheckRemoteToken' );
 		
-		if ( !is_callable ( $fCheckRemoteToken ) ) $this->_Error ( "Invalid Callback: CheckRemoteToken" );
+		if ( !is_callable ( $fCheckRemoteToken ) ) $this->_Error ( 'Invalid Callback: CheckRemoteToken' );
 		
 		$token = @call_user_func ( $fCheckRemoteToken, $pUsername, $pTarget );
 		
@@ -53,18 +65,18 @@ class cQuickSocial {
 			
 			// Do a verification on this token.
 			$data = array (
-				"_social" => "true",
-				"_task" => "verify",
-				"_token" => $pToken,
-				"_username" => $pUsername,
-				"_source" => $source
+				'_social' => 'true',
+				'_task' => 'verify',
+				'_token' => $pToken,
+				'_username' => $pUsername,
+				'_source' => $source
 			);
 			
 			
 			$result = $this->_Communicate ( $pTarget, $data );
 			
-			if ( $result->success == "true" ) {
-				$fCreateRemoteToken = $this->GetCallback ( "CreateRemoteToken" );
+			if ( $result->success == 'true' ) {
+				$fCreateRemoteToken = $this->GetCallback ( 'CreateRemoteToken' );
 				
 				if ( is_callable ( $fCreateRemoteToken ) ) {
 					$token = @call_user_func ( $fCreateRemoteToken, $pUsername, $pTarget, $pToken );
@@ -78,8 +90,8 @@ class cQuickSocial {
 			
 		} else if ( $token == $pToken ) {
 			$return = new stdClass(); 
-			$return->success = "true";
-			$return->error = "";
+			$return->success = 'true';
+			$return->error = '';
 			
 			return ( $return );
 		} else {
@@ -99,16 +111,16 @@ class cQuickSocial {
 		
 		// Do a verification on this token.
 		$data = array (
-			"_social" => "true",
-			"_task" => "verify.remote",
-			"_token" => $pToken,
-			"_username" => $pUsername,
-			"_source" => $source
+			'_social' => 'true',
+			'_task' => 'verify.remote',
+			'_token' => $pToken,
+			'_username' => $pUsername,
+			'_source' => $source
 		);
 		
 		$result = $this->_Communicate ( $pDomain, $data );
 		
-		if ( $result->success == "true" ) return ( true );
+		if ( $result->success == 'true' ) return ( true );
 		
 		return ( false );
 	}
@@ -121,24 +133,24 @@ class cQuickSocial {
 		$social = $this->_GET['_social'];
 		$task = $this->_GET['_task'];
 		
-		if ( $social != "true" ) return ( false );
-		if ( $task != "verify" ) return ( false );
+		if ( $social != 'true' ) return ( false );
+		if ( $task != 'verify' ) return ( false );
 		
 		$source = $this->_GET['_source'];
 		$username = $this->_GET['_username'];
 		$token = $this->_GET['_token'];
 		
-		$fCheckLocalToken = $this->GetCallback ( "CheckLocalToken" );
+		$fCheckLocalToken = $this->GetCallback ( 'CheckLocalToken' );
 		
-		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( "Invalid Callback: CheckLocalToken" );
+		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( 'Invalid Callback: CheckLocalToken' );
 		
 		$verified = @call_user_func ( $fCheckLocalToken, $username, $source, $token );
 		
 		if ( $verified ) {
-			$data['success'] = "true";
-			$data['error'] = "";
+			$data['success'] = 'true';
+			$data['error'] = '';
 		} else {
-			$this->_Error ( "Invalid Token" );
+			$this->_Error ( 'Invalid Token' );
 		}
 		
 		echo json_encode ( $data );
@@ -154,24 +166,24 @@ class cQuickSocial {
 		$social = $this->_GET['_social'];
 		$task = $this->_GET['_task'];
 		
-		if ( $social != "true" ) return ( false );
-		if ( $task != "verify.remote" ) return ( false );
+		if ( $social != 'true' ) return ( false );
+		if ( $task != 'verify.remote' ) return ( false );
 		
 		$source = $this->_GET['_source'];
 		$username = $this->_GET['_username'];
 		$token = $this->_GET['_token'];
 		
-		$fCheckLocalToken = $this->GetCallback ( "CheckLocalToken" );
+		$fCheckLocalToken = $this->GetCallback ( 'CheckLocalToken' );
 		
-		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( "Invalid Callback: CheckLocalToken" );
+		if ( !is_callable ( $fCheckLocalToken ) ) $this->_Error ( 'Invalid Callback: CheckLocalToken' );
 		
 		$verified = @call_user_func ( $fCheckLocalToken, $username, $source, $token, true );
 		
 		if ( $verified ) {
-			$data['success'] = "true";
-			$data['error'] = "";
+			$data['success'] = 'true';
+			$data['error'] = '';
 		} else {
-			$this->_Error ( "Invalid Token" );
+			$this->_Error ( 'Invalid Token' );
 		}
 		
 		echo json_encode ( $data );
@@ -182,8 +194,8 @@ class cQuickSocial {
 	protected function _Error ( $pError ) {
 		
 		$return = array (
-			"success" => "false",
-			"error" => $pError
+			'success' => 'false',
+			'error' => $pError
 		);
 		
 		echo json_encode ( $return );
@@ -215,9 +227,9 @@ class cQuickSocial {
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_HEADER         => false,
 			CURLOPT_FOLLOWLOCATION => true,
-			CURLOPT_ENCODING       => "",
+			CURLOPT_ENCODING       => '',
 			CURLOPT_VERBOSE			=> true,
-			CURLOPT_USERAGENT      => "Appleseed QuickSocial API v0.1",
+			CURLOPT_USERAGENT      => 'Appleseed QuickSocial API v0.1',
 			CURLOPT_AUTOREFERER    => true,
 			CURLOPT_CONNECTTIMEOUT => 10,
 			CURLOPT_TIMEOUT        => 20,      
@@ -231,7 +243,7 @@ class cQuickSocial {
 		curl_close($curl);
 		
 		// Optionally log the request and result if callback exists.
-		$fLogNetworkRequest = $this->GetCallback ( "LogNetworkRequest" );
+		$fLogNetworkRequest = $this->GetCallback ( 'LogNetworkRequest' );
 		
 		if ( is_callable ( $fLogNetworkRequest ) ) {
 			@call_user_func ( $fLogNetworkRequest, $url, $curl_response );

@@ -112,7 +112,7 @@ class cModel extends cBase {
 		
 			WHERE 
 				Username = '%s' 
-				OR ( Email NOT EQUAL '%s' AND LastLogin LIKE '%s' ) 
+				OR ( Email != '%s' AND LastLogin LIKE '%s' ) 
 			GROUP BY Username DESC
 		
 		// ~~ LIKE
@@ -491,7 +491,7 @@ class cModel extends cBase {
 					$operand = "NOT LIKE";
 				break;
 				case '!=':
-					$operand = "NOT EQUAL";
+					$operand = "!=";
 				break;
 				case '=n':
 					$operand = "IS NULL";

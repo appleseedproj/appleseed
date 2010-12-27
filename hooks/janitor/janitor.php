@@ -29,33 +29,9 @@ class cJanitorHook extends cHook {
 		parent::__construct();
 	}
 	
-	public function EndPageShare ( $pData = null ) {
+	public function OnSystemEnd ( $pData = null ) {
 		$this->_Janitorial();
 	    return ( true );
-	}
-	
-	public function EndJournalSave ( $pData ) {
-		$this->_Janitorial();
-		return ( true );
-	}
-	
-	public function EndFriendsApprove ( $pData ) {
-		$this->_Janitorial();
-		return ( true );
-	}
-	
-	public function EndSystemInitialize ( $pData ) {
-		$social = $this->GetSys ( 'Request' )->Get ( '_social' );
-		
-		if ( $social != 'true' ) return ( false );
-		
-		$task = $this->GetSys ( 'Request' )->Get ( '_task' );
-		
-		if ( $task != 'friend.approve' ) return ( false );
-		
-		$this->_Janitorial();
-		
-		return ( true );
 	}
 	
 	private function _Janitorial ( ) {

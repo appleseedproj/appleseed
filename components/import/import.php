@@ -29,4 +29,15 @@ class cImport extends cComponent {
 		parent::__construct();
 	}
 	
+	public function RegisterOptionsArea ( $pData = null ) {
+		
+		if ( $this->_Source != 'Component' ) return ( false );
+		
+		$return = array ();
+		
+		$return[] = array ( 'title' =>"Services", 'class' => "services", 'link' => "/profile/(.*)/options/services/" );
+		
+		return ( $return );
+	}
+	
 }
