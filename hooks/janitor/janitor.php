@@ -29,7 +29,7 @@ class cJanitorHook extends cHook {
 		parent::__construct();
 	}
 	
-	public function OnSystemEnd ( $pData = null ) {
+	public function EndFooterDisplay ( $pData = null ) {
 		$this->_Janitorial();
 	    return ( true );
 	}
