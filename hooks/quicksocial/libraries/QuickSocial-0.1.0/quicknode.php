@@ -95,7 +95,7 @@ class cQuickNode extends cQuickSocial {
 		
 		$verified = $this->Verify ( null, $source, $token );
 		if ( $verified->success != 'true' ) {
-			$this->_Error ( "Invalid Token" );
+			$this->_Error ( 'Invalid Node' );
 			exit;
 		}
 		

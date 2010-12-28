@@ -38,12 +38,17 @@ class cQuicksocialHook extends cHook {
 		
 		if ( $social != 'true' ) return ( false );
 		
+		require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
+				
+		$social = new cQuickSocial ();
+		$social->SetCallback ( 'CheckBlocked', array ( $this, '_CheckBlocked' ) );
+		
+		$social->Blocked();
+		
 		$task = $this->GetSys ( 'Request' )->Get ( '_task' );
 		
 		switch ( $task ) {
 			case 'verify':
-				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
-				 
 				$social = new cQuickSocial ();
 				$social->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
 				
@@ -51,8 +56,6 @@ class cQuicksocialHook extends cHook {
 				exit;
 			break;
 			case 'verify.remote':
-				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicksocial.php' );
-				 
 				$social = new cQuickSocial ();
 				$social->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
 				
@@ -187,6 +190,20 @@ class cQuicksocialHook extends cHook {
 		
 	}
 	
+	public function _CheckBlocked ( $pSource ) {
+		
+		list ( $trusted, $discovered, $blocked ) = $this->_LoadNodeNetwork ( );
+		
+		foreach ( $blocked as $b => $block ) {
+			$pattern = '/^' . $block . '$/';
+			if ( preg_match ( $pattern, $pSource ) ) {
+				return ( false );
+			}
+		}
+		
+		return ( true );
+	}
+	
 	public function OnLoginAuthenticate ( $pData ) {
 		
 		if (!class_exists ( 'cQuickNode' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
@@ -194,6 +211,12 @@ class cQuicksocialHook extends cHook {
 		$node = new cQuickNode ();
 		
 		$domain = $pData['domain'];
+		
+		if ( !$this->_CheckBlocked ( $domain ) ) {
+			$return = new stdClass();
+			$return->error = 'Blocked Node';
+			return ( $return );
+		}
 		
 		$node->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
 		$node->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );

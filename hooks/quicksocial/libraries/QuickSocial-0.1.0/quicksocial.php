@@ -191,6 +191,21 @@ class cQuickSocial {
 		
 	}
 	
+	public function Blocked ( ) {
+		
+		$fCheckBlocked = $this->GetCallback ( 'CheckBlocked' );
+		
+		if ( !is_callable ( $fCheckBlocked ) ) $this->_Error ( 'Invalid Callback: CheckBlocked' );
+		
+		$source = $this->_GET['_source'];
+		
+		$result = @call_user_func ( $fCheckBlocked, $source );
+		
+		if ( !$result ) $this->_Error ( 'Blocked' );
+		
+		return ( true );
+	}
+	
 	protected function _Error ( $pError ) {
 		
 		$return = array (

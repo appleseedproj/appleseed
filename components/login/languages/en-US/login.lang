@@ -9,6 +9,8 @@ INVALID_CALLBACK="A system error occurred: Invalid Callback."
 INVALID_NODE="This is not a valid Appleseed node."
 NOT_LOGGED_IN_TO_NODE="You are not logged in to this Appleseed node."
 
+BLOCKED_NODE="This node has been blocked by the Administrator. "
+
 [password_reset]
 PASSWORD_RESET_CLICK_HERE="Click here to login:"
 PASSWORD_RESET_FROM="password@%domain$s"
