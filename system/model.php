@@ -464,8 +464,16 @@ class cModel extends cBase {
 			$comparison = null;
 			$comparison_string = null;
 			
+			$this->_Masslist = false;
+			
 			if ( $this->_IsMasslist ( $criteria ) ) {
 				$directive = '()';
+				$newCriteria = array ( );
+				foreach ( $criteria as $cc => $crit ) {
+					$newCriteria[] = $cc;
+				}
+				$criteria = join ( ',', $newCriteria );
+				$this->_Masslist = true;
 			} elseif ( is_array ( $criteria ) ) {
 				$comparison = 'AND';
 				$compare = substr ( $c, 0, 2 );
@@ -523,7 +531,8 @@ class cModel extends cBase {
 			
 			if ( $operand ) {
 				// Strip the operand information from the criteria.
-				if ( !is_array ( $criteria ) ) $criteria = substr ( $criteria, 2, strlen ( $criteria ) );
+				if ( ( !is_array ( $criteria ) ) and ( !$this->_Masslist ) ) 
+					$criteria = substr ( $criteria, 2, strlen ( $criteria ) );
 			} else {
 				// Default to equal comparison
 				$operand = "=";
