@@ -1,5 +1,6 @@
 <script type="text/javascript" src="/components/system/assets/javascript/admin.nodes.js"></script>
 <h1>Edit Node Title</h1>
+
 <p id='system-nodes-message'></p>
 <p>Edit Node Description</p>
 

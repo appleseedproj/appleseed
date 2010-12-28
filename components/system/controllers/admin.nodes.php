@@ -299,7 +299,7 @@ class cSystemAdminNodesController extends cController {
 		$count = count ( $selected );
 		
 		$this->GetSys ( "Session" )->Set ( "Message", __ ("Selected Items Deleted", array ( "count" => $count ) ) );
-		$this->GetSys ( "Session" )->Set ( "Error", TRUE );
+		$this->GetSys ( "Session" )->Set ( "Error", false );
 		
 		$this->Go ( "Display" );
 		
