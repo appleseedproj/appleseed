@@ -250,7 +250,6 @@ class cSystemAdminNodesController extends cController {
 		$this->Model->Synchronize();
 		
 		if ( !$this->Model->Get ( 'Source' ) ) $this->Model->Set ( 'Source', ASD_DOMAIN );
-		if ( $this->Model->Get ( 'Callback' ) == 'on' ) $this->Model->Set ( 'Callback', true ); else $this->Model->Set ( 'Admin', false );
 		if ( $this->Model->Get ( 'Inherit' ) == 'on' ) $this->Model->Set ( 'Inherit', true ); else $this->Model->Set ( 'Inherit', false );
 		
 		$this->Model->Set ( 'Stamp', NOW() );

@@ -28,8 +28,6 @@
 			</select>
 		<label>Inheritance</label> 
 		<input type="checkbox" name="Inherit" />
-		<label>Callback</label> 
-		<input type="checkbox" name="Callback" />
 		<label>Source</label> 
 		<input type="text" disabled="disabled" name="Source" />
 	</fieldset>
