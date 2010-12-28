@@ -1,1 +1,3 @@
-<input type="text" disabled="disabled" name="search" placeholder="Search Placeholder Text" class="search"><input type="submit" name="search" value="" class="search-submit">
+<form id="search-global">
+<input type="text" name="keywords" placeholder="Search Placeholder Text" class="keywords"><input type="submit" value="" class="search-submit">
+</form>
