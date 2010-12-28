@@ -23,18 +23,18 @@
 	<table id="customer-table-body" cellspacing="0"> 
 		<thead> 
 			<th scope="col" class="nobg">#</th> 
-			<th scope="col"><a href="#">Entry</th> 
+			<th scope="col"><a href="#">Domain</th> 
 			<th scope="col"><a href="#">Trust</th> 
-			<th scope="col"><a href="#">End Stamp</th> 
+			<th scope="col"><a href="#">Expires</th> 
 			<th scope="col"><a href="#">Source</th> 
 			<th><input class="select-toggle checked" type="checkbox" /></th> 
 		</thead> 
 		<tbody>
 			<tr> 
-				<th class="tID" scope="row"></th>
-				<td class="Entry"></td>
+				<th class="Node_PK" scope="row"></th>
+				<td class="Domain"></td>
 				<td class="Trust"></td>
-				<td class="EndStamp"></td>
+				<td class="Expires"></td>
 				<td class="Source"></td>
 				<td class="Masslist"><input class='masslist-checkbox' type="checkbox" /></td>
 			</tr> 

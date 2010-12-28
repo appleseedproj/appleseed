@@ -60,18 +60,15 @@ class cSystemAdminNodesController extends cController {
 		
 		$tbody->innertext = " " ;
 		
-		$celltID = $row->Find( "[class=tID]", 0 );
-		$cellEntry = $row->Find( "[class=Entry]", 0 );
+		$cellNode_PK = $row->Find( "[class=Node_PK]", 0 );
+		$cellDomain = $row->Find( "[class=Domain]", 0 );
 		$cellTrust = $row->Find( "[class=Trust]", 0 );
 		$cellSource = $row->Find( "[class=Source]", 0 );
-		$cellEndStamp = $row->Find( "[class=EndStamp]", 0 );
+		$cellExpires = $row->Find( "[class=Expires]", 0 );
 		$cellAdmin = $row->Find( "[class=Admin]", 0 );
 		$cellLocation = $row->Find( "[class=Location]", 0 );
 		$cellInherit = $row->Find( "[class=Inherit]", 0 );
 		$cellMasslist = $row->Find( "[class=Masslist] input[type=checkbox]", 0 );
-		
-		$YESNO = array ( "0" => "Option No", "1" => "Option Yes" );
-		$TRUST = array ( "10" => "Option Node Trusted", "20" => "Option Node Blocked" );
 		
 		while ( $this->Model->Fetch() ) {
 			
@@ -79,26 +76,26 @@ class cSystemAdminNodesController extends cController {
 			
 			$row->class = $oddEven;
 			
-			$id = $this->Model->Get ( 'tID' );
+			$id = $this->Model->Get ( 'Node_PK' );
 			
 			$url = $baseURL . "edit" . DS . $id . DS;
 			
-			$entry = $this->Model->Get ( 'Entry' );
+			$domain = $this->Model->Get ( 'Domain' );
 			$trust = $this->Model->Get ( 'Trust' );
-			$endStamp = $this->Model->Get ( 'EndStamp' );
+			$expires = $this->Model->Get ( 'Expires' );
 			$source = $this->Model->Get ( 'Source' );
 			$admin = $this->Model->Get ( 'Admin' );
 			$location = $this->Model->Get ( 'Location' );
 			$inheritance = $this->Model->Get ( 'Inherit' );
 			
-			if ( $endStamp == '0000-00-00 00:00:00' ) $endStamp = __( "Never Expires" );
+			if ( $expires == '0000-00-00 00:00:00' ) $expires = __( "Never Expires" );
 			
 			$context = $this->_Component . '.' . strtolower ( __FUNCTION__ );
 			
-			$celltID->innertext = $this->List->Link ( $id, $url );
-			$cellEntry->innertext = $this->List->Link ( $entry, $url );
-			$cellTrust->innertext = $this->List->Link ( $TRUST[$trust], $url );
-			$cellEndStamp->innertext = $this->List->Link ( $endStamp, $url );
+			$cellNode_PK->innertext = $this->List->Link ( $id, $url );
+			$cellDomain->innertext = $this->List->Link ( $domain, $url );
+			$cellTrust->innertext = $this->List->Link ( $trust, $url );
+			$cellExpires->innertext = $this->List->Link ( $expires, $url );
 			$cellSource->innertext = $this->List->Link ( $source, $url );
 			$cellMasslist->name = "Masslist[" . $id . "]";
 			
@@ -192,7 +189,7 @@ class cSystemAdminNodesController extends cController {
 	
 	public function _PrepareForm() {
 		
-		$tID = $this->GetSys ( "Request" )->Get ( 'tID', $this->Model->Get ( "tID" ) );
+		$Node_PK = $this->GetSys ( "Request" )->Get ( 'Node_PK', $this->Model->Get ( "Node_PK" ) );
 		
 		$this->Form = $this->GetView ( "admin.nodes.form" );
 		
@@ -201,7 +198,7 @@ class cSystemAdminNodesController extends cController {
 		
 		$this->_PrepareMessage();
 		
-		if ( $tID ) {
+		if ( $Node_PK ) {
 			$this->_PrepareEditForm ( );
 		} else {
 			$this->_PrepareAddForm ( );
@@ -217,9 +214,9 @@ class cSystemAdminNodesController extends cController {
 			return ( false );
 		}
 		
-		$this->GetSys ( "Request" )->Set ( "tID", $this->Model->Get ( "tID" ) );
+		$this->GetSys ( "Request" )->Set ( "Node_PK", $this->Model->Get ( "Node_PK" ) );
 		
-		$message = __( "Record Applied", array ( "id" => $this->Model->Get ( "tID" ) ) ); 
+		$message = __( "Record Applied", array ( "id" => $this->Model->Get ( "Node_PK" ) ) ); 
 		$this->GetSys ( "Session" )->Set ( "Message", $message );
 		
 		$this->Go ( "Edit" );
@@ -234,7 +231,7 @@ class cSystemAdminNodesController extends cController {
 			return ( false );
 		}
 		
-		$message = __( "Record Saved", array ( "id" => $this->Model->Get ( "tID" ) ) ); 
+		$message = __( "Record Saved", array ( "id" => $this->Model->Get ( "Node_PK" ) ) ); 
 		$this->GetSys ( "Session" )->Set ( "Message", $message );
 		
 		$this->Go ( "Display" );
@@ -293,7 +290,7 @@ class cSystemAdminNodesController extends cController {
 			return ( false );
 		}
 		
-		$criteria['tID'] = $selected;
+		$criteria['Node_PK'] = $selected;
 		
 		$this->Model = $this->GetModel( "Nodes" );
 		
@@ -309,18 +306,16 @@ class cSystemAdminNodesController extends cController {
 		return ( true );
 	}
 	
-	
-	
 	private function _PrepareEditForm ( ) {
 		
-		$tID = $this->GetSys ( "Request" )->Get ( 'tID', $this->Model->Get ( "tID" ) );
+		$Node_PK = $this->GetSys ( "Request" )->Get ( 'Node_PK', $this->Model->Get ( "Node_PK" ) );
 		
-		$this->Model->Retrieve ( $tID );
+		$this->Model->Retrieve ( $Node_PK );
 		
 		$this->Model->Fetch();
 		
 		$never = false;
-		if ( $this->Model->Get ( "EndStamp" ) == '0000-00-00 00:00:00' ) $never = true;
+		if ( $this->Model->Get ( "Expires" ) == '0000-00-00 00:00:00' ) $never = true;
 		
 		$defaults = (array) $this->Model->Get ( "Data" );
 		$defaults = array_merge ( $defaults, array ( "Never" => $never) );

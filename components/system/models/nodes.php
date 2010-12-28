@@ -21,7 +21,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cSystemNodesModel extends cModel {
 	
-	protected $_Tablename = "systemNodes";
+	protected $_Tablename = 'NetworkNodes';
 	
 	/**
 	 * Constructor
@@ -31,5 +31,4 @@ class cSystemNodesModel extends cModel {
 	public function __construct ( $pTables = null ) {       
 		parent::__construct( $pTables );
 	}
-	
-}
+} 

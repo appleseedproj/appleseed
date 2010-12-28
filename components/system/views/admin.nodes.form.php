@@ -4,25 +4,26 @@
 <p>Edit Node Description</p>
 
 <form id="system-nodes-edit" method="post">
-	<input type="hidden" name="tID" />
+	<input type="hidden" name="Node_PK" />
 	<input type="hidden" name="Context" />
 	
 	<fieldset>
 		<legend id='edit-subtitle'>Edit Node Subtitle</legend>
-		<label for="Entry">Entry<em>*</em></label><input class="required" type="text" name="Entry" />
+		<label for="Domain">Domain<em>*</em></label><input class="required" type="text" name="Domain" />
 		<label for="Trust">Trust<em>*</em></label>
 			<select id="node-trusted" type="text" name="Trust" />
-				<option value="10">Trusted</option>
-				<option value="20">Blocked</option>
+				<option value="trusted">Trusted</option>
+				<option value="discovered">Discovered</option>
+				<option value="blocked">Blocked</option>
 			</select>
-		<label for="EndStamp">End Stamp<em>*</em></label><input type="text" name="EndStamp" />
+		<label for="Expires">Expires<em>*</em></label><input type="text" name="Expires" />
 		<label>Never Expires</label> 
 		<input type="checkbox" name="Never" />
-		<label for="Share">Share<em>*</em></label>
-			<select id="node-trusted" type="text" name="Share" />
-				<option  value="10">Public</option>
-				<option  value="20">Trusted</option>
-				<option  value="30">Private</option>
+		<label for="Access">Access<em>*</em></label>
+			<select id="node-trusted" type="text" name="Access" />
+				<option  value="public">Public</option>
+				<option  value="trusted">Trusted</option>
+				<option  value="private">Private</option>
 			</select>
 		<label>Inheritance</label> 
 		<input type="checkbox" name="Inherit" />
