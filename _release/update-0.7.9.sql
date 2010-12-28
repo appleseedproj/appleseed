@@ -26,3 +26,5 @@ insert into `#__NetworkNodes` values (1,'Official beta test site for the Applese
 create table `#__SchemaVersions` ( `Schema_PK` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `Version` char(16) DEFAULT NULL, `Notes` text, PRIMARY KEY (`Schema_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 insert into `#__SchemaVersions` ( `Version`, `Notes` ) values ( '0.7.9', '+PageLinks +NotificationsOutgoing.Title +NotificationsIncoming.Title -journalPrivacy -journalPost +JournalEntries -contentArticles +SearchIndexes +NotificationsOutgoing.Feedback +NotificationsOutgoing.Comments +NotificationsIncoming.Feedback +NotificationsIncoming.Comments +FriendPing +NetworkNodes >NetworkNodes.Domain="appleseedproject.org" +SchemaVersions >SchemaVersions.Version="0.7.9" ' );
+
+drop table `#__systemNodes`;
