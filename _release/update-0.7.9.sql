@@ -28,3 +28,4 @@ create table `#__SchemaVersions` ( `Schema_PK` timestamp NOT NULL DEFAULT CURREN
 insert into `#__SchemaVersions` ( `Version`, `Notes` ) values ( '0.7.9', '+PageLinks +NotificationsOutgoing.Title +NotificationsIncoming.Title -journalPrivacy -journalPost +JournalEntries -contentArticles +SearchIndexes +NotificationsOutgoing.Feedback +NotificationsOutgoing.Comments +NotificationsIncoming.Feedback +NotificationsIncoming.Comments +FriendPing +NetworkNodes >NetworkNodes.Domain="appleseedproject.org" +SchemaVersions >SchemaVersions.Version="0.7.9" ' );
 
 drop table `#__systemNodes`;
+drop table `#__NodeDiscovery`;

@@ -29,29 +29,6 @@ class cQuicksocialHook extends cHook {
 		parent::__construct();
 	}
 	
-	public function SystemNodeDiscovery ( $pData = array() ) {
-		
-		if (!class_exists ( 'cQuickNode' ) ) require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
-		
-		// Set caching on by default.
-		$cache = $pData['cache'] ? isset ( $pData['cache'] ) : true;
-		
-		if ( $cache ) {
-			$model = new cModel ( 'NodeDiscovery');
-		}
-		
-		$node = new cQuickNode ();
-		
-		$domain = $pData['domain'];
-		
-		$node->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
-		$node->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
-		
-		$node = $node->Discover ( $domain );
-		
-		return ( $node );
-	}
-	
 	public function EndSystemInitialize ( $pData = null ) {
 		
 		// Bounce if requested.
@@ -134,16 +111,6 @@ class cQuicksocialHook extends cHook {
 				$node->SetCallback ( 'NodeInformation', array ( $this, '_NodeInformation' ) );
 				$node->SetCallback ( 'StoreNodeNetwork', array ( $this, '_StoreNodeNetwork' ) );
 				$node->ReplyToSynchronize();
-				exit;
-			break;
-			case 'node.discover':
-				require ( ASD_PATH . 'hooks' . DS . 'quicksocial' . DS . 'libraries' . DS . 'QuickSocial-0.1.0' . DS . 'quicknode.php' );
-				 
-				$node = new cQuickNode ();
-				$node->SetCallback ( 'CheckRemoteToken', array ( $this, '_CheckRemoteToken' ) );
-				$node->SetCallback ( 'CreateRemoteToken', array ( $this, '_CreateRemoteToken' ) );
-				$node->SetCallback ( 'NodeInformation', array ( $this, '_NodeInformation' ) );
-				$node->ReplyToDiscover();
 				exit;
 			break;
 			case 'redirect':
@@ -231,8 +198,14 @@ class cQuicksocialHook extends cHook {
 		$node->SetCallback ( 'CheckLocalToken', array ( $this, '_CheckLocalToken' ) );
 		$node->SetCallback ( 'CreateLocalToken', array ( $this, '_CreateLocalToken' ) );
 		$node->SetCallback ( 'LogNetworkRequest', array ( $this, '_LogNetworkRequest' ) );
+		$node->SetCallback ( 'LoadNodeNetwork', array ( $this, '_LoadNodeNetwork' ) );
+		$node->SetCallback ( 'NodeInformation', array ( $this, '_NodeInformation' ) );
+		$node->SetCallback ( 'StoreNodeNetwork', array ( $this, '_StoreNodeNetwork' ) );
 		
-		$node = $node->Discover ( $domain );
+		$node_description = __ ( $this->GetSys ( 'Config' )->GetConfiguration ( 'node_description' ), array ( 'domain' => ASD_DOMAIN ) ); 
+		$node_methods = $this->GetSys ( 'Config' )->GetConfiguration ( 'node_methods' ); 
+		
+		$node = $node->Synchronize ( $domain, $node_description, $node_methods );
 		
 		if ( $node->success != 'true' ) {
 			$return = new stdClass();
@@ -1147,7 +1120,9 @@ class cQuicksocialHook extends cHook {
 		
 		// 2. Loop through all nodes.
 		foreach ( $nodes as $n => $node ) {
-		
+			// Check for regular expression characters, ? * ^ $
+			if ( preg_match ( '/[^A-Za-z0-9_\-\.]/', $node ) ) continue;
+			
 			// 3. Contact nodes and recieve node list back.
 			$quickNode->Synchronize( $node, $node_description, $node_methods );
 			
@@ -1282,7 +1257,7 @@ class cQuicksocialHook extends cHook {
 				$model->Set ( 'Updated', NOW() );
 				$model->Set ( 'Contacted', NOW() );
 				$model->Set ( 'Version', null );
-				$model->Set ( 'Status', true );
+				$model->Set ( 'Status', false );
 				$model->Save();
 			}
 		
@@ -1305,7 +1280,7 @@ class cQuicksocialHook extends cHook {
 				$model->Set ( 'Updated', NOW() );
 				$model->Set ( 'Contacted', NOW() );
 				$model->Set ( 'Version', null );
-				$model->Set ( 'Status', true );
+				$model->Set ( 'Status', false );
 				$model->Save();
 			}
 		
@@ -1335,7 +1310,7 @@ class cQuicksocialHook extends cHook {
 					$model->Set ( 'Updated', NOW() );
 					$model->Set ( 'Contacted', NOW() );
 					$model->Set ( 'Version', null );
-					$model->Set ( 'Status', true );
+					$model->Set ( 'Status', false );
 					$model->Save();
 				}
 		

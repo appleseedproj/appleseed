@@ -59,19 +59,6 @@ Protocol
 			- NOTE: If _username is empty, represents a site verification token only.
 	
 	QuickNode
-		- Discover / ReplyToDiscover
-			 - GET:	_social=true
-					_task=node.discover
-					_source=<domain>					# Domain source
-					_token=<token>						# Required for verification
-			- JSON:	success=<true|false>
-					error=<error>
-					methods=<[array]>
-					tasks=<[array=(verify,node.update,friend.add,etc)]>
-					trusted=<[array]>
-					version=<version>
-			- NOTE:	Source & Token optional
-			
 		- Synchronize / ReplyToSynchronize
 			- GET:	_social=true
 					_task=node.synchronize
