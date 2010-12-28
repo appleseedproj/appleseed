@@ -51,6 +51,7 @@ class cSearchSearchController extends cController {
 			$this->Ask->Find ( '[name=search]', 0 )->disabled = true;
 		} else {
 			$this->Ask->Find ( '#search-global', 0 )->action = 'http://' . $this->_Current->Domain . '/search/';
+			$this->Ask->Synchronize();
 		}
 		
 		$this->Ask->Display();
