@@ -252,7 +252,8 @@ class cSystemAdminNodesController extends cController {
 		if ( !$this->Model->Get ( 'Source' ) ) $this->Model->Set ( 'Source', ASD_DOMAIN );
 		if ( $this->Model->Get ( 'Inherit' ) == 'on' ) $this->Model->Set ( 'Inherit', true ); else $this->Model->Set ( 'Inherit', false );
 		
-		$this->Model->Set ( 'Stamp', NOW() );
+		$this->Model->Set ( 'Updated', NOW() );
+		$this->Model->Set ( 'Status', true );
 		
 		$validate = $this->GetSys ( 'Validation' );
 		
