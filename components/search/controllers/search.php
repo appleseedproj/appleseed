@@ -34,6 +34,14 @@ class cSearchSearchController extends cController {
 		parent::__construct( );
 	}
 	
+	public function Display ( $pView = null, $pData = null ) {
+		$this->View = $this->GetView ( $pView );
+		
+		$this->View->Display();
+		
+		return ( true );
+	}
+	
 	/**
 	 * Display the global search box
 	 * 

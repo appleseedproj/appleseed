@@ -38,4 +38,9 @@ class cSearch extends cComponent {
 		return ( $return );
 	}
 	
+	public function Keywords ( $pData = null ) {
+		
+		return ( array ( ) );
+	}
+	
 }
