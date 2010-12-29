@@ -27,7 +27,7 @@ There are three levels of protocol support.  Each level is dependant on the leve
 Optimization
 --------------
 
-Where possible, the QuickSearch library does various optimizations, including concurrent and/or 
+Where possible, the QuickSocial library does various optimizations, including concurrent and/or 
 persistent HTTP connections, and bulk data retrieval.
 
 Token and node discovery caching must be handled by the application.
@@ -332,12 +332,13 @@ Protocol
 					_method=<method>					# http, https, ws, etc
 					_account=<user@domain>
 					_source=<domain>
-					_keywords=<keywords>
+					_keywords=<array>					# Array of keywords to search for.
 			- JSON:	success=<true|false>
 					error=<error>
 					results=<array>
 						title=<title>
 						link=<link>
+						icon=<icon>
 						owner=<owner>
 						description=<description>
 						stamp=<datetime>
