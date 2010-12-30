@@ -25,9 +25,12 @@ create table `#__NetworkNodes` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Des
 
 insert into `#__NetworkNodes` values (1,'Official beta test site for the Appleseed Project: The first open source, fully decentralized social networking software.','appleseedproject.org','trusted','','public',1,NOW(),NOW(),NOW(),'0000-00-00 00:00:00','http','QS/0.1.1',1);
 
+create table `#__CommentEntries` ( `Entry_PK` int(10) unsigned NOT NULL AUTO_INCREMENT, `Context` varchar(32) DEFAULT NULL, `Context_FK` int(10) unsigned NOT NULL, `Parent_ID` int(10) unsigned DEFAULT NULL, `Content` text, `Created` datetime DEFAULT NULL, `Owner` varchar(128) NOT NULL DEFAULT '', `Address` varchar(16) DEFAULT '0.0.0.0', PRIMARY KEY (`Entry_PK`) ) CHARSET=utf8;
+
+drop table `#__systemNodes`;
+drop table `#__NodeDiscovery`;
+
 create table `#__SchemaVersions` ( `Schema_PK` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `Version` char(16) DEFAULT NULL, `Notes` text, PRIMARY KEY (`Schema_PK`) ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 insert into `#__SchemaVersions` ( `Version`, `Notes` ) values ( '0.7.9', '+PageLinks +NotificationsOutgoing.Title +NotificationsIncoming.Title -journalPrivacy -journalPost +JournalEntries -contentArticles +SearchIndexes +NotificationsOutgoing.Feedback +NotificationsOutgoing.Comments +NotificationsIncoming.Feedback +NotificationsIncoming.Comments +FriendPing +NetworkNodes >NetworkNodes.Domain="appleseedproject.org" +SchemaVersions >SchemaVersions.Version="0.7.9" ' );
 
-drop table `#__systemNodes`;
-drop table `#__NodeDiscovery`;
