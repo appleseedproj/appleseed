@@ -29,7 +29,7 @@ class cCommentsCommentsController extends cController {
 		parent::__construct( );
 	}
 	
-	function Display ( $pView = null, $pData = array ( ) ) {
+	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
@@ -78,6 +78,80 @@ class cCommentsCommentsController extends cController {
 		$this->View->Display();
 		
 		return ( true );
+	}
+	
+	public function Delete ( $pView = null, $pData = array ( ) ) {
+		
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		$Entry_PK = $this->GetSys ( 'Request' )->Get ( 'Entry_PK' );
+		
+		$this->Model = $this->GetModel ( );
+		
+		if ( ( $this->Model->Ownership ( $Entry_PK, $this->_Current->Account ) ) or
+		     ( $this->_Current->Account == $this->_Focus->Account ) ) {
+		     // User is editing their own context, or user owns the comment.
+		     $this->Model->Remove ( $Entry_PK );
+		} else {
+			// Access is denied
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
+		
+		$redirect = $this->GetSys ( 'Router' )->Get ( 'Request' );
+		header ( 'Location:' . $redirect );
+		
+		return ( true );
+		
+	}
+	
+	public function Reply ( $pView = null, $pData = array ( ) ) {
+		
+		$Parent_ID = $this->GetSys ( 'Request' )->Get ( 'Parent_ID' );
+		
+		$this->View = $this->GetView ( 'reply' );
+		
+		$this->Model = $this->GetModel();
+		
+		$this->Model->Retrieve ( array ( 'Entry_PK' => $Parent_ID ) );
+		$this->Model->Fetch();
+		
+		$parent = $this->Model->Get ( 'Data' );
+		
+		$this->_PrepComment ( $this->View, $parent );
+		
+		$this->View->Find ( 'form[name="comment"] [name="Parent_ID"]', 0 )->value = $Parent_ID;
+		
+		$this->View->Display();
+		
+		return ( true );
+	}
+	
+	public function Save ( $pView = null, $pData = array ( ) ) {
+		
+		$Context = $pData['Context'];
+		$Id = $pData['Id'];
+		
+		$this->_Current = $this->Talk ( 'User', 'Current' );
+		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		
+		$Body = $this->GetSys ( 'Request' )->Get ( 'Body' );
+		$Parent_ID = $this->GetSys ( 'Request' )->Get ( 'Parent_ID' );
+		
+		$this->Model = $this->GetModel();
+		
+		$this->Model->Store ( $Context, $Id, $Body, $Parent_ID, $this->_Current->Account );
+		
+		$redirect = $this->GetSys ( 'Router' )->Get ( 'Request' );
+		header ( 'Location:' . $redirect );
+		exit;
+	}
+	
+	public function Cancel ( $pView = null, $pData = array ( ) ) {
+		$redirect = $this->GetSys ( 'Router' )->Get ( 'Request' );
+		header ( 'Location:' . $redirect );
+		exit;
 	}
 	
 	private function _GetChildren ( $pParent ) {
@@ -144,8 +218,15 @@ class cCommentsCommentsController extends cController {
 			$pRow->Find ( '.comment-user-link', 0 )->href = $OwnerLink;
 			$pRow->Find ( '.comment-icon-link', 0 )->href = $OwnerLink;
 			
+			$Contexts = $pRow->Find ( '[name="Context"]' );
+			foreach ( $Contexts as $c => $context ) {
+				$context->value = $this->Get ( 'Context' );
+			}
+			$pRow->Find ( 'form[name="reply"] [name="Parent_ID"]', 0 )->value = $pItem['Entry_PK'];
+			
 			if ( ( $this->_Current->Account == $this->_Focus->Account ) or ( $this->_Current->Account == $pItem['Owner'] ) ) {
-				$pRow->Find ( '.delete', 0 )->href = "";
+				$pRow->Find ( 'form[name="delete"] [name="Entry_PK"]', 0 )->value = $pItem['Entry_PK'];
+				$pRow->Find ( 'form[name="delete"]', 0 )->action = $this->GetSys ( 'Router' )->Get ( 'Request' );
 			} else {
 				$pRow->Find ( '.delete-area', 0 )->outertext = "";
 			} 
@@ -155,7 +236,7 @@ class cCommentsCommentsController extends cController {
 	
 	private function _PrepDeletedComment ( $pRow, $pItem ) {
 		$pRow->Find ( '.comment-body', 0 )->innertext = __ ( 'Deleted Comment' );
-		$pRow->Find ( '.comments', 0 )->class .= ' deleted ';
+		$pRow->Find ( '.comment', 0 )->class .= ' deleted ';
 		$pRow->Find ( '.delete-area', 0 )->outertext = '';
 		$pRow->Find ( '.reply-area', 0 )->outertext = '';
 		$pRow->Find ( '.stamp', 0 )->outertext = '';

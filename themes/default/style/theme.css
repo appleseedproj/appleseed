@@ -96,6 +96,8 @@
 		
 		/* Comments */
 		section.comments { clear:both; float:left; width:100%; }
+		section.comments form[name="comment"] textarea { margin-left:20px; width:672px; min-height:60px; }
+		section.comments form[name="comment"] .buttons { float:right; margin:0; }
 		ol.comments.outer { font-size:110%; }
 		ol.comments { float:left; clear:both; width:100%; list-style-type:none; margin:0; }
 		ol.comments li { clear: left; }
@@ -105,8 +107,8 @@
 		ol.comments li div.comment-icon-area a { background:none; padding:0; }
 		ol.comments li div.comment-icon-area img { width:32px; height:32px; padding:0; margin:0; }
 		
-		ol.deleted li div.comment { padding-right:42px; color:#4a4a4a; font-style:italic; }
-		ol.deleted li div.comment-icon-area { display:none; }
+		ol.comments li div.comment.deleted { padding-right:42px; color:#6a6a6a; font-style:italic; font-size:90%; }
+		ol.comments li div.comment.deleted div.comment-icon-area { display:none; }
 		
 		ol.comments li div.comment-content { float:right; clear:none; display:inline; width:658px; margin:5px 0 0 0; padding:0; vertical-align:top; }
 		
@@ -117,7 +119,7 @@
 		ol.comments li div.comment-content nav ul li { float:left; display:inline; border:none; width:auto; padding:0; margin-right:10px; clear:none; }
 		ol.comments li div.comment-content nav ul li a { font-weight:normal; }
 		
-		ol.comments ol.nested { padding: 0px 0px 0px 19px; border-left:1px solid #d9e8cf; clear: left; }
+		ol.comments ol.nested { padding: 0px 0px 0px 19px; border-left:1px solid #defcd3; clear: left; }
 		ol.comments ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested { margin: 0px 0px 0px 0px; clear:left; }
 		
 		ol.comments li ol.nested li div.comment-content { width:638px; }
