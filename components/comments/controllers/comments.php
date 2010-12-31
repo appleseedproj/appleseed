@@ -227,6 +227,9 @@ class cCommentsCommentsController extends cController {
 			if ( ( $this->_Current->Account == $this->_Focus->Account ) or ( $this->_Current->Account == $pItem['Owner'] ) ) {
 				$pRow->Find ( 'form[name="delete"] [name="Entry_PK"]', 0 )->value = $pItem['Entry_PK'];
 				$pRow->Find ( 'form[name="delete"]', 0 )->action = $this->GetSys ( 'Router' )->Get ( 'Request' );
+			} else if ( !$this->_Current ) {
+				$pRow->Find ( '.reply-area', 0 )->outertext = "";
+				$pRow->Find ( '.delete-area', 0 )->outertext = "";
 			} else {
 				$pRow->Find ( '.delete-area', 0 )->outertext = "";
 			} 
