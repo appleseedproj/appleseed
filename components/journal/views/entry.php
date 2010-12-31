@@ -12,3 +12,4 @@
 	<section class="comments"></section>
 </section>
 
+<section class="comments"></section>

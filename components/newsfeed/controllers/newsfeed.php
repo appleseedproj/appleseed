@@ -136,7 +136,6 @@ class cNewsfeedNewsfeedController extends cController {
 			$Comment = $this->GetSys ( 'Render' )->Format ( $this->Model->Get ( 'Comment' ) );
 			$Comment = $this->GetSys ( 'Render' )->LiveLinks ( $Comment );
 			
-			
 			$row->Find ( '.comment', 0 )->innertext = str_replace ( "\n", "<br />", $Comment );
 			$row->Find ( '.actionowner-link', 0 )->rel = $ActionOwner;
 			$row->Find ( '.actionowner-link', 0 )->innertext = $ActionOwner;

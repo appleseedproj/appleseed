@@ -95,25 +95,29 @@
 		input.search-submit {  -webkit-border-bottom-right-radius:4px; -webkit-border-top-right-radius:4px;  -moz-border-radius-bottomright:4px; -moz-border-radius-topright:4px;  -border-bottom-right-radius:4px; -border-top-right-radius:4px;  }
 		
 		/* Comments */
+		section.comments { clear:both; float:left; width:100%; }
 		ol.comments.outer { font-size:110%; }
 		ol.comments { float:left; clear:both; width:100%; list-style-type:none; margin:0; }
 		ol.comments li { clear: left; }
 		ol.comments li div.comment { float:left; clear:both; background:#c0d895; border-top:1px solid #80af1f; margin-bottom:1px; } 
 		ol.outer li div.comment { border:none; } 
-		ol.comments li div.comment-icon { float:left; display:inline; clear:none; width:32px; padding:5px 5px 0 5px; }
-		ol.comments li div.comment-icon a { background:none; padding:0; }
-		ol.comments li div.comment-icon img { width:32px; height:32px; padding:0; margin:0; }
+		ol.comments li div.comment-icon-area { float:left; display:inline; clear:none; width:32px; padding:5px 5px 0 5px; }
+		ol.comments li div.comment-icon-area a { background:none; padding:0; }
+		ol.comments li div.comment-icon-area img { width:32px; height:32px; padding:0; margin:0; }
+		
+		ol.deleted li div.comment { padding-right:42px; color:#4a4a4a; font-style:italic; }
+		ol.deleted li div.comment-icon-area { display:none; }
 		
 		ol.comments li div.comment-content { float:right; clear:none; display:inline; width:658px; margin:5px 0 0 0; padding:0; vertical-align:top; }
 		
-		ol.comments li div.comment-content p { float:left; width:100%; margin:0 0 5px 0; padding:0; }
+		ol.comments li div.comment-content p { float:left; width:100%; margin:0 0 5px 0; padding:0; font-size:100%; }
 		ol.comments li div.comment-content a { background:none; padding:0; font-weight:bold; margin-right:5px; }
-		ol.comments li div.comment-content abbr { float:left; clear:none; font-size:80%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
-		ol.comments li div.comment-content nav { font-size:80%; float:right; margin:0; padding:0; clear:none; }
+		ol.comments li div.comment-content abbr { float:left; clear:none; font-size:90%; color:#8a8a8a; font-style:italic; border:none; cursor:auto; }
+		ol.comments li div.comment-content nav { font-size:90%; float:right; margin:0; padding:0; clear:none; }
 		ol.comments li div.comment-content nav ul li { float:left; display:inline; border:none; width:auto; padding:0; margin-right:10px; clear:none; }
 		ol.comments li div.comment-content nav ul li a { font-weight:normal; }
 		
-		ol.comments ol.nested { margin: 0px 0px 0px 20px; clear: left; }
+		ol.comments ol.nested { padding: 0px 0px 0px 19px; border-left:1px solid #d9e8cf; clear: left; }
 		ol.comments ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested ol.nested { margin: 0px 0px 0px 0px; clear:left; }
 		
 		ol.comments li ol.nested li div.comment-content { width:638px; }
@@ -126,6 +130,9 @@
 		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:498px; }
 		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:478px; }
 		ol.comments li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li ol.nested li div.comment-content { width:458px; }
+		
+		ol.comments .comment-content .comment-area { margin-bottom:5px; }
+		ol.comments .comment-content .comment-body p { clear:none; float:none; width:auto; display:inline; margin:0; padding:0; }
 		
 		/* Translation Debugging */
 		span.untranslated { margin:0; padding:0px 4px; color:#2a2afa; background-color:#cacafa;}
