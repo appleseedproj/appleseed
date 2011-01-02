@@ -50,6 +50,9 @@ class cCommentsCommentsController extends cController {
 		$this->Model = $this->GetModel ( );
 		
 		$this->Comments = $this->Model->Load ( $Context, $Context_FK );
+		$count = $this->Model->Get ( 'Total' );
+		
+		$this->View->Find ( '.title', 0)->innertext = __ ( "Read Comments", array ( 'count' => $count ) );
 		
 		$ol = $this->View->Find ( '.comments', 0);
 		
@@ -74,6 +77,9 @@ class cCommentsCommentsController extends cController {
 		    $ol->innertext .= $row->outertext;
 		    unset ( $row );
 		}
+		
+		$this->View->Find ( 'form[name="comment"] [name="Parent_ID"]', 0 )->value = "";
+		$this->View->Find ( 'form[name="comment"] [name="Context"]', 0 )->value = $this->Get ( 'Context' );
 		
 		$this->View->Display();
 		
@@ -128,7 +134,7 @@ class cCommentsCommentsController extends cController {
 		return ( true );
 	}
 	
-	public function Save ( $pView = null, $pData = array ( ) ) {
+	public function Post ( $pView = null, $pData = array ( ) ) {
 		
 		$Context = $pData['Context'];
 		$Id = $pData['Id'];

@@ -1,3 +1,5 @@
 
+NO_COMMENTS=" "
+READ_COMMENTS="Read %count$s comments"
 DELETED_COMMENT="This comment has been deleted"
 WRITE_A_COMMENT="Write a comment..."

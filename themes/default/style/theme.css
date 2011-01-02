@@ -33,6 +33,8 @@
 		
 		section p { clear:both; margin-top:10px; }
 		
+		a.anchor { display:none; }
+		
 		/* Pagination */
 		
 		nav.pagination ol { float:right; clear:both; margin-top:10px; }
@@ -96,8 +98,9 @@
 		
 		/* Comments */
 		section.comments { clear:both; float:left; width:100%; }
-		section.comments form[name="comment"] textarea { margin-left:20px; width:672px; min-height:60px; }
-		section.comments form[name="comment"] .buttons { float:right; margin:0; }
+		section.comments form[name="comment"] textarea { width:692px; height:14px; }
+		section.comments form[name="comment"] textarea:focus { width:692px; height:56px; }
+		section.comments form[name="comment"] .buttons { float:right; margin:0; margin-bottom:5px; }
 		ol.comments.outer { font-size:110%; }
 		ol.comments { float:left; clear:both; width:100%; list-style-type:none; margin:0; }
 		ol.comments li { clear: left; }
