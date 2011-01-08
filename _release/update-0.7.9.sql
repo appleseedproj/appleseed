@@ -25,7 +25,7 @@ create table `#__NetworkNodes` ( `Node_PK` int(11) NOT NULL AUTO_INCREMENT, `Des
 
 insert into `#__NetworkNodes` values (1,'Official beta test site for the Appleseed Project: The first open source, fully decentralized social networking software.','appleseedproject.org','trusted','','public',1,NOW(),NOW(),NOW(),'0000-00-00 00:00:00','http','QS/0.1.1',1);
 
-create table `#__CommentEntries` ( `Entry_PK` int(10) unsigned NOT NULL AUTO_INCREMENT, `Context` varchar(32) DEFAULT NULL, `Context_FK` int(10) unsigned NOT NULL, `Parent_ID` int(10) unsigned DEFAULT NULL, `Content` text, `Created` datetime DEFAULT NULL, `Owner` varchar(128) NOT NULL DEFAULT '', `Address` varchar(16) DEFAULT '0.0.0.0', PRIMARY KEY (`Entry_PK`) ) CHARSET=utf8;
+create table `#__CommentEntries` ( `Entry_PK` int(10) unsigned NOT NULL AUTO_INCREMENT, `Context` varchar(32) DEFAULT NULL, `Context_FK` int(10) unsigned NOT NULL, `Parent_ID` int(10) unsigned DEFAULT NULL, `Body` text, `Created` datetime DEFAULT NULL, `Owner` varchar(128) NOT NULL DEFAULT '', `Address` varchar(16) DEFAULT '0.0.0.0', `Status` tinyint(1) DEFAULT '1', PRIMARY KEY (`Entry_PK`) ) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 drop table `#__systemNodes`;
 drop table `#__NodeDiscovery`;
