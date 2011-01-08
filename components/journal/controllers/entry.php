@@ -79,12 +79,18 @@ class cJournalEntryController extends cController {
 			$this->View->Find ( '.edit', 0 )->outertext = ""; 
 		}
 		
-		$commentsData = array ( 'Context' => 'Journal', 'Id' => $this->Model->Get ( 'Entry_PK' ) );
-		$this->View->Find ( '.comments', 0 )->innertext = $this->GetSys ( 'Components' )->Buffer ( 'comments', $commentsData ); 
-		
+		$this->_PrepComments();
 		$this->View->Find ( '.back', 0 )->href = '/profile/' . $this->_Focus->Username . '/journal/';
 		
 		$this->_PrepMessage();
+		
+		return ( true );
+	}
+	
+	private function _PrepComments ( ) {
+		
+		$commentsData = array ( 'Context' => 'Journal', 'Id' => $this->Model->Get ( 'Entry_PK' ) );
+		$this->View->Find ( '.comments', 0 )->innertext = $this->GetSys ( 'Components' )->Buffer ( 'comments', $commentsData ); 
 		
 		return ( true );
 	}

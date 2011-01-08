@@ -152,6 +152,7 @@ class cPage extends cComponent {
 		
 		$Post = $Model->RetrievePost ( $this->_Focus->Id, $Identifier );
 		
+		$return['PK'] = $Post['Post_PK'];
 		$return['Owner'] = $Post['Owner'];
 		$return['Comment'] = $Post['Content'];
 		
@@ -191,6 +192,7 @@ class cPage extends cComponent {
 		
 		$Link = $Model->RetrieveLink ( $this->_Focus->Id, $Identifier );
 		
+		$return['PK'] = $Link['Link_PK'];
 		$return['Owner'] = $Link['Owner'];
 		$return['Comment'] = $Link['Content'];
 		$return['Link'] = $Link['Link'];

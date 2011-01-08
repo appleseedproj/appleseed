@@ -9,7 +9,4 @@
 	<abbr class="stamp"></abbr>
 	<div class="body"></div>
 	<div class="permalink"><span class="permalink-label">Permalink</span><a class="permalink-link"></a></div>
-	<section class="comments"></section>
 </section>
-
-<section class="comments"></section>

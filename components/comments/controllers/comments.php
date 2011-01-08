@@ -149,10 +149,42 @@ class cCommentsCommentsController extends cController {
 		
 		$this->Model->Store ( $Context, $Id, $Body, $Parent_ID, $this->_Current->Account );
 		
+		$this->_NotifyPost ($this->_Focus->Email, $this->_Current->Account, $this->_Focus->Account, $Body, $pData );
+		
 		$redirect = $this->GetSys ( 'Router' )->Get ( 'Request' );
 		header ( 'Location:' . $redirect );
 		exit;
 	}
+	
+	private function _NotifyPost ( $pEmail, $pSender, $pRecipient, $pComment ) {
+		
+		$data = array ( 'request' => $pSender, 'source' => ASD_DOMAIN, 'account' => $pRecipient );
+		$SenderInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
+		
+		$SenderFullname = $SenderInfo->fullname;
+		$SenderNameParts = explode ( ' ', $SenderInfo->fullname );
+		$SenderFirstName = $SenderNameParts[0];
+		
+		list ( $RecipientUsername, $RecipientDomain ) = explode ( '@', $pRecipient );
+		
+		$MailSubject = __( 'Someone Commented On Your Context', array ( 'fullname' => $SenderFullname ) );
+		$Byline = __( 'Commented On Your Context' );
+		$Subject = __( 'Commented On Your Context Subject', array ( 'firstname' => $SenderFirstName ) );
+		
+		$LinkDescription = __( 'Click Here For Comments' );
+		$Link = 'http://' . ASD_DOMAIN . $this->GetSys ( 'Router' )->Get ( 'Request' );
+		
+		$pComment = strip_tags ( $this->GetSys ( 'Render' )->Format ( $pComment ) );
+		
+		$Body = __( 'Commented On Your Context Description', array ( 'fullname' => $SenderFullname, 'comment' => $pComment, 'domain' => 'http://' . ASD_DOMAIN, 'link' => $Link ) );
+		
+		$Message = array ( 'Type' => 'User', 'SenderFullname' => $SenderFullname, 'SenderAccount' => $pSender, 'RecipientEmail' => $pEmail, 'MailSubject' => $MailSubject, 'Byline' => $Byline, 'Subject' => $Subject, 'Body' => $Body, 'LinkDescription' => $LinkDescription, 'Link' => $Link );
+		
+		$this->GetSys ( 'Components' )->Talk ( 'Postal', 'Send', $Message );
+		
+		return ( true );
+	} 
+	
 	
 	public function Cancel ( $pView = null, $pData = array ( ) ) {
 		$redirect = $this->GetSys ( 'Router' )->Get ( 'Request' );

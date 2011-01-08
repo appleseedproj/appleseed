@@ -101,7 +101,7 @@
 		section.comments form[name="comment"] textarea { width:692px; height:14px; }
 		section.comments form[name="comment"] textarea:focus { width:692px; height:56px; }
 		section.comments form[name="comment"] .buttons { float:right; margin:0; margin-bottom:5px; }
-		ol.comments.outer { font-size:110%; }
+		ol.comments.outer { }
 		ol.comments { float:left; clear:both; width:100%; list-style-type:none; margin:0; }
 		ol.comments li { clear: left; }
 		ol.comments li div.comment { float:left; clear:both; background:#c0d895; border-top:1px solid #80af1f; margin-bottom:1px; } 

@@ -24,3 +24,11 @@ EDIT_CANCELLED="Your changes have been cancelled"
 ITEM_SAVED="Your journal entry has been saved"
 
 RSS_FEED_TITLE="%fullname$s's Journal on %domain$s"
+
+[notifications]
+CLICK_HERE_FOR_COMMENTS="See the comment thread:"
+SOMEONE_COMMENTED_ON_YOUR_CONTEXT="%fullname$s commented on your journal entry."
+COMMENTED_ON_YOUR_CONTEXT="commented on your entry"
+COMMENTED_ON_YOUR_CONTEXT_SUBJECT="%firstname$s commented on your journal entry."
+COMMENTED_ON_YOUR_CONTEXT_DESCRIPTION="
+%fullname$s wrote: &quot;%comment$s&quot;"

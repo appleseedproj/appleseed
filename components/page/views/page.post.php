@@ -13,4 +13,4 @@
 	<input type="hidden" name="Identifier" />
 	<button class="remove-post">Remove Post</button>
 </form>
-
+<section class="comments"></section>

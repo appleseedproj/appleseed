@@ -48,9 +48,9 @@ class cPagePageController extends cController {
 	
 	private function _Prep ( ) {
 		
-		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
+		$requestedIdentifier = $this->GetSys ( 'Request' )->Get ( 'Identifier' );
 		
-		$this->References->RetrieveReferences ( $this->_Focus->Id, $Identifier );
+		$this->References->RetrieveReferences ( $this->_Focus->Id, $requestedIdentifier );
 		
 		$li = $this->View->Find ( '.list .item', 0);
 		
@@ -97,12 +97,26 @@ class cPagePageController extends cController {
 		
 		$this->View->Reload();
 	
+		if ( $requestedIdentifier ) $this->_PrepComments ( $Type, $this->_Item['PK'] );
+		
 		return ( true );
 	}
+	
+	private function _PrepComments ( $pType, $pId ) {
+		
+		$commentsData = array ( 'Context' => 'Page.' . $pType, 'Id' => $pId );
+		
+		$this->View->Find ( '.comments', 0 )->innertext = $this->GetSys ( 'Components' )->Buffer ( 'comments', $commentsData ); 
+		
+		return ( true );
+	}
+	
 	
 	private function _PrepLink ( ) {
 		
 		$row = $this->GetView ( 'page.link' );
+		
+		$row->Find ( '.add-comment', 0 )->href = '/profile/' . $this->_Focus->Username . '/page/' . $this->_Item['Identifier']  . '#comments';
 		
 		$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->References->Get ( 'Stamp' ) );
 		$row->Find ( '.content', 0 )->innertext = str_replace ( "\n", "<br />", $this->_Item['Comment'] );
@@ -157,6 +171,8 @@ class cPagePageController extends cController {
 	private function _PrepPost ( ) {
 		
 		$row = $this->GetView ( 'page.post' );
+		
+		$row->Find ( '.add-comment', 0 )->href = '/profile/' . $this->_Focus->Username . '/page/' . $this->_Item['Identifier']  . '#comments';
 		
 		$row->Find ( '.stamp', 0 )->innertext = $this->GetSys ( 'Date' )->Format ( $this->References->Get ( 'Stamp' ) );
 		$row->Find ( '.content', 0 )->innertext = str_replace ( "\n", "<br />", $this->_Item['Comment'] );
