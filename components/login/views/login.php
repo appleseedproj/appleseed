@@ -8,7 +8,7 @@
 		<input type='hidden' name='Redirect' value=''> 
 
 		<div><label for='Username'>Username</label><input type='Text' name='Username' class='username' maxlength='64' value="" /></div>
-		<div><label for='Password'>Password</label><input type='Password' name='Pass' class='pass' maxlength='16' value="" /></div>
+		<div><label for='Password'>Password</label><input type='Password' name='Pass' class='pass' value="" /></div>
 		<div><label for='Remember'>Remember Me</label><input id='Remember' type='checkbox' name='Remember' /></div>
 		</fieldset>
 
