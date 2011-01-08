@@ -27,7 +27,7 @@ POSTED_A_LINK_BODY="
 
 CLICK_HERE_FOR_COMMENTS="See the comment thread:"
 SOMEONE_COMMENTED_ON_YOUR_CONTEXT="%fullname$s commented on your page."
-COMMENTED_ON_YOUR_CONTEXT="commented on your entry"
+COMMENTED_ON_YOUR_CONTEXT="commented on your page"
 COMMENTED_ON_YOUR_CONTEXT_SUBJECT="%firstname$s commented on your page."
 COMMENTED_ON_YOUR_CONTEXT_DESCRIPTION="
 %fullname$s wrote: &quot;%comment$s&quot;"
