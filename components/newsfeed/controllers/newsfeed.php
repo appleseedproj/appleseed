@@ -156,6 +156,8 @@ class cNewsfeedNewsfeedController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
+			$row->Find ( '.add-comment', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/page/' . $Identifier  . '#comments';
+		
 			return ( $row->outertext );
 	}
 	
@@ -226,6 +228,8 @@ class cNewsfeedNewsfeedController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
+			$row->Find ( '.add-comment', 0 )->href = 'http://' . $domain . '/profile/' . $username . '/page/' . $Identifier  . '#comments';
+		
 			return ( $row->outertext );
 	}
 	
@@ -296,6 +300,8 @@ class cNewsfeedNewsfeedController extends cController {
 			$row->Find ( '[name=Context]', 0 )->value = $this->Get ( 'Context' );
 			$row->Find ( '[name=Identifier]', 0 )->value = $Identifier;
 			
+			$row->Find ( '.add-comment', 0 )->href = $ActionLink . '#comments';
+		
 			return ( $row->outertext );
 	}
 	
