@@ -10,3 +10,4 @@
 	<div class="body"></div>
 	<div class="permalink"><span class="permalink-label">Permalink</span><a class="permalink-link"></a></div>
 </section>
+<section class="comments"></section> 
