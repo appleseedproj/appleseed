@@ -271,7 +271,7 @@
     
     <footer id="appleseed-footer" class="container_16">
     
-    	<p> <a href="http://opensource.appleseedproject.org">Appleseed Social Networking Software</a> is Copyright &copy; 2004-2010 by Michael Chisari under the GNU General Public License. All Rights Reserved. </p>
+    	<p> <a href="http://opensource.appleseedproject.org">Appleseed Social Networking Software</a> is Copyright &copy; 2004-2011 by Michael Chisari under the GNU General Public License. All Rights Reserved. </p>
     	
     </footer>
     

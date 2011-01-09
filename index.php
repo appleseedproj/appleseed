@@ -6,7 +6,7 @@
   // | FILE: index.php                               CREATED: 04-12-2007 + 
   // | LOCATION: /                                  MODIFIED: 10-25-2010 +
   // +-------------------------------------------------------------------+
-  // | Copyright (c) 2004-2010 Appleseed Project                         |
+  // | Copyright (c) 2004-2011 Appleseed Project                         |
   // +-------------------------------------------------------------------+
   // | This program is free software; you can redistribute it and/or     |
   // | modify it under the terms of the GNU General Public License       |
@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.8                                               |
+  // | VERSION:      0.7.9                                               |
   // | DESCRIPTION:  Default Appleseed Installer                         |
   // +-------------------------------------------------------------------+
   
@@ -106,7 +106,7 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-  <title>Appleseed 0.7.8 Install Script</title>
+  <title>Appleseed 0.7.9 Install Script</title>
 </head>
 
 <style type="text/css" media="screen">
@@ -1149,7 +1149,7 @@ class cINSTALL {
     global $gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, $gHOST, $gDOMAIN;
     global $gADMINUSER, $gADMINPASS, $gADMINEMAIL, $gUPGRADE;
     
-    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.8', $gHOST, $gDOMAIN)) return (FALSE);
+    if (!$this->WriteConfiguration ($gDATABASE, $gUSERNAME, $gPASSWORD, $gPREFIX, '0.7.9', $gHOST, $gDOMAIN)) return (FALSE);
     if (!$this->WriteHtaccess ()) return (FALSE);
     if (!$this->ImportData ($gUSERNAME, $gPASSWORD, $gHOST, $gDATABASE, $gPREFIX, $gUPGRADE)) return (FALSE);
     if (!$this->UpdateAdminUserPass ($gADMINUSER, $gADMINPASS)) return (FALSE);
@@ -1208,9 +1208,10 @@ class cINSTALL {
 							</ul>
 						<h3>New in this release</h3>
 							<ul>
-								<li>"Page" posts/status updates</li>
-								<li>New email notifications</li>
-								<li>New frontpage layout</li>
+								<li>Posting links to your "Page"</li>
+								<li>Comments</li>
+								<li>Node Discovery</li>
+								<li>Journals</li>
 								<li>More bug fixes</li>
 							</ul>
 
@@ -1226,7 +1227,7 @@ class cINSTALL {
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.8</h1>
+            <h1>Appleseed Install v0.7.9</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
@@ -1403,7 +1404,7 @@ class cINSTALL {
 
        <footer class='container_12'>
 			  	<p align="center">
-        		Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
+        		Copyright &copy; 2004-2011 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
 					</p>
        </footer>
      </body>
@@ -1446,11 +1447,11 @@ class cINSTALL {
 							</ul>
 						<h3>New in this release</h3>
 							<ul>
-								<li>One-Click Server Upgrades</li>
-								<li>New Layout</li>
-								<li>Client-Side Internationalization</li>
-								<li>Legacy code refactoring</li>
-								<li>Lots of bug fixes</li>
+								<li>Posting links to your "Page"</li>
+								<li>Comments</li>
+								<li>Node Discovery</li>
+								<li>Journals</li>
+								<li>More bug fixes</li>
 							</ul>
 
 						<h3>Appleseed Project Homepage</h3>
@@ -1464,7 +1465,7 @@ class cINSTALL {
         <div id="page_right" class="grid_9">
 										         
   	      <section id="install">
-            <h1>Appleseed Install v0.7.8</h1>
+            <h1>Appleseed Install v0.7.9</h1>
       
 					  <?php echo $ErrorString; ?>
             <form id='main' name='main' method='POST' action='/'>
@@ -1591,7 +1592,7 @@ class cINSTALL {
 
        <footer class='container_12'>
 			  	<p align="center">
-        		Copyright &copy; 2004-2010 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
+        		Copyright &copy; 2004-2011 by Michael Chisari under the <a href='http://www.gnu.org/licenses/gpl-2.0.html'>GNU GPL Version 2</a>. All Rights Reserved.
 					</p>
        </footer>
     </body>

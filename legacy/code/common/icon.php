@@ -29,7 +29,7 @@
   // +-------------------------------------------------------------------+
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
-  // | VERSION:      0.7.8                                               |
+  // | VERSION:      0.7.9                                               |
   // | DESCRIPTION:  This file uses mod_rewrite to push out a default    |
   // | icon for a requested user.  Uses MySQL for user authentication.   |
   // +-------------------------------------------------------------------+

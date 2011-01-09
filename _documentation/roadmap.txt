@@ -3,8 +3,8 @@ Appleseed Roadmap
 
 (Visual roadmap available at: http://opensource.appleseedproject.org/roadmap/)
 
-Updated:  11-11-2010
-Version:  0.7.8
+Updated:  01-09-2011
+Version:  0.7.9
 
 0.7 SERIES
 ----------
@@ -15,12 +15,12 @@ Base features, API, Framework, Themability, Internationalisation, UI Overhaul.
 * 0.7.6  - Input Purification, Refactor legacy code, Round out features and bug fix node control, Automatic update, Login component, and Client-side i18n.
 * 0.7.7  - Round out features and bug fix Friends.
 * 0.7.8  - Round out features and bug fix Privacy, Newsfeed, components. Add micro-blogging and "wall"/Page components.
-0.7.9    - Round out and bug fix Photos, Journals, and Comments components, round out features and bug fix control and config components.
-0.7.10   - Add user options and system logging components, round out features and bug fix Messaging
+* 0.7.9  - Round out and bug fix Journals, and Comments components, round out features and bug fix control and config components.
+0.7.10   - Add user options and system logging components, round out features and bug fix Messaging, Photos
 0.7.12   - Round out features and bug fix groups, pages.
 0.7.13   - Add search and events components, build out JQuery integration and framework
 0.7.14   - Add chat, video, and music components
-0.7.15   - Refactor and round out new components.  Semi-Freeze protocol and API with this release.
+0.7.15   - Refactor and round out new components.  Semi-Freeze graph protocol and API with this release.
 
 0.8 SERIES
 ----------

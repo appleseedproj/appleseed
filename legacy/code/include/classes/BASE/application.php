@@ -30,7 +30,7 @@
   // | AUTHORS: Michael Chisari <michael.chisari@gmail.com>              |
   // +-------------------------------------------------------------------+
   // | Part of the Appleseed BASE API                                    |
-  // | VERSION:      0.7.8                                               |
+  // | VERSION:      0.7.9                                               |
   // | DESCRIPTION:  Application class definitions. Reusable functions   |
   // |               not specifically tied to Appleseed.                 |
   // +-------------------------------------------------------------------+
@@ -377,7 +377,7 @@
       
       // Current Appleseed version.  Must be updated for each release.
       global $gAPPLESEEDVERSION;
-      $gAPPLESEEDVERSION = '0.7.8';
+      $gAPPLESEEDVERSION = '0.7.9';
       
       global $gSITEURL;
       $gSITEURL =  $zApp->Config->GetConfiguration ( "url" );

@@ -1,18 +1,18 @@
-Appleseed v0.7.8 Beta (Thirteenth Release)
+Appleseed v0.7.9 Beta (Fourteenth Release)
 
-Nov 11 2010
+Jan 9 2011
 
 New In This Release:
 --------------------
 
-Privacy UI, Newsfeeds, "Page" posts.
+Posting links to "Page", Journals, Trust-Based Node Discovery, Comments
 
 See _release/changelog.txt
 
 --------------------
 About Appleseed:
 
-This is the thirteenth release of the Appleseed code base.  Appleseed is 
+This is the fourteenth release of the Appleseed code base.  Appleseed is 
 social networking software, similar to Friendster or Myspace.  
 
 Appleseed is distributed social networking, which connects friends on 
@@ -50,7 +50,7 @@ Install Instructions
 Upgrade Instructions
 
 (This can be a little tricky, and these steps only work for upgrading
-from 0.7.7)
+from 0.7.8)
 
 1. Make a backup of your web directory and db tables!
 2. Untar the release into your web directory, overwriting existing files
@@ -66,7 +66,7 @@ host="localhost"
 url="http://localhost"
 
 5. Copy htaccess.original to .htaccess
-6. Run the queries in _release/update-0.7.7.sql on your database, replacing "#__" with your prefix.
+6. Run the queries in _release/update-0.7.9.sql on your database, replacing "#__" with your prefix.
 
 ie, 
 

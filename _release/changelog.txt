@@ -1,5 +1,12 @@
 RELEASE CHANGES
 
+-- 0.7.9 --
+
++ Refactored Comments
++ Refactored Journals
++ Posting links to "Page"
++ Trust-Based Node discovery
+
 -- 0.7.8 --
 
 + Refactored privacy controls
