@@ -34,6 +34,7 @@ class cJournalModel extends cModel {
 	public function Load ( $pUserId, $pEntry ) {
 		
 		$url = str_replace ( '-', ' ', $pEntry );
+		$url = str_replace ( '&', '&amp;', $url );
 		
 		// NOTE:  Does a fuzzier search due to parsed out characters such as '?'
 		// TODO:  Find a way to not parse out those characters.
