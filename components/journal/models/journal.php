@@ -35,7 +35,9 @@ class cJournalModel extends cModel {
 		
 		$url = str_replace ( '-', ' ', $pEntry );
 		
-		$criteria = array ( 'Owner_FK' => $pUserId, array ( 'Identifier' => $pEntry, '||Title' => $url ) );
+		// NOTE:  Does a fuzzier search due to parsed out characters such as '?'
+		// TODO:  Find a way to not parse out those characters.
+		$criteria = array ( 'Owner_FK' => $pUserId, array ( 'Identifier' => $pEntry, '||Title' => '~~' . '%' . $url . '%' ) );
 		
 		$this->Retrieve ( $criteria, 'Created DESC' );
 		
