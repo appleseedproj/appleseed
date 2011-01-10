@@ -1212,11 +1212,12 @@ class cQuicksocialHook extends cHook {
 		$All = array_unique ( array_merge ( $pTrusted, $pDiscovered, $pBlocked ) );
 		
 		$NodeNetwork = array_merge ( $this->_CachedNodeNetwork[0], $this->_CachedNodeNetwork[1], $this->_CachedNodeNetwork[2] );
+		$NodeNetwork = array_map("strtolower", $NodeNetwork );
 		
 		$model = new cModel ( 'NetworkNodes' );
 		
 		// Update the recieved information
-		if ( in_array ( $pSource, $NodeNetwork ) ) {
+		if ( in_array ( strtolower ( $pSource ), $NodeNetwork ) ) {
 			$model->Retrieve ( array ( 'Domain' => $pSource ) );
 			$model->Fetch();
 			$model->Set ( 'Description', $pDescription );
@@ -1249,21 +1250,21 @@ class cQuicksocialHook extends cHook {
 			if ( $node['Domain'] == $pSource ) {
 				if ( $node['Inherit'] == true ) $inherit = true;
 			}
-			if ( ( in_array ( $node['Domain'], $pTrusted ) ) or
-			     ( in_array ( $node['Domain'], $pDiscovered ) ) or 
-			     ( in_array ( $node['Domain'], $pBlocked ) ) ) {
+			if ( ( in_array ( strtolower ( $node['Domain'] ), $pTrusted ) ) or
+			     ( in_array ( strtolower ( $node['Domain'] ), $pDiscovered ) ) or 
+			     ( in_array ( strtolower ( $node['Domain'] ), $pBlocked ) ) ) {
 				$update[$node['Node_PK']] = $node['Domain'];
 			}
-			if ( !in_array ( $node['Domain'], $All ) ) {
+			if ( !in_array ( strtolower ( $node['Domain'] ), $All ) ) {
 				$insert[] = $node['Domain'];
 			}
 		}
 		
 		// Add the trusted nodes.
 		foreach ( $pTrusted as $t => $trusted ) {
-			if ( $trusted == QUICKSOCIAL_DOMAIN ) continue;
+			if ( strtolower ( $trusted ) == strtolower ( QUICKSOCIAL_DOMAIN ) ) continue;
 			// Update the recieved information
-			if ( !in_array ( $trusted, $NodeNetwork ) ) {
+			if ( !in_array ( strtolower ( $trusted ), $NodeNetwork ) ) {
 				$model->Destroy ( 'Node_PK' );
 				$model->Set ( 'Description', null );
 				$model->Set ( 'Domain', $trusted );
@@ -1288,9 +1289,9 @@ class cQuicksocialHook extends cHook {
 		
 		// Add the discovered nodes.
 		foreach ( $pDiscovered as $d => $discovered ) {
-			if ( $discovered == QUICKSOCIAL_DOMAIN ) continue;
+			if ( strtolower ( $discovered ) == strtolower ( QUICKSOCIAL_DOMAIN ) ) continue;
 			// Update the recieved information
-			if ( !in_array ( $discovered, $NodeNetwork ) ) {
+			if ( !in_array ( strtolower ( $discovered ), $NodeNetwork ) ) {
 				$model->Destroy ( 'Node_PK' );
 				$model->Set ( 'Description', null );
 				$model->Set ( 'Domain', $discovered );
@@ -1313,9 +1314,9 @@ class cQuicksocialHook extends cHook {
 		if ( $inherit ) {
 			// Add the blocked nodes.
 			foreach ( $pBlocked as $b => $blocked ) {
-				if ( $blocked == QUICKSOCIAL_DOMAIN ) continue;
+				if ( strtolower ( $blocked ) == strtolower ( QUICKSOCIAL_DOMAIN ) ) continue;
 				// Update the recieved information
-				if ( in_array ( $blocked, $NodeNetwork ) ) {
+				if ( in_array ( strtolower ( $blocked ), $NodeNetwork ) ) {
 					$model->Retrieve ( array ( 'Domain' => $blocked ) );
 					$model->Fetch();
 					$model->Set ( 'Trust', 'blocked' );
