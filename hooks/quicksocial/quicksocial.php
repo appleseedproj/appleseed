@@ -1263,6 +1263,9 @@ class cQuicksocialHook extends cHook {
 		// Add the trusted nodes.
 		foreach ( $pTrusted as $t => $trusted ) {
 			if ( strtolower ( $trusted ) == strtolower ( QUICKSOCIAL_DOMAIN ) ) continue;
+	        if ( strtolower ( $trusted ) == 'localhost' ) continue;
+	        if ( strtolower ( $trusted ) == '127.0.0.1' ) continue;
+			
 			// Update the recieved information
 			if ( !in_array ( strtolower ( $trusted ), $NodeNetwork ) ) {
 				$model->Destroy ( 'Node_PK' );
@@ -1290,6 +1293,8 @@ class cQuicksocialHook extends cHook {
 		// Add the discovered nodes.
 		foreach ( $pDiscovered as $d => $discovered ) {
 			if ( strtolower ( $discovered ) == strtolower ( QUICKSOCIAL_DOMAIN ) ) continue;
+	        if ( strtolower ( $discovered ) == 'localhost' ) continue;
+	        if ( strtolower ( $discovered ) == '127.0.0.1' ) continue;
 			// Update the recieved information
 			if ( !in_array ( strtolower ( $discovered ), $NodeNetwork ) ) {
 				$model->Destroy ( 'Node_PK' );
@@ -1315,6 +1320,9 @@ class cQuicksocialHook extends cHook {
 			// Add the blocked nodes.
 			foreach ( $pBlocked as $b => $blocked ) {
 				if ( strtolower ( $blocked ) == strtolower ( QUICKSOCIAL_DOMAIN ) ) continue;
+		        if ( strtolower ( $blocked ) == 'localhost' ) continue;
+		        if ( strtolower ( $blocked ) == '127.0.0.1' ) continue;
+		        
 				// Update the recieved information
 				if ( in_array ( strtolower ( $blocked ), $NodeNetwork ) ) {
 					$model->Retrieve ( array ( 'Domain' => $blocked ) );
