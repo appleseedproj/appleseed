@@ -36,6 +36,7 @@ class cDebugHook extends cHook {
 		$path = $uriParts[0];
 		
 		if ( $path == 'api' ) return ( true );
+		if ( $path == 'janitor' ) return ( true );
 		
 		$this->GetSys ( "Components" )->Execute ( "debug" );
         
