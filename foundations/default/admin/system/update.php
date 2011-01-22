@@ -87,7 +87,5 @@
  		<?php $zApp->Components->Go ( "footer" ); ?>
  	</footer>
  	
-	<?php $zApp->Components->Go ( "system", "system", null, "data" ); ?>
-
 </body>
 </html>

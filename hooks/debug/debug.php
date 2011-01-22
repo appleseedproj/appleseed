@@ -29,7 +29,13 @@ class cDebugHook extends cHook {
 		parent::__construct();
 	}
 	
-	public function DisplayDebugData ( $pData = null ) {
+	public function OnSystemEnd ( $pData = null ) {
+		
+		$uriParts = explode ( '/', ltrim ( rtrim ( ( $_SERVER['REQUEST_URI'] ), '/' ), '/' ) );
+		
+		$path = $uriParts[0];
+		
+		if ( $path == 'api' ) return ( true );
 		
 		$this->GetSys ( "Components" )->Execute ( "debug" );
         

@@ -80,7 +80,5 @@
     
 	<div class="clear"></div>
 	
-	<?php $zApp->Components->Go ( "system", "system", null, "data" ); ?>
-	
 </body>
 </html>
