@@ -36,18 +36,25 @@ class cJanitorHook extends cHook {
 	
 	private function _Janitorial ( ) {
 		// create both cURL resources
-		$ch1 = curl_init();
+		$curlHandle = curl_init();
 
 		// set URL and other appropriate options
 		$url = 'http://' . ASD_DOMAIN . '/janitor/';
 		
-		curl_setopt($ch1, CURLOPT_URL, $url);
-		curl_setopt($ch1, CURLOPT_HEADER, 0);
-		curl_setopt($ch1, CURLOPT_TIMEOUT, 1);
+		$multiHandle = curl_multi_init();  
 		
-	    curl_exec($ch1);
+		curl_setopt ( $curlHandle, CURLOPT_URL, $url );
+		curl_setopt ( $curlHandle, CURLOPT_HEADER, 0 );
+		curl_setopt ( $curlHandle, CURLOPT_TIMEOUT, 0 );
+		
+	    curl_multi_add_handle ( $multiHandle, $curlHandle );  
 	    
-	    curl_close ( $ch1 );
+	    do {
+    		$mrc = curl_multi_exec($multiHandle, $active);
+		} while ($mrc == CURLM_CALL_MULTI_PERFORM);
+	    
+		curl_multi_remove_handle ( $multiHandle, $curlHandle );
+		curl_multi_close ( $multiHandle );
 	    
 	    return ( true );
 	}

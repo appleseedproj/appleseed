@@ -32,10 +32,28 @@ class cJanitorJanitorController extends cController {
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
         ignore_user_abort(true);
-		
+        
+        $Model = $this->GetModel();
+        
+        $Model->Retrieve();
+        
+        $Model->Fetch();
+        
+        $lastUpdated = strtotime ( $Model->Get ( 'Updated' ) );
+        $now = strtotime ( NOW() );
+        
+        $diff = $now - $lastUpdated;
+        $diffMinutes = $diff / 60;
+        
+        if ( $diffMinutes < 1 ) return ( true );
+        
 		$this->Talk ( 'Newsfeed', 'ProcessQueue' );
 		
 		$this->GetSys ( 'Event' )->Trigger ( 'Update', 'Node', 'Network' );
+		
+		$Model->Query(' DELETE FROM #__Janitor' );
+		$Model->Set ( 'Updated', NOW() );
+		$Model->Save();
 		
 		return ( true );
 	}
