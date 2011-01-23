@@ -1349,6 +1349,15 @@ class cQuicksocialHook extends cHook {
 			}
 		}
 		
+		// For some reason, duplicate entries are getting created.  For now, delete duplicates.
+		$query = "
+			DELETE FROM #__NetworkNodes
+				USING #__NetworkNodes, #__NetworkNodes as vtable
+				WHERE (#__NetworkNodes.Node_PK > vtable.Node_PK)
+				AND (#__NetworkNodes.Domain=vtable.Domain);
+		";
+		$model->Query ( $query );
+		
 		return ( true );
 	}
 }
