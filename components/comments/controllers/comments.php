@@ -34,10 +34,6 @@ class cCommentsCommentsController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		
-		if ( !$this->_Current->Account ) {
-			return ( false );
-		}
-		
 		$Context = $pData['Context'];
 		$Context_FK = $pData['Id'];
 		
@@ -84,6 +80,11 @@ class cCommentsCommentsController extends cController {
 		
 		$this->View->Find ( 'form[name="comment"] [name="Parent_ID"]', 0 )->value = "";
 		$this->View->Find ( 'form[name="comment"] [name="Context"]', 0 )->value = $this->Get ( 'Context' );
+		
+		if ( !$this->_Current->Account ) {
+			$this->View->Find ( 'form[name="comment"]', 0 )->innertext = "";
+		}
+		
 		
 		$this->View->Display();
 		
