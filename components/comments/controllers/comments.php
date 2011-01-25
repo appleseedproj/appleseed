@@ -34,6 +34,10 @@ class cCommentsCommentsController extends cController {
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		
+		if ( !$this->_Current->Account ) {
+			return ( false );
+		}
+		
 		$Context = $pData['Context'];
 		$Context_FK = $pData['Id'];
 		
