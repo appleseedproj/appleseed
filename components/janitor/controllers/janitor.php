@@ -37,25 +37,48 @@ class cJanitorJanitorController extends cController {
         
         $Model->Retrieve();
         
-        $Model->Fetch();
+        while ( $Model->Fetch() ) {
+        	$Task = $Model->Get ( 'Task' );
+        	$Tasks[$Task] = strtotime ( $Model->Get ( 'Updated' ) );
+        }
         
-        $lastUpdated = strtotime ( $Model->Get ( 'Updated' ) );
-        $now = strtotime ( NOW() );
+        // Run the janitor every minute.
+       	// TODO: Make this configurable.
+        if ( !$this->_IsPast ( $Tasks['Janitorial'], 1 ) ) return ( true );
+       	$Model->Set ( 'Updated', NOW() );
+       	$Model->Save ( array ( 'Task' => 'Janitorial' ) );
         
-        $diff = $now - $lastUpdated;
-        $diffMinutes = $diff / 60;
-        
-        if ( $diffMinutes < 1 ) return ( true );
-        
-		$this->Talk ( 'Newsfeed', 'ProcessQueue' );
+       	// Process the newsfeed every FIVE minutes.
+       	// TODO: Make this configurable.
+        if ( $this->_IsPast ( $Tasks['ProcessNewsfeed'], 5 ) ) {
+        	$this->Talk ( 'Newsfeed', 'ProcessQueue' );
+        	$Model->Set ( 'Updated', NOW() );
+        	$Model->Save ( array ( 'Task' => 'ProcessNewsfeed' ) );
+        }
 		
-		$this->GetSys ( 'Event' )->Trigger ( 'Update', 'Node', 'Network' );
-		
-		$Model->Query(' DELETE FROM #__Janitor' );
-		$Model->Set ( 'Updated', NOW() );
-		$Model->Save();
+       	// Update the node network every 24 hours.
+       	// TODO: Make this configurable.
+        if ( $this->_IsPast ( $Tasks['UpdateNodeNetwork'], 1440 ) ) {
+			$this->GetSys ( 'Event' )->Trigger ( 'Update', 'Node', 'Network' );
+        	$Model->Set ( 'Updated', NOW() );
+        	$Model->Save ( array ( 'Task' => 'UpdateNodeNetwork' ) );
+        }
 		
 		return ( true );
+	}
+	
+	private function _IsPast ( $pTime, $pDistance ) {
+		
+		if ( !$pTime ) return ( false );
+		
+        $now = strtotime ( NOW() );
+        
+        $diff = $now - $pTime;
+        $diffMinutes = $diff / 60;
+        
+        if ( $diffMinutes < $pDistance ) return ( false );
+        
+        return ( true );
 	}
 
 }

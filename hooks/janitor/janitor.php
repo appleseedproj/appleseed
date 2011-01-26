@@ -33,7 +33,7 @@ class cJanitorHook extends cHook {
 		
         $Model = new cModel('Janitor');
         
-        $Model->Retrieve();
+        $Model->Retrieve( array ( 'Task' => 'Janitorial' ) );
         
         $Model->Fetch();
         
