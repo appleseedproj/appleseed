@@ -30,7 +30,24 @@ class cJanitorHook extends cHook {
 	}
 	
 	public function EndFooterDisplay ( $pData = null ) {
+		
+        $Model = new cModel('Janitor');
+        
+        $Model->Retrieve();
+        
+        $Model->Fetch();
+        
+        $lastUpdated = strtotime ( $Model->Get ( 'Updated' ) );
+        $now = strtotime ( NOW() );
+        
+        $diff = $now - $lastUpdated;
+        $diffMinutes = $diff / 60;
+        
+        // If we've recently updated, don't ping the Janitor.
+        if ( $diffMinutes < 1 ) return ( true );
+        
 		$this->_Janitorial();
+		
 	    return ( true );
 	}
 	
