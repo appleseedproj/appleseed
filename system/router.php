@@ -51,8 +51,6 @@ class cRouter extends cBase {
 		
 		$request = strtolower ( ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' ) );
 
-		$this->Set ( 'Request', $request );
-		
 		// If GET data is in the request, then remove it.
 		if ( strstr ( $request, '?' ) ) {
 			list ( $request, $null ) = explode ( '?', $request );
@@ -146,10 +144,10 @@ class cRouter extends cBase {
 			}
 		}
 
-		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
-		
 		$this->Legacy ( );
        	
+		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
+		
 		return ( true );
 	}
 	
