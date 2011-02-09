@@ -33,6 +33,8 @@ class cRequest {
 		eval ( GLOBALS );
 		
 		$purifier = $zApp->GetSys ( "Purifier" );
+
+		$this->_ParseURI();
 		
 		foreach ( $_REQUEST as $key => $value ) {
 			$lowerkey = strtolower ( $key );
@@ -63,16 +65,16 @@ class cRequest {
 		// Makes all request variable names case insensitive.
 		$variable = strtolower ( rtrim ( ltrim ( $pVariable ) ) );
 		
-		if ( !$this->_URI ) $this->_ParseURI();
-		
 		if ( $pVariable === null ) return ( $this->_Request );
 		
 		if ( !$this->_Request[$variable] ) return ( $pDefault );
 		
-		
-		
 		return ( $this->_Request[$variable] );
 
+	}
+
+	public function URI ( ) {
+		return ( $this->_URI );
 	}
 	
 	protected function _ParseURI ( ) {
