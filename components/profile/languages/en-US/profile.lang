@@ -9,6 +9,7 @@ PHOTOS_TAB="Photos"
 GROUPS_TAB="Groups"
 EVENTS_TAB="Events"
 MAIL_TAB="Mail"
+FILES_TAB="Files"
 OPTIONS_TAB="Options"
 MORE_PROFILE_TABS="..."
 
