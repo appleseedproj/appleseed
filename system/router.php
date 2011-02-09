@@ -50,6 +50,8 @@ class cRouter extends cBase {
 		$routes = $FoundationConfig->GetConfiguration ( "routes" );
 		
 		$request = strtolower ( ltrim ( rtrim ( $_SERVER['REQUEST_URI'], '/' ), '/' ) );
+
+		$this->Set ( 'Request', $request );
 		
 		// If GET data is in the request, then remove it.
 		if ( strstr ( $request, '?' ) ) {
@@ -143,11 +145,11 @@ class cRouter extends cBase {
 				return ( true );
 			}
 		}
+
+		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
 		
 		$this->Legacy ( );
        	
-		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
-		
 		return ( true );
 	}
 	
