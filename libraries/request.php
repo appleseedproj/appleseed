@@ -22,6 +22,7 @@ class cRequest {
 	
 	protected $_Request;
 	protected $_Unassigned;
+	protected $_Method;
 	protected $_URI;
 	
 	/**
@@ -35,12 +36,39 @@ class cRequest {
 		$purifier = $zApp->GetSys ( "Purifier" );
 
 		$this->_ParseURI();
-		
-		foreach ( $_REQUEST as $key => $value ) {
+
+		$this->_Method = $_SERVER['REQUEST_METHOD'];
+
+		switch ( $this->_Method ) {
+			case 'GET':
+				$Data = $_GET;
+			break;
+			
+			case 'POST':
+				$Data = $_POST;
+			break;
+			break;
+			
+			case 'PUT':
+				parse_str(file_get_contents('php://input'), $Data);
+			break;
+			
+			case 'DELETE':
+				$Source = '_DELETE';
+				parse_str(file_get_contents('php://input'), $Data);
+			break;
+			
+			case 'HEAD':
+				$Source = '_HEAD';
+				parse_str(file_get_contents('php://input'), $Data);
+			break;
+		}
+
+		foreach ( $Data as $key => $value ) {
 			$lowerkey = strtolower ( $key );
-			$this->_Raw[$lowerkey] = $_REQUEST[$key];
-			if ( is_array ( $_REQUEST[$key] ) ) {
-				$requests = $_REQUEST[$key];
+			$this->_Raw[$lowerkey] = $Data[$key];
+			if ( is_array ( $Data[$key] ) ) {
+				$requests = $Data[$key];
 				foreach ( $requests as $r => $request ) {
 					/*
 					 * @todo If we have nested arrays, this will break it.
@@ -51,10 +79,10 @@ class cRequest {
 				}
 				$this->_Request[$lowerkey] = $requests;
 			} else {
-				$this->_Request[$lowerkey] = $purifier->Purify ( $_REQUEST[$key] );
+				$this->_Request[$lowerkey] = $purifier->Purify ( $Data[$key] );
 			}
 		}
-		
+
 		$this->_Unassigned = array ();
 		
 		return ( true );
@@ -73,6 +101,10 @@ class cRequest {
 
 	}
 
+	public function Method ( ) {
+		return ( $this->_Method );
+	}
+	
 	public function URI ( ) {
 		return ( $this->_URI );
 	}
@@ -81,6 +113,10 @@ class cRequest {
 		eval ( GLOBALS );
 		
 		$this->_URI = substr ( $_SERVER['REQUEST_URI'], 1, strlen ( $_SERVER['REQUEST_URI'] ) );
+
+		// Remove all GET variables from the URI
+		list ( $this->_URI ) = explode ( '?', $this->_URI, 2 );
+
 		$pattern = $zApp->GetSys ( "Router" )->Get ( "Route" );
 		
 		$this->_URI = preg_replace ( '/\/$/', '', $this->_URI );
