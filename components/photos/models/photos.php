@@ -11,16 +11,16 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Photos Component Sets Model
+/** Photos Component Photos Model
  * 
- * Photos Component Sets Model Class
+ * Photos Component Photos Model Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Photos
  */
-class cPhotosSetsModel extends cModel {
+class cPhotosModel extends cModel {
 	
-	protected $_Tablename = 'PhotoSets';
+	protected $_Tablename = 'Photos';
 	
 	/**
 	 * Constructor
@@ -30,14 +30,26 @@ class cPhotosSetsModel extends cModel {
 	public function __construct ( $pTables = null ) {       
 		parent::__construct( $pTables );
 	}
+
+	public function LoadFromSet ( $pSetId ) {
+		$this->Retrieve ( array ( 'Set_FK' => $pSetId ) );
+
+		return ( true );
+	}
+
+	public function Load ( $pIdentifier ) {
+
+		$this->Retrieve ( array ( 'Identifier' => $pIdentifier ) );
+
+		return ( true );
+	}
 	
-	public function Load ( $pOwner, $pDirectory = null ) {
+	public function GetCover ( $pSetId ) {
 		
-		if ( $pDirectory ) {
-			$this->Retrieve ( array ( 'Owner_FK' => $pOwner, 'Directory' => $pDirectory ), 'Created DESC' );
-		} else {
-			$this->Retrieve ( array ( 'Owner_FK' => $pOwner ), 'Created DESC' );
-		}
+		$this->Retrieve ( array ( 'Set_FK' => $pSetId ) );
+		$this->Fetch();
+
+		return ( true );
 	}
 	
 }

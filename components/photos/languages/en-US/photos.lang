@@ -1,3 +1,4 @@
+; @todo:  refactor this into different views
 BACK_TO_PROFILE="&laquo; %userlink$s"
-BACK_TO_PHOTOSETS="&laquo; %userlink$s's Albums"
-BACK_TO_PHOTOSET="&laquo; %photosetlink$s"
+BACK_TO_PHOTOSETS="&laquo; <a href=\"%setlink$s\">%fullname$s's Albums</a>"
+BACK_TO_PHOTOSET="&laquo; <a href=\"%setlink$s\">%setname$s</a>"

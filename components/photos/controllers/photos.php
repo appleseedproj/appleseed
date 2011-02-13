@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Photos Component Sets Controller
+/** Photos Component Photos Controller
  * 
- * Photos Component Sets Controller Class
+ * Photos Component Photos Controller Class
  * 
  * @package     Appleseed.Components
  * @subpackage  Photos
  */
-class cPhotosSetsController extends cController {
+class cPhotosPhotosController extends cController {
 	
 	/**
 	 * Constructor
@@ -35,11 +35,16 @@ class cPhotosSetsController extends cController {
 		
 		$this->View = $this->GetView ( $pView ); 
 		
-		$this->Sets = $this->GetModel ( 'Sets' );
+		$this->Set = $this->GetModel ( 'Sets' );
 
-		$this->Photo = $this->GetModel ( 'Photos' );
-		
-		$this->Sets->Load ( $this->_Focus->Id );
+		$this->Photos = $this->GetModel ( 'Photos' );
+
+		$Set = $this->GetSys ( 'Request' )->Get ( 'Set' );
+
+		$this->Set->Load ( $this->_Focus->Id, $Set );
+		$this->Set->Fetch();
+
+		$this->Photos->LoadFromSet ( $this->Set->Get ( 'Set_PK' ) );
 
 		$this->_Prep();
 		
@@ -56,24 +61,21 @@ class cPhotosSetsController extends cController {
 
 		$list->innertext = "";
 		
-		while ( $this->Sets->Fetch() ) {
-			$id = $this->Sets->Get ( 'Set_PK' );
+		while ( $this->Photos->Fetch() ) {
+			$id = $this->Photos->Get ( 'Photo_PK' );
 
-			$this->Photo->GetCover ( $id );
-			$item->Find ( '.name', 0 )->innertext = $this->Sets->Get ( 'Name' );
-			$item->Find ( '.description', 0 )->innertext = $this->Sets->Get ( 'Description' );
-
-			$filename = $this->Photo->Get ( 'Filename' );
+			$filename = $this->Photos->Get ( 'Filename' );
 			$extension = pathinfo ( $filename, PATHINFO_EXTENSION );
 
-			$link = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/photos/' . $this->Sets->Get ( 'Directory' );
-			$item->Find ( '.photoset-name-link', 0 )->href = $link;
-			$item->Find ( '.photoset-cover-link', 0 )->href = $link;
+			$link = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/' . $this->Photos->Get ( 'Identifier' );
+			$item->Find ( '.photo-link', 0 )->href = $link;
 
 			list ( $file ) = explode ( '.' . $extension, $filename );
 
-			$coverLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Sets->Get ( 'Directory' ) . '/' . $file . '_m.' . $extension;
-			$item->Find ( '.cover', 0 )->src = $coverLocation;
+			$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Set->Get ( 'Directory' ) . '/' . $file . '_m.' . $extension;
+			$item->Find ( '.photo', 0 )->src = $photoLocation;
+
+			$item->Find ( '.description', 0 )->innertext = $this->Photos->Get ( 'Description' );
 			$list->innertext .= $item->outertext;
 		}
 	}

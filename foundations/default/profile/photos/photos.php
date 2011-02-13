@@ -70,8 +70,6 @@
 					<div id="photos-navigation">
 					  	<?php $zApp->Components->Go ( "photos", "navigation", "navigation" ); ?>
 					</div>
-				</div>
-				<div id="appleseed-profile-content" class="grid_12 omega">
 					<?php $zApp->Components->Go ( "photos", "photos", "photos" ); ?>
 				</div>
 			</div>

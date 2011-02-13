@@ -37,13 +37,21 @@ class cPhotosNavigationController extends cController {
 		
 		$Set = $this->GetSys ( 'Request' )->Get ( 'Set' );
 		$Photo = $this->GetSys ( 'Request' )->Get ( 'Photo' );
-		
+
 		$focusLinkData = $this->Talk ( 'User', 'Link', array ( 'request' => $this->_Focus->Account ) );
 		
 		if ( $Photo ) {
-			$this->Navigation->Find ( '.breadcrumb', 0 )->innertext = __ ( 'Back To Photoset', array ( 'photosetlink' => 'Photo album name' ) );
+			$this->Set = $this->GetModel ( 'Sets' );
+
+			$this->Set->Load ( $this->_Focus->Id, $Set );
+			$this->Set->Fetch();
+		
+			$setlink = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' );
+			$setname = $this->Set->Get ( 'Name' );
+			$this->Navigation->Find ( '.breadcrumb', 0 )->innertext = __ ( 'Back To Photoset', array ( 'setlink' => $setlink, 'setname' => $setname ) );
 		} else if ( $Set ) {
-			$this->Navigation->Find ( '.breadcrumb', 0 )->innertext = __ ( 'Back To Photosets' , array ( 'userlink' => $focusLinkData['link'] ) );
+			$setlink = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/photos/';
+			$this->Navigation->Find ( '.breadcrumb', 0 )->innertext = __ ( 'Back To Photosets' , array ( 'fullname' => $this->_Focus->Fullname, 'setlink' => $setlink ) );
 		} else {
 			$this->Navigation->Find ( '.breadcrumb', 0 )->innertext = __ ( 'Back To Profile' , array ( 'userlink' => $focusLinkData['link'] ) );
 		}
