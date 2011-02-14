@@ -20,7 +20,6 @@ DROP TABLE IF EXISTS `%PREFIX%PagePosts`;
 DROP TABLE IF EXISTS `%PREFIX%PageReferences`;
 DROP TABLE IF EXISTS `%PREFIX%Photos`;
 DROP TABLE IF EXISTS `%PREFIX%PrivacySettings`;
-DROP TABLE IF EXISTS `%PREFIX%PhotoSets`;
 DROP TABLE IF EXISTS `%PREFIX%RemoteTokens`;
 DROP TABLE IF EXISTS `%PREFIX%SchemaVersions`;
 DROP TABLE IF EXISTS `%PREFIX%SearchIndexes`;
@@ -85,7 +84,6 @@ CREATE TABLE `%PREFIX%NotificationsUpdated` ( `Updated_PK` int(11) NOT NULL AUTO
 CREATE TABLE `%PREFIX%PageLinks` ( `Link_PK` int(11) NOT NULL AUTO_INCREMENT, `User_FK` int(11) DEFAULT NULL, `Owner` char(64) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Content` text, `Link` char(255) DEFAULT NULL, `Title` char(64) DEFAULT NULL, `Description` text, `Thumb` char(255) DEFAULT NULL, PRIMARY KEY (`Link_PK`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE `%PREFIX%PagePosts` ( `Post_PK` int(11) NOT NULL AUTO_INCREMENT, `User_FK` int(11) NOT NULL, `Owner` char(64) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Content` text, `Current` tinyint(1) DEFAULT NULL, PRIMARY KEY (`Post_PK`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE `%PREFIX%PageReferences` ( `Reference_PK` int(11) NOT NULL AUTO_INCREMENT, `User_FK` int(11) NOT NULL, `Identifier` char(32) DEFAULT NULL, `Type` char(16) DEFAULT NULL, `Stamp` datetime DEFAULT NULL, PRIMARY KEY (`Reference_PK`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-CREATE TABLE `%PREFIX%PhotoSets` ( `Set_PK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Name` char(128) DEFAULT NULL, `Directory` char(128) DEFAULT NULL, `Description` text, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Set_PK`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE `%PREFIX%Photos` ( `Photo_PK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Set_FK` int(11) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Filename` char(128) DEFAULT NULL, `Description` text, `Profile` tinyint(1) DEFAULT '0', `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Photo_PK`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 CREATE TABLE `%PREFIX%PrivacySettings` ( `Setting_PK` int(11) NOT NULL AUTO_INCREMENT, `User_FK` int(11) NOT NULL, `Circle_FK` int(11) DEFAULT NULL, `Type` char(32) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Everybody` tinyint(1) DEFAULT NULL, `Friends` tinyint(1) DEFAULT NULL, PRIMARY KEY (`Setting_PK`)) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 CREATE TABLE `%PREFIX%RemoteTokens` ( `Token_PK` int(11) NOT NULL AUTO_INCREMENT, `Token` varchar(64) DEFAULT NULL, `Username` varchar(255) DEFAULT NULL, `Source` varchar(255) NOT NULL, `Address` varchar(255) DEFAULT NULL, `Host` varchar(255) DEFAULT NULL, `Stamp` datetime DEFAULT NULL, PRIMARY KEY (`Token_PK`)) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
