@@ -56,8 +56,37 @@ class cPrivacyPrivacyController extends cController {
 		$li->innertext = '';
 		
 		$circles = $this->Talk ( 'Friends', 'Circles' );
+
+		$inputPrivacy = $this->GetSys ( 'Request' )->Get ( 'Privacy' );
 		
-		if ( ( $pType ) && ( $pIdentifier ) ) {
+		if ( $inputPrivacy ) {
+			// Use REQUEST instead of the current or default.
+			$currentPrivacy = new stdClass();
+			$currentPrivacy->Circles = array ();
+
+			$nobody = $inputPrivacy['nobody'];
+			$friends = $inputPrivacy['friends'];
+			$everybody = $inputPrivacy['everybody'];
+			if ( $friends == 'on' ) {
+				$this->_View->Find ( '[name=Privacy[friends]]', 0 )->checked = true;
+				$this->_View->Find ( '[name=Privacy[nobody]]', 0 )->checked = false;
+			} else if ( $everybody == 'on' ) {
+				$this->_View->Find ( '[name=Privacy[everybody]]', 0 )->checked = true;
+				$this->_View->Find ( '[name=Privacy[nobody]]', 0 )->checked = false;
+			} else if ( $nobody == 'on' ) {
+			} else {
+				$this->_View->Find ( '[name=Privacy[nobody]]', 0 )->checked = false;
+				$circleKeys = array_flip ( $circles );
+				foreach ( $inputPrivacy as $i => $input ) {
+					$selected[] = strtolower ( $i );
+				}
+				foreach ( $circleKeys as $circle => $id ) {
+					if ( in_array ( strtolower ( $circle ), $selected ) ) {
+						$currentPrivacy->Circles[] = $id;
+					}
+				}
+			}
+		} else if ( ( $pType ) && ( $pIdentifier ) ) {
 			$currentPrivacy = $this->_Model->RetrieveItem ( $this->_Focus->Id, $pType, $pIdentifier );
 			if ( $currentPrivacy->Friends == 1 ) {
 				$this->_View->Find ( '[name=Privacy[friends]]', 0 )->checked = true;
