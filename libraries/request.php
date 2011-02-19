@@ -21,6 +21,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 class cRequest {
 	
 	protected $_Request;
+	protected $_Files = false;
 	protected $_Unassigned;
 	protected $_Method;
 	protected $_URI;
@@ -64,6 +65,17 @@ class cRequest {
 			break;
 		}
 
+		/*
+		 * Loop through the file data and store in the framework.
+		 */
+		if ( count ( $_FILES ) > 0 ) {
+			foreach ( $_FILES as $f => $file ) {
+				if ( !$file['tmp_name'][0] ) continue;
+				if ( $file['error'][0] == 4 ) continue;
+				$this->_Files[] = $file;
+			}
+		}
+
 		foreach ( $Data as $key => $value ) {
 			$lowerkey = strtolower ( $key );
 			$this->_Raw[$lowerkey] = $Data[$key];
@@ -99,6 +111,10 @@ class cRequest {
 		
 		return ( $this->_Request[$variable] );
 
+	}
+
+	public function Files ( ) {
+		return ( $this->_Files );
 	}
 
 	public function Method ( ) {

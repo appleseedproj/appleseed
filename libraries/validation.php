@@ -237,14 +237,14 @@ class cValidation {
 			
 			if ($c == "%20") $c = " ";
 
-				if (strpos ($pValue, $c)) {
-					return ( false );
-				} // if
-			} 
+			if (strpos ($pValue, $c)) {
+				return ( false );
+			} // if
+		} 
         
         return ( true );
 	}
-	
+
 	/*
 	 *  Allow only letters, digits, and spaces.
 	 * 
