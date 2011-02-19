@@ -50,13 +50,18 @@ class cPhotosSetsController extends cController {
 	
 	private function _Prep ( ) {
 
+		$this->View->Find ( 'form[class="add"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/add/';
+
 		$list = $this->View->Find ( '.list', 0);
 
-		$item = $this->View->Find ( '.item', 0 );
+		$itemOriginal = $this->View->Find ( '.item', 0 )->outertext;
 
 		$list->innertext = "";
 		
 		while ( $this->Sets->Fetch() ) {
+            $item = new cHTML ();
+            $item->Load ( $itemOriginal );
+
 			$id = $this->Sets->Get ( 'Set_PK' );
 
 			$this->Photo->GetCover ( $id );
@@ -72,8 +77,15 @@ class cPhotosSetsController extends cController {
 
 			list ( $file ) = explode ( '.' . $extension, $filename );
 
-			$coverLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Sets->Get ( 'Directory' ) . '/' . $file . '_m.' . $extension;
-			$item->Find ( '.cover', 0 )->src = $coverLocation;
+			$Identifier = $this->Photo->Get ( 'Identifier' );
+
+			$coverLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/' . $this->_Focus->Username . '/' . $this->Sets->Get ( 'Directory' ) . '/' . $Identifier . '.m' . '.jpg';
+			$coverFile = ASD_PATH . '_storage/photos/' . $this->_Focus->Username . '/' . $this->Sets->Get ( 'Directory' ) . '/' . $Identifier . '.m' . '.jpg';
+			if ( file_exists ( $coverFile ) ) {
+				$item->Find ( '.cover', 0 )->src = $coverLocation;
+			} else {
+				$item->Find ( '.cover', 0 )->class .= ' none ';
+			}
 			$list->innertext .= $item->outertext;
 		}
 	}

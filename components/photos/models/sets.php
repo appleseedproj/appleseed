@@ -32,12 +32,21 @@ class cPhotosSetsModel extends cModel {
 	}
 	
 	public function Load ( $pOwner, $pDirectory = null ) {
-		
 		if ( $pDirectory ) {
-			$this->Retrieve ( array ( 'Owner_FK' => $pOwner, 'Directory' => $pDirectory ), 'Created DESC' );
+			if ( is_int ( $pDirectory ) ) {
+				$this->Retrieve ( array ( 'Owner_FK' => $pOwner, 'Set_PK' => $pDirectory ), 'Created DESC' );
+				$this->Fetch();
+			} else {
+				$this->Retrieve ( array ( 'Owner_FK' => $pOwner, 'Directory' => $pDirectory ), 'Created DESC' );
+				$this->Fetch();
+			}
 		} else {
 			$this->Retrieve ( array ( 'Owner_FK' => $pOwner ), 'Created DESC' );
 		}
 	}
-	
+
+	public function DirectoryExists ( $pSetId, $pOwner ) {
+		return ( true );
+	}
+
 }

@@ -137,11 +137,11 @@ class cJournalEntryController extends cController {
 		
 		$this->View->Find ( '.journal', 0 )->action = "/profile/" . $this->_Focus->Username . '/journal/add';
 		
-		$privacyData = array ( 'start' => $start, 'step'  => $step, 'total' => $total, 'link' => $link );
+		$privacyData = array ( 'Type' => 'journal', 'Identifier'  => $Identifier );
 		$privacyControls =  $this->View->Find ('.privacy');
 		
 		foreach ( $privacyControls as $c => $control ) {
-			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $pageData ); 
+			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $privacyData ); 
 		}
 		
 		$Contexts =  $this->View->Find ( '[name=Context]' );

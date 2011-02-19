@@ -55,6 +55,8 @@ class cPhotosPhotosController extends cController {
 	
 	private function _Prep ( ) {
 
+		$this->View->Find ( 'form[class="edit"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/edit/';
+
 		$list = $this->View->Find ( '.list', 0);
 
 		$item = $this->View->Find ( '.item', 0 );
@@ -64,6 +66,8 @@ class cPhotosPhotosController extends cController {
 		while ( $this->Photos->Fetch() ) {
 			$id = $this->Photos->Get ( 'Photo_PK' );
 
+			$Identifier = $this->Photos->Get ( 'Identifier' );
+
 			$filename = $this->Photos->Get ( 'Filename' );
 			$extension = pathinfo ( $filename, PATHINFO_EXTENSION );
 
@@ -72,7 +76,7 @@ class cPhotosPhotosController extends cController {
 
 			list ( $file ) = explode ( '.' . $extension, $filename );
 
-			$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Set->Get ( 'Directory' ) . '/' . $file . '_m.' . $extension;
+			$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Set->Get ( 'Directory' ) . '/' . $Identifier . '.m' . '.jpg'; 
 			$item->Find ( '.photo', 0 )->src = $photoLocation;
 
 			$item->Find ( '.description', 0 )->innertext = $this->Photos->Get ( 'Description' );

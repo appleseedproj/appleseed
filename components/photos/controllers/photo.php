@@ -59,12 +59,10 @@ class cPhotosPhotoController extends cController {
 
 		$id = $this->Photos->Get ( 'Photo_PK' );
 
-		$filename = $this->Photos->Get ( 'Filename' );
+		$Identifier = $this->Photos->Get ( 'Identifier' );
 		$extension = pathinfo ( $filename, PATHINFO_EXTENSION );
 
-		list ( $file ) = explode ( '.' . $extension, $filename );
-
-		$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Set->Get ( 'Directory' ) . '/' . $file . '_n.' . $extension;
+		$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Set->Get ( 'Directory' ) . '/' . $Identifier . '.n' . '.jpg';
 		$this->View->Find ( '.original', 0 )->src = $photoLocation;
 
 		$this->View->Find ( '.description', 0 )->innertext = $this->Photos->Get ( 'Description' );

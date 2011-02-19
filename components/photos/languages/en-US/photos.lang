@@ -2,3 +2,22 @@
 BACK_TO_PROFILE="&laquo; %userlink$s"
 BACK_TO_PHOTOSETS="&laquo; <a href=\"%setlink$s\">%fullname$s's Albums</a>"
 BACK_TO_PHOTOSET="&laquo; <a href=\"%setlink$s\">%setname$s</a>"
+
+CREATE_NEW_SET="&raquo; New"
+SET_LABEL="Album"
+
+SET_NAME_LABEL="Album name"
+SET_DIRECTORY_LABEL="Album directory"
+SET_DESCRIPTION_LABEL="Album description"
+
+PHOTO_DESCRIPTION_LABEL="Photo description"
+
+ADD_PHOTOS_TITLE="Add photos"
+ADD_PHOTOS="Add"
+
+EDIT_SET="Edit"
+
+CANNOT_BE_NULL="%field$s shouldn't be empty." 
+
+ILLEGAL_CHARACTERS_IN_DIRECTORY="Directory can only be letters, numbers, and dashes."
+

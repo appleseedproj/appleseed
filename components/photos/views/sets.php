@@ -1,4 +1,7 @@
 <section class="photosets">
+<form class="add" method="post" action="">
+	<button class="add-photos">Add Photos</button>
+</form>
 
 <ul class="list">
 	<li class="item">

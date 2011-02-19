@@ -21,6 +21,9 @@ define ( 'ASD_DOMAIN', $_SERVER['HTTP_HOST']);
 require ( ASD_PATH . DS . 'system' . DS . 'base.php' );
 require ( ASD_PATH . 'system' . DS . 'application.php' );
 
+ini_set ( 'display_errors', 1 );
+error_reporting (E_ALL);
+
 /** 
  * Entry Point
  * 

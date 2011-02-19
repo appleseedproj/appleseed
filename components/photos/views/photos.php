@@ -1,4 +1,7 @@
 <section class="photos">
+<form class="edit" method="post" action="">
+	<button class="edit-set">Edit Set</button>
+</form>
 
 <ul class="list">
 	<li class="item">
