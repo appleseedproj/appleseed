@@ -301,20 +301,20 @@
 		#photos-navigation a { background:none; padding:0; }
 		
 		#profile-photos .photosets a { background:none; padding:0; }
-		#profile-photos .photosets { float:left; width:100%; }
+		#profile-photos .photosets ul { float:left; width:100%; }
 		#profile-photos .photosets .item { clear:none; float:left; list-style-type:none; width:128px; margin-right:10px; }
 		#profile-photos .photosets .item .cover { float:left; width:124px; height:124px; border:2px solid #a4bcc2; }
 		#profile-photos .photosets .item .cover:hover { border:2px solid #81a8b8;  -webkit-box-shadow: 0px 0px 10px #000; }
 		#profile-photos .photosets .item .cover.none {  background-color:#a4bcc2; }
  		#profile-photos .photosets .item .name { float:left; width:100%; text-align:center; color: #81a8b8; font-weight:bold; margin-top:5px; }
 		#profile-photos .photosets .item .description { display:none; }
-		#profile-photos form { float:right; clear:both; width:100%; margin-bottom:10px; }
-		#profile-photos .add-photos { float:right; clear:both; }
-		#profile-photos .edit-set { float:right; clear:both; }
+		#profile-photos .add-photos { float:right; clear:none; background-color:#ff00ff; font-weight:bold; }
+		#profile-photos .edit-set { float:right; clear:none; background-color:#ff00ff; margin-right:5px; }
 
 		#profile-photos .privacy { margin:0; padding:0; margin-left:41%; width:49%;  }
 
-		#profile-photos .photos .item { list-style-type:none; width:124px; }
+		#profile-photos .photos ul { float:left; width:100%; }
+		#profile-photos .photos .item { float:left; clear:none; list-style-type:none; width:128px; margin-right:10px; }
 		#profile-photos .photos .item .photo { float:left; width:124px; height:124px; border:1px; border:2px solid #a4bcc2; }
 		#profile-photos .photos .item .photo:hover { border:2px solid #81a8b8;  -webkit-box-shadow: 0px 0px 10px #000; }
 		#profile-photos .photos .item .description { display:none; }

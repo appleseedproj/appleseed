@@ -1,6 +1,8 @@
 <section class="photosets">
 <form class="add" method="post" action="">
-	<button class="add-photos">Add Photos</button>
+	<input type="hidden" name="Task" value="Add" />
+	<input type="hidden" name="Context" value="" />
+	<button class="add-photos">Add Photos Button</button>
 </form>
 
 <ul class="list">

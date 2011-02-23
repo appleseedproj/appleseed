@@ -32,7 +32,7 @@ class cPhotosModel extends cModel {
 	}
 
 	public function LoadFromSet ( $pSetId ) {
-		$this->Retrieve ( array ( 'Set_FK' => $pSetId ) );
+		$this->Retrieve ( array ( 'Set_FK' => $pSetId ), 'Created DESC' );
 
 		return ( true );
 	}
@@ -46,7 +46,7 @@ class cPhotosModel extends cModel {
 	
 	public function GetCover ( $pSetId ) {
 		
-		$this->Retrieve ( array ( 'Set_FK' => $pSetId ) );
+		$this->Retrieve ( array ( 'Set_FK' => $pSetId ), 'Created DESC' );
 		$this->Fetch();
 
 		return ( true );

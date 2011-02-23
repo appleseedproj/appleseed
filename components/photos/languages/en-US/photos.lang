@@ -13,9 +13,9 @@ SET_DESCRIPTION_LABEL="Album description"
 PHOTO_DESCRIPTION_LABEL="Photo description"
 
 ADD_PHOTOS_TITLE="Add photos"
-ADD_PHOTOS="Add"
+ADD_PHOTOS_BUTTON="+"
 
-EDIT_SET="Edit"
+EDIT_SET_BUTTON="Edit"
 
 CANNOT_BE_NULL="%field$s shouldn't be empty." 
 

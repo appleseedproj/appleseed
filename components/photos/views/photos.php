@@ -1,6 +1,13 @@
 <section class="photos">
+<form class="add" method="post" action="">
+	<input type="hidden" name="Task" value="Add" />
+	<input type="hidden" name="Context" value="" />
+	<button class="add-photos">Add Photos Button</button>
+</form>
 <form class="edit" method="post" action="">
-	<button class="edit-set">Edit Set</button>
+	<input type="hidden" name="Task" value="Add" />
+	<input type="hidden" name="Context" value="" />
+	<button class="edit-set">Edit Set Button</button>
 </form>
 
 <ul class="list">
