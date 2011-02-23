@@ -87,7 +87,7 @@ class cPhotosPhotosController extends cController {
 
 			list ( $file ) = explode ( '.' . $extension, $filename );
 
-			$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/admin/' . $this->Set->Get ( 'Directory' ) . '/' . $Identifier . '.m' . '.jpg'; 
+			$photoLocation = 'http://' . ASD_DOMAIN . '/_storage/photos/' . $this->_Focus->Username . '/' . $this->Set->Get ( 'Directory' ) . '/' . $Identifier . '.m' . '.jpg'; 
 			$item->Find ( '.photo', 0 )->src = $photoLocation;
 
 			$item->Find ( '.description', 0 )->innertext = $this->Photos->Get ( 'Description' );
