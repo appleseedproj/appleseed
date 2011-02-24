@@ -76,17 +76,19 @@ class cPhotosPhotosController extends cController {
 	
 	private function _Prep ( ) {
 
+		$Contexts = $this->View->Find ( '[name="Context"]' );
+		foreach ( $Contexts as $c => $context ) {
+			$context->value = $this->Get ( 'Context' );
+		}
+
 		if ( $this->_Current->Account == $this->_Focus->Account ) {
-			$this->View->Find ( 'form[class="edit"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/';
+			$this->View->Find ( 'form[class="edit"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/';
+			$this->View->Find ( 'form[class="edit"] [name="Context"]', 0 )->value = "sets.photos.(\d+).sets";
+			$this->View->Find ( '[name="Set"]', 0 )->value = $this->Set->Get ( 'Set_PK' );
 			$this->View->Find ( 'form[class="add"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/';
 		} else {
 			$this->View->Find ( 'form[class="edit"]', 0 )->outertext = '';
 			$this->View->Find ( 'form[class="add"]', 0 )->outertext = '';
-		}
-
-		$Contexts = $this->View->Find ( '[name="Context"]' );
-		foreach ( $Contexts as $c => $context ) {
-			$context->value = $this->Get ( 'Context' );
 		}
 
 		$list = $this->View->Find ( '.list', 0);
@@ -142,7 +144,7 @@ class cPhotosPhotosController extends cController {
 		
 		return ( true );
 	}
-	
+
 	private function _PrepAdd ( ) {
 
 		$this->View->Find ( '[name="Set"]', 0 )->innertext .= '<optgroup>';

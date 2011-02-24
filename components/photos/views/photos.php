@@ -5,8 +5,9 @@
 	<button class="add-photos">Add Photos Button</button>
 </form>
 <form class="edit" method="post" action="">
-	<input type="hidden" name="Task" value="Add" />
+	<input type="hidden" name="Task" value="Edit" />
 	<input type="hidden" name="Context" value="" />
+	<input type="hidden" name="Set" value="" />
 	<button class="edit-set">Edit Set Button</button>
 </form>
 

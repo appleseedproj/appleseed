@@ -15,6 +15,12 @@ PHOTO_DESCRIPTION_LABEL="Photo description"
 ADD_PHOTOS_TITLE="Add photos"
 ADD_PHOTOS_BUTTON="+"
 
+ADD_SET_TITLE="Create Photo Album"
+ADD_SET="+";
+
+EDIT_SET_TITLE="Edit Photo Album"
+EDIT_SET="+";
+
 EDIT_SET_BUTTON="Edit"
 
 CANNOT_BE_NULL="%field$s shouldn't be empty." 

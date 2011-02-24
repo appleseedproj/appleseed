@@ -126,7 +126,7 @@ class cComponents extends cBase {
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		
 		ob_start();
-		
+
 		$context = $this->Execute ( $pComponent, $pController, $pView, $pTask, $pData );
 		
 		$buffer = ob_get_clean();

@@ -30,7 +30,7 @@ class cPhotosSetsController extends cController {
 	}
 	
 	public function Display ( $pView = null, $pData = array ( ) ) {
-		
+
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
 		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
@@ -104,7 +104,7 @@ class cPhotosSetsController extends cController {
 			return ( false );
 		}
 
-		$this->View = $this->GetView ( 'sets.add' ); 
+		$this->View = $this->GetView ( 'sets.edit' ); 
 		
 		$this->Sets = $this->GetModel ( 'Sets' );
 		$this->Photos = $this->GetModel ( 'Photos' );
@@ -122,19 +122,66 @@ class cPhotosSetsController extends cController {
 		
 		return ( true );
 	}
+
+	public function Edit ( $pView = null, $pData = array ( ) ) {
+		
+		// Determine access.
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
+
+		$this->View = $this->GetView ( 'sets.edit' ); 
+		
+		$this->Sets = $this->GetModel ( 'Sets' );
+		$this->Photos = $this->GetModel ( 'Photos' );
+
+		$Set = (int) $this->GetSys ( 'Request' )->Get ( 'Set' );
+		$this->Sets->Load ( $this->_Focus->Id, $Set );
+
+		if ( $this->Sets->Get ( 'Total' ) == 0 ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/404.php' );
+			return ( false );
+		}
+
+		$data = $this->Sets->Get ( 'Data' );
+
+		$this->Photos->Load ( $Identifier );
+		$this->Photos->Fetch();
+
+		$this->_PrepEdit();
+		
+		$this->View->Synchronize( $data );
+		
+		$this->View->Display();
+		
+		return ( true );
+	}
 	
 	private function _PrepAdd ( ) {
 
-		$this->View->Find ( '[name="Set"]', 0 )->innertext .= '<optgroup>';
-		while ( $this->Sets->Fetch() ) {
-			$option = '<option value="' . $this->Sets->Get ( 'Set_PK' ) . '">' . $this->Sets->Get ( 'Name' ) . '</option>';
-			$this->View->Find ( '[name="Set"]', 0 )->innertext .= $option;
-		}
-		$this->View->Find ( '[name="Set"]', 0 )->innertext .= '</optgroup>';
-
 		$this->View->Find ( '[name="Context"]', 0 )->value = $this->Get ( 'Context' );
 			
-		$privacyData = array ( 'Type' => 'journal', 'Identifier'  => $Identifier );
+		$privacyData = array ( 'Type' => 'photosets', 'Identifier'  => $Identifier );
+		$privacyControls =  $this->View->Find ('.privacy');
+		foreach ( $privacyControls as $c => $control ) {
+			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $privacyData );
+		}
+
+		$this->_PrepMessage();
+
+		return ( true );
+	}
+
+	private function _PrepEdit ( ) {
+
+		$this->View->Find ( '[name="Context"]', 0 )->value = $this->Get ( 'Context' );
+		$this->View->Find ( '[name="Set_PK"]', 0 )->value = $this->Sets->Get ( 'Set_PK' );
+
+		$this->View->Find ( '.photos-edit-title', 0 )->innertext = 'Edit Set Title';
+		$this->View->Find ( '.add-edit', 0 )->innertext = 'Edit Set';
+			
+		$privacyData = array ( 'Type' => 'photosets', 'Identifier'  => $this->Sets->Get ( 'Identifier' ) );
 		$privacyControls =  $this->View->Find ('.privacy');
 		foreach ( $privacyControls as $c => $control ) {
 			$control->innertext = $this->GetSys ( 'Components' )->Buffer ( 'privacy', $privacyData );
@@ -147,10 +194,7 @@ class cPhotosSetsController extends cController {
 
 	public function Save ( ) {
 
-        $this->Image = $this->GetSys ( 'Image' );
-
 		$Request = $this->GetSys ( 'Request' );
-		$Files = $Request->Files();
 
 		$this->Sets = $this->GetModel ( 'Sets' );
 		$this->Photos = $this->GetModel ( 'Photos' );
@@ -161,6 +205,12 @@ class cPhotosSetsController extends cController {
 			return ( false );
 		}
 
+		$Set = $Request->Get ( 'Set' );
+
+		if ( isset ( $Set ) ) {
+			return ( $this->_Update ( ) );
+		}
+
 		// 1. Sanity check all the inputs.
 		$Directory = $Request->Get ( 'Directory' );
 
@@ -169,6 +219,8 @@ class cPhotosSetsController extends cController {
 		if ( !$this->_Sanity() ) {
 			return ( $this->Add() );
 		}
+
+		// 2. Rename the directory.
 
 		// 3. Create an album if necessary.
 		$Location = $this->_CreateDirectory ( $this->_Focus->Username, $Directory );
@@ -198,6 +250,70 @@ class cPhotosSetsController extends cController {
 
         header ( "Location:" . $Redirect );
 		exit;
+	}
+
+	private function _Update ( ) {
+
+		if ( !$this->_Sanity() ) {
+			return ( $this->Edit() );
+		}
+
+		$Request = $this->GetSys ( 'Request' );
+
+		$this->Sets = $this->GetModel ( 'Sets' );
+		$this->Photos = $this->GetModel ( 'Photos' );
+
+		$Set = (int)$Request->Get ( 'Set' );
+
+		$Directory = $Request->Get ( 'Directory' );
+
+		$this->Sets->Load ( $this->_Focus->Id, $Set );
+
+		if ( $this->Sets->Get ( 'Total' ) == 0 ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/404.php' );
+			return ( false );
+		}
+
+		$NewDirectory = strtolower ( ltrim ( rtrim ( $Directory ) ) );
+		$OldDirectory = strtolower ( ltrim ( rtrim ( $this->Sets->Get ( 'Directory' ) ) ) );
+
+		// 2. Rename the directory.
+		if ( $NewDirectory != $OldDirectory ) {
+			if ( !$this->_RenameDirectory ( $OldDirectory, $NewDirectory ) ) {
+				$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );         
+				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Cannot Be Null', array ( 'field' => 'Directory' ) ) );
+				$this->GetSys ( 'Session' )->Set ( 'Error', true );
+				return ( $this->Edit ( ) );
+			}
+		}
+
+		// @todo: Move to model
+		$Name = $Request->Get ( 'Name' );
+		$Identifier = $this->Sets->Get ( 'Identifier' );
+		$Description = $Request->Get ( 'Description' );
+
+		$this->Sets->Set ( 'Set_PK', $Set );
+		$this->Sets->Protect ( 'Identifier' );
+		$this->Sets->Protect ( 'Owner_FK' );
+		$this->Sets->Set ( 'Name', $Name );
+		$this->Sets->Set ( 'Description', $Description );
+		$this->Sets->Set ( 'Directory', $Directory );
+		$this->Sets->Protect ( 'Created' );
+		$this->Sets->Set ( 'Updated', NOW() );
+		$this->Sets->Save();
+
+		$Privacy = $Request->Get ( 'Privacy' );
+
+       	$privacyData = array ( 'Privacy' => $Privacy, 'Type' => 'Photosets', 'Identifier' => $Identifier );
+       	$this->GetSys ( 'Components' )->Talk ( 'Privacy', 'Store', $privacyData );
+
+		// 6. Redirect to the new photo.
+		$Redirect = 'http://' . ASD_DOMAIN . '/profile/' . $this->_Focus->Username . '/photos/' . $Directory . '/';
+
+        header ( "Location:" . $Redirect );
+		exit;
+
+		return ( true );
 	}
 
 	private function _CheckAccess ( ) {
@@ -263,7 +379,6 @@ class cPhotosSetsController extends cController {
 		return ( true );
 	}
 
-
 	private function _PrepMessage ( ) {
 
 		$markup = $this->View;
@@ -296,81 +411,17 @@ class cPhotosSetsController extends cController {
 		return ( $location );
 	}
 
-	private function _Process ( $pSetId, $pLocation, $pFiles ) {
+	private function _RenameDirectory ( $pOld, $pNew ) {
 
-		if ( !is_writable ( $pLocation ) ) return ( false );
+		$Username = $this->_Focus->Username;
 
-		$Descriptions = $this->GetSys ( 'Request' )->Get ( 'Descriptions' );
-		foreach ( $pFiles as $f => $file ) {
-			$Description = $Descriptions[$f];
+		$old = ASD_PATH . '_storage/photos/' . $Username . '/' . $pOld;
+		$new = ASD_PATH . '_storage/photos/' . $Username . '/' . $pNew;
 
-			$TempFile = $file['tmp_name'][0];
-			$Filename = $file['name'][0];
+		if ( file_exists ( $new ) ) return ( false );
 
-			$Identifier = $this->CreateUniqueIdentifier();
-			$Extension = '.jpg';
+		if ( !rename ( $old, $new ) ) return ( false );
 
-			$ThumbFilename = $pLocation . '/' . $Identifier . '.t' . $Extension;
-			$this->_ResizeAndMove ( $TempFile, $ThumbFilename, 32, 32, true );
-
-			$SmallFilename = $pLocation . '/' . $Identifier . '.s' . $Extension;
-			$this->_ResizeAndMove ( $TempFile, $SmallFilename, 64, 64, true );
-
-			$MediumFilename = $pLocation . '/' . $Identifier . '.m' . $Extension;
-			$this->_ResizeAndMove ( $TempFile, $MediumFilename, 128, 128, true );
-
-			$NormalFilename = $pLocation . '/' . $Identifier . '.n' . $Extension;
-			$this->_ResizeAndMove ( $TempFile, $NormalFilename, 800 );
-
-			$OriginalFilename = $pLocation . '/' . $Identifier . $Extension;
-			$this->_ResizeAndMove ( $TempFile, $OriginalFilename );
-
-			// @todo: Move to model
-			$this->Photos->Destroy ( 'Photo_PK' );
-			$this->Photos->Set ( 'Owner_FK', $this->_Focus->Id );
-			$this->Photos->Set ( 'Set_FK', $pSetId );
-			$this->Photos->Set ( 'Description', $Description );
-			$this->Photos->Set ( 'Filename', $Filename );
-			$this->Photos->Set ( 'Identifier', $Identifier );
-			$this->Photos->Set ( 'Created', NOW() );
-			$this->Photos->Set ( 'Updated', NOW() );
-			$this->Photos->Set ( 'Profile', false );
-			$this->Photos->Save();
-		}
-
-		return ( true );
+		return ( $new );
 	}
-
-	private function _ResizeAndMove ( $pSource, $pDestination, $pWidth = null, $pHeight = null, $pProportional = false ) {
-
-		$this->Image->Attributes ( $pSource );
-		$this->Image->Convert ( $pSource );
-
-		if ( ( $pWidth ) && ( $pHeight ) ) {
-			$this->Image->ResizeAndCrop ( $pWidth, $pHeight );
-			$this->Image->Save ( $pDestination );
-		} else if ( ( !$pWidth ) && ( $pHeight ) ) {
-			if ( !$pWidth ) $pWidth = $this->Image->Get ( 'Width' );
-			if ( !$pHeight ) $pHeight = $this->Image->Get ( 'Height' );
-
-			if ( $this->Image->Get ( 'Height' ) > $pHeight ) 
-    			$this->Image->Resize ($pWidth, $pHeight, true, false, true );
-			$this->Image->Save ( $pDestination );
-		} else if ( ( $pWidth ) && ( !$pHeight ) ) {
-			if ( !$pWidth ) $pWidth = $this->Image->Get ( 'Width' );
-			if ( !$pHeight ) $pHeight = $this->Image->Get ( 'Height' );
-
-			if ( $this->Image->Get ( 'Width' ) > $pWidth ) {
-    			$this->Image->Resize ($pWidth, $pHeight, true, true );
-			}
-
-			$this->Image->Save ( $pDestination ) or die ( 'Couldn\'t ');
-		} else {
-			$this->Image->Save ( $pDestination );
-		}
-
-		return ( true );
-	}
-
-
 }
