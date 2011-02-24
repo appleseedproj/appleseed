@@ -102,7 +102,7 @@ class cJournalModel extends cModel {
 			// We're looking at our own journal, so return everything.
 		} elseif ( !$Current->Account ) {
 			// We're not logged in, so search for Everybody
-			$criteria = array ( 'User_FK' => $pUserId, 'Everybody' => true );
+			$criteria = array ( 'User_FK' => $pUserId, 'Type' => 'Journal', 'Everybody' => true );
 			
 			$this->Privacy->Retrieve ( $criteria );
 			
@@ -126,7 +126,7 @@ class cJournalModel extends cModel {
 			if ( count ( $circleList > 0 ) ) {
 				$subcriteria['||Circle_FK'] = '()' . implode ( $circleList );
 			}
-			$criteria = array ( 'User_FK' => $pUserId, $subcriteria );
+			$criteria = array ( 'User_FK' => $pUserId, 'Type' => 'Journal', $subcriteria );
 			$this->Privacy->Retrieve ( $criteria );
 			
 			// No identifiers were found, which means no entries were found.
@@ -161,7 +161,7 @@ class cJournalModel extends cModel {
 		$this->Privacy = new cModel('PrivacySettings');
 		
 		// We're not logged in, so search for Everybody
-		$criteria = array ( 'User_FK' => $pUserId, 'Everybody' => true );
+		$criteria = array ( 'User_FK' => $pUserId, 'Type' => 'Journal', 'Everybody' => true );
 			
 		$this->Privacy->Retrieve ( $criteria );
 		
