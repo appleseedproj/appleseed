@@ -39,6 +39,8 @@ class cComponent extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {
+
+		$this->Controllers = new stdClass();
 		
 		parent::__construct();
 	}

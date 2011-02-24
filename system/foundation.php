@@ -55,13 +55,14 @@ class cFoundation extends cBase {
 		$Buffer = $this->GetSys ( "Buffer" );
 		
 		$contexts = $this->Get ( "Config" )->GetConfiguration ( "contexts" );
-		
-		$context = $contexts[$pRoute];
-		
-		if ( !$context ) {
+
+		if ( !isset ( $contexts[$pRoute] ) ) {
 			// @todo: Throw a warning.
- 		}
-		
+			$context = null;
+ 		} else {
+			$context = $contexts[$pRoute];
+		}
+
 		// If the context isn't set in the Request data, set it with the specified default.
 		if ( !$this->GetSys ( "Request" )->Get ( "Context" ) ) {
 			$this->GetSys ( "Request" )->Set ( "Context", $context );

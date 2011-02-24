@@ -614,7 +614,9 @@ class cModel extends cBase {
 		
 		$sql = 'SELECT SQL_CALC_FOUND_ROWS * FROM %table$s';
 		$replacements['table'] = $table;
-		
+
+		$prepared = array();
+
 		// Without criteria, we'll find everything in the table.
 		if ( $pCriteria ) {
 			$sql .= ' WHERE %pk$s = ? ';
@@ -856,12 +858,12 @@ class cModel extends cBase {
 		 */
 		 
 		$data = $this->_Handle->Fetch ( PDO::FETCH_OBJ );
+
+		if ( !$data ) return ( false );
 		
 		foreach ( $data as $d => $dat ) {
 			$data->$d = utf8_decode ( $dat );
 		}
-		
-		if ( !$data ) return ( false );
 		
 		$this->_Data = (array) $data;
 		

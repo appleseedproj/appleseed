@@ -38,7 +38,7 @@ class cGraphHook extends cHook {
 		$request = $this->GetSys ( "Request" )->URI();
 		$requestMethod = strtolower ( $this->GetSys ( "Request" )->Method() );
 
-		$parts = split ( '/', $request );
+		$parts = explode ( '/', $request );
 
 		if ( $parts[0] != 'graph' ) return ( false );
 

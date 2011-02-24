@@ -58,8 +58,11 @@ class cProfileTabsController extends cController {
 		$useDefault = true;
 		foreach ( $componentList as $c => $component ) {
 			if ( !$tabItems = $components->Talk ( $component, 'AddToProfileTabs' ) ) continue;
-			
+
 			foreach ( $tabItems as $m => $menu ) {
+				if ( !isset ( $menu['class'] ) ) $menu['class'] = null;
+				if ( !isset ( $menu['owner'] ) ) $menu['owner'] = null;
+
 				$link = 'profile/' . $focus->Username . '/' . ltrim ( rtrim ( $menu['link'], '/' ), '/' );
 				
 				$row->Find ( 'a', 0 )->innertext = __( $menu['title'] );

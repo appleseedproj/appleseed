@@ -96,7 +96,7 @@ class cTheme extends cBase {
 		
 		// Reorder the styles according to the configuration
 		if ( isset ( $order ) ) {
-			if ( isset ( $skip ) ) $skip = split ( ' ', $this->_Config->GetConfiguration ( 'skip' ) );
+			if ( isset ( $skip ) ) $skip = explode ( ' ', $this->_Config->GetConfiguration ( 'skip' ) );
 			foreach ( $order as $o => $ostyle ) {
 				foreach ( $styles as $s => $style ) {
 					if ( strstr ( $style, $ostyle ) ) {

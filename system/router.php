@@ -79,7 +79,7 @@ class cRouter extends cBase {
 				// See if we're matching variables in the url and store them in cRequest 
 				if ( preg_match ( '/\?/', $route ) ) {
 					list ( $finalDestination, $variables ) = explode ( '?', $route, 2);
-					$pairs = split ( '&', $variables );
+					$pairs = explode ( '&', $variables );
 					
 					preg_match ( $pattern, $request, $matches );
 					

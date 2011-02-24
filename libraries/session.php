@@ -75,7 +75,7 @@ class cSession {
 			}
 		}
 		
-		if ( !$return ) return ( $pDefault );
+		if ( !isset ( $return ) ) return ( $pDefault );
 		
 		return ( $return );
 	}

@@ -47,6 +47,10 @@ class cLogs extends cBase {
 	
 	public function Add ( $pContext, $pValue, $pComponentContext ) {
 		
+		// If the index is not set, initialize to empty array
+		if ( !isset ( $this->_Log[$pContext] ) ) 
+			$this->_Log[$pContext] = array();
+
 		$current = count ( $this->_Log[$pContext] );
 		
 		$this->_Log[$pContext][$current] = new StdClass();

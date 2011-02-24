@@ -34,6 +34,7 @@ class cBuffer extends cBase {
 	public function __construct ( ) {       
 		
 		$this->_Count = array ();
+		$this->_Queue = array ();
 		
 	}
 	
@@ -154,6 +155,9 @@ class cBuffer extends cBase {
 	 * @param string $pContext Which context to add to (ie, "component")
 	 */
 	public function AddToCount ( $pContext ) {
+		if ( !isset ( $this->_Count[$pContext] ) )
+			$this->_Count[$pContext] = 0;
+
 		$this->_Count[$pContext]++;
 		
 		return ( true );
@@ -169,6 +173,10 @@ class cBuffer extends cBase {
 	 */
 	public function Queue ( $pContext, $pData, $pBuffer ) {
 		$count = $this->_Count[$pContext];
+		
+		if ( !isset ( $this->_Queue[$pContext][$count]->Parameters ) ) 
+			$this->_Queue[$pContext][$count] = new stdClass();
+				
 		$this->_Queue[$pContext][$count]->Parameters = $pData;
 		$this->_Queue[$pContext][$count]->Buffer = $pBuffer;
 		

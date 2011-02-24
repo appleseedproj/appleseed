@@ -50,15 +50,7 @@ class cPhotosSetsModel extends cModel {
 	}
 
 	private function _Sets ( $pUserId ) {
-		//$this->Retrieve ( array ( 'Owner_FK' => $pOwner ), 'Created DESC' );
-
-		//return ( true );
-		
 		eval ( GLOBALS );
-		// $this->Retrieve ( array ( 'Owner_FK' => $pUserId ), 'Created DESC', $pLimit );
-		
-		$start = $pLimit['start'] ? $pLimit['start'] : 0;
-		$limit = $pLimit['limit'] ? $pLimit['limit'] : 10;
 		
 		// Get a list of circles the current member is a member of.
 		$Current = $zApp->GetSys ( 'Components' )->Talk ( 'User', 'Current' );

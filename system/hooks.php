@@ -41,6 +41,8 @@ class cHooks extends cBase {
 	 */
 	public function _Load ( ) {
 		eval ( GLOBALS );
+
+		$this->_Hooks = new stdClass();
 		
 		foreach ( $this->_Config->_Hooks as $h => $hook ) {
 			

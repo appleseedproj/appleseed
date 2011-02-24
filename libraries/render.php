@@ -32,10 +32,14 @@ class cRender extends Textile {
 	}
 
 	public function LiveLinks ( $pString ) {
-		$pString = eregi_replace(' (((f|ht){1}tp://)[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '<a target="_blank" href="\\1">\\1</a>', $pString); 
-		$pString = eregi_replace(' ([[:space:]()[{}])(www.[-a-zA-Z0-9@:%_\+.~#?&//=]+)', '\\1<a target="_blank" href="http://\\2">\\2</a>', $pString); 
-		$pString = eregi_replace(' ([_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,3})', '<a href="mailto:\\1">\\1</a>', $pString); 
-		
+
+		$pString = preg_replace("/([ \t]|^)www\./i", "\\1http://www.", $pString);
+		$pString = preg_replace("/([ \t]|^)ftp\./i", "\\1ftp://ftp.", $pString);
+		$pString = preg_replace("/(http:\/\/[^ )\r\n!]+)/i", "<a href=\"\\1\">\\1</a>", $pString);
+		$pString = preg_replace("/(https:\/\/[^ )\r\n!]+)/i", "<a href=\"\\1\">\\1</a>", $pString);
+		$pString = preg_replace("/(ftp:\/\/[^ )\r\n!]+)/i", "<a href=\"\\1\">\\1</a>", $pString);
+		$pString = preg_replace("/([-a-z0-9_]+(\.[_a-z0-9-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)+))/i", "<a href=\"mailto:\\1\">\\1</a>", $pString);
+
 		return ( $pString );
 	}
 	

@@ -107,7 +107,7 @@ class cRequest {
 		
 		if ( $pVariable === null ) return ( $this->_Request );
 		
-		if ( !$this->_Request[$variable] ) return ( $pDefault );
+		if ( !isset ( $this->_Request[$variable] ) ) return ( $pDefault );
 		
 		return ( $this->_Request[$variable] );
 
@@ -133,7 +133,9 @@ class cRequest {
 		// Remove all GET variables from the URI
 		list ( $this->_URI ) = explode ( '?', $this->_URI, 2 );
 
-		$pattern = $zApp->GetSys ( "Router" )->Get ( "Route" );
+		$pattern = $zApp->GetSys ( 'Router' )->Get ( 'Route' );
+
+		if ( !$pattern ) return ( false );
 		
 		$this->_URI = preg_replace ( '/\/$/', '', $this->_URI );
 		preg_match ( $pattern, $this->_URI, $returns );
@@ -157,6 +159,8 @@ class cRequest {
 				}
 			}
 		} 
+
+		return ( true );
 	}
 	
 	public function Set ( $pVariable, $pValue ) {

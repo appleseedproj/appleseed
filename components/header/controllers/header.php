@@ -31,38 +31,41 @@ class cHeaderHeaderController extends cController {
 	
 	function Display ( $pView = null, $pData = array ( ) ) {
 		
-		$current = $this->Talk ( "User", "Current" );
+		$current = $this->Talk ( 'User', 'Current' );
 		
 		$parameters['account'] = $current->Username . '@' . $current->Domain;
-		$access = $this->Talk ( "Security", "Access", $parameters );
+		$access = $this->Talk ( 'Security', 'Access', $parameters );
 		
 		$pView = 'main';
 		
 		if ( $current->Remote ) $pView = 'remote';
 		else if ( $current->Username ) $pView = 'local';
 		
-		if ( ( $current->Username ) && ( $access->Get ( "Admin" ) ) ) $pView .= '.admin';
+		if ( ( $current->Username ) && ( $access->Get ( 'Admin' ) ) ) $pView .= '.admin';
 		
 		$this->Header = $this->GetView ( $pView );
 		
-		$link = $this->Header->Find ( "[id=current-user-profile-link]", 0 );
+		$link = $this->Header->Find ( '[id=current-user-profile-link]', 0 );
 		
-		$icon = $this->Header->Find ( "[class=current-icon]", 0);
+		$icon = $this->Header->Find ( '[class=current-icon]', 0);
 		
-		$data = array ( "username" => $current->Username, "domain" => $current->Domain, "width" => 32, "height" => 32 );
-		$icon->class .= " usericon ";
-		$icon->src = $this->GetSys ( "Event" )->Trigger ( "On", "User", "Icon", $data );
+		$data = array ( 'username' => $current->Username, 'domain' => $current->Domain, 'width' => 32, 'height' => 32 );
+		$icon->class .= ' usericon ';
+		$icon->src = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Icon', $data );
 		
-		$this->Header->Find ( "[id=header-search]", 0)->innertext = $this->GetSys ( "Components" )->Buffer ( "search", "search", "global", "ask" ); 
+		$this->Header->Find ( '[id=header-search]', 0)->innertext = $this->GetSys ( 'Components' )->Buffer ( 'search', 'search', 'global', 'ask' ); 
 		
-		$this->Header->Find ( "[class=links-news]", 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/news/';
-		$this->Header->Find ( "[class=links-profile]", 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/';
-		$this->Header->Find ( "[class=links-options]", 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/options/';
+		$this->Header->Find ( '[class=links-news]', 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/news/';
+		$this->Header->Find ( '[class=links-profile]', 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/';
+
+		$Options = $this->Header->Find ( '[class=links-options]', 0 );
+		if ( $Options ) {
+			$this->Header->Find ( '[class=links-options]', 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/options/';
+			$this->Header->Find ( '[class=links-options]', 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/options/';
+		}
 		
-		$this->Header->Find ( "[class=links-options]", 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/options/';
-		
-		$this->Header->Find ( "[class=mail]", 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/messages/';
-		$this->Header->Find ( "[class=friends]", 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/friends/requests/';
+		$this->Header->Find ( '[class=mail]', 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/messages/';
+		$this->Header->Find ( '[class=friends]', 0)->href = 'http://' . $current->Domain . '/profile/' . $current->Username . '/friends/requests/';
 		
 		$link->innertext = $current->Username . '@' . $current->Domain;
 		$link->href = 'http://' . $current->Domain . '/profile/' . $current->Username ;

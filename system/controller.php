@@ -30,6 +30,8 @@ class cController extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {
+
+		$this->_Models = new stdClass();
 		
 		parent::__construct();
 	}
@@ -142,7 +144,7 @@ class cController extends cBase {
 		// We cannot use a suffix which is the same as the default model name (ie, component name).
 		if ( strtolower ( $pSuffix ) == $this->_Component ) {
 			$warning = __('Model suffix and default model name ("%name$s") cannot be the same', array ( 'name' => $pSuffix ) );
-			$zApp->GetSys ( "Logs" )->Add ( $warning, "Warnings" );
+			$zApp->GetSys ( "Logs" )->Add ( $warning, "Warnings", 'System' );
 			$pSuffix = null;
 		}
 		
