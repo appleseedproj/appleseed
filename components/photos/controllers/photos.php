@@ -32,6 +32,7 @@ class cPhotosPhotosController extends cController {
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
 		
@@ -50,6 +51,20 @@ class cPhotosPhotosController extends cController {
 
 		$this->Set->Fetch();
 
+		$Access = $this->Talk ( 'Privacy', 'Check', $data = array ( 'Requesting' => $this->_Current->Account, 'Type' => 'Photosets', 'Identifier' => $this->Set->Get ( 'Identifier' ) ) );
+
+		if ( ( !$Access ) && ( $this->_Current->Account != $this->_Focus->Account ) ) {
+			if ( !$this->_Current->Account ) {
+				$this->GetSys ( 'Session' )->Context ( 'login.login.(\d)+.login' );
+				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Login To See This Page' ) );
+				$this->GetSys ( 'Session' )->Set ( 'Error', true );
+				$this->GetSys ( 'Foundation' )->Redirect ( 'login/login.php' );
+			} else {
+				$this->GetSys ( 'Foundation' )->Redirect ( 'common/denied.php' );
+			}
+			return ( false );
+		}
+		
 		$this->Photos->LoadFromSet ( $this->Set->Get ( 'Set_PK' ) );
 
 		$this->_Prep();
@@ -61,8 +76,14 @@ class cPhotosPhotosController extends cController {
 	
 	private function _Prep ( ) {
 
-		$this->View->Find ( 'form[class="edit"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/';
-		$this->View->Find ( 'form[class="add"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/';
+		if ( $this->_Current->Account == $this->_Focus->Account ) {
+			$this->View->Find ( 'form[class="edit"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/';
+			$this->View->Find ( 'form[class="add"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/' . $this->Set->Get ( 'Directory' ) . '/';
+		} else {
+			$this->View->Find ( 'form[class="edit"]', 0 )->outertext = '';
+			$this->View->Find ( 'form[class="add"]', 0 )->outertext = '';
+		}
+
 		$Contexts = $this->View->Find ( '[name="Context"]' );
 		foreach ( $Contexts as $c => $context ) {
 			$context->value = $this->Get ( 'Context' );
@@ -97,8 +118,12 @@ class cPhotosPhotosController extends cController {
 
 	public function Add ( $pView = null, $pData = array ( ) ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		
+		// Determine access.
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
+
 		$this->View = $this->GetView ( 'photos.add' ); 
 		
 		$this->Sets = $this->GetModel ( 'Sets' );

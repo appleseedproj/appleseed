@@ -32,6 +32,7 @@ class cPhotosSetsController extends cController {
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
 		
@@ -50,8 +51,12 @@ class cPhotosSetsController extends cController {
 	
 	private function _Prep ( ) {
 
-		$this->View->Find ( 'form[class="add"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/';
-		$this->View->Find ( '[name="Context"]', 0 )->value = $this->Get ( 'Context' );
+		if ( $this->_Focus->Account == $this->_Current->Account ) {
+			$this->View->Find ( 'form[class="add"]', 0 )->action = '/profile/' . $this->_Focus->Username . '/photos/';
+			$this->View->Find ( '[name="Context"]', 0 )->value = $this->Get ( 'Context' );
+		} else {
+			$this->View->Find ( 'form[class="add"]', 0 )->outertext = '';
+		}
 
 		$list = $this->View->Find ( '.list', 0);
 
@@ -93,8 +98,12 @@ class cPhotosSetsController extends cController {
 
 	public function Add ( $pView = null, $pData = array ( ) ) {
 		
-		$this->_Focus = $this->Talk ( 'User', 'Focus' );
-		
+		// Determine access.
+		if ( !$this->_CheckAccess ( ) ) {
+			$this->GetSys ( 'Foundation' )->Redirect ( 'common/403.php' );
+			return ( false );
+		}
+
 		$this->View = $this->GetView ( 'sets.add' ); 
 		
 		$this->Sets = $this->GetModel ( 'Sets' );

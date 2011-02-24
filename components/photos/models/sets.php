@@ -41,7 +41,7 @@ class cPhotosSetsModel extends cModel {
 				$this->Fetch();
 			}
 		} else {
-			$this->Retrieve ( array ( 'Owner_FK' => $pOwner ), 'Created DESC' );
+			return ( $this->_Sets ( $pOwner ) );
 		}
 	}
 
@@ -49,4 +49,74 @@ class cPhotosSetsModel extends cModel {
 		return ( true );
 	}
 
+	private function _Sets ( $pUserId ) {
+		//$this->Retrieve ( array ( 'Owner_FK' => $pOwner ), 'Created DESC' );
+
+		//return ( true );
+		
+		eval ( GLOBALS );
+		// $this->Retrieve ( array ( 'Owner_FK' => $pUserId ), 'Created DESC', $pLimit );
+		
+		$start = $pLimit['start'] ? $pLimit['start'] : 0;
+		$limit = $pLimit['limit'] ? $pLimit['limit'] : 10;
+		
+		// Get a list of circles the current member is a member of.
+		$Current = $zApp->GetSys ( 'Components' )->Talk ( 'User', 'Current' );
+		$Focus = $zApp->GetSys ( 'Components' )->Talk ( 'User', 'Focus' );
+		
+		$Circles = $zApp->GetSys ( 'Components' )->Talk ( 'Friends', 'Circles', array ( 'Requesting' => $Current->Account, 'All' => true ) );
+		$Friends = $zApp->GetSys ( 'Components' )->Talk ( 'Friends', 'Friends', array ( 'Requesting' => $Current->Account, 'All' => true ) );
+		
+		$prepared[] = $pUserId;
+		
+		$this->Privacy = new cModel ( 'PrivacySettings' );
+		
+		if ( $Focus->Account == $Current->Account ) {
+			// We're looking at our own journal, so return everything.
+		} elseif ( !$Current->Account ) {
+			// We're not logged in, so search for Everybody
+			$criteria = array ( 'User_FK' => $pUserId, 'Type' => 'Photosets', 'Everybody' => true );
+			
+			$this->Privacy->Retrieve ( $criteria );
+			
+			// No identifiers were found, which means no entries were found.
+			if ( $this->Privacy->Get ( 'Total' ) == 0 ) return ( false );
+			
+			while ( $this->Privacy->Fetch() ) {
+				$Identifiers[] = $this->Privacy->Get ( 'Identifier' );
+			}
+		} else {
+			// We're logged in, so search based on our criteria
+			$subcriteria['Everybody'] = true;
+			
+			if ( in_array ( $Current->Account, $Friends ) ) {
+				$subcriteria['||Friends'] = true;
+			}
+			
+			foreach ( $Circles as $c => $circle ) {
+				$circleList[] = $c;
+			}
+			if ( count ( $circleList > 0 ) ) {
+				$subcriteria['||Circle_FK'] = '()' . implode ( $circleList );
+			}
+			$criteria = array ( 'User_FK' => $pUserId, 'Type' => 'Photosets', $subcriteria );
+			$this->Privacy->Retrieve ( $criteria );
+			
+			// No identifiers were found, which means no entries were found.
+			if ( $this->Privacy->Get ( 'Total' ) == 0 ) return ( false );
+			
+			while ( $this->Privacy->Fetch() ) {
+				$Identifiers[] = $this->Privacy->Get ( 'Identifier' );
+			}
+		}
+		
+		if ( $Focus->Account == $Current->Account ) {
+			$this->Retrieve ( array ( 'Owner_FK' => $pUserId ), 'Created DESC', $pLimit );
+		} else {
+			$this->Retrieve ( array ( 'Owner_FK' => $pUserId, 'Identifier' => '()' . implode ( ',', $Identifiers ) ), 'Created DESC', $pLimit );
+		}
+		
+		return ( true );
+	}
+	
 }

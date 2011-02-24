@@ -32,6 +32,7 @@ class cPhotosPhotoController extends cController {
 	public function Display ( $pView = null, $pData = array ( ) ) {
 		
 		$this->_Focus = $this->Talk ( 'User', 'Focus' );
+		$this->_Current = $this->Talk ( 'User', 'Current' );
 		
 		$this->View = $this->GetView ( $pView ); 
 		
@@ -40,6 +41,7 @@ class cPhotosPhotoController extends cController {
 		$this->Photos = $this->GetModel ( 'Photos' );
 
 		$Set = $this->GetSys ( 'Request' )->Get ( 'Set' );
+
 		$Identifier = $this->GetSys ( 'Request' )->Get ( 'Photo' );
 
 		$this->Set->Load ( $this->_Focus->Id, $Set );
@@ -48,6 +50,20 @@ class cPhotosPhotoController extends cController {
 		$this->Photos->Load ( $Identifier );
 		$this->Photos->Fetch();
 
+		$Access = $this->Talk ( 'Privacy', 'Check', $data = array ( 'Requesting' => $this->_Current->Account, 'Type' => 'Photosets', 'Identifier' => $this->Set->Get ( 'Identifier' ) ) );
+
+		if ( ( !$Access ) && ( $this->_Current->Account != $this->_Focus->Account ) ) {
+			if ( !$this->_Current->Account ) {
+				$this->GetSys ( 'Session' )->Context ( 'login.login.(\d)+.login' );
+				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Login To See This Page' ) );
+				$this->GetSys ( 'Session' )->Set ( 'Error', true );
+				$this->GetSys ( 'Foundation' )->Redirect ( 'login/login.php' );
+			} else {
+				$this->GetSys ( 'Foundation' )->Redirect ( 'common/denied.php' );
+			}
+			return ( false );
+		}
+		
 		$this->_Prep();
 		
 		$this->View->Display();
