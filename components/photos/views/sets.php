@@ -2,7 +2,7 @@
 <form class="add" method="post" action="">
 	<input type="hidden" name="Task" value="Add" />
 	<input type="hidden" name="Context" value="" />
-	<button class="add-photos">Add Photos Button</button>
+	<button class="add-photos">Add Set Button</button>
 </form>
 
 <ul class="list">

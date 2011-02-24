@@ -207,7 +207,7 @@ class cPhotosSetsController extends cController {
 
 		$Set = $Request->Get ( 'Set' );
 
-		if ( isset ( $Set ) ) {
+		if ( $Set ) {
 			return ( $this->_Update ( ) );
 		}
 
