@@ -220,9 +220,7 @@ class cPhotosSetsController extends cController {
 			return ( $this->Add() );
 		}
 
-		// 2. Rename the directory.
-
-		// 3. Create an album if necessary.
+		// 2. Create an album if necessary.
 		$Location = $this->_CreateDirectory ( $this->_Focus->Username, $Directory );
 
 		// @todo: Move to model
@@ -281,7 +279,7 @@ class cPhotosSetsController extends cController {
 		if ( $NewDirectory != $OldDirectory ) {
 			if ( !$this->_RenameDirectory ( $OldDirectory, $NewDirectory ) ) {
 				$this->GetSys ( 'Session' )->Context ( $this->Get ( 'Context' ) );         
-				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Cannot Be Null', array ( 'field' => 'Directory' ) ) );
+				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Cannot Move Directory', array ( 'old' => $OldDirectory, 'new' => $NewDirectory ) ) );
 				$this->GetSys ( 'Session' )->Set ( 'Error', true );
 				return ( $this->Edit ( ) );
 			}
@@ -343,18 +341,19 @@ class cPhotosSetsController extends cController {
 		$fields = $this->Sets->Get ( 'Fields' );
 		$data = $Request->Get();
 
-		if ( $Set == -1 ) {
-			if ( !$Directory ) {
-				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Cannot Be Null', array ( 'field' => 'Directory' ) ) );
-				$this->GetSys ( 'Session' )->Set ( 'Error', true );
+		if ( !isset ( $Directory ) ) {
+			$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Cannot Be Null', array ( 'field' => 'Directory' ) ) );
+			$this->GetSys ( 'Session' )->Set ( 'Error', true );
 
-				return ( false );
-			} else if ( !$Validate->Illegal ( $Directory, '/ * \ < > ( ) [ ] & ^ $ # @ ! ? ; \' " { } | ~ + = %20' ) ) {
-				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Illegal Characters In Directory' ) );
-				$this->GetSys ( 'Session' )->Set ( 'Error', true );
+			return ( false );
+		} else if ( !$Validate->Illegal ( $Directory, '/ * \ < > ( ) [ ] & ^ $ # @ ! ? ; \' " { } | ~ + = %20' ) ) {
+			$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Illegal Characters In Directory' ) );
+			$this->GetSys ( 'Session' )->Set ( 'Error', true );
 
-				return ( false );
-			}
+			return ( false );
+		}
+
+		if ( !isset ( $Set ) ) {
 			// If the directory name already exists, throw an error.
 			if ( $this->Sets->Get ( 'Total' ) > 0 ) {
 				$this->GetSys ( 'Session' )->Set ( 'Message', __( 'Directory Already Exists' ) );
