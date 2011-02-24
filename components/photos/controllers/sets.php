@@ -63,6 +63,8 @@ class cPhotosSetsController extends cController {
 		$itemOriginal = $this->View->Find ( '.item', 0 )->outertext;
 
 		$list->innertext = "";
+
+		if ( $this->Sets->Get ( 'Total' ) == 0 ) return ( false );
 		
 		while ( $this->Sets->Fetch() ) {
             $item = new cHTML ();
@@ -94,6 +96,8 @@ class cPhotosSetsController extends cController {
 			}
 			$list->innertext .= $item->outertext;
 		}
+
+		return ( true );
 	}
 
 	public function Add ( $pView = null, $pData = array ( ) ) {
