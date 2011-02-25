@@ -82,6 +82,17 @@ class cPhotosPhotoController extends cController {
 		$this->View->Find ( '.original', 0 )->src = $photoLocation;
 
 		$this->View->Find ( '.description', 0 )->innertext = $this->Photos->Get ( 'Description' );
+
+		$this->_PrepComments();
 	}
+
+	private function _PrepComments ( ) {
+		
+		$commentsData = array ( 'Context' => 'Photo', 'Id' => $this->Photos->Get ( 'Photo_PK' ) );
+		$this->View->Find ( '.comments', 0 )->innertext = $this->GetSys ( 'Components' )->Buffer ( 'comments', $commentsData ); 
+		
+		return ( true );
+	}
+	
 	
 }
