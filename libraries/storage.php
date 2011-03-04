@@ -67,7 +67,7 @@ class cStorage {
 		return ( $return );
 	}
 
-	public function Scan ( $pDirectory ) {
+	public function Scan ( $pDirectory, $pExtension = null ) {
 		eval ( GLOBALS );
 
 		$Data = array();
@@ -80,7 +80,22 @@ class cStorage {
 			if ( $file == '.' ) continue;
 			if ( $file == '..' ) continue;
 
-			$return[] = $file;
+			// We're looking for a specific extension
+			if ( $pExtension ) {
+				// Remove any . to avoid confusion
+				$pExtension = str_replace ( '.', '', $pExtension );
+
+				// Search for . followed by extension at end of the line
+				$pattern = '/\.' . $pExtension . '$/';
+
+				// Match for the requested extension
+				if ( preg_match ( $pattern, $file ) ) {
+					$return[] = $file;
+				}
+			} else {
+				// Return the file no matter what type.
+				$return[] = $file;
+			}
 		}
 		
 		return ( $return );
