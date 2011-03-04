@@ -125,6 +125,8 @@ class cComponents extends cBase {
 	 */
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		
+		$this->_AddScript ( $pComponent, $pController, $pView, $pTask );
+		
 		ob_start();
 
 		$context = $this->Execute ( $pComponent, $pController, $pView, $pTask, $pData );
@@ -177,7 +179,7 @@ class cComponents extends cBase {
 			echo __("Component Not Found", array ( 'name' => $componentname ) );
 			return ( false );
 		};
-		
+
 		// Overwrite the Controller from Request data.
 		if ( $this->GetSys ( "Request" )->Get ('Controller') ) {
 			$pController = $this->GetSys ( "Request" )->Get ( 'Controller' );
@@ -232,7 +234,41 @@ class cComponents extends cBase {
 		else
 			return ( false );
 	}
-	
+
+	public function _AddScript ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
+		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
+
+		foreach ( $queue['component'] as $c => $component ) {
+			if ( $component->Parameters == 'head.system.1.system' ) {
+				//$View->Load ( );
+				if ( !$pView ) $pView = $pComponent;
+
+				$clients = $this->GetSys ( 'Client' )->Get ( 'Config' )->GetPath();
+
+				$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/client/' . $pView . '.js';
+				$location = ASD_PATH . 'components/' . $pComponent . '/client/' . $pView . '.js';
+
+				foreach ( $clients as $client ) {
+					$clientPath = 'http://' . ASD_DOMAIN . '/client/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
+					$clientLocation = ASD_PATH . 'client/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
+
+					if ( !file_exists ( $clientLocation ) ) continue;
+
+					$path = $clientPath;
+					$location = $clientLocation;
+				}
+
+				if ( !file_exists ( $location ) ) continue;
+				$script = '<script type="text/javascript" src="' . $path . '"></script>';
+				$queue['component'][$c]->Buffer .= "\n" . $script;
+			}
+		}
+
+		$this->GetSys ( 'Buffer' )->Set ( 'Queue', $queue );
+
+		return ( true );
+	}
+
 	public function Buffer ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		
 		ob_start ();

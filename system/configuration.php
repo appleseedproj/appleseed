@@ -120,7 +120,7 @@ class cConfiguration extends cBase {
 		
 		// Check to see if there's more than one parent left
 		if ( count ( $configurations ) > 1 ) {
-			die ( "More Than One Parent Configuration Is Enabled.  Please Resolve." );
+			die ( 'More Than One Parent Configuration (' . ucwords ( $pDirectory ) . ') Is Enabled.  Please Resolve.' );
 		} 
 		
 		$parent = key ( $configurations );
