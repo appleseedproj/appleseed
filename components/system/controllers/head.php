@@ -51,6 +51,28 @@ class cSystemHeadController extends cController {
 		list ( $foundation, $null ) = explode ( '.php', $foundation );
 
 		/*
+		 * Load all files in the init/ directory.
+		 */
+		foreach ( $clients as $c => $client ) {
+			$directory = ASD_PATH . 'client/' . $client . '/init/';
+			if ( !is_dir ( $directory ) ) continue;
+
+			$Storage = Wob::_('Storage');
+
+		    $files = $Storage->Scan ( $directory );	
+
+			foreach ( $files as $f => $file ) {
+				$inits[$file] = $client;
+			}
+		}
+
+		foreach ( $inits as $file => $client ) {
+			$initPath = 'http://' . ASD_DOMAIN . '/client/' . $client . '/init/'. $file;
+
+			$finalPaths[] = $initPath;
+		}
+
+		/*
 		 * Find the most relevant global client js file.
 		 */
 		$clientPath = null;

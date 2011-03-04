@@ -66,5 +66,24 @@ class cStorage {
 		
 		return ( $return );
 	}
+
+	public function Scan ( $pDirectory ) {
+		eval ( GLOBALS );
+
+		$Data = array();
+
+		$Data['Directory'] = $pDirectory;
+
+		$files = $zApp->GetSys ( 'Event' )->Trigger ( 'On', 'Scan', 'Directory', $Data );
+
+		foreach ( $files as $f => $file ) {
+			if ( $file == '.' ) continue;
+			if ( $file == '..' ) continue;
+
+			$return[] = $file;
+		}
+		
+		return ( $return );
+	}
 	
 }

@@ -87,5 +87,13 @@ class cFilesystemHook extends cHook {
 		
 		return ( $exists );
 	}
+
+	public function OnScanDirectory ( $pData = null ) {
+		$Directory = $pData['Directory'];
+
+		$return = scandir ( $Directory );
+
+		return ( $return );
+	}
 	
 }

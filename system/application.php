@@ -405,3 +405,20 @@ function rmkdir ( $path, $mode = 0777 ) {
 	}
 	return @mkdir ( $path, $mode );
 }
+
+/*
+ * Factory class
+ *
+ */
+class Wob {
+
+	/*
+	 * System Object Retrieval
+     */
+	public static function _ ( $pObject ) {
+		global $zApp;
+
+		return ( $zApp->GetSys ( $pObject) );
+	}
+
+}
