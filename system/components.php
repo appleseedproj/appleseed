@@ -239,8 +239,7 @@ class cComponents extends cBase {
 		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
 
 		foreach ( $queue['component'] as $c => $component ) {
-			if ( $component->Parameters == 'head.system.1.system' ) {
-				//$View->Load ( );
+			if ( preg_match ( '/head.system.(\d+).(\w+)/', $component->Parameters ) ) {
 				if ( !$pView ) $pView = $pComponent;
 
 				$clients = $this->GetSys ( 'Client' )->Get ( 'Config' )->GetPath();
@@ -270,6 +269,8 @@ class cComponents extends cBase {
 	}
 
 	public function Buffer ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
+		
+		$this->_AddScript ( $pComponent, $pController, $pView, $pTask );
 		
 		ob_start ();
 		
