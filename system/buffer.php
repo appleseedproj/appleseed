@@ -54,14 +54,6 @@ class cBuffer extends cBase {
 		$buffer = ob_get_contents ();
 		ob_end_clean ();
 		
-		$replacement = "#@ head @#";
-		preg_match("/<head.*>(.*)<\/head>/smU", $buffer, $headData);
-		
-		$newbuffer = preg_replace("/<head.*>(.*)<\/head>/smU", $replacement, $buffer);
-		if ( $newbuffer ) $buffer = $newbuffer;
-		
-		$this->_Queue['head'] = $headData[0];
-		
 		$this->_Buffer = $buffer;
 		
 		return ( true );
@@ -113,7 +105,7 @@ class cBuffer extends cBase {
 	 * @access  public
 	 */
 	public function Process ( ) {
-		
+
 		$this->GetSys ( "Event" )->Trigger ( "Begin", "System", "Buffer" );
 		
 		// Check if we've been instructed to redirect and process a different foundation.
@@ -137,9 +129,6 @@ class cBuffer extends cBase {
 				$processed = preg_replace ( $pattern, $queue->Buffer, $processed );
 			}
 		} while ( preg_match ( $whilepattern, $processed ) );
-		
-		$pattern = "/\#\@ head \@\#/";
-		$processed = preg_replace ( $pattern, $this->_Queue['head'], $processed );
 		
 		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Buffer" );
 		
