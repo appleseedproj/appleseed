@@ -117,7 +117,7 @@ class cSystemAdminNodesController extends cController {
 			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", "pagination", "amount", $pageData ); 
 		}
 		
-		$this->List->Synchronize();
+		$this->List->SynchronizeInputs();
 		
 		$this->_PrepareMessage();
 		
@@ -319,7 +319,7 @@ class cSystemAdminNodesController extends cController {
 		
 		$defaults = (array) $this->Model->Get ( "Data" );
 		$defaults = array_merge ( $defaults, array ( "Never" => $never) );
-		$this->Form->Synchronize ( $defaults );
+		$this->Form->SynchronizeInputs ( $defaults );
 		
 	}
 	

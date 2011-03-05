@@ -138,7 +138,7 @@ class cPhotosPhotosController extends cController {
 
 		$this->_PrepAdd();
 		
-		$this->View->Synchronize();
+		$this->View->SynchronizeInputs();
 		
 		$this->View->Display();
 		

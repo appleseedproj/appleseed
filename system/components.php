@@ -126,6 +126,7 @@ class cComponents extends cBase {
 	public function Go ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		
 		$this->_AddScript ( $pComponent, $pController, $pView, $pTask );
+		$this->_AddStyles ( $pComponent, $pController, $pView, $pTask );
 		
 		ob_start();
 
@@ -268,9 +269,43 @@ class cComponents extends cBase {
 		return ( true );
 	}
 
+	public function _AddStyles ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
+		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
+
+		foreach ( $queue['component'] as $c => $component ) {
+			if ( preg_match ( '/head.system.(\d+).(\w+)/', $component->Parameters ) ) {
+				if ( !$pView ) $pView = $pComponent;
+
+				$themes = $this->GetSys ( 'Theme' )->Get ( 'Config' )->GetPath();
+
+				$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/styles/' . $pView . '.css';
+				$location = ASD_PATH . 'components/' . $pComponent . '/styles/' . $pView . '.css';
+
+				foreach ( $themes as $theme ) {
+					$themePath = 'http://' . ASD_DOMAIN . '/themes/' . $theme . '/styles/components/' . $pComponent . '/' . $pView . '.css';
+					$themeLocation = ASD_PATH . 'themes/' . $theme . '/styles/components/' . $pComponent . '/' . $pView . '.css';
+
+					if ( !file_exists ( $themeLocation ) ) continue;
+
+					$path = $themePath;
+					$location = $themeLocation;
+				}
+
+				if ( !file_exists ( $location ) ) continue;
+				$script = '<link rel="stylesheet" href="' . $path . '" />';
+				$queue['component'][$c]->Buffer .= "\n" . $script;
+			}
+		}
+
+		$this->GetSys ( 'Buffer' )->Set ( 'Queue', $queue );
+
+		return ( true );
+	}
+
 	public function Buffer ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		
 		$this->_AddScript ( $pComponent, $pController, $pView, $pTask );
+		$this->_AddStyles ( $pComponent, $pController, $pView, $pTask );
 		
 		ob_start ();
 		

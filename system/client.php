@@ -29,7 +29,7 @@ class cClient extends cBase {
 	 */
 	public function __construct ( ) {       
 		
- 		// Load language configuration.
+ 		// Load client configuration.
  		$this->_Config = new cConf ();
 		$this->_Config->Set ( "Data",  $this->_Config->Load ( "client" ) );
 		

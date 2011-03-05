@@ -105,7 +105,7 @@ class cSystemAdminUpdateController extends cController {
 		
 		$defaults['BackupDirectory'] = ASD_PATH . "_backup";
 		
-		$this->Form->Synchronize( $defaults );
+		$this->Form->SynchronizeInputs( $defaults );
 		
 		$this->_PrepareMessage ( $this->Form );
 		

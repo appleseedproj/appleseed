@@ -1,5 +1,8 @@
 <script type="text/javascript" src="/components/example/assets/javascript/example.js"></script>
 
+<div style="width: 350px; height: 290px">
+</div>
+
 <section id="example" class="admin-content">
 	<h1>Example</h1>
 	<p id='example_message'></p>

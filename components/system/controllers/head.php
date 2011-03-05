@@ -73,23 +73,6 @@ class cSystemHeadController extends cController {
 		}
 
 		/*
-		 * Find the most relevant global client js file.
-		 */
-		$clientPath = null;
-		foreach ( $clients as $c => $client ) {
-			$clientPath = 'http://' . ASD_DOMAIN . '/client/' . $client . '/'. $client . '.js';
-			$clientLocation = ASD_PATH . 'client/' . $client . '/' .  $client . '.js';
-
-			if ( !file_exists ( $clientLocation ) ) continue;
-
-			$finalClientPath = $clientPath;
-		}
-
-		if ( $finalClientPath ) {
-			$finalPaths[] = $clientPath;
-		}
-
-		/*
 		 * Find the most relevant foundation-specific js file.
 		 */
 		$foundationPath = null;
@@ -135,10 +118,16 @@ class cSystemHeadController extends cController {
                     if ( strstr ( $style, $ostyle ) ) {
                         if ( in_array ( $ostyle, $skip ) ) continue;
                         $orderedstyles[] = $style;
+						unset ( $styles[$s] );
                     }
                 }
             }
         }
+
+		// Add the remaining styles to the end of the list.
+		foreach ( $styles as $s => $style ) {
+			$orderedstyles[] = $style;
+		}
 
 		$styles = $orderedstyles;
 

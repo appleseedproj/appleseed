@@ -3,40 +3,8 @@
 
 <head>
 	
-	<!-- Meta -->
-	<meta charset="utf-8" />
+  	<?php $zApp->Components->Go ( 'system', 'head', 'head' ); ?>
 
-	<!-- Title -->
-	<title><?php echo __("Access Denied | Appleseed"); ?></title>
-	
-	<!-- Links -->
-	<link rel="stylesheet" href="/themes/default/style/html5reset-1.4.1.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/fonts-min.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
-	
-	<!-- Javascript --> 
-	<!--[if IE]>
-	<script src="/themes/default/style/html5.js"></script>
-	<![endif]-->
-	
-    <!-- Load JLoader framework -->
-   	<script type="text/javascript" src="/libraries/javascript/jloader.init.js"></script>
-   	<script type="text/javascript" src="/foundations/default/default.js"></script>
-   	
-	<!-- Load JQuery -->
-   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/jquery-1.4.2.min.js"></script>
-   	
-   	<!-- Load JQuery::UI -->
-   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery-ui-1.8.2.custom.min.js"></script>
-   	
-   	<!-- Load JQuery::Validation -->
-   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.validate.js"></script>
-	
-   	<!-- Load JQuery::Preload -->
-   	<script type="text/javascript" src="/libraries/external/JQuery-1.4.2/plugins/jquery.preload-min.js"></script>
-   	
 </head>
 
 <body id="appleseed">

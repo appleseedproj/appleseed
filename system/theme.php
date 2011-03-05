@@ -57,13 +57,13 @@ class cTheme extends cBase {
 		
  		foreach ( $paths as $p => $path ) {
  			
- 			$location = $zApp->GetPath() . DS . 'themes' . DS . $path . DS . 'style';
+ 			$location = $zApp->GetPath() . '/themes/' . $path . '/styles/init';
  			
  			// Directory does not exist, continue;
  			if (!is_dir ($location)) continue;
  			
  			// Get a list of all css files.
- 			$files = glob($location . DS . '*.css');
+ 			$files = glob($location . '/*.css');
  			
  			// No styles found, continue
  			if ( count ( $files ) < 1 ) continue;
@@ -77,7 +77,25 @@ class cTheme extends cBase {
  			}
  		
  		} 
- 		
+
+		$Router = Wob::_( 'Router' );
+		$foundation = $Router->Get ('Foundation' );
+
+		$foundation = str_replace ( '.php', '.css', $foundation );
+
+		// Load the foundation styles
+		$foundationStyle = null;
+		foreach ( $paths as $p => $path ) {
+			$file = ASD_PATH . 'themes/' . $path . '/styles/foundations' . $foundation;
+			$url = $path . '/styles/foundations' . $foundation;
+			if ( file_exists ( $file ) ) {
+				$foundationStyle = $url;
+			}
+		}
+
+		if ( $foundationStyle )
+			$styles[] = $foundationStyle;
+
  		return ( $styles );
 	}
 	

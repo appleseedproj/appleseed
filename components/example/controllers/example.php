@@ -261,7 +261,7 @@ class cExampleExampleController extends cController {
 		foreach ( $pageControls as $p => $pageControl ) {
 			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", "pagination", "amount", $pageData ); 
 		}
-		$this->List->Synchronize();
+		$this->List->SynchronizeInputs();
 		
 		$this->_PrepareMessage();
 		
@@ -476,7 +476,7 @@ class cExampleExampleController extends cController {
 		
 		$defaults = array_merge ( (array)$defaults, (array)$data );
 		
-		$this->Form->Synchronize ( $defaults );
+		$this->Form->SynchronizeInputs ( $defaults );
 		
 		$this->_ShowReasons ();
 		

@@ -294,7 +294,7 @@ class cFriendsCirclesController extends cController {
 		
 		$data = (array) $this->Circles->Get ( "Data" );
 		
-		$this->View->Synchronize ( $data );
+		$this->View->SynchronizeInputs ( $data );
 		
 		$this->View->Find ( "[class=friends-circles-form]", 0 )->action = '/profile/' . $this->_Focus->Username . '/friends/circles/';
 		

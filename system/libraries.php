@@ -18,7 +18,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cLibrary extends cBase {
+class cLibraries extends cBase {
 
 	/**
 	 * Constructor
@@ -26,6 +26,12 @@ class cLibrary extends cBase {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+
+ 		// Load libraries configuration.
+ 		$this->_Config = new cConf ();
+		$this->_Config->Set ( "Data",  $this->_Config->Load ( "libraries" ) );
+		
+		return ( true );
 	}
 
 }

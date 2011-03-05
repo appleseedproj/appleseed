@@ -122,7 +122,7 @@ class cUserAdminAccessController extends cController {
 			$pageControl->innertext = $this->GetSys ( "Components" )->Buffer ( "pagination", "pagination", "amount", $pageData ); 
 		}
 		
-		$this->List->Synchronize();
+		$this->List->SynchronizeInputs();
 		
 		$this->_PrepareMessage();
 		
@@ -320,7 +320,7 @@ class cUserAdminAccessController extends cController {
 		
 		$this->Model->Fetch();
 		$defaults = (array) $this->Model->Get ( "Data" );
-		$this->Form->Synchronize ( $defaults );
+		$this->Form->SynchronizeInputs ( $defaults );
 		
 	}
 	

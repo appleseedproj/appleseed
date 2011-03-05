@@ -58,6 +58,7 @@ class cApplication extends cBase {
 		require ( ASD_PATH . DS . 'system' . DS . 'components.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'controller.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'language.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'libraries.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'event.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'hook.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'hooks.php' );
@@ -69,6 +70,8 @@ class cApplication extends cBase {
 		
 		set_error_handler ( array ( $this->Logs, "HandleError" ) );
 		
+		$this->Libararies = new cLibraries ();
+
 		$this->_LoadLibraries ();
             
 		$this->Config = new cConf ();
@@ -111,21 +114,67 @@ class cApplication extends cBase {
 	 */
 	private function _LoadLibraries ( ) {
 		
-		// Dynamically loaded library classes.	
-		$this->AddSys ( "Session",  ASD_PATH . DS . 'libraries' . DS . 'session.php' );
-		$this->AddSys ( "Communication",  ASD_PATH . DS . 'libraries' . DS . 'communication.php' );
-		$this->AddSys ( "Image",  ASD_PATH . DS . 'libraries' . DS . 'image.php' );
-		$this->AddSys ( "Storage",  ASD_PATH . DS . 'libraries' . DS . 'storage.php' );
-		$this->AddSys ( "Validation",  ASD_PATH . DS . 'libraries' . DS . 'validation.php' );
-		$this->AddSys ( "Request",  ASD_PATH . DS . 'libraries' . DS . 'request.php' );
-		$this->AddSys ( "HTML",  ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
-		$this->AddSys ( "Textup",  ASD_PATH . DS . 'libraries' . DS . 'markup.php' );
-		$this->AddSys ( "Purifier",  ASD_PATH . DS . 'libraries' . DS . 'purifier.php' );
-		$this->AddSys ( "Mailer",  ASD_PATH . DS . 'libraries' . DS . 'mailer.php' );
-		$this->AddSys ( "Crypt",  ASD_PATH . DS . 'libraries' . DS . 'crypt.php' );
-		$this->AddSys ( "Date",  ASD_PATH . DS . 'libraries' . DS . 'date.php' );
-		$this->AddSys ( "Render",  ASD_PATH . DS . 'libraries' . DS . 'render.php' );
-		
+		$libraries = $this->GetSys ( 'Libraries' )->Get ( 'Config' )->GetPath(); 
+
+		foreach ( $libraries as $l => $library ) {
+			$Session = ASD_PATH . 'libraries/' . $library . '/session.php';
+			$Communication = ASD_PATH . 'libraries/' . $library . '/communication.php';
+			$Image = ASD_PATH . 'libraries/' . $library . '/image.php';
+			$Storage = ASD_PATH . 'libraries/' . $library . '/storage.php';
+			$Validation = ASD_PATH . 'libraries/' . $library . '/validation.php';
+			$Request = ASD_PATH . 'libraries/' . $library . '/request.php';
+			$HTML = ASD_PATH . 'libraries/' . $library . '/markup.php';
+			$Textup = ASD_PATH . 'libraries/' . $library . '/markup.php';
+			$Purifier = ASD_PATH . 'libraries/' . $library . '/purifier.php';
+			$Mailer = ASD_PATH . 'libraries/' . $library . '/mailer.php';
+			$Crypt = ASD_PATH . 'libraries/' . $library . '/crypt.php';
+			$Date = ASD_PATH . 'libraries/' . $library . '/date.php';
+			$Render = ASD_PATH . 'libraries/' . $library . '/render.php';
+
+			if ( file_exists ( $Session ) )
+				$load['Session'] = ASD_PATH . 'libraries/' . $library . '/session.php';
+
+			if ( file_exists ( $Communication ) )
+				$load['Communication'] = ASD_PATH . 'libraries/' . $library . '/communication.php';
+
+			if ( file_exists ( $Image ) )
+				$load['Image'] = ASD_PATH . 'libraries/' . $library . '/image.php';
+
+			if ( file_exists ( $Storage ) )
+				$load['Storage'] = ASD_PATH . 'libraries/' . $library . '/storage.php';
+
+			if ( file_exists ( $Validation ) )
+				$load['Validation'] = ASD_PATH . 'libraries/' . $library . '/validation.php';
+
+			if ( file_exists ( $Request ) )
+				$load['Request'] = ASD_PATH . 'libraries/' . $library . '/request.php';
+
+			if ( file_exists ( $HTML ) )
+				$load['HTML'] = ASD_PATH . 'libraries/' . $library . '/markup.php';
+
+			if ( file_exists ( $Textup ) )
+				$load['Textup'] = ASD_PATH . 'libraries/' . $library . '/markup.php';
+
+			if ( file_exists ( $Purifier ) )
+				$load['Purifier'] = ASD_PATH . 'libraries/' . $library . '/purifier.php';
+
+			if ( file_exists ( $Mailer ) )
+				$load['Mailer'] = ASD_PATH . 'libraries/' . $library . '/mailer.php';
+
+			if ( file_exists ( $Crypt ) )
+				$load['Crypt'] = ASD_PATH . 'libraries/' . $library . '/crypt.php';
+
+			if ( file_exists ( $Date ) )
+				$load['Date'] = ASD_PATH . 'libraries/' . $library . '/date.php';
+
+			if ( file_exists ( $Render ) )
+				$load['Render'] = ASD_PATH . 'libraries/' . $library . '/render.php';
+		}
+
+		foreach ( $load as $name => $location ) {
+			$this->AddSys ( $name,  $location );
+		}
+
 		return ( true );
 	}
 	

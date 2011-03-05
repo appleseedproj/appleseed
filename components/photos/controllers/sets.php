@@ -120,7 +120,7 @@ class cPhotosSetsController extends cController {
 
 		$this->_PrepAdd();
 		
-		$this->View->Synchronize();
+		$this->View->SynchronizeInputs();
 		
 		$this->View->Display();
 		
@@ -155,7 +155,7 @@ class cPhotosSetsController extends cController {
 
 		$this->_PrepEdit();
 		
-		$this->View->Synchronize( $data );
+		$this->View->SynchronizeInputs( $data );
 		
 		$this->View->Display();
 		

@@ -91,7 +91,7 @@ class cLoginLoginController extends cController {
 		
 		$defaults = array_merge ( array ( "Remember" => "checked" ), $sessionData );
 
-		$this->Login->Synchronize( $defaults );
+		$this->Login->SynchronizeInputs( $defaults );
 			
 		$this->Login->Display();
 		
@@ -133,7 +133,7 @@ class cLoginLoginController extends cController {
 			$this->Login->Find ( "[id=remote-login-message]", 0 )->innertext = $result->error;
 			$this->Login->Find ( "[id=remote-login-message]", 0 )->class = 'error';
 			
-			$this->Login->Synchronize ( );
+			$this->Login->SynchronizeInputs ( );
 			
 			$this->_PrepareMessages ( "remote" );
 		
@@ -205,7 +205,7 @@ class cLoginLoginController extends cController {
 			
 			$this->_SetContexts();
 			
-			$this->Login->Synchronize();
+			$this->Login->SynchronizeInputs();
 			
 			$this->Login->Display();
 			
@@ -327,7 +327,7 @@ class cLoginLoginController extends cController {
 			
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
-			$this->Login->Synchronize();
+			$this->Login->SynchronizeInputs();
 			$this->Login->Display();
 			
 			return ( true );
@@ -349,7 +349,7 @@ class cLoginLoginController extends cController {
 		
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
-			$this->Login->Synchronize();
+			$this->Login->SynchronizeInputs();
 			$this->Login->Display();
 			
 			return ( true );
@@ -366,7 +366,7 @@ class cLoginLoginController extends cController {
 		
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
-			$this->Login->Synchronize();
+			$this->Login->SynchronizeInputs();
 			$this->Login->Display();
 			
 			return ( true );
@@ -384,7 +384,7 @@ class cLoginLoginController extends cController {
 		
 			$this->_SetContexts();
 			$this->_PrepareMessages ( 'join' );
-			$this->Login->Synchronize();
+			$this->Login->SynchronizeInputs();
 			$this->Login->Display();
 			
 			return ( true );
@@ -423,7 +423,7 @@ class cLoginLoginController extends cController {
 		}
 		
 		$this->_PrepareMessages ( 'success' );
-		$this->Login->Synchronize();
+		$this->Login->SynchronizeInputs();
 		
 		$this->Login->Display();
 		
