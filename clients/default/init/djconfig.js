@@ -1,3 +1,3 @@
         var djConfig = {
-            baseUrl: '/client/default/includes/dojo/',
+            baseUrl: '/client/default/libraries/dojo/',
         };
