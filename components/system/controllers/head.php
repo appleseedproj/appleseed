@@ -44,7 +44,7 @@ class cSystemHeadController extends cController {
 	private function _ProcessScripts ( ) {
 		$scripts = $this->View->Find ( 'script', 0 )->outertext;
 
-        $clients = $this->GetSys ( 'Client' )->Get ( 'Config' )->GetPath ();
+        $clients = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetPath ();
 
 		$foundation = $this->GetSys ( 'Router' )->Get ( 'Foundation' );
 
