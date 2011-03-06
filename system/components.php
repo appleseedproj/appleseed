@@ -243,14 +243,14 @@ class cComponents extends cBase {
 			if ( preg_match ( '/head.system.(\d+).(\w+)/', $component->Parameters ) ) {
 				if ( !$pView ) $pView = $pComponent;
 
-				$clients = $this->GetSys ( 'Client' )->Get ( 'Config' )->GetPath();
+				$clients = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetPath();
 
-				$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/client/' . $pView . '.js';
-				$location = ASD_PATH . 'components/' . $pComponent . '/client/' . $pView . '.js';
+				$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/clients/' . $pView . '.js';
+				$location = ASD_PATH . 'components/' . $pComponent . '/clients/' . $pView . '.js';
 
 				foreach ( $clients as $client ) {
-					$clientPath = 'http://' . ASD_DOMAIN . '/client/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
-					$clientLocation = ASD_PATH . 'client/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
+					$clientPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
+					$clientLocation = ASD_PATH . 'clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
 
 					if ( !file_exists ( $clientLocation ) ) continue;
 

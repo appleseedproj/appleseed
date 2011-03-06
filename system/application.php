@@ -50,7 +50,7 @@ class cApplication extends cBase {
 		
 		require ( ASD_PATH . DS . 'system' . DS . 'benchmark.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'database.php' );
-		require ( ASD_PATH . DS . 'system' . DS . 'client.php' );
+		require ( ASD_PATH . DS . 'system' . DS . 'clients.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'configuration.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'theme.php' );
 		require ( ASD_PATH . DS . 'system' . DS . 'foundation.php' );
@@ -82,7 +82,7 @@ class cApplication extends cBase {
 		$this->Database = new cDatabase();
 		
 		$this->Theme = new cTheme ();
-		$this->Client = new cClient ();
+		$this->Clients = new cClients ();
 		$this->Benchmark = new cBenchmark();
 		$this->Buffer = new cBuffer();
 		
@@ -281,7 +281,7 @@ class cApplication extends cBase {
 			'config', 
 			'language', 
 			'theme', 
-			'client', 
+			'clients', 
 			'buffer',
 		);
 		

@@ -11,14 +11,14 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** Client Class
+/** Clients Class
  * 
- * Base class for Client
+ * Base class for Clients
  * 
  * @package     Appleseed.Framework
  * @subpackage  System
  */
-class cClient extends cBase {
+class cClients extends cBase {
 	
 	protected $_Config;
 	
@@ -31,7 +31,7 @@ class cClient extends cBase {
 		
  		// Load client configuration.
  		$this->_Config = new cConf ();
-		$this->_Config->Set ( "Data",  $this->_Config->Load ( "client" ) );
+		$this->_Config->Set ( "Data",  $this->_Config->Load ( "clients" ) );
 		
 		return ( true );
 	}
