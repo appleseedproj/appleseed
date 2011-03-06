@@ -63,15 +63,14 @@ class cController extends cBase {
 	public function LoadView ( $pView ) {
 		eval ( GLOBALS );
 		
-		// In case it was accidentally specified, remove the php extension from view name.
+		// In case it was accidentally specified, remove the php or html extension from view name.
 		$pView = str_replace ( '.php', '', $pView );
+		$pView = str_replace ( '.html', '', $pView );
 		
 		$viewpath = $this->_GetViewPath ( $pView ) ;
-		
-		if ( $viewpath ) {
-			ob_start ();
-			include ( $viewpath );
-			return ( ob_get_clean () );
+
+		if ( $return = file_get_contents ( $viewpath ) ) {
+			return ( $return );
 		}
 		
 		return ( false );
@@ -106,11 +105,11 @@ class cController extends cBase {
 		$ThemeConfig = $Theme->Get ( "Config" );
 		$themepath = $ThemeConfig->GetPath();
 		
-		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'views' . DS . $pView . '.php';
+		$filename = $zApp->GetPath() . DS . 'components' . DS . $this->_Component . DS . 'views' . DS . $pView . '.html';
 		if ( is_file ( $filename ) ) $return = $filename;
 		
 		foreach ( $themepath as $t => $theme ) {
-			$filename = $zApp->GetPath() . DS . 'themes' . DS . $theme . DS . 'views' . DS . $this->_Component . DS . $pView . '.php';
+			$filename = $zApp->GetPath() . DS . 'themes' . DS . $theme . DS . 'views' . DS . $this->_Component . DS . $pView . '.html';
 			if ( is_file ( $filename ) ) $return = $filename;
 		}
 		
