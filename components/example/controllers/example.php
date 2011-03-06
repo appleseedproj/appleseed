@@ -77,7 +77,7 @@ class cExampleExampleController extends cController {
 		 */
 		$exampleResponse = $this->Talk ( "Example", "GetResponse" );
 		
-		$this->List = $this->GetView ( "example_list" );
+		$this->List = $this->GetView ( "list" );
 		
 		$this->Customers = $this->GetModel();
 		
@@ -285,16 +285,10 @@ class cExampleExampleController extends cController {
 		
 		$this->Employees = $this->GetModel("Employees");
 		
-		$this->Form = $this->GetView ( "example_form" );
+		$this->Form = $this->GetView ( "form" );
 		
 		$this->_PrepareForm();
 		
-		/*
-		 * @tutorial The order in which views are loaded and edited is important.  
-		 * @tutorial If you call one view within another view, make sure to edit them separately, and in the proper order (outer view last).
-		 * @tutorial In this instance, the "example" view wraps "example_form", so load and edit "example" after "example_form"
-		 * 
-		 */
 		$this->Form->Display();
 		
 		$this->Form->Clear();
@@ -314,16 +308,10 @@ class cExampleExampleController extends cController {
 		
 		$this->Employees = $this->GetModel("Employees");
 		
-		$this->Form = $this->GetView ( "example_form" );
+		$this->Form = $this->GetView ( "form" );
 		
 		$this->_PrepareForm();
 		
-		/*
-		 * @tutorial The order in which views are loaded and edited is important.  
-		 * @tutorial If you call one view within another view, make sure to edit them separately, and in the proper order (outer view last).
-		 * @tutorial In this instance, the "example" view wraps "example_form", so load and edit "example" after "example_form"
-		 * 
-		 */
 		$this->Form->Display();
 		
 		$this->Form->Clear();
@@ -354,9 +342,7 @@ class cExampleExampleController extends cController {
 		 * @tutorial Some extra functionality is included, but basically all the original functions are still intact.
 		 * 
 		 */
-		$this->Form = $this->GetView ( "example_form" );
-		
-		// $this->Form->Load ( $this->LoadView ( "example_form" ), "example_form" );
+		$this->Form = $this->GetView ( "form" );
 		
 		// $this->Form->SetDefaults ( "select[name=country]" );
 		
