@@ -148,9 +148,9 @@ class cConfiguration extends cBase {
 	 * @access  public
 	 * @param array pVariable
 	 */
-	function GetConfiguration ( $pVariable ) {
+	function GetConfiguration ( $pVariable, $pDefault = null ) {
 		
-		if ( !isset ( $this->_Data[$pVariable] ) ) return ( false );
+		if ( !isset ( $this->_Data[$pVariable] ) ) return ( $pDefault );
 		
 		return ( $this->_Data[$pVariable] );
 	}
