@@ -71,8 +71,6 @@ class cHooks extends cBase {
 				$this->$hookref->Set ( "Config", new cConf() );
 				$this->$hookref->Get ( 'Config' )->Set ( 'Data', $this->_Config->_Config[$hookname] );
 
-				$this->$hookref->_Config = $this->_Config->_Config[$hookname];
-				
 				$this->_Hooks->$hookref = $this->$hookref;
 			
 		}
