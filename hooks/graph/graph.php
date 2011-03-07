@@ -35,7 +35,6 @@ class cGraphHook extends cHook {
 	 */
 	public function EndSystemInitialize ( $pData = null ) {
 
-		$request = $this->GetSys ( "Request" )->URI();
 		$requestMethod = strtolower ( $this->GetSys ( "Request" )->Method() );
 
 		$entry = $this->Get ( 'Config' )->GetConfiguration ( 'entry', '/graph/' );
@@ -47,19 +46,36 @@ class cGraphHook extends cHook {
 
 		$Parts = explode ( '/', $URI );
 
-		$Component = ucwords ( $Parts[1] );
-		$Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
-		$Parameters = split ( '/', $Parts[3] );
+        $Request = Wob::_('Request');
+
+        $Data = $Request->Get();
 
 		$Signature = $this->GetSys ( 'Request' )->Get ( 'Signature' );
 
-		// Find the last parameter in the list.
-		$length = count ( $Parameters );
-		$sections = explode ( '.', $Parameters[$length-1] );
+		// Split up the rest of the URI into "objects" 
+		if ( count ( $Parts ) > 3 ) {
+			for ( $p = 3; $p < count ( $Parts ); $p++ ) {
+				$Parameters[] = $Parts[$p];
+			}
+			$PartCount = count ( $Parameters ) - 1;
+			$last = $Parameters[$PartCount];
+			$Parameters[$PartCount] = preg_replace ( '/\.xml$/', '', $Parts[$p-1] );
+			$Parameters[$PartCount] = preg_replace ( '/\.json$/', '', $Parameters[$PartCount] );
+			if ( !$Parameters[$PartCount] ) unset ( $Parameters[$PartCount] );
+			$Data['objects'] = $Parameters;
+		} else if ( count ( $Parts[2] ) ) {
+			$last = $Parts[2];
+			$Parts[2] = preg_replace ( '/\.xml$/', '', $Parts[2] );
+			$Parts[2] = preg_replace ( '/\.json$/', '', $Parts[2] );
+		} else if ( count ( $Parts[1] ) ) {
+			$last = $Parts[1];
+			$Parts[1] = preg_replace ( '/\.xml$/', '', $Parts[1] );
+		}
+
+		$sections = explode ( '.', $last );
 
 		// Find the value past the . to determine the return format.
-		$last = count ( $sections ) - 1;
-		$format = ltrim ( rtrim ( strtolower ( $sections[$last] ) ) );
+		$format = ltrim ( rtrim ( strtolower ( $sections[1] ) ) );
 
 		// Currently supported is XML and JSON format.
 		switch ( $format ) {
@@ -72,8 +88,11 @@ class cGraphHook extends cHook {
 			break;
 		}
 
+		$Component = ucwords ( $Parts[1] );
+		$Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
+
 		// 1.  Check if the method exists.
-		if ( !$this->_ComponentMethodExists ( $Component, $Method, $Parameters ) ) {
+		if ( !$this->_ComponentMethodExists ( $Component, $Method ) ) {
 			// We cannot resolve to a component, error out.
 			$this->_Error ( '404' );
 			exit;
