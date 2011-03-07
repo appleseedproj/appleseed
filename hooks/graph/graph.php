@@ -38,13 +38,18 @@ class cGraphHook extends cHook {
 		$request = $this->GetSys ( "Request" )->URI();
 		$requestMethod = strtolower ( $this->GetSys ( "Request" )->Method() );
 
-		$parts = explode ( '/', $request );
+		$entry = $this->Get ( 'Config' )->GetConfiguration ( 'entry', '/graph/' );
 
-		if ( $parts[0] != 'graph' ) return ( false );
+		if ( !$entryData = $this->_EntryPoint() ) return ( false );
 
-		$Component = ucwords ( $parts[1] );
-		$Method = ucwords ( $requestMethod ) . ucwords ( $parts[2] );
-		$Parameters = split ( '/', $parts[3] );
+	    $Domain = $entryData['Domain'];	
+	    $URI = $entryData['URI'];	
+
+		$Parts = explode ( '/', $URI );
+
+		$Component = ucwords ( $Parts[1] );
+		$Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
+		$Parameters = split ( '/', $Parts[3] );
 
 		$Signature = $this->GetSys ( 'Request' )->Get ( 'Signature' );
 
@@ -135,6 +140,105 @@ class cGraphHook extends cHook {
 		}
 
 		return ( true );
+	}
+
+	private function _EntryPoint ( ) {
+
+		$request = $this->GetSys ( "Request" )->URI();
+
+		$request = rtrim ( $request, '/' );
+
+		$parts = explode ( '/', $request );
+
+		$entry = $this->Get ( 'Config' )->GetConfiguration ( 'entry', '/graph/' );
+		$version = $this->Get ( 'Config' )->GetConfiguration ( 'version', '0.1.0' );
+
+		$protocol = 'ASDGRAPH/' . $version;
+
+		$return = array();
+
+		if ( $entry[0] == '/' ) {
+			// This is a url redirect
+			$entryPoint = ltrim ( rtrim ( $entry, '/' ), '/' );
+
+			$pattern = '/^' . preg_quote ( $entryPoint , '/') . '/';
+			$uri = preg_replace ( $pattern, '', $request );
+
+			$return['Domain'] = ASD_DOMAIN;
+			$return['URI'] = $uri;
+
+			if ( $entryPoint == $request ) {
+				// We're at the root, so return node information
+				$this->_NodeInformation();
+			} else if ( strpos ( $request, $entryPoint ) === 0 ) {
+				// The request matches the entrypoint, so return URI/Domain
+				return ( $return );
+			}
+
+			if ( $parts[0] == 'graph' ) {
+				if ( count ( $parts ) == 1 ) {
+					// Leave a default node root of graph/ for all sites
+					$this->_NodeInformation();
+				} else {
+					// Can't access the graph from the wrong entrypoint.
+					return ( false );
+				}
+			}
+		} else {
+			// This is a domain redirect.
+			$entryParts = explode ( '/', $entry );
+			$entryDomain = strtolower ( ltrim ( rtrim ( $entryParts[0] ) ) );
+
+			unset ( $entryParts[0] );
+			$entryPoint = ltrim ( rtrim ( join ('/', $entryParts ) , '/' ), '/' );
+
+			$pattern = '/^' . preg_quote ( $entryPoint , '/') . '/';
+			$uri = preg_replace ( $pattern, '', $request );
+
+			$return['Domain'] = ASD_DOMAIN;
+			$return['URI'] = $uri;
+
+			// Check if we're on the proper domain
+			if ( $entryDomain != ASD_DOMAIN ) {
+				// Leave a default node root of graph/ for all sites
+				if ( $parts[0] == 'graph' ) {
+					$this->_NodeInformation();
+				} else {
+					// Can't access the graph from the wrong entrypoint.
+					return ( false );
+				} 
+			} else {
+				if ( $entryPoint == $request ) {
+					// We're at the root, so return node information
+					$this->_NodeInformation();
+				} else if ( strpos ( $request, $entryPoint ) === 0 ) {
+					// The request matches the entrypoint, so return URI/Domain
+					return ( $return );
+				} else if ( $request == 'graph' ) {
+					// Leave a default node root of graph/ for all sites
+					$this->_NodeInformation();
+				}
+			}
+		}
+
+		return ( false );
+
+	}
+	
+	private function _NodeInformation ( ) {
+
+		$entry = $this->Get ( 'Config' )->GetConfiguration ( 'entry', '/graph/' );
+		$version = $this->Get ( 'Config' )->GetConfiguration ( 'version', '0.1.0' );
+
+		$protocol = 'ASDGRAPH/' . $version;
+
+		$result = array (
+			'entry' => $entry,
+			'version' => $protocol,
+		);
+
+		echo json_encode ( $result );
+		exit;
 	}
 
 	/*
