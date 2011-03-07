@@ -116,6 +116,34 @@ class cUser extends cComponent {
 		return ( $return );
 	}
 	
+	public function GetIcon ( $pData = null ) {
+		$objects = $pData['objects'];
+
+		// Disallow component-to-component requests, so we don't exit out.
+
+		if ( !$pData['username'] ) $username = $objects[0];
+		if ( !$pData['size'] ) $size = $objects[1];
+
+		if ( !$size ) $size = 't';
+
+		$file = ASD_PATH . '_storage/photos/' . $username . '/' . 'profile.' . $size . '.jpg';
+		if ( !file_exists ( $file ) ) {
+			// @todo: Create an Error() function for interfaces
+			$return['error'] = '403';
+			$return['message'] = 'File Not Found';
+			return ( $return );
+		}
+
+    	$im = @imagecreatefromjpeg( $file );
+
+		header('Content-Type: image/jpeg');
+
+		imagejpeg ( $im );
+
+		// Todo:  Create a Source() function for interfaces
+		exit;
+	}
+	
 }
 
 /** User Authorization Class
@@ -275,5 +303,5 @@ class cUserAuthorization extends cBase {
       	
       	return ( true );
 	}
-	
+
 }
