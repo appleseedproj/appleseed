@@ -32,7 +32,14 @@ class cExample extends cComponent {
 	
 	public function GetResponse ( $pData = null ) {
 		$return = array();
-		$return[] = 'This is a response from the Example component.';
+		$return['value'] = 'This is a response from the Example component.';
+		
+		return ( $return );
+	}
+	
+	public function PutResponse ( $pData = null ) {
+		$return = array();
+		$return['value'] = 'This is a put response from the Example component.';
 		
 		return ( $return );
 	}
