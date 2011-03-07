@@ -10,3 +10,7 @@ insert into `#__Janitor` ( `Updated`, `Task` ) values ( NOW(), 'UpdateNodeNetwor
 insert into `#__Janitor` ( `Updated`, `Task` ) values ( NOW(), 'ProcessNewsfeed' );
 
 alter table `#__PhotoSets` change `Directory` `Directory` char(128) not null;
+
+alter table `#__NetworkNodes` drop `Methods`;
+
+alter table `#__NetworkNodes` change `Version` `Version` char(32);
