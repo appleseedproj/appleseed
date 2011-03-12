@@ -20,6 +20,10 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cGraphHook extends cHook {
 
+	private $_Component;
+	private $_Method;
+	private $_Format;
+
 	/**
 	 * Constructor
 	 *
@@ -63,67 +67,62 @@ class cGraphHook extends cHook {
 			$Parameters[$PartCount] = preg_replace ( '/\.json$/', '', $Parameters[$PartCount] );
 			if ( !$Parameters[$PartCount] ) unset ( $Parameters[$PartCount] );
 			$Data['objects'] = $Parameters;
-		} else if ( count ( $Parts[2] ) ) {
+		} else if ( $Parts[2] ) {
 			$last = $Parts[2];
 			$Parts[2] = preg_replace ( '/\.xml$/', '', $Parts[2] );
 			$Parts[2] = preg_replace ( '/\.json$/', '', $Parts[2] );
-		} else if ( count ( $Parts[1] ) ) {
+		} else if ( $Parts[1] ) {
 			$last = $Parts[1];
 			$Parts[1] = preg_replace ( '/\.xml$/', '', $Parts[1] );
+			$Parts[1] = preg_replace ( '/\.json$/', '', $Parts[1] );
 		}
 
 		$sections = explode ( '.', $last );
 
 		// Find the value past the . to determine the return format.
-		$format = ltrim ( rtrim ( strtolower ( $sections[1] ) ) );
+		$this->_Format = ltrim ( rtrim ( strtolower ( $sections[1] ) ) );
 
 		// Currently supported is XML and JSON format.
-		switch ( $format ) {
+		switch ( $this->_Format ) {
 			case 'xml':
 			case 'json':
 			break;
 			default:
 				// Default to JSON
-				$format = 'json';
+				$this->_Format = 'json';
 			break;
 		}
 
-		$Component = ucwords ( $Parts[1] );
-		$Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
+		$this->_Component = ucwords ( $Parts[1] );
+		$this->_Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
+
+		// If we're requesting 
+		if ( $requestMethod == 'options' ) {
+			if ( $Parts[2] ) {
+				$this->_Options ( ucwords ( $Parts[2] ) );
+			} else {
+				$this->_OptionsAll ( );
+			}
+		}
 
 		// 1.  Check if the method exists.
-		if ( !$this->_ComponentMethodExists ( $Component, $Method ) ) {
+		if ( !$this->_ComponentMethodExists ( $this->_Component, $this->_Method ) ) {
 			// We cannot resolve to a component, error out.
 			$this->_Error ( '404' );
 			exit;
 		}
 
 		// 2. Determine proper authorization.
-		if ( !$this->_CheckAccess ( $Component, $Method ) ) {
+		if ( !$this->_CheckAccess ( $this->_Component, $this->_Method ) ) {
 			// No access
 			$this->_Error ( '403' );
 			exit;
 		}
 
 		// 3. Execute the component method.
-		$return = $this->GetSys ( 'Components' )->Talk ( $Component, $Method, $Data );
+		$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, $this->_Method, $Data );
 
-		// 4. Translate the resulting value.
-		switch ( $format ) {
-			case 'xml':
-				header ("content-type: text/xml; charset=utf-8"); 
-
-				$output = $this->_ArrayToXML ( "<result/>", $return );
-			break;
-			case 'json':
-			default:
-				header('content-type: application/json; charset=utf-8');
-
-				$output = json_encode ( $return );
-			break;
-		}
-
-		echo $output;
+		$this->Format ( $return );
 
 		// Exit the framework completely
 		exit;
@@ -260,31 +259,144 @@ class cGraphHook extends cHook {
 		exit;
 	}
 
-	/*
-	 * Adapted from php.net
-	 * Original author: phil at dier dot us
-	 *
-	 * @todo:  Replace with a better approach.
-	*/
-	private function _ArrayToXML ( $pRoot, $pArray ) { 
-    	$xml = new SimpleXMLElement($pRoot); 
-    	$f = create_function('$f,$c,$a',' 
-            foreach($a as $k=>$v) { 
-                if(is_array($v)) { 
-                    $ch=$c->addChild($k); 
-                    $f($f,$ch,$v); 
-                } else { 
-					if ( is_int ($k) ) $k = "value";
-                    $c->addChild($k,$v); 
-                } 
-            }'); 
-    	$f ( $f, $xml, $pArray); 
+	private function _Options ( $pObject ) {
 
-		$dom = new DOMDocument('1.0');
-		$dom->preserveWhiteSpace = false;
-		$dom->formatOutput = true;
-		$dom->loadXML($xml->asXML());
+		// 1.  Check if the method exists.
+		if ( $this->_ComponentMethodExists ( $this->_Component, 'Options' . $pObject ) ) {
+			// Override Options
+			$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $Data );
+			$this->Format ( $return );
+			exit;
+		}
 
-		return ( $dom->saveXML() );
-	} 
+		$return = array();
+		$return['interface'] = strtolower ( $this->_Component );
+		$return['object'] = strtolower ( $pObject );
+		$return['methods'] = array();
+
+		$class = $this->_Component;
+		$reflect = new ReflectionClass ( $this->GetSys ( 'Components' )->$class );
+		$methods = $reflect->getMethods();
+
+		$className = $reflect->GetName();
+
+		foreach ( $methods as $m => $method ) {
+
+			// Skip if we're looking at an inherited method.
+			if ( $method->GetDeclaringClass()->getName() != $className ) continue;
+
+			$methodType = null;
+
+			switch ( $method->getName() ) {
+				case 'Get' . $pObject;
+					$methodType = 'get';
+				break;
+				case 'Post' . $pObject;
+					$methodType = 'post';
+				break;
+				case 'Put' . $pObject;
+					$methodType = 'put';
+				break;
+				case 'Delete' . $pObject;
+					$methodType = 'delete';
+				break;
+				default:
+				break;
+			}
+
+			if ( !$methodType ) continue;
+
+			$parameters = $method->getParameters();
+			foreach ( $parameters as $p => $parameter ) {
+				$name = strtolower ( $parameter->getName() );
+				$return['methods'][$methodType]['params'][] = array ();
+				$pointer = count ( $return['methods'][$methodType]['params'] ) - 1;
+				$return['methods'][$methodType]['params'][$pointer]['name'] = $name;
+				if ( $parameter->isDefaultValueAvailable() ) {
+					$return['methods'][$methodType]['params'][$pointer]['required'] = '0';
+					$return['methods'][$methodType]['params'][$pointer]['default'] = $parameter->getDefaultValue();
+				} else {
+					$return['methods'][$methodType]['params'][$pointer]['required'] = '1';
+				}
+			}
+		}
+
+		$this->Format ( $return );
+		exit;
+	}
+
+	private function _OptionsAll ( ) {
+
+		// 1.  Check if the method exists.
+		if ( $this->_ComponentMethodExists ( $this->_Component, 'Options' ) ) {
+			// Override Options
+			$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $Data );
+			$this->Format ( $return );
+			exit;
+		}
+
+		$return = array();
+		$return['interface'] = strtolower ( $this->_Component );
+		$return['objects'] = array();
+
+		$class = $this->_Component;
+		$reflect = new ReflectionClass ( $this->GetSys ( 'Components' )->$class );
+		$methods = $reflect->getMethods();
+
+		$className = $reflect->GetName();
+
+		foreach ( $methods as $m => $method ) {
+
+			// Skip if we're looking at an inherited method.
+			if ( $method->GetDeclaringClass()->getName() != $className ) continue;
+
+			// Only match REST request methods.
+			if ( !preg_match ( "/^(Get|Post|Put|Delete)(.*)/", $method->getName(), $matches) ) {
+				continue;
+			}
+
+			$methodType = strtolower ( $matches[1] );
+			$object = strtolower ( $matches[2] );
+
+			$return['objects'][$object]['methods'][$methodType] = array();
+
+			$parameters = $method->getParameters();
+			foreach ( $parameters as $p => $parameter ) {
+				$name = strtolower ( $parameter->getName() );
+				$return['objects'][$object]['methods'][$methodType]['params'][] = array ();
+				$pointer = count ( $return['objects'][$object]['methods'][$methodType]['params'] ) - 1;
+				$return['objects'][$object]['methods'][$methodType]['params'][$pointer]['name'] = $name;
+				if ( $parameter->isDefaultValueAvailable() ) {
+					$return['objects'][$object]['methods'][$methodType]['params'][$pointer]['required'] = '0';
+					$return['objects'][$object]['methods'][$methodType]['params'][$pointer]['default'] = $parameter->getDefaultValue();
+				} else {
+					$return['objects'][$object]['methods'][$methodType]['params'][$pointer]['required'] = '1';
+				}
+			}
+		}
+
+		$this->Format ( $return );
+		exit;
+	}
+
+	private function Format ( $pResponse ) {
+
+		switch ( $this->_Format ) {
+			case 'xml':
+				header ("content-type: text/xml; charset=utf-8"); 
+
+				$output = xml_encode ( $pResponse );
+			break;
+			case 'json':
+			default:
+				header('content-type: application/json; charset=utf-8');
+
+				$output = json_encode ( $pResponse );
+			break;
+		}
+
+		echo $output;
+
+		return ( true );
+	}
 }
