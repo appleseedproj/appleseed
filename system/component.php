@@ -145,7 +145,7 @@ class cComponent extends cBase {
 			$pController = strtolower ( implode ( "", $pControllerElements ) );
 		}
 		
-		$contextData = array ( $pController, $this->_Component, $this->_Instance, $this->_View );
+		$contextData = array ( $this->_Component, $pController, $this->_Instance, $this->_View );
 		
 		$context = join ( '.', $contextData );
 		
