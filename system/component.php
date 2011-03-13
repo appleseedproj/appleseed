@@ -207,8 +207,14 @@ class cComponent extends cBase {
 		return ( true );
 	}
 	
-	public function Talk ( $pComponent, $pRequest, $pData = null ) {
-		return ( $this->GetSys ( "Components" )->Talk ( $pComponent, $pRequest, $pData ) );
+	public function Talk ( $pComponent, $pRequest ) {
+
+      	$args = func_get_args();
+		$Components = Wob::_('Components' );
+
+	    $return = call_user_func_array ( array ( $Components, 'Talk' ), $args );
+		
+		return ( $return );
 	}
 	
 }

@@ -316,7 +316,12 @@ class cComponents extends cBase {
 		return ( $return );
 	}
 	
-	public function Talk ( $pComponent, $pRequest, $pData = null ) {
+	public function Talk ( $pComponent, $pRequest ) {
+
+      	$args = func_get_args();
+
+		unset ( $args[0] );
+		unset ( $args[1] );
 		
 		$component = ucwords ( strtolower ( ltrim ( rtrim ( $pComponent ) ) ) );
 		$function = ltrim ( rtrim ( $pRequest ) );
@@ -330,7 +335,9 @@ class cComponents extends cBase {
 		if ( !$methods ) return ( false );
 		
 		if ( in_array ( $function, $methods) ) {
-			return ( $this->$component->$function ( $pData ) );
+	    	$return = call_user_func_array ( array ( $this->$component, $function ), $args );
+		
+			return ( $return );
 		}
 		
 		return ( false );

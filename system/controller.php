@@ -241,10 +241,13 @@ class cController extends cBase {
 	 * @param string $pEvent Which event to trigger
 	 * @param array $pEvent Extra data to pass to event hook
 	 */
-	public function Talk ( $pComponent, $pRequest, $pData = null ) {
+	public function Talk ( $pComponent, $pRequest ) {
 		
-		$return = $this->GetSys ( "Components" )->Talk ( $pComponent, $pRequest, $pData );
-		
+      	$args = func_get_args();
+		$Components = Wob::_('Components' );
+
+	    $return = call_user_func_array ( array ( $Components, 'Talk' ), $args );
+
 		return ( $return );
 	}
 
