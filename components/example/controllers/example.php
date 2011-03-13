@@ -76,7 +76,8 @@ class cExampleExampleController extends cController {
 		 * 
 		 */
 		$exampleResponse = $this->Talk ( "Example", "GetResponse" );
-		
+		$exampleResponse = $this->Talk ( "Example", "GetBlah", "Argument 1" );
+
 		$this->List = $this->GetView ( "list" );
 		
 		$this->Customers = $this->GetModel();

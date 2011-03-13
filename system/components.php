@@ -342,5 +342,4 @@ class cComponents extends cBase {
 		
 		return ( false );
 	}
-
 }
