@@ -66,7 +66,7 @@ class cGraphHook extends cHook {
 			$Parameters[$PartCount] = preg_replace ( '/\.xml$/', '', $Parts[$p-1] );
 			$Parameters[$PartCount] = preg_replace ( '/\.json$/', '', $Parameters[$PartCount] );
 			if ( !$Parameters[$PartCount] ) unset ( $Parameters[$PartCount] );
-			$Data['objects'] = $Parameters;
+			$Data = $Parameters;
 		} else if ( $Parts[2] ) {
 			$last = $Parts[2];
 			$Parts[2] = preg_replace ( '/\.xml$/', '', $Parts[2] );
@@ -119,8 +119,56 @@ class cGraphHook extends cHook {
 			exit;
 		}
 
-		// 3. Execute the component method.
-		$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, $this->_Method, $Data );
+		// 3. Align the component parameters.
+		$c = $this->_Component;
+		$instance = $this->GetSys ( 'Components' )->$c;
+		$m = $this->_Method;
+
+		$reflect = new ReflectionClass ( $instance );
+		$method = $reflect->getMethod ( $m );
+
+		$parameters = $method->getParameters();
+
+		$RequestData = $Request->Get();
+		$Params = $Data;
+		$pnames = array();
+		foreach ( $parameters as $p => $parameter ) {
+			$pname = $parameter->GetName();
+			if ( ( $pname[0] == 'p' ) && ( ctype_upper ( $pname[1] ) ) ) {
+				// We're using $pParameter notation.  Remove the p.
+				list ( $null, $name ) = explode ( $pname[0], $pname, 2 );
+				$name = strtolower ( $name );
+				if ( $RequestData[$name] ) {
+					if ( !isset ( $Parameters[$p] ) ) 
+						$Parameters[$p] = $RequestData[$name];
+				}
+			} else {
+				// We're not using $pParameter notation
+				$name = strtolower ( $pname );
+				$Parameters[$p] = $RequestData[$name];
+			}
+			$pnames[$p] = $name;
+
+		}
+
+		// Check to make sure all necessary parameters are available.
+		$return = array();
+		foreach ( $parameters as $p => $parameter ) {
+			if ( ( !$parameter->IsOptional() ) && ( !isset ( $Parameters[$p] ) ) ) {
+				header('HTTP/1.1 412 Precondition Failed');
+				$return['error'] = true;
+				$return['message'][] = 'Field required: "' . $pnames[$p] . '"';
+			}
+		}
+
+		// If we've found an error, exit.
+		if ( $return['error'] == true ) {
+			$this->Format ( $return );
+			exit;
+		}
+
+		// 4. Execute the component method.
+        $return = call_user_func_array ( array ( $instance, $this->_Method ), $Parameters  );
 
 		$this->Format ( $return );
 
