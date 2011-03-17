@@ -42,11 +42,17 @@ class cRequest {
 
 		switch ( $this->_Method ) {
 			case 'GET':
-				$Data = $_GET;
+				if ( $_GET ) 
+					$Data = $_GET;
+				else
+					parse_str(file_get_contents('php://input'), $Data);
 			break;
 			
 			case 'POST':
-				$Data = $_POST;
+				if ( $_POST ) 
+					$Data = $_POST;
+				else
+					parse_str(file_get_contents('php://input'), $Data);
 			break;
 			break;
 			
