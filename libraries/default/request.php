@@ -50,6 +50,10 @@ class cRequest {
 			break;
 			break;
 			
+			case 'OPTIONS':
+				parse_str(file_get_contents('php://input'), $Data);
+			break;
+			
 			case 'PUT':
 				parse_str(file_get_contents('php://input'), $Data);
 			break;
