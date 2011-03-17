@@ -96,17 +96,8 @@ class cGraphHook extends cHook {
 		$this->_Component = ucwords ( $Parts[1] );
 		$this->_Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
 
-		// If we're requesting 
-		if ( $requestMethod == 'options' ) {
-			if ( $Parts[2] ) {
-				$this->_Options ( ucwords ( $Parts[2] ) );
-			} else {
-				$this->_OptionsAll ( );
-			}
-		}
-
 		// 1.  Check if the method exists.
-		if ( !$this->_ComponentMethodExists ( $this->_Component, $this->_Method ) ) {
+		if ( ( !$this->_ComponentMethodExists ( $this->_Component, $this->_Method ) ) && ( $requestMethod != 'options' ) ) {
 			// We cannot resolve to a component, error out.
 			$this->_Error ( '404' );
 			exit;
@@ -119,16 +110,28 @@ class cGraphHook extends cHook {
 			exit;
 		}
 
-		// 3. Align the component parameters.
 		$c = $this->_Component;
 		$instance = $this->GetSys ( 'Components' )->$c;
 		$m = $this->_Method;
 
 		$reflect = new ReflectionClass ( $instance );
-		$method = $reflect->getMethod ( $m );
+		$className = $reflect->GetName();
 
-		$parameters = $method->getParameters();
+		if ( $method = $reflect->hasMethod ( $m ) ) {
+			$method = $reflect->getMethod ( $m );
 
+			$parameters = $method->getParameters();
+	
+			if ( $method->GetDeclaringClass()->getName() != $className ) {
+				$this->_Error ( '403' );
+				exit;
+			}
+		} else {
+			$method = null;
+			$parameters = array ();
+		}
+
+		// 3. Align the parameters.
 		$RequestData = $Request->Get();
 		$Params = $Data;
 		$pnames = array();
@@ -167,8 +170,19 @@ class cGraphHook extends cHook {
 			exit;
 		}
 
+		$this->_Parameters = (array) $Parameters;
+
+		// Requesting information on methods
+		if ( $requestMethod == 'options' ) {
+			if ( $Parts[2] ) {
+				$this->_Options ( ucwords ( $Parts[2] ) );
+			} else {
+				$this->_OptionsAll ( );
+			}
+		}
+
 		// 4. Execute the component method.
-        $return = call_user_func_array ( array ( $instance, $this->_Method ), $Parameters  );
+        $return = call_user_func_array ( array ( $instance, $this->_Method ), $this->_Parameters  );
 
 		$this->Format ( $return );
 
@@ -201,7 +215,7 @@ class cGraphHook extends cHook {
 				header("HTTP/1.1 404 Not Found");
 			break;
 			case '403':
-				header("HTTP/1.1 403 Not Found");
+				header("HTTP/1.1 403 Forbidden");
 			break;
 		}
 
@@ -312,7 +326,10 @@ class cGraphHook extends cHook {
 		// 1.  Check if the method exists.
 		if ( $this->_ComponentMethodExists ( $this->_Component, 'Options' . $pObject ) ) {
 			// Override Options
-			$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $Data );
+			//$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $Data );
+			$c = $this->_Component;
+			$instance = $this->GetSys ( 'Components' )->$c;
+        	$return = call_user_func_array ( array ( $instance, 'Options' ), $this->_Parameters  );
 			$this->Format ( $return );
 			exit;
 		}
@@ -378,7 +395,10 @@ class cGraphHook extends cHook {
 		// 1.  Check if the method exists.
 		if ( $this->_ComponentMethodExists ( $this->_Component, 'Options' ) ) {
 			// Override Options
-			$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $Data );
+			//$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $this->_Parameters );
+			$c = $this->_Component;
+			$instance = $this->GetSys ( 'Components' )->$c;
+        	$return = call_user_func_array ( array ( $instance, 'Options' ), $this->_Parameters  );
 			$this->Format ( $return );
 			exit;
 		}
