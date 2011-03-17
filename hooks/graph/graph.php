@@ -326,7 +326,6 @@ class cGraphHook extends cHook {
 		// 1.  Check if the method exists.
 		if ( $this->_ComponentMethodExists ( $this->_Component, 'Options' . $pObject ) ) {
 			// Override Options
-			//$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $Data );
 			$c = $this->_Component;
 			$instance = $this->GetSys ( 'Components' )->$c;
         	$return = call_user_func_array ( array ( $instance, 'Options' ), $this->_Parameters  );
@@ -395,7 +394,6 @@ class cGraphHook extends cHook {
 		// 1.  Check if the method exists.
 		if ( $this->_ComponentMethodExists ( $this->_Component, 'Options' ) ) {
 			// Override Options
-			//$return = $this->GetSys ( 'Components' )->Talk ( $this->_Component, 'Options' . $pObject, $this->_Parameters );
 			$c = $this->_Component;
 			$instance = $this->GetSys ( 'Components' )->$c;
         	$return = call_user_func_array ( array ( $instance, 'Options' ), $this->_Parameters  );
