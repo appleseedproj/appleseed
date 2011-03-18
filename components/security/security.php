@@ -32,8 +32,10 @@ class cSecurity extends cComponent {
 	}
 	
 	public function Access ( $pData = null ) {
-		
-		if ( $this->_Source != 'Component' ) return ( false );
+
+		// Only allow internal components to get access information.
+		$Source = $this->Get ( 'Source' );
+		if ( $Source != 'Component' ) return ( false );
 		
 		$account = isset ( $pData['account'] ) ? $pData['account'] : null;
 		$context = isset ( $pData['context'] ) ? $pData['context'] : null;
