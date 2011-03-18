@@ -22,6 +22,10 @@ class cComponents extends cBase {
 	
 	protected $_ComponentCount;
 
+	protected $_Source;
+	protected $_Identity;
+	protected $_Origin;
+
 	/**
 	 * Constructor
 	 *
@@ -329,9 +333,13 @@ class cComponents extends cBase {
 		if ( !isset ( $this->$component ) ) return ( false );
 		
 		$methods = get_class_methods ( $this->$component );
-		
+
+		$Current = $this->GetSys ( 'Event' )->Trigger ( 'Get', 'Current', 'User' );
+
 		$this->$component->Set ( 'Source', 'Component' );
-		
+		$this->$component->Set ( 'Origin', ASD_DOMAIN );
+		$this->$component->Set ( 'Identity', $Current->Account );
+
 		if ( !$methods ) return ( false );
 		
 		if ( in_array ( $function, $methods) ) {

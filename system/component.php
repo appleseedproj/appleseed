@@ -24,7 +24,10 @@ class cComponent extends cBase {
 	
 	protected $_Context;
 	
-	protected $_Source = false;
+	protected $_Source;
+	protected $_Identity;
+	protected $_Origin;
+
 	
 	protected $_Controller;
 	protected $_View;
