@@ -19,4 +19,7 @@ alter table `#__NetworkNodes` drop `Methods`;
 
 alter table `#__NetworkNodes` change `Version` `Version` char(32);
 
-alter table `#__NetworkNodes` add `Entry` varchar(128);
+alter table `#__NetworkNodes` add `Entry` char(128);
+
+alter table `#__userAuthorization` add `Secret` char(32);
+
