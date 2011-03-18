@@ -376,6 +376,7 @@ class cLoginLoginController extends cController {
 		$userAuth->Set ( 'Pass', $newpass);	
 		$userAuth->Set ( 'Verification', 0);	
 		$userAuth->Set ( 'Standing', 0);	
+		$userAuth->Set ( 'Secret', md5(rand()) );  // 32-bit user secret.
 		
 		if ( !$userAuth->Save() ) {
 			$session->Set ( "Message", "An error occurred" );
