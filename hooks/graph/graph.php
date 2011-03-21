@@ -30,9 +30,32 @@ class cGraphHook extends cHook {
 	 * @access  public
 	 */
 	public function __construct ( ) {       
+		define ( "GRAPHAPI", true );
+
+		require_once ( ASD_PATH . 'hooks/graph/libraries/graph.php' );
+		require_once ( ASD_PATH . 'hooks/graph/libraries/signatures.php' );
+
+		$this->_Graph = new cGraphApi;
+		$this->_Signatures = new cGraphApiSignatures;
+
+		$this->_Graph->SetCallback ( 'GetNodeEntryPoint', array ( $this, 'GetNodeEntryPoint' ) );
+		$this->_Graph->SetCallback ( 'UpdateNetworkNode', array ( $this, 'UpdateNetworkNode' ) );
+		$this->_Graph->SetCallback ( 'GetNodeProtocols', array ( $this, 'GetNodeProtocols' ) );
+
+		if ( ASD_DOMAIN == 'enterprise.appleseed' ) {
+			$result = $this->_Graph->Communicate ( 'fellowship.appleseed', 'GET', '/user/token/', 'admin@enterprise.appleseed' );
+			echo "<pre>";
+			echo "Result:\n";
+			print_r ( $result );
+			exit;
+		}
+
+		//echo $this->_Token ( 'mchisari', 'fellowship.appleseed' );
+		//exit;
+
 		parent::__construct();
 	}
-	
+
 	/*
 	 * Trap the Graph API entry point.
 	 * 
@@ -464,5 +487,138 @@ class cGraphHook extends cHook {
 		echo $output;
 
 		return ( true );
+	}
+
+	/**
+	 * Retrieve the secret of a specific user.
+	 *
+	 * @access  public
+	 */
+	private function _Secret ( $pUsername ) {
+
+		$User = new cModel ( 'userAuthorization' );
+
+		$User->Retrieve ( array ( 'Username' => $pUsername ) );
+
+		// User not found
+		if ( $User->Get ('Total' ) == 0 ) return ( false );
+
+		$User->Fetch();
+
+		/*
+		 * If we can't find a secret, then add one to the table.
+		 */
+		if ( !$Secret = $User->Get ( 'Secret' ) ) {
+			$User->Set ( 'Secret', md5(rand()) );
+			$User->Save();
+			$Secret = $User->Get ( 'Secret' );
+		}
+
+		return ( $Secret );
+	}
+
+	private function _Stamp ( $pTime = null ) {
+
+		// YYYY-MM-DDTHH:MM:SSZ
+		if ( !$pTime ) 
+			$pTime = mktime();
+		else
+			if ( !$pTime = strtotime($pTime))  return ( false );
+
+		$return = gmdate("Y- m-d\TH:i:s\Z", $pTime);
+
+		return ( $return );
+	}
+
+	private function _Token ( $pIdentity, $pDestination ) {
+
+		list ( $Username, $Domain ) = explode ( '@', $pIdentity );
+
+		if ( !$Domain ) $Domain = ASD_DOMAIN;
+
+		echo $Username, '<br />';
+		echo $Domain, '<br />';
+
+		if ( $Domain == ASD_DOMAIN ) {
+			// First Party Token
+			$Secret = $this->_Secret ( $Username );
+			$Expiration = $this->_Stamp();
+			$String = $pIdentity . $pDestination . $Expiration;
+			$Token1P =  hash_hmac ( 'sha512', $String, $Secret );
+			echo $String, "<br />";
+			echo $Secret, "<br />";
+			echo $Token1P, "<br />";
+
+			// Store the first party token
+		} else {
+			// Third Party Token
+		}
+
+	}
+
+	/*
+     * Get the stored entry point of a node.
+     *
+     */
+	public function GetNodeEntryPoint ( $pDomain ) {
+
+		$Model = new cModel ( 'NetworkNodes' );
+
+		// Retrieve a record updated in the past 24 hours
+		$ago = strtotime ( "24 hours ago" );
+		$ago = date("Y-m-d H:i:s", $ago);
+		$Model->Retrieve ( array ( 'Domain' => $pDomain, 'Updated' => '>>' . $ago ) );
+
+		// Exit false if no record is found.
+		if ( $Model->Get ( 'Total' ) == 0 ) return ( false );
+
+		$Model->Fetch();
+		$Entry = $Model->Get ( 'Entry' );
+
+		return ( $Entry );
+	}
+
+	/*
+     * Get the stored available protocols of a node.
+     *
+     */
+	public function GetNodeProtocols ( $pDomain ) {
+
+		$Model = new cModel ( 'NetworkNodes' );
+
+		// Retrieve a record updated in the past 24 hours
+		$ago = strtotime ( "24 hours ago" );
+		$ago = date("Y-m-d H:i:s", $ago);
+		$Model->Retrieve ( array ( 'Domain' => $pDomain, 'Updated' => '>>' . $ago ) );
+
+		// Exit false if no record is found.
+		if ( $Model->Get ( 'Total' ) == 0 ) return ( false );
+
+		$Model->Fetch();
+		$Protocols = explode ( ' ', $Model->Get ( 'Protocols' ) );
+
+		$Protocols = array_flip ( $Protocols );
+
+		return ( $Protocols );
+	}
+
+	public function UpdateNetworkNode ( $pDomain, $pEntryPoint, $pVersion ) {
+		$Model = new cModel ( 'NetworkNodes' );
+		$Model->Retrieve ( array ( 'Domain' => $pDomain ) );
+
+		$Model->Fetch();
+
+		$Model->Set ( 'Domain', $pDomain );
+		$Model->Set ( 'Entry', $pEntryPoint );
+		$Model->Set ( 'Version', $pVersion );
+		$Model->Set ( 'Updated', NOW() );
+		$Model->Set ( 'Contacted', NOW() );
+		$Model->Save();
+
+		echo $Model->Get ( 'Query' ); exit;
+
+		echo $pDomain, "<br />";
+		echo $pEntryPoint, "<br />";
+exit;
 	}
 }
