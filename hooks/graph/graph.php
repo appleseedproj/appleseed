@@ -36,7 +36,6 @@ class cGraphHook extends cHook {
 		require_once ( ASD_PATH . 'hooks/graph/libraries/signatures.php' );
 
 		$this->_Graph = new cGraphApi;
-		$this->_Signatures = new cGraphApiSignatures;
 
 		$this->_Graph->SetCallback ( 'GetNodeEntryPoint', array ( $this, 'GetNodeEntryPoint' ) );
 		$this->_Graph->SetCallback ( 'UpdateNetworkNode', array ( $this, 'UpdateNetworkNode' ) );
