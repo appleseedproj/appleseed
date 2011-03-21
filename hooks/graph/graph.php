@@ -33,24 +33,12 @@ class cGraphHook extends cHook {
 		define ( "GRAPHAPI", true );
 
 		require_once ( ASD_PATH . 'hooks/graph/libraries/graph.php' );
-		require_once ( ASD_PATH . 'hooks/graph/libraries/signatures.php' );
 
 		$this->_Graph = new cGraphApi;
 
 		$this->_Graph->SetCallback ( 'GetNodeEntryPoint', array ( $this, 'GetNodeEntryPoint' ) );
 		$this->_Graph->SetCallback ( 'UpdateNetworkNode', array ( $this, 'UpdateNetworkNode' ) );
 		$this->_Graph->SetCallback ( 'GetNodeProtocols', array ( $this, 'GetNodeProtocols' ) );
-
-		if ( ASD_DOMAIN == 'enterprise.appleseed' ) {
-			$result = $this->_Graph->Communicate ( 'fellowship.appleseed', 'GET', '/user/token/', 'admin@enterprise.appleseed' );
-			echo "<pre>";
-			echo "Result:\n";
-			print_r ( $result );
-			exit;
-		}
-
-		//echo $this->_Token ( 'mchisari', 'fellowship.appleseed' );
-		//exit;
 
 		parent::__construct();
 	}
