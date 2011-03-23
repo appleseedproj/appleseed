@@ -244,7 +244,7 @@ class cComponents extends cBase {
 		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
 
 		foreach ( $queue['component'] as $c => $component ) {
-			if ( preg_match ( '/head.system.(\d+).(\w+)/', $component->Parameters ) ) {
+			if ( preg_match ( '/system.head.(\d+).(\w+)/', $component->Parameters ) ) {
 				if ( !$pView ) $pView = $pComponent;
 
 				$clients = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetPath();
@@ -277,7 +277,7 @@ class cComponents extends cBase {
 		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
 
 		foreach ( $queue['component'] as $c => $component ) {
-			if ( preg_match ( '/head.system.(\d+).(\w+)/', $component->Parameters ) ) {
+			if ( preg_match ( '/system.head.(\d+).(\w+)/', $component->Parameters ) ) {
 				if ( !$pView ) $pView = $pComponent;
 
 				$themes = $this->GetSys ( 'Theme' )->Get ( 'Config' )->GetPath();
