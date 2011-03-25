@@ -54,7 +54,7 @@ class cSystemHeadController extends cController {
 		 * Load all files in the init/ directory.
 		 */
 		foreach ( $clients as $c => $client ) {
-			$directory = ASD_PATH . 'client/' . $client . '/init/';
+			$directory = ASD_PATH . 'clients/' . $client . '/init/';
 			if ( !is_dir ( $directory ) ) continue;
 
 			$Storage = Wob::_('Storage');
@@ -67,7 +67,7 @@ class cSystemHeadController extends cController {
 		}
 
 		foreach ( $inits as $file => $client ) {
-			$initPath = 'http://' . ASD_DOMAIN . '/client/' . $client . '/init/'. $file;
+			$initPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/init/'. $file;
 
 			$finalPaths[] = $initPath;
 		}
@@ -77,8 +77,8 @@ class cSystemHeadController extends cController {
 		 */
 		$foundationPath = null;
 		foreach ( $clients as $c => $client ) {
-			$foundationPath = 'http://' . ASD_DOMAIN . '/client/' . $client . '/foundations/' . $foundation . '.js';
-			$foundationLocation = ASD_PATH . 'client/' . $client . '/foundations/' .  $foundation . '.js';
+			$foundationPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/foundations/' . $foundation . '.js';
+			$foundationLocation = ASD_PATH . 'clients/' . $client . '/foundations/' .  $foundation . '.js';
 
 			if ( !file_exists ( $foundationLocation ) ) continue;
 

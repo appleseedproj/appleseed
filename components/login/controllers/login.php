@@ -173,7 +173,7 @@ class cLoginLoginController extends cController {
 		$password = $this->GetSys ( "Request" )->Get ( "Pass" );
 		$remember = $this->GetSys ( "Request" )->Get ( "Remember" );
 		
-		$loginModel = new cModel ( "userAuthorization" );
+		$loginModel = new cModel ( "UserAccounts" );
 		
 		$criteria = array ( "Username" => $username );
 		
@@ -187,7 +187,7 @@ class cLoginLoginController extends cController {
 		
 		if ( $loginModel->Get ( "Pass" ) == $newpass ) {
 			
-			$this->_SetLogin ( $loginModel->Get ( "uID"), $remember );
+			$this->_SetLogin ( $loginModel->Get ( 'Account_PK' ), $remember );
 			
 			if ( $redirect = $this->GetSys ( "Request" )->Get ( "Redirect" ) ) {
 				$redirect = base64_decode ( $redirect );
@@ -224,10 +224,10 @@ class cLoginLoginController extends cController {
 	
 	private function _SetLogin ( $pUserID, $pRemember = false ) {
 		
-		$sessionModel = new cModel ( "userSessions" );
+		$sessionModel = new cModel ( "UserSessions" );
 		
 		// Delete current session id's.
-		$criteria = array ( "userAuth_uID" => $pUserID );
+		$criteria = array ( "Account_FK" => $pUserID );
 		
 		$sessionModel->Delete ( $criteria );
 		
@@ -235,7 +235,8 @@ class cLoginLoginController extends cController {
         $identifier = md5(uniqid(rand(), true));
         
 		// Set the session database information.
-		$sessionModel->Set ( "userAuth_uID", $pUserID );
+		$sessionModel->Protect ( "Session_PK" );
+		$sessionModel->Set ( "Account_FK", $pUserID );
 		$sessionModel->Set ( "Identifier", $identifier );
 		$sessionModel->Set ( "Stamp", NOW() );
 		$sessionModel->Set ( "Address", $_SERVER['REMOTE_ADDR'] );
@@ -248,14 +249,14 @@ class cLoginLoginController extends cController {
 			$time = time()+60*60*24*365;
 		else
 			$time = 0;
-		
+
 		// Set the cookie
       	if ( !setcookie ("gLOGINSESSION", $identifier, $time, '/') ) {
       		// @todo Set error that we couldn't set the cookie.
       		
       		return ( false );
-      	};
-		
+      	}
+
 		// Update the userInformation table
 		$infoModel = new cModel ( "userInformation" );
 		
@@ -335,14 +336,14 @@ class cLoginLoginController extends cController {
 		
 		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $password );
 		
-		$userAuth = new cModel ( 'userAuthorization' );
-		$userProfile = new cModel ( 'userProfile' );
+		$UserAccounts = new cModel ( 'UserAccounts' );
+		$UserInformation = new cModel ( 'UserInformation' );
 		
 		// Check for existing username.
-		$userAuth->Retrieve ( array ( "Username" => $username ) );
-		$userAuth->Fetch();
+		$UserAccounts->Retrieve ( array ( "Username" => $username ) );
+		$UserAccounts->Fetch();
 		
-		if ( $userAuth->Get ( "Total" ) > 0 ) {
+		if ( $UserAccounts->Get ( "Total" ) > 0 ) {
 			$session->Set ( "Message", "Username Is Taken" );
 			$session->Set ( "Error", 1 );
 			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
@@ -356,10 +357,10 @@ class cLoginLoginController extends cController {
 		}
 		
 		// Check for existing email.
-		$userProfile->Retrieve ( array ( "Email" => $email ) );
-		$userProfile->Fetch();
+		$UserAccounts->Retrieve ( array ( "Email" => $email ) );
+		$UserAccounts->Fetch();
 		
-		if ( $userProfile->Get ( "Total" ) > 0 ) {
+		if ( $UserAccounts->Get ( "Total" ) > 0 ) {
 			$session->Set ( "Message", "Email address in use" );
 			$session->Set ( "Error", 1 );
 			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
@@ -372,13 +373,13 @@ class cLoginLoginController extends cController {
 			return ( true );
 		}
 		
-		$userAuth->Set ( 'Username', $username);	
-		$userAuth->Set ( 'Pass', $newpass);	
-		$userAuth->Set ( 'Verification', 0);	
-		$userAuth->Set ( 'Standing', 0);	
-		$userAuth->Set ( 'Secret', md5(rand()) );  // 32-bit user secret.
+		$UserAccounts->Set ( 'Username', $username);	
+		$UserAccounts->Set ( 'Pass', $newpass);	
+		$UserAccounts->Set ( 'Verification', 0);	
+		$UserAccounts->Set ( 'Standing', 0);	
+		$UserAccounts->Set ( 'Secret', md5(rand()) );  // 32-bit user secret.
 		
-		if ( !$userAuth->Save() ) {
+		if ( !$UserAccounts->Save() ) {
 			$session->Set ( "Message", "An error occurred" );
 			$session->Set ( "Error", 1 );
 			if ( !$this->Login = $this->GetView ( "join" ) ) return ( false );
@@ -391,11 +392,10 @@ class cLoginLoginController extends cController {
 			return ( true );
 		}
 		
-		$userProfile->Set ( "userAuth_uID", $userAuth->Get ( "uID" ) );
-		$userProfile->Set ( "Fullname", $fullname );
-		$userProfile->Set ( "Email", $email );
+		$userInformation->Set ( "Account_FK", $UserAccounts->Get ( "Account_PK" ) );
+		$userInformation->Set ( "Fullname", $fullname );
 		
-		$userProfile->Save();
+		$userInformation->Save();
 		
 		if ( !$this->Login = $this->GetView ( 'success' ) ) return ( false );
 		
@@ -409,8 +409,8 @@ class cLoginLoginController extends cController {
 			$userInvites->Save( array ( "Recipient" => $email, "Value" => $invite ) );
 			
 			// Create a friend relationship 
-			$sender = $userInvites->Get ( 'userAuth_uID' );
-			$recipient = $userProfile->Get ( 'userAuth_uID' );
+			$sender = $userInvites->Get ( 'Account_FK' );
+			$recipient = $userInformation->Get ( 'Account_FK' );
 			$data = array ( 'sender' => $sender, 'recipient' => $recipient);
 			$this->Talk ( 'Friends', 'CreateRelationship', $data );
 			
@@ -434,27 +434,27 @@ class cLoginLoginController extends cController {
 	function _EmailAccepted ( $pSenderId, $pRecipientId ) {
 		
 		// @todo Move retrieval of local user info into Talk function
-		$userAuth = new cModel ( 'userAuthorization' );
-		$userAuth->Structure();
+		$UserAccounts = new cModel ( 'UserAccounts' );
+		$UserAccounts->Structure();
 		
-		$userAuth->Retrieve ( array ( 'uID' => $pSenderId ) );
-		$userAuth->Fetch();
+		$UserAccounts->Retrieve ( array ( 'Account_PK' => $pSenderId ) );
+		$UserAccounts->Fetch();
 		
-		$Sender = $userAuth->Get ( 'Username' ) . '@' . ASD_DOMAIN;
+		$Sender = $UserAccounts->Get ( 'Username' ) . '@' . ASD_DOMAIN;
 		
-		$userAuth->Retrieve ( array ( 'uID' => $pRecipientId ) );
-		$userAuth->Fetch();
+		$UserAccounts->Retrieve ( array ( 'Account_PK' => $pRecipientId ) );
+		$UserAccounts->Fetch();
 		
-		$Recipient = $userAuth->Get ( 'Username' ) . '@' . ASD_DOMAIN;
+		$Recipient = $UserAccounts->Get ( 'Username' ) . '@' . ASD_DOMAIN;
 		
-		$userProfile = new cModel ( 'userProfile' );
-		$userProfile->Structure();
+		$UserInformation = new cModel ( 'UserInformation' );
+		$UserInformation->Structure();
 		
-		$userProfile->Retrieve ( array ( 'userAuth_uID' => $pRecipientId ) );
-		$userProfile->Fetch();
+		$UserInformation->Retrieve ( array ( 'Account_FK' => $pRecipientId ) );
+		$UserInformation->Fetch();
 		
-		$Email = $userProfile->Get ( 'Email' );
-		$Recipient = $userAuth->Get ( 'Username' ) . '@' . ASD_DOMAIN;
+		$Email = $UserAccounts->Get ( 'Email' );
+		$Recipient = $UserAccounts->Get ( 'Username' ) . '@' . ASD_DOMAIN;
 		
 		$data = array ( 'request' => $Sender, 'source' => ASD_DOMAIN, 'account' => $Recipient );
 		$SenderInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
@@ -496,24 +496,24 @@ class cLoginLoginController extends cController {
 		
 		$newpassword = $this->_GeneratePassword ('##XX##XX#XX!');
       
-		$userAuth = new cModel ( 'userAuthorization' );
+		$UserAccounts = new cModel ( 'UserAccounts' );
 		
-		$userAuth->Retrieve ( array ( "Username" => $username ) );
-		if (! $userAuth->Fetch() ) {
+		$UserAccounts->Retrieve ( array ( "Username" => $username ) );
+		if (! $UserAccounts->Fetch() ) {
 			$this->GetSys ( "Session" )->Context ( "login.login.(\d+).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", __( "Username Not Found", array ( "username" => $username ) ) );
 			$this->GetSys ( "Session" )->Set ( "Error", 1 );
 			return ( $this->Display ( $pView, $pData ) );
 		}
 		
-		$userProfile = new cModel ( 'userProfile' );
-		$userProfile->Retrieve ( $userAuth->Get ( "uID" ) );
-		$userProfile->Fetch();
+		$UserInformation = new cModel ( 'UserInformation' );
+		$UserInformation->Retrieve ( $UserAccounts->Get ( "Account_PK" ) );
+		$UserInformation->Fetch();
       
 		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $newpassword );
 		
-		$to = $userProfile->Get ( "Email" ); 
-		$toName = $userProfile->Get ( "Fullname" );
+		$to = $UserAccounts->Get ( "Email" ); 
+		$toName = $UserInformation->Get ( "Fullname" );
 
 		if ( !$this->ForgotEmail( $to, $username, $newpassword ) ) {
 			// Couldn't send out the message, so error without resetting the pw.
@@ -522,8 +522,8 @@ class cLoginLoginController extends cController {
 			$this->GetSys ( "Session" )->Set ( "Error", 1 );
 		} else { 
 			// Reset the pw.
-			$userAuth->Set ( "Pass", $newpass );
-			$userAuth->Save();
+			$UserAccounts->Set ( "Pass", $newpass );
+			$UserAccounts->Save();
 			$this->GetSys ( "Session" )->Context ( "login.login.(\d+).login" );
 			$this->GetSys ( "Session" )->Set ( "Message", __( "Password Has Been Reset", array ( "username" => $username ) ) );
 			$this->GetSys ( "Session" )->Set ( "Error", 0 );
