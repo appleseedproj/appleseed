@@ -175,7 +175,7 @@
       $this->Initialize ($gDOMAIN);
       
       $authTokens = $this->TablePrefix . "authTokens";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $userProfile = $this->TablePrefix . "userProfile";
       
       // Check our local database, see if this token exists.
@@ -217,9 +217,9 @@
           // Load and send back the fullname.
         
           $sql_statement = "SELECT $userProfile.Fullname,$userProfile.Alias
-                            FROM   $userProfile,$userAuth
-                            WHERE  $userAuth.uID = $userProfile.userAuth_uID
-                            AND    $userAuth.Username = '%s'
+                            FROM   $userProfile,$UserAccounts
+                            WHERE  $UserAccounts.Account_PK = $userProfile.Account_FK
+                            AND    $UserAccounts.Username = '%s'
           ";
           
           $sql_statement = sprintf ($sql_statement,
@@ -244,7 +244,7 @@
     	
       global $gAPPLESEEDVERSION;
      
-      $userAuth = $this->TablePrefix . 'userAuthorization'; 
+      $UserAccounts = $this->TablePrefix . 'UserAccounts'; 
       $authTokens = $this->TablePrefix . 'authTokens'; 
       
       // First, check our remote cache database, see if this token exists.
@@ -370,18 +370,18 @@
         return ($return);
       } // if
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $friendInfo = $this->TablePrefix . "FriendInformation";
       
       $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       // Select the User ID
       $sql_statement = "
-        SELECT $userAuth.uID, $userProfile.Fullname, $userProfile.Alias
-        FROM   $userAuth,$userProfile
-        WHERE  $userAuth.Username = '%s'
-        AND    $userProfile.userAuth_uID = $userAuth.uID
+        SELECT $UserAccounts.Account_PK, $userProfile.Fullname, $userProfile.Alias
+        FROM   $UserAccounts,$userProfile
+        WHERE  $UserAccounts.Username = '%s'
+        AND    $userProfile.Account_FK = $UserAccounts.Account_PK
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -393,19 +393,19 @@
       global $gFULLNAME;
       $gFULLNAME = $result['Fullname'];
       if ($result['Alias']) $gFULLNAME = $result['Alias'];
-      $uID = $result['uID'];
+      $Account_PK = $result['Account_PK'];
       mysql_free_result ($sql_result);
       
       // Delete any current records.
       $sql_statement = "
         DELETE FROM $friendInfo
-        WHERE userAuth_uID = %s
+        WHERE Account_FK = %s
         AND Username = '%s'
         AND Domain = '%s'
       ";      
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($uID),
+                                mysql_real_escape_string ($Account_PK),
                                 mysql_real_escape_string ($gUSERNAME),
                                 mysql_real_escape_string ($gDOMAIN)
                                 );
@@ -417,11 +417,11 @@
       $sql_statement = "
         SELECT MAX(sID)
         FROM   $friendInfo
-        WHERE    userAuth_uID = %s 
+        WHERE    Account_FK = %s 
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($uID)
+                                mysql_real_escape_string ($Account_PK)
                                 );
       
       $sql_result = mysql_query ($sql_statement);
@@ -436,13 +436,13 @@
       // Insert the friend record.
       $sql_statement = "
          INSERT INTO $friendInfo
-         (userAuth_uID, Username, Domain, Verification, Created)
+         (Account_FK, Username, Domain, Verification, Created)
          VALUES
          (%s, '%s', '%s', 2, NOW())
       ";
       
       $sql_statement = sprintf ($sql_statement,
-                                mysql_real_escape_string ($uID),
+                                mysql_real_escape_string ($Account_PK),
                                 mysql_real_escape_string ($this->ReturnUsername),
                                 mysql_real_escape_string ($gDOMAIN)
                                 );
@@ -459,9 +459,9 @@
       
       $sql_statement = "
         SELECT Fullname, Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userProfile,$UserAccounts
+        WHERE  $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -644,19 +644,19 @@
         return ($return);
       } // if
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Delete the friend record.
       
       $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       $sql_statement = "
         DELETE $friendInfo
-        FROM   $friendInfo,$userAuth
-        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $friendInfo,$UserAccounts
+        WHERE  $friendInfo.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
         AND    $friendInfo.Username = '%s'
         AND    $friendInfo.Domain = '%s'
       ";
@@ -676,9 +676,9 @@
       
       $sql_statement = "
         SELECT Fullname,Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userProfile,$UserAccounts
+        WHERE  $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -717,19 +717,19 @@
         return ($return);
       } // if
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Delete the friend record.
       
       $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       $sql_statement = "
         DELETE $friendInfo
-        FROM   $friendInfo,$userAuth
-        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $friendInfo,$UserAccounts
+        WHERE  $friendInfo.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
         AND    $friendInfo.Username = '%s'
         AND    $friendInfo.Domain = '%s'
       ";
@@ -749,9 +749,9 @@
       
       $sql_statement = "
         SELECT Fullname,Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userProfile,$UserAccounts
+        WHERE  $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -791,19 +791,19 @@
       } // if
       
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Delete the friend record.
       
       $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       $sql_statement = "
         DELETE $friendInfo
-        FROM   $friendInfo,$userAuth
-        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $friendInfo,$UserAccounts
+        WHERE  $friendInfo.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
         AND    $friendInfo.Username = '%s'
         AND    $friendInfo.Domain = '%s'
       ";
@@ -823,9 +823,9 @@
       
       $sql_statement = "
         SELECT Fullname,Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userProfile,$UserAccounts
+        WHERE  $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -863,19 +863,19 @@
         return ($return);
       } // if
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $friendInfo = $this->TablePrefix . "FriendInformation";
       
       // Update the friend record.
       
       $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       $sql_statement = "
-        UPDATE $friendInfo,$userAuth
+        UPDATE $friendInfo,$UserAccounts
         SET    $friendInfo.Verification = 1
-        WHERE  $friendInfo.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        WHERE  $friendInfo.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
         AND    $friendInfo.Username = '%s'
         AND    $friendInfo.Domain = '%s'
       ";
@@ -896,9 +896,9 @@
       
       $sql_statement = "
         SELECT Fullname,Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userProfile,$UserAccounts
+        WHERE  $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -937,14 +937,14 @@
         return ($return);
       } // if
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $friendInfo = $this->TablePrefix . "FriendInformation";
       
       $sql_statement = "
         SELECT $friendInfo.Verification AS Verification
-        FROM $userAuth, $friendInfo 
-        WHERE $friendInfo.userAuth_uID = $userAuth.uID 
-        AND $userAuth.Username='%s'
+        FROM $UserAccounts, $friendInfo 
+        WHERE $friendInfo.Account_FK = $UserAccounts.Account_PK 
+        AND $UserAccounts.Username='%s'
         AND $friendInfo.Username='%s' 
         AND $friendInfo.Domain='%s';
       ";
@@ -1013,13 +1013,13 @@
       
       $userProfile = $this->TablePrefix . "userProfile";
       $userInfo = $this->TablePrefix . "userInformation";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       $sql_statement = "
         SELECT Fullname, Alias
-        FROM   $userProfile,$userAuth
-        WHERE  $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userProfile,$UserAccounts
+        WHERE  $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -1034,9 +1034,9 @@
       // Load and send back the online status.
       $sql_statement = "
         SELECT OnlineStamp
-        FROM   $userInfo,$userAuth
-        WHERE  $userInfo.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userInfo,$UserAccounts
+        WHERE  $userInfo.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -1085,16 +1085,16 @@
       
       $authVerification = $this->TablePrefix . "authVerification";
       $userProfile = $this->TablePrefix . "userProfile";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       
       // Check our local database, see if this token exists.
       $sql_statement = "
         SELECT $authVerification.*,$userProfile.Fullname,$userProfile.Alias
-        FROM   $authVerification, $userProfile,$userAuth
+        FROM   $authVerification, $userProfile,$UserAccounts
         WHERE  $authVerification.Username = '%s'
         AND    $authVerification.Domain = '%s'
-        AND    $userProfile.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        AND    $userProfile.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
 		AND    Active = '1';
       ";
       
@@ -1168,7 +1168,7 @@
       } // if
       
       $userIcons = $this->TablePrefix . "userIcons";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $finaldata = null;
       
       $this->XML->Load ("legacy/code/include/data/xml/icon_list/top.xml");
@@ -1177,9 +1177,9 @@
       // Check our local database, see if this token exists.
       $sql_statement = "
         SELECT $userIcons.Filename,$userIcons.Keyword
-        FROM   $userIcons,$userAuth
-        WHERE  $userIcons.userAuth_uID = $userAuth.uID
-        AND    $userAuth.Username = '%s'
+        FROM   $userIcons,$UserAccounts
+        WHERE  $userIcons.Account_FK = $UserAccounts.Account_PK
+        AND    $UserAccounts.Username = '%s'
       ";
       
       $sql_statement = sprintf ($sql_statement,
@@ -1219,7 +1219,7 @@
       
       $messageStore = $this->TablePrefix . "messageStore";
       $messageRecipient = $this->TablePrefix . "messageRecipient";
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $userProfile = $this->TablePrefix . "userProfile";
       
       // Select the message.
@@ -1233,7 +1233,7 @@
                $userProfile.Alias AS Alias
         FROM   $messageStore,$userProfile,$messageRecipient
         WHERE  $messageRecipient.Username = '%s'
-        AND    $userProfile.userAuth_uID = $messageStore.userAuth_uID
+        AND    $userProfile.Account_FK = $messageStore.Account_FK
         AND    $messageRecipient.Identifier = '%s'
         AND    $messageRecipient.messageStore_tID = $messageStore.tID;
       ";
@@ -1309,18 +1309,18 @@
       
       global $gSUCCESS, $gFULLNAME;
       
-      $userAuth = $this->TablePrefix . "userAuthorization";
+      $UserAccounts = $this->TablePrefix . "UserAccounts";
       $userProfile = $this->TablePrefix . "userProfile";
       
       // First check if the user exists.
       $sql_statement = "
-        SELECT $userAuth.uID as uID,
+        SELECT $UserAccounts.Account_PK as Account_PK,
                $userProfile.Email as Email,
                $userProfile.Fullname as Fullname,
                $userProfile.Alias as Alias
-        FROM   $userAuth,$userProfile
-        WHERE  $userAuth.Username = '%s'
-        AND    $userProfile.userAuth_uID = $userAuth.uID
+        FROM   $UserAccounts,$userProfile
+        WHERE  $UserAccounts.Username = '%s'
+        AND    $userProfile.Account_FK = $UserAccounts.Account_PK
       ";
       $sql_statement = sprintf ($sql_statement,
                                 mysql_real_escape_string ($gRECIPIENT));
@@ -1337,7 +1337,7 @@
       } // if
       
       $result = mysql_fetch_assoc ($sql_result);
-      $uid = $result['uID'];
+      $uid = $result['Account_PK'];
       $fullname = $result['Fullname'];
       $email = $result['Email'];
       $gFULLNAME = $fullname;
@@ -1350,7 +1350,7 @@
       // Insert notification into database.
       $sql_statement = "
         INSERT INTO $messageNotify 
-        (userAuth_uID, Sender_Username, Sender_Domain, Identifier, Subject, Stamp, Standing, Location)
+        (Account_FK, Sender_Username, Sender_Domain, Identifier, Subject, Stamp, Standing, Location)
         VALUES
         ('%s', '%s', '%s', '%s', '%s', NOW(), 1, 1)
       ";

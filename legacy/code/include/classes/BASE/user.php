@@ -38,7 +38,7 @@
   // User Authorization class.
   class cOLDUSERAUTHORIZATION extends cBASEDATACLASS {
 
-    var $uID, $Username, $Pass, $Invite, $Verification, $Standing;
+    var $Account_PK, $Username, $Pass, $Invite, $Verification, $Standing;
     var $userSession, $userProfile, $userAccess, $userAnswers;
     var $userInformation;
     var $Cascade;
@@ -46,8 +46,8 @@
     function cOLDUSERAUTHORIZATION ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
-      $this->TableName = $gTABLEPREFIX . 'userAuthorization';
-      $this->uID = '';
+      $this->TableName = $gTABLEPREFIX . 'UserAccounts';
+      $this->Account_PK = '';
       $this->Username = '';
       $this->Pass = '';
       $this->Invite = '';
@@ -57,13 +57,13 @@
       $this->Message = '';
       $this->Result = '';
       $this->FieldNames = '';
-      $this->PrimaryKey = 'uID';
+      $this->PrimaryKey = 'Account_PK';
       $this->ForeignKey = '';
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
 
-        'uID'            => array ('max'        => '',
+        'Account_PK'            => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -161,7 +161,7 @@
     	
         $un = mysql_real_escape_string (strtolower ($this->Username));
         $pw = $this->Pass;
-        $userAuth = $gTABLEPREFIX . 'userAuthorization';
+        $UserAccounts = $gTABLEPREFIX . 'UserAccounts';
         
         $salt = substr(md5(uniqid(rand(), true)), 0, 16);
         
@@ -173,7 +173,7 @@
 			UPDATE %s SET Pass = '%s' WHERE Username = '%s'
 		";
 		
-		$query = sprintf ($query, $userAuth, $newpass, $un );
+		$query = sprintf ($query, $UserAccounts, $newpass, $un );
 		
 		$result = $this->Query ( $query );
 		
@@ -186,13 +186,13 @@
     	global $gTABLEPREFIX;
     	
         $un = mysql_real_escape_string (strtolower ($this->Username));
-        $userAuth = $gTABLEPREFIX . 'userAuthorization';
+        $UserAccounts = $gTABLEPREFIX . 'UserAccounts';
     	
     	$query = "
 			SELECT SUBSTR(Pass FROM 1 FOR 16) AS Salt FROM %s WHERE Username = '%s';
 		";
 		
-		$query = sprintf ($query, $userAuth, $un );
+		$query = sprintf ($query, $UserAccounts, $un );
 		
 		$result = $this->Query ( $query );
 		
@@ -216,7 +216,7 @@
       if (!$pLOCATION) $pLOCATION = $_SERVER['REQUEST_URI'];
 
       // Load security settings from userAccess.
-      $securitydefs = array ("userAuth_uID" => $this->uID,
+      $securitydefs = array ("Account_FK" => $this->Account_PK,
                              "Location"     => $pLOCATION);
 
       $this->userAccess->SelectByMultiple ($securitydefs);
@@ -233,7 +233,7 @@
         // Use recursive call of this function.
         $classname = get_class ($this);
         $parentAccess = new $classname;
-        $parentAccess->Select ('uID', $this->uID);
+        $parentAccess->Select ('Account_PK', $this->Account_PK);
         $parentAccess->FetchArray ();
         $parentAccess->Access ($this->userAccess->r, 
                                $this->userAccess->w,
@@ -267,13 +267,13 @@
   // User sessions class.
   class cUSERSESSIONS extends cBASEDATACLASS {
 
-    var $userAuth_uID, $Identifier, $Stamp, $Address, $Host;
+    var $Account_FK, $Identifier, $Stamp, $Address, $Host;
  
     function cUSERSESSIONS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
-      $this->TableName = $gTABLEPREFIX . 'userSessions';
-      $this->userAuth_uID = '';
+      $this->TableName = $gTABLEPREFIX . 'UserSessions';
+      $this->Account_FK = '';
       $this->Identifier = '';
       $this->Stamp = '';
       $this->Address = '';
@@ -281,8 +281,8 @@
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
-      $this->PrimaryKey = 'userAuth_uID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->PrimaryKey = 'Account_FK';
+      $this->ForeignKey = 'Account_FK';
  
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;
@@ -290,7 +290,7 @@
       // Create extended field definitions
       $this->FieldDefinitions = array (
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -411,14 +411,14 @@
   // User access class.
   class cUSERACCESS extends cBASEDATACLASS {
 
-    var $tID, $userAuth_uID, $Location, $r, $w, $a, $e, $Inheritance;
+    var $tID, $Account_FK, $Location, $r, $w, $a, $e, $Inheritance;
  
     function cUSERACCESS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userAccess';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Location = '';
       $this->r = '';
       $this->w = '';
@@ -430,7 +430,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
@@ -444,7 +444,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -521,14 +521,14 @@
   // User settings class.
   class cUSERSETTINGS extends cBASEDATACLASS {
 
-    var $tID, $userAuth_uID, $Identifier, $Value, $SettingsCache;
+    var $tID, $Account_FK, $Identifier, $Value, $SettingsCache;
  
     function cUSERSETTINGS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userSettings';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Identifier = '';
       $this->Value = '';
       $this->SettingsCache = array ('DefaultTheme' => NULL);
@@ -536,7 +536,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
@@ -550,7 +550,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -590,7 +590,7 @@
     function Load () {
       
       // Select current users settings.
-      $this->Select ("userAuth_uID", $this->userAuth_uID);
+      $this->Select ("Account_FK", $this->Account_FK);
 
       // Loop through results.
       while ($this->FetchArray ()) {
@@ -611,7 +611,7 @@
       } else {
        
         // Load directly from the database.
-        $criteria = array ("userAuth_uID" => $this->userAuth_uID,
+        $criteria = array ("Account_FK" => $this->Account_FK,
                            "Identifier"   => $pIDENTIFIER);
         $this->SelectByMultiple ($criteria);
         $this->FetchArray ();
@@ -635,9 +635,9 @@
     function Save ($pIDENTIFIER, $pVALUE) {
 
       // Check if user ID is set.
-      if (!$this->userAuth_uID) return (FALSE);
+      if (!$this->Account_FK) return (FALSE);
 
-      $criteria = array ("userAuth_uID" => $this->userAuth_uID,
+      $criteria = array ("Account_FK" => $this->Account_FK,
                          "Identifier"   => $pIDENTIFIER);
       $this->SelectByMultiple ($criteria);
       $this->FetchArray ();

@@ -340,7 +340,7 @@ class cXML extends cMarkup {
 	 *
 	 * @access  public
 	 */
-	function __construct() {       
+	function __construct() {
 		parent::__construct();
 	}
 

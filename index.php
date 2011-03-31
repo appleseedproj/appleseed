@@ -1027,9 +1027,9 @@ class cINSTALL {
 		$sha512 = hash ("sha512", $salt . $pADMINPASS);
 		$newpass = $salt . $sha512;
 
-		$tablename = $gPREFIX . 'userAuthorization';
+		$tablename = $gPREFIX . 'UserAccounts';
 
-		$reset_query = "UPDATE %s SET Pass = '%s', Username='%s' WHERE uID = 1";
+		$reset_query = "UPDATE %s SET Pass = '%s', Username='%s' WHERE Account_PK = 1";
 
 		$sql = sprintf ( $reset_query, $tablename, $newpass, $pADMINUSER );
 
@@ -1043,9 +1043,9 @@ class cINSTALL {
     global $gDATABASE, $gPREFIX;
     global $MysqlLink;
 
-	$tablename = $gPREFIX . 'userProfile';
+	$tablename = $gPREFIX . 'UserAccounts';
 
-	$reset_query = "UPDATE %s SET Email = '%s' WHERE userAuth_uID = 1";
+	$reset_query = "UPDATE %s SET Email = '%s' WHERE Account_FK = 1";
 
 	$sql = sprintf ( $reset_query, $tablename, $pADMINEMAIL );
 	

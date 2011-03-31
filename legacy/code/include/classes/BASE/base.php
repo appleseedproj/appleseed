@@ -775,15 +775,15 @@
         return (-1);
       } // if
 
-      // Grab the uID of the recently created userAuthorization record.
+      // Grab the Account_PK of the recently created UserAccounts record.
       $this->AutoIncremented();
 
-      $this->uID = $this->LastIncrement;
+      $this->Account_PK = $this->LastIncrement;
 
       if ( (is_array ($this->Cascade) ) and (isset ($this->Cascade) ) ) {
 
         foreach ($this->Cascade as $internal) {
-          $this->$internal->userAuth_uID = $this->uID;
+          $this->$internal->Account_FK = $this->Account_PK;
           foreach ($this->$internal->FieldNames as $fieldname) {
             // If the data is blank, skip over it to use the default database value.
             if ($this->$internal->$fieldname == '') $this->$internal->$fieldname = SQL_SKIP;
@@ -881,7 +881,7 @@
         } // foreach
         
         $joinarray[] = "LEFT JOIN " .  $this->$cascadeclass->TableName . 
-                       " ON " . $this->$cascadeclass->TableName . ".userAuth_uID=$thistable.uID ";
+                       " ON " . $this->$cascadeclass->TableName . ".Account_FK=$thistable.Account_PK ";
       } // foreach
       
       $fields = join (", \n", $fieldarray);
@@ -894,7 +894,7 @@
           $where = "WHERE $thistable.$pFIELD = '$pVALUE'";
         } // if
       } else {
-        $where = "GROUP BY $thistable.uID";
+        $where = "GROUP BY $thistable.Account_PK";
       } // if
       
       $this->Statement = "
@@ -963,7 +963,7 @@
         } // foreach
         
         $joinarray[] = "LEFT JOIN " .  $this->$cascadeclass->TableName . 
-                       " ON " . $this->$cascadeclass->TableName . ".userAuth_uID=$thistable.uID ";
+                       " ON " . $this->$cascadeclass->TableName . ".Account_FK=$thistable.Account_PK ";
       } // foreach
       
       $fields = join (", \n", $fieldarray);
@@ -1145,7 +1145,7 @@
         } // foreach
         
         $joinarray[] = "LEFT JOIN " .  $this->$cascadeclass->TableName . 
-                       " ON " . $this->$cascadeclass->TableName . ".userAuth_uID=$thistable.uID ";
+                       " ON " . $this->$cascadeclass->TableName . ".Account_FK=$thistable.Account_PK ";
       } // foreach
       
       $fields = join (", \n", $fieldarray);
@@ -1356,7 +1356,7 @@
           } // if
         } // foreach
         // Synchronize the foreign key even if no values were found.
-        $this->$classname->userAuth_uID = $this->uID;
+        $this->$classname->Account_FK = $this->Account_PK;
       } // foreach
       
       return (TRUE);

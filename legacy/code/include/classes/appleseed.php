@@ -198,9 +198,9 @@
   
           $zLOCALUSER->userSession->Select ("Identifier", $gLOGINSESSION);
           $zLOCALUSER->userSession->FetchArray ();
-          $zLOCALUSER->uID = $zLOCALUSER->userSession->userAuth_uID;
+          $zLOCALUSER->Account_PK = $zLOCALUSER->userSession->Account_FK;
   
-          $zLOCALUSER->Select ("uID", $zLOCALUSER->uID);
+          $zLOCALUSER->Select ("Account_PK", $zLOCALUSER->Account_PK);
           if ($zLOCALUSER->CountResult() == 0) {
             // User is anonymous.
             $zAUTHUSER->Username = __("Anonymous");
@@ -215,10 +215,10 @@
             $zLOCALUSER->Access ();
             // Global variables
             $this->SetTag('AUTHUSERNAME', $zLOCALUSER->Username);
-            $this->SetTag('AUTHUSERID', $zLOCALUSER->uID);
+            $this->SetTag('AUTHUSERID', $zLOCALUSER->Account_PK);
             $this->SetTag('AUTHDOMAIN', $gSITEDOMAIN);
   
-            $zAUTHUSER->uID = $zLOCALUSER->uID;
+            $zAUTHUSER->Account_PK = $zLOCALUSER->Account_PK;
             $zAUTHUSER->Username = $zLOCALUSER->Username;
             $zAUTHUSER->Fullname = $zLOCALUSER->userProfile->GetAlias ();
             $zAUTHUSER->Domain = $gSITEDOMAIN;
@@ -301,10 +301,10 @@
         // Look up the focus user id from the database.
         $zFOCUSUSER->Select ('Username', $gFOCUSUSERNAME);
         $zFOCUSUSER->FetchArray ();
-        $zFOCUSUSER->userProfile->Select ('userAuth_uID', $zFOCUSUSER->uID);
+        $zFOCUSUSER->userProfile->Select ('Account_FK', $zFOCUSUSER->Account_PK);
         $zFOCUSUSER->userProfile->FetchArray ();
         $zFOCUSUSER->userSettings->Load ();
-        $gFOCUSUSERID = $zFOCUSUSER->uID;
+        $gFOCUSUSERID = $zFOCUSUSER->Account_PK;
         $gFOCUSFULLNAME = $zFOCUSUSER->userProfile->GetAlias ();
         $this->SetTag ('FOCUSFULLNAME', $gFOCUSFULLNAME);
       } // if
@@ -861,7 +861,7 @@
       // Check if photoset is hidden, and skip.
       if ( ($pPRIVACYSETTING == PRIVACY_HIDE) and
            ($zLOCALUSER->userAccess->r == FALSE) and
-           ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
+           ($zLOCALUSER->Account_PK != $zFOCUSUSER->Account_PK)  ) {
 
         // Rollback the for counter by 1.
         $gLISTCOUNT--;
@@ -884,7 +884,7 @@
       // Check if photoset is hidden, and skip.
       if ( ($pPRIVACYSETTING == PRIVACY_BLOCK) and
            ($zLOCALUSER->userAccess->r == FALSE) and
-           ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
+           ($zLOCALUSER->Account_PK != $zFOCUSUSER->Account_PK)  ) {
 
         // Rollback the for counter by 1.
         $gLISTCOUNT--;
@@ -905,13 +905,13 @@
 
       if ( ($pPRIVACYSETTING == PRIVACY_HIDE) and
            ($zLOCALUSER->userAccess->r == FALSE) and
-           ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
+           ($zLOCALUSER->Account_PK != $zFOCUSUSER->Account_PK)  ) {
         return (TRUE);
       } // if
 
       if ( ($pPRIVACYSETTING == PRIVACY_BLOCK) and
            ($zLOCALUSER->userAccess->r == FALSE) and
-           ($zLOCALUSER->uID != $zFOCUSUSER->uID)  ) {
+           ($zLOCALUSER->Account_PK != $zFOCUSUSER->Account_PK)  ) {
         return (TRUE);
       } // if
 
@@ -968,7 +968,7 @@
         $zFOCUSUSER->userAnswers->Answer = "";
 
         // Load the focus user's answer.
-        $infocriteria = array ("userAuth_uID"      => $zFOCUSUSER->uID,
+        $infocriteria = array ("Account_FK"      => $zFOCUSUSER->Account_PK,
                                "userQuestions_tID" => $QUESTIONSLIST->tID);
         $zFOCUSUSER->userAnswers->SelectByMultiple ($infocriteria);
         $zFOCUSUSER->userAnswers->FetchArray ();
@@ -1120,12 +1120,12 @@
            $IMAGEDATA = new cDATACLASS ();
   
            $query = "select Filename, Width, Height, photoSets_tID, " .
-                    "userAuthorization.Username, photoSets.Directory " .
-                    "from photoSets, photoInformation, userAuthorization, " .
+                    "UserAccounts.Username, photoSets.Directory " .
+                    "from photoSets, photoInformation, UserAccounts, " .
                     "userProfile where photoSets.tID = " .
                     "photoInformation.photoSets_tID and " .
-                    "userProfile.userAuth_uID = photoInformation.userAuth_uID " .
-                    "and userAuthorization.uID = userProfile.userAuth_uID " .
+                    "userProfile.Account_FK = photoInformation.Account_FK " .
+                    "and UserAccounts.Account_PK = userProfile.Account_FK " .
                     "and photoInformation.Hint='$imagehint'"; 
   
            $IMAGEDATA->Query ($query);
@@ -1165,12 +1165,12 @@
              $IMAGEDATA = new cDATACLASS ();
   
              $query = "select Filename, Width, Height, photoSets_tID, " .
-                      "userAuthorization.Username, photoSets.Directory " .
-                      "from photoSets, photoInformation, userAuthorization, " .
+                      "UserAccounts.Username, photoSets.Directory " .
+                      "from photoSets, photoInformation, UserAccounts, " .
                       "userProfile where photoSets.tID = " .
                       "photoInformation.photoSets_tID and " .
-                      "userProfile.userAuth_uID = photoInformation.userAuth_uID " .
-                      "and userAuthorization.uID = userProfile.userAuth_uID " .
+                      "userProfile.Account_FK = photoInformation.Account_FK " .
+                      "and UserAccounts.Account_PK = userProfile.Account_FK " .
                       "and photoInformation.Hint='$imagehint'"; 
   
              $IMAGEDATA->Query ($query);

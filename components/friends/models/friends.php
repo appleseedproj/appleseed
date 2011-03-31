@@ -206,15 +206,15 @@ class cFriendsModel extends cModel {
 	
 	public function CreateRelationship ( $pFirst, $pSecond ) {
 		
-		$userAuth = new cModel ( 'userAuthorization' );
+		$UserAccounts = new cModel ( 'UserAccounts' );
 		
-		$userAuth->Retrieve ( array ( 'uID' => $pFirst ) );
-		$userAuth->Fetch();
-		$firstUsername = $userAuth->Get ( 'Username' );
+		$UserAccounts->Retrieve ( array ( 'Account_PK' => $pFirst ) );
+		$UserAccounts->Fetch();
+		$firstUsername = $UserAccounts->Get ( 'Username' );
 		
-		$userAuth->Retrieve ( array ( 'uID' => $pSecond ) );
-		$userAuth->Fetch();
-		$secondUsername = $userAuth->Get ( 'Username' );
+		$UserAccounts->Retrieve ( array ( 'Account_PK' => $pSecond ) );
+		$UserAccounts->Fetch();
+		$secondUsername = $UserAccounts->Get ( 'Username' );
 		
 		// Create first record
 		$this->Set ( 'Owner_FK', $pFirst );

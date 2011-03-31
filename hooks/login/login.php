@@ -70,7 +70,7 @@ class cLoginHook extends cHook {
 		
 		// Delete the local session info database entry.
 		if ( $loginSession ) {
-      		$sessionModel = new cModel ( "userSessions" );
+      		$sessionModel = new cModel ( "UserSessions" );
       		$sessionModel->Delete ( array ( "Identifier" => $loginSession ) );
 		}
 		

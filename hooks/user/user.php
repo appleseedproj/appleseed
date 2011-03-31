@@ -1,7 +1,7 @@
 <?php
 /**
  * @version      $Id$
- * @package      Appleseed.Components
+ * @package      Appleseed.Framework
  * @subpackage   User
  * @copyright    Copyright (C) 2004 - 2010 Michael Chisari. All rights reserved.
  * @link         http://opensource.appleseedproject.org
@@ -11,24 +11,29 @@
 // Restrict direct access
 defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
 
-/** User Component Model
+/** User Hook Class
  * 
- * User Component Model Class
+ * User Hook Class
  * 
- * @package     Appleseed.Components
+ * @package     Appleseed.Framework
  * @subpackage  User
  */
-class cUserModel extends cModel {
-	
-	protected $_Tablename = "UserAccounts";
-	
+class cUserHook extends cHook {
+
 	/**
 	 * Constructor
 	 *
 	 * @access  public
 	 */
-	public function __construct ( $pTables = null ) {       
-		parent::__construct( $pTables );
+	public function __construct ( ) {       
+		parent::__construct();
+	}
+	
+	public function GetCurrentUser ( $pData = null ) {
+		$Components = Wob::_("Components" );
+		$Components->User->Set ( 'Source', 'Component' );
+		$Current = $Components->User->Current();
+		return ( $Current );
 	}
 	
 }

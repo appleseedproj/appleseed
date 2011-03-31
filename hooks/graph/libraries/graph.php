@@ -61,7 +61,7 @@ class cGraphAPI {
      * @access	public
 	 * @return	array
 	 */
-	public function Communicate ( $pDomain, $pMethod, $pEndPoint, $pIdentity = null ) {
+	public function Communicate ( $pDomain, $pMethod, $pEndPoint, $pIdentity = null, $pFormat = 'json' ) {
 
 		// Pull from callback function
 		$EntryPoint = $this->_EntryPoint ( $pDomain );
@@ -88,7 +88,30 @@ class cGraphAPI {
 
 		$url = $Entry . $pEndPoint;
 
-		echo $url, "<br />";
+		switch ( $pFormat ) {
+			case 'xml':
+				$url .= '.xml';
+			break;
+			case 'json':
+				$url .= '.json';
+			break;
+			default:
+			break;
+		}
+
+		$result = $this->_Communicate ( $url );
+
+		switch ( $pFormat ) {
+			case 'xml':
+				$result = xml_decode ( $result );
+			break;
+			case 'json':
+			default:
+				$result = json_decode ( $result );
+			break;
+		}
+
+		return ( $result );
 	}
 
 	/*
@@ -105,9 +128,10 @@ class cGraphAPI {
 				$result = json_decode ( $this->_Communicate ( $target ) );
 				$EntryPoint = $result->entry;
 				$Version = $result->version;
+				$Protocols = $result->protocols;
 				// Attempt to store the new data for the future.
 				if ( $this->IsCallback ( 'UpdateNetworkNode' ) ) {
-					$this->Callback ( 'UpdateNetworkNode', array ( $pDomain, $EntryPoint, $Version ) );
+					$this->Callback ( 'UpdateNetworkNode', array ( $pDomain, $EntryPoint, $Version, $Protocols ) );
 				}
 			}
 		}

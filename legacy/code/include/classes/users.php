@@ -38,7 +38,7 @@
   // User class.
   class cOLDUSER extends cOLDUSERAUTHORIZATION {
 
-    var $uID, $Username, $Pass, $Invite, $Verification, $Standing;
+    var $Account_PK, $Username, $Pass, $Invite, $Verification, $Standing;
     var $userSession, $userProfile, $userAccess, $userAnswers;
     var $userInformation;
     var $Cascade;
@@ -46,8 +46,8 @@
     function cOLDUSER ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
-      $this->TableName = $gTABLEPREFIX . 'userAuthorization';
-      $this->uID = '';
+      $this->TableName = $gTABLEPREFIX . 'UserAccounts';
+      $this->Account_PK = '';
       $this->Username = '';
       $this->Pass = '';
       $this->Invite = '';
@@ -57,7 +57,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->FieldNames = '';
-      $this->PrimaryKey = 'uID';
+      $this->PrimaryKey = 'Account_PK';
       $this->ForeignKey = '';
       $this->Cascade = array ('userSession', 'userAccess', 'userProfile', 
                               'userInformation', 'userIcons', 'userInvites',
@@ -66,7 +66,7 @@
       // Create extended field definitions
       $this->FieldDefinitions = array (
 
-        'uID'            => array ('max'        => '',
+        'Account_PK'            => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -140,7 +140,7 @@
       global $gSITEDOMAIN;
 
       // Create the default user icon.
-      $this->userIcons->userAuth_uID = $this->uID;
+      $this->userIcons->Account_FK = $this->Account_PK;
       $this->userIcons->Filename = NO_ICON;
       $this->userIcons->Keyword = "(no icon)";
       $this->userIcons->Comments = "";
@@ -161,7 +161,7 @@
       	$INVITE->FetchArray();
 	 
       	$USER = new cOLDUSER();
-      	$USER->Select ("uID", $INVITE->userAuth_uID);
+      	$USER->Select ("Account_PK", $INVITE->Account_FK);
       	$USER->FetchArray();
 
       	$FRIEND = new cFRIENDINFORMATION();
@@ -197,13 +197,13 @@
         $questionid = $QUESTIONSLIST->tID;
 
         // Query for question id + user id.
-        $answercriteria = array ("userAuth_uID"      => $this->uID,
+        $answercriteria = array ("Account_FK"      => $this->Account_PK,
                                  "userQuestions_tID" => $questionid); 
         $this->userAnswers->SelectByMultiple ($answercriteria);
         $this->userAnswers->FetchArray ();
 
           // Assign the new answer
-        $this->userAnswers->userAuth_uID = $this->uID;
+        $this->userAnswers->Account_FK = $this->Account_PK;
         $this->userAnswers->userQuestions_tID = $questionid;
         if ($QUESTIONSLIST->TypeOf == QUESTION_CHECKLIST) {
           $labelname = 'g' . $QUESTIONSLIST->Concern;
@@ -352,7 +352,7 @@
               
           // Check if image with filename already exists.
           $ICONCHECK = new cUSERICONS;
-          $iconcriteria = array ("userAuth_uID" => $this->uID,
+          $iconcriteria = array ("Account_FK" => $this->Account_PK,
                                  "Filename"     => $this->userIcons->Filename);
           $ICONCHECK->SelectByMultiple ($iconcriteria);
 
@@ -376,7 +376,7 @@
 
               // Remove the NO_ICON default if it exists.
   
-              $defaultcriteria = array ("userAuth_uID" => $this->uID,
+              $defaultcriteria = array ("Account_FK" => $this->Account_PK,
                                         "Filename" => NO_ICON);
               $this->userIcons->SelectByMultiple ($defaultcriteria);
               $this->userIcons->FetchArray ();
@@ -411,7 +411,7 @@
         $this->userIcons->tID = $TID;
         $this->userIcons->Keyword = $gKEYWORD[$TID];
         $this->userIcons->Comments = $gCOMMENTS[$TID];
-        $this->userIcons->userAuth_uID = $this->uID;
+        $this->userIcons->Account_FK = $this->Account_PK;
         $this->userIcons->PageContext = "USER.OPTIONS";
 
         // Skip the filename, don't change it.
@@ -475,7 +475,7 @@
         $zPHOTO->Message = __("File uploaded");
 
         // Check if no default icon exists.
-        $defaultcriteria = array ("userAuth_uID" => $this->uID,
+        $defaultcriteria = array ("Account_FK" => $this->Account_PK,
                                   "Filename" => NO_ICON);
         $this->userIcons->SelectByMultiple ($defaultcriteria);
         $this->userIcons->FetchArray ();
@@ -572,7 +572,7 @@
     		return ( FALSE );
     	}
     	
-        $userAuth = $gTABLEPREFIX . 'userAuthorization';
+        $UserAccounts = $gTABLEPREFIX . 'UserAccounts';
       
         $salt = substr(md5(uniqid(rand(), true)), 0, 16);
         $sha512 = hash ("sha512", $salt . $gPASSWORD);
@@ -580,9 +580,9 @@
 
         $reset_query = "UPDATE %s SET " .
                        "Pass = '%s' WHERE " .
-                       "uID = '%s'";
+                       "Account_PK = '%s'";
                      
-        $reset_query = sprintf ($reset_query, $userAuth, $newpass, $this->uID);
+        $reset_query = sprintf ($reset_query, $UserAccounts, $newpass, $this->Account_PK);
       
         $this->Query ($reset_query);
 
@@ -608,7 +608,7 @@
       // NOTE:  Check if user owns this icon.
 
       // Do not delete if only one icon is left.
-      $this->userIcons->Select ("userAuth_uID", $this->uID);
+      $this->userIcons->Select ("Account_FK", $this->Account_PK);
 
       if ($this->userIcons->CountResult () == 1) {
         $zICON->Message = __("At Least One Icon Required");
@@ -641,7 +641,7 @@
 
         // Find the latest icon.
         $USERICON = new cUSERICONS (); 
-        $USERICON->Select ("userAuth_uID", $this->uID, "tID DESC");
+        $USERICON->Select ("Account_FK", $this->Account_PK, "tID DESC");
         $USERICON->FetchArray ();
 
         $this->userIcons->Replace ($USERICON->Filename); 
@@ -658,14 +658,14 @@
   // User profile class.
   class cUSERPROFILE extends cDATACLASS {
  
-    var $userAuth_uID, $Email, $Fullname, $Description, $Gender;
+    var $Account_FK, $Email, $Fullname, $Description, $Gender;
     var $Zipcode, $Birthday;
  
     function cUSERPROFILE ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userProfile';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Email = '';
       $this->Fullname = '';
       $this->Alias = '';
@@ -676,13 +676,13 @@
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
-      $this->PrimaryKey = 'userAuth_uID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->PrimaryKey = 'Account_FK';
+      $this->ForeignKey = 'Account_FK';
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -773,7 +773,7 @@
 
       $gPASSWORD = $zOLDAPPLE->GeneratePassword ('##XX#XX!');
       
-      $userAuth = $gTABLEPREFIX . 'userAuthorization';
+      $UserAccounts = $gTABLEPREFIX . 'UserAccounts';
       
       $salt = substr(md5(uniqid(rand(), true)), 0, 16);
       $sha512 = hash ("sha512", $salt . $gPASSWORD);
@@ -781,9 +781,9 @@
 
       $reset_query = "UPDATE %s SET " .
                      "Pass = '%s' WHERE " .
-                     "uID = '%s'";
+                     "Account_PK = '%s'";
                      
-      $reset_query = sprintf ($reset_query, $userAuth, $newpass, $this->userAuth_uID);
+      $reset_query = sprintf ($reset_query, $UserAccounts, $newpass, $this->Account_FK);
       
       $this->Query ($reset_query);
 
@@ -929,21 +929,21 @@
   // User profile answers class.
   class cUSERANSWERS extends cDATACLASS {
 
-    var $tID, $userAuth_uID, $userQuestions_tID, $Answer;
+    var $tID, $Account_FK, $userQuestions_tID, $Answer;
  
     function cUSERANSWERS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userAnswers';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->userQuestions_tID = '';
       $this->Answer = '';
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;
@@ -959,7 +959,7 @@
                                         'sanitize'   => NO,
                                         'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'        => array ('max'        => '',
+        'Account_FK'        => array ('max'        => '',
                                         'min'        => '',
                                         'illegal'    => '',
                                         'required'   => '',
@@ -1014,28 +1014,28 @@
   // User information class.
   class cUSERINFORMATION extends cDATACLASS {
 
-    var $userAuth_uID, $Views, $FirstLogin, $LastLogin;
+    var $Account_FK, $Views, $FirstLogin, $LastLogin;
 
     function cUSERINFORMATION ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userInformation';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Views = '';
       $this->FirstLogin = '';
       $this->LastLogin = '';
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
-      $this->PrimaryKey = 'userAuth_uID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->PrimaryKey = 'Account_FK';
+      $this->ForeignKey = 'Account_FK';
  
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -1159,13 +1159,13 @@
   // User information class.
   class cUSERINVITES extends cDATACLASS {
 
-    var $userAuth_uID, $Value, $Active, $Amount;
+    var $Account_FK, $Value, $Active, $Amount;
 
     function cUSERINVITES ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userInvites';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Value = '';
       $this->Active = '';
       $this->Email = '';
@@ -1175,7 +1175,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
@@ -1188,7 +1188,7 @@
                                    'sanitize'   => NO,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -1258,7 +1258,7 @@
     function CountInvites () {
 
       // Count the amount of usable invites this user has.
-      $invitedefs = array ("userAuth_uID" => $this->userAuth_uID,
+      $invitedefs = array ("Account_FK" => $this->Account_FK,
                            "Active"       => ACTIVE);
       $this->SelectByMultiple ($invitedefs);
       $this->Amount = $this->CountResult ();
@@ -1273,7 +1273,7 @@
 
       // Count how many invites are available.
       $COUNTER = new cUSERINVITES;
-      $COUNTER->userAuth_uID = $this->userAuth_uID;
+      $COUNTER->Account_FK = $this->Account_FK;
       $COUNTER->CountInvites();
       $oldamount = $COUNTER->Amount;
       unset ($COUNTER);
@@ -1302,7 +1302,7 @@
         
         // Select all tID's that belong to this user. 
         $DINVITE = new cUSERINVITES;
-        $deletedefs = array ("userAuth_uID" => $this->userAuth_uID,
+        $deletedefs = array ("Account_FK" => $this->Account_FK,
                              "Active" => ACTIVE);
         $DINVITE->SelectByMultiple ($deletedefs);
 
@@ -1331,14 +1331,14 @@
   // User icons class.
   class cUSERICONS extends cDATACLASS {
 
-    var $tID, $userAuth_uID, $Filename, $Keyword, $Comments;
+    var $tID, $Account_FK, $Filename, $Keyword, $Comments;
 
     function cUSERICONS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userIcons';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Filename = '';
       $this->Keyword = '';
       $this->Comments = '';
@@ -1346,7 +1346,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;
@@ -1362,7 +1362,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -1408,7 +1408,7 @@
 
       global $gICONLIST;
 
-      $this->Select ("userAuth_uID", $pUID);
+      $this->Select ("Account_FK", $pUID);
 
       if ($this->CountResult () == 0) {
         return (FALSE);
@@ -1469,7 +1469,7 @@
 
       $journalquery = "UPDATE journalPost " .
                       "SET userIcons_Filename = $pREPLACEMENT WHERE " .
-                      "userAuth_uID = " . $zFOCUSUSER->uID . " AND " .
+                      "Account_FK = " . $zFOCUSUSER->Account_PK . " AND " .
                       "userIcons_Filename = " . $this->Filename;
       $DATA->Query ($journalquery); 
 
@@ -1494,21 +1494,21 @@
   // User groups class.
   class cUSERGROUPS extends cDATACLASS {
 
-    var $tID, $userAuth_uID, $Name, $Domain;
+    var $tID, $Account_FK, $Name, $Domain;
 
     function cUSERGROUPS ($pDEFAULTCONTEXT = '') {
       global $gTABLEPREFIX;
 
       $this->TableName = $gTABLEPREFIX . 'userGroups';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Name = '';
       $this->Domain = '';
       $this->Error = 0;
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Assign context from paramater.
       $this->PageContext = $pDEFAULTCONTEXT;
@@ -1524,7 +1524,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '',
                                    'illegal'    => '',
                                    'required'   => '',

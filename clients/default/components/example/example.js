@@ -1,6 +1,14 @@
     dojo.require("dijit.layout.TabContainer");
     dojo.require("dijit.layout.ContentPane");
 
+	dojo.xhrGet({
+    	url:"/.to/fellowship.appleseed/graph/example/response",
+    	handleAs:"json",
+    	load: function(data){
+			console.log ( data );
+    	}
+	});
+
    dojo.addOnLoad(function() {
         var tc = new dijit.layout.TabContainer({
             style: "height: 100%; width: 100%;"

@@ -641,19 +641,19 @@ class cQuicksocialHook extends cHook {
 		
 		$cookie = $_COOKIE['gLOGINSESSION'];
 		
-		$session = new cModel ( 'userSessions' );
+		$session = new cModel ( 'UserSessions' );
 		
 		// Get the session by the identifier
 		$criteria = array ( 'Identifier' => $cookie );
 		$session->Retrieve ( $criteria );
 		$session->Fetch();
-		$uID = $session->get ( 'userAuth_uID' );
+		$UserId = $session->get ( 'Account_FK' );
 		
-		if ( !$uID ) return ( false );
+		if ( !$UserId ) return ( false );
 		
-		$authorization = new cModel ( 'userAuthorization' );
+		$authorization = new cModel ( 'UserAccounts' );
 		
-		$criteria = array ( 'uID' => $uID );
+		$criteria = array ( 'Account_PK' => $UserId );
 		$authorization->Retrieve ( $criteria );
 		$authorization->Fetch();
 		$Username = strtolower ( $authorization->get ( 'Username' ) );
@@ -828,7 +828,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _UserInfo ( $pAccount, $pRequest, $pVerified = false ) {
 		
-		$auth = new cModel ('userAuthorization');
+		$auth = new cModel ('UserAccounts');
 		$auth->Structure();
 		
 		$auth->Retrieve ( array ( 'Username' => $pAccount ) );
@@ -836,10 +836,10 @@ class cQuicksocialHook extends cHook {
 		
 		if ( !$auth->Get ( 'Username' ) ) return ( false );
 		
-		$profile = new cModel ('userProfile');
+		$profile = new cModel ('UserInformation');
 		$profile->Structure();
 		
-		$profile->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+		$profile->Retrieve ( array ( 'Account_FK' => $auth->Get ( 'Account_PK' ) ) );
 		$profile->Fetch();
 		
 		// Get the user's full name or alias
@@ -854,7 +854,7 @@ class cQuicksocialHook extends cHook {
 			$info = new cModel ('userInformation');
 			$info->Structure();
 		
-			$info->Retrieve ( array ( 'userAuth_uID' => $auth->Get ( 'uID' ) ) );
+			$info->Retrieve ( array ( 'Account_FK' => $auth->Get ( 'Account_PK' ) ) );
 			$info->Fetch();
 		
 			$currently = strtotime ('now');
@@ -873,7 +873,7 @@ class cQuicksocialHook extends cHook {
 			$friends = new cModel ('FriendInformation');
 			$friends->Structure();
 		
-			$friends->Retrieve ( array ( 'Owner_FK' => $auth->Get ( 'uID' ), 'Verification' => '1' ) );
+			$friends->Retrieve ( array ( 'Owner_FK' => $auth->Get ( 'Account_PK' ), 'Verification' => '1' ) );
 			$return['friends'] = array ();
 			while ( $friends->Fetch() ) {
 				$return['friends'][] = $friends->Get ( 'Username' ) . '@' . $friends->Get ( 'Domain' );
@@ -931,10 +931,10 @@ class cQuicksocialHook extends cHook {
 	
 	public function _FriendAdd ( $pAccount, $pRequest ) {
 		
-		$userModel = new cModel ( 'userAuthorization' );
+		$userModel = new cModel ( 'UserAccounts' );
 		$userModel->Structure();
 		
-		$profileModel = new cModel ( 'userProfile' );
+		$profileModel = new cModel ( 'UserInformation' );
 		$profileModel->Structure();
 		
 		$friendModel = new cModel ( 'FriendInformation' );
@@ -946,16 +946,16 @@ class cQuicksocialHook extends cHook {
 		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );
 		$userModel->Fetch();
 		
-		$requestUsername_uID = $userModel->Get ( 'uID' );
+		$requestUsername_uID = $userModel->Get ( 'Account_PK' );
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
 		$friendModel->Retrieve ( array ( 'Owner_FK' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain ) );
 		
-		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
+		$profileModel->Retrieve ( array ( 'Account_FK' => $requestUsername_uID ) );
 		$profileModel->Fetch();
 		
-		$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
+		$data = array ( 'Email' => $userModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
 		$this->GetSys ( 'Components' )->Talk ( 'Friends', 'NotifyAdd', $data );
 		
 		if ( $friendModel->Get ( 'Total' ) == 0 ) {
@@ -978,7 +978,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _FriendApprove ( $pAccount, $pRequest ) {
 		
-		$userModel = new cModel ( 'userAuthorization' );
+		$userModel = new cModel ( 'UserAccounts' );
 		$userModel->Structure();
 		
 		$friendModel = new cModel ( 'FriendInformation' );
@@ -987,19 +987,19 @@ class cQuicksocialHook extends cHook {
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
 		
-		$profileModel = new cModel ( 'userProfile' );
+		$profileModel = new cModel ( 'UserInformation' );
 		$profileModel->Structure();
 		
 		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );
 		$userModel->Fetch();
 		
-		$requestUsername_uID = $userModel->Get ( 'uID' );
+		$requestUsername_uID = $userModel->Get ( 'Account_PK' );
 		
 		if ( !$requestUsername_uID ) return ( false );
 		
 		$friendModel->Retrieve ( array ( 'Owner_FK' => $requestUsername_uID, 'Username' => $accountUsername, 'Domain' => $accountDomain, 'Verification' => '()' . '1,3' ) );
 		
-		$profileModel->Retrieve ( array ( 'userAuth_uID' => $requestUsername_uID ) );
+		$profileModel->Retrieve ( array ( 'Account_FK' => $requestUsername_uID ) );
 		$profileModel->Fetch();
 		
 		if ( $friendModel->Get ( 'Total' ) > 0 ) {
@@ -1016,10 +1016,10 @@ class cQuicksocialHook extends cHook {
 			$request = $requestUsername . '@' . ASD_DOMAIN;
 			$friends = $this->GetSys ( 'Components' )->Talk ( 'Friends', 'Friends', array ( 'Target' => $requestUsername_uID ) );
 			
-			$notifyData = array ( 'OwnerId' => $userModel->Get ( 'uID' ), 'Friends' => $friends, 'ActionOwner' => $pRequest, 'Action' => 'friended', 'SubjectOwner' => $pAccount, 'Context' => 'friends' );
+			$notifyData = array ( 'OwnerId' => $userModel->Get ( 'Account_PK' ), 'Friends' => $friends, 'ActionOwner' => $pRequest, 'Action' => 'friended', 'SubjectOwner' => $pAccount, 'Context' => 'friends' );
 			$this->GetSys ( 'Components' )->Talk ( 'Newsfeed', 'Notify', $notifyData );
 			
-			$data = array ( 'Email' => $profileModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
+			$data = array ( 'Email' => $userModel->Get ( 'Email' ), 'Recipient' => $pRequest, 'Sender' => $pAccount );
 			$this->GetSys ( 'Components' )->Talk ( 'Friends', 'NotifyApprove', $data );
 		
 			return ( true );
@@ -1031,7 +1031,7 @@ class cQuicksocialHook extends cHook {
 	
 	public function _FriendRemove ( $pAccount, $pRequest ) {
 		
-		$userModel = new cModel ( 'userAuthorization' );
+		$userModel = new cModel ( 'UserAccounts' );
 		$userModel->Structure();
 		
 		$friendModel = new cModel ( 'FriendInformation' );
@@ -1043,7 +1043,7 @@ class cQuicksocialHook extends cHook {
 		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );
 		$userModel->Fetch();
 		
-		$requestUsername_uID = $userModel->Get ( 'uID' );
+		$requestUsername_uID = $userModel->Get ( 'Account_PK' );
 		
 		if ( !$requestUsername_uID ) return ( false );
 		

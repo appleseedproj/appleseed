@@ -29,11 +29,14 @@ class cExample extends cComponent {
 		
 		parent::__construct();
 	}
-	
+
 	public function GetResponse ( $pData = null ) {
 		$return = array();
-		$return['value'] = 'This is a response from the Example component.';
-		
+		$return['value'] = 'This is a response from the Example component on ' . ASD_DOMAIN . '.';
+		$return['source'] = $this->Get ( 'Source' );
+		$return['identity'] = $this->Get ( 'Identity' );
+		$return['origin'] = $this->Get ( 'Origin' );
+
 		return ( $return );
 	}
 	
@@ -41,13 +44,6 @@ class cExample extends cComponent {
 		$return = array();
 		$return['value'] = 'This is a put response from the Example component.';
 		
-		return ( $return );
-	}
-
-	public function GetBlah ( $pName, $pType) {
-		$return = array ();
-		$return['name'] = $pName;
-		$return['type'] = $pType;
 		return ( $return );
 	}
 

@@ -92,8 +92,8 @@
   
   //$zIMAGE->Show ($allowedfilename);
     
-  $userAuth = $zSERVER->TablePrefix . "userAuthorization";
-  $userSessions = $zSERVER->TablePrefix . "userSessions";
+  $UserAccounts = $zSERVER->TablePrefix . "UserAccounts";
+  $UserSessions = $zSERVER->TablePrefix . "UserSessions";
   $authSessions = $zSERVER->TablePrefix . "authSessions";
   $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
   $friendCircles = $zSERVER->TablePrefix . "friendCircles";
@@ -164,8 +164,8 @@
   function DetermineAnonymousAccess ($pOWNER, $pDIRECTORY) {
     global $zSERVER;
     
-    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
-    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $UserAccounts = $zSERVER->TablePrefix . "UserAccounts";
+    $UserSessions = $zSERVER->TablePrefix . "UserSessions";
     $authSessions = $zSERVER->TablePrefix . "authSessions";
     $photoSets = $zSERVER->TablePrefix . "photoSets";
     $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
@@ -175,10 +175,10 @@
       
     $sql_statement = "
       SELECT   MIN($photoPrivacy.Access) AS FinalAccess
-      FROM     $photoSets, $photoPrivacy, $userAuth
-      WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
-      AND      $userAuth.Username = '%s'
-      AND      $photoSets.userAuth_uID = $userAuth.uID
+      FROM     $photoSets, $photoPrivacy, $UserAccounts
+      WHERE    $photoPrivacy.Account_FK = $UserAccounts.Account_PK
+      AND      $UserAccounts.Username = '%s'
+      AND      $photoSets.Account_FK = $UserAccounts.Account_PK
       AND      $photoPrivacy.friendCircles_sID = %s
       AND      $photoPrivacy.photoSets_tID = $photoSets.tID
       AND      $photoSets.Directory = '%s'
@@ -199,8 +199,8 @@
   function DetermineAccess ($pOWNER, $pDIRECTORY, $pUSERNAME, $pDOMAIN) {
     global $zSERVER;
     
-    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
-    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $UserAccounts = $zSERVER->TablePrefix . "UserAccounts";
+    $UserSessions = $zSERVER->TablePrefix . "UserSessions";
     $authSessions = $zSERVER->TablePrefix . "authSessions";
     $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
     $photoSets = $zSERVER->TablePrefix . "photoSets";
@@ -219,11 +219,11 @@
     
     $sql_statement = "
       SELECT   MIN($photoPrivacy.Access) AS FinalAccess
-      FROM     $photoSets, $photoInfo, $photoPrivacy, $userAuth,  $friendCircles, $friendCirclesList, $friendInfo 
-      WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
-      AND      $friendCircles.userAuth_uID = $userAuth.uID
-      AND      $userAuth.Username = '%s'
-      AND      $userAuth.uID = $photoSets.userAuth_uID
+      FROM     $photoSets, $photoInfo, $photoPrivacy, $UserAccounts,  $friendCircles, $friendCirclesList, $friendInfo 
+      WHERE    $photoPrivacy.Account_FK = $UserAccounts.Account_PK
+      AND      $friendCircles.Account_FK = $UserAccounts.Account_PK
+      AND      $UserAccounts.Username = '%s'
+      AND      $UserAccounts.Account_PK = $photoSets.Account_FK
       AND      $photoPrivacy.friendCircles_sID = $friendCircles.sID 
       AND      $photoPrivacy.photoSets_tID = $photoSets.tID
       AND      $photoSets.Directory = '%s'
@@ -253,10 +253,10 @@
     
     $sql_statement = "
       SELECT   MIN($photoPrivacy.Access) AS FinalAccess
-      FROM     $photoSets, $photoPrivacy, $userAuth
-      WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
-      AND      $userAuth.Username = '%s'
-      AND      $photoSets.userAuth_uID = $userAuth.uID
+      FROM     $photoSets, $photoPrivacy, $UserAccounts
+      WHERE    $photoPrivacy.Account_FK = $UserAccounts.Account_PK
+      AND      $UserAccounts.Username = '%s'
+      AND      $photoSets.Account_FK = $UserAccounts.Account_PK
       AND     ($photoPrivacy.friendCircles_sID = %s
       OR       $photoPrivacy.friendCircles_sID = %s)
       AND      $photoPrivacy.photoSets_tID = $photoSets.tID
@@ -281,8 +281,8 @@
   function GetLocalUserInformation ($pIDENTIFIER) {
     global $zSERVER;
     
-    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
-    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $UserAccounts = $zSERVER->TablePrefix . "UserAccounts";
+    $UserSessions = $zSERVER->TablePrefix . "UserSessions";
     $authSessions = $zSERVER->TablePrefix . "authSessions";
     $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
     $friendCircles = $zSERVER->TablePrefix . "friendCircles";
@@ -293,10 +293,10 @@
     
     // Check for local.
     $sql_statement = "
-      SELECT $userAuth.Username
-      FROM   $userSessions,$userAuth
-      WHERE  $userSessions.Identifier = '%s'
-      AND    $userAuth.uID = $userSessions.userAuth_uID
+      SELECT $UserAccounts.Username
+      FROM   $UserSessions,$UserAccounts
+      WHERE  $UserSessions.Identifier = '%s'
+      AND    $UserAccounts.Account_PK = $UserSessions.Account_FK
     ";
     
     $sql_statement = sprintf ($sql_statement,
@@ -305,7 +305,7 @@
     $sql_result = mysql_query ($sql_statement);
     $sql_data = mysql_fetch_assoc ($sql_result);
     $Username = $sql_data['Username'];
-    $uid = $sql_data['uID'];
+    $uid = $sql_data['Account_PK'];
     
     $return['Username'] = $Username;
     $return['Domain'] = $zSERVER->SiteDomain;
@@ -317,8 +317,8 @@
   function GetRemoteUserInformation ($pIDENTIFIER) {
     global $zSERVER;
     
-    $userAuth = $zSERVER->TablePrefix . "userAuthorization";
-    $userSessions = $zSERVER->TablePrefix . "userSessions";
+    $UserAccounts = $zSERVER->TablePrefix . "UserAccounts";
+    $UserSessions = $zSERVER->TablePrefix . "UserSessions";
     $authSessions = $zSERVER->TablePrefix . "authSessions";
     $photoPrivacy = $zSERVER->TablePrefix . "photoPrivacy";
     $friendCircles = $zSERVER->TablePrefix . "friendCircles";

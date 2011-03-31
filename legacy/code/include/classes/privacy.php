@@ -64,7 +64,7 @@
       global $gTABLEPREFIX;
 
       $ptable = $this->TableName;
-      $userAuth = $gTABLEPREFIX . "userAuthorization";
+      $UserAccounts = $gTABLEPREFIX . "UserAccounts";
       $friendCircles = $gTABLEPREFIX . "friendCircles";
       $friendCirclesList = $gTABLEPREFIX . "friendCirclesList";
       $friendInfo = $gTABLEPREFIX . "FriendInformation";
@@ -72,20 +72,20 @@
       if ($$pKEYUSER->Anonymous) {
         // Anonymous user
         $query = "SELECT   MIN(" . $ptable . ".Access) AS FinalAccess " .
-                 "FROM     " . $ptable . ", $userAuth  " .
-                 "         WHERE    " . $ptable . ".userAuth_uID = $userAuth.uID " .
-                 "         AND      $userAuth.uID= " . $$pLOCKUSER->uID .
+                 "FROM     " . $ptable . ", $UserAccounts  " .
+                 "         WHERE    " . $ptable . ".Account_FK = $UserAccounts.Account_PK " .
+                 "         AND      $UserAccounts.Account_PK= " . $$pLOCKUSER->Account_PK .
                  "         AND      " . $ptable . ".friendCircles_sID = " . USER_EVERYONE .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL;
 
       } else {
         // Logged in User
         $query = "SELECT   MIN(" . $ptable . ".Access) AS FinalAccess " .
-                 "FROM     " . $ptable . ", $userAuth,  " .
+                 "FROM     " . $ptable . ", $UserAccounts,  " .
                  "         $friendCircles, $friendCirclesList, $friendInfo " .
-                 "         WHERE    " . $ptable . ".userAuth_uID = $userAuth.uID " .
-                 "         AND      $friendCircles.userAuth_uID = $userAuth.uID " .
-                 "         AND      $userAuth.uID= " . $$pLOCKUSER->uID .
+                 "         WHERE    " . $ptable . ".Account_FK = $UserAccounts.Account_PK " .
+                 "         AND      $friendCircles.Account_FK = $UserAccounts.Account_PK " .
+                 "         AND      $UserAccounts.Account_PK= " . $$pLOCKUSER->Account_PK .
                  "         AND      " . $ptable . ".friendCircles_sID = $friendCircles.sID  " .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL .
                  "         AND      $friendCircles.tID = $friendCirclesList.friendCircles_tID " .
@@ -103,11 +103,11 @@
       // If no result was returned, user is not a friend.
       if ($result == NULL) {
         $query = "SELECT   MIN(" . $ptable . ".Access) AS FinalAccess " .
-                 "FROM     " . $ptable . ", $userAuth,  " .
+                 "FROM     " . $ptable . ", $UserAccounts,  " .
                  "         $friendCircles, $friendCirclesList, $friendInfo " .
-                 "         WHERE    " . $ptable . ".userAuth_uID = $userAuth.uID " .
-                 "         AND      $friendCircles.userAuth_uID = $userAuth.uID " .
-                 "         AND      $userAuth.uID= " . $$pLOCKUSER->uID .
+                 "         WHERE    " . $ptable . ".Account_FK = $UserAccounts.Account_PK " .
+                 "         AND      $friendCircles.Account_FK = $UserAccounts.Account_PK " .
+                 "         AND      $UserAccounts.Account_PK= " . $$pLOCKUSER->Account_PK .
                  "         AND      (" . $ptable . ".friendCircles_sID = " . USER_LOGGEDIN .
                  "         OR       " . $ptable . ".friendCircles_sID = " . USER_EVERYONE . ") " .
                  "         AND      " . $ptable . "." . $pFOREIGNKEY . " = " . $pFOREIGNVAL .
@@ -140,7 +140,7 @@
       $returnbuffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/privacy.top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
 
       // Everyone
-      $privacycriteria = array ("userAuth_uID"    => $zFOCUSUSER->uID,
+      $privacycriteria = array ("Account_FK"    => $zFOCUSUSER->Account_PK,
                                 "friendCircles_sID" => 1000,
                                 $pREFERENCEFIELD  => $pREFERENCEID);
 
@@ -149,7 +149,7 @@
       $returnbuffer .= $this->PrivacyOptions ( __("Everyone"), 1000, $this->Access, PRIVACY_RESTRICT); 
 
       // Logged in users.
-      $privacycriteria = array ("userAuth_uID"    => $zFOCUSUSER->uID,
+      $privacycriteria = array ("Account_FK"    => $zFOCUSUSER->Account_PK,
                                 "friendCircles_sID" => 2000,
                                 $pREFERENCEFIELD  => $pREFERENCEID);
                                 
@@ -160,9 +160,9 @@
       $CIRCLES = new cFRIENDCIRCLES;
 
       // Loop through friend circles list.
-      $CIRCLES->Select ("userAuth_uID", $zFOCUSUSER->uID);
+      $CIRCLES->Select ("Account_FK", $zFOCUSUSER->Account_PK);
       while ($CIRCLES->FetchArray () ) {
-        $privacycriteria = array ("userAuth_uID"    => $zFOCUSUSER->uID,
+        $privacycriteria = array ("Account_FK"    => $zFOCUSUSER->Account_PK,
                                   "friendCircles_sID" => $CIRCLES->sID,
                                   $pREFERENCEFIELD  => $pREFERENCEID);
                                 
@@ -242,11 +242,11 @@
 
         $this->friendCircles_sID = $sID;
         $this->$pREFERENCEFIELD = $pREFERENCEID;
-        $this->userAuth_uID = $zFOCUSUSER->uID;
+        $this->Account_FK = $zFOCUSUSER->Account_PK;
         $this->Access = $Access;
 
         //Find the table ID of the exact record we're updating.
-        $targetcriteria = array ("userAuth_uID"      => $zFOCUSUSER->uID,
+        $targetcriteria = array ("Account_FK"      => $zFOCUSUSER->Account_PK,
                                  $pREFERENCEFIELD    => $pREFERENCEID,
                                  "friendCircles_sID" => $sID);
 

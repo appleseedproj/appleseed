@@ -30,11 +30,11 @@ class cSystemHook extends cHook {
 	}
 	
 	public function BeginSystemInitialize ( $pData = null ) {
-		
+
 		$this->_CheckSchemaVersion ( );
 		return ( true );
 	}
-	
+
 	private function _CheckSchemaVersion ( ) {
 		
 		$Config = $this->GetSys ( 'Config' );

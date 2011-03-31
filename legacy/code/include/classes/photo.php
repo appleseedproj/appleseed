@@ -37,7 +37,7 @@
   class cPHOTOSETS extends cDATACLASS {
  
     // Keys
-    var $tID, $userAuth_uID; 
+    var $tID, $Account_FK; 
     
     // Variables
     var $Name, $Directory, $Description;
@@ -51,7 +51,7 @@
 
       $this->TableName = $gTABLEPREFIX . 'photoSets';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->Name = '';
       $this->Directory = '';
       $this->Description = '';
@@ -59,7 +59,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
       // $this->Cascade = array ('photoInfo', 'photoThumbs'); 
  
       // Create extended field definitions
@@ -74,7 +74,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '0',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -176,8 +176,8 @@
       $buffer = $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/latest/photos/top.aobj", INCLUDE_SECURITY_NONE, OUTPUT_BUFFER);
       
       $USER = new cOLDUSER();
-      $userAuth = $gTABLEPREFIX . "userAuthorization";
-      $userSessions = $gTABLEPREFIX . "userSessions";
+      $UserAccounts = $gTABLEPREFIX . "UserAccounts";
+      $UserSessions = $gTABLEPREFIX . "UserSessions";
       $authSessions = $gTABLEPREFIX . "authSessions";
       $photoSets = $gTABLEPREFIX . "photoSets";
       $photoInfo = $gTABLEPREFIX . "photoInformation";
@@ -190,9 +190,9 @@
         $sql_statement = "
           SELECT   MIN($photoPrivacy.Access) AS FinalAccess,
                    $photoInfo.Filename
-          FROM     $photoSets, $photoPrivacy, $userAuth, $photoInfo
-          WHERE    $photoPrivacy.userAuth_uID = $userAuth.uID
-          AND      $photoSets.userAuth_uID = $userAuth.uID
+          FROM     $photoSets, $photoPrivacy, $UserAccounts, $photoInfo
+          WHERE    $photoPrivacy.Account_FK = $UserAccounts.Account_PK
+          AND      $photoSets.Account_FK = $UserAccounts.Account_PK
           AND      $photoPrivacy.friendCircles_sID = %s
           AND      $photoPrivacy.photoSets_tID = $photoSets.tID
           GROUP BY $photoInfo.Filename
@@ -208,7 +208,7 @@
       while ($this->photoInfo->FetchArray ()) {
         $this->Select ('tID', $this->photoInfo->photoSets_tID);
         $this->FetchArray();
-        $USER->Select ("uID", $this->userAuth_uID);
+        $USER->Select ("Account_PK", $this->Account_FK);
         $USER->FetchArray();
         $gIMG = '/profile/' . $USER->Username . '/photos/' . $this->Directory . '/' . $this->photoInfo->Filename;
         $gIMGSRC = '_storage/legacy/photos/' . $USER->Username . '/sets/' . $this->Directory . '/' . '_sm.' . $this->photoInfo->Filename;
@@ -233,7 +233,7 @@
   class cPHOTOINFORMATION extends cDATACLASS {
  
     // Keys
-    var $tID, $userAuth_uID, $photoSets_tID;
+    var $tID, $Account_FK, $photoSets_tID;
 
     // Variables
     var $Filename, $Width, $Height, $ThumbWidth, $ThumbHeight, $Description;
@@ -246,7 +246,7 @@
 
       $this->TableName = $gTABLEPREFIX . 'photoInformation';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->photoSets_tID = '';
       $this->Filename = '';
       $this->Width = '';
@@ -258,7 +258,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Internal class references.
       $this->Comments        = new cCOMMENTINFORMATION ($pDEFAULTCONTEXT);
@@ -293,7 +293,7 @@
                                    'sanitize'   => NO,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '0',
                                    'illegal'    => '',
                                    'required'   => '',
@@ -381,7 +381,7 @@
   class cPHOTOPRIVACY extends cPRIVACYCLASS {
  
     // Keys
-    var $tID, $userAuth_uID, $photoSets_tID, $friendCircles_sID, $Access;
+    var $tID, $Account_FK, $photoSets_tID, $friendCircles_sID, $Access;
 
     // Variables
     var $Filename, $Width, $Height;
@@ -391,7 +391,7 @@
 
       $this->TableName = $gTABLEPREFIX . 'photoPrivacy';
       $this->tID = '';
-      $this->userAuth_uID = '';
+      $this->Account_FK = '';
       $this->photoSets_tID = '';
       $this->friendCircles_sID = '';
       $this->Access = '';
@@ -399,7 +399,7 @@
       $this->Message = '';
       $this->Result = '';
       $this->PrimaryKey = 'tID';
-      $this->ForeignKey = 'userAuth_uID';
+      $this->ForeignKey = 'Account_FK';
  
       // Create extended field definitions
       $this->FieldDefinitions = array (
@@ -413,7 +413,7 @@
                                    'sanitize'   => YES,
                                    'datatype'   => 'INTEGER'),
 
-        'userAuth_uID'   => array ('max'        => '',
+        'Account_FK'   => array ('max'        => '',
                                    'min'        => '0',
                                    'illegal'    => '',
                                    'required'   => '',

@@ -38,12 +38,12 @@ class cUserInvitesModel extends cModel {
 	
 	public function Active ( $pAddress, $pUserId ) {
 		
-		$userProfile = new cModel ('userProfile');
-		$userProfile->Structure();
+		$UserAccounts = new cModel ('UserAccounts');
+		$UserAccounts->Structure();
 		
-		$userProfile->Retrieve ( array ( 'Email' => $pAddress ) );
+		$UserAccounts->Retrieve ( array ( 'Email' => $pAddress ) );
 		
-		if ( $userProfile->Get ( 'Total' ) == 0 ) return ( false );
+		if ( $UserAccounts->Get ( 'Total' ) == 0 ) return ( false );
 		
 		return ( true );
 	}

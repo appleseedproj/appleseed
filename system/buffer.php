@@ -48,7 +48,7 @@ class cBuffer extends cBase {
 		eval ( GLOBALS );
 		
 		ob_start ();
-		
+
 		require ( $pFoundation );
 		
 		$buffer = ob_get_contents ();

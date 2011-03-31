@@ -40,6 +40,17 @@ class cGraphHook extends cHook {
 		$this->_Graph->SetCallback ( 'UpdateNetworkNode', array ( $this, 'UpdateNetworkNode' ) );
 		$this->_Graph->SetCallback ( 'GetNodeProtocols', array ( $this, 'GetNodeProtocols' ) );
 
+		if ( ASD_DOMAIN == 'enterprise.appleseed' ) {
+			//$result = $this->_Graph->Communicate ( 'fellowship.appleseed', 'GET', '/user/token/', 'admin@enterprise.appleseed' );
+			//echo "<pre>";
+			//echo "Result:\n";
+			//print_r ( $result );
+			//exit;
+		}
+
+		//echo $this->_Token ( 'mchisari', 'fellowship.appleseed' );
+		//exit;
+
 		parent::__construct();
 	}
 
@@ -53,6 +64,10 @@ class cGraphHook extends cHook {
 
 		$entry = $this->Get ( 'Config' )->GetConfiguration ( 'entry', '/graph/' );
 
+		// Check if we're tunneling
+		$this->_Tunnel();
+
+		// Check if this is the proper entrypoint
 		if ( !$entryData = $this->_EntryPoint() ) return ( false );
 
 	    $Domain = $entryData['Domain'];	
@@ -89,19 +104,8 @@ class cGraphHook extends cHook {
 
 		$sections = explode ( '.', $last );
 
-		// Find the value past the . to determine the return format.
-		$this->_Format = ltrim ( rtrim ( strtolower ( $sections[1] ) ) );
-
-		// Currently supported is XML and JSON format.
-		switch ( $this->_Format ) {
-			case 'xml':
-			case 'json':
-			break;
-			default:
-				// Default to JSON
-				$this->_Format = 'json';
-			break;
-		}
+		// Determine which format is being requested.
+		$this->_Format = $this->_Format();
 
 		$this->_Component = ucwords ( $Parts[1] );
 		$this->_Method = ucwords ( $requestMethod ) . ucwords ( $Parts[2] );
@@ -192,12 +196,38 @@ class cGraphHook extends cHook {
 		}
 
 		// 4. Execute the component method.
+		$this->_SetOriginInformation ( $instance );
         $return = call_user_func_array ( array ( $instance, $this->_Method ), $this->_Parameters  );
 
 		$this->Format ( $return );
 
 		// Exit the framework completely
 		exit;
+	}
+
+	/*
+	 * Determine the Source, Origin, and Identity of the request.
+	 * 
+	 */
+	private function _SetOriginInformation ( $pInstance ) {
+
+        $Current = $this->GetSys ( 'Event' )->Trigger ( 'Get', 'Current', 'User' );
+
+		if ( $Current->Account ) {
+			// Request is coming from an ajax call.
+			$pInstance->Set ( 'Source', 'Client' );
+			$Referer = $_SERVER['HTTP_REFERER'];
+			$Referer = str_replace ( 'http://', '', $Referer );
+			$Referer = str_replace ( 'https://', '', $Referer );
+			list ( $Origin, $null ) = explode ( '/', $Referer );
+			if ( $Origin != ASD_DOMAIN ) $Origin = null;
+			$pInstance->Set ( 'Origin', $Origin );
+			$pInstance->Set ( 'Identity', $Current->Account );
+			return ( true );
+		} else {
+		}
+
+		return ( false );
 	}
 
 	private function _CheckAccess ( $pComponent, $pMethod, $pParameters ) {
@@ -314,16 +344,59 @@ class cGraphHook extends cHook {
 		return ( false );
 
 	}
+
+	private function _Tunnel ( ) {
+		$request = $this->GetSys ( "Request" )->URI();
+		$request = rtrim ( $request, '/' );
+		$parts = explode ( '/', $request );
+
+		if ( $parts[0] != '.to' ) return ( false );
+
+		// Determine which format to use.
+		$this->_Format = $this->_Format();
+
+		unset ( $parts[0] );
+		$Request = implode ( $parts, '/' );
+
+        $Current = $this->GetSys ( 'Event' )->Trigger ( 'Get', 'Current', 'User' );
+
+		$Account = null;
+		if ( $Current->Account ) $Account = $Current->Account;
+
+		list ( $Domain, $Request ) = explode ( '/', $Request, 2 );
+		$result = $this->_Graph->Communicate ( $Domain, $pMethod = 'GET', $Request, $Account );
+
+		$this->Format ( $result );
+
+		exit;
+	}
+
+	private function _Format ( ) {
+		$request = $this->GetSys ( "Request" )->URI();
+		$request = rtrim ( $request, '/' );
+
+		if ( preg_match ( '/.xml$/', $request, $matches ) ) {
+			$this->_Format = 'xml';
+		} else if ( preg_match ( '/.json$/', $request, $matches ) ) {
+			$this->_Format = 'json';
+		} else {
+			$this->_Format = 'json';
+		}
+		
+		return ( $this->_Format );
+	}
 	
 	private function _NodeInformation ( ) {
 
 		$entry = $this->Get ( 'Config' )->GetConfiguration ( 'entry', '/graph/' );
 		$version = $this->Get ( 'Config' )->GetConfiguration ( 'version', '0.1.0' );
+		$protocols = $this->Get ( 'Config' )->GetConfiguration ( 'protocols', 'http' );
 
 		$protocol = 'ASDGRAPH/' . $version;
 
 		$result = array (
 			'entry' => $entry,
+			'protocols' => $protocols,
 			'version' => $protocol,
 		);
 
@@ -483,7 +556,7 @@ class cGraphHook extends cHook {
 	 */
 	private function _Secret ( $pUsername ) {
 
-		$User = new cModel ( 'userAuthorization' );
+		$User = new cModel ( 'UserAccounts' );
 
 		$User->Retrieve ( array ( 'Username' => $pUsername ) );
 
@@ -589,23 +662,33 @@ class cGraphHook extends cHook {
 		return ( $Protocols );
 	}
 
-	public function UpdateNetworkNode ( $pDomain, $pEntryPoint, $pVersion ) {
+	/*
+     * Update the network node list with newly discovered information.
+     *
+     */
+	public function UpdateNetworkNode ( $pDomain, $pEntryPoint, $pVersion, $pProtocols = 'http' ) {
 		$Model = new cModel ( 'NetworkNodes' );
 		$Model->Retrieve ( array ( 'Domain' => $pDomain ) );
 
-		$Model->Fetch();
+		if ( $Model->Get ( 'Total' ) == 0 ) {
+			// New record.
+			$Model->Set ( 'Trust', 'discovered' );
+			$Model->Set ( 'Access', 'public' );
+			$Model->Set ( 'Inherit', '0' );
+			$Model->Set ( 'Source', ASD_DOMAIN );
+			$Model->Set ( 'Created', NOW() );
+		} else {
+			$Model->Fetch();
+		}
 
 		$Model->Set ( 'Domain', $pDomain );
 		$Model->Set ( 'Entry', $pEntryPoint );
 		$Model->Set ( 'Version', $pVersion );
+		$Model->Set ( 'Protocols', $pProtocols );
 		$Model->Set ( 'Updated', NOW() );
 		$Model->Set ( 'Contacted', NOW() );
 		$Model->Save();
 
-		echo $Model->Get ( 'Query' ); exit;
-
-		echo $pDomain, "<br />";
-		echo $pEntryPoint, "<br />";
-exit;
+		return ( true );
 	}
 }

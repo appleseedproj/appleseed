@@ -144,6 +144,15 @@ class cUser extends cComponent {
 		exit;
 	}
 	
+	public function GetToken ( ) {
+		$return = array ( 'uno' => 'One', 
+						  'nested' => array ( 'two' => 'TWO', 
+											  'tres' => 'Three' ), 
+						  'four' => '4' );
+
+		return ( $return );
+	}
+
 }
 
 /** User Authorization Class
@@ -164,7 +173,7 @@ class cUserAuthorization extends cBase {
 		
       	$loginSession = isset($_COOKIE["gLOGINSESSION"]) ?  $_COOKIE["gLOGINSESSION"] : "";
       	$remoteLoginSession = isset($_COOKIE["gREMOTELOGINSESSION"]) ?  $_COOKIE["gREMOTELOGINSESSION"] : "";
-      	
+
       	if ( $loginSession ) {
       		$this->_LocalLoggedIn ( $loginSession );
       	} else if ( $remoteLoginSession ) {
@@ -179,27 +188,27 @@ class cUserAuthorization extends cBase {
 	private function _LocalLoggedIn ( $pSession ) {
 		
       	// Load the session information.
-      	$sessionModel = new cModel ( "userSessions" );
+      	$sessionModel = new cModel ( "UserSessions" );
       	$sessionModel->Retrieve ( array ( "Identifier" => $pSession ) );
       	$sessionModel->Fetch();
       	
-      	if ( !$sessionModel->Get ( "userAuth_uID" ) ) return ( false );
+      	if ( !$sessionModel->Get ( "Account_FK" ) ) return ( false );
       	
       	// Load the user account information.
-      	$userModel = new cModel ( "userAuthorization" );
-      	$userModel->Retrieve ( array ( "uID" => $sessionModel->Get ( "userAuth_uID" ) ) );
-      	$userModel->Fetch();
+      	$UserAccounts = new cModel ( "UserAccounts" );
+      	$UserAccounts->Retrieve ( array ( "Account_PK" => $sessionModel->Get ( "Account_FK" ) ) );
+      	$UserAccounts->Fetch();
       	
-      	if ( !$userModel->Get ( "Username" ) ) return ( false );
+      	if ( !$UserAccounts->Get ( "Username" ) ) return ( false );
       	
-      	$this->Username = $userModel->Get ( "Username" );
+      	$this->Username = $UserAccounts->Get ( "Username" );
       	
       	// Load the user profile information.
-      	$profileModel = new cModel ( "userProfile" );
-      	$profileModel->Retrieve ( array ( "userAuth_uID" => $sessionModel->Get ( "userAuth_uID" ) ) );
-      	$profileModel->Fetch();
+      	$UserInformation = new cModel ( "UserInformation" );
+      	$UserInformation->Retrieve ( array ( "Account_FK" => $sessionModel->Get ( "Account_FK" ) ) );
+      	$UserInformation->Fetch();
       	
-      	$this->Fullname = $profileModel->Get ( "Fullname" );
+      	$this->Fullname = $UserInformation->Get ( "Fullname" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Remote = false;
@@ -230,33 +239,33 @@ class cUserAuthorization extends cBase {
 	public function Focus ( $pUsername ) {
 		
       	// Load the user account information.
-      	$userModel = new cModel ( "userAuthorization" );
-      	$userModel->Retrieve ( array ( "Username" => $pUsername ) );
-      	$userModel->Fetch();
+      	$UserAccounts = new cModel ( "UserAccounts" );
+      	$UserAccounts->Retrieve ( array ( "Username" => $pUsername ) );
+      	$UserAccounts->Fetch();
       	
-      	if ( !$userModel->Get ( "Username" ) ) return ( false );
+      	if ( !$UserAccounts->Get ( "Username" ) ) return ( false );
       	
-      	$this->Username = $userModel->Get ( "Username" );
-      	$this->Id = $userModel->Get ( "uID" );
+      	$this->Username = $UserAccounts->Get ( "Username" );
+      	$this->Id = $UserAccounts->Get ( "Account_PK" );
       	
       	// Load the user profile information.
-      	$profileModel = new cModel ( "userProfile" );
-      	$profileModel->Retrieve ( array ( "userAuth_uID" => $userModel->Get ( "uID" ) ) );
-      	$profileModel->Fetch();
+      	$UserInformation = new cModel ( "UserInformation" );
+      	$UserInformation->Retrieve ( array ( "Account_FK" => $UserAccounts->Get ( "Account_PK" ) ) );
+      	$UserInformation->Fetch();
       	
-      	$this->uID = $profileModel->Get ( "userAuth_uID" );
+      	$this->Account_PK = $UserInformation->Get ( "Account_FK" );
       	
-      	if ( $profileModel->Get ( "Alias" ) )
-      		$this->Fullname = $profileModel->Get ( "Alias" );
+      	if ( $UserInformation->Get ( "Alias" ) )
+      		$this->Fullname = $UserInformation->Get ( "Alias" );
       	else
-      		$this->Fullname = $profileModel->Get ( "Fullname" );
+      		$this->Fullname = $UserInformation->Get ( "Fullname" );
       		
-      	$this->Description = $profileModel->Get ( "Description" );
+      	$this->Description = $UserInformation->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Account = $this->Username . '@' . $this->Domain;
       	
-      	$this->Email = $profileModel->Get ( 'Email' );
+      	$this->Email = $UserAccounts->Get ( 'Email' );
       	
       	$this->Remote = false;
       	
@@ -265,39 +274,39 @@ class cUserAuthorization extends cBase {
 	
 	public function Load ( $pUser ) {
 		
-      	$userModel = new cModel ( "userAuthorization" );
-      	$userModel->Structure();
+      	$UserAccounts = new cModel ( "UserAccounts" );
+      	$UserAccounts->Structure();
       	
       	if ( is_int ( $pUser ) ) {
-      		$userModel->Retrieve ( array ( 'uID' => $pUser ) );
+      		$UserAccounts->Retrieve ( array ( 'Account_PK' => $pUser ) );
       	} else {
-      		$userModel->Retrieve ( array ( 'Username' => $pUser ) );
+      		$UserAccounts->Retrieve ( array ( 'Username' => $pUser ) );
       	}
-      	$userModel->Fetch();
+      	$UserAccounts->Fetch();
       	
-      	if ( !$userModel->Get ( "Username" ) ) return ( false );
+      	if ( !$UserAccounts->Get ( "Username" ) ) return ( false );
       	
-      	$this->Username = $userModel->Get ( "Username" );
-      	$this->Id = $userModel->Get ( "uID" );
+      	$this->Username = $UserAccounts->Get ( "Username" );
+      	$this->Id = $UserAccounts->Get ( "Account_PK" );
       	
       	// Load the user profile information.
-      	$profileModel = new cModel ( "userProfile" );
-      	$profileModel->Retrieve ( array ( "userAuth_uID" => $userModel->Get ( "uID" ) ) );
-      	$profileModel->Fetch();
+      	$UserInformation = new cModel ( "UserInformation" );
+      	$UserInformation->Retrieve ( array ( "Account_FK" => $UserAccounts->Get ( "Account_PK" ) ) );
+      	$UserInformation->Fetch();
       	
-      	$this->uID = $profileModel->Get ( "userAuth_uID" );
+      	$this->Account_PK = $UserInformation->Get ( "Account_FK" );
       	
-      	if ( $profileModel->Get ( "Alias" ) )
-      		$this->Fullname = $profileModel->Get ( "Alias" );
+      	if ( $UserInformation->Get ( "Alias" ) )
+      		$this->Fullname = $UserInformation->Get ( "Alias" );
       	else
-      		$this->Fullname = $profileModel->Get ( "Fullname" );
+      		$this->Fullname = $UserInformation->Get ( "Fullname" );
       		
-      	$this->Description = $profileModel->Get ( "Description" );
+      	$this->Description = $UserInformation->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Account = $this->Username . '@' . $this->Domain;
       	
-      	$this->Email = $profileModel->Get ( 'Email' );
+      	$this->Email = $UserAccounts->Get ( 'Email' );
       	
       	$this->Remote = false;
       	

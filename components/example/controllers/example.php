@@ -75,8 +75,7 @@ class cExampleExampleController extends cController {
 		 * @tutorial You can optionally pass parameters in a third variable of type "array".
 		 * 
 		 */
-		$exampleResponse = $this->Talk ( "Example", "GetResponse" );
-		$exampleResponse = $this->Talk ( "Example", "GetBlah", "Argument 1" );
+		$exampleResponse = $this->Talk ( "Example", "GetResponse", "Argument 1" );
 
 		$this->List = $this->GetView ( "list" );
 		
