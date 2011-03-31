@@ -3,20 +3,7 @@
 <html lang="en">
 
 <head>
-    
-    <!-- Meta -->
-    <meta charset="utf-8" />
-
-    <!-- Title -->
-    <title><?php echo __("Login Component | Appleseed"); ?></title>
-    
-    <!-- Links -->
-    <?php $zApp->Theme->UseStyles (); ?>
-    
-    <!-- Javascript --> 
-    <!--[if IE]>
-    <script src="/themes/default/style/html5.js"></script>
-    <![endif]-->
+  	<?php $zApp->Components->Go ( 'system', 'head', 'head' ); ?>
 </head>
 
 <body id="appleseed">
