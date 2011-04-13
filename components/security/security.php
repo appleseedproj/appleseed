@@ -76,7 +76,7 @@ class cSecurity extends cComponent {
 			list ( $username, $domain ) = explode ( '@', $account );
 		}
 		
-		// Load security settings from userAccess.
+		// Load security settings from AccessControl.
 		$criteria = array ( array ("account" => $account, "||account" => $username), "Location"     => $context);
 		
 		$accessModel->Retrieve ( $criteria );
@@ -103,7 +103,7 @@ class cSecurity extends cComponent {
 				$access->Set ( "Admin", $parentAccess->Get ( "Admin" ) );
 			} else {
 				// Use default values;
-				$this->userAccess->Location = $context; 
+				$this->AccessControl->Location = $context; 
 				$access->Set ( "Read", isset ($pData['Read'] ) ? $pData['Read'] : false); 
 				$access->Set ( "Write", isset ($pData['Write'] ) ? $pData['Write'] : false);  
 				$access->Set ( "Admin", isset ($pData['Admin'] ) ? $pData['Admin'] : false); 

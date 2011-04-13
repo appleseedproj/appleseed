@@ -2,25 +2,7 @@
 <html lang="en">
 
 <head>
-	
-	<!-- Meta -->
-	<meta charset="utf-8" />
-
-	<!-- Title -->
-	<title><?php echo __("Layout"); ?></title>
-	
-	<!-- Links -->
-	<link rel="stylesheet" href="/themes/default/style/html5reset-1.4.1.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/fonts-min.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/960.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/default.css" /> 
-	<link rel="stylesheet" href="/themes/default/style/theme.css" /> 
-	
-	<!-- Javascript --> 
-	<!--[if IE]>
-	<script src="/themes/default/style/html5.js"></script>
-	<![endif]-->
-	
+  	<?php $zApp->Components->Go ( 'system', 'head', 'head' ); ?>
 </head>
 
 <body id="appleseed">

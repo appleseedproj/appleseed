@@ -2,9 +2,7 @@
 <html lang="en">
 
 <head>
-	
   	<?php $zApp->Components->Go ( 'system', 'head', 'head' ); ?>
-
 </head>
 
 <body id="appleseed">
