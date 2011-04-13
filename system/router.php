@@ -140,10 +140,14 @@ class cRouter extends cBase {
 		
 				$Foundation->Load ( $finalDestination );
 				
+				$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
+		
 				return ( true );
 			}
 		}
 
+		$Foundation->Load ( 'common/404.php' );
+				
 		$this->GetSys ( "Event" )->Trigger ( "End", "System", "Route" );
 		
 		return ( true );
