@@ -1,7 +1,0 @@
-   </tbody>
-   </table>
-  </form>
-
- <?php $zHTML->Scroll ($gTARGET, 'user.photos', SCROLL_NOFIRST); ?>
-
-</section>

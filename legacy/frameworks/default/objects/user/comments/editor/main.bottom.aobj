@@ -1,8 +1,0 @@
-  </form> <!-- #masslist -->
-
-  </div> <!-- #editor -->
- </div> <!-- #container -->
-
- <?php $zHTML->Scroll ($gCOMMENTTARGET, 'user.comments', SCROLL_NOFIRST); ?>
-
-</div> <!-- #comments -->

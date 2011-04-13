@@ -1,7 +1,0 @@
-<section id='joininfo'>
-  <h1>
-   <?php echo __("Site Join Info Title"); ?>
-  </h1>
-
-   <?php echo __("Site Join Info Content"); ?>
-</section> <!-- #joininfo -->

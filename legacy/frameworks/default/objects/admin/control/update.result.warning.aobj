@@ -1,1 +1,0 @@
-<span class='warning'><?php echo $gRESULT; ?></span>

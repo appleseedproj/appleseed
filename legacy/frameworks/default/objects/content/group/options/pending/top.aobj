@@ -1,9 +1,0 @@
-<div id='titles'>
- <span class='user'>
-   <?php echo __("User"); ?>
- </span>
- <span class='action'>
-   <?php echo __("Action"); ?>
- </span>
-</div> <!-- #titles -->
-<ul>

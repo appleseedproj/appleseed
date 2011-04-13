@@ -1,8 +1,0 @@
- <nav class='tabs'>
-
-  <ul>
-  	<li><asd id='link' extra='READDATA' target='%COMMENTTARGET%#comments' text='Read Comments' /></li>
-  	<li><asd id='link' extra='ADDDATA' target='%COMMENTTARGET%#comments' text='Add Comment' /></li>
-  </ul>
-
- </nav> <!-- #tabs -->

@@ -63,7 +63,7 @@ class cFriendsFriendsController extends cController {
 	private function _DisplayFriends ( ) {
 		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( 'Friends Title', array ( 'fullname' => $this->_Focus->Fullname ) );
 		
-		$this->Model->RetrieveFriends ( $this->_Focus->uID, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
+		$this->Model->RetrieveFriends ( $this->_Focus->Account_PK, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
 		
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( 'Number Of Friends', array ( 'count' => $this->Model->Get ( 'Total' ) ) );
 		
@@ -91,7 +91,7 @@ class cFriendsFriendsController extends cController {
 		$data = array ( 'account' => $this->_Current->Account, 'source' => ASD_DOMAIN, 'request' => $this->_Current->Account );
 		$this->_CurrentInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
 		
-		$this->Model->RetrieveMutual ( $this->_Focus->uID, $this->_CurrentInfo->friends, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
+		$this->Model->RetrieveMutual ( $this->_Focus->Account_PK, $this->_CurrentInfo->friends, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
 		
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( 'Number Of Mutual Friends', array ( 'count' => $this->Model->Get ( 'Total' ) ) );
 		
@@ -115,7 +115,7 @@ class cFriendsFriendsController extends cController {
 		
 		$this->View->Find ( '[class=profile-friends-title]', 0 )->innertext = __( 'Requests Title', array ( 'fullname' => $this->_Focus->Fullname ) );
 		
-		$this->Model->RetrieveRequests ( $this->_Focus->uID, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
+		$this->Model->RetrieveRequests ( $this->_Focus->Account_PK, array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
 		
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( 'Number Of Friend Requests', array ( 'count' => $this->Model->Get ( 'Total' ) ) );
 		
@@ -149,7 +149,7 @@ class cFriendsFriendsController extends cController {
 		
 		$this->_ViewingCircle = $this->Circles->Get ( 'Name' );
 		
-		$this->Model->RetrieveCircle ( $this->_Focus->uID, $this->Circles->Get ( 'tID' ), array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
+		$this->Model->RetrieveCircle ( $this->_Focus->Account_PK, $this->Circles->Get ( 'tID' ), array ( 'start' => $this->_PageStart, 'step' => $this->_PageStep ) );
 		
 		$this->View->Find ( '[class=profile-friends-count]', 0 )->innertext = __( 'Number Of Friends In Circle', array ( 'count' => $this->Model->Get ( 'Total' ), 'circle' => $this->Circles->Get ( 'Name' ) ) );
 		
@@ -167,8 +167,8 @@ class cFriendsFriendsController extends cController {
 		$this->_Prep();
 		
 		// Prepare forms.
-		$friendsList = $this->Model->Friends ( $this->_Focus->uID );
-		$friendsInCircle = $this->Model->FriendsInCircle ( $this->_Focus->uID, $this->Circles->Get ( 'tID' ) );
+		$friendsList = $this->Model->Friends ( $this->_Focus->Account_PK );
+		$friendsInCircle = $this->Model->FriendsInCircle ( $this->_Focus->Account_PK, $this->Circles->Get ( 'tID' ) );
 		$friendsOutCircle = array_diff (  $friendsList, $friendsInCircle );
 		
 		if ( count ( $friendsOutCircle ) > 0 ) {
@@ -287,7 +287,7 @@ class cFriendsFriendsController extends cController {
 		$pRow->Find ( '[class=friends-mutual-count]', 0 )->innertext = '';
 		
 		// Prepare Circle Add/Remove
-		$circlesList = $this->Circles->Circles ( $this->_Focus->uID );
+		$circlesList = $this->Circles->Circles ( $this->_Focus->Account_PK );
 		
 		if ( count ( $circlesList ) == 0 ) {
 			$pRow->Find ( '[class=friend-circle-edit-list]', 0)->outertext = '';
@@ -298,7 +298,7 @@ class cFriendsFriendsController extends cController {
 			}
 			
 			$account = $this->Model->Get ( 'Username' ) . '@' . $this->Model->Get ( 'Domain' );
-			$MemberOfCircles = $this->Circles->CirclesByMember ( $this->_Focus->uID, $account );
+			$MemberOfCircles = $this->Circles->CirclesByMember ( $this->_Focus->Account_PK, $account );
 			$NotMemberOfCircles = array_diff (  $AllCircles, $MemberOfCircles );
 			
 			if ( count ( $NotMemberOfCircles ) > 0 ) {
@@ -504,7 +504,7 @@ class cFriendsFriendsController extends cController {
 		$this->_RequestInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
 		
 		// 0. Check for a pending request.
-		if ( $model->CheckPending ( $this->_Focus->uID, $request ) ) {
+		if ( $model->CheckPending ( $this->_Focus->Account_PK, $request ) ) {
 			$session->Context ( 'friends.friends.(\d+).(mutual|friends|requests|circles|circle)' );
 			$session->Set ( "Message", __( "Pending request already exists", array ( 'account' => $request, 'fullname' => $this->_RequestInfo->fullname ) ) );
 		
@@ -527,7 +527,7 @@ class cFriendsFriendsController extends cController {
 		}
 		
 		// 2. Create a pending record in the database.
-		$model->SavePending ( $this->_Focus->uID, $request );
+		$model->SavePending ( $this->_Focus->Account_PK, $request );
 		
 		// 3. Redirect to friends.
 		$session->Context ( 'friends.friends.(\d+).(mutual|friends|requests|circles|circle)' );
@@ -610,7 +610,7 @@ class cFriendsFriendsController extends cController {
 		$this->_RequestInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
 		
 		// 1. Delete the current record.
-		$model->RemoveFriend ( $this->_Focus->uID, $request );
+		$model->RemoveFriend ( $this->_Focus->Account_PK, $request );
 		
 		// 2. Send out the request
 		$data = array ( 'account' => $this->_Current->Account, 'request' => $request );
@@ -646,7 +646,7 @@ class cFriendsFriendsController extends cController {
 		$this->_RequestInfo = $this->GetSys ( 'Event' )->Trigger ( 'On', 'User', 'Info', $data );
 		
 		// 1. Check if a request record exists for this user.
-		if ( !$model->CheckRequest ( $this->_Focus->uID, $request ) ) {
+		if ( !$model->CheckRequest ( $this->_Focus->Account_PK, $request ) ) {
 			$session->Context ( 'friends.friends.(\d+).(mutual|friends|requests|circles|circle)' );
 			$session->Set ( "Message", __( "No Friend Request Found", array ( 'account' => $request, 'fullname' => $this->_RequestInfo->fullname ) ) );
 			$session->Set ( "Error", true );
@@ -671,7 +671,7 @@ class cFriendsFriendsController extends cController {
 		}
 		
 		// 3. Update the flag in the database.
-		$model->SaveApproved ( $this->_Focus->uID, $request );
+		$model->SaveApproved ( $this->_Focus->Account_PK, $request );
 		
 		// 4. Add to newsfeed.
 		$friends = $this->Talk ( 'Friends', 'Friends' );

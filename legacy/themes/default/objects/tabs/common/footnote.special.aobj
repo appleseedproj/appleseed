@@ -1,3 +1,0 @@
-<span class='footnote'>
- <?php echo $gFOOTNOTE; ?>
-</span>

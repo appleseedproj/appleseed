@@ -1,8 +1,0 @@
- <nav class='tabs'>
-
-  <ul>
-    <li><a href='/articles/'>Read Articles</a></li>
-    <li><a href='articles/submit/'>Submit Articles</a></li>
-  </ul>
-
- </nav> <!-- #tabs -->

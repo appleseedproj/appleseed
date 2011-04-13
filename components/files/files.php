@@ -33,7 +33,8 @@ class cFiles extends cComponent {
 		
 		$return = array ();
 		
-		$return[] = array ( 'id' => 'files', 'title' => 'Files Tab', 'link' => '/files/', 'owner' => false );
+		// Note: Temporarily removed
+		//$return[] = array ( 'id' => 'files', 'title' => 'Files Tab', 'link' => '/files/', 'owner' => false );
 		
 		return ( $return );
 	} 

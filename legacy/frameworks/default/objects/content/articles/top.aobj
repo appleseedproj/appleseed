@@ -1,8 +1,0 @@
-<section id='site_articles'>
-
-<?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
- 
-  <?php $zSEARCH->Ask (); ?>
-
-  <?php $zARTICLES->Broadcast (); ?>
-  <ol>

@@ -1,9 +1,0 @@
-   <form id='add' name='add' method='POST' action='<?php echo $gTARGET; ?>'>
-    <?php $zHTML->Button ('start_topic'); ?>
-   </form>
-  </div> <!-- #topics -->
- </div> <!-- #container -->
-
- <?php $zHTML->Scroll ($gTARGET, 'content.group.topics', SCROLL_NOFIRST); ?>
-
-</div> <!-- #group  -->

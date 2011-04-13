@@ -1,9 +1,0 @@
- <nav id='user_nav'>
-    <ul>
-      <li><a href='profile/%FOCUSUSERNAME%/info/'>Info</a></li>
-      <li><a href='profile/%FOCUSUSERNAME%/journal/'>Journal</a></li>
-	  <li><a href='profile/%FOCUSUSERNAME%/photos/'>Photos</a></li>
-	  <li><a href='profile/%FOCUSUSERNAME%/friends/'>Friends</a></li>
-	  <li><a href='profile/%FOCUSUSERNAME%/groups/'>Groups</a></li>
-	</ul>
- </nav>

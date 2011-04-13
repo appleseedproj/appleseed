@@ -1,3 +1,0 @@
-<div class='admin' id='content'>
-  <?php echo __("Access Denied", array ('adminemail' => $gADMINEMAIL)); ?>
-</div> <!-- ## admin.content -->

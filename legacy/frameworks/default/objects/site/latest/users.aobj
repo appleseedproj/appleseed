@@ -1,8 +1,0 @@
-<section id="latest_users"> 
-
-  <h1>
-   <?php echo __("Latest Users Title"); ?>
-  </h1>
-
-  (no text yet)
-</section>

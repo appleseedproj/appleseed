@@ -1,3 +1,0 @@
-<span class='noexif'>
-  <?php echo $gNOEXIF; ?>
-</span>

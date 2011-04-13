@@ -1,7 +1,0 @@
-<section id="user_profile"> 
-
-  <h1> <?php echo __("User Profile", array ('fullname' => $gFOCUSFULLNAME)); ?> </h1>
-
-  <?php echo $bPROFILEQUESTIONS; ?>
-
- </section>

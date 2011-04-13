@@ -1,1 +1,0 @@
-<input id='<?php echo $gSTYLEID; ?>' type='checkbox' name='<?php echo $gCHECKNAME ?>' <?php echo $gCHECKVALUE; ?> <?php echo $gCHECKED; ?> />

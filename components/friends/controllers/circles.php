@@ -60,7 +60,7 @@ class cFriendsCirclesController extends cController {
 		$circle = $this->GetSys ( "Request" )->Get ( "Circle" );
 		$viewing = $this->GetSys ( "Request" )->Get ( "Viewing" );
 		
-		$this->Model->SaveFriendToCircle ( $this->_Focus->uID, $friend, $circle );
+		$this->Model->SaveFriendToCircle ( $this->_Focus->Account_PK, $friend, $circle );
 		
 		if ( $viewing ) {
 			$circleLink = $this->_ToUrl ( $viewing );
@@ -138,7 +138,7 @@ class cFriendsCirclesController extends cController {
 			return ( false );
 		}
 		
-		$id = $this->GetSys ( "Request" )->Get ( "tID" );
+		$id = $this->GetSys ( "Request" )->Get ( "Circle_PK" );
 		
 		$validate = $this->GetSys ( "Validation" );
 		
@@ -147,7 +147,7 @@ class cFriendsCirclesController extends cController {
 		
 		$this->_Load ( $name );
 		
-		if ( ( $this->Circles->Get ( "Total" ) > 0 ) and ( $this->Circles->Get ( "tID" ) != $id ) ) {
+		if ( ( $this->Circles->Get ( "Total" ) > 0 ) and ( $this->Circles->Get ( "Circle_PK" ) != $id ) ) {
 			$session->Set ( "Message", "Circle Already Exists" );
 			$session->Set ( "Error", true );
 			$error = true;
@@ -199,7 +199,7 @@ class cFriendsCirclesController extends cController {
 		$session = $this->GetSys ( "Session" );
 		$session->Context ( $this->Get ( "Context" ) );
 		
-		$id = $this->GetSys ( "Request" )->Get ( "tID" );
+		$id = $this->GetSys ( "Request" )->Get ( "Circle_PK" );
 		
 		$this->_Load();
 		
@@ -303,7 +303,7 @@ class cFriendsCirclesController extends cController {
 		$this->View->Find ( "[name=Context]", 0 )->value = $context;
 		$this->View->Find ( "[name=Original]", 0 )->value = $this->Circles->Get ( "Name" );
 		
-		if ( $this->Circles->Get ( "tID" ) ) {
+		if ( $this->Circles->Get ( "Circle_PK" ) ) {
 			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "Edit Circles Header" , array ( "circle" => $this->Circles->Get ( "Name" ) ) );
 		} else {
 			$this->View->Find ( "[class=friends-circles-title]", 0 )->innertext = __( "New Circles Header" );

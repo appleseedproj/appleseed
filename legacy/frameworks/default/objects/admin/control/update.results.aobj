@@ -1,5 +1,0 @@
-    <p id='results'>
-        <?php echo __("Results"); ?>
-    	<?php echo $bRESULT; ?>
-    </p>
-

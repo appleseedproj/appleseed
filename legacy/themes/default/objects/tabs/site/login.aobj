@@ -1,8 +1,0 @@
- <nav class='tabs'>
-
-  <ul>
-    <li><a href='login/'>Local</a></li>
-    <li><a href='login/remote/'>Remote</a></li>
-  </ul>
-
- </nav>

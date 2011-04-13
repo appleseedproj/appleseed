@@ -1,7 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <recipient>
-  <success>%SUCCESS%</success>
-  <fullname>%FULLNAME%</fullname>
- </recipient>
-</appleseed>

@@ -1,4 +1,0 @@
-  </ol>
-</section> <!-- #articles -->
-
-<?php $zHTML->Scroll(); ?>

@@ -1,7 +1,0 @@
-<div class='circleview'>
-<p class='name'>
- <?php echo $zFRIENDS->friendCircles->Name; ?>
-</p>
-<p class='description'>
- <?php echo $zFRIENDS->friendCircles->Description; ?>
-</p>

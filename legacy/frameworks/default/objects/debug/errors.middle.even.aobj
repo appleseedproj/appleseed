@@ -1,7 +1,0 @@
-<li class='even <?php echo strtolower($gTYPE); ?>'>
-  <span class='count'><?php echo $gCOUNT; ?></span>
-  <span class='string'><?php echo $gSTRING; ?></span>
-  <span class='type'><?php echo $gTYPE; ?></span>
-  <span class='line'><?php echo $gLINE; ?></span>
-  <span class='file'><?php echo $gFILE; ?></span>
-</li>

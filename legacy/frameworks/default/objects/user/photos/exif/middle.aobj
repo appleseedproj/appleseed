@@ -1,8 +1,0 @@
-<?php $zHTML->Alternate(); ?>
-  <span class='exiflabel'>
-    <?php echo $gEXIFLABEL; ?>
-  </span>
-  <span class='exifdata'>
-    <?php echo $gEXIFDATA; ?>
-  </span>
-</li> <!-- #[alternate] -->

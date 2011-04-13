@@ -1,5 +1,0 @@
-<section id='admin'>
-  <h1> <?php echo __("Admin Title"); ?> </h1>
-
-  <p> <?php echo __("Admin Description"); ?> </p>
- </section>

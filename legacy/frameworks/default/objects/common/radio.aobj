@@ -1,2 +1,0 @@
-<input type='radio' name='<?php echo $gCHECKNAME; ?>' <?php echo $gCHECKVALUE; ?> <?php echo $gCHECKED; ?> />
-

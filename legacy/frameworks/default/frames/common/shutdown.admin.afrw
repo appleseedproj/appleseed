@@ -1,5 +1,0 @@
-<!-- ## title obj -->
-<?php $zHTML->Title (); ?>
-
-  <!-- ## shutdown obj -->
-  <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/common/shutdown.admin.aobj", INCLUDE_SECURITY_NONE); ?>

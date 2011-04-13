@@ -1,6 +1,0 @@
-<div id='groups'>
-
- <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/group/$gGROUPSTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
- 
-  <div id='container'>
-  <?php $zGROUPS->Broadcast (); ?>

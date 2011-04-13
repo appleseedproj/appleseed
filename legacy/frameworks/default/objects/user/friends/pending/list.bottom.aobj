@@ -1,9 +1,0 @@
- </ul> 
- </div> <!-- #listing -->
- 
-  </div> <!-- #container -->
- </div> <!-- #pending -->
-
- <?php $zHTML->Scroll ($gTARGET, 'user.friends', SCROLL_PAGEOF); ?>
-
-</div> <!-- #friends -->

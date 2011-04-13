@@ -1,1 +1,0 @@
-<li class="<?php echo $gSTYLEID; ?>" <?php echo $gSTYLEEXTRA; ?> >

@@ -1,4 +1,0 @@
- <ul class='first'>
-   <li class='deleted'>
-     <?php echo __("Deleted Entry"); ?>
-   </li> 

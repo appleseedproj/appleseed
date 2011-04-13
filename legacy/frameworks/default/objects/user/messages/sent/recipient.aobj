@@ -1,6 +1,0 @@
-<div class='recipient'>
- <?php echo $bRECIPIENT; ?> 
- <span class='status'>
-   <?php echo $gREADSTATUS; ?>
- </span> <!-- .status -->
-</div>

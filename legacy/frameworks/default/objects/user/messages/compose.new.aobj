@@ -1,3 +1,0 @@
-<form id='compose' name='compose' method='POST' action='<?php echo $gTARGET; ?>'>
- <?php $zHTML->Button ('Compose'); ?>
-</form> <!-- #compose -->

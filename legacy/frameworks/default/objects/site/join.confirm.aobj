@@ -1,8 +1,0 @@
-<section>
-  <h1> <?php echo __("Site Join Confirm Title"); ?> </h1>
-
-  <?php $zFOCUSUSER->Broadcast ('join'); ?>
-
-  <p> <?php echo __("Site Join Confirm Content"); ?> </p>
-
-</section>

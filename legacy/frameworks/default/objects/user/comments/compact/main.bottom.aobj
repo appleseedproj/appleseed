@@ -1,6 +1,0 @@
-  </div> <!-- #compact -->
- </div> <!-- #container -->
-
- <?php $zHTML->Scroll ($gCOMMENTTARGET, 'user.comments', SCROLL_NOFIRST); ?>
-
-</div> <!-- #comments -->

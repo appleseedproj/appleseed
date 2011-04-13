@@ -1,4 +1,0 @@
-  
-    <h1>
-     <?php echo __("Statistics For", array ( "name" => $gFOCUSFULLNAME ) ); ?>
-    </h1>

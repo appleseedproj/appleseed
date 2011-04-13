@@ -1,9 +1,0 @@
-<div id='articles'>
-
- <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/content/articles/$gARTICLESTAB.aobj", INCLUDE_SECURITY_BASIC); ?>
- 
- <div id='container'>
-
-   <?php $zARTICLES->Broadcast(); ?>
- 
-   <ul>

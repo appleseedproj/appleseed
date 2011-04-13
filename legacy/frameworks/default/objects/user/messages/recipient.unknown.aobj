@@ -1,3 +1,0 @@
-<?php $zHTML->TextArea ("RECIPIENTADDRESS", $gRECIPIENTADDRESS); ?>
-
-<?php $zMESSAGE->Broadcast('field', 'recipientaddress'); ?>

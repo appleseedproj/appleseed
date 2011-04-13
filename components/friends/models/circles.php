@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cFriendsCirclesModel extends cModel {
 	
-	protected $_Tablename = "friendCircles";
+	protected $_Tablename = "FriendCircles";
 	
 	/**
 	 * Constructor
@@ -33,7 +33,7 @@ class cFriendsCirclesModel extends cModel {
 	
 	public function Load ( $pUserId, $pCircle ) {
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Name" => $pCircle ) );
+		$this->Retrieve ( array ( "Account_FK" => $pUserId, "Name" => $pCircle ) );
 		
 		if ( !$this->Fetch() ) return ( false );
 		
@@ -58,11 +58,11 @@ class cFriendsCirclesModel extends cModel {
 			$this->Set ( 'Private', (int)true );
 		}
 		
-		$this->Set ( "userAuth_uID", $pUserId );
+		$this->Set ( "Account_FK", $pUserId );
 		$this->Set ( "Name", $pCircle );
 		
 		if ( $pId ) {
-			$this->Save ( array ( "tID" => $pId, "userAuth_uID" => $pUserId ) );
+			$this->Save ( array ( "tID" => $pId, "Account_FK" => $pUserId ) );
 		} else {
 			$this->Save ( );
 		}
@@ -73,7 +73,7 @@ class cFriendsCirclesModel extends cModel {
 	public function DeleteCircle ( $pCircle, $pUserId ) {
 		$this->Protect( "tID" );
 		
-		$this->Delete ( array ( "Name" => $pCircle, "userAuth_uID" => $pUserId ) );
+		$this->Delete ( array ( "Name" => $pCircle, "Account_FK" => $pUserId ) );
 		
 		return ( true );
 	}
@@ -81,10 +81,10 @@ class cFriendsCirclesModel extends cModel {
 	
 	public function Circles ( $pUserId ) {
 		
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId ), 'sID ASC' );
+		$this->Retrieve ( array ( "Account_FK" => $pUserId ), 'sID ASC' );
 		
 		while ( $this->Fetch() ) {
-			$return[] = array ( 'id' => $this->Get ( 'tID' ), 'name' => $this->Get ( 'Name' ), 'private' => $this->Get ( 'Private' ), 'protected' => $this->Get ( 'Protected' ), 'shared' => $this->Get ( 'Shared' ) );
+			$return[] = array ( 'id' => $this->Get ( 'Circle_PK' ), 'name' => $this->Get ( 'Name' ), 'private' => $this->Get ( 'Private' ), 'protected' => $this->Get ( 'Protected' ), 'shared' => $this->Get ( 'Shared' ) );
 		}
 		
 		return ( $return );
@@ -127,9 +127,9 @@ class cFriendsCirclesModel extends cModel {
 		list ( $username, $domain ) = explode ( '@', $pFriend );
 		
 		// Get the circle id
-		$this->Retrieve ( array ( "userAuth_uID" => $pUserId, "Name" => $pCircle ) );
+		$this->Retrieve ( array ( "Account_FK" => $pUserId, "Name" => $pCircle ) );
 		$this->Fetch();
-		if ( !$circleId = $this->Get ( "tID" ) ) return ( false );
+		if ( !$circleId = $this->Get ( "Circle_PK" ) ) return ( false );
 		
 		// Get the friend id
 		$this->Friend = new cModel ( "FriendInformation" );
@@ -143,7 +143,7 @@ class cFriendsCirclesModel extends cModel {
 		$this->CirclesMap->Structure();
 		$this->CirclesMap->Retrieve ( array ( "friendInformation_tID" => $friendId, "friendCircles_tID" => $circleId ) );
 		$this->CirclesMap->Fetch();
-		if ( !$mapId = $this->CirclesMap->Get ( "tID" ) ) {
+		if ( !$mapId = $this->CirclesMap->Get ( "Map_PK" ) ) {
 			// Doesn't exist in map table, so create it.
 			$this->CirclesMap->Set ( "friendInformation_tID", $friendId );
 			$this->CirclesMap->Set ( "friendCircles_tID", $circleId );

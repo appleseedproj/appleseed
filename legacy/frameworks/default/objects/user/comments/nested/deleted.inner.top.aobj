@@ -1,5 +1,0 @@
- <a name='comments<?php echo $gTARGETID; ?>'></a>
- <ul>
-   <li class='deleted'>
-    <?php echo __("Deleted Comment"); ?>
-   </li>

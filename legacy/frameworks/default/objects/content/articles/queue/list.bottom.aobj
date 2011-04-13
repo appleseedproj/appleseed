@@ -1,9 +1,0 @@
-   </ul>
-
-  <?php $zSEARCH->Ask (); ?>
-
- </div> <!-- #container -->
-
- <?php $zHTML->Scroll ($gTARGET, 'content.articles'); ?>
-
-</div> <!-- #articles -->

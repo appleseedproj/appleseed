@@ -1,3 +1,0 @@
-<span class='mark_inbox'>
-  <?php echo __("Inbox"); ?>
-</span> <!-- .mark_inbox -->

@@ -1,5 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <message>%MESSAGE%</message>
- <success>%SUCCESS%</success>
-</appleseed>

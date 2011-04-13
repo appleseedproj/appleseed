@@ -1,6 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <error>
-  <title>%ERRORTITLE%</title>
- </error>
-</appleseed>

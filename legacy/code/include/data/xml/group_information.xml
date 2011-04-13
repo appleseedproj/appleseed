@@ -1,9 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <fullname>%FULLNAME%</fullname>
- <description><![CDATA[%DESCRIPTION%]]></description>
- <stamp>%STAMP%</stamp>
- <tags>%TAGS%</tags>
- <members>%MEMBERS%</members>
- <success>%SUCCESS%</success>
-</appleseed>

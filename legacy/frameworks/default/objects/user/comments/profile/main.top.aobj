@@ -1,7 +1,0 @@
-<section id='user_comments'>
-
- <a name='comments'></a>
-
- <?php $zOLDAPPLE->IncludeFile ("$gTHEMELOCATION/objects/tabs/comments/main.aobj", INCLUDE_SECURITY_BASIC); ?>
- 
- <?php $zLOCALUSER->Broadcast (); ?>

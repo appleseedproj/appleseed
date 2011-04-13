@@ -1,7 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <userinfo>
-  <fullname>%FULLNAME%</fullname>
-  <online>%ONLINE%</online>
- </userinfo>
-</appleseed>

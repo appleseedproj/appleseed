@@ -1,4 +1,0 @@
- <section id="user_info"> 
-   <h1>Info</h1> 
-   <?php echo $bDESCRIPTION; ?>
- </section>

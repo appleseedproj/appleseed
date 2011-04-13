@@ -1,3 +1,0 @@
-<span class='mark_labels'>
-  <?php echo $gLABELLISTING; ?>
-</span> <!-- .mark_labels -->

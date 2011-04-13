@@ -1,6 +1,0 @@
-<li class='even'>
- <span class='count'><?php echo $gCOUNT; ?></span>
- <span class='statement'><?php echo $gSTATEMENT; ?></span>
- <span class='benchmark'><?php echo $gBENCHMARK; ?></span>
- <span class='class'><?php echo $gCLASS; ?></span>
-</li>

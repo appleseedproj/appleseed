@@ -1,3 +1,0 @@
- <?php $zHTML->Scroll ($gCOMMENTTARGET, 'user.comments', SCROLL_NOFIRST); ?>
-
-</section>

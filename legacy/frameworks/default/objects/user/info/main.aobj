@@ -1,6 +1,0 @@
- <!-- tabs objects -->
- <?php $zOLDAPPLE->IncludeFile ($gUSERTABSLOCATION, INCLUDE_SECURITY_BASIC); ?>
-
-    <p class='description'>
-     <?php echo $bDESCRIPTION; ?>
-    </p>

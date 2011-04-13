@@ -1,5 +1,0 @@
-<!-- ## title obj -->
-<?php $zHTML->Title (); ?>
-
-  <!-- ## error.403 obj -->
-  <?php $zOLDAPPLE->IncludeFile ("$gFRAMELOCATION/objects/site/error.403.aobj", INCLUDE_SECURITY_NONE); ?>

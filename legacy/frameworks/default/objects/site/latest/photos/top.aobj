@@ -1,6 +1,0 @@
-<section id="latest_users"> 
-  <h1>
-   <?php echo __("Latest Photos Title"); ?>
-  </h1>
-
- <ul>

@@ -1,6 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <result>TRUE</result>
- <username>%USERNAME%</username>
- <fullname>%FULLNAME%</fullname>
-</appleseed>

@@ -1,9 +1,0 @@
-<appleseed>
- <version>%APPLESEEDVERSION%</version>
- <message>
-  <subject>%SUBJECT%</subject>
-  <body><![CDATA[%BODY%]]></body>
-  <stamp>%STAMP%</stamp>
-  <fullname>%FULLNAME%</fullname>
- </message>
-</appleseed>
