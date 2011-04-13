@@ -204,11 +204,11 @@ class cUserAuthorization extends cBase {
       	$this->Username = $UserAccounts->Get ( "Username" );
       	
       	// Load the user profile information.
-      	$UserInformation = new cModel ( "UserInformation" );
-      	$UserInformation->Retrieve ( array ( "Account_FK" => $sessionModel->Get ( "Account_FK" ) ) );
-      	$UserInformation->Fetch();
+      	$UserProfile = new cModel ( "UserProfile" );
+      	$UserProfile->Retrieve ( array ( "Account_FK" => $sessionModel->Get ( "Account_FK" ) ) );
+      	$UserProfile->Fetch();
       	
-      	$this->Fullname = $UserInformation->Get ( "Fullname" );
+      	$this->Fullname = $UserProfile->Get ( "Fullname" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Remote = false;
@@ -249,18 +249,18 @@ class cUserAuthorization extends cBase {
       	$this->Id = $UserAccounts->Get ( "Account_PK" );
       	
       	// Load the user profile information.
-      	$UserInformation = new cModel ( "UserInformation" );
-      	$UserInformation->Retrieve ( array ( "Account_FK" => $UserAccounts->Get ( "Account_PK" ) ) );
-      	$UserInformation->Fetch();
+      	$UserProfile = new cModel ( "UserProfile" );
+      	$UserProfile->Retrieve ( array ( "Account_FK" => $UserAccounts->Get ( "Account_PK" ) ) );
+      	$UserProfile->Fetch();
       	
-      	$this->Account_PK = $UserInformation->Get ( "Account_FK" );
+      	$this->Account_PK = $UserProfile->Get ( "Account_FK" );
       	
-      	if ( $UserInformation->Get ( "Alias" ) )
-      		$this->Fullname = $UserInformation->Get ( "Alias" );
+      	if ( $UserProfile->Get ( "Alias" ) )
+      		$this->Fullname = $UserProfile->Get ( "Alias" );
       	else
-      		$this->Fullname = $UserInformation->Get ( "Fullname" );
+      		$this->Fullname = $UserProfile->Get ( "Fullname" );
       		
-      	$this->Description = $UserInformation->Get ( "Description" );
+      	$this->Description = $UserProfile->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Account = $this->Username . '@' . $this->Domain;
@@ -290,18 +290,18 @@ class cUserAuthorization extends cBase {
       	$this->Id = $UserAccounts->Get ( "Account_PK" );
       	
       	// Load the user profile information.
-      	$UserInformation = new cModel ( "UserInformation" );
-      	$UserInformation->Retrieve ( array ( "Account_FK" => $UserAccounts->Get ( "Account_PK" ) ) );
-      	$UserInformation->Fetch();
+      	$UserProfile = new cModel ( "UserProfile" );
+      	$UserProfile->Retrieve ( array ( "Account_FK" => $UserAccounts->Get ( "Account_PK" ) ) );
+      	$UserProfile->Fetch();
       	
-      	$this->Account_PK = $UserInformation->Get ( "Account_FK" );
+      	$this->Account_PK = $UserProfile->Get ( "Account_FK" );
       	
-      	if ( $UserInformation->Get ( "Alias" ) )
-      		$this->Fullname = $UserInformation->Get ( "Alias" );
+      	if ( $UserProfile->Get ( "Alias" ) )
+      		$this->Fullname = $UserProfile->Get ( "Alias" );
       	else
-      		$this->Fullname = $UserInformation->Get ( "Fullname" );
+      		$this->Fullname = $UserProfile->Get ( "Fullname" );
       		
-      	$this->Description = $UserInformation->Get ( "Description" );
+      	$this->Description = $UserProfile->Get ( "Description" );
       	$this->Domain = $_SERVER['HTTP_HOST'];
       	
       	$this->Account = $this->Username . '@' . $this->Domain;

@@ -836,7 +836,7 @@ class cQuicksocialHook extends cHook {
 		
 		if ( !$auth->Get ( 'Username' ) ) return ( false );
 		
-		$profile = new cModel ('UserInformation');
+		$profile = new cModel ('UserProfile');
 		$profile->Structure();
 		
 		$profile->Retrieve ( array ( 'Account_FK' => $auth->Get ( 'Account_PK' ) ) );
@@ -934,7 +934,7 @@ class cQuicksocialHook extends cHook {
 		$userModel = new cModel ( 'UserAccounts' );
 		$userModel->Structure();
 		
-		$profileModel = new cModel ( 'UserInformation' );
+		$profileModel = new cModel ( 'UserProfile' );
 		$profileModel->Structure();
 		
 		$friendModel = new cModel ( 'FriendInformation' );
@@ -987,7 +987,7 @@ class cQuicksocialHook extends cHook {
 		list ( $requestUsername, $requestDomain ) = explode ( '@', $pRequest );
 		list ( $accountUsername, $accountDomain ) = explode ( '@', $pAccount );
 		
-		$profileModel = new cModel ( 'UserInformation' );
+		$profileModel = new cModel ( 'UserProfile' );
 		$profileModel->Structure();
 		
 		$userModel->Retrieve ( array ( 'Username' => $requestUsername ) );

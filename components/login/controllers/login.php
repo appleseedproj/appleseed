@@ -337,7 +337,7 @@ class cLoginLoginController extends cController {
 		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $password );
 		
 		$UserAccounts = new cModel ( 'UserAccounts' );
-		$UserInformation = new cModel ( 'UserInformation' );
+		$UserProfile = new cModel ( 'UserProfile' );
 		
 		// Check for existing username.
 		$UserAccounts->Retrieve ( array ( "Username" => $username ) );
@@ -447,11 +447,11 @@ class cLoginLoginController extends cController {
 		
 		$Recipient = $UserAccounts->Get ( 'Username' ) . '@' . ASD_DOMAIN;
 		
-		$UserInformation = new cModel ( 'UserInformation' );
-		$UserInformation->Structure();
+		$UserProfile = new cModel ( 'UserProfile' );
+		$UserProfile->Structure();
 		
-		$UserInformation->Retrieve ( array ( 'Account_FK' => $pRecipientId ) );
-		$UserInformation->Fetch();
+		$UserProfile->Retrieve ( array ( 'Account_FK' => $pRecipientId ) );
+		$UserProfile->Fetch();
 		
 		$Email = $UserAccounts->Get ( 'Email' );
 		$Recipient = $UserAccounts->Get ( 'Username' ) . '@' . ASD_DOMAIN;
@@ -506,14 +506,14 @@ class cLoginLoginController extends cController {
 			return ( $this->Display ( $pView, $pData ) );
 		}
 		
-		$UserInformation = new cModel ( 'UserInformation' );
-		$UserInformation->Retrieve ( $UserAccounts->Get ( "Account_PK" ) );
-		$UserInformation->Fetch();
+		$UserProfile = new cModel ( 'UserProfile' );
+		$UserProfile->Retrieve ( $UserAccounts->Get ( "Account_PK" ) );
+		$UserProfile->Fetch();
       
 		$newpass = $this->GetSys ( "Crypt" )->Encrypt ( $newpassword );
 		
 		$to = $UserAccounts->Get ( "Email" ); 
-		$toName = $UserInformation->Get ( "Fullname" );
+		$toName = $UserProfile->Get ( "Fullname" );
 
 		if ( !$this->ForgotEmail( $to, $username, $newpassword ) ) {
 			// Couldn't send out the message, so error without resetting the pw.

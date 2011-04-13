@@ -180,22 +180,25 @@ CREATE TABLE #__UserSessions ( `Session_PK` INTEGER NOT NULL PRIMARY KEY, `Accou
 # userInformation
 
 drop table #__userInformation;
+
 # userProfile
 
-CREATE TABLE `#__UserInformation` (
+CREATE TABLE `#___UserProfile` (
   `Account_FK` int(11) NOT NULL,
   `Fullname` char(64) DEFAULT NULL,
   `Alias` char(64) DEFAULT NULL,
   `Description` text
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-insert into #__UserInformation select userAuth_uID, Fullname, Alias, Description from #__userProfile;
+insert into #___UserProfile select userAuth_uID, Fullname, Alias, Description from #__userProfile;
 
 alter table #__userAuthorization add `Email` char(128) NOT NULL;
 
 update `#__userAuthorization` AS `a` set `a`.`Email` = ( select `p`.`Email` FROM `#__userProfile` AS `p` WHERE `p`.`userAuth_uID` = `a`.`uID` );
 
-drop table #__userProfile;
+drop table `#__userProfile`;
+
+alter table `#___UserProfile` rename `#__UserProfile`;
 
 # messageNotification
 
