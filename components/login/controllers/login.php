@@ -257,9 +257,6 @@ class cLoginLoginController extends cController {
       		return ( false );
       	}
 
-		// Update the userInformation table
-		$infoModel = new cModel ( "userInformation" );
-		
 		return ( true );
 	}
 	
@@ -312,7 +309,7 @@ class cLoginLoginController extends cController {
 		}
 		
 		if ( $invites == "true" ) {
-			$userInvites = new cModel ( "userInvites" );
+			$userInvites = new cModel ( "UserInvites" );
 			
 			$userInvites->Retrieve ( array ( "Recipient" => $email, "Value" => $invite ) );
 			if ( $userInvites->Get ( "Total" ) == 0 ) {
@@ -392,10 +389,10 @@ class cLoginLoginController extends cController {
 			return ( true );
 		}
 		
-		$userInformation->Set ( "Account_FK", $UserAccounts->Get ( "Account_PK" ) );
-		$userInformation->Set ( "Fullname", $fullname );
+		$UserProfile->Set ( "Account_FK", $UserAccounts->Get ( "Account_PK" ) );
+		$UserProfile->Set ( "Fullname", $fullname );
 		
-		$userInformation->Save();
+		$UserProfile->Save();
 		
 		if ( !$this->Login = $this->GetView ( 'success' ) ) return ( false );
 		
@@ -410,7 +407,7 @@ class cLoginLoginController extends cController {
 			
 			// Create a friend relationship 
 			$sender = $userInvites->Get ( 'Account_FK' );
-			$recipient = $userInformation->Get ( 'Account_FK' );
+			$recipient = $UserProfile->Get ( 'Account_FK' );
 			$data = array ( 'sender' => $sender, 'recipient' => $recipient);
 			$this->Talk ( 'Friends', 'CreateRelationship', $data );
 			

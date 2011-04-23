@@ -666,7 +666,7 @@ class cQuicksocialHook extends cHook {
 	
 	private function _SetRemoteSession( $pUsername, $pDomain ) {
 		
-		$sessionModel = new cModel ( 'authSessions' );
+		$sessionModel = new cModel ( 'RemoteSessions' );
 		
 		// Delete current session id's.
 		$criteria = array ( 'Username' => $pUsername, 'Domain' => $pDomain );
@@ -693,9 +693,6 @@ class cQuicksocialHook extends cHook {
       		
       		return ( false );
       	};
-		
-		// Update the userInformation table
-		$infoModel = new cModel ( 'userInformation' );
 		
 		return ( true );
 	}
@@ -851,6 +848,8 @@ class cQuicksocialHook extends cHook {
 		
 		// Check whether the user is currently online only if verified
 		if ( $pVerified ) {
+			/* NOTE: REMOVED TEMPORARILY
+			/* @todo: Create a new user information table
 			$info = new cModel ('userInformation');
 			$info->Structure();
 		
@@ -866,6 +865,7 @@ class cQuicksocialHook extends cHook {
 				$return['online'] = 'true';
 			else
 				$return['online'] = 'false';
+			*/
 		}
 		
 		// Get the user's friends list for verified users only.

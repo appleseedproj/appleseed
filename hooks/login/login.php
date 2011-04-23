@@ -76,7 +76,7 @@ class cLoginHook extends cHook {
 		
 		// Delete the remote session info database entry.
 		if ( $remoteLoginSession ) {
-      		$sessionModel = new cModel ( "authSessions" );
+      		$sessionModel = new cModel ( "RemoteSessions" );
       		$sessionModel->Delete ( array ( "Identifier" => $remoteLoginSession ) );
 		}
 		

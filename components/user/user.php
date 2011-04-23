@@ -220,7 +220,7 @@ class cUserAuthorization extends cBase {
 	
 	private function _RemoteLoggedIn ( $pSession ) {
       	// Load the session information.
-      	$sessionModel = new cModel ( "authSessions" );
+      	$sessionModel = new cModel ( "RemoteSessions" );
       	$sessionModel->Retrieve ( array ( "Identifier" => $pSession ) );
       	$sessionModel->Fetch();
       	

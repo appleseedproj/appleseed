@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cProfileSummaryModel extends cModel {
 	
-	protected $_Tablename = "userQuestions";
+	protected $_Tablename = "UserQuestions";
 	
 	protected $_Answers;
 	
@@ -31,7 +31,7 @@ class cProfileSummaryModel extends cModel {
 	 */
 	public function __construct ( $pTables = null ) {       
 		
-		$this->_Answers = new cModel ( "userAnswers" );
+		$this->_Answers = new cModel ( "UserAnswers" );
 		
 		parent::__construct( $pTables );
 	}
@@ -46,8 +46,8 @@ class cProfileSummaryModel extends cModel {
 			
 			$return[$current]->Question = $this->Get ( "FullQuestion" );
 			
-			$tID = $this->Get ( "tID" );
-			$this->_Answers->Retrieve ( array ( "userAuth_uID" => $pUserId, "userQuestions_tID" => $tID ) );
+			$tID = $this->Get ( "Question_PK" );
+			$this->_Answers->Retrieve ( array ( "Owner_FK" => $pUserId, "Question_FK" => $tID ) );
 			
 			$this->_Answers->Fetch();
 			

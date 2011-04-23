@@ -79,7 +79,7 @@ class cFriendsModel extends cModel {
 	public function RetrieveCircle ( $pFocusId, $pCircleId, $pLimit = null ) {
 		
 		$friendsTable = $this->_Prefix . $this->_Tablename;
-		$circlesMapTable = $this->_Prefix . 'friendCirclesList';
+		$circlesMapTable = $this->_Prefix . 'FriendCirclesMap';
 		
 		$prepared[] = $pFocusId;
 		$prepared[] = $pCircleId;
@@ -89,8 +89,8 @@ class cFriendsModel extends cModel {
 			FROM `$friendsTable` AS f, `$circlesMapTable` AS c
 			WHERE f.`Owner_FK` = ?
 			AND f.`Verification` = 1 
-			AND c.`friendCircles_tID` = ?
-			AND c.`friendInformation_tID` = f.`Friend_PK`
+			AND c.`Circle_PK` = ?
+			AND c.`Friend_FK` = f.`Friend_PK`
 		";
 		
 		if ( $pLimit ) {

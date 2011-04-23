@@ -20,7 +20,7 @@ defined( 'APPLESEED' ) or die( 'Direct Access Denied' );
  */
 class cUserInvitesModel extends cModel {
 	
-	protected $_Tablename = 'userInvites';
+	protected $_Tablename = 'UserInvites';
 	
 	/**
 	 * Constructor
@@ -32,7 +32,7 @@ class cUserInvitesModel extends cModel {
 	}
 	
 	public function CountInvites ( $pUserId ) {
-		$this->Retrieve ( array ( 'userAuth_uID' => $pUserId, 'Active' => 1 ) );
+		$this->Retrieve ( array ( 'Account_FK' => $pUserId, 'Active' => 1 ) );
 		return ( $this->Get ( 'Total' ) );
 	}
 	
@@ -49,7 +49,7 @@ class cUserInvitesModel extends cModel {
 	}
 	
 	public function Invited ( $pAddress, $pUserId ) {
-		$this->Retrieve ( array ( 'Recipient' => $pAddress, 'userAuth_uID' => $pUserId, 'Active' => '2' ) );
+		$this->Retrieve ( array ( 'Recipient' => $pAddress, 'Account_FK' => $pUserId, 'Active' => '2' ) );
 		if ( $this->Get ( 'Total' ) == 0 ) return ( false );
 		
 		$this->Fetch();
@@ -58,18 +58,18 @@ class cUserInvitesModel extends cModel {
 	}
 	
 	public function InviteCode ( $pAddress, $pUserId ) {
-		$this->Retrieve ( array ( 'userAuth_uID' => $pUserId, 'Active' => 1 ) );
+		$this->Retrieve ( array ( 'Account_FK' => $pUserId, 'Active' => 1 ) );
 		
 		if ( $this->Get ( 'Total' ) == 0 ) return ( false );
 		
 		$this->Fetch();
 		
-		$this->Protect ( 'tID' );
+		$this->Protect ( 'Invite_PK' );
 		$this->Set ( 'Recipient', $pAddress );
 		$this->Set ( 'Active', 2 ); // Pending
 		$this->Set ( 'Stamp', NOW() );
 		
-		if ( $this->Save ( array ( 'tID' => $this->Get ( 'tID' ) ) ) ) {
+		if ( $this->Save ( array ( 'Invite_PK' => $this->Get ( 'Invite_PK' ) ) ) ) {
 			return ( $this->Get ( 'Value' ) );
 		}
 		
@@ -84,8 +84,8 @@ class cUserInvitesModel extends cModel {
 		for ( $i = 0; $i < $pCount; $i++ ) {
 			$Value = $this->GetSys ( 'Crypt' )->Identifier ( 32 );
 			
-			$this->Protect ( 'tID' );
-			$this->Set ( 'userAuth_uID', $pUserId );
+			$this->Protect ( 'Invite_PK' );
+			$this->Set ( 'Account_FK', $pUserId );
 			$this->Set ( 'Value', $Value );
 			$this->Set ( 'Active', 1 );
 			$this->Set ( 'Recipient', null );

@@ -33,7 +33,7 @@ class cFriendsCirclesModel extends cModel {
 	
 	public function Load ( $pUserId, $pCircle ) {
 		
-		$this->Retrieve ( array ( "Account_FK" => $pUserId, "Name" => $pCircle ) );
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Name" => $pCircle ) );
 		
 		if ( !$this->Fetch() ) return ( false );
 		
@@ -42,7 +42,7 @@ class cFriendsCirclesModel extends cModel {
 	
 	public function SaveCircle ( $pCircle, $pUserId, $pId = null ) {
 		
-		$this->Protect( "tID" );
+		$this->Protect( "Circle_PK" );
 		
 		$Sharing = $this->GetSys ( "Request" )->Get ( "Sharing" );
 		
@@ -58,11 +58,11 @@ class cFriendsCirclesModel extends cModel {
 			$this->Set ( 'Private', (int)true );
 		}
 		
-		$this->Set ( "Account_FK", $pUserId );
+		$this->Set ( "Owner_FK", $pUserId );
 		$this->Set ( "Name", $pCircle );
 		
 		if ( $pId ) {
-			$this->Save ( array ( "tID" => $pId, "Account_FK" => $pUserId ) );
+			$this->Save ( array ( "Circle_PK" => $pId, "Owner_FK" => $pUserId ) );
 		} else {
 			$this->Save ( );
 		}
@@ -71,9 +71,9 @@ class cFriendsCirclesModel extends cModel {
 	}
 	
 	public function DeleteCircle ( $pCircle, $pUserId ) {
-		$this->Protect( "tID" );
+		$this->Protect( "Circle_PK" );
 		
-		$this->Delete ( array ( "Name" => $pCircle, "Account_FK" => $pUserId ) );
+		$this->Delete ( array ( "Name" => $pCircle, "Owner_FK" => $pUserId ) );
 		
 		return ( true );
 	}
@@ -81,7 +81,7 @@ class cFriendsCirclesModel extends cModel {
 	
 	public function Circles ( $pUserId ) {
 		
-		$this->Retrieve ( array ( "Account_FK" => $pUserId ), 'sID ASC' );
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId ), 'sID ASC' );
 		
 		while ( $this->Fetch() ) {
 			$return[] = array ( 'id' => $this->Get ( 'Circle_PK' ), 'name' => $this->Get ( 'Name' ), 'private' => $this->Get ( 'Private' ), 'protected' => $this->Get ( 'Protected' ), 'shared' => $this->Get ( 'Shared' ) );
@@ -109,12 +109,12 @@ class cFriendsCirclesModel extends cModel {
 		$this->Friend->Fetch();
 		if ( !$friendId = $this->Friend->Get ( "Friend_PK" ) ) return ( false );
 		
-		$this->CirclesMap = new cModel ( "friendCirclesList" );
+		$this->CirclesMap = new cModel ( "FriendCirclesMap" );
 		$this->CirclesMap->Structure();
-		$this->CirclesMap->Retrieve ( array ( "friendInformation_tID" => $friendId, "friendCircles_tID" => '()' . $inList ) );
+		$this->CirclesMap->Retrieve ( array ( "Friend_FK" => $friendId, "Circle_FK" => '()' . $inList ) );
 		$return = array ();
 		while ( $this->CirclesMap->Fetch() ) {
-			$this->Retrieve ( array ( "tID" => $this->CirclesMap->Get ( "friendCircles_tID" ) ) );
+			$this->Retrieve ( array ( "Circle_PK" => $this->CirclesMap->Get ( "Circle_FK" ) ) );
 			$this->Fetch();
 			$return[] = $this->Get ( "Name" );
 		}
@@ -127,7 +127,7 @@ class cFriendsCirclesModel extends cModel {
 		list ( $username, $domain ) = explode ( '@', $pFriend );
 		
 		// Get the circle id
-		$this->Retrieve ( array ( "Account_FK" => $pUserId, "Name" => $pCircle ) );
+		$this->Retrieve ( array ( "Owner_FK" => $pUserId, "Name" => $pCircle ) );
 		$this->Fetch();
 		if ( !$circleId = $this->Get ( "Circle_PK" ) ) return ( false );
 		
@@ -139,14 +139,14 @@ class cFriendsCirclesModel extends cModel {
 		if ( !$friendId = $this->Friend->Get ( "Friend_PK" ) ) return ( false );
 		
 		// Get the map id
-		$this->CirclesMap = new cModel ( "friendCirclesList" );
+		$this->CirclesMap = new cModel ( "FriendCirclesMap" );
 		$this->CirclesMap->Structure();
-		$this->CirclesMap->Retrieve ( array ( "friendInformation_tID" => $friendId, "friendCircles_tID" => $circleId ) );
+		$this->CirclesMap->Retrieve ( array ( "Friend_FK" => $friendId, "Circle_FK" => $circleId ) );
 		$this->CirclesMap->Fetch();
 		if ( !$mapId = $this->CirclesMap->Get ( "Map_PK" ) ) {
 			// Doesn't exist in map table, so create it.
-			$this->CirclesMap->Set ( "friendInformation_tID", $friendId );
-			$this->CirclesMap->Set ( "friendCircles_tID", $circleId );
+			$this->CirclesMap->Set ( "Friend_FK", $friendId );
+			$this->CirclesMap->Set ( "Circle_FK", $circleId );
 			$this->CirclesMap->Save ();
 		} else {
 			// Exists in map table, so delete it.
