@@ -9,9 +9,9 @@ insert into `#__Janitor` ( `Updated`, `Task` ) values ( NOW(), 'UpdateNodeNetwor
 
 insert into `#__Janitor` ( `Updated`, `Task` ) values ( NOW(), 'ProcessNewsfeed' );
 
-drop table `#__photoInformation`;
-drop table `#__photoPrivacy`;
-drop table `#__photoSets`;
+drop table if exists `#__photoInformation`;
+drop table if exists `#__photoPrivacy`;
+drop table if exists `#__photoSets`;
 
 create table `#__PhotoSets` ( `Set_PK` int(11) NOT NULL AUTO_INCREMENT, `Owner_FK` int(11) DEFAULT NULL, `Identifier` char(32) DEFAULT NULL, `Name` char(128) DEFAULT NULL, `Directory` char(128) NOT NULL, `Description` text, `Created` datetime DEFAULT NULL, `Updated` datetime DEFAULT NULL, PRIMARY KEY (`Set_PK`)) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -25,7 +25,9 @@ alter table `#__userAuthorization` add `Secret` char(32);
 
 ### Legacy Database Refactoring
 
+#
 # authSessions
+#
 
 alter table #__authSessions engine="MyIsam";
 
@@ -46,7 +48,9 @@ alter table #__authSessions rename #___authSessions;
 alter table #___authSessions rename #__RemoteSessions;
 
 
+#
 # friendCircles
+#
 
 alter table #__friendCircles drop key #__Circles_FKIndex1;
 
@@ -58,11 +62,15 @@ alter table #__friendCircles change Name Name char(32) DEFAULT NULL;
 
 alter table #__friendCircles change Description Description char(255) DEFAULT NULL;
 
+alter table #__friendCircles change userAuth_uID Owner_FK INTEGER NOT NULL;
+
 alter table #__friendCircles rename #___friendCircles;
 alter table #___friendCircles rename #__FriendCircles;
 
 
+#
 # friendCirclesList
+#
 
  alter table #__friendCirclesList drop key #__friendCirclesList_FKIndex1;
 
@@ -78,108 +86,183 @@ alter table #__friendCirclesList change friendInformation_tID Friend_FK INTEGER 
 
 alter table #__friendCirclesList rename #__FriendCirclesMap;
 
-
-
+#
 # userIcons
+#
 
-drop table #__userIcons;
+drop table if exists #__userIcons;
 
+#
 # userAnswers
+#
 
- drop table #__userAnswers;
+CREATE TABLE `#___UserAnswers` (
+  `Answer_PK` int(11) NOT NULL AUTO_INCREMENT,
+  `Owner_FK` int(11) NOT NULL,
+  `Question_FK` int(11) NOT NULL,
+  `Answer` text,
+  PRIMARY KEY (`Answer_PK`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+insert into #___UserAnswers select * from #__userAnswers;
+
+drop table if exists #__userAnswers;
+
+alter table #___UserAnswers rename #__UserAnswers;
+
+
+#
 # userQuestions
+#
 
-drop table #__userQuestions;
+CREATE TABLE `#___UserQuestions` (
+  `Question_FK` int(11) NOT NULL AUTO_INCREMENT,
+  `FullQuestion` char(255) DEFAULT NULL,
+  `ShortQuestion` char(255) DEFAULT NULL,
+  `TypeOf` int(2) DEFAULT NULL,
+  `Language` char(2) DEFAULT NULL,
+  `Concern` char(255) DEFAULT NULL,
+  `Visible` int(1) DEFAULT NULL,
+  PRIMARY KEY (`Question_FK`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+insert into #___UserQuestions select * from #__userQuestions;
+
+drop table if exists #__userQuestions;
+
+alter table #___UserQuestions rename #__UserQuestions;
+
+#
 # commentInformation
+#
 
-drop table #__commentInformation;
+drop table if exists #__commentInformation;
 
+#
 # systemLogs
+#
 
-drop table #__systemLogs;
+drop table if exists #__systemLogs;
 
+#
 # systemConfig
+#
 
-drop table #__systemConfig;
+drop table if exists #__systemConfig;
 
+#
 # systemOptions
+#
 
-drop table #__systemOptions;
+drop table if exists #__systemOptions;
 
+#
 # systemMaintenance
+#
 
-drop table #__systemMaintenance;
+drop table if exists #__systemMaintenance;
 
+#
 # tagInformation
+#
 
-drop table #__tagInformation;
+drop table if exists #__tagInformation;
 
+#
 # tagList
+#
 
- drop table #__tagList;
+drop table if exists #__tagList;
 
+#
 # userAccess
+#
 
-drop table #__userAccess;
+drop table if exists #__userAccess;
+#
 # userInvites
+#
 
 create table #__UserInvitesNew ( Invite_PK INTEGER PRIMARY KEY AUTO_INCREMENT, Account_FK INTEGER NOT NULL, Value CHAR(32), Active BOOL, Recipient CHAR(128), Stamp DATETIME );
 
 insert into #__UserInvitesNew ( Account_FK, Value, Active, Recipient, Stamp ) SELECT userAuth_uID, Value, Active, Recipient, Stamp FROM #__userInvites; 
 
-drop table #__userInvites;
+drop table if exists #__userInvites;
 
 alter table #__UserInvitesNew rename #__UserInvites;
+
+#
 # userPreferences
+#
 
-drop table #__userPreferences;
+drop table if exists #__userPreferences;
+
+#
 # userPrivacy
+#
 
-drop table #__userPrivacy;
+drop table if exists #__userPrivacy;
 
+#
 # contentPages
+#
 
-drop table #__contentPages;
+drop table if exists #__contentPages;
 
+#
 # contentNodes
+#
 
-drop table #__contentNodes;
+drop table if exists #__contentNodes;
 
+#
+# journalPrivacy
+#
+
+drop table if exists #__journalPrivacy;
+
+#
+# journalPost
+#
+
+drop table if exists #__journalPost;
+
+#
 # userBlocks
+#
 
-drop table #__userBlocks;
+drop table if exists #__userBlocks;
+
 # groupContent
 
-drop table #__groupContent;
+drop table if exists #__groupContent;
 
 # groupInformation
 
-drop table #__groupInformation;
+drop table if exists #__groupInformation;
 # groupMembers
 
-drop table #__groupMembers;
+drop table if exists #__groupMembers;
 
 # cacheNodes
 
-drop table #__cacheNodes;
+drop table if exists #__cacheNodes;
 # userGroups
 
-drop table #__userGroups;
+drop table if exists #__userGroups;
 # userSettings
 
-drop table #__userSettings;
+drop table if exists #__userSettings;
 
 # userSessions
 
-drop table #__userSessions;
+drop table if exists #__userSessions;
 
 CREATE TABLE #__UserSessions ( `Session_PK` INTEGER NOT NULL PRIMARY KEY, `Account_FK` INTEGER NOT NULL, `Identifier` CHAR(32), Stamp DATETIME, Address CHAR(16), Host CHAR(128) );
 
 # userInformation
 
-drop table #__userInformation;
+drop table if exists #__userInformation;
 
 # userProfile
 
@@ -196,7 +279,7 @@ alter table #__userAuthorization add `Email` char(128) NOT NULL;
 
 update `#__userAuthorization` AS `a` set `a`.`Email` = ( select `p`.`Email` FROM `#__userProfile` AS `p` WHERE `p`.`userAuth_uID` = `a`.`uID` );
 
-drop table `#__userProfile`;
+drop table if exists `#__userProfile`;
 
 alter table `#___UserProfile` rename `#__UserProfile`;
 
@@ -255,7 +338,7 @@ alter table #__messageLabelList rename #__MessageLabelsMap;
 
 # messageAttachments
 
-drop table #__messageAttachments;
+drop table if exists #__messageAttachments;
 
 # messageInformation
 
@@ -278,11 +361,11 @@ alter table #__messageInformation rename #__MessageEntries;
 
 # authTokens
 
-drop table #__authTokens;
+drop table if exists #__authTokens;
 
 # authVerification
 
-drop table #__authVerification;
+drop table if exists #__authVerification;
 
 # messageStore
 
