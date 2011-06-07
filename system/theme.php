@@ -48,48 +48,56 @@ class cTheme extends cBase {
 		if ( isset ( $this->_styles ) ) return ( $this->_styles );
 		
 		$paths = $this->_Config->GetPath ();
-		
+
+		$extensions = explode ( ' ', $this->_Config->GetConfiguration ( 'extensions', 'css' ) );
+
 		$found = false;
 		
 		$base = $zApp->GetPath() . DS . 'themes';
 		
 		$styles = array ();
 		
- 		foreach ( $paths as $p => $path ) {
+		foreach ( $extensions as $e => $extension ) {
+ 			foreach ( $paths as $p => $path ) {
  			
- 			$location = $zApp->GetPath() . '/themes/' . $path . '/styles/init';
+ 				$directory = $zApp->GetPath() . '/themes/' . $path . '/styles/init/';
+ 				$location = $path . '/styles/init/';
  			
- 			// Directory does not exist, continue;
- 			if (!is_dir ($location)) continue;
+ 				// Directory does not exist, continue;
+ 				if (!is_dir ($directory)) continue;
  			
- 			// Get a list of all css files.
- 			$files = glob($location . '/*.css');
+ 				// Get a list of all css files.
+                $Storage = Wob::_('Storage');
+
+                $files = $Storage->Scan ( $directory, $extension );
+
+ 				// No styles found, continue
+ 				if ( count ( $files ) < 1 ) continue;
  			
- 			// No styles found, continue
- 			if ( count ( $files ) < 1 ) continue;
+ 				$found = true;
  			
- 			$found = true;
- 			
- 			foreach ( $files as $f => $file ) {
- 				$file = str_replace ($base . '/', '', $file);
- 				$file = implode ( '/', explode ( DS, $file ) );
- 				$styles[] = $file;
- 			}
+ 				foreach ( $files as $f => $file ) {
+ 					$file = $location . $file;
+ 					$styles[] = $file;
+ 				}
  		
- 		} 
+ 			} 
+		}
 
 		$Router = Wob::_( 'Router' );
 		$foundation = $Router->Get ('Foundation' );
 
-		$foundation = str_replace ( '.php', '.css', $foundation );
+		foreach ( $extensions as $e => $extension ) {
+			$foundation = str_replace ( '.php', '.' . $extension, $foundation );
 
-		// Load the foundation styles
-		$foundationStyle = null;
-		foreach ( $paths as $p => $path ) {
-			$file = ASD_PATH . 'themes/' . $path . '/styles/foundations' . $foundation;
-			$url = $path . '/styles/foundations' . $foundation;
-			if ( file_exists ( $file ) ) {
-				$foundationStyle = $url;
+			// Load the foundation styles
+			$foundationStyle = null;
+			foreach ( $paths as $p => $path ) {
+				$file = ASD_PATH . 'themes/' . $path . '/styles/foundations' . $foundation;
+				$url = $path . '/styles/foundations' . $foundation;
+				if ( file_exists ( $file ) ) {
+					$foundationStyle = $url;
+				}
 			}
 		}
 

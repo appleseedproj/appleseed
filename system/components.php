@@ -275,7 +275,8 @@ class cComponents extends cBase {
 						break;
 					}
 					$script = '<script type="' . $type . '" src="' . $path . '"></script>';
-					$queue['component'][$c]->Buffer .= "\n" . $script;
+					$queue['component'][$c]->Buffer = rtrim ( $queue['component'][$c]->Buffer ) . "\n";
+					$queue['component'][$c]->Buffer .= $script . "\n";
 				}
 			}
 		}
@@ -288,28 +289,42 @@ class cComponents extends cBase {
 	public function _AddStyles ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
 
-		foreach ( $queue['component'] as $c => $component ) {
-			if ( preg_match ( '/system.head.(\d+).(\w+)/', $component->Parameters ) ) {
-				if ( !$pView ) $pView = $pComponent;
+		$extensions = explode ( ' ', $this->GetSys ( 'Theme' )->Get ( 'Config' )->GetConfiguration ( 'extensions', 'css' ) );
 
-				$themes = $this->GetSys ( 'Theme' )->Get ( 'Config' )->GetPath();
+		foreach ( $extensions as $e => $extension ) {
+			foreach ( $queue['component'] as $c => $component ) {
+				if ( preg_match ( '/system.head.(\d+).(\w+)/', $component->Parameters ) ) {
+					if ( !$pView ) $pView = $pComponent;
 
-				$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/styles/' . $pView . '.css';
-				$location = ASD_PATH . 'components/' . $pComponent . '/styles/' . $pView . '.css';
+					$themes = $this->GetSys ( 'Theme' )->Get ( 'Config' )->GetPath();
 
-				foreach ( $themes as $theme ) {
-					$themePath = 'http://' . ASD_DOMAIN . '/themes/' . $theme . '/styles/components/' . $pComponent . '/' . $pView . '.css';
-					$themeLocation = ASD_PATH . 'themes/' . $theme . '/styles/components/' . $pComponent . '/' . $pView . '.css';
+					$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/styles/' . $pView . '.' . $extension;
+					$location = ASD_PATH . 'components/' . $pComponent . '/styles/' . $pView . '.' . $extension;
 
-					if ( !file_exists ( $themeLocation ) ) continue;
+					foreach ( $themes as $theme ) {
+						$themePath = 'http://' . ASD_DOMAIN . '/themes/' . $theme . '/styles/components/' . $pComponent . '/' . $pView . '.' . $extension;
+						$themeLocation = ASD_PATH . 'themes/' . $theme . '/styles/components/' . $pComponent . '/' . $pView . '.' . $extension;
 
-					$path = $themePath;
-					$location = $themeLocation;
+						if ( !file_exists ( $themeLocation ) ) continue;
+
+						$path = $themePath;
+						$location = $themeLocation;
+					}
+
+					if ( !file_exists ( $location ) ) continue;
+
+            		if ( strstr ( $path, '.less' ) ) {
+						$script = '<link rel="stylesheet/less" type="text/css" href="' . $path . '" />';
+            		} else {
+						$script = '<link rel="stylesheet" type="text/css" href="' . $path . '" />';
+            		}
+
+					// Necessary because .less files must be before any scripts.
+					$bufferParts = explode ( "\n<script", $queue['component'][$c]->Buffer, 2 );
+
+					$bufferParts[0] .= $script . "\n\n";
+					$queue['component'][$c]->Buffer = implode ( "<script", $bufferParts );
 				}
-
-				if ( !file_exists ( $location ) ) continue;
-				$script = '<link rel="stylesheet" href="' . $path . '" />';
-				$queue['component'][$c]->Buffer .= "\n" . $script;
 			}
 		}
 

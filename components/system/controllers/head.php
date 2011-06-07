@@ -115,7 +115,7 @@ class cSystemHeadController extends cController {
 				$script->Find ( 'script', 0 )->type = 'text/javascript';
 			}
 
-			$this->View->Find ( 'script', 0 )->outertext .= "\n" . $script->outertext;
+			$this->View->Find ( 'script', 0 )->outertext .= $script->outertext . "\n";
 		}
 		$this->View->Reload();
 
@@ -162,6 +162,12 @@ class cSystemHeadController extends cController {
             $style->Load ( $stylesheets );
 
 			$style->Find ( '[rel="stylesheet"]', 0 )->href = $path;
+
+			if ( strstr ( $path, '.less' ) ) {
+				$style->Find ( '[rel="stylesheet"]', 0 )->rel = "stylesheet/less";
+			} else {
+				$style->Find ( '[rel="stylesheet"]', 0 )->rel = "stylesheet";
+			}
 
 			$this->View->Find ( '[rel="stylesheet"]', 0 )->outertext .= "\n" . $style->outertext;
 		}
