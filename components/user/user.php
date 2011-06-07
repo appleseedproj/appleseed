@@ -129,7 +129,7 @@ class cUser extends cComponent {
 		$file = ASD_PATH . '_storage/photos/' . $username . '/' . 'profile.' . $size . '.jpg';
 		if ( !file_exists ( $file ) ) {
 			// @todo: Create an Error() function for interfaces
-			$return['error'] = '403';
+			$return['error'] = '404';
 			$return['message'] = 'File Not Found';
 			return ( $return );
 		}
@@ -144,11 +144,89 @@ class cUser extends cComponent {
 		exit;
 	}
 	
+	/*
+	 * Retrieve or generate an authentication token.
+	 * Available to authenticated users only.
+	 *
+	 */
 	public function GetToken ( ) {
-		$return = array ( 'uno' => 'One', 
-						  'nested' => array ( 'two' => 'TWO', 
-											  'tres' => 'Three' ), 
-						  'four' => '4' );
+
+		$Current = $this->Talk ( 'User', 'Current' );
+
+		if ( !$Current ) {
+			// User is not locally authenticated.
+			$return['error'] = '403';
+			$return['message'] = 'Forbidden';
+			return ( $return );
+		}
+
+		$Secret = $Current->Secret;
+
+		$Identity = $Current->Account;
+		$Origin = ASD_DOMAIN;
+		$Destination = ASD_DOMAIN;
+
+		// 1. Check for existing, unexpired token.
+      	$tokensModel = new cModel ( "AuthorizationTokens" );
+
+		$Graph = Wob::_( 'Graph' );
+
+		// Create the callback function pointer for saving tokens.
+		$fSaveToken = array ( $this, '_SaveToken' );
+		$fLoadToken = array ( $this, '_LoadToken' );
+		list ( $Token, $Expiration ) = $Graph->Token ( $Identity, $Origin, $Destination, $pSecret, 24 * 60, $fSaveToken, $fLoadToken );
+
+		$Date = Wob::_( 'Date' );
+
+		// Check for Created is > 24h ago.
+		$createdStamp = ( time() - ( 60 * 60 * 24 ) ); 
+		$createdMysql = $Date->ToMysql ( $createdStamp );
+
+		// Find a corresponding token which is less than 24 hours old.
+		$tokensModel->Query ( 'SELECT * FROM #__AuthorizationTokens' );
+
+		$criteria = array (
+			'Identity' => $Identity,
+			'Origin' => $Origin,
+			'Destination' => $Destination,
+			'Created' => '>>' . $createdMysql,
+		);
+		$tokensModel->Retrieve ( $criteria );
+
+		// 2. Create new token.
+		if ( $tokensModel->Get ( 'Total' ) == 0 ) {
+			$createdStamp = time();
+			$expirationStamp = ( time() + ( 60 * 60 * 24 ) ); 
+
+			$createdMysql = $Date->ToMysql ( $createdStamp );
+			$expirationMysql = $Date->ToMysql ( $expirationStamp );
+			$Expiration = $Date->ToGraph ( $expirationStamp );
+
+			# 1P =  hmac_sha512 ( Identity + Origin + Destination + Expiration, Secret );
+			$String = $Identity . $Origin . $Destination . $Expiration;
+			$Token = hash_hmac ( 'sha512', $String, $Secret );
+
+			$tokensModel->Set ( 'Identity', $Identity );
+			$tokensModel->Set ( 'Origin', $Origin );
+			$tokensModel->Set ( 'Destination', $Destination );
+			$tokensModel->Set ( 'Created', $createdMysql );
+			$tokensModel->Set ( 'Token', $Token );
+			$tokensModel->Set ( 'Token', $Token );
+			$tokensModel->Set ( 'Host', $_SERVER['HTTP_HOST'] );
+			$tokensModel->Set ( 'Address', $_SERVER['REMOTE_ADDR'] );
+			$tokensModel->Save();
+		} else {
+			$tokensModel->Fetch();
+			$Token = $tokensModel->Get ( 'Token' );
+			$Expiration = $Date->ToGraph ( strtotime ( $tokensModel->Get ( 'Created' ) ) + (24 * 60 * 60 ) );
+		}
+
+		// 3. Return the token.
+		$return = array ( 'account' => $Identity, 
+						  'origin' => $Origin,
+						  'destination' => $Destination,
+						  'token' => $Token,
+						  'expiration' => $Expiration );
 
 		return ( $return );
 	}
@@ -202,6 +280,7 @@ class cUserAuthorization extends cBase {
       	if ( !$UserAccounts->Get ( "Username" ) ) return ( false );
       	
       	$this->Username = $UserAccounts->Get ( "Username" );
+      	$this->Secret = $UserAccounts->Get ( "Secret" );
       	
       	// Load the user profile information.
       	$UserProfile = new cModel ( "UserProfile" );

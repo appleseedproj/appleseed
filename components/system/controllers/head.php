@@ -53,17 +53,33 @@ class cSystemHeadController extends cController {
 		/*
 		 * Load all files in the init/ directory.
 		 */
-		foreach ( $clients as $c => $client ) {
-			$directory = ASD_PATH . 'clients/' . $client . '/init/';
-			if ( !is_dir ( $directory ) ) continue;
+		$extensions = explode ( ' ', $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetConfiguration ( 'extensions', 'js' ) );
 
-			$Storage = Wob::_('Storage');
+        foreach ( $extensions as $e => $extension ) {
+			foreach ( $clients as $c => $client ) {
+				$directory = ASD_PATH . 'clients/' . $client . '/init/';
+				if ( !is_dir ( $directory ) ) continue;
 
-		    $files = $Storage->Scan ( $directory, 'js' );	
+				$Storage = Wob::_('Storage');
 
-			foreach ( $files as $f => $file ) {
-				$inits[$file] = $client;
+		    	$files = $Storage->Scan ( $directory, $extension );	
+
+				foreach ( $files as $f => $file ) {
+					$inits[$file] = $client;
+				}
 			}
+		}
+
+		/*
+		 * Load specific initialization files.
+		 */
+
+		$explicitInits = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetConfiguration ( 'init' );
+
+		foreach ( $explicitInits as $i => $init ) {
+			$initPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/' . $init;
+
+			$finalPaths[] = $initPath;
 		}
 
 		foreach ( $inits as $file => $client ) {
@@ -92,6 +108,12 @@ class cSystemHeadController extends cController {
             $script->Load ( $scripts );
 
 			$script->Find ( 'script', 0 )->src = $final;
+
+			if ( strstr ( $final, '.coffee' ) ) { 
+				$script->Find ( 'script', 0 )->type = 'text/coffeescript';
+			} else {
+				$script->Find ( 'script', 0 )->type = 'text/javascript';
+			}
 
 			$this->View->Find ( 'script', 0 )->outertext .= "\n" . $script->outertext;
 		}

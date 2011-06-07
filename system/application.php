@@ -130,6 +130,7 @@ class cApplication extends cBase {
 			$Mailer = ASD_PATH . 'libraries/' . $library . '/mailer.php';
 			$Crypt = ASD_PATH . 'libraries/' . $library . '/crypt.php';
 			$Date = ASD_PATH . 'libraries/' . $library . '/date.php';
+			$Graph = ASD_PATH . 'libraries/' . $library . '/graph.php';
 			$Render = ASD_PATH . 'libraries/' . $library . '/render.php';
 
 			if ( file_exists ( $Session ) )
@@ -164,6 +165,9 @@ class cApplication extends cBase {
 
 			if ( file_exists ( $Crypt ) )
 				$load['Crypt'] = ASD_PATH . 'libraries/' . $library . '/crypt.php';
+
+			if ( file_exists ( $Graph ) )
+				$load['Graph'] = ASD_PATH . 'libraries/' . $library . '/graph.php';
 
 			if ( file_exists ( $Date ) )
 				$load['Date'] = ASD_PATH . 'libraries/' . $library . '/date.php';

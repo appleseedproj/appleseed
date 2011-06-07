@@ -45,7 +45,14 @@ class cConfiguration extends cBase {
 		eval (GLOBALS);
 
 		$location = $zApp->GetPath () . DS . $pDirectory;
-		
+
+		# Production mode by default.
+		$mode = null;
+
+		if ( isset ( $zApp->Config ) ) {
+			$mode = $zApp->Config->GetConfiguration ( 'mode' );
+		}
+
 		// Check for other configuration directories
 		$dirs = scandirs ($location);
 		
@@ -55,7 +62,7 @@ class cConfiguration extends cBase {
 			$configurations[$dir]->Directory = $dir;
 			$file = $zApp->GetPath () . DS . $pDirectory . DS . $dir . DS . $dir . '.conf';
 			
-			if ( !$configurations[$dir]->_Data = $this->Parse ($file) ) {
+			if ( !$configurations[$dir]->_Data = $this->Parse ($file, $mode) ) {
 				// Load failed.  Set a warning and unset value
 				unset ($configurations[$dir]);
 				continue;
@@ -373,7 +380,7 @@ class cConfiguration extends cBase {
 	 * @access  public
 	 * @var string $pFilename Full path of file to parse
 	 */
-	function Parse ( $pFilename ) {
+	function Parse ( $pFilename, $pMode = null ) {
 
 		$version = phpversion();
 
@@ -438,6 +445,28 @@ class cConfiguration extends cBase {
 			} else {
 				// No associative arrays are used, so parse normally
 				$return = parse_ini_file ( $pFilename );
+			}
+		}
+
+		// Allow the current configuration file to specify a mode.
+		foreach ( $return as $key => $value ) {
+			if ( $key == 'mode' ) {
+				$pMode = $value;
+			}
+		}
+
+		if ( $pMode ) {
+			$mode = '.' . $pMode;
+
+			// Check for .mode modifiers
+			foreach ( $return as $key => $value ) {
+				if ( strstr ( $key, $mode ) ) {
+					$key = str_replace ( $mode, '', $key );
+					$return[$key] = $value;
+
+					// We no longer need the .mode key/value
+					unset ( $return[$key . $mode] );
+				}
 			}
 		}
 

@@ -243,28 +243,40 @@ class cComponents extends cBase {
 	public function _AddScript ( $pComponent, $pController = null, $pView = null, $pTask = null, $pData = null ) {
 		$queue = $this->GetSys ( 'Buffer' )->Get ( 'Queue' );
 
-		foreach ( $queue['component'] as $c => $component ) {
-			if ( preg_match ( '/system.head.(\d+).(\w+)/', $component->Parameters ) ) {
-				if ( !$pView ) $pView = $pComponent;
+		$extensions = explode ( ' ', $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetConfiguration ( 'extensions', 'js' ) );
 
-				$clients = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetPath();
+		foreach ( $extensions as $e => $extension ) {
+			foreach ( $queue['component'] as $c => $component ) {
+				if ( preg_match ( '/system.head.(\d+).(\w+)/', $component->Parameters ) ) {
+					if ( !$pView ) $pView = $pComponent;
 
-				$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/clients/' . $pView . '.js';
-				$location = ASD_PATH . 'components/' . $pComponent . '/clients/' . $pView . '.js';
+					$clients = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetPath();
 
-				foreach ( $clients as $client ) {
-					$clientPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
-					$clientLocation = ASD_PATH . 'clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.js';
+					$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/clients/' . $pView . '.' . $extension;
+					$location = ASD_PATH . 'components/' . $pComponent . '/clients/' . $pView . '.' . $extension;
 
-					if ( !file_exists ( $clientLocation ) ) continue;
+					foreach ( $clients as $client ) {
+						$clientPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.' . $extension;
+						$clientLocation = ASD_PATH . 'clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.' . $extension;
 
-					$path = $clientPath;
-					$location = $clientLocation;
+						if ( !file_exists ( $clientLocation ) ) continue;
+
+						$path = $clientPath;
+						$location = $clientLocation;
+					}
+
+					if ( !file_exists ( $location ) ) continue;
+					switch ( $extension ) {
+						case 'coffee':
+							$type = 'text/coffeescript';
+						break;
+						default:
+							$type = 'text/javascript';
+						break;
+					}
+					$script = '<script type="' . $type . '" src="' . $path . '"></script>';
+					$queue['component'][$c]->Buffer .= "\n" . $script;
 				}
-
-				if ( !file_exists ( $location ) ) continue;
-				$script = '<script type="text/javascript" src="' . $path . '"></script>';
-				$queue['component'][$c]->Buffer .= "\n" . $script;
 			}
 		}
 

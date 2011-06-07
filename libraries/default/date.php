@@ -75,6 +75,48 @@ class cDate {
 		return ( $formatted );
 		
 	}
-	
+
+	public function ToGraph ( $pStamp ) {
+		# YYYY-MM-DDTHH:MM:SSZ
+
+		# Convert to GMT/UTC
+
+		$difference = date ( 'O', $pStamp );
+
+		$year = date ( 'Y', $pStamp );
+		$month = date ( 'm', $pStamp );
+		$day = date ( 'd', $pStamp );
+
+		$return = $year . '-' . $month . '-' . $day . 'T';
+
+		$hour = date ( 'H', $pStamp );
+		$minute = date ( 'i', $pStamp );
+		$second = date ( 's', $pStamp );
+
+		$return .= $hour . ':' . $minute . ':' . $second . 'Z';
+
+		return ( $return );
+	} 
+
+	public function ToMysql ( $pStamp ) {
+		# YYYY-MM-DD HH:MM:SS
+
+		$difference = date ( 'O', $pStamp );
+
+		$year = date ( 'Y', $pStamp );
+		$month = date ( 'm', $pStamp );
+		$day = date ( 'd', $pStamp );
+
+		$return = $year . '-' . $month . '-' . $day . ' ';
+
+		$hour = date ( 'H', $pStamp );
+		$minute = date ( 'i', $pStamp );
+		$second = date ( 's', $pStamp );
+
+		$return .= $hour . ':' . $minute . ':' . $second . '';
+
+		return ( $return );
+	}
+
 }
 
