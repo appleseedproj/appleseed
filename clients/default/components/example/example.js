@@ -2,7 +2,8 @@
     dojo.require("dijit.layout.ContentPane");
 
 	dojo.xhrGet({
-    	url:"/.to/fellowship.appleseed/graph/example/response",
+    	//url:"/.to/fellowship.appleseed/graph/example/response",
+		url:"/graph/user/token",
     	handleAs:"json",
     	load: function(data){
 			console.log ( data );
