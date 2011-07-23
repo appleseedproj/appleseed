@@ -1,4 +1,3 @@
-
 /**
  * @tutorial Call this function to instantiate the framework.  The parameter is both the id
  * of the element to modify internally, and the name of the class, in this case, "Example".

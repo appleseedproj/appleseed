@@ -460,6 +460,41 @@ function rmkdir ( $path, $mode = 0777 ) {
 	return @mkdir ( $path, $mode );
 }
 
+/*
+ * Adapted from: http://php.net/manual/en/function.scandir.php
+ * 
+ */
+function rscandir($base='', &$files=array()) {
+	global $__rscandir_iteration;
+
+	$__rscandir_iteration++;
+  
+	$array = array_diff(scandir($base), array('.', '..'));
+	$array = scandir ( $base );
+   
+	foreach($array as $value) {
+		if ( ( $value == '.' ) or ( $value == '..' ) ) {
+			continue;
+		}
+		if (is_dir($base.$value)) { 
+			$files[] = $base.$value.'/'; 
+			$files = rscandir($base.$value.'/', $files); 
+		} elseif (is_file($base.$value)) {
+			$files[] = $base.$value;
+		}
+	}
+  
+	$__rscandir_iteration--;
+
+	if ( $__rscandir_iteration == 0 ) {
+		foreach ( $files as $f => $file ) {
+			$files[$f] = str_replace ( $base, '', $file );
+		}
+	}
+
+	return $files;
+}
+
 
 function xml_encode( $pArray ) {
 	$return = "<xml><data>XML Not Yet Available</data></xml>";

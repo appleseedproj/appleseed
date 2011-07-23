@@ -62,14 +62,14 @@ class cTheme extends cBase {
  			
  				$directory = $zApp->GetPath() . '/themes/' . $path . '/styles/init/';
  				$location = $path . '/styles/init/';
- 			
+
  				// Directory does not exist, continue;
  				if (!is_dir ($directory)) continue;
  			
  				// Get a list of all css files.
                 $Storage = Wob::_('Storage');
 
-                $files = $Storage->Scan ( $directory, $extension );
+                $files = $Storage->Scan ( $directory, $extension, true );
 
  				// No styles found, continue
  				if ( count ( $files ) < 1 ) continue;

@@ -252,8 +252,8 @@ class cComponents extends cBase {
 
 					$clients = $this->GetSys ( 'Clients' )->Get ( 'Config' )->GetPath();
 
-					$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/clients/' . $pView . '.' . $extension;
-					$location = ASD_PATH . 'components/' . $pComponent . '/clients/' . $pView . '.' . $extension;
+					$path = 'http://' . ASD_DOMAIN . '/components/' . $pComponent . '/client/' . $pView . '.' . $extension;
+					$location = ASD_PATH . 'components/' . $pComponent . '/client/' . $pView . '.' . $extension;
 
 					foreach ( $clients as $client ) {
 						$clientPath = 'http://' . ASD_DOMAIN . '/clients/' . $client . '/components/' . $pComponent . '/' . $pView . '.' . $extension;

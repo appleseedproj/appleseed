@@ -135,33 +135,33 @@
 						<h1>Michael's Friends <span class="profile-friends-count additional-info">246 friends</span> </h1>
 						<ul>
 							<li>
-								<img class="friends-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc3/hs316.snc3/28457_10150199647515293_527500292_13078983_3735516_s.jpg">
+								<img class="friends-icon" src="">
 								<div class="friends-info">
-									<span class="friends-fullname">Charlie Donna</span>
-									<span class="friends-location">Chicago, IL</span>
+									<span class="friends-fullname">User #1</span>
+									<span class="friends-location">Anywhere, IL</span>
 									<p class="friends-status">When some people left Avatar, they had feelings of depression and disconnectedness. This was because they  couldn't stand the fact that they didn't live on the paradise world of Pandora... this is how i feel about Toronto  because of Scott Pilgrim vs The World</p>
 									<span class="friends-mutual-count">7 mutual friends</span>
-									<a href="#" class="friends-identity">charlesdonna@appleseedproject.org</a>
+									<a href="#" class="friends-identity">user1@appleseedproject.org</a>
 								</div>
 							</li>
 							<li>
-								<img class="friends-icon" src="http://photos-b.ak.fbcdn.net/photos-ak-ash1/v282/95/19/662764663/s662764663_1045718_3113.jpg">
+								<img class="friends-icon" src="">
 								<div class="friends-info">
-									<span class="friends-fullname">Flint Arthur</span>
-									<span class="friends-location">Baltimore, MD</span>
+									<span class="friends-fullname">User #2</span>
+									<span class="friends-location">Nowhere, NV</span>
 									<p class="friends-status">Reading Eastern Standard Tribe .epub on the train with Android Lust .mp3, on way to meatspace show. Vinyl boots. Tweeting. #cyberpunk</p>
 									<span class="friends-mutual-count">36 mutual friends</span>
-									<a href="#" class="friends-identity">flint@appleseedproject.org</a>
+									<a href="#" class="friends-identity">user2@appleseedproject.org</a>
 								</div>
 							</li>
 							<li>
-								<img class="friends-icon" src="http://sphotos.ak.fbcdn.net/hphotos-ak-snc4/hs171.snc4/37875_736751926255_18401167_41412055_2880695_s.jpg">
+								<img class="friends-icon" src="">
 								<div class="friends-info">
-									<span class="friends-fullname">Adrienne Ruhf</span>
-									<span class="friends-location">Chicago, IL</span>
+									<span class="friends-fullname">User #3</span>
+									<span class="friends-location">Somewhere, CA</span>
 									<p class="friends-status"></p>
 									<span class="friends-mutual-count">32 mutual friends</span>
-									<a href="#" class="friends-identity">adjlaru@appleseedproject.org</a>
+									<a href="#" class="friends-identity">user3@appleseedproject.org</a>
 								</div>
 							</li>
 						</ul>

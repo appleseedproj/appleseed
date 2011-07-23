@@ -61,7 +61,8 @@
     </div>
 
 	<div class="clear"></div>
-    
+
+	<meta name="appleseed-language-data" content='{"id": 1, "name": "Foo", "price": 123, "tags": ["Bar","Eek"] }' /> 
     <footer id="appleseed-footer" class="container_16">
  		<?php $zApp->Components->Go ( "footer" ); ?>
  	</footer>

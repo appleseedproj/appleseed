@@ -90,10 +90,14 @@ class cFilesystemHook extends cHook {
 
 	public function OnScanDirectory ( $pData = null ) {
 		$Directory = $pData['Directory'];
+		$Recursive = $pData['Recursive'];
 
-		$return = scandir ( $Directory );
+		if ( $Recursive == true ) {
+			$return = rscandir ( $Directory );
+		} else {
+			$return = scandir ( $Directory );
+		}
 
 		return ( $return );
 	}
-	
 }

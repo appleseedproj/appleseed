@@ -67,12 +67,13 @@ class cStorage {
 		return ( $return );
 	}
 
-	public function Scan ( $pDirectory, $pExtension = null ) {
+	public function Scan ( $pDirectory, $pExtension = null, $pRecursive = false ) {
 		eval ( GLOBALS );
 
 		$Data = array();
 
 		$Data['Directory'] = $pDirectory;
+		$Data['Recursive'] = $pRecursive;
 
 		$files = $zApp->GetSys ( 'Event' )->Trigger ( 'On', 'Scan', 'Directory', $Data );
 
@@ -82,6 +83,7 @@ class cStorage {
 
 			// We're looking for a specific extension
 			if ( $pExtension ) {
+
 				// Remove any . to avoid confusion
 				$pExtension = str_replace ( '.', '', $pExtension );
 

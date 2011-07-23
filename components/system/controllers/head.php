@@ -62,7 +62,7 @@ class cSystemHeadController extends cController {
 
 				$Storage = Wob::_('Storage');
 
-		    	$files = $Storage->Scan ( $directory, $extension );	
+		    	$files = $Storage->Scan ( $directory, $extension, $recursive = true );	
 
 				foreach ( $files as $f => $file ) {
 					$inits[$file] = $client;
