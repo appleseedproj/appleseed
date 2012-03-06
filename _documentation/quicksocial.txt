@@ -10,7 +10,7 @@ More information is available at: http://opensource.appleseedproject.org/quickso
 Overview
 -------------
 
-QuickSocial is a unified protocol, and much of it's implementation relies on other parts of
+QuickSocial is a unified protocol, and much of its implementation relies on other parts of
 the protocol. For instance, QuickFriend requires QuickConnect to verify identify before the
 establishment of a relationship can be made.  A few simple rules define the protocol flow:
 
@@ -18,7 +18,7 @@ establishment of a relationship can be made.  A few simple rules define the prot
 1. Stored tokens are used to verify identity through callbacks before actions are taken.
 2. Actions (friending, messaging) are taken by the home node only.
 
-There are three levels of protocol support.  Each level is dependant on the level above it.
+There are three levels of protocol support.  Each level is dependent on the level above it.
 
 0. Social, Node, Connect, User
 1. Friend, Message
